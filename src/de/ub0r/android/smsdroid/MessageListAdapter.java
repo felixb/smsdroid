@@ -19,13 +19,10 @@
 package de.ub0r.android.smsdroid;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -34,43 +31,38 @@ import android.widget.TextView;
  * 
  * @author flx
  */
-public class ConversationListAdapter extends SimpleCursorAdapter {
+public class MessageListAdapter extends SimpleCursorAdapter {
 	/** Tag for logging. */
-	final static String TAG = "SMSdroid.cla";
+	final static String TAG = "SMSdroid.mla";
 
 	/** INDEX: id. */
-	public static final int INDEX_ID = 0;
+	public static final int INDEX_ID = ConversationListAdapter.INDEX_ID;
 	/** INDEX: date. */
-	public static final int INDEX_DATE = 1;
+	public static final int INDEX_DATE = ConversationListAdapter.INDEX_DATE;
 	/** INDEX: address. */
-	public static final int INDEX_ADDRESS = 2;
+	public static final int INDEX_ADDRESS = ConversationListAdapter.INDEX_ADDRESS;
 	/** INDEX: thread_id. */
-	public static final int INDEX_THREADID = 3;
+	public static final int INDEX_THREADID = ConversationListAdapter.INDEX_THREADID;
 	/** INDEX: body. */
-	public static final int INDEX_BODY = 4;
+	public static final int INDEX_BODY = ConversationListAdapter.INDEX_BODY;
 	/** INDEX: type. */
-	public static final int INDEX_TYPE = 5;
+	public static final int INDEX_TYPE = ConversationListAdapter.INDEX_TYPE;
 
-	static final String DATE_FORMAT = "dd.MM. kk:mm";
+	private static final String DATE_FORMAT = ConversationListAdapter.DATE_FORMAT;
 
 	/** Cursor's projection. */
-	public static final String[] PROJECTION = { //
-	"_id",// 0
-			Calls.DATE, // 1
-			"address", // 2
-			"thread_id", // 3
-			"body", // 4
-			Calls.TYPE, // 5
-	};
+	public static final String[] PROJECTION = ConversationListAdapter.PROJECTION;
+	/** Cursor's selection. */
+	public static final String SELECTION = PROJECTION[INDEX_THREADID]
+			+ " = '?'";
 	/** Cursor's sort. */
-	public static final String SORT = Calls.DATE + " DESC";
+	public static final String SORT = Calls.DATE + " ASC";;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public ConversationListAdapter(final Context context, final Cursor c) {
-		super(context, R.layout.conversationlist_item, c, new String[0],
-				new int[0]);
+	public MessageListAdapter(final Context context, final Cursor c) {
+		super(context, R.layout.messagelist_item, c, new String[0], new int[0]);
 	}
 
 	/**
@@ -79,29 +71,17 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final String threadID = cursor.getString(3);
 		String s = "";
-		int t = cursor.getInt(INDEX_TYPE);
+		int t = cursor.getInt(5);
 		if (t == Calls.INCOMING_TYPE) {
 			s = "<< ";
 		} else if (t == Calls.OUTGOING_TYPE) {
 			s = ">> ";
 		}
 		((TextView) view.findViewById(R.id.text1)).setText(s
-				+ cursor.getString(INDEX_ADDRESS));
-		((TextView) view.findViewById(R.id.text2)).setText(cursor
-				.getString(INDEX_BODY));
+				+ cursor.getString(2));
+		((TextView) view.findViewById(R.id.text2)).setText(cursor.getString(4));
 		((TextView) view.findViewById(R.id.text3)).setText(DateFormat.format(
-				DATE_FORMAT, Long.parseLong(cursor.getString(INDEX_DATE))));
-
-		view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				final Intent i = new Intent(context, MessageList.class);
-				i.setData(Uri.parse("content://mms-sms/conversations/"
-						+ threadID));
-				context.startActivity(i);
-			}
-		});
+				DATE_FORMAT, Long.parseLong(cursor.getString(1))));
 	}
 }

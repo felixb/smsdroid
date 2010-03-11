@@ -20,19 +20,18 @@
     <string name="app_name">SMSdroid</string>
 	<string name="app_version">0.1</string>
 	<string name="changelog_">Changelog</string>
-		<string name="more_">More Apps..</string>
+	<string name="more_">More Apps..</string>
 	<string name="about_">About</string>
-	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app. 
-	</string>
+	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string>
 	<string name="author_">Author:</string>
 	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;</string>
-	<string name="license">GPLv3 - see
-		http://www.gnu.org/licenses/gpl-3.0.txt</string>
+	<string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<string name="license_">License:</string>
-	<string name="source">http://repo.or.cz/w/smsdroid.git
-	</string>
+	<string name="source">http://github.com/felixb/smsdroid</string>
 	<string name="source_">Sourcescode:</string>
 	<string name="website_">Website:</string>
 	<string name="website">http://code.google.com/p/websmsdroid/</string>
 	<string name="settings">Preferences</string>
+	<string name="new_message">New message</string>
+	<string name="answer">Answer</string>
 </resources>

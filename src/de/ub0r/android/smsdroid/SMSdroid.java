@@ -3,14 +3,19 @@ package de.ub0r.android.smsdroid;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 
-public class SMSdroid extends ListActivity {
+public class SMSdroid extends ListActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid";
 
@@ -26,8 +31,9 @@ public class SMSdroid extends ListActivity {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.conversationlist);
 
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -48,6 +54,8 @@ public class SMSdroid extends ListActivity {
 		ConversationListAdapter adapter = new ConversationListAdapter(this,
 				mCursor);
 		this.setListAdapter(adapter);
+
+		this.findViewById(R.id.new_message).setOnClickListener(this);
 	}
 
 	/**
@@ -86,6 +94,26 @@ public class SMSdroid extends ListActivity {
 			return builder.create();
 		default:
 			return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onClick(final View v) {
+		switch (v.getId()) {
+		case R.id.new_message:
+			try {
+				final Intent i = new Intent(Intent.ACTION_SENDTO);
+				i.setData(Uri.parse("sms:"));
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "could not find app to compose message", e);
+			}
+			break;
+		default:
+			break;
 		}
 	}
 }
