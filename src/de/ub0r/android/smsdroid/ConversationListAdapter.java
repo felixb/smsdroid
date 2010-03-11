@@ -21,12 +21,8 @@ package de.ub0r.android.smsdroid;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Message;
-import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
-import android.provider.Contacts.PeopleColumns;
-import android.provider.Contacts.Phones;
-import android.provider.Contacts.PhonesColumns;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -37,6 +33,8 @@ import android.widget.TextView;
  * @author flx
  */
 public class ConversationListAdapter extends SimpleCursorAdapter {
+	/** Tag for logging. */
+	final static String TAG = "SMSdroid.cla";
 
 	/** INDEX: name. */
 	public static final int NAME_INDEX = 1;
@@ -45,15 +43,19 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	/** INDEX: type. */
 	public static final int NUMBER_TYPE = 3;
 
+	private static final String DATE_FORMAT = "dd.MM. kk:mm";
+
 	/** Global ContentResolver. */
 	private ContentResolver mContentResolver;
 
 	/** Cursor's projection. */
 	public static final String[] PROJECTION = { //
 	"_id",// 0
-			"date", // 1
-			"person", // 2
+			Calls.DATE, // 1
+			"address", // 2
 			"thread_id", // 3
+			"body", // 4
+			Calls.TYPE, // 5
 	};
 
 	public static final String SORT = Calls.DATE + " DESC";
@@ -61,7 +63,7 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public ConversationListAdapter(final Context context, Cursor c) {
+	public ConversationListAdapter(final Context context, final Cursor c) {
 		super(context, R.layout.conversationlist_item, c, new String[0],
 				new int[0]);
 	}
@@ -72,8 +74,17 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		((TextView) view.findViewById(R.id.text1)).setText(cursor.getString(2));
-		((TextView) view.findViewById(R.id.text2)).setText(cursor.getString(3));
-		((TextView) view.findViewById(R.id.text3)).setText(cursor.getString(1));
+		String s = "";
+		int t = cursor.getInt(5);
+		if (t == Calls.INCOMING_TYPE) {
+			s = "<< ";
+		} else if (t == Calls.OUTGOING_TYPE) {
+			s = ">> ";
+		}
+		((TextView) view.findViewById(R.id.text1)).setText(s
+				+ cursor.getString(2));
+		((TextView) view.findViewById(R.id.text2)).setText(cursor.getString(4));
+		((TextView) view.findViewById(R.id.text3)).setText(DateFormat.format(
+				DATE_FORMAT, Long.parseLong(cursor.getString(1))));
 	}
 }
