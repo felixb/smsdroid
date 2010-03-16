@@ -22,6 +22,7 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -36,6 +37,8 @@ public class MessageList extends ListActivity implements OnClickListener {
 
 	/** Address. */
 	private String address = null;
+	/** URI to resolve. */
+	private static final Uri URI = Uri.parse("content://sms");
 
 	/**
 	 * {@inheritDoc}
@@ -46,7 +49,7 @@ public class MessageList extends ListActivity implements OnClickListener {
 		this.setContentView(R.layout.messagelist);
 
 		if (!SMSdroid.prefsNoAds) {
-			this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
+			// this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
 		}
 
 		final Intent i = this.getIntent();
@@ -55,16 +58,23 @@ public class MessageList extends ListActivity implements OnClickListener {
 		List<String> p = uri.getPathSegments();
 		String threadID = p.get(p.size() - 1);
 
-		Cursor mCursor = this.getContentResolver().query(
-				Uri.parse("content://sms"), MessageListAdapter.PROJECTION,
-				MessageListAdapter.SELECTION.replace("?", threadID), null,
+		final String selection = MessageListAdapter.SELECTION.replace("?",
+				threadID);
+
+		Cursor mCursor = this.getContentResolver().query(URI,
+				MessageListAdapter.PROJECTION, selection, null,
 				MessageListAdapter.SORT);
+		ContentValues cv = new ContentValues();
+		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
+		this.getContentResolver().update(URI, cv,
+				selection + " AND read = '0'", null);
 		this.startManagingCursor(mCursor);
 		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
 		this.setListAdapter(adapter);
 		if (mCursor.moveToFirst()) {
 			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
 		}
+		this.setTitle(this.getTitle() + " > " + this.address);
 		this.findViewById(R.id.answer).setOnClickListener(this);
 	}
 

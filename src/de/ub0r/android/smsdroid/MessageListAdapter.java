@@ -47,7 +47,10 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 	public static final int INDEX_BODY = ConversationListAdapter.INDEX_BODY;
 	/** INDEX: type. */
 	public static final int INDEX_TYPE = ConversationListAdapter.INDEX_TYPE;
+	/** INDEX: read. */
+	public static final int INDEX_READ = ConversationListAdapter.INDEX_READ;
 
+	/** Dateformat. //TODO: move me to xml */
 	private static final String DATE_FORMAT = ConversationListAdapter.DATE_FORMAT;
 
 	/** Cursor's projection. */
@@ -77,6 +80,12 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 			s = "<< ";
 		} else if (t == Calls.OUTGOING_TYPE) {
 			s = ">> ";
+		}
+		int read = cursor.getInt(INDEX_READ);
+		if (read == 0) {
+			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
+		} else {
+			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 		((TextView) view.findViewById(R.id.text1)).setText(s
 				+ cursor.getString(2));

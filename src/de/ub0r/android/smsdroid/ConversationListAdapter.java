@@ -50,7 +50,10 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	public static final int INDEX_BODY = 4;
 	/** INDEX: type. */
 	public static final int INDEX_TYPE = 5;
+	/** INDEX: read. */
+	public static final int INDEX_READ = 6;
 
+	/** Dateformat. //TODO: move me to xml */
 	static final String DATE_FORMAT = "dd.MM. kk:mm";
 
 	/** Cursor's projection. */
@@ -61,7 +64,9 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 			"thread_id", // 3
 			"body", // 4
 			Calls.TYPE, // 5
+			"read", // 6
 	};
+
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " DESC";
 
@@ -86,6 +91,12 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 			s = "<< ";
 		} else if (t == Calls.OUTGOING_TYPE) {
 			s = ">> ";
+		}
+		int read = cursor.getInt(INDEX_READ);
+		if (read == 0) {
+			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
+		} else {
+			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 		((TextView) view.findViewById(R.id.text1)).setText(s
 				+ cursor.getString(INDEX_ADDRESS));
