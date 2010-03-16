@@ -20,11 +20,19 @@
     <string name="app_name">SMSdroid</string>
 	<string name="app_version">0.1</string>
 	<string name="changelog_">Changelog</string>
-	<string name="more_">More Apps..</string>
 	<string name="about_">About</string>
 	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string>
 	<string name="author_">Author:</string>
 	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;</string>
+	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=5779152</string>
+	<string name="donate_mail">flx.yoo+websms.donator@gmail.com</string>
+	<string name="donate_subject">I\'m the donator. My sender hash is...</string>
+	<string name="donate_">Donate</string>
+	<string name="donate_remove_ads_">Donate/remove ads</string>
+	<string name="remove_ads_">Remove ads</string>
+	<string name="predonate">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating (via paypal). I\'ll remove the ads for you as soon as possible.\nThank you!</string>
+	<string name="postdonate">To remove ads, you need to send me the MD5 hash of your IMEI (unique id of your phone). This hash is a one-way-function. It is not traceable back to you.</string>
+	<string name="more_apps_">More Apps..</string>
 	<string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<string name="license_">License:</string>
 	<string name="source">http://github.com/felixb/smsdroid</string>
@@ -34,4 +42,9 @@
 	<string name="settings">Preferences</string>
 	<string name="new_message">New message</string>
 	<string name="answer">Answer</string>
+	<string name="send_">Send</string>
+	<string name="receive_vibrate_">Vibrate</string>
+	<string name="receive_vibrate_hint">Vibrate on receive</string>
+	<string name="receive_sound_">Sound</string>
+	<string name="receive_sound_hint">Sound on receive</string>
 </resources>

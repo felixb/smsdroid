@@ -19,8 +19,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:title="@string/settings" android:id="@+id/item_settings"
 		android:icon="@android:drawable/ic_menu_preferences" />
-	<item android:id="@+id/item_about" android:title="@string/about_"
-		android:icon="@android:drawable/ic_menu_info_details" />
+	<item android:id="@+id/item_about" android:icon="@android:drawable/ic_menu_info_details"
+		android:title="@string/about_" />
+	<item android:id="@+id/item_donate" android:icon="@drawable/ic_menu_star"
+		android:title="@string/donate_remove_ads_" />
 	<item android:id="@+id/item_more" android:icon="@drawable/ic_menu_windows"
-		android:title="@string/more_" />
+		android:title="@string/more_apps_" />
 </menu>
