@@ -55,9 +55,6 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 
 	/** Cursor's projection. */
 	public static final String[] PROJECTION = ConversationListAdapter.PROJECTION;
-	/** Cursor's selection. */
-	public static final String SELECTION = PROJECTION[INDEX_THREADID]
-			+ " = '?'";
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " ASC";;
 

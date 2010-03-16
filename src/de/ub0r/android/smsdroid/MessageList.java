@@ -39,7 +39,7 @@ public class MessageList extends ListActivity implements OnClickListener {
 	/** Address. */
 	private String address = null;
 	/** URI to resolve. */
-	private static final Uri URI = Uri.parse("content://sms");
+	private static final String URI = "content://sms/conversations/";
 
 	/**
 	 * {@inheritDoc}
@@ -107,16 +107,13 @@ public class MessageList extends ListActivity implements OnClickListener {
 		List<String> p = uri.getPathSegments();
 		String threadID = p.get(p.size() - 1);
 
-		final String selection = MessageListAdapter.SELECTION.replace("?",
-				threadID);
-
-		Cursor mCursor = this.getContentResolver().query(URI,
-				MessageListAdapter.PROJECTION, selection, null,
-				MessageListAdapter.SORT);
+		Cursor mCursor = this.getContentResolver().query(
+				Uri.parse(URI + threadID), MessageListAdapter.PROJECTION, null,
+				null, MessageListAdapter.SORT);
 		ContentValues cv = new ContentValues();
 		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
-		this.getContentResolver().update(URI, cv,
-				selection + " AND read = '0'", null);
+		this.getContentResolver().update(Uri.parse(URI + threadID), cv,
+				"read = '0'", null);
 		this.startManagingCursor(mCursor);
 		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
 		this.setListAdapter(adapter);
