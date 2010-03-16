@@ -17,9 +17,5 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<CheckBoxPreference android:key="receive_vibrate"
-		android:title="@string/receive_vibrate_" android:summary="@string/receive_vibrate_hint" />
-	<RingtonePreference android:key="receive_sound"
-		android:title="@string/receive_sound_" android:summary="@string/receive_sound_hint"
-		android:ringtoneType="notification" android:defaultValue="content://settings/system/notification_sound" />
+	
 </PreferenceScreen>

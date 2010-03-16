@@ -27,17 +27,23 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="vnd.android-dir/mms-sms" />
+			</intent-filter>
 		</activity>
 		<activity android:name=".Preferences" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".MessageList" android:configChanges="orientation|keyboardHidden"
-			android:launchMode="singleTop" />
+			android:launchMode="singleTop">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="vnd.android-dir/mms-sms" />
+			</intent-filter>
+		</activity>
 		<!-- The application's publisher ID assigned by AdMob -->
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
-		<receiver android:name="BroadcastReceiver">
-			<intent-filter>
-				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
-			</intent-filter>
-		</receiver>
 	</application>
 	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="7" />
 	<supports-screens android:largeScreens="true"
@@ -46,9 +52,7 @@
 
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.READ_CONTACTS" />
-	<uses-permission android:name="android.permission.RECEIVE_SMS" />
 	<uses-permission android:name="android.permission.READ_SMS" />
-	<uses-permission android:name="android.permission.VIBRATE" />
 	<!-- AdMob SDK permissions -->
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
