@@ -27,6 +27,8 @@ public class MessageList extends ListActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.messagelist);
 
+		this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
+
 		final Intent i = this.getIntent();
 		final Uri uri = i.getData();
 		Log.d(TAG, "launched with data: " + uri.toString());

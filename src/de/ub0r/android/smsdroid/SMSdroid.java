@@ -35,6 +35,8 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.conversationlist);
 
+		this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
+
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		// display changelog?
