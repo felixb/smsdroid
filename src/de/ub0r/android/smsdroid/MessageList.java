@@ -52,30 +52,25 @@ public class MessageList extends ListActivity implements OnClickListener {
 			// this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
 		}
 
+		this.findViewById(R.id.answer).setOnClickListener(this);
+
 		final Intent i = this.getIntent();
 		final Uri uri = i.getData();
-		Log.d(TAG, "launched with data: " + uri.toString());
-		List<String> p = uri.getPathSegments();
-		String threadID = p.get(p.size() - 1);
-
-		final String selection = MessageListAdapter.SELECTION.replace("?",
-				threadID);
-
-		Cursor mCursor = this.getContentResolver().query(URI,
-				MessageListAdapter.PROJECTION, selection, null,
-				MessageListAdapter.SORT);
-		ContentValues cv = new ContentValues();
-		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
-		this.getContentResolver().update(URI, cv,
-				selection + " AND read = '0'", null);
-		this.startManagingCursor(mCursor);
-		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
-		this.setListAdapter(adapter);
-		if (mCursor.moveToFirst()) {
-			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
+		if (uri != null) {
+			this.parseIntent(i);
 		}
-		this.setTitle(this.getTitle() + " > " + this.address);
-		this.findViewById(R.id.answer).setOnClickListener(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected final void onNewIntent(final Intent intent) {
+		super.onNewIntent(intent);
+		final Uri uri = intent.getData();
+		if (uri != null) {
+			this.parseIntent(intent);
+		}
 	}
 
 	/**
@@ -96,5 +91,37 @@ public class MessageList extends ListActivity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * Parse data pushed by {@link Intent}.
+	 * 
+	 * @param intent
+	 *            {@link Intent}
+	 */
+	private void parseIntent(final Intent intent) {
+		final Uri uri = intent.getData();
+		Log.d(TAG, "got intent: " + uri.toString());
+
+		List<String> p = uri.getPathSegments();
+		String threadID = p.get(p.size() - 1);
+
+		final String selection = MessageListAdapter.SELECTION.replace("?",
+				threadID);
+
+		Cursor mCursor = this.getContentResolver().query(URI,
+				MessageListAdapter.PROJECTION, selection, null,
+				MessageListAdapter.SORT);
+		ContentValues cv = new ContentValues();
+		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
+		this.getContentResolver().update(URI, cv,
+				selection + " AND read = '0'", null);
+		this.startManagingCursor(mCursor);
+		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
+		this.setListAdapter(adapter);
+		if (mCursor.moveToFirst()) {
+			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
+		}
+		this.setTitle(this.getString(R.string.app_name) + " > " + this.address);
 	}
 }
