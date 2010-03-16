@@ -24,6 +24,7 @@ import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -123,5 +124,13 @@ public class MessageList extends ListActivity implements OnClickListener {
 			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
 		}
 		this.setTitle(this.getString(R.string.app_name) + " > " + this.address);
+		Intent i = new Intent("com.android.mms.transaction"
+				+ ".MessageStatusReceiver.MESSAGE_STATUS_RECEIVED", Uri
+				.parse("vnd.android-dir/mms-sms"));
+		List<ResolveInfo> l = this.getPackageManager().queryBroadcastReceivers(
+				i, 0);
+		Log.d(TAG, l.toString());
+		this.sendBroadcast(i);
+		// FIXME: use own notifications
 	}
 }
