@@ -33,33 +33,54 @@ import android.widget.TextView;
  */
 public class MessageListAdapter extends SimpleCursorAdapter {
 	/** Tag for logging. */
-	final static String TAG = "SMSdroid.mla";
+	static final String TAG = "SMSdroid.mla";
 
 	/** INDEX: id. */
-	public static final int INDEX_ID = ConversationListAdapter.INDEX_ID;
+	public static final int INDEX_ID = 0;
 	/** INDEX: date. */
-	public static final int INDEX_DATE = ConversationListAdapter.INDEX_DATE;
+	public static final int INDEX_DATE = 1;
 	/** INDEX: address. */
-	public static final int INDEX_ADDRESS = ConversationListAdapter.INDEX_ADDRESS;
+	public static final int INDEX_ADDRESS = 2;
 	/** INDEX: thread_id. */
-	public static final int INDEX_THREADID = ConversationListAdapter.INDEX_THREADID;
+	public static final int INDEX_THREADID = 3;
 	/** INDEX: body. */
-	public static final int INDEX_BODY = ConversationListAdapter.INDEX_BODY;
+	public static final int INDEX_BODY = 4;
 	/** INDEX: type. */
-	public static final int INDEX_TYPE = ConversationListAdapter.INDEX_TYPE;
+	public static final int INDEX_TYPE = 5;
 	/** INDEX: read. */
-	public static final int INDEX_READ = ConversationListAdapter.INDEX_READ;
+	public static final int INDEX_READ = 6;
+	/** INDEX: person. */
+	public static final int INDEX_PERSON = 7;
 
 	/** Dateformat. //TODO: move me to xml */
-	private static final String DATE_FORMAT = ConversationListAdapter.DATE_FORMAT;
+	private static final String DATE_FORMAT = // .
+	ConversationListAdapter.DATE_FORMAT;
 
 	/** Cursor's projection. */
-	public static final String[] PROJECTION = ConversationListAdapter.PROJECTION;
+	static final String[] PROJECTION = { //
+	"_id", // 0
+			Calls.DATE, // 1
+			"address", // 2
+			"thread_id", // 3
+			"body", // 4
+			Calls.TYPE, // 5
+			"read", // 6
+			"person", // 7
+	};
+
+	/** SQL WHERE: unread messages. */
+	static final String SELECTION_UNREAD = "read = '0'";
+
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " ASC";;
 
 	/**
-	 * {@inheritDoc}
+	 * Default Constructor.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param c
+	 *            {@link Cursor}
 	 */
 	public MessageListAdapter(final Context context, final Cursor c) {
 		super(context, R.layout.messagelist_item, c, new String[0], new int[0]);
@@ -72,7 +93,7 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
 		String s = "";
-		int t = cursor.getInt(5);
+		int t = cursor.getInt(INDEX_TYPE);
 		if (t == Calls.INCOMING_TYPE) {
 			s = "<< ";
 		} else if (t == Calls.OUTGOING_TYPE) {
@@ -85,9 +106,10 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 		((TextView) view.findViewById(R.id.text1)).setText(s
-				+ cursor.getString(2));
-		((TextView) view.findViewById(R.id.text2)).setText(cursor.getString(4));
+				+ cursor.getString(INDEX_ADDRESS));
+		((TextView) view.findViewById(R.id.text2)).setText(cursor
+				.getString(INDEX_BODY));
 		((TextView) view.findViewById(R.id.text3)).setText(DateFormat.format(
-				DATE_FORMAT, Long.parseLong(cursor.getString(1))));
+				DATE_FORMAT, Long.parseLong(cursor.getString(INDEX_DATE))));
 	}
 }

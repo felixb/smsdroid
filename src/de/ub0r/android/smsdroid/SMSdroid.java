@@ -47,6 +47,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+/**
+ * Main {@link ListActivity} showing conversations.
+ * 
+ * @author flx
+ */
 public class SMSdroid extends ListActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid";
@@ -84,7 +89,7 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onCreate(final Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.conversationlist);
 
@@ -115,7 +120,7 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void onResume() {
+	protected final void onResume() {
 		super.onResume();
 		prefsNoAds = this.hideAds();
 		if (!prefsNoAds) {
@@ -253,7 +258,7 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onClick(final View v) {
+	public final void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.new_message:
 			try {

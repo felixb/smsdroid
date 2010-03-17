@@ -36,7 +36,7 @@ import android.widget.TextView;
  */
 public class ConversationListAdapter extends SimpleCursorAdapter {
 	/** Tag for logging. */
-	final static String TAG = "SMSdroid.cla";
+	static final String TAG = "SMSdroid.cla";
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -58,7 +58,7 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 
 	/** Cursor's projection. */
 	public static final String[] PROJECTION = { //
-	"_id",// 0
+	"_id", // 0
 			Calls.DATE, // 1
 			"address", // 2
 			"thread_id", // 3
@@ -71,7 +71,12 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	public static final String SORT = Calls.DATE + " DESC";
 
 	/**
-	 * {@inheritDoc}
+	 * Default Constructor.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param c
+	 *            {@link Cursor}
 	 */
 	public ConversationListAdapter(final Context context, final Cursor c) {
 		super(context, R.layout.conversationlist_item, c, new String[0],

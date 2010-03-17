@@ -24,7 +24,6 @@ import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +31,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+/**
+ * {@link ListActivity} showing a single conversation.
+ * 
+ * @author flx
+ */
 public class MessageList extends ListActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.ml";
@@ -39,19 +43,19 @@ public class MessageList extends ListActivity implements OnClickListener {
 	/** Address. */
 	private String address = null;
 	/** URI to resolve. */
-	private static final String URI = "content://sms/conversations/";
+	static final String URI = "content://sms/conversations/";
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onCreate(final Bundle savedInstanceState) {
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.messagelist);
 
-		if (!SMSdroid.prefsNoAds) {
-			// this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
-		}
+		// if (!SMSdroid.prefsNoAds) {
+		// this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
+		// }
 
 		this.findViewById(R.id.answer).setOnClickListener(this);
 
@@ -77,8 +81,7 @@ public class MessageList extends ListActivity implements OnClickListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public void onClick(final View v) {
+	public final void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.answer:
 			try {
@@ -113,7 +116,7 @@ public class MessageList extends ListActivity implements OnClickListener {
 		ContentValues cv = new ContentValues();
 		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
 		this.getContentResolver().update(Uri.parse(URI + threadID), cv,
-				"read = '0'", null);
+				MessageListAdapter.SELECTION_UNREAD, null);
 		this.startManagingCursor(mCursor);
 		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
 		this.setListAdapter(adapter);
@@ -121,13 +124,7 @@ public class MessageList extends ListActivity implements OnClickListener {
 			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
 		}
 		this.setTitle(this.getString(R.string.app_name) + " > " + this.address);
-		Intent i = new Intent("com.android.mms.transaction"
-				+ ".MessageStatusReceiver.MESSAGE_STATUS_RECEIVED", Uri
-				.parse("vnd.android-dir/mms-sms"));
-		List<ResolveInfo> l = this.getPackageManager().queryBroadcastReceivers(
-				i, 0);
-		Log.d(TAG, l.toString());
-		this.sendBroadcast(i);
-		// FIXME: use own notifications
+
+		SmsReceiver.updateNewMessageNotification(this);
 	}
 }

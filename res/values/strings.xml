@@ -41,6 +41,12 @@
 	<string name="website">http://code.google.com/p/websmsdroid/</string>
 	<string name="settings">Preferences</string>
 	<string name="new_message">New message</string>
+	<string name="new_messages_">New messages</string>
+	<string name="new_messages">%d unread messages.</string>
 	<string name="answer">Answer</string>
 	<string name="send_">Send</string>
+	<string name="receive_vibrate_">Vibrate</string>
+	<string name="receive_vibrate_hint">Vibrate on receive</string>
+	<string name="receive_sound_">Sound</string>
+	<string name="receive_sound_hint">Sound on receive</string>
 </resources>
