@@ -28,7 +28,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.CallLog.Calls;
 import android.util.Log;
 
 /**
@@ -41,6 +43,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	static final String TAG = "SMSdroid.bcr";
 	/** URI to get messages from. */
 	static final Uri URI = Uri.parse("content://sms/inbox");
+
+	/** Sort the newest message first. */
+	private static final String SORT = Calls.DATE + " DESC";
 
 	/** Delay for spinlock, waiting for new messages. */
 	private static final long SLEEP = 200;
@@ -62,6 +67,10 @@ public class SmsReceiver extends BroadcastReceiver {
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
 		Log.d(TAG, "got intent: " + intent.getAction());
+		Log.d(TAG, "extras: " + intent.getExtras());
+		Bundle b = intent.getExtras();
+		Log.d(TAG, "extras, keys: " + b.keySet());
+
 		// TODO: parse data to get spin until all messages are saved as supposed
 		int count = MAX_SPINS;
 		do {
@@ -72,7 +81,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				e.printStackTrace();
 			}
 			--count;
-		} while (updateNewMessageNotification(context) == 0 && count > 0);
+		} while (updateNewMessageNotification(context, -1) <= 0 && count > 0);
 	}
 
 	/**
@@ -80,21 +89,30 @@ public class SmsReceiver extends BroadcastReceiver {
 	 * 
 	 * @param context
 	 *            {@link Context}
+	 * @param time
+	 *            timestamp of the last assumed unread message
 	 * @return number of unread messages
 	 */
-	static final int updateNewMessageNotification(final Context context) {
+	static final int updateNewMessageNotification(final Context context,
+			final long time) {
 		final Cursor cursor = context.getContentResolver().query(URI,
 				MessageListAdapter.PROJECTION,
-				MessageListAdapter.SELECTION_UNREAD, null, null);
+				MessageListAdapter.SELECTION_UNREAD, null, SORT);
 		final int l = cursor.getCount();
-
+		int ret = -1;
 		NotificationManager mNotificationMgr = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
+		if (time > 0 || l == 0) {
+			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
+		}
 		if (l > 0) {
 			Notification n = null;
+			cursor.moveToFirst();
+			final long d = cursor.getLong(MessageListAdapter.INDEX_DATE);
+			if (time > 0 && time <= d) {
+				ret = l;
+			}
 			if (l == 1) {
-				cursor.moveToFirst();
 				final String r = cursor
 						.getString(MessageListAdapter.INDEX_ADDRESS);
 				final String t = cursor
@@ -148,6 +166,6 @@ public class SmsReceiver extends BroadcastReceiver {
 
 			mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 		}
-		return l;
+		return ret;
 	}
 }

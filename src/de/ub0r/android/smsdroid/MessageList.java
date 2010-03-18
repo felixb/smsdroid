@@ -43,7 +43,7 @@ public class MessageList extends ListActivity implements OnClickListener {
 	/** Address. */
 	private String address = null;
 	/** URI to resolve. */
-	static final String URI = "content://sms/conversations/";
+	static final String URI = "content://mms-sms/conversations/";
 
 	/**
 	 * {@inheritDoc}
@@ -110,13 +110,9 @@ public class MessageList extends ListActivity implements OnClickListener {
 		List<String> p = uri.getPathSegments();
 		String threadID = p.get(p.size() - 1);
 
-		Cursor mCursor = this.getContentResolver().query(
-				Uri.parse(URI + threadID), MessageListAdapter.PROJECTION, null,
-				null, MessageListAdapter.SORT);
-		ContentValues cv = new ContentValues();
-		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
-		this.getContentResolver().update(Uri.parse(URI + threadID), cv,
-				MessageListAdapter.SELECTION_UNREAD, null);
+		Cursor mCursor = this.getContentResolver().query(uri,
+				MessageListAdapter.PROJECTION, null, null,
+				MessageListAdapter.SORT);
 		this.startManagingCursor(mCursor);
 		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
 		this.setListAdapter(adapter);
@@ -124,7 +120,28 @@ public class MessageList extends ListActivity implements OnClickListener {
 			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
 		}
 		this.setTitle(this.getString(R.string.app_name) + " > " + this.address);
+		this.setRead(threadID);
+		SmsReceiver.updateNewMessageNotification(this, -1);
 
-		SmsReceiver.updateNewMessageNotification(this);
+	}
+
+	/**
+	 * Set all messages in a given thread as read.
+	 * 
+	 * @param threadID
+	 *            thread id
+	 */
+	private void setRead(final String threadID) {
+		final Cursor mCursor = this.getContentResolver().query(
+				Uri.parse(URI + threadID), MessageListAdapter.PROJECTION,
+				MessageListAdapter.SELECTION_UNREAD, null, null);
+		if (mCursor.getCount() <= 0) {
+			return;
+		}
+
+		final ContentValues cv = new ContentValues();
+		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
+		this.getContentResolver().update(Uri.parse(URI + threadID), cv,
+				MessageListAdapter.SELECTION_UNREAD, null);
 	}
 }

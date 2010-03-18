@@ -59,6 +59,9 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	/** Prefs: name for last version run. */
 	private static final String PREFS_LAST_RUN = "lastrun";
 
+	/** URI to resolve. */
+	static final Uri URI = Uri.parse("content://sms/");
+
 	/** Dialog: about. */
 	private static final int DIALOG_ABOUT = 0;
 	/** Dialog: updates. */
@@ -105,9 +108,9 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 			this.showDialog(DIALOG_UPDATE);
 		}
 
-		Cursor mCursor = this.getContentResolver().query(
-				Uri.parse("content://sms"), ConversationListAdapter.PROJECTION,
-				null, null, ConversationListAdapter.SORT);
+		Cursor mCursor = this.getContentResolver().query(URI,
+				ConversationListAdapter.PROJECTION, null, null,
+				ConversationListAdapter.SORT);
 		this.startManagingCursor(mCursor);
 		ConversationListAdapter adapter = new ConversationListAdapter(this,
 				mCursor);
