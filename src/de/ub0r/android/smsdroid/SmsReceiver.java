@@ -19,6 +19,8 @@
 
 package de.ub0r.android.smsdroid;
 
+import java.io.Serializable;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -70,6 +72,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		Log.d(TAG, "extras: " + intent.getExtras());
 		Bundle b = intent.getExtras();
 		Log.d(TAG, "extras, keys: " + b.keySet());
+		Serializable o = b.getSerializable("pdus");
 
 		// TODO: parse data to get spin until all messages are saved as supposed
 		int count = MAX_SPINS;
@@ -109,8 +112,12 @@ public class SmsReceiver extends BroadcastReceiver {
 			Notification n = null;
 			cursor.moveToFirst();
 			final long d = cursor.getLong(MessageListAdapter.INDEX_DATE);
-			if (time > 0 && time <= d) {
-				ret = l;
+			if (time > 0) {
+				if (time <= d) {
+					ret = l;
+				} else {
+					return -1;
+				}
 			}
 			if (l == 1) {
 				final String r = cursor
@@ -150,20 +157,21 @@ public class SmsReceiver extends BroadcastReceiver {
 			n.ledOffMS = NOTIFICATION_LED_OFF;
 			final SharedPreferences p = PreferenceManager
 					.getDefaultSharedPreferences(context);
-			final boolean vibrate = p.getBoolean(Preferences.PREFS_VIBRATE,
-					false);
-			final String s = p.getString(Preferences.PREFS_SOUND, null);
-			Uri sound;
-			if (s == null || s.length() <= 0) {
-				sound = null;
-			} else {
-				sound = Uri.parse(s);
+			if (time > 0) {
+				final boolean vibrate = p.getBoolean(Preferences.PREFS_VIBRATE,
+						false);
+				final String s = p.getString(Preferences.PREFS_SOUND, null);
+				Uri sound;
+				if (s == null || s.length() <= 0) {
+					sound = null;
+				} else {
+					sound = Uri.parse(s);
+				}
+				if (vibrate) {
+					n.defaults |= Notification.DEFAULT_VIBRATE;
+				}
+				n.sound = sound;
 			}
-			if (vibrate) {
-				n.defaults |= Notification.DEFAULT_VIBRATE;
-			}
-			n.sound = sound;
-
 			mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 		}
 		return ret;
