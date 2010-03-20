@@ -25,7 +25,8 @@
 	<RelativeLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<TextView android:text="@+id/text1" android:id="@+id/text1"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/text2"
 			android:text="@+id/text2" android:layout_below="@+id/text1"

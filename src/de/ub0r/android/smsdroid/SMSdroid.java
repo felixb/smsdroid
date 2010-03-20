@@ -60,7 +60,7 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	private static final String PREFS_LAST_RUN = "lastrun";
 
 	/** URI to resolve. */
-	static final Uri URI = Uri.parse("content://sms/");
+	static final Uri URI = Uri.parse("content://mms-sms/conversations/");
 
 	/** Dialog: about. */
 	private static final int DIALOG_ABOUT = 0;
@@ -115,7 +115,6 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 		ConversationListAdapter adapter = new ConversationListAdapter(this,
 				mCursor);
 		this.setListAdapter(adapter);
-
 		this.findViewById(R.id.new_message).setOnClickListener(this);
 	}
 
