@@ -119,10 +119,13 @@ public class MessageList extends ListActivity implements OnClickListener {
 		if (mCursor.moveToFirst()) {
 			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
 		}
-		this.setTitle(this.getString(R.string.app_name) + " > " + this.address);
-		this.setRead(threadID);
-		SmsReceiver.updateNewMessageNotification(this, -1);
+		String pers = CachePersons.getName(this, this.address, null);
+		if (pers == null) {
+			pers = this.address;
+		}
 
+		this.setTitle(this.getString(R.string.app_name) + " > " + pers);
+		this.setRead(threadID);
 	}
 
 	/**
@@ -143,5 +146,6 @@ public class MessageList extends ListActivity implements OnClickListener {
 		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
 		this.getContentResolver().update(Uri.parse(URI + threadID), cv,
 				MessageListAdapter.SELECTION_UNREAD, null);
+		SmsReceiver.updateNewMessageNotification(this, -1);
 	}
 }

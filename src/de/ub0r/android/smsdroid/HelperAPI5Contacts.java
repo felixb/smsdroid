@@ -1,0 +1,86 @@
+/*
+ * Copyright (C) 2010 Felix Bechstein
+ * 
+ * This file is part of SMSdroid.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/>.
+ */
+package de.ub0r.android.smsdroid;
+
+import java.lang.reflect.Method;
+
+import android.app.Notification;
+import android.app.Service;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.util.Log;
+
+/**
+ * Helper class to set/unset background for api5 systems.
+ * 
+ * @author flx
+ */
+public final class HelperAPI5Contacts {
+	/** Tag for output. */
+	private static final String TAG = "SMSdroid.api5c";
+
+	/** Error message if API5 is not available. */
+	private static final String ERRORMESG = "no API5c available";
+
+	/** {@link Uri} for persons. */
+	private static final Uri API5_URI_PERSON = // .
+	ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI;
+	/** Projection for persons query. */
+	private static final String[] API5_PROJECTION = // .
+	new String[] { ContactsContract.Data.DISPLAY_NAME };
+
+	/**
+	 * Check whether API5 is available.
+	 * 
+	 * @return true if API5 is available
+	 */
+	boolean isAvailable() {
+		try {
+			Method mDebugMethod = Service.class.getMethod("startForeground",
+					new Class[] { Integer.TYPE, Notification.class });
+			/* success, this is a newer device */
+			if (mDebugMethod != null) {
+				return true;
+			}
+		} catch (Throwable e) {
+			Log.d(TAG, ERRORMESG, e);
+			throw new VerifyError(ERRORMESG);
+		}
+		Log.d(TAG, ERRORMESG);
+		throw new VerifyError(ERRORMESG);
+	}
+
+	/**
+	 * Get Persons {@link Uri}.
+	 * 
+	 * @return {@link Uri}
+	 */
+	static Uri getUri() {
+		return API5_URI_PERSON;
+	}
+
+	/**
+	 * Get projection.
+	 * 
+	 * @return projection
+	 */
+	static String[] getProjections() {
+		return API5_PROJECTION;
+	}
+}
