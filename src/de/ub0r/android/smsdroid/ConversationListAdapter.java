@@ -105,12 +105,14 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 		}
 		final String address = cursor.getString(INDEX_ADDRESS);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
-		twPerson.setText(s + address);
+		// twPerson.setText(s + address);
+		twPerson.setText(address);
 		CachePersons.getName(context, address, twPerson);
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
 				.getString(INDEX_BODY));
-		((TextView) view.findViewById(R.id.text3)).setText(DateFormat.format(
-				DATE_FORMAT, Long.parseLong(cursor.getString(INDEX_DATE))));
+		((TextView) view.findViewById(R.id.text3)).setText(s
+				+ DateFormat.format(DATE_FORMAT, Long.parseLong(cursor
+						.getString(INDEX_DATE))));
 
 		view.setOnClickListener(new OnClickListener() {
 			@Override
