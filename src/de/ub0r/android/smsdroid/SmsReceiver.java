@@ -19,8 +19,6 @@
 
 package de.ub0r.android.smsdroid;
 
-import java.io.Serializable;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,6 +31,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.telephony.gsm.SmsMessage;
 import android.util.Log;
 
 /**
@@ -66,15 +65,22 @@ public class SmsReceiver extends BroadcastReceiver {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
 		Log.d(TAG, "got intent: " + intent.getAction());
-		Log.d(TAG, "extras: " + intent.getExtras());
 		Bundle b = intent.getExtras();
-		Log.d(TAG, "extras, keys: " + b.keySet());
-		Serializable o = b.getSerializable("pdus");
+		Object[] messages = (Object[]) b.get("pdus");
+		SmsMessage[] smsMessage = new SmsMessage[messages.length];
+		int l = messages.length;
+		for (int i = 0; i < l; i++) {
+			smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
+		}
+		long t = -1;
+		if (l > 0) {
+			t = smsMessage[0].getTimestampMillis();
+		}
 
-		// TODO: parse data to get spin until all messages are saved as supposed
 		int count = MAX_SPINS;
 		do {
 			try {
@@ -84,7 +90,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				e.printStackTrace();
 			}
 			--count;
-		} while (updateNewMessageNotification(context, -1) <= 0 && count > 0);
+		} while (updateNewMessageNotification(context, t) <= 0 && count > 0);
 	}
 
 	/**
@@ -102,7 +108,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				MessageListAdapter.PROJECTION,
 				MessageListAdapter.SELECTION_UNREAD, null, SORT);
 		final int l = cursor.getCount();
-		int ret = -1;
+		int ret = l;
 		NotificationManager mNotificationMgr = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		if (time > 0 || l == 0) {
