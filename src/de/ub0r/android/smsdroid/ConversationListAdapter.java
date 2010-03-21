@@ -18,7 +18,9 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -26,6 +28,7 @@ import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -37,6 +40,11 @@ import android.widget.TextView;
 public class ConversationListAdapter extends SimpleCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.cla";
+
+	/** Index in dialog: view. */
+	private static final int WHICH_VIEW = 0;
+	/** Index in dialog: delete. */
+	private static final int WHICH_DELETE = 1;
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -114,13 +122,42 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 				+ DateFormat.format(DATE_FORMAT, Long.parseLong(cursor
 						.getString(INDEX_DATE))));
 
+		final Uri target = Uri.parse(MessageList.URI + threadID);
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				final Intent i = new Intent(context, MessageList.class);
-				i.setData(Uri.parse("content://mms-sms/conversations/"
-						+ threadID));
+				i.setData(target);
 				context.startActivity(i);
+			}
+		});
+		view.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(final View v) {
+				Builder builder = new Builder(context);
+				builder.setItems(R.array.conversationlist_dialog,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(final DialogInterface dialog,
+									final int which) {
+								switch (which) {
+								case WHICH_VIEW:
+									final Intent i = new Intent(context,
+											MessageList.class);
+									i.setData(target);
+									context.startActivity(i);
+									break;
+								case WHICH_DELETE:
+									SMSdroid.deleteMessages(context, target,
+											R.string.delete_thread_);
+									break;
+								default:
+									break;
+								}
+							}
+						});
+				builder.create().show();
+				return true;
 			}
 		});
 	}

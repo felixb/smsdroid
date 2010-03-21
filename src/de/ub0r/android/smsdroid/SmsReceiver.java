@@ -69,6 +69,10 @@ public class SmsReceiver extends BroadcastReceiver {
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
 		Log.d(TAG, "got intent: " + intent.getAction());
+		if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				Preferences.PREFS_NOTIFICATION_ENABLE, true)) {
+			return;
+		}
 		Bundle b = intent.getExtras();
 		Object[] messages = (Object[]) b.get("pdus");
 		SmsMessage[] smsMessage = new SmsMessage[messages.length];
@@ -104,13 +108,19 @@ public class SmsReceiver extends BroadcastReceiver {
 	 */
 	static final int updateNewMessageNotification(final Context context,
 			final long time) {
+		final NotificationManager mNotificationMgr = // .
+		(NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				Preferences.PREFS_NOTIFICATION_ENABLE, true)) {
+			mNotificationMgr.cancelAll();
+			return -1;
+		}
 		final Cursor cursor = context.getContentResolver().query(URI,
 				MessageListAdapter.PROJECTION,
 				MessageListAdapter.SELECTION_UNREAD, null, SORT);
 		final int l = cursor.getCount();
 		int ret = l;
-		NotificationManager mNotificationMgr = (NotificationManager) context
-				.getSystemService(Context.NOTIFICATION_SERVICE);
 		if (time > 0 || l == 0) {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 		}

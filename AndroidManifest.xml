@@ -34,6 +34,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".Preferences" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name=".About" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".MessageList" android:configChanges="orientation|keyboardHidden"
 			android:launchMode="singleTop">
 			<intent-filter>

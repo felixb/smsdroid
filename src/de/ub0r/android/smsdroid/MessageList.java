@@ -22,12 +22,14 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -45,6 +47,9 @@ public class MessageList extends ListActivity implements OnClickListener {
 	/** URI to resolve. */
 	static final String URI = "content://mms-sms/conversations/";
 
+	/** Used {@link Uri}. */
+	private Uri uri;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -60,8 +65,8 @@ public class MessageList extends ListActivity implements OnClickListener {
 		this.findViewById(R.id.answer).setOnClickListener(this);
 
 		final Intent i = this.getIntent();
-		final Uri uri = i.getData();
-		if (uri != null) {
+		this.uri = i.getData();
+		if (this.uri != null) {
 			this.parseIntent(i);
 		}
 	}
@@ -72,8 +77,8 @@ public class MessageList extends ListActivity implements OnClickListener {
 	@Override
 	protected final void onNewIntent(final Intent intent) {
 		super.onNewIntent(intent);
-		final Uri uri = intent.getData();
-		if (uri != null) {
+		this.uri = intent.getData();
+		if (this.uri != null) {
 			this.parseIntent(intent);
 		}
 	}
@@ -104,13 +109,12 @@ public class MessageList extends ListActivity implements OnClickListener {
 	 *            {@link Intent}
 	 */
 	private void parseIntent(final Intent intent) {
-		final Uri uri = intent.getData();
-		Log.d(TAG, "got intent: " + uri.toString());
+		Log.d(TAG, "got intent: " + this.uri.toString());
 
-		List<String> p = uri.getPathSegments();
+		List<String> p = this.uri.getPathSegments();
 		String threadID = p.get(p.size() - 1);
 
-		Cursor mCursor = this.getContentResolver().query(uri,
+		Cursor mCursor = this.getContentResolver().query(this.uri,
 				MessageListAdapter.PROJECTION, null, null,
 				MessageListAdapter.SORT);
 		this.startManagingCursor(mCursor);
@@ -135,17 +139,42 @@ public class MessageList extends ListActivity implements OnClickListener {
 	 *            thread id
 	 */
 	private void setRead(final String threadID) {
-		final Cursor mCursor = this.getContentResolver().query(
-				Uri.parse(URI + threadID), MessageListAdapter.PROJECTION,
-				MessageListAdapter.SELECTION_UNREAD, null, null);
-		if (mCursor.getCount() <= 0) {
-			return;
-		}
+		SMSdroid.markRead(this, Uri.parse(URI + threadID));
+	}
 
-		final ContentValues cv = new ContentValues();
-		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
-		this.getContentResolver().update(Uri.parse(URI + threadID), cv,
-				MessageListAdapter.SELECTION_UNREAD, null);
-		SmsReceiver.updateNewMessageNotification(this, -1);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final boolean onCreateOptionsMenu(final Menu menu) {
+		MenuInflater inflater = this.getMenuInflater();
+		inflater.inflate(R.menu.messagelist, menu);
+		return true;
+	}
+
+	/**
+	 *{@inheritDoc}
+	 */
+	@Override
+	public final boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.item_delete_thread:
+			SMSdroid.deleteMessages(this, this.uri, R.string.delete_thread_);
+			return true;
+		case R.id.item_all_threads:
+			this.startActivity(new Intent(this, SMSdroid.class));
+			return true;
+		case R.id.item_compose:
+			try {
+				final Intent i = new Intent(Intent.ACTION_SENDTO);
+				i.setData(Uri.parse("sms:"));
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "could not find app to compose message", e);
+			}
+			return true;
+		default:
+			return false;
+		}
 	}
 }

@@ -18,30 +18,23 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
 /**
- * Preferences.
+ * Display About {@link Activity}.
  * 
  * @author flx
  */
-public class Preferences extends PreferenceActivity {
-	/** Preference's name: vibrate on receive. */
-	static final String PREFS_VIBRATE = "receive_vibrate";
-	/** Preference's name: sound on receive. */
-	static final String PREFS_SOUND = "receive_sound";
-	/** Preference's name: hide ads. */
-	static final String PREFS_HIDEADS = "hideads";
-	/** Preference's name: enable notifications. */
-	static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
-
+public class About extends Activity {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.addPreferencesFromResource(R.xml.prefs);
+		this.setContentView(R.layout.about);
+		this.setTitle(this.getString(R.string.about_) + " v"
+				+ this.getString(R.string.app_version));
 	}
 }

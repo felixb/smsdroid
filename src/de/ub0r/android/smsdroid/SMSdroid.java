@@ -32,6 +32,8 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,8 +64,6 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	/** URI to resolve. */
 	static final Uri URI = Uri.parse("content://mms-sms/conversations/");
 
-	/** Dialog: about. */
-	private static final int DIALOG_ABOUT = 0;
 	/** Dialog: updates. */
 	private static final int DIALOG_UPDATE = 1;
 	/** Dialog: pre donate. */
@@ -135,15 +135,8 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	 */
 	@Override
 	protected final Dialog onCreateDialog(final int id) {
-		Dialog d;
 		Builder builder;
 		switch (id) {
-		case DIALOG_ABOUT:
-			d = new Dialog(this);
-			d.setContentView(R.layout.about);
-			d.setTitle(this.getString(R.string.about_) + " v"
-					+ this.getString(R.string.app_version));
-			return d;
 		case DIALOG_UPDATE:
 			builder = new Builder(this);
 			builder.setTitle(R.string.changelog_);
@@ -221,11 +214,68 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	@Override
 	public final boolean onCreateOptionsMenu(final Menu menu) {
 		MenuInflater inflater = this.getMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
+		inflater.inflate(R.menu.conversationlist, menu);
 		if (prefsNoAds) {
 			menu.removeItem(R.id.item_donate);
 		}
 		return true;
+	}
+
+	/**
+	 * Mark all messages with a given {@link Uri} as read.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param uri
+	 *            {@link Uri}
+	 */
+	static final void markRead(final Context context, final Uri uri) {
+		final Cursor mCursor = context.getContentResolver().query(uri,
+				MessageListAdapter.PROJECTION,
+				MessageListAdapter.SELECTION_UNREAD, null, null);
+		if (mCursor.getCount() <= 0) {
+			return;
+		}
+
+		final ContentValues cv = new ContentValues();
+		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
+		context.getContentResolver().update(uri, cv,
+				MessageListAdapter.SELECTION_UNREAD, null);
+		SmsReceiver.updateNewMessageNotification(context, -1);
+	}
+
+	/**
+	 * Delete messages with a given {@link Uri}.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param uri
+	 *            {@link Uri}
+	 * @param title
+	 *            title of {@link Dialog}
+	 */
+	static final void deleteMessages(final Context context, final Uri uri,
+			final int title) {
+		final Cursor mCursor = context.getContentResolver().query(uri,
+				MessageListAdapter.PROJECTION, null, null, null);
+		if (mCursor.getCount() <= 0) {
+			return;
+		}
+
+		Builder builder = new Builder(context);
+		builder.setTitle(title);
+		builder.setMessage(R.string.delete_messages_question);
+		builder.setNegativeButton(android.R.string.no, null);
+		builder.setPositiveButton(android.R.string.yes,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int which) {
+						context.getContentResolver().delete(uri, null, null);
+						SmsReceiver.updateNewMessageNotification(context, -1);
+					}
+				});
+		builder.create().show();
 	}
 
 	/**
@@ -234,22 +284,18 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	@Override
 	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.item_about: // start about dialog
-			this.showDialog(DIALOG_ABOUT);
-			return true;
 		case R.id.item_settings: // start settings activity
 			this.startActivity(new Intent(this, Preferences.class));
 			return true;
 		case R.id.item_donate:
 			this.showDialog(DIALOG_PREDONATE);
 			return true;
-		case R.id.item_more:
-			try {
-				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-						.parse("market://search?q=pub:\"Felix Bechstein\"")));
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "no market", e);
-			}
+		case R.id.item_delete_all_threads:
+			deleteMessages(this, Uri.parse("content://sms/"),
+					R.string.delete_threads_);
+			return true;
+		case R.id.item_mark_all_read:
+			markRead(this, Uri.parse("content://sms/inbox"));
 			return true;
 		default:
 			return false;
