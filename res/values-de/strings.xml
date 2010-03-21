@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+		Copyright (C) 2009 Felix Bechstein
+	-->
+	<!--
+		This file is part of SMSdroid. This program is free software; you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation; either
+		version 3 of the License, or (at your option) any later version.
+	-->
+	<!--
+		This program is distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+		General Public License for more details. You should have received a
+		copy of the GNU General Public License along with this program; If
+		not, see <http://www.gnu.org/licenses/>.
+	-->
+<resources>
+    <string name="about_">Über</string>
+	<string name="about_hint">Über diese App</string>
+	<string name="feedback_">Feedback</string>
+	<string name="feedback_hint">Bugreports, feature requests ...</string>
+	<string name="about0">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebeigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
+	<string name="author_">Autor:</string>
+	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11046415</string>
+	<string name="donate_subject">Ich bin der Spender. Mein Hash ist...</string>
+	<string name="donate_">Spenden</string>
+	<string name="donate_remove_ads_">Spenden/Werbung entfernen</string>
+	<string name="remove_ads_">Werbung entfernen</string>
+	<string name="predonate">Dies ist eine open-source App. Sie ist und bleibt frei. Wenn du die App wirklich magst oder dich die Werbung nervt, kannst du gerne etwas spenden. Ich werde die Werbung so schnell wie möglich entfernen.\n\nAn alle WebSMS Spender: Der noads code funktioniert auch mit SMSdroid.</string>
+	<string name="postdonate">Um die Werbung zu entfernen brauche ich den MD5 Hash deiner IMEI (Die eindeutige ID deines Handys) von dir. Der Hash ist eine Einwegfunktion und ist somit nicht zu deiner IMEI Rückverfolgbar.</string>
+	<string name="more_apps_">Mehr Apps..</string>
+	<string name="license">GPLv3 - siehe http://www.gnu.org/licenses/gpl-3.0.txt</string>
+	<string name="license_">Lizens:</string>
+	<string name="settings">Einstellungen</string>
+	<string name="new_message">Neue Nachricht</string>
+	<string name="new_messages_">Neue Nachrichten</string>
+	<string name="new_messages">%d ungelesene Nachrichten.</string>
+	<string name="answer">Antworten</string>
+	<string name="send_">Senden</string>
+	<string name="notification_">Benachrictigungen</string>
+	<string name="notification_enable_">Benachrichtigungen aktivieren</string>
+	<string name="notification_enable_hint">Benachrichtigungen bei neuen Nachrichten aktivieren</string>
+	<string name="receive_vibrate_">Vibrieren</string>
+	<string name="receive_vibrate_hint">Vibrieren bei neuen Nachrichten</string>
+	<string name="receive_sound_">Sound</string>
+	<string name="receive_sound_hint">Sound bei neuen Nachrichten</string>
+	<string name="me">Ich</string>
+	<string name="view_thread_">Thread anzeigen</string>
+	<string name="delete_message_">Nachricht löschen</string>
+	<string name="delete_thread_">Thread löschen</string>
+	<string name="delete_threads_">Alle Threads löschen</string>
+	<string name="mark_all_read_">Alles als gelesen markieren</string>
+	<string name="all_threads_">Alle Threads</string>
+	<string name="compose_">Schreiben</string>
+	<string name="delete_messages_question">Willst du wirklich diese Nachrichten löschen?</string>
+	
+	<string-array name="conversationlist_dialog">
+		<item>Thread anzeigen</item>
+		<item>Thread löschen</item>
+	</string-array>
+	<string-array name="messagelist_dialog">
+		<item>Nachricht löschen</item>
+	</string-array>
+</resources>

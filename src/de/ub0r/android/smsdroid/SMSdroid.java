@@ -151,6 +151,22 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 			builder.setMessage(buf.toString());
 			builder.setCancelable(true);
 			builder.setPositiveButton(android.R.string.ok, null);
+			builder.setNeutralButton("get WebSMS",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(final DialogInterface d,
+								final int which) {
+							try {
+								SMSdroid.this.startActivity(// .
+										new Intent(
+												Intent.ACTION_VIEW,
+												Uri.parse(// .
+														"market://search?q=pname:de.ub0r.android.websms")));
+							} catch (ActivityNotFoundException e) {
+								Log.e(TAG, "no market", e);
+							}
+						}
+					});
 			return builder.create();
 		case DIALOG_PREDONATE:
 			builder = new Builder(this);

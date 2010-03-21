@@ -40,7 +40,7 @@
 	<string name="license_">License:</string>
 	<string name="source">http://github.com/felixb/smsdroid</string>
 	<string name="source_">Sourcescode:</string>
-	<string name="website_">Website:</string>anti
+	<string name="website_">Website:</string>
 	<string name="website">http://code.google.com/p/websmsdroid/</string>
 	<string name="settings">Preferences</string>
 	<string name="new_message">New message</string>
@@ -56,7 +56,7 @@
 	<string name="receive_sound_">Sound</string>
 	<string name="receive_sound_hint">Sound on receive</string>
 	<string name="me">Me</string>
-	<string name="view_thread_">View Thread</string>
+	<string name="view_thread_">View thread</string>
 	<string name="delete_message_">Delete message</string>
 	<string name="delete_thread_">Delete thread</string>
 	<string name="delete_threads_">Delete all threads</string>

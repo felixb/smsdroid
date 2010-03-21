@@ -19,6 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
+		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
 		<item>v0.1: Initial market release</item>
 	</string-array>
 </resources>
