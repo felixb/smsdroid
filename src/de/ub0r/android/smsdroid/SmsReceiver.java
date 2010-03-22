@@ -138,11 +138,15 @@ public class SmsReceiver extends BroadcastReceiver {
 			if (l == 1) {
 				final String r = cursor
 						.getString(MessageListAdapter.INDEX_ADDRESS);
+				String rr = CachePersons.getName(this, r, null);
+				if (rr == null) {
+					rr = r;
+				}
 				final String t = cursor
 						.getString(MessageListAdapter.INDEX_BODY);
 				final String th = cursor
 						.getString(MessageListAdapter.INDEX_THREADID);
-				n = new Notification(R.drawable.stat_notify_sms, r, System
+				n = new Notification(R.drawable.stat_notify_sms, rr, System
 						.currentTimeMillis());
 				final Intent i = new Intent(Intent.ACTION_VIEW, Uri
 						.parse(MessageList.URI + th), context,
@@ -151,7 +155,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				// i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 				final PendingIntent cIntent = PendingIntent.getActivity(
 						context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-				n.setLatestEventInfo(context, r, t, cIntent);
+				n.setLatestEventInfo(context, rr, t, cIntent);
 			} else {
 				n = new Notification(R.drawable.stat_notify_sms, context
 						.getString(R.string.new_messages_), System
