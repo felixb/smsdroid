@@ -18,7 +18,7 @@
 	-->
 <resources>
     <string name="app_name">SMSdroid</string>
-	<string name="app_version">0.0.1 beta1</string>
+	<string name="app_version">0.0.2 beta2</string>
 	<string name="changelog_">Changelog</string>
 	<string name="about_">About</string>
 	<string name="about_hint">About this app</string>
