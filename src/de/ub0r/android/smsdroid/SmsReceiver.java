@@ -138,7 +138,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			if (l == 1) {
 				final String r = cursor
 						.getString(MessageListAdapter.INDEX_ADDRESS);
-				String rr = CachePersons.getName(this, r, null);
+				String rr = CachePersons.getName(context, r, null);
 				if (rr == null) {
 					rr = r;
 				}
