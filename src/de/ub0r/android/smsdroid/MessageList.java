@@ -56,6 +56,7 @@ public class MessageList extends ListActivity implements OnClickListener {
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.setTheme(Preferences.getTheme(this));
 		this.setContentView(R.layout.messagelist);
 
 		// if (!SMSdroid.prefsNoAds) {

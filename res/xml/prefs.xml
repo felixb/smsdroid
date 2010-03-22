@@ -3,7 +3,7 @@
 		Copyright (C) 2010 Felix Bechstein
 	-->
 	<!--
-		This file is part of WebSMS. This program is free software; you can
+		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
 		Public License as published by the Free Software Foundation; either
 		version 3 of the License, or (at your option) any later version.
@@ -17,6 +17,11 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/appearance_">
+		<ListPreference android:title="@string/theme_"
+			android:key="theme" android:entries="@array/themes"
+			android:entryValues="@array/themes_values" />
+	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/notification_">
 		<CheckBoxPreference android:key="notification_enable"
 			android:title="@string/notification_enable_" android:summary="@string/notification_enable_hint"

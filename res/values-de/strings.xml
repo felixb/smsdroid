@@ -46,6 +46,8 @@
 	<string name="receive_vibrate_hint">Vibrieren bei neuen Nachrichten</string>
 	<string name="receive_sound_">Sound</string>
 	<string name="receive_sound_hint">Sound bei neuen Nachrichten</string>
+	<string name="appearance_">Erscheinung</string>
+	<string name="theme_">Theme</string>
 	<string name="me">Ich</string>
 	<string name="view_thread_">Thread anzeigen</string>
 	<string name="delete_message_">Nachricht löschen</string>
@@ -62,5 +64,10 @@
 	</string-array>
 	<string-array name="messagelist_dialog">
 		<item>Nachricht löschen</item>
+	</string-array>
+	<string-array name="themes">
+		<item>Default</item>
+		<item>Schwarz</item>
+		<item>Hell</item>
 	</string-array>
 </resources>

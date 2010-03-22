@@ -18,8 +18,11 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 /**
  * Preferences.
@@ -35,6 +38,14 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_HIDEADS = "hideads";
 	/** Preference's name: enable notifications. */
 	static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
+	/** Preference's name: theme. */
+	private static final String PREFS_THEME = "theme";
+	/** Theme: default. */
+	private static final String THEME_DEFAULT = "default";
+	/** Theme: black. */
+	private static final String THEME_BLACK = "black";
+	/** Theme: light. */
+	private static final String THEME_LIGHT = "light";
 
 	/**
 	 * {@inheritDoc}
@@ -42,6 +53,21 @@ public class Preferences extends PreferenceActivity {
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.setTheme(Preferences.getTheme(this));
 		this.addPreferencesFromResource(R.xml.prefs);
+	}
+
+	static final int getTheme(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final String s = p.getString(PREFS_THEME, THEME_DEFAULT);
+		if (s == null || THEME_DEFAULT.equals(s)) {
+			return android.R.style.Theme;
+		} else if (THEME_BLACK.equals(s)) {
+			return android.R.style.Theme_Black;
+		} else if (THEME_LIGHT.equals(s)) {
+			return android.R.style.Theme_Light;
+		}
+		return android.R.style.Theme;
 	}
 }

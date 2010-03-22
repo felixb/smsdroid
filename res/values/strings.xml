@@ -55,6 +55,8 @@
 	<string name="receive_vibrate_hint">Vibrate on receive</string>
 	<string name="receive_sound_">Sound</string>
 	<string name="receive_sound_hint">Sound on receive</string>
+	<string name="appearance_">Appearance</string>
+	<string name="theme_">Theme</string>
 	<string name="me">Me</string>
 	<string name="view_thread_">View thread</string>
 	<string name="delete_message_">Delete message</string>
@@ -71,5 +73,15 @@
 	</string-array>
 	<string-array name="messagelist_dialog">
 		<item>Delete message</item>
+	</string-array>
+	<string-array name="themes">
+		<item>Default</item>
+		<item>Black</item>
+		<item>Light</item>
+	</string-array>
+	<string-array name="themes_values">
+		<item>default</item>
+		<item>black</item>
+		<item>light</item>
 	</string-array>
 </resources>

@@ -31,6 +31,7 @@
 			android:layout_alignParentBottom="true" />
 		<ListView android:id="@id/android:list" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:drawSelectorOnTop="true"
+			android:scrollingCache="true" android:fastScrollEnabled="true"
 			android:stackFromBottom="true" android:layout_above="@id/answer" />
 	</RelativeLayout>
 </RelativeLayout>
