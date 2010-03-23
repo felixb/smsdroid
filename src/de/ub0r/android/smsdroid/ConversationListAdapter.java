@@ -18,19 +18,13 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 /**
@@ -38,14 +32,9 @@ import android.widget.TextView;
  * 
  * @author flx
  */
-public class ConversationListAdapter extends SimpleCursorAdapter {
+public class ConversationListAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.cla";
-
-	/** Index in dialog: view. */
-	private static final int WHICH_VIEW = 0;
-	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 1;
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -88,8 +77,7 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	 *            {@link Cursor}
 	 */
 	public ConversationListAdapter(final Context context, final Cursor c) {
-		super(context, R.layout.conversationlist_item, c, new String[0],
-				new int[0]);
+		super(context, R.layout.conversationlist_item, c, true);
 	}
 
 	/**
@@ -98,7 +86,7 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final String threadID = cursor.getString(3);
+		final String threadID = cursor.getString(INDEX_THREADID);
 		String s = "";
 		int t = cursor.getInt(INDEX_TYPE);
 		if (t == Calls.INCOMING_TYPE) {
@@ -131,48 +119,10 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 			iv.setVisibility(View.GONE);
 		}
 
-		final Uri target = Uri.parse(MessageList.URI + threadID);
+		// final Uri target = Uri.parse(MessageList.URI + threadID);
 		// final Cursor c = context.getContentResolver().query(target, null,
 		// null, null, null);
 		// TextView tv = (TextView) view.findViewById(R.id.text4);
 		// tv.setText("(" + c.getCount() + ")");
-
-		view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				final Intent i = new Intent(context, MessageList.class);
-				i.setData(target);
-				context.startActivity(i);
-			}
-		});
-		view.setOnLongClickListener(new OnLongClickListener() {
-			@Override
-			public boolean onLongClick(final View v) {
-				Builder builder = new Builder(context);
-				builder.setItems(R.array.conversationlist_dialog,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(final DialogInterface dialog,
-									final int which) {
-								switch (which) {
-								case WHICH_VIEW:
-									final Intent i = new Intent(context,
-											MessageList.class);
-									i.setData(target);
-									context.startActivity(i);
-									break;
-								case WHICH_DELETE:
-									SMSdroid.deleteMessages(context, target,
-											R.string.delete_thread_);
-									break;
-								default:
-									break;
-								}
-							}
-						});
-				builder.create().show();
-				return true;
-			}
-		});
 	}
 }

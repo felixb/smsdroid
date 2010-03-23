@@ -27,7 +27,7 @@ import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.View.OnLongClickListener;
-import android.widget.SimpleCursorAdapter;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 /**
@@ -35,7 +35,7 @@ import android.widget.TextView;
  * 
  * @author flx
  */
-public class MessageListAdapter extends SimpleCursorAdapter {
+public class MessageListAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.mla";
 
@@ -92,7 +92,7 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 	 *            {@link Cursor}
 	 */
 	public MessageListAdapter(final Context context, final Cursor c) {
-		super(context, R.layout.messagelist_item, c, new String[0], new int[0]);
+		super(context, R.layout.messagelist_item, c, true);
 	}
 
 	/**

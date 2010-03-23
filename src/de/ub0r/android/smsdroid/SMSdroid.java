@@ -48,13 +48,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
  * Main {@link ListActivity} showing conversations.
  * 
  * @author flx
  */
-public class SMSdroid extends ListActivity implements OnClickListener {
+public class SMSdroid extends ListActivity implements OnClickListener,
+		OnItemClickListener, OnItemLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid";
 
@@ -70,6 +75,11 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	private static final int DIALOG_PREDONATE = 2;
 	/** Dialog: post donate. */
 	private static final int DIALOG_POSTDONATE = 3;
+
+	/** Index in dialog: view. */
+	private static final int WHICH_VIEW = 0;
+	/** Index in dialog: delete. */
+	private static final int WHICH_DELETE = 1;
 
 	/** Preferences: hide ads. */
 	static boolean prefsNoAds = false;
@@ -123,6 +133,9 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 				mCursor);
 		this.setListAdapter(adapter);
 		this.findViewById(R.id.new_message).setOnClickListener(this);
+		final ListView list = this.getListView();
+		list.setOnItemClickListener(this);
+		list.setOnItemLongClickListener(this);
 	}
 
 	/**
@@ -439,5 +452,54 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 			Log.e(TAG, null, e);
 		}
 		return "";
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void onItemClick(final AdapterView<?> parent, final View view,
+			final int position, final long id) {
+		Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+		final String threadID = cursor
+				.getString(ConversationListAdapter.INDEX_THREADID);
+		final Uri target = Uri.parse(MessageList.URI + threadID);
+		final Intent i = new Intent(this, MessageList.class);
+		i.setData(target);
+		this.startActivity(i);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean onItemLongClick(final AdapterView<?> parent,
+			final View view, final int position, final long id) {
+		Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+		final String threadID = cursor
+				.getString(ConversationListAdapter.INDEX_THREADID);
+		final Uri target = Uri.parse(MessageList.URI + threadID);
+		Builder builder = new Builder(this);
+		builder.setItems(R.array.conversationlist_dialog,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int which) {
+						switch (which) {
+						case WHICH_VIEW:
+							final Intent i = new Intent(SMSdroid.this,
+									MessageList.class);
+							i.setData(target);
+							SMSdroid.this.startActivity(i);
+							break;
+						case WHICH_DELETE:
+							SMSdroid.deleteMessages(SMSdroid.this, target,
+									R.string.delete_thread_);
+							break;
+						default:
+							break;
+						}
+					}
+				});
+		builder.create().show();
+		return true;
 	}
 }
