@@ -29,6 +29,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -122,7 +123,20 @@ public class ConversationListAdapter extends SimpleCursorAdapter {
 				+ DateFormat.format(DATE_FORMAT, Long.parseLong(cursor
 						.getString(INDEX_DATE))));
 
+		ImageView iv = (ImageView) view.findViewById(R.id.photo);
+		if (SMSdroid.showContactPhoto) {
+			CachePersons.getPicture(context, address, iv);
+			iv.setVisibility(View.VISIBLE);
+		} else {
+			iv.setVisibility(View.GONE);
+		}
+
 		final Uri target = Uri.parse(MessageList.URI + threadID);
+		// final Cursor c = context.getContentResolver().query(target, null,
+		// null, null, null);
+		// TextView tv = (TextView) view.findViewById(R.id.text4);
+		// tv.setText("(" + c.getCount() + ")");
+
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {

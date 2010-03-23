@@ -23,15 +23,18 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ListView;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -115,9 +118,20 @@ public class MessageList extends ListActivity implements OnClickListener {
 		List<String> p = this.uri.getPathSegments();
 		String threadID = p.get(p.size() - 1);
 
+		final SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		final ListView lv = this.getListView();
+		String sort;
+		if (prefs.getBoolean(Preferences.PREFS_MSGLIST_SORT, true)) {
+			sort = MessageListAdapter.SORT_USD;
+			lv.setStackFromBottom(true);
+		} else {
+			sort = MessageListAdapter.SORT_NORM;
+			lv.setStackFromBottom(false);
+		}
+
 		Cursor mCursor = this.getContentResolver().query(this.uri,
-				MessageListAdapter.PROJECTION, null, null,
-				MessageListAdapter.SORT);
+				MessageListAdapter.PROJECTION, null, null, sort);
 		this.startManagingCursor(mCursor);
 		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
 		this.setListAdapter(adapter);

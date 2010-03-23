@@ -18,12 +18,19 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.io.InputStream;
 import java.lang.reflect.Method;
 
 import android.app.Notification;
 import android.app.Service;
+import android.content.ContentUris;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 
 /**
@@ -43,7 +50,7 @@ public final class HelperAPI5Contacts {
 	ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI;
 	/** Projection for persons query. */
 	private static final String[] API5_PROJECTION = // .
-	new String[] { ContactsContract.Data.DISPLAY_NAME };
+	new String[] { BaseColumns._ID, ContactsContract.Data.DISPLAY_NAME };
 
 	/**
 	 * Check whether API5 is available.
@@ -64,6 +71,25 @@ public final class HelperAPI5Contacts {
 		}
 		Log.d(TAG, ERRORMESG);
 		throw new VerifyError(ERRORMESG);
+	}
+
+	/**
+	 * Load ContactPhoto from database.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param contactId
+	 *            id of contact
+	 * @return {@link Bitmap}
+	 */
+	static Bitmap loadContactPhoto(final Context context, final long contactId) {
+		InputStream is = Contacts.openContactPhotoInputStream(context
+				.getContentResolver(), ContentUris.withAppendedId(
+				Contacts.CONTENT_URI, contactId));
+		if (is == null) {
+			return null;
+		}
+		return BitmapFactory.decodeStream(is);
 	}
 
 	/**

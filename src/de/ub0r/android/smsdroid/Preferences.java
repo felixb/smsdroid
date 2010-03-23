@@ -38,6 +38,10 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_HIDEADS = "hideads";
 	/** Preference's name: enable notifications. */
 	static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
+	/** Prefernece's name: sort messages upside down. */
+	static final String PREFS_MSGLIST_SORT = "sort_messages_upsidedown";
+	/** Prefernece's name: show contact's photo. */
+	static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
 	/** Preference's name: theme. */
 	private static final String PREFS_THEME = "theme";
 	/** Theme: default. */
@@ -53,7 +57,6 @@ public class Preferences extends PreferenceActivity {
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setTheme(Preferences.getTheme(this));
 		this.addPreferencesFromResource(R.xml.prefs);
 	}
 

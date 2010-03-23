@@ -78,8 +78,10 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 	/** SQL WHERE: unread messages. */
 	static final String SELECTION_UNREAD = "read = '0'";
 
-	/** Cursor's sort. */
-	public static final String SORT = Calls.DATE + " ASC";;
+	/** Cursor's sort, upside down. */
+	public static final String SORT_USD = Calls.DATE + " ASC";;
+	/** Cursor's sort, normal. */
+	public static final String SORT_NORM = Calls.DATE + " DESC";;
 
 	/**
 	 * Default Constructor.
@@ -102,14 +104,18 @@ public class MessageListAdapter extends SimpleCursorAdapter {
 		int t = cursor.getInt(INDEX_TYPE);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		String s = "";
+		// View v = view.findViewById(R.id.bg);
 		if (t == Calls.INCOMING_TYPE) {
 			final String address = cursor.getString(INDEX_ADDRESS);
 			twPerson.setText(address);
 			CachePersons.getName(context, address, twPerson);
 			s = "<< ";
+			view.setBackgroundColor(0xa00000);
 		} else if (t == Calls.OUTGOING_TYPE) {
 			twPerson.setText(R.string.me);
 			s = ">> ";
+			// v.setBackgroundColor(0x0000a0);
+			view.setBackgroundColor(0x0000a0);
 		}
 		int read = cursor.getInt(INDEX_READ);
 		if (read == 0) {

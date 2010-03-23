@@ -88,6 +88,9 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 	/** Path to file containing signatures of UID Hash. */
 	private static final String NOADS_SIGNATURES = "/sdcard/websms.noads";
 
+	/** Show contact's photo. */
+	static boolean showContactPhoto = false;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -97,17 +100,20 @@ public class SMSdroid extends ListActivity implements OnClickListener {
 		this.setTheme(Preferences.getTheme(this));
 		this.setContentView(R.layout.conversationlist);
 
-		SharedPreferences preferences = PreferenceManager
+		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		// display changelog?
-		String v0 = preferences.getString(PREFS_LAST_RUN, "");
+		String v0 = prefs.getString(PREFS_LAST_RUN, "");
 		String v1 = this.getString(R.string.app_version);
 		if (!v0.equals(v1)) {
-			SharedPreferences.Editor editor = preferences.edit();
+			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString(PREFS_LAST_RUN, v1);
 			editor.commit();
 			this.showDialog(DIALOG_UPDATE);
 		}
+
+		showContactPhoto = prefs.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
+				false);
 
 		Cursor mCursor = this.getContentResolver().query(URI,
 				ConversationListAdapter.PROJECTION, null, null,

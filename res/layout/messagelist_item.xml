@@ -19,11 +19,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:orientation="horizontal">
-	<View android:id="@+id/read" android:background="#00aa00" android:layout_height="fill_parent"
-		android:layout_width="3dip" android:layout_alignParentLeft="true"
-		android:layout_centerVertical="true" android:layout_marginRight="2dip" />
+	<View android:id="@+id/read" android:background="#00aa00"
+		android:layout_height="fill_parent" android:layout_width="3dip"
+		android:layout_alignParentLeft="true" android:layout_centerVertical="true"
+		android:layout_marginRight="2dip" />
 	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+		android:id="@+id/bg" android:layout_height="wrap_content">
 		<TextView android:text="@+id/text1" android:id="@+id/text1"
 			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 		<TextView android:layout_width="wrap_content"

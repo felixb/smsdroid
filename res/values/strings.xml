@@ -57,6 +57,10 @@
 	<string name="receive_sound_hint">Sound on receive</string>
 	<string name="appearance_">Appearance</string>
 	<string name="theme_">Theme</string>
+	<string name="show_contact_photo_">Show photo</string>
+	<string name="show_contact_photo_hint">Show contact\'s photo in conversation list</string>
+	<string name="sort_messages_upsidedown_">Sort upside down</string>
+	<string name="sort_messages_upsidedown_hint">Sort messages in conversation upside down</string>
 	<string name="me">Me</string>
 	<string name="view_thread_">View thread</string>
 	<string name="delete_message_">Delete message</string>

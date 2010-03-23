@@ -20,12 +20,17 @@ package de.ub0r.android.smsdroid;
 
 import java.util.HashMap;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.Contacts;
+import android.provider.Contacts.People;
 import android.provider.Contacts.PeopleColumns;
+import android.provider.Contacts.People.Extensions;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -35,6 +40,18 @@ import android.widget.TextView;
  */
 @SuppressWarnings("deprecation")
 public final class CachePersons {
+	/** Cached person. */
+	private static class Person {
+		/** Persons's ID. */
+		long id = -1;
+		/** Persons's name. */
+		String name = null;
+		/** There is no picture. */
+		boolean noPicutre = false;
+		/** Person's profile picture. */
+		Bitmap picture = null;
+	}
+
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.cp";
 
@@ -42,8 +59,8 @@ public final class CachePersons {
 	private static final String ERRORMESG = "no API5 available";
 
 	/** Cached data. */
-	private static final HashMap<String, String> CACHE = // .
-	new HashMap<String, String>();
+	private static final HashMap<String, Person> CACHE = // .
+	new HashMap<String, Person>();
 
 	/** {@link Uri} for persons. */
 	private static final Uri API3_URI_PERSON = // .
@@ -51,7 +68,12 @@ public final class CachePersons {
 
 	/** Projection for persons query. */
 	private static final String[] API3_PROJECTION = // .
-	new String[] { PeopleColumns.NAME };
+	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME };
+
+	/** Index of id. */
+	private static int INDEX_ID = 0;
+	/** Index of name. */
+	private static int INDEX_NAME = 1;
 
 	/** Used {@link Uri} for query. */
 	private static Uri uriPerson = API3_URI_PERSON;
@@ -93,25 +115,77 @@ public final class CachePersons {
 	 *            {@link Context}
 	 * @param address
 	 *            address
-	 * @return name
+	 * @return Person
 	 */
-	private static String getNameForAddress(final Context context,
+	private static Person getNameForAddress(final Context context,
 			final String address) {
 		// address contains the phone number
-		Uri phoneUri = Uri.withAppendedPath(uriPerson, address);
-		if (phoneUri != null) {
-			Cursor phoneCursor = context.getContentResolver().query(phoneUri,
+		Uri uri = Uri.withAppendedPath(uriPerson, address);
+		if (uri != null) {
+			Cursor phoneCursor = context.getContentResolver().query(uri,
 					projection, null, null, null);
 			if (phoneCursor.moveToFirst()) {
-				final String ret = phoneCursor.getString(0);
-				if (ret != null) {
-					Log.d(TAG, "resolved address: " + address + " -> " + ret);
-					CACHE.put(address, ret);
-				}
-				return ret;
+				final Person p = new Person();
+				p.id = phoneCursor.getLong(INDEX_ID);
+				p.name = phoneCursor.getString(INDEX_NAME);
+				return p;
 			}
+
 		}
 		return null;
+	}
+
+	/**
+	 * Get picture for person.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param person
+	 *            Person
+	 * @return {@link Bitmap}
+	 */
+	private static Bitmap getPictureForPerson(final Context context,
+			final Person person) {
+		if (person.noPicutre) {
+			return null;
+		}
+		Bitmap b = null;
+		if (useNewAPI) {
+			b = HelperAPI5Contacts.loadContactPhoto(context, person.id);
+		} else {
+			Uri uri = ContentUris.withAppendedId(People.CONTENT_URI, person.id);
+			Log.d(TAG, "load pic: " + uri.toString());
+			b = People.loadContactPhoto(context, uri,
+					R.drawable.ic_contact_picture, null);
+		}
+		person.picture = b;
+		if (b == null) {
+			person.noPicutre = true;
+		} else {
+			Log.d(TAG, "got picture for " + person.name + "/" + person.id);
+		}
+		return b;
+	}
+
+	/**
+	 * Add a new Person to Cache.
+	 * 
+	 * @param address
+	 *            person's address
+	 * @return Person
+	 */
+	private static Person newEntry(final String address, final Person person) {
+		Log.d(TAG, "put person to cache: " + address);
+		Person p = person;
+		if (p == null) {
+			p = new Person();
+		}
+		CACHE.put(address, p);
+		if (p.name != null) {
+			Log.d(TAG, address + ": " + p.name);
+			Log.d(TAG, address + ": " + p.id);
+		}
+		return p;
 	}
 
 	/**
@@ -127,14 +201,54 @@ public final class CachePersons {
 	 */
 	public static String getName(final Context context, final String address,
 			final TextView targetView) {
-		String ret = CACHE.get(address);
-		if (ret == null) {
+		Person p = CACHE.get(address);
+		if (p == null) {
 			// TODO: for targetView != null: spawn thread to do the work
-			ret = getNameForAddress(context, address);
+			p = getNameForAddress(context, address);
+			if (p != null) {
+				newEntry(address, p);
+			}
 		}
-		if (targetView != null && ret != null) {
-			targetView.setText(ret);
+		if (p != null) {
+			if (targetView != null && p.name != null) {
+				targetView.setText(p.name);
+			}
+			return p.name;
+		} else {
+			return null;
 		}
-		return ret;
+	}
+
+	/**
+	 * Get a picture for a person.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param address
+	 *            person's address
+	 * @param targetView
+	 *            {@link ImageView} the person should be set to
+	 * @return person's picture
+	 */
+	public static Bitmap getPicture(final Context context,
+			final String address, final ImageView targetView) {
+
+		Person p = CACHE.get(address);
+		if (p == null) {
+			getName(context, address, null); // try to get contact from database
+			p = CACHE.get(address);
+		}
+		Bitmap b = null;
+		if (p != null) {
+			b = getPictureForPerson(context, p);
+		}
+		if (targetView != null) {
+			if (b != null) {
+				targetView.setImageBitmap(b);
+			} else {
+				targetView.setImageResource(R.drawable.ic_contact_picture);
+			}
+		}
+		return b;
 	}
 }

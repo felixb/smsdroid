@@ -21,6 +21,11 @@
 		<ListPreference android:title="@string/theme_"
 			android:key="theme" android:entries="@array/themes"
 			android:entryValues="@array/themes_values" />
+		<CheckBoxPreference android:key="sort_messages_upsidedown"
+			android:defaultValue="true" android:title="@string/sort_messages_upsidedown_"
+			android:summary="@string/sort_messages_upsidedown_hint" />
+		<CheckBoxPreference android:key="show_contact_photo"
+			android:title="@string/show_contact_photo_" android:summary="@string/show_contact_photo_hint" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/notification_">
 		<CheckBoxPreference android:key="notification_enable"
