@@ -44,8 +44,12 @@
 	<string name="notification_enable_hint">Benachrichtigungen bei neuen Nachrichten aktivieren</string>
 	<string name="receive_vibrate_">Vibrieren</string>
 	<string name="receive_vibrate_hint">Vibrieren bei neuen Nachrichten</string>
+	<string name="receive_vibrate_mode_">Vibrationsmodus</string>
 	<string name="receive_sound_">Sound</string>
 	<string name="receive_sound_hint">Sound bei neuen Nachrichten</string>
+	<string name="receive_led_color_">LED Farbe</string>
+	<string name="receive_led_flash_">LED Modus</string>
+	<string name="receive_led_flash_hint">LED Blinkverhalten</string>
 	<string name="appearance_">Erscheinung</string>
 	<string name="theme_">Theme</string>
 	<string name="show_contact_photo_">Zeige Foto</string>
@@ -53,25 +57,50 @@
 	<string name="sort_messages_upsidedown_">Sortierung umdrehen</string>
 	<string name="sort_messages_upsidedown_hint">Sortierung in Nachrichtenliste umdrehen</string>
 	<string name="me">Ich</string>
+	<string name="view_contact_">Zeige Kontakt</string>
+	<string name="add_contact_">zu Kontakten hinzufügen</string>
 	<string name="view_thread_">Thread anzeigen</string>
 	<string name="delete_message_">Nachricht löschen</string>
 	<string name="delete_thread_">Thread löschen</string>
+	<string name="forward_">Weiterleiten</string>
+	<string name="copy_text_">Nachrichtentext kopieren</string>
+	<string name="view_details_">Nachrichtendetails anzeigen</string>
+	<string name="spek_">Vorlesen</string>
 	<string name="delete_threads_">Alle Threads löschen</string>
 	<string name="mark_all_read_">Alles als gelesen markieren</string>
 	<string name="all_threads_">Alle Threads</string>
+	<string name="message_options_">Nachrichtenoptionen</string>
 	<string name="compose_">Schreiben</string>
 	<string name="delete_messages_question">Willst du wirklich diese Nachrichten löschen?</string>
+	<string name="from_">Von:</string>
+	<string name="to_">An:</string>
+	<string name="type_">Typ:</string>
+	<string name="sent_">Gesendet:</string>
+	<string name="received_">Empfangen:</string>
+	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
 	
-	<string-array name="conversationlist_dialog">
-		<item>Thread anzeigen</item>
-		<item>Thread löschen</item>
-	</string-array>
-	<string-array name="messagelist_dialog">
-		<item>Nachricht löschen</item>
-	</string-array>
 	<string-array name="themes">
 		<item>Default</item>
 		<item>Schwarz</item>
 		<item>Hell</item>
+	</string-array>
+	<string-array name="led_color">
+		<item>Grün</item>
+		<item>Blau</item>
+		<item>Rot</item>
+		<item>Orange</item>
+		<item>Magenta</item>
+		<item>Cyan</item>
+	</string-array>
+	<string-array name="led_flash">
+		<item>Blinkend</item>
+		<item>Durchgehend</item>
+	</string-array>
+	<string-array name="vibrate_mode">
+		<item>Default</item>
+		<item>Lang</item>
+		<item>Mehrmals kurz</item>
+		<item>Mehrmals lang</item>
+		<item>Kurz, lang, kurz, lang</item>
 	</string-array>
 </resources>

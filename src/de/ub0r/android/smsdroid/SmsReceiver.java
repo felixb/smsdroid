@@ -55,12 +55,6 @@ public class SmsReceiver extends BroadcastReceiver {
 
 	/** ID for new message notification. */
 	private static final int NOTIFICATION_ID_NEW = 1;
-	/** LED color for notification. */
-	private static final int NOTIFICATION_LED_COLOR = 0xff00ff00;
-	/** LED blink on (ms) for notification. */
-	private static final int NOTIFICATION_LED_ON = 500;
-	/** LED blink off (ms) for notification. */
-	private static final int NOTIFICATION_LED_OFF = 2000;
 
 	/**
 	 * {@inheritDoc}
@@ -172,9 +166,10 @@ public class SmsReceiver extends BroadcastReceiver {
 				n.number = l;
 			}
 			n.flags |= Notification.FLAG_SHOW_LIGHTS;
-			n.ledARGB = NOTIFICATION_LED_COLOR;
-			n.ledOnMS = NOTIFICATION_LED_ON;
-			n.ledOffMS = NOTIFICATION_LED_OFF;
+			n.ledARGB = Preferences.getLEDcolor(context);
+			int[] ledFlash = Preferences.getLEDflash(context);
+			n.ledOnMS = ledFlash[0];
+			n.ledOffMS = ledFlash[1];
 			final SharedPreferences p = PreferenceManager
 					.getDefaultSharedPreferences(context);
 			if (time > 0) {
@@ -188,7 +183,13 @@ public class SmsReceiver extends BroadcastReceiver {
 					sound = Uri.parse(s);
 				}
 				if (vibrate) {
-					n.defaults |= Notification.DEFAULT_VIBRATE;
+					final long[] pattern = Preferences
+							.getVibratorPattern(context);
+					if (pattern.length == 1 && pattern[0] == 0) {
+						n.defaults |= Notification.DEFAULT_VIBRATE;
+					} else {
+						n.vibrate = pattern;
+					}
 				}
 				n.sound = sound;
 			}

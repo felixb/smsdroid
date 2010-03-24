@@ -20,6 +20,7 @@ package de.ub0r.android.smsdroid;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -119,10 +120,11 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 			iv.setVisibility(View.GONE);
 		}
 
-		// final Uri target = Uri.parse(MessageList.URI + threadID);
-		// final Cursor c = context.getContentResolver().query(target, null,
-		// null, null, null);
-		// TextView tv = (TextView) view.findViewById(R.id.text4);
-		// tv.setText("(" + c.getCount() + ")");
+		final Uri target = Uri.parse(MessageList.URI + threadID);
+		final Cursor c = context.getContentResolver().query(target,
+				MessageListAdapter.PROJECTION, null, null, null);
+		TextView tv = (TextView) view.findViewById(R.id.text4);
+		tv.setText(" (" + c.getCount() + ")");
+		c.close();
 	}
 }

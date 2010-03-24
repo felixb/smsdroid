@@ -34,6 +34,12 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_VIBRATE = "receive_vibrate";
 	/** Preference's name: sound on receive. */
 	static final String PREFS_SOUND = "receive_sound";
+	/** Preference's name: led color. */
+	private static final String PREFS_LED_COLOR = "receive_led_color";
+	/** Preference's name: led flash. */
+	private static final String PREFS_LED_FLASH = "receive_led_flash";
+	/** Preference's name: vibrator pattern. */
+	private static final String PREFS_VIBRATOR_PATTERN = "receive_vibrate_mode";
 	/** Preference's name: hide ads. */
 	static final String PREFS_HIDEADS = "hideads";
 	/** Preference's name: enable notifications. */
@@ -60,6 +66,13 @@ public class Preferences extends PreferenceActivity {
 		this.addPreferencesFromResource(R.xml.prefs);
 	}
 
+	/**
+	 * Get Theme from Preferences.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return theme
+	 */
 	static final int getTheme(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -72,5 +85,57 @@ public class Preferences extends PreferenceActivity {
 			return android.R.style.Theme_Light;
 		}
 		return android.R.style.Theme;
+	}
+
+	/**
+	 * Get LED color pattern from Preferences.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return pattern
+	 */
+	static final int getLEDcolor(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final String s = p.getString(PREFS_LED_COLOR, "4278255360");
+		return Integer.parseInt(s);
+	}
+
+	/**
+	 * Get LED flash pattern from Preferences.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return pattern
+	 */
+	static final int[] getLEDflash(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final String s = p.getString(PREFS_LED_FLASH, "500_2000");
+		final String[] ss = s.split("_");
+		final int[] ret = new int[2];
+		ret[0] = Integer.parseInt(ss[0]);
+		ret[1] = Integer.parseInt(ss[1]);
+		return ret;
+	}
+
+	/**
+	 * Get vibrator pattern from Preferences.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return pattern
+	 */
+	static final long[] getVibratorPattern(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final String s = p.getString(PREFS_VIBRATOR_PATTERN, "0");
+		final String[] ss = s.split("_");
+		final int l = ss.length;
+		final long[] ret = new long[l];
+		for (int i = 0; i < l; i++) {
+			ret[i] = Long.parseLong(ss[i]);
+		}
+		return ret;
 	}
 }

@@ -71,9 +71,9 @@ public final class CachePersons {
 	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME };
 
 	/** Index of id. */
-	private static int INDEX_ID = 0;
+	private static final int INDEX_ID = 0;
 	/** Index of name. */
-	private static int INDEX_NAME = 1;
+	private static final int INDEX_NAME = 1;
 
 	/** Used {@link Uri} for query. */
 	private static Uri uriPerson = API3_URI_PERSON;
@@ -81,7 +81,6 @@ public final class CachePersons {
 	private static String[] projection = API3_PROJECTION;
 
 	/** Use old API? */
-	@SuppressWarnings("unused")
 	private static boolean useNewAPI = isAvailable();
 
 	/** Private Constructor. */
@@ -122,15 +121,16 @@ public final class CachePersons {
 		// address contains the phone number
 		Uri uri = Uri.withAppendedPath(uriPerson, address);
 		if (uri != null) {
-			Cursor phoneCursor = context.getContentResolver().query(uri,
-					projection, null, null, null);
-			if (phoneCursor.moveToFirst()) {
+			Cursor cursor = context.getContentResolver().query(uri, projection,
+					null, null, null);
+			if (cursor.moveToFirst()) {
 				final Person p = new Person();
-				p.id = phoneCursor.getLong(INDEX_ID);
-				p.name = phoneCursor.getString(INDEX_NAME);
+				p.id = cursor.getLong(INDEX_ID);
+				p.name = cursor.getString(INDEX_NAME);
+				cursor.close();
 				return p;
 			}
-
+			cursor.close();
 		}
 		return null;
 	}
@@ -172,6 +172,8 @@ public final class CachePersons {
 	 * 
 	 * @param address
 	 *            person's address
+	 * @param person
+	 *            {@link Person}
 	 * @return Person
 	 */
 	private static Person newEntry(final String address, final Person person) {
@@ -217,6 +219,27 @@ public final class CachePersons {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Get id of a person.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param address
+	 *            person's address
+	 * @return person's id
+	 */
+	public static long getID(final Context context, final String address) {
+		Person p = CACHE.get(address);
+		if (p == null) {
+			getName(context, address, null); // try to get contact from database
+			p = CACHE.get(address);
+		}
+		if (p != null) {
+			return p.id;
+		}
+		return -1;
 	}
 
 	/**

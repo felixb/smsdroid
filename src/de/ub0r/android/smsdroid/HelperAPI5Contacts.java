@@ -82,7 +82,8 @@ public final class HelperAPI5Contacts {
 	 *            id of contact
 	 * @return {@link Bitmap}
 	 */
-	static Bitmap loadContactPhoto(final Context context, final long contactId) {
+	static Bitmap loadContactPhoto(final Context context, // .
+			final long contactId) {
 		InputStream is = Contacts.openContactPhotoInputStream(context
 				.getContentResolver(), ContentUris.withAppendedId(
 				Contacts.CONTENT_URI, contactId));

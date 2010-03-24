@@ -18,15 +18,11 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
@@ -38,9 +34,6 @@ import android.widget.TextView;
 public class MessageListAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.mla";
-
-	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 0;
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -110,12 +103,12 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 			twPerson.setText(address);
 			CachePersons.getName(context, address, twPerson);
 			s = "<< ";
-			view.setBackgroundColor(0xa00000);
+			// view.setBackgroundColor(0xa00000);
 		} else if (t == Calls.OUTGOING_TYPE) {
 			twPerson.setText(R.string.me);
 			s = ">> ";
 			// v.setBackgroundColor(0x0000a0);
-			view.setBackgroundColor(0x0000a0);
+			// view.setBackgroundColor(0x0000a0);
 		}
 		int read = cursor.getInt(INDEX_READ);
 		if (read == 0) {
@@ -128,31 +121,5 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		((TextView) view.findViewById(R.id.text3)).setText(s
 				+ DateFormat.format(DATE_FORMAT, Long.parseLong(cursor
 						.getString(INDEX_DATE))));
-
-		final Uri target = Uri
-				.parse("content://sms/" + cursor.getInt(INDEX_ID));
-		view.setOnLongClickListener(new OnLongClickListener() {
-			@Override
-			public boolean onLongClick(final View v) {
-				Builder builder = new Builder(context);
-				builder.setItems(R.array.messagelist_dialog,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(final DialogInterface dialog,
-									final int which) {
-								switch (which) {
-								case WHICH_DELETE:
-									SMSdroid.deleteMessages(context, target,
-											R.string.delete_message_);
-									break;
-								default:
-									break;
-								}
-							}
-						});
-				builder.create().show();
-				return true;
-			}
-		});
 	}
 }

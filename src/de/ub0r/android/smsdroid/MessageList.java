@@ -21,29 +21,53 @@ package de.ub0r.android.smsdroid;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.CallLog.Calls;
+import android.text.ClipboardManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
  * {@link ListActivity} showing a single conversation.
  * 
  * @author flx
  */
-public class MessageList extends ListActivity implements OnClickListener {
+public class MessageList extends ListActivity implements OnClickListener,
+		OnItemLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.ml";
+
+	/** Number of items. */
+	private static final int WHICH_N = 4;
+	// private static final int WHICH_N = 5;
+	/** Index in dialog: forward. */
+	private static final int WHICH_FORWARD = 0;
+	/** Index in dialog: copy text. */
+	private static final int WHICH_COPY_TEXT = 1;
+	/** Index in dialog: view details. */
+	private static final int WHICH_VIEW_DETAILS = 2;
+	/** Index in dialog: delete. */
+	private static final int WHICH_DELETE = 3;
+	/** Index in dialog: speak. */
+	private static final int WHICH_SPEAK = 4;
 
 	/** Address. */
 	private String address = null;
@@ -52,6 +76,9 @@ public class MessageList extends ListActivity implements OnClickListener {
 
 	/** Used {@link Uri}. */
 	private Uri uri;
+
+	/** Dialog items shown if an item was long clicked. */
+	private String[] longItemClickDialog = null;
 
 	/**
 	 * {@inheritDoc}
@@ -73,6 +100,19 @@ public class MessageList extends ListActivity implements OnClickListener {
 		if (this.uri != null) {
 			this.parseIntent(i);
 		}
+		final ListView list = this.getListView();
+		list.setOnItemLongClickListener(this);
+		this.longItemClickDialog = new String[WHICH_N];
+		this.longItemClickDialog[WHICH_FORWARD] = this
+				.getString(R.string.forward_);
+		this.longItemClickDialog[WHICH_COPY_TEXT] = this
+				.getString(R.string.copy_text_);
+		this.longItemClickDialog[WHICH_VIEW_DETAILS] = this
+				.getString(R.string.view_details_);
+		this.longItemClickDialog[WHICH_DELETE] = this
+				.getString(R.string.delete_message_);
+		// this.longItemClickDialog[WHICH_SPEAK] =
+		// this.getString(R.string.speak_);
 	}
 
 	/**
@@ -192,4 +232,93 @@ public class MessageList extends ListActivity implements OnClickListener {
 			return false;
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean onItemLongClick(final AdapterView<?> parent,
+			final View view, final int position, final long id) {
+		final Context context = this;
+		final Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+		final Uri target = Uri.parse("content://sms/"
+				+ cursor.getInt(MessageListAdapter.INDEX_ID));
+		Builder builder = new Builder(context);
+		builder.setTitle(R.string.message_options_);
+		builder.setItems(this.longItemClickDialog,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int which) {
+						switch (which) {
+						case WHICH_FORWARD:
+							final Intent i = new Intent(Intent.ACTION_SEND);
+							i.setType("text/plain");
+							i.putExtra(Intent.EXTRA_TEXT, cursor
+									.getString(MessageListAdapter.INDEX_BODY));
+							context.startActivity(Intent.createChooser(i,
+									context.getString(R.string.forward_)));
+							break;
+						case WHICH_COPY_TEXT:
+							final ClipboardManager cm = // .
+							(ClipboardManager) context.getSystemService(// .
+									Context.CLIPBOARD_SERVICE);
+							cm.setText(cursor
+									.getString(MessageListAdapter.INDEX_BODY));
+							break;
+						case WHICH_VIEW_DETAILS:
+							final int t = cursor
+									.getInt(MessageListAdapter.INDEX_TYPE);
+							Builder b = new Builder(context);
+							b.setTitle(R.string.view_details_);
+							b.setCancelable(true);
+							StringBuilder sb = new StringBuilder();
+							final String a = cursor.getString(// .
+									MessageListAdapter.INDEX_ADDRESS);
+							final long d = cursor
+									.getLong(MessageListAdapter.INDEX_DATE);
+							final String ds = DateFormat.format(
+									context.getString(// .
+											R.string.DATEFORMAT_details), d)
+									.toString();
+							String sentReceived;
+							String fromTo;
+							if (t == Calls.INCOMING_TYPE) {
+								sentReceived = context
+										.getString(R.string.received_);
+								fromTo = context.getString(R.string.from_);
+							} else if (t == Calls.OUTGOING_TYPE) {
+								sentReceived = context
+										.getString(R.string.sent_);
+								fromTo = context.getString(R.string.to_);
+							} else {
+								sentReceived = "ukwn:";
+								fromTo = "ukwn:";
+							}
+							sb.append(sentReceived + " ");
+							sb.append(ds);
+							sb.append("\n");
+							sb.append(fromTo + " ");
+							sb.append(a);
+							b.setMessage(sb.toString());
+							b.setPositiveButton(android.R.string.ok, null);
+							b.show();
+							break;
+						case WHICH_DELETE:
+							SMSdroid.deleteMessages(context, target,
+									R.string.delete_message_);
+							break;
+						case WHICH_SPEAK:
+							// TODO: implement me
+							Toast.makeText(context, R.string.not_implemented,
+									Toast.LENGTH_SHORT).show();
+							break;
+						default:
+							break;
+						}
+					}
+				});
+		builder.show();
+		return true;
+	}
+
 }

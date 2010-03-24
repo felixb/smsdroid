@@ -27,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.List;
 
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -37,10 +38,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Contacts;
+import android.provider.Contacts.People;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -76,10 +80,16 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 	/** Dialog: post donate. */
 	private static final int DIALOG_POSTDONATE = 3;
 
+	/** Number of items. */
+	private static final int WHICH_N = 3;
+	/** Index in dialog: view contact. */
+	private static final int WHICH_VIEW_CONTACT = 0;
+	/** Index in dialog: add contact. */
+	private static final int WHICH_ADD_CONTACT = 0;
 	/** Index in dialog: view. */
-	private static final int WHICH_VIEW = 0;
+	private static final int WHICH_VIEW = 1;
 	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 1;
+	private static final int WHICH_DELETE = 2;
 
 	/** Preferences: hide ads. */
 	static boolean prefsNoAds = false;
@@ -100,6 +110,9 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 
 	/** Show contact's photo. */
 	static boolean showContactPhoto = false;
+
+	/** Dialog items shown if an item was long clicked. */
+	private String[] longItemClickDialog = null;
 
 	/**
 	 * {@inheritDoc}
@@ -136,6 +149,13 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 		final ListView list = this.getListView();
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
+		this.longItemClickDialog = new String[WHICH_N];
+		this.longItemClickDialog[WHICH_VIEW_CONTACT] = this
+				.getString(R.string.view_contact_);
+		this.longItemClickDialog[WHICH_VIEW] = this
+				.getString(R.string.view_thread_);
+		this.longItemClickDialog[WHICH_DELETE] = this
+				.getString(R.string.delete_thread_);
 	}
 
 	/**
@@ -162,31 +182,39 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 			builder.setTitle(R.string.changelog_);
 			final String[] changes = this.getResources().getStringArray(
 					R.array.updates);
-			final StringBuilder buf = new StringBuilder(changes[0]);
+			final StringBuilder buf = new StringBuilder();
+			final List<ResolveInfo> ri = this
+					.getPackageManager()
+					.queryBroadcastReceivers(
+							new Intent("de.ub0r.android.websms.connector.INFO"),
+							0);
+			if (ri.size() == 0) {
+				buf.append(changes[0]);
+				builder.setNeutralButton("get WebSMS",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(final DialogInterface d,
+									final int which) {
+								try {
+									SMSdroid.this.startActivity(// .
+											new Intent(
+													Intent.ACTION_VIEW,
+													Uri.parse(// .
+															"market://search?q=pname:de.ub0r.android.websms")));
+								} catch (ActivityNotFoundException e) {
+									Log.e(TAG, "no market", e);
+								}
+							}
+						});
+			}
 			for (int i = 1; i < changes.length; i++) {
 				buf.append("\n\n");
 				buf.append(changes[i]);
 			}
 			builder.setIcon(android.R.drawable.ic_menu_info_details);
-			builder.setMessage(buf.toString());
+			builder.setMessage(buf.toString().trim());
 			builder.setCancelable(true);
 			builder.setPositiveButton(android.R.string.ok, null);
-			builder.setNeutralButton("get WebSMS",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(final DialogInterface d,
-								final int which) {
-							try {
-								SMSdroid.this.startActivity(// .
-										new Intent(
-												Intent.ACTION_VIEW,
-												Uri.parse(// .
-														"market://search?q=pname:de.ub0r.android.websms")));
-							} catch (ActivityNotFoundException e) {
-								Log.e(TAG, "no market", e);
-							}
-						}
-					});
 			return builder.create();
 		case DIALOG_PREDONATE:
 			builder = new Builder(this);
@@ -478,27 +506,51 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 				.getString(ConversationListAdapter.INDEX_THREADID);
 		final Uri target = Uri.parse(MessageList.URI + threadID);
 		Builder builder = new Builder(this);
-		builder.setItems(R.array.conversationlist_dialog,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog,
-							final int which) {
-						switch (which) {
-						case WHICH_VIEW:
-							final Intent i = new Intent(SMSdroid.this,
-									MessageList.class);
-							i.setData(target);
-							SMSdroid.this.startActivity(i);
-							break;
-						case WHICH_DELETE:
-							SMSdroid.deleteMessages(SMSdroid.this, target,
-									R.string.delete_thread_);
-							break;
-						default:
-							break;
-						}
+		String[] items = this.longItemClickDialog;
+		final String a = cursor
+				.getString(ConversationListAdapter.INDEX_ADDRESS);
+		final String n = CachePersons.getName(this, a, null);
+		if (n == null) {
+			builder.setTitle(a);
+			items = items.clone();
+			items[WHICH_VIEW_CONTACT] = this.getString(R.string.add_contact_);
+		} else {
+			builder.setTitle(n);
+		}
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				Intent i = null;
+				switch (which) {
+				// case WHICH_ADD_CONTACT:
+				case WHICH_VIEW_CONTACT:
+					if (n == null) {
+						i = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+						i.setType(People.CONTENT_ITEM_TYPE);
+						i.putExtra(Contacts.Intents.Insert.PHONE, a);
+						i.putExtra(Contacts.Intents.Insert.PHONE_TYPE,
+								Contacts.PhonesColumns.TYPE_MOBILE);
+					} else {
+						final Uri uri = Uri.parse("content://contacts/people/"
+								+ CachePersons.getID(SMSdroid.this, a));
+						i = new Intent(Intent.ACTION_VIEW, uri);
 					}
-				});
+					SMSdroid.this.startActivity(i);
+					break;
+				case WHICH_VIEW:
+					i = new Intent(SMSdroid.this, MessageList.class);
+					i.setData(target);
+					SMSdroid.this.startActivity(i);
+					break;
+				case WHICH_DELETE:
+					SMSdroid.deleteMessages(SMSdroid.this, target,
+							R.string.delete_thread_);
+					break;
+				default:
+					break;
+				}
+			}
+		});
 		builder.create().show();
 		return true;
 	}

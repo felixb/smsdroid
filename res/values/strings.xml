@@ -53,8 +53,12 @@
 	<string name="notification_enable_hint">Enable notifications on receive</string>
 	<string name="receive_vibrate_">Vibrate</string>
 	<string name="receive_vibrate_hint">Vibrate on receive</string>
+	<string name="receive_vibrate_mode_">Vibrator mode</string>
 	<string name="receive_sound_">Sound</string>
 	<string name="receive_sound_hint">Sound on receive</string>
+	<string name="receive_led_color_">LED color</string>
+	<string name="receive_led_flash_">LED mode</string>
+	<string name="receive_led_flash_hint">Set LED flashing behaviour</string>
 	<string name="appearance_">Appearance</string>
 	<string name="theme_">Theme</string>
 	<string name="show_contact_photo_">Show photo</string>
@@ -62,22 +66,30 @@
 	<string name="sort_messages_upsidedown_">Sort upside down</string>
 	<string name="sort_messages_upsidedown_hint">Sort messages in conversation upside down</string>
 	<string name="me">Me</string>
+	<string name="view_contact_">View contact</string>
+	<string name="add_contact_">Add to contacts</string>
 	<string name="view_thread_">View thread</string>
 	<string name="delete_message_">Delete message</string>
 	<string name="delete_thread_">Delete thread</string>
+	<string name="forward_">Forward</string>
+	<string name="copy_text_">Copy message text</string>
+	<string name="view_details_">View messate details</string>
+	<string name="spek_">Speak</string>
 	<string name="delete_threads_">Delete all threads</string>
 	<string name="mark_all_read_">Mark all as read</string>
 	<string name="all_threads_">All threads</string>
+	<string name="message_options_">Message options</string>
 	<string name="compose_">Compose</string>
 	<string name="delete_messages_question">Do you really want to delete these messages?</string>
+	<string name="from_">From:</string>
+	<string name="to_">To:</string>
+	<string name="type_">Type:</string>
+	<string name="sent_">Sent:</string>
+	<string name="received_">Received:</string>
+	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
+
+	<string name="not_implemented">Sorry, not yet implemented.</string>
 	
-	<string-array name="conversationlist_dialog">
-		<item>View thread</item>
-		<item>Delete thread</item>
-	</string-array>
-	<string-array name="messagelist_dialog">
-		<item>Delete message</item>
-	</string-array>
 	<string-array name="themes">
 		<item>Default</item>
 		<item>Black</item>
@@ -87,5 +99,43 @@
 		<item>default</item>
 		<item>black</item>
 		<item>light</item>
+	</string-array>
+	<string-array name="led_color">
+		<item>Green</item>
+		<item>Blue</item>
+		<item>Red</item>
+		<item>Orange</item>
+		<item>Magenta</item>
+		<item>Cyan</item>
+	</string-array>
+	<string-array name="led_color_values">
+		<item>4278255360</item>
+		<item>4278190335</item>
+		<item>4294901760</item>
+		<item>4294944000</item>
+		<item>4294902015</item>
+		<item>4278255615</item>
+	</string-array>
+	<string-array name="led_flash">
+		<item>Flashing</item>
+		<item>Consistently</item>
+	</string-array>
+	<string-array name="led_flash_values">
+		<item>500_2000</item>
+		<item>1_0</item>
+	</string-array>
+	<string-array name="vibrate_mode">
+		<item>Default</item>
+		<item>Long</item>
+		<item>Multiple short</item>
+		<item>Multiple long</item>
+		<item>Short, long, short, long</item>
+	</string-array>
+	<string-array name="vibrate_mode_values">
+		<item>0</item>
+		<item>1000</item>
+		<item>200_200_200</item>
+		<item>1000_1000_1000</item>
+		<item>200_1000_200_1000</item>
 	</string-array>
 </resources>
