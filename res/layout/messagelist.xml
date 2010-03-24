@@ -30,12 +30,10 @@
 			android:layout_height="wrap_content" android:text="@string/answer"
 			android:layout_alignParentBottom="true" />
 		<ListView android:id="@id/android:list" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:drawSelectorOnTop="true"
-			android:cacheColorHint="#00000000" android:scrollingCache="true"
-			android:layout_above="@id/answer" android:scrollbarStyle="outsideInset" />
+			android:layout_height="fill_parent" android:drawSelectorOnTop="false"
+			android:scrollingCache="true" android:fastScrollEnabled="true"
+			android:cacheColorHint="@android:color/transparent"
+			android:choiceMode="singleChoice" android:scrollbarStyle="outsideInset"
+			android:layout_above="@id/answer" />
 	</RelativeLayout>
 </RelativeLayout>
-	<!--
-		android:scrollingCache="true" android:fastScrollEnabled="true"
-		android:cacheColorHint="?android:attr/colorBackground"
-	-->

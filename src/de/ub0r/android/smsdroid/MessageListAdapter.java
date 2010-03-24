@@ -97,18 +97,17 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		int t = cursor.getInt(INDEX_TYPE);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		String s = "";
-		// View v = view.findViewById(R.id.bg);
+		View v = view.findViewById(R.id.bg);
 		if (t == Calls.INCOMING_TYPE) {
 			final String address = cursor.getString(INDEX_ADDRESS);
 			twPerson.setText(address);
 			CachePersons.getName(context, address, twPerson);
 			s = "<< ";
-			// view.setBackgroundColor(0xa00000);
+			v.setVisibility(View.GONE);
 		} else if (t == Calls.OUTGOING_TYPE) {
 			twPerson.setText(R.string.me);
 			s = ">> ";
-			// v.setBackgroundColor(0x0000a0);
-			// view.setBackgroundColor(0x0000a0);
+			v.setVisibility(View.VISIBLE);
 		}
 		int read = cursor.getInt(INDEX_READ);
 		if (read == 0) {
