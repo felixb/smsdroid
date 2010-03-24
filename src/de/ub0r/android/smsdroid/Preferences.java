@@ -97,7 +97,7 @@ public class Preferences extends PreferenceActivity {
 	static final int getLEDcolor(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		final String s = p.getString(PREFS_LED_COLOR, "4278255360");
+		final String s = p.getString(PREFS_LED_COLOR, "65280");
 		return Integer.parseInt(s);
 	}
 

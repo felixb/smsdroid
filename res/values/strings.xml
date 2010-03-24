@@ -109,12 +109,12 @@
 		<item>Cyan</item>
 	</string-array>
 	<string-array name="led_color_values">
-		<item>4278255360</item>
-		<item>4278190335</item>
-		<item>4294901760</item>
-		<item>4294944000</item>
-		<item>4294902015</item>
-		<item>4278255615</item>
+		<item>65280</item>
+		<item>255</item>
+		<item>16711680</item>
+		<item>16753920</item>
+		<item>16711935</item>
+		<item>65535</item>
 	</string-array>
 	<string-array name="led_flash">
 		<item>Flashing</item>
