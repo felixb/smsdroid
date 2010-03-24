@@ -81,15 +81,15 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 	private static final int DIALOG_POSTDONATE = 3;
 
 	/** Number of items. */
-	private static final int WHICH_N = 3;
-	/** Index in dialog: view contact. */
-	private static final int WHICH_VIEW_CONTACT = 0;
-	/** Index in dialog: add contact. */
-	private static final int WHICH_ADD_CONTACT = 0;
+	private static final int WHICH_N = 4;
+	/** Index in dialog: answer. */
+	private static final int WHICH_ANSWER = 0;
+	/** Index in dialog: view/add contact. */
+	private static final int WHICH_VIEW_CONTACT = 1;
 	/** Index in dialog: view. */
-	private static final int WHICH_VIEW = 1;
+	private static final int WHICH_VIEW = 2;
 	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 2;
+	private static final int WHICH_DELETE = 3;
 
 	/** Preferences: hide ads. */
 	static boolean prefsNoAds = false;
@@ -150,6 +150,8 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 		this.longItemClickDialog = new String[WHICH_N];
+		this.longItemClickDialog[WHICH_ANSWER] = this
+				.getString(R.string.answer);
 		this.longItemClickDialog[WHICH_VIEW_CONTACT] = this
 				.getString(R.string.view_contact_);
 		this.longItemClickDialog[WHICH_VIEW] = this
@@ -522,7 +524,15 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 			public void onClick(final DialogInterface dialog, final int which) {
 				Intent i = null;
 				switch (which) {
-				// case WHICH_ADD_CONTACT:
+				case WHICH_ANSWER:
+					try {
+						i = new Intent(Intent.ACTION_SENDTO);
+						i.setData(Uri.parse("smsto:" + a));
+						SMSdroid.this.startActivity(i);
+					} catch (ActivityNotFoundException e) {
+						Log.e(TAG, "could not find app to compose message", e);
+					}
+					break;
 				case WHICH_VIEW_CONTACT:
 					if (n == null) {
 						i = new Intent(Intent.ACTION_INSERT_OR_EDIT);
