@@ -28,7 +28,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
@@ -50,7 +49,8 @@ public final class HelperAPI5Contacts {
 	ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI;
 	/** Projection for persons query. */
 	private static final String[] API5_PROJECTION = // .
-	new String[] { BaseColumns._ID, ContactsContract.Data.DISPLAY_NAME };
+	new String[] { ContactsContract.Data.CONTACT_ID,
+			ContactsContract.Data.DISPLAY_NAME };
 
 	/**
 	 * Check whether API5 is available.

@@ -520,6 +520,7 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 			builder.setTitle(n);
 		}
 		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
 				Intent i = null;
