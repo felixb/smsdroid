@@ -51,7 +51,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -62,8 +61,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
  * 
  * @author flx
  */
-public class SMSdroid extends ListActivity implements OnClickListener,
-		OnItemClickListener, OnItemLongClickListener {
+public class SMSdroid extends ListActivity implements OnItemClickListener,
+		OnItemLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid";
 
@@ -92,7 +91,7 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 	private static final int WHICH_DELETE = 3;
 
 	/** Preferences: hide ads. */
-	static boolean prefsNoAds = false;
+	private static boolean prefsNoAds = false;
 	/** Hased IMEI. */
 	private static String imeiHash = null;
 	/** Crypto algorithm for signing UID hashs. */
@@ -137,7 +136,9 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 
 		showContactPhoto = prefs.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
 				false);
-
+		final ListView list = this.getListView();
+		final View header = View.inflate(this, R.layout.newmessage_item, null);
+		list.addHeaderView(header);
 		Cursor mCursor = this.getContentResolver().query(URI,
 				ConversationListAdapter.PROJECTION, null, null,
 				ConversationListAdapter.SORT);
@@ -145,8 +146,6 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 		ConversationListAdapter adapter = new ConversationListAdapter(this,
 				mCursor);
 		this.setListAdapter(adapter);
-		this.findViewById(R.id.new_message).setOnClickListener(this);
-		final ListView list = this.getListView();
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 		this.longItemClickDialog = new String[WHICH_N];
@@ -294,19 +293,23 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 	 *            {@link Context}
 	 * @param uri
 	 *            {@link Uri}
+	 * @param read
+	 *            read status
 	 */
-	static final void markRead(final Context context, final Uri uri) {
+	static final void markRead(final Context context, final Uri uri,
+			final int read) {
+		String select = MessageListAdapter.SELECTION_UNREAD.replace("0", String
+				.valueOf(1 - read));
 		final Cursor mCursor = context.getContentResolver().query(uri,
-				MessageListAdapter.PROJECTION,
-				MessageListAdapter.SELECTION_UNREAD, null, null);
+				MessageListAdapter.PROJECTION, select, null, null);
 		if (mCursor.getCount() <= 0) {
 			return;
 		}
 
 		final ContentValues cv = new ContentValues();
-		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ], 1);
-		context.getContentResolver().update(uri, cv,
-				MessageListAdapter.SELECTION_UNREAD, null);
+		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ],
+				read);
+		context.getContentResolver().update(uri, cv, select, null);
 		SmsReceiver.updateNewMessageNotification(context, -1);
 	}
 
@@ -361,30 +364,10 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 					R.string.delete_threads_);
 			return true;
 		case R.id.item_mark_all_read:
-			markRead(this, Uri.parse("content://sms/inbox"));
+			markRead(this, Uri.parse("content://sms/inbox"), 1);
 			return true;
 		default:
 			return false;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final void onClick(final View v) {
-		switch (v.getId()) {
-		case R.id.new_message:
-			try {
-				final Intent i = new Intent(Intent.ACTION_SENDTO);
-				i.setData(Uri.parse("sms:"));
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "could not find app to compose message", e);
-			}
-			break;
-		default:
-			break;
 		}
 	}
 
@@ -489,13 +472,23 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 	 */
 	public final void onItemClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
-		Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-		final String threadID = cursor
-				.getString(ConversationListAdapter.INDEX_THREADID);
-		final Uri target = Uri.parse(MessageList.URI + threadID);
-		final Intent i = new Intent(this, MessageList.class);
-		i.setData(target);
-		this.startActivity(i);
+		if (position == 0) { // header
+			try {
+				final Intent i = new Intent(Intent.ACTION_SENDTO);
+				i.setData(Uri.parse("sms:"));
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "could not find app to compose message", e);
+			}
+		} else {
+			Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+			final String threadID = cursor
+					.getString(ConversationListAdapter.INDEX_THREADID);
+			final Uri target = Uri.parse(MessageList.URI + threadID);
+			final Intent i = new Intent(this, MessageList.class);
+			i.setData(target);
+			this.startActivity(i);
+		}
 	}
 
 	/**
@@ -503,66 +496,75 @@ public class SMSdroid extends ListActivity implements OnClickListener,
 	 */
 	public final boolean onItemLongClick(final AdapterView<?> parent,
 			final View view, final int position, final long id) {
-		Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-		final String threadID = cursor
-				.getString(ConversationListAdapter.INDEX_THREADID);
-		final Uri target = Uri.parse(MessageList.URI + threadID);
-		Builder builder = new Builder(this);
-		String[] items = this.longItemClickDialog;
-		final String a = cursor
-				.getString(ConversationListAdapter.INDEX_ADDRESS);
-		final String n = CachePersons.getName(this, a, null);
-		if (n == null) {
-			builder.setTitle(a);
-			items = items.clone();
-			items[WHICH_VIEW_CONTACT] = this.getString(R.string.add_contact_);
+		if (position == 0) { // header
+			return true;
 		} else {
-			builder.setTitle(n);
-		}
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
-				Intent i = null;
-				switch (which) {
-				case WHICH_ANSWER:
-					try {
-						i = new Intent(Intent.ACTION_SENDTO);
-						i.setData(Uri.parse("smsto:" + a));
-						SMSdroid.this.startActivity(i);
-					} catch (ActivityNotFoundException e) {
-						Log.e(TAG, "could not find app to compose message", e);
-					}
-					break;
-				case WHICH_VIEW_CONTACT:
-					if (n == null) {
-						i = new Intent(Intent.ACTION_INSERT_OR_EDIT);
-						i.setType(People.CONTENT_ITEM_TYPE);
-						i.putExtra(Contacts.Intents.Insert.PHONE, a);
-						i.putExtra(Contacts.Intents.Insert.PHONE_TYPE,
-								Contacts.PhonesColumns.TYPE_MOBILE);
-					} else {
-						final Uri uri = Uri.parse("content://contacts/people/"
-								+ CachePersons.getID(SMSdroid.this, a));
-						i = new Intent(Intent.ACTION_VIEW, uri);
-					}
-					SMSdroid.this.startActivity(i);
-					break;
-				case WHICH_VIEW:
-					i = new Intent(SMSdroid.this, MessageList.class);
-					i.setData(target);
-					SMSdroid.this.startActivity(i);
-					break;
-				case WHICH_DELETE:
-					SMSdroid.deleteMessages(SMSdroid.this, target,
-							R.string.delete_thread_);
-					break;
-				default:
-					break;
-				}
+			Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+			final String threadID = cursor
+					.getString(ConversationListAdapter.INDEX_THREADID);
+			final Uri target = Uri.parse(MessageList.URI + threadID);
+			Builder builder = new Builder(this);
+			String[] items = this.longItemClickDialog;
+			final String a = cursor
+					.getString(ConversationListAdapter.INDEX_ADDRESS);
+			final String n = CachePersons.getName(this, a, null);
+			if (n == null) {
+				builder.setTitle(a);
+				items = items.clone();
+				items[WHICH_VIEW_CONTACT] = this
+						.getString(R.string.add_contact_);
+			} else {
+				builder.setTitle(n);
 			}
-		});
-		builder.create().show();
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+				@SuppressWarnings("deprecation")
+				@Override
+				public void onClick(final DialogInterface dialog,
+						final int which) {
+					Intent i = null;
+					switch (which) {
+					case WHICH_ANSWER:
+						try {
+							i = new Intent(Intent.ACTION_SENDTO);
+							i.setData(Uri.parse("smsto:" + a));
+							SMSdroid.this.startActivity(i);
+						} catch (ActivityNotFoundException e) {
+							Log.e(TAG, "could not find app to compose message",
+									e);
+						}
+						break;
+					case WHICH_VIEW_CONTACT:
+						if (n == null) {
+							i = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+							i.setType(People.CONTENT_ITEM_TYPE);
+							i.putExtra(Contacts.Intents.Insert.PHONE, a);
+							i.putExtra(Contacts.Intents.Insert.PHONE_TYPE,
+									Contacts.PhonesColumns.TYPE_MOBILE);
+						} else {
+							final Uri uri = Uri
+									.parse("content://contacts/people/"
+											+ CachePersons.getID(SMSdroid.this,
+													a));
+							i = new Intent(Intent.ACTION_VIEW, uri);
+						}
+						SMSdroid.this.startActivity(i);
+						break;
+					case WHICH_VIEW:
+						i = new Intent(SMSdroid.this, MessageList.class);
+						i.setData(target);
+						SMSdroid.this.startActivity(i);
+						break;
+					case WHICH_DELETE:
+						SMSdroid.deleteMessages(SMSdroid.this, target,
+								R.string.delete_thread_);
+						break;
+					default:
+						break;
+					}
+				}
+			});
+			builder.create().show();
+		}
 		return true;
 	}
 }

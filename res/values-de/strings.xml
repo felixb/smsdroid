@@ -68,6 +68,8 @@
 	<string name="spek_">Vorlesen</string>
 	<string name="delete_threads_">Alle Threads löschen</string>
 	<string name="mark_all_read_">Alles als gelesen markieren</string>
+	<string name="mark_read_">Als gelesen markieren</string>
+	<string name="mark_unread_">Als ungelesen markieren</string>
 	<string name="all_threads_">Alle Threads</string>
 	<string name="message_options_">Nachrichtenoptionen</string>
 	<string name="compose_">Schreiben</string>
@@ -80,7 +82,6 @@
 	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
 	
 	<string-array name="themes">
-		<item>Default</item>
 		<item>Schwarz</item>
 		<item>Hell</item>
 	</string-array>

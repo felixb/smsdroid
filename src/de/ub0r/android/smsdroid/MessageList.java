@@ -39,10 +39,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
@@ -50,24 +51,26 @@ import android.widget.AdapterView.OnItemLongClickListener;
  * 
  * @author flx
  */
-public class MessageList extends ListActivity implements OnClickListener,
+public class MessageList extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.ml";
 
 	/** Number of items. */
-	private static final int WHICH_N = 4;
-	// private static final int WHICH_N = 5;
+	private static final int WHICH_N = 5;
+	// private static final int WHICH_N = 6;
+	/** Index in dialog: mark read/unread. */
+	private static final int WHICH_MARK_UNREAD = 0;
 	/** Index in dialog: forward. */
-	private static final int WHICH_FORWARD = 0;
+	private static final int WHICH_FORWARD = 1;
 	/** Index in dialog: copy text. */
-	private static final int WHICH_COPY_TEXT = 1;
+	private static final int WHICH_COPY_TEXT = 2;
 	/** Index in dialog: view details. */
-	private static final int WHICH_VIEW_DETAILS = 2;
+	private static final int WHICH_VIEW_DETAILS = 3;
 	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 3;
+	private static final int WHICH_DELETE = 4;
 	/** Index in dialog: speak. */
-	private static final int WHICH_SPEAK = 4;
+	private static final int WHICH_SPEAK = 5;
 
 	/** Address. */
 	private String address = null;
@@ -80,6 +83,9 @@ public class MessageList extends ListActivity implements OnClickListener,
 	/** Dialog items shown if an item was long clicked. */
 	private String[] longItemClickDialog = null;
 
+	/** Sort list upside down. */
+	private boolean sortUSD = true;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,12 +95,6 @@ public class MessageList extends ListActivity implements OnClickListener,
 		this.setTheme(Preferences.getTheme(this));
 		this.setContentView(R.layout.messagelist);
 
-		// if (!SMSdroid.prefsNoAds) {
-		// this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
-		// }
-
-		this.findViewById(R.id.answer).setOnClickListener(this);
-
 		final Intent i = this.getIntent();
 		this.uri = i.getData();
 		if (this.uri != null) {
@@ -102,7 +102,10 @@ public class MessageList extends ListActivity implements OnClickListener,
 		}
 		final ListView list = this.getListView();
 		list.setOnItemLongClickListener(this);
+		list.setOnItemClickListener(this);
 		this.longItemClickDialog = new String[WHICH_N];
+		this.longItemClickDialog[WHICH_MARK_UNREAD] = this
+				.getString(R.string.mark_unread_);
 		this.longItemClickDialog[WHICH_FORWARD] = this
 				.getString(R.string.forward_);
 		this.longItemClickDialog[WHICH_COPY_TEXT] = this
@@ -128,25 +131,6 @@ public class MessageList extends ListActivity implements OnClickListener,
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public final void onClick(final View v) {
-		switch (v.getId()) {
-		case R.id.answer:
-			try {
-				final Intent i = new Intent(Intent.ACTION_SENDTO);
-				i.setData(Uri.parse("smsto:" + this.address));
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "could not find app to compose message", e);
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	/**
 	 * Parse data pushed by {@link Intent}.
 	 * 
 	 * @param intent
@@ -162,11 +146,17 @@ public class MessageList extends ListActivity implements OnClickListener,
 				.getDefaultSharedPreferences(this);
 		final ListView lv = this.getListView();
 		String sort;
+		final View header = View.inflate(this, R.layout.newmessage_item, null);
+		((TextView) header.findViewById(R.id.text1)).setText(R.string.answer);
 		if (prefs.getBoolean(Preferences.PREFS_MSGLIST_SORT, true)) {
+			this.sortUSD = true;
 			sort = MessageListAdapter.SORT_USD;
+			lv.addFooterView(header);
 			lv.setStackFromBottom(true);
 		} else {
+			this.sortUSD = false;
 			sort = MessageListAdapter.SORT_NORM;
+			lv.addHeaderView(header);
 			lv.setStackFromBottom(false);
 		}
 
@@ -184,6 +174,7 @@ public class MessageList extends ListActivity implements OnClickListener,
 		}
 
 		this.setTitle(this.getString(R.string.app_name) + " > " + pers);
+		((TextView) header.findViewById(R.id.text2)).setText(this.address);
 		this.setRead(threadID);
 	}
 
@@ -194,7 +185,7 @@ public class MessageList extends ListActivity implements OnClickListener,
 	 *            thread id
 	 */
 	private void setRead(final String threadID) {
-		SMSdroid.markRead(this, Uri.parse(URI + threadID));
+		SMSdroid.markRead(this, Uri.parse(URI + threadID), 1);
 	}
 
 	/**
@@ -236,89 +227,126 @@ public class MessageList extends ListActivity implements OnClickListener,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean onItemLongClick(final AdapterView<?> parent,
-			final View view, final int position, final long id) {
-		final Context context = this;
-		final Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-		final Uri target = Uri.parse("content://sms/"
-				+ cursor.getInt(MessageListAdapter.INDEX_ID));
-		Builder builder = new Builder(context);
-		builder.setTitle(R.string.message_options_);
-		builder.setItems(this.longItemClickDialog,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog,
-							final int which) {
-						switch (which) {
-						case WHICH_FORWARD:
-							final Intent i = new Intent(Intent.ACTION_SEND);
-							i.setType("text/plain");
-							i.putExtra(Intent.EXTRA_TEXT, cursor
-									.getString(MessageListAdapter.INDEX_BODY));
-							context.startActivity(Intent.createChooser(i,
-									context.getString(R.string.forward_)));
-							break;
-						case WHICH_COPY_TEXT:
-							final ClipboardManager cm = // .
-							(ClipboardManager) context.getSystemService(// .
-									Context.CLIPBOARD_SERVICE);
-							cm.setText(cursor
-									.getString(MessageListAdapter.INDEX_BODY));
-							break;
-						case WHICH_VIEW_DETAILS:
-							final int t = cursor
-									.getInt(MessageListAdapter.INDEX_TYPE);
-							Builder b = new Builder(context);
-							b.setTitle(R.string.view_details_);
-							b.setCancelable(true);
-							StringBuilder sb = new StringBuilder();
-							final String a = cursor.getString(// .
-									MessageListAdapter.INDEX_ADDRESS);
-							final long d = cursor
-									.getLong(MessageListAdapter.INDEX_DATE);
-							final String ds = DateFormat.format(
-									context.getString(// .
-											R.string.DATEFORMAT_details), d)
-									.toString();
-							String sentReceived;
-							String fromTo;
-							if (t == Calls.INCOMING_TYPE) {
-								sentReceived = context
-										.getString(R.string.received_);
-								fromTo = context.getString(R.string.from_);
-							} else if (t == Calls.OUTGOING_TYPE) {
-								sentReceived = context
-										.getString(R.string.sent_);
-								fromTo = context.getString(R.string.to_);
-							} else {
-								sentReceived = "ukwn:";
-								fromTo = "ukwn:";
-							}
-							sb.append(sentReceived + " ");
-							sb.append(ds);
-							sb.append("\n");
-							sb.append(fromTo + " ");
-							sb.append(a);
-							b.setMessage(sb.toString());
-							b.setPositiveButton(android.R.string.ok, null);
-							b.show();
-							break;
-						case WHICH_DELETE:
-							SMSdroid.deleteMessages(context, target,
-									R.string.delete_message_);
-							break;
-						case WHICH_SPEAK:
-							// TODO: implement me
-							Toast.makeText(context, R.string.not_implemented,
-									Toast.LENGTH_SHORT).show();
-							break;
-						default:
-							break;
-						}
-					}
-				});
-		builder.show();
-		return true;
+	public final void onItemClick(final AdapterView<?> parent, final View view,
+			final int position, final long id) {
+		int headerPos = 0;
+		if (this.sortUSD) {
+			headerPos = parent.getAdapter().getCount() - 1;
+		}
+		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
+		if (position == headerPos) { // header
+			try {
+				final Intent i = new Intent(Intent.ACTION_SENDTO);
+				i.setData(Uri.parse("smsto:" + this.address));
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "could not find app to compose message", e);
+			}
+		} else {
+			return;
+		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean onItemLongClick(final AdapterView<?> parent,
+			final View view, final int position, final long id) {
+		int headerPos = 0;
+		if (this.sortUSD) {
+			headerPos = parent.getAdapter().getCount() - 1;
+		}
+		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
+		if (position == headerPos) { // header
+			return true;
+		} else {
+			final Context context = this;
+			final Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+			final Uri target = Uri.parse("content://sms/"
+					+ cursor.getInt(MessageListAdapter.INDEX_ID));
+			final int read = cursor.getInt(MessageListAdapter.INDEX_READ);
+			Builder builder = new Builder(context);
+			builder.setTitle(R.string.message_options_);
+			String[] items = this.longItemClickDialog;
+			if (read == 0) {
+				items = items.clone();
+				items[WHICH_MARK_UNREAD] = context
+						.getString(R.string.mark_read_);
+			}
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(final DialogInterface dialog,
+						final int which) {
+					switch (which) {
+					case WHICH_MARK_UNREAD:
+						SMSdroid.markRead(context, target, 1 - read);
+						break;
+					case WHICH_FORWARD:
+						final Intent i = new Intent(Intent.ACTION_SEND);
+						i.setType("text/plain");
+						i.putExtra(Intent.EXTRA_TEXT, cursor
+								.getString(MessageListAdapter.INDEX_BODY));
+						context.startActivity(Intent.createChooser(i, context
+								.getString(R.string.forward_)));
+						break;
+					case WHICH_COPY_TEXT:
+						final ClipboardManager cm = // .
+						(ClipboardManager) context.getSystemService(// .
+								Context.CLIPBOARD_SERVICE);
+						cm.setText(cursor
+								.getString(MessageListAdapter.INDEX_BODY));
+						break;
+					case WHICH_VIEW_DETAILS:
+						final int t = cursor
+								.getInt(MessageListAdapter.INDEX_TYPE);
+						Builder b = new Builder(context);
+						b.setTitle(R.string.view_details_);
+						b.setCancelable(true);
+						StringBuilder sb = new StringBuilder();
+						final String a = cursor.getString(// .
+								MessageListAdapter.INDEX_ADDRESS);
+						final long d = cursor
+								.getLong(MessageListAdapter.INDEX_DATE);
+						final String ds = DateFormat.format(context.getString(// .
+								R.string.DATEFORMAT_details), d).toString();
+						String sentReceived;
+						String fromTo;
+						if (t == Calls.INCOMING_TYPE) {
+							sentReceived = context
+									.getString(R.string.received_);
+							fromTo = context.getString(R.string.from_);
+						} else if (t == Calls.OUTGOING_TYPE) {
+							sentReceived = context.getString(R.string.sent_);
+							fromTo = context.getString(R.string.to_);
+						} else {
+							sentReceived = "ukwn:";
+							fromTo = "ukwn:";
+						}
+						sb.append(sentReceived + " ");
+						sb.append(ds);
+						sb.append("\n");
+						sb.append(fromTo + " ");
+						sb.append(a);
+						b.setMessage(sb.toString());
+						b.setPositiveButton(android.R.string.ok, null);
+						b.show();
+						break;
+					case WHICH_DELETE:
+						SMSdroid.deleteMessages(context, target,
+								R.string.delete_message_);
+						break;
+					case WHICH_SPEAK:
+						// TODO: implement me
+						Toast.makeText(context, R.string.not_implemented,
+								Toast.LENGTH_SHORT).show();
+						break;
+					default:
+						break;
+					}
+				}
+			});
+			builder.show();
+			return true;
+		}
+	}
 }

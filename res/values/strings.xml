@@ -44,6 +44,7 @@
 	<string name="website">http://code.google.com/p/websmsdroid/</string>
 	<string name="settings">Preferences</string>
 	<string name="new_message">New message</string>
+	<string name="new_message_hint">Compose a new message</string>
 	<string name="new_messages_">New messages</string>
 	<string name="new_messages">%d unread messages.</string>
 	<string name="answer">Answer</string>
@@ -77,6 +78,8 @@
 	<string name="spek_">Speak</string>
 	<string name="delete_threads_">Delete all threads</string>
 	<string name="mark_all_read_">Mark all as read</string>
+	<string name="mark_read_">Mark read</string>
+	<string name="mark_unread_">Mark unread</string>
 	<string name="all_threads_">All threads</string>
 	<string name="message_options_">Message options</string>
 	<string name="compose_">Compose</string>
@@ -91,12 +94,10 @@
 	<string name="not_implemented">Sorry, not yet implemented.</string>
 	
 	<string-array name="themes">
-		<item>Default</item>
 		<item>Black</item>
 		<item>Light</item>
 	</string-array>
 	<string-array name="themes_values">
-		<item>default</item>
 		<item>black</item>
 		<item>light</item>
 	</string-array>

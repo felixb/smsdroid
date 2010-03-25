@@ -50,8 +50,6 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
 	/** Preference's name: theme. */
 	private static final String PREFS_THEME = "theme";
-	/** Theme: default. */
-	private static final String THEME_DEFAULT = "default";
 	/** Theme: black. */
 	private static final String THEME_BLACK = "black";
 	/** Theme: light. */
@@ -76,15 +74,11 @@ public class Preferences extends PreferenceActivity {
 	static final int getTheme(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		final String s = p.getString(PREFS_THEME, THEME_DEFAULT);
-		if (s == null || THEME_DEFAULT.equals(s)) {
-			return android.R.style.Theme;
-		} else if (THEME_BLACK.equals(s)) {
-			return android.R.style.Theme_Black;
-		} else if (THEME_LIGHT.equals(s)) {
+		final String s = p.getString(PREFS_THEME, THEME_BLACK);
+		if (s!= null && THEME_LIGHT.equals(s)) {
 			return android.R.style.Theme_Light;
 		}
-		return android.R.style.Theme;
+		return android.R.style.Theme_Black;
 	}
 
 	/**

@@ -32,6 +32,8 @@ import android.provider.Contacts.People.Extensions;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Cache holding persons.
@@ -57,6 +59,9 @@ public final class CachePersons {
 
 	/** Error message if API5 is not available. */
 	private static final String ERRORMESG = "no API5 available";
+
+	/** Pattern to clean up numbers. */
+	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern.compile("<([0-9]+)>");
 
 	/** Cached data. */
 	private static final HashMap<String, Person> CACHE = // .
@@ -118,8 +123,14 @@ public final class CachePersons {
 	 */
 	private static Person getNameForAddress(final Context context,
 			final String address) {
+		// clean up number
+		final Matcher m = PATTERN_CLEAN_NUMBER.matcher(address);
+		String realAddress = address;
+		if (m.find()) {
+			realAddress = m.group(1);
+		}
 		// address contains the phone number
-		Uri uri = Uri.withAppendedPath(uriPerson, address);
+		Uri uri = Uri.withAppendedPath(uriPerson, realAddress);
 		if (uri != null) {
 			Cursor cursor = context.getContentResolver().query(uri, projection,
 					null, null, null);

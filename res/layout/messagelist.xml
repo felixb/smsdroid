@@ -16,24 +16,8 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 	-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
-	android:layout_height="fill_parent" android:layout_width="fill_parent">
-	<com.admob.android.ads.AdView android:id="@+id/ad"
-		android:layout_alignParentTop="true" android:visibility="gone"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:gravity="bottom" app:isGoneWithoutAd="true"
-		app:keywords="android mobile handy cellphone google htc market app sms message game" />
-	<RelativeLayout android:layout_height="fill_parent"
-		android:layout_width="fill_parent" android:layout_below="@id/ad">
-		<Button android:id="@+id/answer" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:text="@string/answer"
-			android:layout_alignParentBottom="true" />
-		<ListView android:id="@id/android:list" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:drawSelectorOnTop="false"
-			android:scrollingCache="true" android:fastScrollEnabled="true"
-			android:cacheColorHint="@android:color/transparent"
-			android:choiceMode="singleChoice" android:scrollbarStyle="outsideInset"
-			android:layout_above="@id/answer" />
-	</RelativeLayout>
-</RelativeLayout>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@id/android:list" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:drawSelectorOnTop="false"
+	android:scrollingCache="true" android:fastScrollEnabled="true"
+	android:cacheColorHint="@android:color/transparent" android:choiceMode="singleChoice" />

@@ -65,6 +65,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		Log.d(TAG, "got intent: " + intent.getAction());
 		if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				Preferences.PREFS_NOTIFICATION_ENABLE, true)) {
+			Log.d(TAG, "no notification needed");
 			return;
 		}
 		Bundle b = intent.getExtras();
@@ -79,8 +80,11 @@ public class SmsReceiver extends BroadcastReceiver {
 			t = smsMessage[0].getTimestampMillis();
 		}
 
+		Log.d(TAG, "l: " + l);
+		Log.d(TAG, "t: " + t);
 		int count = MAX_SPINS;
 		do {
+			Log.d(TAG, "spin: " + count);
 			try {
 				Thread.sleep(SLEEP);
 			} catch (InterruptedException e) {
@@ -102,18 +106,21 @@ public class SmsReceiver extends BroadcastReceiver {
 	 */
 	static final int updateNewMessageNotification(final Context context,
 			final long time) {
+		Log.d(TAG, "updNewMsgNoti(" + context + "," + time + ")");
 		final NotificationManager mNotificationMgr = // .
 		(NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 				Preferences.PREFS_NOTIFICATION_ENABLE, true)) {
 			mNotificationMgr.cancelAll();
+			Log.d(TAG, "no notification needed, return -1");
 			return -1;
 		}
 		final Cursor cursor = context.getContentResolver().query(URI,
 				MessageListAdapter.PROJECTION,
 				MessageListAdapter.SELECTION_UNREAD, null, SORT);
 		final int l = cursor.getCount();
+		Log.d(TAG, "l: " + l);
 		int ret = l;
 		if (time > 0 || l == 0) {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
@@ -122,10 +129,12 @@ public class SmsReceiver extends BroadcastReceiver {
 			Notification n = null;
 			cursor.moveToFirst();
 			final long d = cursor.getLong(MessageListAdapter.INDEX_DATE);
+			Log.d(TAG, "d: " + d);
 			if (time > 0) {
 				if (time <= d) {
 					ret = l;
 				} else {
+					Log.d(TAG, "return -1 (1)");
 					return -1;
 				}
 			}
@@ -195,6 +204,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			}
 			mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 		}
+		Log.d(TAG, "return " + ret + " (2)");
 		return ret;
 	}
 }

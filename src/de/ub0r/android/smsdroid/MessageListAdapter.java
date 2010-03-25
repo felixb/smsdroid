@@ -70,11 +70,16 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 
 	/** SQL WHERE: unread messages. */
 	static final String SELECTION_UNREAD = "read = '0'";
+	/** SQL WHERE: read messages. */
+	static final String SELECTION_READ = "read = '1'";
 
 	/** Cursor's sort, upside down. */
-	public static final String SORT_USD = Calls.DATE + " ASC";;
+	public static final String SORT_USD = Calls.DATE + " ASC";
 	/** Cursor's sort, normal. */
-	public static final String SORT_NORM = Calls.DATE + " DESC";;
+	public static final String SORT_NORM = Calls.DATE + " DESC";
+
+	/** Used background drawable for outgoing messages. */
+	private int backgroundDrawableOut = 0;
 
 	/**
 	 * Default Constructor.
@@ -86,6 +91,11 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 	 */
 	public MessageListAdapter(final Context context, final Cursor c) {
 		super(context, R.layout.messagelist_item, c, true);
+		if (Preferences.getTheme(context) == android.R.style.Theme_Black) {
+			this.backgroundDrawableOut = R.drawable.grey_dark;
+		} else {
+			this.backgroundDrawableOut = R.drawable.grey_light;
+		}
 	}
 
 	/**
@@ -97,17 +107,16 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		int t = cursor.getInt(INDEX_TYPE);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		String s = "";
-		View v = view.findViewById(R.id.bg);
 		if (t == Calls.INCOMING_TYPE) {
 			final String address = cursor.getString(INDEX_ADDRESS);
 			twPerson.setText(address);
 			CachePersons.getName(context, address, twPerson);
 			s = "<< ";
-			v.setVisibility(View.GONE);
+			view.setBackgroundResource(0);
 		} else if (t == Calls.OUTGOING_TYPE) {
 			twPerson.setText(R.string.me);
 			s = ">> ";
-			v.setVisibility(View.VISIBLE);
+			view.setBackgroundResource(this.backgroundDrawableOut);
 		}
 		int read = cursor.getInt(INDEX_READ);
 		if (read == 0) {

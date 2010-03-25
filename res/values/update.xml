@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>v0.0.5: Change layout, show outgoing messages in different color, fix some fc</item>
 		<item>v0.0.4: Fix ListView behaviour, allow to change notification settings, answer/call/view/add contact from thread, display message count</item>
 		<item>v0.0.3: Add contact photos, allow swap message list, fix light theme on prefs</item>
 		<item>v0.0.2: Fix name in notification, add theme support</item>

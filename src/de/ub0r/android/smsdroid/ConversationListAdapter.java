@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+import android.util.Log;
 
 /**
  * CursorAdapter getting Name, Phone from DB.
@@ -51,6 +52,8 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 	public static final int INDEX_TYPE = 5;
 	/** INDEX: read. */
 	public static final int INDEX_READ = 6;
+	/** INDEX: person. */
+	public static final int INDEX_PERSON = 7;
 
 	/** Dateformat. //TODO: move me to xml */
 	static final String DATE_FORMAT = "dd.MM. kk:mm";
@@ -64,6 +67,7 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 			"body", // 4
 			Calls.TYPE, // 5
 			"read", // 6
+			"person", // 7
 	};
 
 	/** Cursor's sort. */
@@ -103,7 +107,6 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 		}
 		final String address = cursor.getString(INDEX_ADDRESS);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
-		// twPerson.setText(s + address);
 		twPerson.setText(address);
 		CachePersons.getName(context, address, twPerson);
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
@@ -119,6 +122,8 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 		} else {
 			iv.setVisibility(View.GONE);
 		}
+
+		Log.d(TAG, "person: " + cursor.getInt(INDEX_PERSON));
 
 		final Uri target = Uri.parse(MessageList.URI + threadID);
 		final Cursor c = context.getContentResolver().query(target,
