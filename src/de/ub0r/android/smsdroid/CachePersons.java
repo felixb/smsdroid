@@ -19,6 +19,8 @@
 package de.ub0r.android.smsdroid;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.content.ContentUris;
 import android.content.Context;
@@ -32,8 +34,6 @@ import android.provider.Contacts.People.Extensions;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * Cache holding persons.
@@ -61,7 +61,8 @@ public final class CachePersons {
 	private static final String ERRORMESG = "no API5 available";
 
 	/** Pattern to clean up numbers. */
-	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern.compile("<([0-9]+)>");
+	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern
+			.compile("<([0-9]+)>");
 
 	/** Cached data. */
 	private static final HashMap<String, Person> CACHE = // .
