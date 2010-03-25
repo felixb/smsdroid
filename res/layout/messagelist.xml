@@ -20,4 +20,4 @@
 	android:id="@id/android:list" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:drawSelectorOnTop="false"
 	android:scrollingCache="true" android:fastScrollEnabled="true"
-	android:cacheColorHint="@android:color/transparent" android:choiceMode="singleChoice" />
+	android:choiceMode="singleChoice" android:background="?android:attr/colorBackground" />

@@ -61,6 +61,8 @@ public class Preferences extends PreferenceActivity {
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// final int theme = Preferences.getTheme(this);
+		// this.setTheme(theme);
 		this.addPreferencesFromResource(R.xml.prefs);
 	}
 

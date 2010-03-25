@@ -19,7 +19,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:orientation="horizontal">
-	<View android:id="@+id/read" android:background="#00aa00"
+	<View android:id="@+id/read" android:background="#FF00AA00"
 		android:layout_height="fill_parent" android:layout_width="3dip"
 		android:layout_alignParentLeft="true" android:layout_centerVertical="true"
 		android:layout_marginRight="2dip" />

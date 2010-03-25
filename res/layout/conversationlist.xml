@@ -18,11 +18,13 @@
 	-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
-	android:layout_height="fill_parent" android:layout_width="fill_parent">
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:background="?android:attr/colorBackground">
 	<com.admob.android.ads.AdView android:id="@+id/ad"
 		android:layout_alignParentBottom="true" android:visibility="gone"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:gravity="bottom"
+		android:gravity="bottom" app:backgroundColor="?android:attr/colorBackground"
+		app:textColor="?android:attr/textColorPrimary"
 		app:keywords="android mobile handy cellphone google htc market app sms message game" />
 	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:drawSelectorOnTop="false"
