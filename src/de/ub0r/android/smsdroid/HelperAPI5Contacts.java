@@ -44,9 +44,12 @@ public final class HelperAPI5Contacts {
 	/** Error message if API5 is not available. */
 	private static final String ERRORMESG = "no API5c available";
 
-	/** {@link Uri} for persons. */
-	private static final Uri API5_URI_PERSON = // .
+	/** {@link Uri} for persons, content filter. */
+	private static final Uri API5_URI_CONTENT_FILTER = // .
 	ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI;
+	/** {@link Uri} for persons, plain. */
+	private static final Uri API5_URI_PLAIN = // .
+	ContactsContract.Contacts.CONTENT_URI;
 	/** Projection for persons query. */
 	private static final String[] API5_PROJECTION = // .
 	new String[] { ContactsContract.Data.CONTACT_ID,
@@ -94,12 +97,21 @@ public final class HelperAPI5Contacts {
 	}
 
 	/**
-	 * Get Persons {@link Uri}.
+	 * Get Persons {@link Uri}, filter.
 	 * 
 	 * @return {@link Uri}
 	 */
-	static Uri getUri() {
-		return API5_URI_PERSON;
+	static Uri getUriFilter() {
+		return API5_URI_CONTENT_FILTER;
+	}
+
+	/**
+	 * Get Persons {@link Uri}, plain.
+	 * 
+	 * @return {@link Uri}
+	 */
+	static Uri getUriPlain() {
+		return API5_URI_PLAIN;
 	}
 
 	/**

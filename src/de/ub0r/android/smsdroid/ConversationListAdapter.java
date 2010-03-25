@@ -91,7 +91,7 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final String threadID = cursor.getString(INDEX_THREADID);
+		final int threadID = cursor.getInt(INDEX_THREADID);
 		String s = "";
 		int t = cursor.getInt(INDEX_TYPE);
 		if (t == Calls.INCOMING_TYPE) {
@@ -105,25 +105,30 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
+		Object id;
 		final String address = cursor.getString(INDEX_ADDRESS);
+		final int person = cursor.getInt(INDEX_PERSON);
+		if (person == 0) {
+			id = address;
+		} else {
+			id = person;
+		}
+		Log.d(TAG, "p: " + address + "/" + person + " > " + id);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		twPerson.setText(address);
-		CachePersons.getName(context, address, twPerson);
+		CachePersons.getName(context, id, twPerson);
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
 				.getString(INDEX_BODY));
 		((TextView) view.findViewById(R.id.text3)).setText(s
-				+ DateFormat.format(DATE_FORMAT, Long.parseLong(cursor
-						.getString(INDEX_DATE))));
+				+ DateFormat.format(DATE_FORMAT, cursor.getLong(INDEX_DATE)));
 
 		ImageView iv = (ImageView) view.findViewById(R.id.photo);
 		if (SMSdroid.showContactPhoto) {
-			CachePersons.getPicture(context, address, iv);
+			CachePersons.getPicture(context, id, iv);
 			iv.setVisibility(View.VISIBLE);
 		} else {
 			iv.setVisibility(View.GONE);
 		}
-
-		Log.d(TAG, "person: " + cursor.getInt(INDEX_PERSON));
 
 		final Uri target = Uri.parse(MessageList.URI + threadID);
 		final Cursor c = context.getContentResolver().query(target,

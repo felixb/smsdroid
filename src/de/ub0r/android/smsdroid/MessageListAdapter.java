@@ -22,6 +22,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
@@ -108,9 +109,17 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		String s = "";
 		if (t == Calls.INCOMING_TYPE) {
+			Object id;
 			final String address = cursor.getString(INDEX_ADDRESS);
+			final int person = cursor.getInt(INDEX_PERSON);
+			if (person == 0) {
+				id = address;
+			} else {
+				id = person;
+			}
+			Log.d(TAG, "p: " + address + "/" + person + " > " + id);
 			twPerson.setText(address);
-			CachePersons.getName(context, address, twPerson);
+			CachePersons.getName(context, id, twPerson);
 			s = "<< ";
 			view.setBackgroundResource(0);
 		} else if (t == Calls.OUTGOING_TYPE) {
@@ -127,7 +136,6 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
 				.getString(INDEX_BODY));
 		((TextView) view.findViewById(R.id.text3)).setText(s
-				+ DateFormat.format(DATE_FORMAT, Long.parseLong(cursor
-						.getString(INDEX_DATE))));
+				+ DateFormat.format(DATE_FORMAT, cursor.getLong(INDEX_DATE)));
 	}
 }
