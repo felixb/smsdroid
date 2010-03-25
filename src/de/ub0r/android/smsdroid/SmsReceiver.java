@@ -49,9 +49,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static final String SORT = Calls.DATE + " DESC";
 
 	/** Delay for spinlock, waiting for new messages. */
-	private static final long SLEEP = 200;
+	private static final long SLEEP = 500;
 	/** Number of maximal spins. */
-	private static final int MAX_SPINS = 40;
+	private static final int MAX_SPINS = 15;
 
 	/** ID for new message notification. */
 	private static final int NOTIFICATION_ID_NEW = 1;
