@@ -139,11 +139,20 @@ public class SmsReceiver extends BroadcastReceiver {
 				}
 			}
 			if (l == 1) {
-				final String r = cursor
+				Object pid;
+				final String a = cursor
 						.getString(MessageListAdapter.INDEX_ADDRESS);
-				String rr = CachePersons.getName(context, r, null);
+				final int person = cursor
+						.getInt(MessageListAdapter.INDEX_PERSON);
+				if (person == 0) {
+					pid = a;
+				} else {
+					pid = person;
+				}
+				Log.d(TAG, "p: " + a + "/" + person + " > " + pid);
+				String rr = CachePersons.getName(context, pid, null);
 				if (rr == null) {
-					rr = r;
+					rr = a;
 				}
 				final String t = cursor
 						.getString(MessageListAdapter.INDEX_BODY);

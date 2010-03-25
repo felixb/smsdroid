@@ -109,17 +109,17 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		String s = "";
 		if (t == Calls.INCOMING_TYPE) {
-			Object id;
+			Object pid;
 			final String address = cursor.getString(INDEX_ADDRESS);
 			final int person = cursor.getInt(INDEX_PERSON);
 			if (person == 0) {
-				id = address;
+				pid = address;
 			} else {
-				id = person;
+				pid = person;
 			}
-			Log.d(TAG, "p: " + address + "/" + person + " > " + id);
+			Log.d(TAG, "p: " + address + "/" + person + " > " + pid);
 			twPerson.setText(address);
-			CachePersons.getName(context, id, twPerson);
+			CachePersons.getName(context, pid, twPerson);
 			s = "<< ";
 			view.setBackgroundResource(0);
 		} else if (t == Calls.OUTGOING_TYPE) {

@@ -165,10 +165,19 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.startManagingCursor(mCursor);
 		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
 		this.setListAdapter(adapter);
+		Object pid = null;
 		if (mCursor.moveToFirst()) {
 			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
+			final int personID = mCursor
+					.getInt(MessageListAdapter.INDEX_PERSON);
+			if (personID == 0) {
+				pid = this.address;
+			} else {
+				pid = personID;
+			}
+			Log.d(TAG, "p: " + this.address + "/" + personID + " > " + pid);
 		}
-		String pers = CachePersons.getName(this, this.address, null);
+		String pers = CachePersons.getName(this, pid, null);
 		if (pers == null) {
 			pers = this.address;
 		}
