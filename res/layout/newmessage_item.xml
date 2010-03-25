@@ -17,7 +17,8 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content">
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:paddingTop="5dip" android:paddingBottom="5dip">
 	<TextView android:text="@string/new_message" android:id="@+id/text1"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
