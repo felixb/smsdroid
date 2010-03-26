@@ -515,18 +515,12 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			final Uri target = Uri.parse(MessageList.URI + threadID);
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;
-			Object pid;
 			final String a = cursor
 					.getString(ConversationListAdapter.INDEX_ADDRESS);
 			final int person = cursor
 					.getInt(ConversationListAdapter.INDEX_PERSON);
-			if (person == 0) {
-				pid = a;
-			} else {
-				pid = person;
-			}
-			Log.d(TAG, "p: " + a + "/" + person + " > " + pid);
-			final String n = CachePersons.getName(this, pid, null);
+			Log.d(TAG, "p: " + a + "/" + person);
+			final String n = CachePersons.getName(this, a, null);
 			if (n == null) {
 				builder.setTitle(a);
 				items = items.clone();

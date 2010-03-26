@@ -28,7 +28,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.util.Log;
@@ -48,16 +47,11 @@ public final class HelperAPI5Contacts {
 	/** {@link Uri} for persons, content filter. */
 	private static final Uri API5_URI_CONTENT_FILTER = // .
 	ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI;
-	/** {@link Uri} for persons, plain. */
-	private static final Uri API5_URI_PLAIN = // .
-	ContactsContract.Contacts.CONTENT_URI;
+
 	/** Projection for persons query, filter. */
 	private static final String[] API5_PROJECTION_FILTER = // .
 	new String[] { ContactsContract.Data.CONTACT_ID,
 			ContactsContract.Data.DISPLAY_NAME };
-	/** Projection for persons query, plain. */
-	private static final String[] API5_PROJECTION_PLAIN = // .
-	new String[] { BaseColumns._ID, ContactsContract.Contacts.DISPLAY_NAME };
 
 	/**
 	 * Check whether API5 is available.
@@ -110,29 +104,11 @@ public final class HelperAPI5Contacts {
 	}
 
 	/**
-	 * Get Persons {@link Uri}, plain.
-	 * 
-	 * @return {@link Uri}
-	 */
-	static Uri getUriPlain() {
-		return API5_URI_PLAIN;
-	}
-
-	/**
 	 * Get projection.
 	 * 
 	 * @return projection
 	 */
 	static String[] getProjectionFilter() {
 		return API5_PROJECTION_FILTER;
-	}
-
-	/**
-	 * Get projection.
-	 * 
-	 * @return projection
-	 */
-	static String[] getProjectionPlain() {
-		return API5_PROJECTION_PLAIN;
 	}
 }
