@@ -53,7 +53,8 @@ public final class HelperAPI5Contacts {
 	ContactsContract.Contacts.CONTENT_URI;
 	/** Projection for persons query, filter. */
 	private static final String[] API5_PROJECTION_FILTER = // .
-	new String[] { BaseColumns._ID, ContactsContract.Data.DISPLAY_NAME };
+	new String[] { ContactsContract.Data.CONTACT_ID,
+			ContactsContract.Data.DISPLAY_NAME };
 	/** Projection for persons query, plain. */
 	private static final String[] API5_PROJECTION_PLAIN = // .
 	new String[] { BaseColumns._ID, ContactsContract.Contacts.DISPLAY_NAME };
