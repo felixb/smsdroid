@@ -22,7 +22,7 @@
 	<TextView android:text="@string/new_message" android:id="@+id/text1"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:paddingLeft="5dip" />
+		android:paddingLeft="7dip" />
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:id="@+id/text2"
 		android:text="@string/new_message_hint" android:layout_below="@+id/text1"
