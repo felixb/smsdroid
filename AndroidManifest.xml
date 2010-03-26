@@ -48,6 +48,13 @@
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>
+        	<receiver android:name=".WidgetProvider">
+	            <meta-data android:name="android.appwidget.provider"
+        	            android:resource="@xml/appwidget_provider" />
+	            <intent-filter>
+        	        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	            </intent-filter>
+        	</receiver>
 		<!-- The application's publisher ID assigned by AdMob -->
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
 	</application>
