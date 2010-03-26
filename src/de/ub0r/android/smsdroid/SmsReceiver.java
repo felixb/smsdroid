@@ -22,7 +22,9 @@ package de.ub0r.android.smsdroid;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -125,6 +127,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		if (time > 0 || l == 0) {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 		}
+		Uri uri = null;
 		if (l > 0) {
 			Notification n = null;
 			cursor.moveToFirst();
@@ -160,8 +163,8 @@ public class SmsReceiver extends BroadcastReceiver {
 						.getString(MessageListAdapter.INDEX_THREADID);
 				n = new Notification(R.drawable.stat_notify_sms, rr, System
 						.currentTimeMillis());
-				final Intent i = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(MessageList.URI + th), context,
+				uri = Uri.parse(MessageList.URI + th);
+				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
 						MessageList.class);
 				// add pending intent
 				// i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -172,10 +175,12 @@ public class SmsReceiver extends BroadcastReceiver {
 				n = new Notification(R.drawable.stat_notify_sms, context
 						.getString(R.string.new_messages_), System
 						.currentTimeMillis());
-				final Intent i = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(MessageList.URI), context, SMSdroid.class);
+				uri = Uri.parse(MessageList.URI);
+				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
+						SMSdroid.class);
 				// add pending intent
 				// i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+
 				final PendingIntent cIntent = PendingIntent.getActivity(
 						context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 				n.setLatestEventInfo(context, context
@@ -214,6 +219,9 @@ public class SmsReceiver extends BroadcastReceiver {
 			mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 		}
 		Log.d(TAG, "return " + ret + " (2)");
+		AppWidgetManager.getInstance(context).updateAppWidget(
+				new ComponentName(context, WidgetProvider.class),
+				WidgetProvider.getRemoteViews(context, l, uri));
 		return ret;
 	}
 }

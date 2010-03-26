@@ -24,7 +24,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 /**
@@ -57,18 +59,46 @@ public final class WidgetProvider extends AppWidgetProvider {
 	 * @return {@link RemoteViews}
 	 */
 	static RemoteViews getRemoteViews(final Context context) {
-		Intent intent = new Intent(context, SMSdroid.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-				intent, 0);
-		RemoteViews views = new RemoteViews(context.getPackageName(),
-				R.layout.widget);
 		final Cursor cursor = context.getContentResolver().query(
 				SmsReceiver.URI, MessageListAdapter.PROJECTION,
 				MessageListAdapter.SELECTION_UNREAD, null, null);
 		final int l = cursor.getCount();
 		Log.d(TAG, "l: " + l);
-		views.setTextViewText(R.id.text1, String.valueOf(l));
-		views.setOnClickPendingIntent(R.id.text1, pendingIntent);
+		return getRemoteViews(context, l, null);
+	}
+
+	/**
+	 * Get {@link RemoteViews}.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param count
+	 *            number of unread messages
+	 * @param uri
+	 *            {@link Uri} to link
+	 * @return {@link RemoteViews}
+	 */
+	static RemoteViews getRemoteViews(final Context context, final int count,
+			final Uri uri) {
+		Intent intent;
+		if (uri == null) {
+			intent = new Intent(context, SMSdroid.class);
+		} else {
+			intent = new Intent(Intent.ACTION_VIEW, uri, context,
+					SMSdroid.class);
+		}
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+				intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		RemoteViews views = new RemoteViews(context.getPackageName(),
+				R.layout.widget);
+		views.setTextViewText(R.id.text1, String.valueOf(count));
+		if (count == 0) {
+			views.setViewVisibility(R.id.text_bg, View.GONE);
+		} else {
+			views.setViewVisibility(R.id.text_bg, View.VISIBLE);
+		}
+		views.setOnClickPendingIntent(R.id.icon, pendingIntent);
 		return views;
 	}
 }
