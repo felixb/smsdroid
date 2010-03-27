@@ -43,13 +43,7 @@ public final class WidgetProvider extends AppWidgetProvider {
 	public void onUpdate(final Context context,
 			final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
 		Log.d(TAG, "onUpdate");
-
-		// final int n = appWidgetIds.length;
-		// for (int i = 0; i < n; i++) {
-		// RemoteViews views = getRemoteViews(context);
-		// appWidgetManager.updateAppWidget(i, views);
-		// }
-		SmsReceiver.updateNewMessageNotification(context, -1);
+		SmsReceiver.updateNewMessageNotification(context, null);
 	}
 
 	/**
@@ -99,7 +93,7 @@ public final class WidgetProvider extends AppWidgetProvider {
 		} else {
 			views.setViewVisibility(R.id.text_bg, View.VISIBLE);
 		}
-		views.setOnClickPendingIntent(R.id.icon, pendingIntent);
+		views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 		return views;
 	}
 }

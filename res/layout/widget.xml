@@ -18,22 +18,23 @@
 	-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:id="@+id/widget">
+	android:layout_height="72dip" android:layout_width="72dip"
+	android:background="@drawable/btn_application_selector" android:id="@+id/widget"
+	android:focusable="true" android:clickable="true">
 	<ImageView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:src="@drawable/icon"
 		android:scaleType="centerInside" android:id="@+id/icon"
 		android:layout_centerInParent="true" />
 	<RelativeLayout android:layout_height="wrap_content"
 		android:layout_width="wrap_content" android:layout_alignRight="@+id/icon"
-		android:layout_alignBottom="@+id/icon" android:id="@+id/text_bg" android:visibility="gone">
+		android:layout_alignBottom="@+id/icon" android:id="@+id/text_bg"
+		android:visibility="gone">
 		<ImageView android:src="@drawable/widget_counter_bg"
 			android:layout_height="18dip" android:layout_width="18dip"
 			android:layout_centerInParent="true" android:scaleType="fitXY" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:padding="3dip"
-			android:id="@+id/text1" android:text="0" android:shadowColor="#ff00ff00"
-			android:shadowRadius="10" android:layout_centerInParent="true" />
-
+			android:id="@+id/text1" android:text="0"
+			android:layout_centerInParent="true" />
 	</RelativeLayout>
 </RelativeLayout>
