@@ -310,7 +310,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ],
 				read);
 		context.getContentResolver().update(uri, cv, select, null);
-		SmsReceiver.updateNewMessageNotification(context, -1);
+		SmsReceiver.updateNewMessageNotification(context, null);
 	}
 
 	/**
@@ -341,7 +341,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					public void onClick(final DialogInterface dialog,
 							final int which) {
 						context.getContentResolver().delete(uri, null, null);
-						SmsReceiver.updateNewMessageNotification(context, -1);
+						SmsReceiver.updateNewMessageNotification(context, null);
 					}
 				});
 		builder.create().show();
@@ -468,18 +468,25 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	}
 
 	/**
+	 * Get a {@link Intent} for sending a new message.
+	 */
+	final static Intent getComposeIntent(final String address) {
+		final Intent i = new Intent(Intent.ACTION_SENDTO);
+		if (address == null) {
+			i.setData(Uri.parse("sms:"));
+		} else {
+			i.setData(Uri.parse("smsto:" + address));
+		}
+		return i;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public final void onItemClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
 		if (position == 0) { // header
-			try {
-				final Intent i = new Intent(Intent.ACTION_SENDTO);
-				i.setData(Uri.parse("sms:"));
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "could not find app to compose message", e);
-			}
+			this.startActivity(getComposeIntent(null));
 		} else {
 			Cursor cursor = (Cursor) parent.getItemAtPosition(position);
 			final String threadID = cursor
@@ -497,6 +504,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	public final boolean onItemLongClick(final AdapterView<?> parent,
 			final View view, final int position, final long id) {
 		if (position == 0) { // header
+			final Intent i = getComposeIntent(null);
+			this.startActivity(Intent.createChooser(i, this
+					.getString(R.string.new_message)));
 			return true;
 		} else {
 			Cursor cursor = (Cursor) parent.getItemAtPosition(position);
@@ -505,18 +515,12 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			final Uri target = Uri.parse(MessageList.URI + threadID);
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;
-			Object pid;
 			final String a = cursor
 					.getString(ConversationListAdapter.INDEX_ADDRESS);
 			final int person = cursor
 					.getInt(ConversationListAdapter.INDEX_PERSON);
-			if (person == 0) {
-				pid = a;
-			} else {
-				pid = person;
-			}
-			Log.d(TAG, "p: " + a + "/" + person + " > " + pid);
-			final String n = CachePersons.getName(this, pid, null);
+			Log.d(TAG, "p: " + a + "/" + person);
+			final String n = CachePersons.getName(this, a, null);
 			if (n == null) {
 				builder.setTitle(a);
 				items = items.clone();
@@ -533,14 +537,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					Intent i = null;
 					switch (which) {
 					case WHICH_ANSWER:
-						try {
-							i = new Intent(Intent.ACTION_SENDTO);
-							i.setData(Uri.parse("smsto:" + a));
-							SMSdroid.this.startActivity(i);
-						} catch (ActivityNotFoundException e) {
-							Log.e(TAG, "could not find app to compose message",
-									e);
-						}
+						SMSdroid.this.startActivity(getComposeIntent(a));
 						break;
 					case WHICH_VIEW_CONTACT:
 						if (n == null) {

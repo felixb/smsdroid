@@ -18,7 +18,7 @@
 	-->
 <resources>
     <string name="app_name">SMSdroid</string>
-	<string name="app_version">0.0.5 beta5</string>
+	<string name="app_version">0.0.6 beta6</string>
 	<string name="changelog_">Changelog</string>
 	<string name="about_">About</string>
 	<string name="about_hint">About this app</string>
@@ -28,7 +28,7 @@
 	<string name="author_">Author:</string>
 	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;</string>
 	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=5779152</string>
-	<string name="donate_mail">flx.yoo+websms.donator@gmail.com</string>
+	<string name="donate_mail">flx.yoo%2Bwebsms.donator@gmail.com</string>
 	<string name="donate_subject">I\'m the donator. My sender hash is...</string>
 	<string name="donate_">Donate</string>
 	<string name="donate_remove_ads_">Donate/remove ads</string>

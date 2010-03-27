@@ -22,7 +22,6 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -165,19 +164,13 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.startManagingCursor(mCursor);
 		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
 		this.setListAdapter(adapter);
-		Object pid = null;
 		if (mCursor.moveToFirst()) {
 			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
 			final int personID = mCursor
 					.getInt(MessageListAdapter.INDEX_PERSON);
-			if (personID == 0) {
-				pid = this.address;
-			} else {
-				pid = personID;
-			}
-			Log.d(TAG, "p: " + this.address + "/" + personID + " > " + pid);
+			Log.d(TAG, "p: " + this.address + "/" + personID);
 		}
-		String pers = CachePersons.getName(this, pid, null);
+		String pers = CachePersons.getName(this, this.address, null);
 		if (pers == null) {
 			pers = this.address;
 		}
@@ -220,13 +213,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.startActivity(new Intent(this, SMSdroid.class));
 			return true;
 		case R.id.item_compose:
-			try {
-				final Intent i = new Intent(Intent.ACTION_SENDTO);
-				i.setData(Uri.parse("sms:"));
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "could not find app to compose message", e);
-			}
+			this.startActivity(SMSdroid.getComposeIntent(null));
 			return true;
 		default:
 			return false;
@@ -244,13 +231,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
 		if (position == headerPos) { // header
-			try {
-				final Intent i = new Intent(Intent.ACTION_SENDTO);
-				i.setData(Uri.parse("smsto:" + this.address));
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "could not find app to compose message", e);
-			}
+			this.startActivity(SMSdroid.getComposeIntent(this.address));
 		} else {
 			return;
 		}
@@ -267,6 +248,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
 		if (position == headerPos) { // header
+			final Intent i = SMSdroid.getComposeIntent(this.address);
+			this.startActivity(Intent.createChooser(i, this
+					.getString(R.string.answer)));
 			return true;
 		} else {
 			final Context context = this;

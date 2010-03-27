@@ -27,7 +27,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.BaseColumns;
 import android.provider.Contacts;
 import android.provider.Contacts.People;
 import android.provider.Contacts.PeopleColumns;
@@ -66,18 +65,17 @@ public final class CachePersons {
 			.compile("<([0-9]+)>");
 
 	/** Cached data. */
-	private static final HashMap<Object, Person> CACHE = // .
-	new HashMap<Object, Person>();
+	private static final HashMap<String, Person> CACHE = // .
+	new HashMap<String, Person>();
 
 	/** {@link Uri} for persons, content filter. */
 	private static final Uri API3_URI_CONTENT_FILTER = // .
 	Contacts.Phones.CONTENT_FILTER_URL;
-	/** {@link Uri} for persons, plain. */
-	private static final Uri API3_URI_PLAIN = People.CONTENT_URI;
 
-	/** Projection for persons query. */
-	private static final String[] API3_PROJECTION = // .
+	/** Projection for persons query, filter. */
+	private static final String[] API3_PROJECTION_FILTER = // .
 	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME };
+	/** Projection for persons query, plain. */
 
 	/** Index of id. */
 	private static final int INDEX_ID = 0;
@@ -86,10 +84,8 @@ public final class CachePersons {
 
 	/** Used {@link Uri} for query. */
 	private static Uri uriFilter = API3_URI_CONTENT_FILTER;
-	/** Used {@link Uri} for query. */
-	private static Uri uriPlain = API3_URI_PLAIN;
-	/** Used projection for query. */
-	private static String[] projection = API3_PROJECTION;
+	/** Used projection for query, filter. */
+	private static String[] projectionFilter = API3_PROJECTION_FILTER;
 
 	/** Use old API? */
 	private static boolean useNewAPI = isAvailable();
@@ -107,8 +103,7 @@ public final class CachePersons {
 		try {
 			if (new HelperAPI5Contacts().isAvailable()) {
 				uriFilter = HelperAPI5Contacts.getUriFilter();
-				uriPlain = HelperAPI5Contacts.getUriPlain();
-				projection = HelperAPI5Contacts.getProjections();
+				projectionFilter = HelperAPI5Contacts.getProjectionFilter();
 				return true;
 			}
 		} catch (Throwable e) {
@@ -130,35 +125,33 @@ public final class CachePersons {
 	 */
 	private static Person getNameForAddress(final Context context,
 			final Object address) {
-		Uri uri;
-		String[] proj = projection;
-		if (address instanceof String) {
-			// clean up number
-			String realAddress = (String) address;
-			final Matcher m = PATTERN_CLEAN_NUMBER.matcher(realAddress);
-			if (m.find()) {
-				realAddress = m.group(1);
-			}
-			// address contains the phone number
-			uri = Uri.withAppendedPath(uriFilter, realAddress);
-		} else if (address instanceof Integer) {
-			uri = Uri.withAppendedPath(uriPlain, address.toString());
-			proj = proj.clone();
-			proj[INDEX_ID] = BaseColumns._ID;
-		} else {
-			uri = null;
+		Log.d(TAG, "a: " + address);
+		// clean up number
+		String realAddress = (String) address;
+		final Matcher m = PATTERN_CLEAN_NUMBER.matcher(realAddress);
+		if (m.find()) {
+			realAddress = m.group(1);
 		}
+		// address contains the phone number
+		Uri uri = Uri.withAppendedPath(uriFilter, realAddress);
 		if (uri != null) {
-			Cursor cursor = context.getContentResolver().query(uri, proj, null,
-					null, null);
-			if (cursor.moveToFirst()) {
-				final Person p = new Person();
-				p.id = cursor.getLong(INDEX_ID);
-				p.name = cursor.getString(INDEX_NAME);
+			try {
+				Log.d(TAG, "uri: " + uri);
+				Log.d(TAG, "proj[0]: " + projectionFilter[0]);
+				Log.d(TAG, "proj[1]: " + projectionFilter[1]);
+				Cursor cursor = context.getContentResolver().query(uri,
+						projectionFilter, null, null, null);
+				if (cursor.moveToFirst()) {
+					final Person p = new Person();
+					p.id = cursor.getLong(INDEX_ID);
+					p.name = cursor.getString(INDEX_NAME);
+					cursor.close();
+					return p;
+				}
 				cursor.close();
-				return p;
+			} catch (Exception e) {
+				Log.e(TAG, "failed to fetch person", e);
 			}
-			cursor.close();
 		}
 		return null;
 	}
@@ -204,8 +197,8 @@ public final class CachePersons {
 	 *            {@link Person}
 	 * @return Person
 	 */
-	private static Person newEntry(final Object address, final Person person) {
-		Log.d(TAG, "put person to cache: " + address.toString());
+	private static Person newEntry(final String address, final Person person) {
+		Log.d(TAG, "put person to cache: " + address);
 		Person p = person;
 		if (p == null) {
 			p = new Person();
@@ -229,7 +222,7 @@ public final class CachePersons {
 	 *            {@link TextView} the person should be set to
 	 * @return person's name
 	 */
-	public static String getName(final Context context, final Object address,
+	public static String getName(final Context context, final String address,
 			final TextView targetView) {
 		Person p = CACHE.get(address);
 		if (p == null) {
@@ -258,7 +251,7 @@ public final class CachePersons {
 	 *            person's address
 	 * @return person's id
 	 */
-	public static long getID(final Context context, final Object address) {
+	public static long getID(final Context context, final String address) {
 		Person p = CACHE.get(address);
 		if (p == null) {
 			getName(context, address, null); // try to get contact from database
@@ -282,7 +275,7 @@ public final class CachePersons {
 	 * @return person's picture
 	 */
 	public static Bitmap getPicture(final Context context,
-			final Object address, final ImageView targetView) {
+			final String address, final ImageView targetView) {
 		Person p = CACHE.get(address);
 		if (p == null) {
 			getName(context, address, null); // try to get contact from database

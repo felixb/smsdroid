@@ -105,18 +105,12 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
-		Object pid;
 		final String address = cursor.getString(INDEX_ADDRESS);
 		final int person = cursor.getInt(INDEX_PERSON);
-		if (person == 0) {
-			pid = address;
-		} else {
-			pid = person;
-		}
-		Log.d(TAG, "p: " + address + "/" + person + " > " + pid);
+		Log.d(TAG, "p: " + address + "/" + person);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		twPerson.setText(address);
-		CachePersons.getName(context, pid, twPerson);
+		CachePersons.getName(context, address, twPerson);
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
 				.getString(INDEX_BODY));
 		((TextView) view.findViewById(R.id.text3)).setText(s
@@ -124,7 +118,7 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 
 		ImageView iv = (ImageView) view.findViewById(R.id.photo);
 		if (SMSdroid.showContactPhoto) {
-			CachePersons.getPicture(context, pid, iv);
+			CachePersons.getPicture(context, address, iv);
 			iv.setVisibility(View.VISIBLE);
 		} else {
 			iv.setVisibility(View.GONE);
