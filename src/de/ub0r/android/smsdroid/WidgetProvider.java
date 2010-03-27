@@ -44,11 +44,12 @@ public final class WidgetProvider extends AppWidgetProvider {
 			final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
 		Log.d(TAG, "onUpdate");
 
-		final int n = appWidgetIds.length;
-		for (int i = 0; i < n; i++) {
-			RemoteViews views = getRemoteViews(context);
-			appWidgetManager.updateAppWidget(i, views);
-		}
+		// final int n = appWidgetIds.length;
+		// for (int i = 0; i < n; i++) {
+		// RemoteViews views = getRemoteViews(context);
+		// appWidgetManager.updateAppWidget(i, views);
+		// }
+		SmsReceiver.updateNewMessageNotification(context, -1);
 	}
 
 	/**

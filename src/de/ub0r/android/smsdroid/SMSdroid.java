@@ -364,7 +364,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					R.string.delete_threads_);
 			return true;
 		case R.id.item_mark_all_read:
-			markRead(this, Uri.parse("content://sms/inbox"), 1);
+			markRead(this, Uri.parse("content://sms/"), 1);
 			return true;
 		default:
 			return false;
