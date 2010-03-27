@@ -39,6 +39,7 @@ import android.util.Log;
  * 
  * @author flx
  */
+@SuppressWarnings("deprecation")
 public class SmsReceiver extends BroadcastReceiver {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.bcr";
@@ -59,7 +60,6 @@ public class SmsReceiver extends BroadcastReceiver {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
 		Log.d(TAG, "got intent: " + intent.getAction());
@@ -75,9 +75,9 @@ public class SmsReceiver extends BroadcastReceiver {
 		for (int i = 0; i < l; i++) {
 			smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
 		}
-		long t = -1;
+		String t = null;
 		if (l > 0) {
-			t = smsMessage[0].getTimestampMillis();
+			t = smsMessage[0].getDisplayMessageBody();
 		}
 
 		Log.d(TAG, "l: " + l);
@@ -93,6 +93,9 @@ public class SmsReceiver extends BroadcastReceiver {
 			}
 			--count;
 		} while (updateNewMessageNotification(context, t) <= 0 && count > 0);
+		if (count == 0) { // use messages as they are available
+			updateNewMessageNotification(context, null);
+		}
 	}
 
 	/**
@@ -100,13 +103,13 @@ public class SmsReceiver extends BroadcastReceiver {
 	 * 
 	 * @param context
 	 *            {@link Context}
-	 * @param time
-	 *            timestamp of the last assumed unread message
+	 * @param text
+	 *            text of the last assumed unread message
 	 * @return number of unread messages
 	 */
 	static final int updateNewMessageNotification(final Context context,
-			final long time) {
-		Log.d(TAG, "updNewMsgNoti(" + context + "," + time + ")");
+			final String text) {
+		Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ")");
 		final NotificationManager mNotificationMgr = // .
 		(NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -122,16 +125,16 @@ public class SmsReceiver extends BroadcastReceiver {
 		final int l = cursor.getCount();
 		Log.d(TAG, "l: " + l);
 		int ret = l;
-		if (time > 0 || l == 0) {
+		if (text != null || l == 0) {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 		}
 		if (l > 0) {
 			Notification n = null;
 			cursor.moveToFirst();
-			final long d = cursor.getLong(MessageListAdapter.INDEX_DATE);
-			Log.d(TAG, "d: " + d);
-			if (time > 0) {
-				if (time <= d) {
+			final String t = cursor.getString(MessageListAdapter.INDEX_BODY);
+			Log.d(TAG, "t: " + t);
+			if (text != null) {
+				if (t.startsWith(text)) {
 					ret = l;
 				} else {
 					Log.d(TAG, "return -1 (1)");
@@ -148,8 +151,6 @@ public class SmsReceiver extends BroadcastReceiver {
 				if (rr == null) {
 					rr = a;
 				}
-				final String t = cursor
-						.getString(MessageListAdapter.INDEX_BODY);
 				final String th = cursor
 						.getString(MessageListAdapter.INDEX_THREADID);
 				n = new Notification(R.drawable.stat_notify_sms, rr, System
@@ -184,7 +185,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			n.ledOffMS = ledFlash[1];
 			final SharedPreferences p = PreferenceManager
 					.getDefaultSharedPreferences(context);
-			if (time > 0) {
+			if (text != null) {
 				final boolean vibrate = p.getBoolean(Preferences.PREFS_VIBRATE,
 						false);
 				final String s = p.getString(Preferences.PREFS_SOUND, null);

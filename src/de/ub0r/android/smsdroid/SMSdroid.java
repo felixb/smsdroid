@@ -310,7 +310,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ],
 				read);
 		context.getContentResolver().update(uri, cv, select, null);
-		SmsReceiver.updateNewMessageNotification(context, -1);
+		SmsReceiver.updateNewMessageNotification(context, null);
 	}
 
 	/**
@@ -341,7 +341,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					public void onClick(final DialogInterface dialog,
 							final int which) {
 						context.getContentResolver().delete(uri, null, null);
-						SmsReceiver.updateNewMessageNotification(context, -1);
+						SmsReceiver.updateNewMessageNotification(context, null);
 					}
 				});
 		builder.create().show();
