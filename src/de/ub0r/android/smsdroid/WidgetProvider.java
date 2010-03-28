@@ -89,9 +89,9 @@ public final class WidgetProvider extends AppWidgetProvider {
 				R.layout.widget);
 		views.setTextViewText(R.id.text1, String.valueOf(count));
 		if (count == 0) {
-			views.setViewVisibility(R.id.text_bg, View.GONE);
+			views.setViewVisibility(R.id.text1, View.GONE);
 		} else {
-			views.setViewVisibility(R.id.text_bg, View.VISIBLE);
+			views.setViewVisibility(R.id.text1, View.VISIBLE);
 		}
 		views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 		return views;
