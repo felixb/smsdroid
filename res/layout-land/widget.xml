@@ -22,8 +22,8 @@
 	android:background="@drawable/btn_application_selector" android:id="@+id/widget"
 	android:focusable="true" android:clickable="true"
 	android:layout_marginTop="1dip">
-	<ImageView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:src="@drawable/icon"
+	<ImageView android:layout_width="56dip"
+		android:layout_height="56dip" android:src="@drawable/icon"
 		android:scaleType="centerInside" android:id="@+id/icon"
 		android:layout_centerHorizontal="true" android:paddingTop="2dip" />
 	<TextView android:layout_height="20dip" android:layout_width="20dip"
