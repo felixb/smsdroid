@@ -18,7 +18,7 @@
 	-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:orientation="horizontal">
+	android:orientation="horizontal" android:paddingRight="5dip">
 	<View android:id="@+id/read" android:background="#FF00AA00"
 		android:layout_height="fill_parent" android:layout_width="5dip"
 		android:layout_alignParentLeft="true" android:layout_centerVertical="true"
@@ -26,15 +26,15 @@
 	<RelativeLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<TextView android:text="@+id/text1" android:id="@+id/text1"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:singleLine="true" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/text2"
 			android:text="@+id/text2" android:layout_below="@+id/text1"
-			android:paddingRight="3dip" android:singleLine="false"
-			android:autoLink="all" />
+			android:singleLine="false" android:autoLink="all" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
-			android:paddingRight="3dip" android:layout_height="wrap_content"
-			android:id="@+id/text3" android:text="@+id/text3" />
+			android:layout_height="wrap_content" android:id="@+id/text3"
+			android:text="@+id/text3" android:singleLine="true" />
 	</RelativeLayout>
 </LinearLayout>

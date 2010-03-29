@@ -128,7 +128,7 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 		final Cursor c = context.getContentResolver().query(target,
 				MessageListAdapter.PROJECTION, null, null, null);
 		TextView tv = (TextView) view.findViewById(R.id.text4);
-		tv.setText(" (" + c.getCount() + ")");
+		tv.setText("(" + c.getCount() + ") ");
 		c.close();
 	}
 }

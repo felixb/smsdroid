@@ -27,9 +27,8 @@
 		app:textColor="?android:attr/textColorPrimary"
 		app:keywords="android mobile handy cellphone google htc market app sms message game" />
 	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:drawSelectorOnTop="false"
-	android:scrollingCache="true" android:fastScrollEnabled="true"
-	android:choiceMode="singleChoice" android:scrollbarStyle="outsideInset"
-	android:cacheColorHint="?android:attr/colorBackground"
-	android:layout_above="@id/ad" />
+		android:layout_height="fill_parent" android:drawSelectorOnTop="false"
+		android:scrollingCache="true" android:fastScrollEnabled="true"
+		android:choiceMode="singleChoice" android:cacheColorHint="?android:attr/colorBackground"
+		android:layout_above="@id/ad" />
 </RelativeLayout>
