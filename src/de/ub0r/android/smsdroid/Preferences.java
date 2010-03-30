@@ -31,9 +31,9 @@ import android.preference.PreferenceManager;
  */
 public class Preferences extends PreferenceActivity {
 	/** Preference's name: vibrate on receive. */
-	static final String PREFS_VIBRATE = "receive_vibrate";
+	public static final String PREFS_VIBRATE = "receive_vibrate";
 	/** Preference's name: sound on receive. */
-	static final String PREFS_SOUND = "receive_sound";
+	public static final String PREFS_SOUND = "receive_sound";
 	/** Preference's name: led color. */
 	private static final String PREFS_LED_COLOR = "receive_led_color";
 	/** Preference's name: led flash. */
@@ -43,7 +43,7 @@ public class Preferences extends PreferenceActivity {
 	/** Preference's name: hide ads. */
 	static final String PREFS_HIDEADS = "hideads";
 	/** Preference's name: enable notifications. */
-	static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
+	public static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
 	/** Prefernece's name: sort messages upside down. */
 	static final String PREFS_MSGLIST_SORT = "sort_messages_upsidedown";
 	/** Prefernece's name: show contact's photo. */
@@ -90,7 +90,7 @@ public class Preferences extends PreferenceActivity {
 	 *            {@link Context}
 	 * @return pattern
 	 */
-	static final int getLEDcolor(final Context context) {
+	public static final int getLEDcolor(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_LED_COLOR, "65280");
@@ -104,7 +104,7 @@ public class Preferences extends PreferenceActivity {
 	 *            {@link Context}
 	 * @return pattern
 	 */
-	static final int[] getLEDflash(final Context context) {
+	public static final int[] getLEDflash(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_LED_FLASH, "500_2000");
@@ -122,7 +122,7 @@ public class Preferences extends PreferenceActivity {
 	 *            {@link Context}
 	 * @return pattern
 	 */
-	static final long[] getVibratorPattern(final Context context) {
+	public static final long[] getVibratorPattern(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_VIBRATOR_PATTERN, "0");

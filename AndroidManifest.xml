@@ -43,18 +43,19 @@
 				<data android:mimeType="vnd.android-dir/mms-sms" />
 			</intent-filter>
 		</activity>
-		<receiver android:name="SmsReceiver">
+		<receiver android:name=".services.SmsReceiver">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name=".WidgetProvider">
+		<receiver android:name=".services.WidgetProvider">
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/appwidget_provider" />
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
 		</receiver>
+		<service android:name=".services.SmsMonitorService" />
 		<!-- The application's publisher ID assigned by AdMob -->
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
 	</application>

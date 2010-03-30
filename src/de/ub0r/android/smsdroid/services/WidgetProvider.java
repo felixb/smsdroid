@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
-package de.ub0r.android.smsdroid;
+package de.ub0r.android.smsdroid.services;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -28,6 +28,9 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+import de.ub0r.android.smsdroid.MessageListAdapter;
+import de.ub0r.android.smsdroid.R;
+import de.ub0r.android.smsdroid.SMSdroid;
 
 /**
  * A widget provider.
@@ -43,7 +46,7 @@ public final class WidgetProvider extends AppWidgetProvider {
 	public void onUpdate(final Context context,
 			final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
 		Log.d(TAG, "onUpdate");
-		SmsReceiver.updateNewMessageNotification(context, null);
+		SmsMonitorService.updateNewMessageNotification(context);
 	}
 
 	/**
@@ -55,7 +58,7 @@ public final class WidgetProvider extends AppWidgetProvider {
 	 */
 	static RemoteViews getRemoteViews(final Context context) {
 		final Cursor cursor = context.getContentResolver().query(
-				SmsReceiver.URI, MessageListAdapter.PROJECTION,
+				SmsMonitorService.URI, MessageListAdapter.PROJECTION,
 				MessageListAdapter.SELECTION_UNREAD, null, null);
 		final int l = cursor.getCount();
 		Log.d(TAG, "l: " + l);

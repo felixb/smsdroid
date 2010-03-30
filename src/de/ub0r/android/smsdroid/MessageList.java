@@ -75,7 +75,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Address. */
 	private String address = null;
 	/** URI to resolve. */
-	static final String URI = "content://mms-sms/conversations/";
+	public static final String URI = "content://mms-sms/conversations/";
 
 	/** Used {@link Uri}. */
 	private Uri uri;

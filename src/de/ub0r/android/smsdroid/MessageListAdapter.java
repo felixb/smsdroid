@@ -57,7 +57,7 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 	ConversationListAdapter.DATE_FORMAT;
 
 	/** Cursor's projection. */
-	static final String[] PROJECTION = { //
+	public static final String[] PROJECTION = { //
 	"_id", // 0
 			Calls.DATE, // 1
 			"address", // 2
@@ -68,7 +68,7 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 	};
 
 	/** SQL WHERE: unread messages. */
-	static final String SELECTION_UNREAD = "read = '0'";
+	public static final String SELECTION_UNREAD = "read = '0'";
 	/** SQL WHERE: read messages. */
 	static final String SELECTION_READ = "read = '1'";
 
