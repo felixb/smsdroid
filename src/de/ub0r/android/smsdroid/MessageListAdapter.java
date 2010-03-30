@@ -51,8 +51,6 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 	public static final int INDEX_TYPE = 5;
 	/** INDEX: read. */
 	public static final int INDEX_READ = 6;
-	/** INDEX: person. */
-	public static final int INDEX_PERSON = 7;
 
 	/** Dateformat. //TODO: move me to xml */
 	private static final String DATE_FORMAT = // .
@@ -67,7 +65,6 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 			"body", // 4
 			Calls.TYPE, // 5
 			"read", // 6
-			"person", // 7
 	};
 
 	/** SQL WHERE: unread messages. */
@@ -111,8 +108,7 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 
 		if (t == Calls.INCOMING_TYPE) {
 			final String address = cursor.getString(INDEX_ADDRESS);
-			final int person = cursor.getInt(INDEX_PERSON);
-			Log.d(TAG, "p: " + address + "/" + person);
+			Log.d(TAG, "p: " + address);
 			twPerson.setText(address);
 			CachePersons.getName(context, address, twPerson);
 			view.setBackgroundResource(0);

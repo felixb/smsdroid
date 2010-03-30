@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -159,16 +160,22 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			lv.setStackFromBottom(false);
 		}
 
-		Cursor mCursor = this.getContentResolver().query(this.uri,
-				MessageListAdapter.PROJECTION, null, null, sort);
-		this.startManagingCursor(mCursor);
-		MessageListAdapter adapter = new MessageListAdapter(this, mCursor);
+		Cursor cursor;
+		try {
+			cursor = this.getContentResolver().query(this.uri,
+					MessageListAdapter.PROJECTION, null, null, sort);
+		} catch (SQLException e) {
+			Log.w(TAG, "error while query", e);
+			MessageListAdapter.PROJECTION[ConversationListAdapter.INDEX_ADDRESS] = ConversationListAdapter.ADDRESS_HERO;
+			cursor = this.getContentResolver().query(this.uri,
+					MessageListAdapter.PROJECTION, null, null, sort);
+		}
+		this.startManagingCursor(cursor);
+		MessageListAdapter adapter = new MessageListAdapter(this, cursor);
 		this.setListAdapter(adapter);
-		if (mCursor.moveToFirst()) {
-			this.address = mCursor.getString(MessageListAdapter.INDEX_ADDRESS);
-			final int personID = mCursor
-					.getInt(MessageListAdapter.INDEX_PERSON);
-			Log.d(TAG, "p: " + this.address + "/" + personID);
+		if (cursor.moveToFirst()) {
+			this.address = cursor.getString(MessageListAdapter.INDEX_ADDRESS);
+			Log.d(TAG, "p: " + this.address);
 		}
 		String pers = CachePersons.getName(this, this.address, null);
 		if (pers == null) {

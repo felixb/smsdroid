@@ -53,8 +53,6 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 	public static final int INDEX_TYPE = 5;
 	/** INDEX: read. */
 	public static final int INDEX_READ = 6;
-	/** INDEX: person. */
-	public static final int INDEX_PERSON = 7;
 
 	/** Dateformat. //TODO: move me to xml */
 	static final String DATE_FORMAT = "dd.MM. kk:mm";
@@ -68,8 +66,10 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 			"body", // 4
 			Calls.TYPE, // 5
 			"read", // 6
-			"person", // 7
 	};
+
+	/** Cursors row in hero phones: address. */
+	static final String ADDRESS_HERO = "recipient_address";
 
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " DESC";
@@ -110,8 +110,7 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 		final String address = cursor.getString(INDEX_ADDRESS);
-		final int person = cursor.getInt(INDEX_PERSON);
-		Log.d(TAG, "p: " + address + "/" + person);
+		Log.d(TAG, "p: " + address);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
 		twPerson.setText(address);
 		CachePersons.getName(context, address, twPerson);

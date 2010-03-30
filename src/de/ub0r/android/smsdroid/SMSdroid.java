@@ -40,6 +40,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -172,12 +173,21 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		final ListView list = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		list.addHeaderView(header);
-		Cursor mCursor = this.getContentResolver().query(URI,
-				ConversationListAdapter.PROJECTION, null, null,
-				ConversationListAdapter.SORT);
-		this.startManagingCursor(mCursor);
+		Cursor cursor;
+		try {
+			cursor = this.getContentResolver().query(URI,
+					ConversationListAdapter.PROJECTION, null, null,
+					ConversationListAdapter.SORT);
+		} catch (SQLException e) {
+			Log.w(TAG, "error while query", e);
+			ConversationListAdapter.PROJECTION[ConversationListAdapter.INDEX_ADDRESS] = ConversationListAdapter.ADDRESS_HERO;
+			cursor = this.getContentResolver().query(URI,
+					ConversationListAdapter.PROJECTION, null, null,
+					ConversationListAdapter.SORT);
+		}
+		this.startManagingCursor(cursor);
 		ConversationListAdapter adapter = new ConversationListAdapter(this,
-				mCursor);
+				cursor);
 		this.setListAdapter(adapter);
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
@@ -554,9 +564,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			String[] items = this.longItemClickDialog;
 			final String a = cursor
 					.getString(ConversationListAdapter.INDEX_ADDRESS);
-			final int person = cursor
-					.getInt(ConversationListAdapter.INDEX_PERSON);
-			Log.d(TAG, "p: " + a + "/" + person);
+			Log.d(TAG, "p: " + a);
 			final String n = CachePersons.getName(this, a, null);
 			if (n == null) {
 				builder.setTitle(a);

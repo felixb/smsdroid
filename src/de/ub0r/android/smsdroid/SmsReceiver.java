@@ -147,9 +147,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			if (l == 1) {
 				final String a = cursor
 						.getString(MessageListAdapter.INDEX_ADDRESS);
-				final int person = cursor
-						.getInt(MessageListAdapter.INDEX_PERSON);
-				Log.d(TAG, "p: " + a + "/" + person);
+				Log.d(TAG, "p: " + a);
 				String rr = CachePersons.getName(context, a, null);
 				if (rr == null) {
 					rr = a;
