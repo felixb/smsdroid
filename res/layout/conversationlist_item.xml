@@ -34,9 +34,14 @@
 			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
 			android:layout_height="wrap_content" android:id="@+id/text3"
 			android:text="@+id/text3" />
+		<ImageView android:layout_width="12sp"
+			android:layout_height="18sp" android:id="@+id/inout"
+			android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/text3"
+			android:src="@drawable/ic_call_log_list_incoming_call"
+			android:scaleType="fitStart" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_alignParentTop="true"
-			android:layout_toLeftOf="@id/text3" android:id="@+id/text4"
+			android:layout_toLeftOf="@+id/inout" android:id="@+id/text4"
 			android:text="@+id/text4" android:textAppearance="?android:attr/textAppearanceMedium" />
 		<TextView android:text="@+id/text1" android:id="@+id/text1"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"

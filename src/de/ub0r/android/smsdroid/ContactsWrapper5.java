@@ -19,31 +19,22 @@
 package de.ub0r.android.smsdroid;
 
 import java.io.InputStream;
-import java.lang.reflect.Method;
 
-import android.app.Notification;
-import android.app.Service;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
-import android.util.Log;
 
 /**
  * Helper class to set/unset background for api5 systems.
  * 
  * @author flx
  */
-public final class HelperAPI5Contacts {
-	/** Tag for output. */
-	private static final String TAG = "SMSdroid.api5c";
-
-	/** Error message if API5 is not available. */
-	private static final String ERRORMESG = "no API5c available";
-
+public final class ContactsWrapper5 extends ContactsWrapper {
 	/** {@link Uri} for persons, content filter. */
 	private static final Uri API5_URI_CONTENT_FILTER = // .
 	ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI;
@@ -54,36 +45,10 @@ public final class HelperAPI5Contacts {
 			ContactsContract.Data.DISPLAY_NAME };
 
 	/**
-	 * Check whether API5 is available.
-	 * 
-	 * @return true if API5 is available
+	 * {@inheritDoc}
 	 */
-	boolean isAvailable() {
-		try {
-			Method mDebugMethod = Service.class.getMethod("startForeground",
-					new Class[] { Integer.TYPE, Notification.class });
-			/* success, this is a newer device */
-			if (mDebugMethod != null) {
-				return true;
-			}
-		} catch (Throwable e) {
-			Log.d(TAG, ERRORMESG, e);
-			throw new VerifyError(ERRORMESG);
-		}
-		Log.d(TAG, ERRORMESG);
-		throw new VerifyError(ERRORMESG);
-	}
-
-	/**
-	 * Load ContactPhoto from database.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param contactId
-	 *            id of contact
-	 * @return {@link Bitmap}
-	 */
-	static Bitmap loadContactPhoto(final Context context, // .
+	@Override
+	public Bitmap loadContactPhoto(final Context context, // .
 			final long contactId) {
 		InputStream is = Contacts.openContactPhotoInputStream(context
 				.getContentResolver(), ContentUris.withAppendedId(
@@ -95,20 +60,40 @@ public final class HelperAPI5Contacts {
 	}
 
 	/**
-	 * Get Persons {@link Uri}, filter.
-	 * 
-	 * @return {@link Uri}
+	 * {@inheritDoc}
 	 */
-	static Uri getUriFilter() {
+	@Override
+	public Uri getUriFilter() {
 		return API5_URI_CONTENT_FILTER;
 	}
 
 	/**
-	 * Get projection.
-	 * 
-	 * @return projection
+	 * {@inheritDoc}
 	 */
-	static String[] getProjectionFilter() {
+	@Override
+	public Uri getContactUri(final long id) {
+		return Uri.withAppendedPath(Contacts.CONTENT_URI, String.valueOf(id));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String[] getProjectionFilter() {
 		return API5_PROJECTION_FILTER;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Intent getInsertPickIntent(final String address) {
+		final Intent i = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+		i.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+		i.putExtra(ContactsContract.Intents.Insert.PHONE, address);
+		i.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE,
+				ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+		return i;
+	}
+
 }

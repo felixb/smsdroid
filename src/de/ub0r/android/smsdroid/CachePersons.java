@@ -22,15 +22,10 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.Contacts;
-import android.provider.Contacts.People;
-import android.provider.Contacts.PeopleColumns;
-import android.provider.Contacts.People.Extensions;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +35,6 @@ import android.widget.TextView;
  * 
  * @author flx
  */
-@SuppressWarnings("deprecation")
 public final class CachePersons {
 	/** Cached person. */
 	private static class Person {
@@ -57,61 +51,25 @@ public final class CachePersons {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.cp";
 
-	/** Error message if API5 is not available. */
-	private static final String ERRORMESG = "no API5 available";
-
 	/** Pattern to clean up numbers. */
 	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern
-			.compile("<([0-9]+)>");
+			.compile("<(\\+?[0-9]+)>");
 
 	/** Cached data. */
 	private static final HashMap<String, Person> CACHE = // .
 	new HashMap<String, Person>();
-
-	/** {@link Uri} for persons, content filter. */
-	private static final Uri API3_URI_CONTENT_FILTER = // .
-	Contacts.Phones.CONTENT_FILTER_URL;
-
-	/** Projection for persons query, filter. */
-	private static final String[] API3_PROJECTION_FILTER = // .
-	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME };
-	/** Projection for persons query, plain. */
 
 	/** Index of id. */
 	private static final int INDEX_ID = 0;
 	/** Index of name. */
 	private static final int INDEX_NAME = 1;
 
-	/** Used {@link Uri} for query. */
-	private static Uri uriFilter = API3_URI_CONTENT_FILTER;
-	/** Used projection for query, filter. */
-	private static String[] projectionFilter = API3_PROJECTION_FILTER;
-
-	/** Use old API? */
-	private static boolean useNewAPI = isAvailable();
+	/** Wrapper to use for contacts API. */
+	private static final ContactsWrapper WRAPPER = ContactsWrapper
+			.getInstance();
 
 	/** Private Constructor. */
 	private CachePersons() {
-	}
-
-	/**
-	 * Check whether API5 is available.
-	 * 
-	 * @return true if API5 is available
-	 */
-	static boolean isAvailable() {
-		try {
-			if (new HelperAPI5Contacts().isAvailable()) {
-				uriFilter = HelperAPI5Contacts.getUriFilter();
-				projectionFilter = HelperAPI5Contacts.getProjectionFilter();
-				return true;
-			}
-		} catch (Throwable e) {
-			Log.d(TAG, ERRORMESG, e);
-			return false;
-		}
-		Log.d(TAG, ERRORMESG);
-		return false;
 	}
 
 	/**
@@ -124,23 +82,24 @@ public final class CachePersons {
 	 * @return Person
 	 */
 	private static Person getNameForAddress(final Context context,
-			final Object address) {
+			final String address) {
 		Log.d(TAG, "a: " + address);
 		// clean up number
-		String realAddress = (String) address;
+		String realAddress = address;
 		final Matcher m = PATTERN_CLEAN_NUMBER.matcher(realAddress);
 		if (m.find()) {
 			realAddress = m.group(1);
 		}
 		// address contains the phone number
-		Uri uri = Uri.withAppendedPath(uriFilter, realAddress);
+		Uri uri = Uri.withAppendedPath(WRAPPER.getUriFilter(), realAddress);
+		final String[] proj = WRAPPER.getProjectionFilter();
 		if (uri != null) {
 			try {
 				Log.d(TAG, "uri: " + uri);
-				Log.d(TAG, "proj[0]: " + projectionFilter[0]);
-				Log.d(TAG, "proj[1]: " + projectionFilter[1]);
-				Cursor cursor = context.getContentResolver().query(uri,
-						projectionFilter, null, null, null);
+				Log.d(TAG, "proj[0]: " + proj[0]);
+				Log.d(TAG, "proj[1]: " + proj[1]);
+				Cursor cursor = context.getContentResolver().query(uri, proj,
+						null, null, null);
 				if (cursor.moveToFirst()) {
 					final Person p = new Person();
 					p.id = cursor.getLong(INDEX_ID);
@@ -170,15 +129,7 @@ public final class CachePersons {
 		if (person.noPicutre) {
 			return null;
 		}
-		Bitmap b = null;
-		if (useNewAPI) {
-			b = HelperAPI5Contacts.loadContactPhoto(context, person.id);
-		} else {
-			Uri uri = ContentUris.withAppendedId(People.CONTENT_URI, person.id);
-			Log.d(TAG, "load pic: " + uri.toString());
-			b = People.loadContactPhoto(context, uri,
-					R.drawable.ic_contact_picture, null);
-		}
+		Bitmap b = WRAPPER.loadContactPhoto(context, person.id);
 		person.picture = b;
 		if (b == null) {
 			person.noPicutre = true;

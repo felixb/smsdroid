@@ -21,6 +21,7 @@ package de.ub0r.android.smsdroid;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -60,7 +61,7 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 
 	/** Cursor's projection. */
 	public static final String[] PROJECTION = { //
-	"_id", // 0
+	BaseColumns._ID, // 0
 			Calls.DATE, // 1
 			"address", // 2
 			"thread_id", // 3
@@ -92,12 +93,15 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
 		final int threadID = cursor.getInt(INDEX_THREADID);
-		String s = "";
 		int t = cursor.getInt(INDEX_TYPE);
 		if (t == Calls.INCOMING_TYPE) {
-			s = "<< ";
+			((ImageView) view.findViewById(R.id.inout))
+					.setImageResource(R.drawable.// .
+					ic_call_log_list_incoming_call);
 		} else if (t == Calls.OUTGOING_TYPE) {
-			s = ">> ";
+			((ImageView) view.findViewById(R.id.inout))
+					.setImageResource(R.drawable.// .
+					ic_call_log_list_outgoing_call);
 		}
 		int read = cursor.getInt(INDEX_READ);
 		if (read == 0) {
@@ -113,8 +117,8 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 		CachePersons.getName(context, address, twPerson);
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
 				.getString(INDEX_BODY));
-		((TextView) view.findViewById(R.id.text3)).setText(s
-				+ DateFormat.format(DATE_FORMAT, cursor.getLong(INDEX_DATE)));
+		((TextView) view.findViewById(R.id.text3)).setText(DateFormat.format(
+				DATE_FORMAT, cursor.getLong(INDEX_DATE)));
 
 		ImageView iv = (ImageView) view.findViewById(R.id.photo);
 		if (SMSdroid.showContactPhoto) {
@@ -128,7 +132,7 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 		final Cursor c = context.getContentResolver().query(target,
 				MessageListAdapter.PROJECTION, null, null, null);
 		TextView tv = (TextView) view.findViewById(R.id.text4);
-		tv.setText("(" + c.getCount() + ") ");
+		tv.setText("(" + c.getCount() + ")");
 		c.close();
 	}
 }

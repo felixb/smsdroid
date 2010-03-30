@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>v0.0.7: Fix some layout bugs, add widget, fix notificaion</item>
 		<item>v0.0.6: Fix FC for Milestones, allow to choose sender with longclick on compose/answer</item>
 		<item>v0.0.5: Change/fix layout, new icon, show outgoing messages in different color, fix some fc</item>
 		<item>v0.0.4: Fix ListView behaviour, allow to change notification settings, answer/call/view/add contact from thread, display message count</item>

@@ -43,8 +43,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Contacts;
-import android.provider.Contacts.People;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -114,6 +112,39 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	private String[] longItemClickDialog = null;
 
 	/**
+	 * Show all rows of a particular {@link Uri}.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param u
+	 *            {@link Uri}
+	 */
+	static final void showRows(final Context context, final Uri u) {
+		Log.d(TAG, "-----GET HEADERS-----");
+		Log.d(TAG, "-- " + u.toString() + " --");
+		Cursor c = context.getContentResolver()
+				.query(u, null, null, null, null);
+		for (String r : c.getColumnNames()) {
+			Log.d(TAG, r);
+		}
+		c.close();
+		Log.d(TAG, "-*---GET HEADERS---*-");
+
+	}
+
+	/**
+	 * Show rows for debugging purposes.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 */
+	static final void showRows(final Context context) {
+		// this.showRows(ContactsWrapper.getInstance().getUriFilter());
+		showRows(context, URI);
+		// this.showRows(Uri.parse(MessageList.URI));
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -133,6 +164,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			editor.commit();
 			this.showDialog(DIALOG_UPDATE);
 		}
+
+		showRows(this);
 
 		showContactPhoto = prefs.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
 				false);
@@ -469,8 +502,12 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 
 	/**
 	 * Get a {@link Intent} for sending a new message.
+	 * 
+	 * @param address
+	 *            address
+	 * @return {@link Intent}
 	 */
-	final static Intent getComposeIntent(final String address) {
+	static final Intent getComposeIntent(final String address) {
 		final Intent i = new Intent(Intent.ACTION_SENDTO);
 		if (address == null) {
 			i.setData(Uri.parse("sms:"));
@@ -530,7 +567,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 				builder.setTitle(n);
 			}
 			builder.setItems(items, new DialogInterface.OnClickListener() {
-				@SuppressWarnings("deprecation")
 				@Override
 				public void onClick(final DialogInterface dialog,
 						final int which) {
@@ -541,16 +577,13 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 						break;
 					case WHICH_VIEW_CONTACT:
 						if (n == null) {
-							i = new Intent(Intent.ACTION_INSERT_OR_EDIT);
-							i.setType(People.CONTENT_ITEM_TYPE);
-							i.putExtra(Contacts.Intents.Insert.PHONE, a);
-							i.putExtra(Contacts.Intents.Insert.PHONE_TYPE,
-									Contacts.PhonesColumns.TYPE_MOBILE);
+							i = ContactsWrapper.getInstance()
+									.getInsertPickIntent(a);
 						} else {
-							final Uri uri = Uri
-									.parse("content://contacts/people/"
-											+ CachePersons.getID(SMSdroid.this,
-													a));
+							final Uri uri = ContactsWrapper.getInstance()
+									.getContactUri(
+											CachePersons
+													.getID(SMSdroid.this, a));
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
 						SMSdroid.this.startActivity(i);

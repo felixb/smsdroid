@@ -24,6 +24,7 @@ import android.provider.CallLog.Calls;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
@@ -107,19 +108,23 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 			final Cursor cursor) {
 		int t = cursor.getInt(INDEX_TYPE);
 		final TextView twPerson = (TextView) view.findViewById(R.id.text1);
-		String s = "";
+
 		if (t == Calls.INCOMING_TYPE) {
 			final String address = cursor.getString(INDEX_ADDRESS);
 			final int person = cursor.getInt(INDEX_PERSON);
 			Log.d(TAG, "p: " + address + "/" + person);
 			twPerson.setText(address);
 			CachePersons.getName(context, address, twPerson);
-			s = "<< ";
 			view.setBackgroundResource(0);
+			((ImageView) view.findViewById(R.id.inout))
+					.setImageResource(R.drawable.// .
+					ic_call_log_list_incoming_call);
 		} else if (t == Calls.OUTGOING_TYPE) {
 			twPerson.setText(R.string.me);
-			s = ">> ";
 			view.setBackgroundResource(this.backgroundDrawableOut);
+			((ImageView) view.findViewById(R.id.inout))
+					.setImageResource(R.drawable.// .
+					ic_call_log_list_outgoing_call);
 		}
 		int read = cursor.getInt(INDEX_READ);
 		if (read == 0) {
@@ -129,7 +134,7 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		}
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
 				.getString(INDEX_BODY));
-		((TextView) view.findViewById(R.id.text3)).setText(s
-				+ DateFormat.format(DATE_FORMAT, cursor.getLong(INDEX_DATE)));
+		((TextView) view.findViewById(R.id.text3)).setText(DateFormat.format(
+				DATE_FORMAT, cursor.getLong(INDEX_DATE)));
 	}
 }
