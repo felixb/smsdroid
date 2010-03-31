@@ -181,6 +181,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
 			ConversationListAdapter.PROJECTION[ConversationListAdapter.INDEX_ADDRESS] = ConversationListAdapter.ADDRESS_HERO;
+			ConversationListAdapter.PROJECTION[ConversationListAdapter.INDEX_THREADID] = ConversationListAdapter.THREADID_HERO;
 			cursor = this.getContentResolver().query(URI,
 					ConversationListAdapter.PROJECTION, null, null,
 					ConversationListAdapter.SORT);

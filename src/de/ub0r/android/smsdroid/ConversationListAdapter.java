@@ -70,6 +70,8 @@ public class ConversationListAdapter extends ResourceCursorAdapter {
 
 	/** Cursors row in hero phones: address. */
 	static final String ADDRESS_HERO = "recipient_address";
+	/** Cursors row in hero phones: thread_id. */
+	static final String THREADID_HERO = "_id";
 
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " DESC";
