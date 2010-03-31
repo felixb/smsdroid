@@ -175,6 +175,9 @@ public final class CachePersons {
 	 */
 	public static String getName(final Context context, final String address,
 			final TextView targetView) {
+		if (address == null) {
+			return null;
+		}
 		Person p = CACHE.get(address);
 		if (p == null) {
 			// TODO: for targetView != null: spawn thread to do the work
@@ -203,6 +206,9 @@ public final class CachePersons {
 	 * @return person's id
 	 */
 	public static long getID(final Context context, final String address) {
+		if (address == null) {
+			return -1;
+		}
 		Person p = CACHE.get(address);
 		if (p == null) {
 			getName(context, address, null); // try to get contact from database
@@ -227,6 +233,10 @@ public final class CachePersons {
 	 */
 	public static Bitmap getPicture(final Context context,
 			final String address, final ImageView targetView) {
+		if (address == null) {
+			targetView.setImageResource(R.drawable.ic_contact_picture);
+			return null;
+		}
 		Person p = CACHE.get(address);
 		if (p == null) {
 			getName(context, address, null); // try to get contact from database

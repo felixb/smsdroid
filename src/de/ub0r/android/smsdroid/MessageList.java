@@ -174,8 +174,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		MessageListAdapter adapter = new MessageListAdapter(this, cursor);
 		this.setListAdapter(adapter);
 		if (cursor.moveToFirst()) {
-			this.address = cursor.getString(MessageListAdapter.INDEX_ADDRESS);
-			Log.d(TAG, "p: " + this.address);
+			String a = null;
+			do {
+				a = cursor.getString(MessageListAdapter.INDEX_ADDRESS);
+			} while (a == null && cursor.moveToNext());
+			Log.d(TAG, "p: " + a);
+			this.address = a;
 		}
 		String pers = CachePersons.getName(this, this.address, null);
 		if (pers == null) {
