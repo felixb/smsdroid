@@ -79,8 +79,13 @@ public final class WidgetProvider extends AppWidgetProvider {
 		if (uri == null) {
 			intent = new Intent(context, SMSdroid.class);
 		} else {
-			intent = new Intent(Intent.ACTION_VIEW, uri, context,
-					SMSdroid.class);
+			if (uri.toString().equals(MessageList.URI)) {
+				intent = new Intent(Intent.ACTION_VIEW, uri, context,
+						SMSdroid.class);
+			} else {
+				intent = new Intent(Intent.ACTION_VIEW, uri, context,
+						MessageList.class);
+			}
 		}
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
