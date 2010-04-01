@@ -164,7 +164,6 @@ public class SmsReceiver extends BroadcastReceiver {
 				final PendingIntent cIntent = PendingIntent.getActivity(
 						context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 				n.setLatestEventInfo(context, rr, t, cIntent);
-				n.number = 0;
 			} else {
 				n = new Notification(R.drawable.stat_notify_sms, context
 						.getString(R.string.new_messages_), System
@@ -210,6 +209,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				}
 				n.sound = sound;
 			}
+			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 			mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 		}
 		Log.d(TAG, "return " + ret + " (2)");
