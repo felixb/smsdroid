@@ -55,6 +55,8 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import com.flurry.android.FlurryAgent;
+
 /**
  * Main {@link ListActivity} showing conversations.
  * 
@@ -64,6 +66,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid";
+
+	/** Flury's API key. */
+	public static final String FLURYKEY = "Q63FP3PT9LWWR3GJXVG8";
 
 	/** Prefs: name for last version run. */
 	private static final String PREFS_LAST_RUN = "lastrun";
@@ -111,6 +116,24 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 
 	/** Dialog items shown if an item was long clicked. */
 	private String[] longItemClickDialog = null;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void onStart() {
+		super.onStart();
+		FlurryAgent.onStartSession(this, FLURYKEY);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void onStop() {
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+	}
 
 	/**
 	 * Show all rows of a particular {@link Uri}.
