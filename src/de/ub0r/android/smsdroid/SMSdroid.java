@@ -67,8 +67,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid";
 
-	/** Flury's API key. */
-	public static final String FLURYKEY = "Q63FP3PT9LWWR3GJXVG8";
+	/** Flurry's API key. */
+	public static final String FLURRYKEY = "Q63FP3PT9LWWR3GJXVG8";
 
 	/** Prefs: name for last version run. */
 	private static final String PREFS_LAST_RUN = "lastrun";
@@ -123,7 +123,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	@Override
 	public final void onStart() {
 		super.onStart();
-		FlurryAgent.onStartSession(this, FLURYKEY);
+		FlurryAgent.onStartSession(this, FLURRYKEY);
 	}
 
 	/**

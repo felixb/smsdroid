@@ -94,7 +94,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	@Override
 	public final void onStart() {
 		super.onStart();
-		FlurryAgent.onStartSession(this, SMSdroid.FLURYKEY);
+		FlurryAgent.onStartSession(this, SMSdroid.FLURRYKEY);
 	}
 
 	/**
