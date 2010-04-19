@@ -27,20 +27,20 @@
 		android:layout_height="wrap_content">
 		<TextView android:layout_width="wrap_content"
 			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
-			android:layout_height="wrap_content" android:id="@+id/text3"
-			android:text="@+id/text3" android:singleLine="true" />
+			android:layout_height="wrap_content" android:id="@+id/date"
+			android:text="@+id/date" android:singleLine="true" />
 		<ImageView android:layout_width="12sp"
 			android:layout_height="18sp" android:id="@+id/inout"
-			android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/text3"
+			android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/date"
 			android:src="@drawable/ic_call_log_list_incoming_call"
 			android:scaleType="fitStart" />
-		<TextView android:text="@+id/text1" android:id="@+id/text1"
+		<TextView android:text="@+id/addr" android:id="@+id/addr"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:singleLine="true" android:layout_alignParentTop="true"
 			android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/inout" />
 		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/text2"
-			android:text="@+id/text2" android:layout_below="@+id/text1"
+			android:layout_height="wrap_content" android:id="@+id/body"
+			android:text="@+id/body" android:layout_below="@+id/addr"
 			android:singleLine="false" android:autoLink="all" />
 	</RelativeLayout>
 </LinearLayout>

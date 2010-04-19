@@ -21,18 +21,17 @@ package de.ub0r.android.smsdroid;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import android.util.Log;
 
 /**
- * Class holding a single conversation.
+ * Class holding a single message.
  * 
  * @author flx
  */
-public class Conversation {
+public class Message {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.con";
+	static final String TAG = "SMSdroid.msg";
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -49,12 +48,9 @@ public class Conversation {
 	/** INDEX: read. */
 	public static final int INDEX_READ = 6;
 
-	/** Dateformat. //TODO: move me to xml */
-	static final String DATE_FORMAT = "dd.MM. kk:mm";
-
 	/** Cursor's projection. */
-	public static final String[] PROJECTION = { //
-	BaseColumns._ID, // 0
+	static final String[] PROJECTION = { //
+	"_id", // 0
 			Calls.DATE, // 1
 			"address", // 2
 			"thread_id", // 3
@@ -63,10 +59,15 @@ public class Conversation {
 			"read", // 6
 	};
 
-	/** Cursors row in hero phones: address. */
-	static final String ADDRESS_HERO = "recipient_address";
-	/** Cursors row in hero phones: thread_id. */
-	static final String THREADID_HERO = "_id";
+	/** SQL WHERE: unread messages. */
+	static final String SELECTION_UNREAD = "read = '0'";
+	/** SQL WHERE: read messages. */
+	static final String SELECTION_READ = "read = '1'";
+
+	/** Cursor's sort, upside down. */
+	public static final String SORT_USD = Calls.DATE + " ASC";
+	/** Cursor's sort, normal. */
+	public static final String SORT_NORM = Calls.DATE + " DESC";
 
 	/** Id. */
 	private long id;
@@ -83,13 +84,16 @@ public class Conversation {
 	/** Read status. */
 	private int read;
 
+	/** Is this message a MMS? */
+	private final boolean isMms;
+
 	/**
 	 * Default constructor.
 	 * 
 	 * @param cursor
 	 *            {@link Cursor} to read the data
 	 */
-	public Conversation(final Cursor cursor) {
+	public Message(final Cursor cursor) {
 		this.id = cursor.getLong(INDEX_ID);
 		this.threadId = cursor.getLong(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
@@ -100,6 +104,11 @@ public class Conversation {
 		this.body = cursor.getString(INDEX_BODY);
 		this.type = cursor.getInt(INDEX_TYPE);
 		this.read = cursor.getInt(INDEX_READ);
+		if (this.body == null) {
+			this.isMms = true;
+		} else {
+			this.isMms = false;
+		}
 	}
 
 	/**
@@ -170,5 +179,23 @@ public class Conversation {
 	 */
 	public final int getRead() {
 		return this.read;
+	}
+
+	/**
+	 * @return is this message a MMS?
+	 */
+	public final boolean isMMS() {
+		return this.isMms;
+	}
+
+	/**
+	 * @return {@link Uri} of this message
+	 */
+	public final Uri getUri() {
+		if (this.isMms) {
+			return Uri.parse("content://mms/" + this.id);
+		} else {
+			return Uri.parse("content://sms/" + this.id);
+		}
 	}
 }

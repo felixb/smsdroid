@@ -52,6 +52,7 @@
 	<string name="receive_led_flash_hint">LED Blinkverhalten</string>
 	<string name="appearance_">Erscheinung</string>
 	<string name="theme_">Theme</string>
+	<string name="textsize_">Schriftgrad</string>
 	<string name="show_contact_photo_">Zeige Foto</string>
 	<string name="show_contact_photo_hint">Zeige Kontaktfoto in Threadliste</string>
 	<string name="sort_messages_upsidedown_">Sortierung umdrehen</string>
@@ -84,8 +85,12 @@
 	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
 	
 	<string-array name="themes">
-		<item>Schwarz</item>
+		<item>Dunkel</item>
 		<item>Hell</item>
+	</string-array>
+	<string-array name="textsize">
+		<item>Klein</item>
+		<item>Mittel</item>
 	</string-array>
 	<string-array name="led_color">
 		<item>Grün</item>

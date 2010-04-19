@@ -122,8 +122,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			return -1;
 		}
 		final Cursor cursor = context.getContentResolver().query(URI,
-				MessageListAdapter.PROJECTION,
-				MessageListAdapter.SELECTION_UNREAD, null, SORT);
+				Message.PROJECTION, Message.SELECTION_UNREAD, null, SORT);
 		final int l = cursor.getCount();
 		Log.d(TAG, "l: " + l);
 		int ret = l;
@@ -142,7 +141,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		} else {
 			Notification n = null;
 			cursor.moveToFirst();
-			final String t = cursor.getString(MessageListAdapter.INDEX_BODY);
+			final String t = cursor.getString(Message.INDEX_BODY);
 			Log.d(TAG, "t: " + t);
 			if (text != null) {
 				if (t.startsWith(text)) {
@@ -153,15 +152,13 @@ public class SmsReceiver extends BroadcastReceiver {
 				}
 			}
 			if (l == 1) {
-				final String a = cursor
-						.getString(MessageListAdapter.INDEX_ADDRESS);
+				final String a = cursor.getString(Message.INDEX_ADDRESS);
 				Log.d(TAG, "p: " + a);
 				String rr = CachePersons.getName(context, a, null);
 				if (rr == null) {
 					rr = a;
 				}
-				final String th = cursor
-						.getString(MessageListAdapter.INDEX_THREADID);
+				final String th = cursor.getString(Message.INDEX_THREADID);
 				n = new Notification(R.drawable.stat_notify_sms, rr, System
 						.currentTimeMillis());
 				uri = Uri.parse(MessageList.URI + th);

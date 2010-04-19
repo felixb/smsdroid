@@ -136,32 +136,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				.getString(R.string.delete_message_);
 		// this.longItemClickDialog[WHICH_SPEAK] =
 		// this.getString(R.string.speak_);
-
-		// Cursor cur = this.getContentResolver().query(this.uri,
-
-		Cursor cur = this.getContentResolver().query(
-				Uri.parse("content://mms/"), null,
-				"thread_id = '" + this.uri.getLastPathSegment() + "'", null,
-				null);
-		if (cur.moveToFirst()) {
-			int c = cur.getColumnCount();
-			do {
-				for (int j = 0; j < c; j++) {
-					Log.d(TAG, cur.getColumnName(j) + ": " + cur.getString(j));
-				}
-			} while (cur.moveToNext());
-		}
-
-		cur = this.getContentResolver().query(Uri.parse("content://mms/part"),
-				null, null, null, null);
-		if (cur.moveToFirst()) {
-			int c = cur.getColumnCount();
-			do {
-				for (int j = 0; j < c; j++) {
-					Log.d(TAG, cur.getColumnName(j) + ": " + cur.getString(j));
-				}
-			} while (cur.moveToNext());
-		}
 	}
 
 	/**
@@ -196,34 +170,34 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		((TextView) header.findViewById(R.id.text1)).setText(R.string.answer);
 		if (prefs.getBoolean(Preferences.PREFS_MSGLIST_SORT, true)) {
 			this.sortUSD = true;
-			sort = MessageListAdapter.SORT_USD;
+			sort = Message.SORT_USD;
 			lv.addFooterView(header);
 			lv.setStackFromBottom(true);
 		} else {
 			this.sortUSD = false;
-			sort = MessageListAdapter.SORT_NORM;
+			sort = Message.SORT_NORM;
 			lv.addHeaderView(header);
 			lv.setStackFromBottom(false);
 		}
 
+		MessagesAdapter adapter = new MessagesAdapter(this, this.uri, sort);
+		this.setListAdapter(adapter);
+		// TODO: use cached version of get address for thread
 		Cursor cursor;
 		try {
 			cursor = this.getContentResolver().query(this.uri,
-					MessageListAdapter.PROJECTION, null, null, sort);
+					Message.PROJECTION, null, null, sort);
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
-			MessageListAdapter.PROJECTION[Conversation.INDEX_ADDRESS] // .
+			Message.PROJECTION[Conversation.INDEX_ADDRESS] // .
 			= Conversation.ADDRESS_HERO;
 			cursor = this.getContentResolver().query(this.uri,
-					MessageListAdapter.PROJECTION, null, null, sort);
+					Message.PROJECTION, null, null, sort);
 		}
-		this.startManagingCursor(cursor);
-		MessageListAdapter adapter = new MessageListAdapter(this, cursor);
-		this.setListAdapter(adapter);
 		if (cursor.moveToFirst()) {
 			String a = null;
 			do {
-				a = cursor.getString(MessageListAdapter.INDEX_ADDRESS);
+				a = cursor.getString(Message.INDEX_ADDRESS);
 			} while (a == null && cursor.moveToNext());
 			Log.d(TAG, "p: " + a);
 			this.address = a;
@@ -291,10 +265,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		if (position == headerPos) { // header
 			this.startActivity(SMSdroid.getComposeIntent(this.address));
 		} else {
-			final Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-			if (cursor.getString(MessageListAdapter.INDEX_BODY) == null) {
-				final Uri target = Uri.parse(MessageList.URI
-						+ cursor.getInt(MessageListAdapter.INDEX_THREADID));
+			final Message m = (Message) parent.getItemAtPosition(position);
+			if (m.isMMS()) {
+				final Uri target = Uri.parse(MessageList.URI + m.getThreadId());
 				Intent i = new Intent(Intent.ACTION_VIEW, target);
 				this.startActivity(Intent.createChooser(i, this
 						.getString(R.string.view_mms)));
@@ -320,10 +293,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			return true;
 		} else {
 			final Context context = this;
-			final Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-			final Uri target = Uri.parse("content://sms/"
-					+ cursor.getInt(MessageListAdapter.INDEX_ID));
-			final int read = cursor.getInt(MessageListAdapter.INDEX_READ);
+			final Message m = (Message) parent.getItemAtPosition(position);
+			final Uri target = m.getUri();
+			final int read = m.getRead();
 			Builder builder = new Builder(context);
 			builder.setTitle(R.string.message_options_);
 			String[] items = this.longItemClickDialog;
@@ -343,8 +315,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					case WHICH_FORWARD:
 						final Intent i = new Intent(Intent.ACTION_SEND);
 						i.setType("text/plain");
-						i.putExtra(Intent.EXTRA_TEXT, cursor
-								.getString(MessageListAdapter.INDEX_BODY));
+						i.putExtra(Intent.EXTRA_TEXT, m.getBody());
 						context.startActivity(Intent.createChooser(i, context
 								.getString(R.string.forward_)));
 						break;
@@ -352,20 +323,16 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						final ClipboardManager cm = // .
 						(ClipboardManager) context.getSystemService(// .
 								Context.CLIPBOARD_SERVICE);
-						cm.setText(cursor
-								.getString(MessageListAdapter.INDEX_BODY));
+						cm.setText(m.getBody());
 						break;
 					case WHICH_VIEW_DETAILS:
-						final int t = cursor
-								.getInt(MessageListAdapter.INDEX_TYPE);
+						final int t = m.getType();
 						Builder b = new Builder(context);
 						b.setTitle(R.string.view_details_);
 						b.setCancelable(true);
 						StringBuilder sb = new StringBuilder();
-						final String a = cursor.getString(// .
-								MessageListAdapter.INDEX_ADDRESS);
-						final long d = cursor
-								.getLong(MessageListAdapter.INDEX_DATE);
+						final String a = m.getAddress(context);
+						final long d = m.getDate();
 						final String ds = DateFormat.format(context.getString(// .
 								R.string.DATEFORMAT_details), d).toString();
 						String sentReceived;
@@ -386,6 +353,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						sb.append("\n");
 						sb.append(fromTo + " ");
 						sb.append(a);
+						sb.append(context.getString(R.string.type_));
+						if (m.isMMS()) {
+							sb.append(" MMS");
+						} else {
+							sb.append(" SMS");
+						}
 						b.setMessage(sb.toString());
 						b.setPositiveButton(android.R.string.ok, null);
 						b.show();

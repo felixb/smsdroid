@@ -28,7 +28,7 @@
 	<string name="author_">Author:</string>
 	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;</string>
 	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=5779152</string>
-	<string name="donate_mail">flx.yoo%2Bwebsms.donator@gmail.com</string>
+	<string name="donate_mail">flx.yoo@gmail.com</string>
 	<string name="donate_subject">I\'m the donator. My sender hash is...</string>
 	<string name="donate_">Donate</string>
 	<string name="donate_remove_ads_">Donate/remove ads</string>
@@ -62,6 +62,7 @@
 	<string name="receive_led_flash_hint">Set LED flashing behaviour</string>
 	<string name="appearance_">Appearance</string>
 	<string name="theme_">Theme</string>
+	<string name="textsize_">Text size</string>
 	<string name="show_contact_photo_">Show photo</string>
 	<string name="show_contact_photo_hint">Show contact\'s photo in conversation list</string>
 	<string name="sort_messages_upsidedown_">Sort upside down</string>
@@ -103,6 +104,14 @@
 	<string-array name="themes_values">
 		<item>black</item>
 		<item>light</item>
+	</string-array>
+	<string-array name="textsize">
+		<item>Small</item>
+		<item>Medium</item>
+	</string-array>
+	<string-array name="textsize_values">
+		<item>small</item>
+		<item>medium</item>
 	</string-array>
 	<string-array name="led_color">
 		<item>Green</item>

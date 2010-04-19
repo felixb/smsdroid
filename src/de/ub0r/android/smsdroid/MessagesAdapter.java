@@ -36,22 +36,37 @@ import android.widget.TextView;
  * 
  * @author flx
  */
-public class ConversationsAdapter extends ArrayAdapter<Conversation> {
+public class MessagesAdapter extends ArrayAdapter<Message> {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.coa";
+	static final String TAG = "SMSdroid.msa";
 
-	/** URI to resolve. */
-	private static final Uri URI = Uri
-			.parse("content://mms-sms/conversations/");
+	/** SQL WHERE: unread messages. */
+	static final String SELECTION_UNREAD = "read = '0'";
+	/** SQL WHERE: read messages. */
+	static final String SELECTION_READ = "read = '1'";
 
-	/** Cursor's sort. */
-	public static final String SORT = Calls.DATE + " DESC";
+	/** Cursor's sort, upside down. */
+	public static final String SORT_USD = Calls.DATE + " ASC";
+	/** Cursor's sort, normal. */
+	public static final String SORT_NORM = Calls.DATE + " DESC";
 
-	/** {@link SMSdroid}. */
-	private final SMSdroid context;
+	/** Dateformat. //TODO: move me to xml */
+	private static final String DATE_FORMAT = Conversation.DATE_FORMAT;
+
+	/** Used background drawable for outgoing messages. */
+	private final int backgroundDrawableOut;
+
+	/** {@link MessageList}. */
+	private final MessageList context;
 
 	/** Inner {@link Cursor}. */
 	private Cursor cursor;
+
+	/** Sorting order. */
+	private final String sort;
+
+	/** Uri to represent. */
+	private final Uri uri;
 
 	/** Used text size. */
 	private final int textSize;
@@ -60,26 +75,36 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 	 * Default Constructor.
 	 * 
 	 * @param c
-	 *            {@link SMSdroid}
+	 *            {@link MessageList}
+	 * @param u
+	 *            {@link Uri}
+	 * @param s
+	 *            sorting order.
 	 */
-	public ConversationsAdapter(final SMSdroid c) {
-		super(c, R.layout.conversationlist_item);
+	public MessagesAdapter(final MessageList c, final Uri u, final String s) {
+		super(c, R.layout.messagelist_item);
 		this.context = c;
-
+		if (Preferences.getTheme(this.context) == android.R.style.Theme_Black) {
+			this.backgroundDrawableOut = R.drawable.grey_dark;
+		} else {
+			this.backgroundDrawableOut = R.drawable.grey_light;
+		}
 		this.textSize = Preferences.getTextsize(c);
+		this.uri = u;
+		this.sort = s;
 
 		Cursor cur;
 		try {
-			cur = c.getContentResolver().query(URI, Conversation.PROJECTION,
-					null, null, SORT);
+			cur = c.getContentResolver().query(this.uri,
+					Conversation.PROJECTION, null, null, this.sort);
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
 			Conversation.PROJECTION[Conversation.INDEX_ADDRESS]// .
 			= Conversation.ADDRESS_HERO;
 			Conversation.PROJECTION[Conversation.INDEX_THREADID] // .
 			= Conversation.THREADID_HERO;
-			cur = c.getContentResolver().query(URI, Conversation.PROJECTION,
-					null, null, SORT);
+			cur = c.getContentResolver().query(this.uri,
+					Conversation.PROJECTION, null, null, this.sort);
 		}
 		c.startManagingCursor(cur);
 		cur.registerContentObserver(new ContentObserver(new Handler()) {
@@ -87,7 +112,7 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 			public void onChange(final boolean selfChange) {
 				super.onChange(selfChange);
 				Log.d(TAG, "changed cursor");
-				ConversationsAdapter.this.buildArray();
+				MessagesAdapter.this.buildArray();
 			}
 		});
 		this.cursor = cur;
@@ -107,22 +132,24 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		this.cursor.moveToFirst();
 		this.clear();
 		do {
-			final Conversation c = new Conversation(this.cursor);
-			final long d = c.getDate();
+			final Message m = new Message(this.cursor);
+			final long d = m.getDate();
 			final int l = this.getCount();
 			boolean added = false;
 			for (int i = 0; i < l; i++) {
-				if (d > this.getItem(i).getDate()) {
-					this.insert(c, i);
+				if ((this.sort == SORT_NORM && d > this.getItem(i).getDate())
+						|| (this.sort == SORT_USD && d < this.getItem(i)
+								.getDate())) {
+					this.insert(m, i);
 					added = true;
 					break;
 				}
 			}
 			if (!added) {
-				this.add(c);
+				this.add(m);
 			}
-			Log.d(TAG, "added   " + c.getId() + " " + c.getThreadId());
-			Log.d(TAG, "added.. " + c.getDate() + " " + c.getBody());
+			Log.d(TAG, "added   " + m.getId() + " " + m.getThreadId());
+			Log.d(TAG, "added.. " + m.getDate() + " " + m.getBody());
 		} while (this.cursor.moveToNext());
 		Log.d(TAG, "notifyDataSetChanged()");
 		this.notifyDataSetChanged();
@@ -134,63 +161,51 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 	@Override
 	public final View getView(final int position, final View convertView,
 			final ViewGroup parent) {
-		final Conversation c = this.getItem(position);
+		final Message m = this.getItem(position);
 		View view = convertView;
 		TextView twBody;
 		if (view == null) {
-			view = View.inflate(this.context, R.layout.conversationlist_item,
-					null);
+			view = View.inflate(this.context, R.layout.messagelist_item, null);
 			twBody = (TextView) view.findViewById(R.id.body);
 			twBody.setTextSize(this.textSize);
 		} else {
 			twBody = (TextView) view.findViewById(R.id.body);
 		}
 
-		final long threadID = c.getThreadId();
-		int t = c.getType();
+		int t = m.getType();
+		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
+
 		if (t == Calls.INCOMING_TYPE) {
+			final String address = m.getAddress(this.context);
+			Log.d(TAG, "p: " + address);
+			twPerson.setText(address);
+			CachePersons.getName(this.context, address, twPerson);
+			view.setBackgroundResource(0);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);
 		} else if (t == Calls.OUTGOING_TYPE) {
+			twPerson.setText(R.string.me);
+			view.setBackgroundResource(this.backgroundDrawableOut);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_outgoing_call);
 		}
-		int read = c.getRead();
+		int read = m.getRead();
 		if (read == 0) {
 			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
-		String address = c.getAddress(this.context);
-		Log.d(TAG, "p: " + address);
-		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
-		twPerson.setText(address);
-		CachePersons.getName(this.context, address, twPerson);
-		String text = c.getBody();
+		String text = m.getBody();
 		if (text == null) {
-			text = this.context.getString(R.string.mms_conversation);
+			text = this.context.getString(R.string.mms_not_supported);
 		}
 		twBody.setText(text);
-		long time = c.getDate();
+		long time = m.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
-				Conversation.DATE_FORMAT, time));
+				DATE_FORMAT, time));
 
-		ImageView iv = (ImageView) view.findViewById(R.id.photo);
-		if (SMSdroid.showContactPhoto) {
-			CachePersons.getPicture(this.context, address, iv);
-			iv.setVisibility(View.VISIBLE);
-		} else {
-			iv.setVisibility(View.GONE);
-		}
-		// TODO: move to Conversation
-		final Uri target = Uri.parse(MessageList.URI + threadID);
-		final Cursor cur = this.context.getContentResolver().query(target,
-				Message.PROJECTION, null, null, null);
-		TextView tv = (TextView) view.findViewById(R.id.count);
-		tv.setText("(" + cur.getCount() + ")");
-		cur.close();
 		return view;
 	}
 }

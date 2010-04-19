@@ -21,6 +21,9 @@
 		<ListPreference android:title="@string/theme_"
 			android:key="theme" android:entries="@array/themes"
 			android:entryValues="@array/themes_values" />
+		<ListPreference android:title="@string/textsize_"
+			android:key="textsize" android:entries="@array/textsize"
+			android:entryValues="@array/textsize_values" />
 		<CheckBoxPreference android:key="sort_messages_upsidedown"
 			android:defaultValue="true" android:title="@string/sort_messages_upsidedown_"
 			android:summary="@string/sort_messages_upsidedown_hint" />

@@ -27,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Dialog;
@@ -376,10 +377,10 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	 */
 	static final void markRead(final Context context, final Uri uri,
 			final int read) {
-		String select = MessageListAdapter.SELECTION_UNREAD.replace("0", String
+		String select = Message.SELECTION_UNREAD.replace("0", String
 				.valueOf(1 - read));
 		final Cursor mCursor = context.getContentResolver().query(uri,
-				MessageListAdapter.PROJECTION, select, null, null);
+				Message.PROJECTION, select, null, null);
 		if (mCursor.getCount() <= 0) {
 			if (uri.toString().equals("content://sms/")) {
 				SmsReceiver.updateNewMessageNotification(context, null);
@@ -388,8 +389,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		}
 
 		final ContentValues cv = new ContentValues();
-		cv.put(MessageListAdapter.PROJECTION[MessageListAdapter.INDEX_READ],
-				read);
+		cv.put(Message.PROJECTION[Message.INDEX_READ], read);
 		context.getContentResolver().update(uri, cv, select, null);
 		SmsReceiver.updateNewMessageNotification(context, null);
 	}
@@ -407,7 +407,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	static final void deleteMessages(final Context context, final Uri uri,
 			final int title) {
 		final Cursor mCursor = context.getContentResolver().query(uri,
-				MessageListAdapter.PROJECTION, null, null, null);
+				Message.PROJECTION, null, null, null);
 		if (mCursor.getCount() <= 0) {
 			return;
 		}
@@ -495,7 +495,13 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		} catch (Exception e) {
 			Log.e(TAG, "error reading signatures", e);
 		}
-		return p.getBoolean(Preferences.PREFS_HIDEADS, false);
+		final boolean ret = p.getBoolean(Preferences.PREFS_HIDEADS, false);
+		if (ret != prefsNoAds) {
+			final HashMap<String, String> params = new HashMap<String, String>();
+			params.put("value", String.valueOf(ret));
+			FlurryAgent.onEvent("switch prefsNoAds", params);
+		}
+		return ret;
 	}
 
 	/**
