@@ -370,6 +370,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		final Cursor mCursor = context.getContentResolver().query(uri,
 				MessageListAdapter.PROJECTION, select, null, null);
 		if (mCursor.getCount() <= 0) {
+			if (uri.toString().equals("content://sms/")) {
+				SmsReceiver.updateNewMessageNotification(context, null);
+			}
 			return;
 		}
 

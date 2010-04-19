@@ -22,9 +22,6 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -51,45 +48,14 @@ public final class WidgetProvider extends AppWidgetProvider {
 	 * 
 	 * @param context
 	 *            {@link Context}
-	 * @return {@link RemoteViews}
-	 */
-	static RemoteViews getRemoteViews(final Context context) {
-		final Cursor cursor = context.getContentResolver().query(
-				SmsReceiver.URI, MessageListAdapter.PROJECTION,
-				MessageListAdapter.SELECTION_UNREAD, null, null);
-		final int l = cursor.getCount();
-		Log.d(TAG, "l: " + l);
-		return getRemoteViews(context, l, null);
-	}
-
-	/**
-	 * Get {@link RemoteViews}.
-	 * 
-	 * @param context
-	 *            {@link Context}
 	 * @param count
 	 *            number of unread messages
-	 * @param uri
-	 *            {@link Uri} to link
+	 * @param pIntent
+	 *            {@link PendingIntent}
 	 * @return {@link RemoteViews}
 	 */
 	static RemoteViews getRemoteViews(final Context context, final int count,
-			final Uri uri) {
-		Intent intent;
-		if (uri == null) {
-			intent = new Intent(context, SMSdroid.class);
-		} else {
-			if (uri.toString().equals(MessageList.URI)) {
-				intent = new Intent(Intent.ACTION_VIEW, uri, context,
-						SMSdroid.class);
-			} else {
-				intent = new Intent(Intent.ACTION_VIEW, uri, context,
-						MessageList.class);
-			}
-		}
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-				intent, PendingIntent.FLAG_CANCEL_CURRENT);
+			final PendingIntent pIntent) {
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.widget);
 		views.setTextViewText(R.id.text1, String.valueOf(count));
@@ -97,9 +63,9 @@ public final class WidgetProvider extends AppWidgetProvider {
 			views.setViewVisibility(R.id.text1, View.GONE);
 		} else {
 			views.setViewVisibility(R.id.text1, View.VISIBLE);
+			views.setOnClickPendingIntent(R.id.widget, pIntent);
+			Log.d(TAG, "set pending intent: " + pIntent.toString());
 		}
-		views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-		Log.d(TAG, "set pending intent: " + pendingIntent.toString());
 		return views;
 	}
 }

@@ -131,7 +131,15 @@ public class SmsReceiver extends BroadcastReceiver {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 		}
 		Uri uri = null;
-		if (l > 0) {
+		PendingIntent pIntent;
+		if (l == 0) {
+			final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
+					SMSdroid.class);
+			// add pending intent
+			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+			pIntent = PendingIntent.getActivity(context, 0, i,
+					PendingIntent.FLAG_CANCEL_CURRENT);
+		} else {
 			Notification n = null;
 			cursor.moveToFirst();
 			final String t = cursor.getString(MessageListAdapter.INDEX_BODY);
@@ -160,10 +168,10 @@ public class SmsReceiver extends BroadcastReceiver {
 				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
 						MessageList.class);
 				// add pending intent
-				// i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
-				final PendingIntent cIntent = PendingIntent.getActivity(
-						context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-				n.setLatestEventInfo(context, rr, t, cIntent);
+				i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+				pIntent = PendingIntent.getActivity(context, 0, i,
+						PendingIntent.FLAG_CANCEL_CURRENT);
+				n.setLatestEventInfo(context, rr, t, pIntent);
 			} else {
 				n = new Notification(R.drawable.stat_notify_sms, context
 						.getString(R.string.new_messages_), System
@@ -172,13 +180,12 @@ public class SmsReceiver extends BroadcastReceiver {
 				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
 						SMSdroid.class);
 				// add pending intent
-				// i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				final PendingIntent cIntent = PendingIntent.getActivity(
-						context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+				i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+				pIntent = PendingIntent.getActivity(context, 0, i,
+						PendingIntent.FLAG_CANCEL_CURRENT);
 				n.setLatestEventInfo(context, context
 						.getString(R.string.new_messages_), String.format(
-						context.getString(R.string.new_messages), l), cIntent);
+						context.getString(R.string.new_messages), l), pIntent);
 				n.number = l;
 			}
 			n.flags |= Notification.FLAG_SHOW_LIGHTS;
@@ -209,13 +216,14 @@ public class SmsReceiver extends BroadcastReceiver {
 				}
 				n.sound = sound;
 			}
+			Log.d(TAG, "uri: " + uri);
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 			mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 		}
 		Log.d(TAG, "return " + ret + " (2)");
 		AppWidgetManager.getInstance(context).updateAppWidget(
 				new ComponentName(context, WidgetProvider.class),
-				WidgetProvider.getRemoteViews(context, l, uri));
+				WidgetProvider.getRemoteViews(context, l, pIntent));
 		return ret;
 	}
 }
