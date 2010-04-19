@@ -40,11 +40,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -111,6 +111,11 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	/** Path to file containing signatures of UID Hash. */
 	private static final String NOADS_SIGNATURES = "/sdcard/websms.noads";
 
+	/** Minimum date. */
+	public static final long MIN_DATE = 10000000000L;
+	/** Miliseconds per seconds. */
+	public static final long MILLIS = 1000L;
+
 	/** Show contact's photo. */
 	static boolean showContactPhoto = false;
 
@@ -148,10 +153,28 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "-- " + u.toString() + " --");
 		Cursor c = context.getContentResolver()
 				.query(u, null, null, null, null);
-		for (String r : c.getColumnNames()) {
-			Log.d(TAG, r);
+		if (c != null) {
+			int l = c.getColumnCount();
+			StringBuilder buf = new StringBuilder();
+			for (int i = 0; i < l; i++) {
+				buf.append(i + ":");
+				buf.append(c.getColumnName(i));
+				buf.append(" | ");
+			}
+			Log.d(TAG, buf.toString());
+			if (c.moveToFirst()) {
+				do {
+					buf = new StringBuilder();
+					for (int i = 0; i < l; i++) {
+						buf.append(i + ":");
+						buf.append(c.getString(i));
+						buf.append(" | ");
+					}
+					Log.d(TAG, buf.toString());
+				} while (c.moveToNext());
+				c.close();
+			}
 		}
-		c.close();
 		Log.d(TAG, "-*---GET HEADERS---*-");
 
 	}
@@ -165,6 +188,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	static final void showRows(final Context context) {
 		// this.showRows(ContactsWrapper.getInstance().getUriFilter());
 		showRows(context, URI);
+		showRows(context, Uri.parse("content://sms/"));
+		showRows(context, Uri.parse("content://mms/"));
+		// showRows(context, Uri.parse("content://mms-sms/threads"));
 		// this.showRows(Uri.parse(MessageList.URI));
 	}
 
@@ -196,22 +222,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		final ListView list = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		list.addHeaderView(header);
-		Cursor cursor;
-		try {
-			cursor = this.getContentResolver().query(URI,
-					ConversationListAdapter.PROJECTION, null, null,
-					ConversationListAdapter.SORT);
-		} catch (SQLException e) {
-			Log.w(TAG, "error while query", e);
-			ConversationListAdapter.PROJECTION[ConversationListAdapter.INDEX_ADDRESS] = ConversationListAdapter.ADDRESS_HERO;
-			ConversationListAdapter.PROJECTION[ConversationListAdapter.INDEX_THREADID] = ConversationListAdapter.THREADID_HERO;
-			cursor = this.getContentResolver().query(URI,
-					ConversationListAdapter.PROJECTION, null, null,
-					ConversationListAdapter.SORT);
-		}
-		this.startManagingCursor(cursor);
-		ConversationListAdapter adapter = new ConversationListAdapter(this,
-				cursor);
+		ConversationsAdapter adapter = new ConversationsAdapter(this);
 		this.setListAdapter(adapter);
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
@@ -562,10 +573,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		if (position == 0) { // header
 			this.startActivity(getComposeIntent(null));
 		} else {
-			Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-			final String threadID = cursor
-					.getString(ConversationListAdapter.INDEX_THREADID);
-			final Uri target = Uri.parse(MessageList.URI + threadID);
+			final Conversation c = (Conversation) parent
+					.getItemAtPosition(position);
+			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
 			final Intent i = new Intent(this, MessageList.class);
 			i.setData(target);
 			this.startActivity(i);
@@ -583,14 +593,12 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					.getString(R.string.new_message)));
 			return true;
 		} else {
-			Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-			final String threadID = cursor
-					.getString(ConversationListAdapter.INDEX_THREADID);
-			final Uri target = Uri.parse(MessageList.URI + threadID);
+			final Conversation c = (Conversation) parent
+					.getItemAtPosition(position);
+			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;
-			final String a = cursor
-					.getString(ConversationListAdapter.INDEX_ADDRESS);
+			final String a = c.getAddress(this);
 			Log.d(TAG, "p: " + a);
 			final String n = CachePersons.getName(this, a, null);
 			if (n == null) {
@@ -640,5 +648,22 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			builder.create().show();
 		}
 		return true;
+	}
+
+	/**
+	 * Convert time into formated date.
+	 * 
+	 * @param format
+	 *            format
+	 * @param time
+	 *            time
+	 * @return formated date.
+	 */
+	static final String getDate(final String format, final long time) {
+		long t = time;
+		if (t < MIN_DATE) {
+			t *= MILLIS;
+		}
+		return (String) DateFormat.format(format, t);
 	}
 }

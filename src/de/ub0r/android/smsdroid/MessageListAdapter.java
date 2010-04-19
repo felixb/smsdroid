@@ -21,7 +21,6 @@ package de.ub0r.android.smsdroid;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog.Calls;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -53,8 +52,7 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 	public static final int INDEX_READ = 6;
 
 	/** Dateformat. //TODO: move me to xml */
-	private static final String DATE_FORMAT = // .
-	ConversationListAdapter.DATE_FORMAT;
+	private static final String DATE_FORMAT = Conversation.DATE_FORMAT;
 
 	/** Cursor's projection. */
 	static final String[] PROJECTION = { //
@@ -128,9 +126,13 @@ public class MessageListAdapter extends ResourceCursorAdapter {
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
-		((TextView) view.findViewById(R.id.text2)).setText(cursor
-				.getString(INDEX_BODY));
-		((TextView) view.findViewById(R.id.text3)).setText(DateFormat.format(
-				DATE_FORMAT, cursor.getLong(INDEX_DATE)));
+		String text = cursor.getString(INDEX_BODY);
+		if (text == null) {
+			text = context.getString(R.string.mms_not_supported);
+		}
+		((TextView) view.findViewById(R.id.text2)).setText(text);
+		long time = cursor.getLong(INDEX_DATE);
+		((TextView) view.findViewById(R.id.text3)).setText(SMSdroid.getDate(
+				DATE_FORMAT, time));
 	}
 }

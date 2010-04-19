@@ -136,6 +136,32 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				.getString(R.string.delete_message_);
 		// this.longItemClickDialog[WHICH_SPEAK] =
 		// this.getString(R.string.speak_);
+
+		// Cursor cur = this.getContentResolver().query(this.uri,
+
+		Cursor cur = this.getContentResolver().query(
+				Uri.parse("content://mms/"), null,
+				"thread_id = '" + this.uri.getLastPathSegment() + "'", null,
+				null);
+		if (cur.moveToFirst()) {
+			int c = cur.getColumnCount();
+			do {
+				for (int j = 0; j < c; j++) {
+					Log.d(TAG, cur.getColumnName(j) + ": " + cur.getString(j));
+				}
+			} while (cur.moveToNext());
+		}
+
+		cur = this.getContentResolver().query(Uri.parse("content://mms/part"),
+				null, null, null, null);
+		if (cur.moveToFirst()) {
+			int c = cur.getColumnCount();
+			do {
+				for (int j = 0; j < c; j++) {
+					Log.d(TAG, cur.getColumnName(j) + ": " + cur.getString(j));
+				}
+			} while (cur.moveToNext());
+		}
 	}
 
 	/**
@@ -186,7 +212,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					MessageListAdapter.PROJECTION, null, null, sort);
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
-			MessageListAdapter.PROJECTION[ConversationListAdapter.INDEX_ADDRESS] = ConversationListAdapter.ADDRESS_HERO;
+			MessageListAdapter.PROJECTION[Conversation.INDEX_ADDRESS] // .
+			= Conversation.ADDRESS_HERO;
 			cursor = this.getContentResolver().query(this.uri,
 					MessageListAdapter.PROJECTION, null, null, sort);
 		}
@@ -264,6 +291,14 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		if (position == headerPos) { // header
 			this.startActivity(SMSdroid.getComposeIntent(this.address));
 		} else {
+			final Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+			if (cursor.getString(MessageListAdapter.INDEX_BODY) == null) {
+				final Uri target = Uri.parse(MessageList.URI
+						+ cursor.getInt(MessageListAdapter.INDEX_THREADID));
+				Intent i = new Intent(Intent.ACTION_VIEW, target);
+				this.startActivity(Intent.createChooser(i, this
+						.getString(R.string.view_mms)));
+			}
 			return;
 		}
 	}
