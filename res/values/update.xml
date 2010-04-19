@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>v0.0.9: Fix some notification bugs</item>
 		<item>v0.0.8: Fix some FCs</item>
 		<item>v0.0.7: Fix some layout bugs, add widget, fix notificaion</item>
 		<item>v0.0.6: Fix FC for Milestones, allow to choose sending app with longclick on compose/answer</item>
