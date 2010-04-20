@@ -19,7 +19,6 @@
 
 package de.ub0r.android.smsdroid;
 
-import de.ub0r.android.smsdroid.cache.Persons;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -36,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
 import android.util.Log;
+import de.ub0r.android.smsdroid.cache.Persons;
 
 /**
  * Listen for new sms.
@@ -154,7 +154,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			if (l == 1) {
 				final String a = cursor.getString(Message.INDEX_ADDRESS);
 				Log.d(TAG, "p: " + a);
-				String rr = Persons.getName(context, a, null);
+				String rr = Persons.getName(context, a);
 				if (rr == null) {
 					rr = a;
 				}

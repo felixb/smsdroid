@@ -18,7 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import de.ub0r.android.smsdroid.cache.Persons;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -31,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.ub0r.android.smsdroid.cache.AsyncHelper;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -180,7 +180,8 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 			final String address = m.getAddress(this.context);
 			Log.d(TAG, "p: " + address);
 			twPerson.setText(address);
-			Persons.getName(this.context, address, twPerson);
+			// TODO: do only once!
+			AsyncHelper.fillByAddress(this.context, address, twPerson, null);
 			view.setBackgroundResource(0);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .

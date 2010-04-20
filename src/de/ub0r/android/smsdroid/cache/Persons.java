@@ -27,10 +27,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 import de.ub0r.android.smsdroid.ContactsWrapper;
-import de.ub0r.android.smsdroid.R;
 
 /**
  * Cache holding persons.
@@ -171,12 +168,9 @@ public final class Persons {
 	 *            {@link Context}
 	 * @param address
 	 *            person's address
-	 * @param targetView
-	 *            {@link TextView} the person should be set to
 	 * @return person's name
 	 */
-	public static String getName(final Context context, final String address,
-			final TextView targetView) {
+	public static String getName(final Context context, final String address) {
 		if (address == null) {
 			return null;
 		}
@@ -189,9 +183,6 @@ public final class Persons {
 			}
 		}
 		if (p != null) {
-			if (targetView != null && p.name != null) {
-				targetView.setText(p.name);
-			}
 			return p.name;
 		} else {
 			return null;
@@ -213,7 +204,7 @@ public final class Persons {
 		}
 		Person p = CACHE.get(address);
 		if (p == null) {
-			getName(context, address, null); // try to get contact from database
+			getName(context, address); // try to get contact from database
 			p = CACHE.get(address);
 		}
 		if (p != null) {
@@ -229,32 +220,43 @@ public final class Persons {
 	 *            {@link Context}
 	 * @param address
 	 *            person's address
-	 * @param targetView
-	 *            {@link ImageView} the person should be set to
 	 * @return person's picture
 	 */
-	public static Bitmap getPicture(final Context context,
-			final String address, final ImageView targetView) {
-		if (address == null) {
-			targetView.setImageResource(R.drawable.ic_contact_picture);
-			return null;
-		}
+	public static Bitmap getPicture(final Context context, // .
+			final String address) {
 		Person p = CACHE.get(address);
 		if (p == null) {
-			getName(context, address, null); // try to get contact from database
+			getName(context, address); // try to get contact from database
 			p = CACHE.get(address);
 		}
 		Bitmap b = null;
 		if (p != null) {
 			b = getPictureForPerson(context, p);
 		}
-		if (targetView != null) {
-			if (b != null) {
-				targetView.setImageBitmap(b);
-			} else {
-				targetView.setImageResource(R.drawable.ic_contact_picture);
-			}
-		}
 		return b;
+	}
+
+	/**
+	 * Check if {@link Person} is in cache.
+	 * 
+	 * @param address
+	 *            {@link Person}'s address
+	 * @param needPic
+	 *            need picture?
+	 * @return true if {@link Person} is in cache
+	 */
+	public static boolean poke(final String address, final boolean needPic) {
+		Person p = CACHE.get(address);
+		if (p == null) { // not in cache
+			return false;
+		}
+		if (!needPic) { // no picture needed
+			return true;
+		}
+		if (p.noPicutre || p.picture != null) {
+			// no picture or picture in cache
+			return true;
+		}
+		return false;
 	}
 }

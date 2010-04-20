@@ -18,7 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import de.ub0r.android.smsdroid.cache.Persons;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -31,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.ub0r.android.smsdroid.cache.AsyncHelper;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -166,9 +166,6 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		}
 		String address = c.getAddress(this.context);
 		Log.d(TAG, "p: " + address);
-		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
-		twPerson.setText(address);
-		Persons.getName(this.context, address, twPerson);
 		String text = c.getBody();
 		if (text == null) {
 			text = this.context.getString(R.string.mms_conversation);
@@ -178,11 +175,13 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
 				Conversation.DATE_FORMAT, time));
 
+		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
 		ImageView iv = (ImageView) view.findViewById(R.id.photo);
 		if (SMSdroid.showContactPhoto) {
-			Persons.getPicture(this.context, address, iv);
+			AsyncHelper.fillByAddress(this.context, address, twPerson, iv);
 			iv.setVisibility(View.VISIBLE);
 		} else {
+			AsyncHelper.fillByAddress(this.context, address, twPerson, null);
 			iv.setVisibility(View.GONE);
 		}
 		// TODO: move to Conversation

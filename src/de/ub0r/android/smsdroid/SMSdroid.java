@@ -608,7 +608,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			String[] items = this.longItemClickDialog;
 			final String a = c.getAddress(this);
 			Log.d(TAG, "p: " + a);
-			final String n = Persons.getName(this, a, null);
+			final String n = Persons.getName(this, a);
 			if (n == null) {
 				builder.setTitle(a);
 				items = items.clone();
@@ -633,8 +633,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 						} else {
 							final Uri uri = ContactsWrapper.getInstance()
 									.getContactUri(
-											Persons
-													.getID(SMSdroid.this, a));
+											Persons.getID(SMSdroid.this, a));
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
 						SMSdroid.this.startActivity(i);

@@ -18,17 +18,35 @@
  */
 package de.ub0r.android.smsdroid.cache;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.ub0r.android.smsdroid.R;
 
 /**
  * @author flx
  */
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
+	private final Context context;
+
+	private String mAddress;
+	private final long mThreadId;
+	private Bitmap mPhoto = null;
+	private String mName = null;
+	private long mCount = -1;
+
+	private final TextView targetTvName;
+	private final ImageView targetIvPhoto;
+	private final TextView targetTvAddress;
+	private final TextView targetTvCount;
+
 	/**
 	 * Fill Views by address.
 	 * 
+	 * @param c
+	 *            {@link Context}
 	 * @param address
 	 *            address
 	 * @param tvName
@@ -36,46 +54,25 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * @param ivPhoto
 	 *            {@link ImageView} for photo
 	 */
-	private AsyncHelper(final String address, final TextView tvName,
-			final ImageView ivPhoto) {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Fill Views by threadId.
-	 * 
-	 * @param threadId
-	 *            threadId
-	 * @param tvAddress
-	 *            {@link TextView} for address
-	 * @param tvName
-	 *            {@link TextView} for name
-	 * @param tvCount
-	 *            {@link TextView} for count
-	 */
-	private AsyncHelper(final long threadId, final TextView tvAddress,
-			final TextView tvName, final TextView tvCount) {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Fill Views by address.
-	 * 
-	 * @param address
-	 *            address
-	 * @param tvName
-	 *            {@link TextView} for name
-	 * @param ivPhoto
-	 *            {@link ImageView} for photo
-	 */
-	public static void fillByAddress(final String address,
+	private AsyncHelper(final Context c, final String address,
 			final TextView tvName, final ImageView ivPhoto) {
-		new AsyncHelper(address, tvName, ivPhoto).execute((Void[]) null);
+		this.context = c;
+
+		this.mThreadId = -1;
+		this.mAddress = address;
+
+		this.targetTvName = tvName;
+		this.targetIvPhoto = ivPhoto;
+
+		this.targetTvAddress = null;
+		this.targetTvCount = null;
 	}
 
 	/**
 	 * Fill Views by threadId.
 	 * 
+	 * @param c
+	 *            {@link Context}
 	 * @param threadId
 	 *            threadId
 	 * @param tvAddress
@@ -85,10 +82,70 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * @param tvCount
 	 *            {@link TextView} for count
 	 */
-	public static void fillByThread(final long threadId,
+	private AsyncHelper(final Context c, final long threadId,
 			final TextView tvAddress, final TextView tvName,
 			final TextView tvCount) {
-		new AsyncHelper(threadId, tvAddress, tvName, tvCount)
+		this.context = c;
+
+		this.mAddress = null;
+		this.mThreadId = threadId;
+
+		this.targetTvAddress = tvAddress;
+		this.targetTvName = tvName;
+		this.targetTvCount = tvCount;
+
+		this.targetIvPhoto = null;
+	}
+
+	/**
+	 * Fill Views by address.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param address
+	 *            address
+	 * @param tvName
+	 *            {@link TextView} for name
+	 * @param ivPhoto
+	 *            {@link ImageView} for photo
+	 */
+	public static void fillByAddress(final Context context,
+			final String address, final TextView tvName, // .
+			final ImageView ivPhoto) {
+		if (Persons.poke(address, ivPhoto != null)) {
+			// load sync.
+			if (tvName != null) {
+				tvName.setText(Persons.getName(context, address));
+			}
+			if (ivPhoto != null) {
+				ivPhoto.setImageBitmap(Persons.getPicture(context, address));
+			}
+		} else {
+			// load async.
+			new AsyncHelper(context, address, tvName, ivPhoto)
+					.execute((Void[]) null);
+		}
+
+	}
+
+	/**
+	 * Fill Views by threadId.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param threadId
+	 *            threadId
+	 * @param tvAddress
+	 *            {@link TextView} for address
+	 * @param tvName
+	 *            {@link TextView} for name
+	 * @param tvCount
+	 *            {@link TextView} for count
+	 */
+	public static void fillByThread(final Context context, final long threadId,
+			final TextView tvAddress, final TextView tvName,
+			final TextView tvCount) {
+		new AsyncHelper(context, threadId, tvAddress, tvName, tvCount)
 				.execute((Void[]) null);
 	}
 
@@ -97,14 +154,61 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected Void doInBackground(final Void... arg0) {
-		// TODO Auto-generated method stub
+		if (this.mThreadId < 0) { // run Persons
+			// in: mAddress
+			// out: *Photo, *Name
+			if (this.targetIvPhoto != null) {
+				this.mPhoto = Persons.getPicture(this.context, this.mAddress);
+			}
+			if (this.targetTvName != null) {
+				this.mName = Persons.getName(this.context, this.mAddress);
+			}
+		} else {// TODO: run Threads
+			// in: mThreadId
+			// out: *Address, *Count, *Name,
+		}
 		return null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void onPostExecute(final Void... result) {
-		// TODO Auto-generated method stub
+	@Override
+	protected void onPreExecute() {
+		if (this.targetIvPhoto != null) {
+			this.targetIvPhoto.setImageResource(R.drawable.ic_contact_picture);
+		}
+		if (this.targetTvAddress != null) {
+			this.targetTvAddress.setText("...");
+		}
+		if (this.targetTvCount != null) {
+			this.targetTvCount.setText("");
+		}
+		if (this.targetTvName != null) {
+			if (this.mAddress != null) {
+				this.targetTvName.setText(this.mAddress);
+			} else {
+				this.targetTvName.setText("...");
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onPostExecute(final Void result) {
+		if (this.targetIvPhoto != null && this.mPhoto != null) {
+			this.targetIvPhoto.setImageBitmap(this.mPhoto);
+		}
+		if (this.targetTvAddress != null && this.mAddress != null) {
+			this.targetTvAddress.setText(this.mAddress);
+		}
+		if (this.targetTvCount != null && this.mCount > 0) {
+			this.targetTvCount.setText("(" + this.mCount + ")");
+		}
+		if (this.targetTvName != null && this.mName != null) {
+			this.targetTvName.setText(this.mName);
+		}
 	}
 }

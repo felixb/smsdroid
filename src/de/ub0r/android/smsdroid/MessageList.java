@@ -204,7 +204,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			Log.d(TAG, "p: " + a);
 			this.address = a;
 		}
-		String pers = Persons.getName(this, this.address, null);
+		String pers = Persons.getName(this, this.address);
 		if (pers == null) {
 			pers = this.address;
 		}
