@@ -119,7 +119,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				Preferences.PREFS_NOTIFICATION_ENABLE, true)) {
 			mNotificationMgr.cancelAll();
 			Log.d(TAG, "no notification needed, return -1");
-			return -1;
+			return -1; // FIXME: notification != widget
 		}
 		final Cursor cursor = context.getContentResolver().query(URI,
 				Message.PROJECTION, Message.SELECTION_UNREAD, null, SORT);
@@ -132,8 +132,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		Uri uri = null;
 		PendingIntent pIntent;
 		if (l == 0) {
-			final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
-					SMSdroid.class);
+			final Intent i = new Intent(context, SMSdroid.class);
 			// add pending intent
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 			pIntent = PendingIntent.getActivity(context, 0, i,

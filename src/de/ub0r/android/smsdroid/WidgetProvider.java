@@ -63,6 +63,8 @@ public final class WidgetProvider extends AppWidgetProvider {
 			views.setViewVisibility(R.id.text1, View.GONE);
 		} else {
 			views.setViewVisibility(R.id.text1, View.VISIBLE);
+		}
+		if (pIntent != null) {
 			views.setOnClickPendingIntent(R.id.widget, pIntent);
 			Log.d(TAG, "set pending intent: " + pIntent.toString());
 		}
