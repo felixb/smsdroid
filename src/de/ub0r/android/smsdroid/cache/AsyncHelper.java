@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.ub0r.android.smsdroid.Conversation;
 import de.ub0r.android.smsdroid.R;
 
 /**
@@ -33,9 +34,10 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 	private String mAddress;
 	private final long mThreadId;
+	private final Conversation mConversation;
 	private Bitmap mPhoto = null;
 	private String mName = null;
-	private long mCount = -1;
+	private int mCount = -1;
 
 	private final TextView targetTvName;
 	private final ImageView targetIvPhoto;
@@ -59,6 +61,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		this.context = c;
 
 		this.mThreadId = -1;
+		this.mConversation = null;
 		this.mAddress = address;
 
 		this.targetTvName = tvName;
@@ -73,6 +76,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * 
 	 * @param c
 	 *            {@link Context}
+	 * @param conversation
+	 *            {@link Conversation}
 	 * @param threadId
 	 *            threadId
 	 * @param tvAddress
@@ -82,13 +87,20 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * @param tvCount
 	 *            {@link TextView} for count
 	 */
-	private AsyncHelper(final Context c, final long threadId,
-			final TextView tvAddress, final TextView tvName,
-			final TextView tvCount) {
+	private AsyncHelper(final Context c, final Conversation conversation,
+			final long threadId, final TextView tvAddress,
+			final TextView tvName, final TextView tvCount) {
 		this.context = c;
 
-		this.mAddress = null;
-		this.mThreadId = threadId;
+		if (conversation != null) {
+			this.mConversation = conversation;
+			this.mThreadId = conversation.getThreadId();
+			this.mAddress = conversation.getAddress();
+		} else {
+			this.mAddress = null;
+			this.mConversation = null;
+			this.mThreadId = threadId;
+		}
 
 		this.targetTvAddress = tvAddress;
 		this.targetTvName = tvName;
@@ -112,6 +124,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	public static void fillByAddress(final Context context,
 			final String address, final TextView tvName, // .
 			final ImageView ivPhoto) {
+		if (context == null || address == null) {
+			return;
+		}
 		if (Persons.poke(address, ivPhoto != null)) {
 			// load sync.
 			if (tvName != null) {
@@ -133,6 +148,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * 
 	 * @param context
 	 *            {@link Context}
+	 * @param conversation
+	 *            {@link Conversation}
 	 * @param threadId
 	 *            threadId
 	 * @param tvAddress
@@ -142,11 +159,39 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * @param tvCount
 	 *            {@link TextView} for count
 	 */
-	public static void fillByThread(final Context context, final long threadId,
+	public static void fillByThread(final Context context,
+			final Conversation conversation, final long threadId,
 			final TextView tvAddress, final TextView tvName,
 			final TextView tvCount) {
-		new AsyncHelper(context, threadId, tvAddress, tvName, tvCount)
-				.execute((Void[]) null);
+		long tId = threadId;
+		if (tId < 0 && conversation != null) {
+			tId = conversation.getId();
+		}
+		if (context == null || tId < 0) {
+			return;
+		}
+		if (Threads.poke(tId)) {
+			if (tvAddress != null || tvName != null) {
+				final String a = Threads.getAddress(context, tId);
+				if (conversation != null && conversation.getAddress() == null
+						&& a != null) {
+					conversation.setAddress(a);
+				}
+				if (tvAddress != null) {
+					tvAddress.setText(a);
+				}
+				if (tvName != null) {
+					fillByAddress(context, a, tvName, null);
+				}
+			}
+			if (tvCount != null) {
+				tvCount.setText(// .
+						"(" + Threads.getCount(context, tId) + ")");
+			}
+		} else {
+			new AsyncHelper(context, conversation, tId, tvAddress, tvName,
+					tvCount).execute((Void[]) null);
+		}
 	}
 
 	/**
@@ -163,9 +208,19 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			if (this.targetTvName != null) {
 				this.mName = Persons.getName(this.context, this.mAddress);
 			}
-		} else {// TODO: run Threads
+		} else { // run Threads
 			// in: mThreadId
 			// out: *Address, *Count, *Name,
+			if (this.targetTvAddress != null || this.targetTvName != null) {
+				this.mAddress = Threads
+						.getAddress(this.context, this.mThreadId);
+			}
+			if (this.targetTvCount != null) {
+				this.mCount = Threads.getCount(this.context, this.mThreadId);
+			}
+			if (this.targetTvName != null) {
+				this.mName = Persons.getName(this.context, this.mAddress);
+			}
 		}
 		return null;
 	}
@@ -209,6 +264,11 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		}
 		if (this.targetTvName != null && this.mName != null) {
 			this.targetTvName.setText(this.mName);
+		}
+		if (this.mConversation != null
+				&& this.mConversation.getAddress() == null
+				&& this.mAddress != null) {
+			this.mConversation.setAddress(this.mAddress);
 		}
 	}
 }

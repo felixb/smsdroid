@@ -606,7 +606,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;
-			final String a = c.getAddress(this);
+			final String a = c.getAddress();
 			Log.d(TAG, "p: " + a);
 			final String n = Persons.getName(this, a);
 			if (n == null) {

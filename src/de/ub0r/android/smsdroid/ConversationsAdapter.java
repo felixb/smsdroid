@@ -164,7 +164,7 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
-		String address = c.getAddress(this.context);
+		String address = c.getAddress();
 		Log.d(TAG, "p: " + address);
 		String text = c.getBody();
 		if (text == null) {

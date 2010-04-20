@@ -18,12 +18,9 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
-import android.util.Log;
 
 /**
  * Class holding a single conversation.
@@ -124,31 +121,20 @@ public class Conversation {
 	}
 
 	/**
-	 * @param context
-	 *            {@link Context} to query SMS DB for an address.
 	 * @return the address
 	 */
-	public final String getAddress(final Context context) {
-		// TODO: cache address for thread
-		if (this.address == null && context != null) {
-			final String select = Conversation.PROJECTION[// .
-					Conversation.INDEX_THREADID]
-					+ " = '"
-					+ this.getThreadId()
-					+ "' and "
-					+ Conversation.PROJECTION[Conversation.INDEX_ADDRESS]
-					+ " != ''";
-			Log.d(TAG, "select: " + select);
-			final Cursor cur = context.getContentResolver().query(
-					Uri.parse("content://sms/"), Conversation.PROJECTION,
-					select, null, null);
-			if (cur != null && cur.moveToFirst()) {
-				this.address = cur.getString(Conversation.INDEX_ADDRESS);
-				Log.d(TAG, "found address: " + this.address);
-			}
-			cur.close();
-		}
+	public final String getAddress() {
 		return this.address;
+	}
+
+	/**
+	 * Set {@link Conversation}'s address.
+	 * 
+	 * @param a
+	 *            address
+	 */
+	public final void setAddress(final String a) {
+		this.address = a;
 	}
 
 	/**

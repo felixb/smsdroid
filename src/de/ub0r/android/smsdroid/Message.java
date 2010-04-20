@@ -49,7 +49,7 @@ public class Message {
 	public static final int INDEX_READ = 6;
 
 	/** Cursor's projection. */
-	static final String[] PROJECTION = { //
+	public static final String[] PROJECTION = { //
 	"_id", // 0
 			Calls.DATE, // 1
 			"address", // 2
