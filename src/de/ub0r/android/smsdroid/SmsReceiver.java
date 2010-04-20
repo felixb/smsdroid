@@ -19,6 +19,7 @@
 
 package de.ub0r.android.smsdroid;
 
+import de.ub0r.android.smsdroid.cache.Persons;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -153,7 +154,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			if (l == 1) {
 				final String a = cursor.getString(Message.INDEX_ADDRESS);
 				Log.d(TAG, "p: " + a);
-				String rr = CachePersons.getName(context, a, null);
+				String rr = Persons.getName(context, a, null);
 				if (rr == null) {
 					rr = a;
 				}

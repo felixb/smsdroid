@@ -18,9 +18,9 @@
  */
 
 /**
- * This package is holding all GUI stuff from main activity.
+ * This package is holding the cache for some data.
  * 
  * @author flx
  */
-package de.ub0r.android.smsdroid;
+package de.ub0r.android.smsdroid.cache;
 

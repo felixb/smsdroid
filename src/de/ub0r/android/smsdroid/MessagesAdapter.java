@@ -18,6 +18,7 @@
  */
 package de.ub0r.android.smsdroid;
 
+import de.ub0r.android.smsdroid.cache.Persons;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -179,7 +180,7 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 			final String address = m.getAddress(this.context);
 			Log.d(TAG, "p: " + address);
 			twPerson.setText(address);
-			CachePersons.getName(this.context, address, twPerson);
+			Persons.getName(this.context, address, twPerson);
 			view.setBackgroundResource(0);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
-package de.ub0r.android.smsdroid;
+package de.ub0r.android.smsdroid.cache;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -29,13 +29,15 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.ub0r.android.smsdroid.ContactsWrapper;
+import de.ub0r.android.smsdroid.R;
 
 /**
  * Cache holding persons.
  * 
  * @author flx
  */
-public final class CachePersons {
+public final class Persons {
 	/** Cached person. */
 	private static class Person {
 		/** Persons's ID. */
@@ -69,7 +71,7 @@ public final class CachePersons {
 			.getInstance();
 
 	/** Private Constructor. */
-	private CachePersons() {
+	private Persons() {
 	}
 
 	/**

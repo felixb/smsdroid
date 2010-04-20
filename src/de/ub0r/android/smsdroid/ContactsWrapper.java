@@ -31,7 +31,7 @@ import android.util.Log;
  * 
  * @author flx
  */
-abstract class ContactsWrapper {
+public abstract class ContactsWrapper {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.cw";
 

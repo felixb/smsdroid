@@ -18,6 +18,7 @@
  */
 package de.ub0r.android.smsdroid;
 
+import de.ub0r.android.smsdroid.cache.Persons;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -167,7 +168,7 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		Log.d(TAG, "p: " + address);
 		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
 		twPerson.setText(address);
-		CachePersons.getName(this.context, address, twPerson);
+		Persons.getName(this.context, address, twPerson);
 		String text = c.getBody();
 		if (text == null) {
 			text = this.context.getString(R.string.mms_conversation);
@@ -179,7 +180,7 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 
 		ImageView iv = (ImageView) view.findViewById(R.id.photo);
 		if (SMSdroid.showContactPhoto) {
-			CachePersons.getPicture(this.context, address, iv);
+			Persons.getPicture(this.context, address, iv);
 			iv.setVisibility(View.VISIBLE);
 		} else {
 			iv.setVisibility(View.GONE);
