@@ -262,8 +262,12 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		if (this.targetTvCount != null && this.mCount > 0) {
 			this.targetTvCount.setText("(" + this.mCount + ")");
 		}
-		if (this.targetTvName != null && this.mName != null) {
-			this.targetTvName.setText(this.mName);
+		if (this.targetTvName != null) {
+			if (this.mName != null) {
+				this.targetTvName.setText(this.mName);
+			} else if (this.mAddress != null) {
+				this.targetTvName.setText(this.mAddress);
+			}
 		}
 		if (this.mConversation != null
 				&& this.mConversation.getAddress() == null
