@@ -17,6 +17,7 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
+	<string name="lang">de</string>
     <string name="about_">Über</string>
 	<string name="about_hint">Über diese App</string>
 	<string name="feedback_">Feedback</string>
@@ -25,11 +26,15 @@
 	<string name="author_">Autor:</string>
 	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11046415</string>
 	<string name="donate_subject">Ich bin der Spender. Mein Hash ist...</string>
-	<string name="donate_">Spenden</string>
+	<string name="donate_">Spenden (Paypal)</string>
 	<string name="donate_remove_ads_">Spenden/Werbung entfernen</string>
 	<string name="remove_ads_">Werbung entfernen</string>
 	<string name="predonate">Dies ist eine open-source App. Sie ist und bleibt frei. Wenn du die App wirklich magst oder dich die Werbung nervt, kannst du gerne etwas spenden. Ich werde die Werbung so schnell wie möglich entfernen.\n\nAn alle WebSMS Spender: Der noads code funktioniert auch mit SMSdroid.</string>
 	<string name="postdonate">Um die Werbung zu entfernen brauche ich den MD5 Hash deiner IMEI (Die eindeutige ID deines Handys) von dir. Der Hash ist eine Einwegfunktion und ist somit nicht zu deiner IMEI Rückverfolgbar.</string>
+	<string name="send_hash_">Hash senden</string>
+	<string name="signature_">Ich werde dir dann einen Code schicken, mit dem du die Werbung dann abschalten kannst.\Du kannst diesen Code hier unten einfügen:</string>
+	<string name="sig_loaded">Werbung entfernt!</string>
+	<string name="sig_failed">Fehler beim entfernen der Werbung!</string>
 	<string name="more_apps_">Mehr Apps..</string>
 	<string name="license">GPLv3 - siehe http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<string name="license_">Lizens:</string>

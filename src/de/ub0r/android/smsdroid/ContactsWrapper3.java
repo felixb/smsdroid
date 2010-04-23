@@ -45,8 +45,6 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 	private static final String[] PROJECTION_FILTER = // .
 	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME };
 
-	/** Projection for persons query, plain. */
-
 	/**
 	 * {@inheritDoc}
 	 */

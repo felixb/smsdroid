@@ -19,6 +19,7 @@
 <resources>
     <string name="app_name">SMSdroid</string>
 	<string name="app_version">0.0.8 beta8</string>
+	<string name="lang">en</string>
 	<string name="changelog_">Changelog</string>
 	<string name="about_">About</string>
 	<string name="about_hint">About this app</string>
@@ -30,11 +31,15 @@
 	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=5779152</string>
 	<string name="donate_mail">flx.yoo@gmail.com</string>
 	<string name="donate_subject">I\'m the donator. My sender hash is...</string>
-	<string name="donate_">Donate</string>
+	<string name="donate_">Donate (Paypal)</string>
 	<string name="donate_remove_ads_">Donate/remove ads</string>
 	<string name="remove_ads_">Remove ads</string>
 	<string name="predonate">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating (via paypal). I\'ll remove the ads for you as soon as possible.\nThank you!\n\nFor all the WebSMS donators: the noads code is working for SMSdroid as well.</string>
 	<string name="postdonate">To remove ads, you need to send me the MD5 hash of your IMEI (unique id of your phone). This hash is a one-way-function. It is not traceable back to you.</string>
+	<string name="send_hash_">Send hash</string>
+	<string name="signature_">You will get back a code, which you can paste here, to finally remove the ads:</string>
+	<string name="sig_loaded">Ads removed!</string>
+	<string name="sig_failed">Failed to remove ads!</string>
 	<string name="more_apps_">More Apps..</string>
 	<string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<string name="license_">License:</string>

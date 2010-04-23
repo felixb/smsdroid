@@ -81,10 +81,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 
 	/** Dialog: updates. */
 	private static final int DIALOG_UPDATE = 1;
-	/** Dialog: pre donate. */
-	private static final int DIALOG_PREDONATE = 2;
-	/** Dialog: post donate. */
-	private static final int DIALOG_POSTDONATE = 3;
 
 	/** Number of items. */
 	private static final int WHICH_N = 4;
@@ -298,57 +294,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			builder.setCancelable(true);
 			builder.setPositiveButton(android.R.string.ok, null);
 			return builder.create();
-		case DIALOG_PREDONATE:
-			builder = new Builder(this);
-			builder.setIcon(R.drawable.ic_menu_star);
-			builder.setTitle(R.string.donate_);
-			builder.setMessage(R.string.predonate);
-			builder.setPositiveButton(R.string.donate_,
-					new DialogInterface.OnClickListener() {
-						public void onClick(final DialogInterface dialog,
-								final int which) {
-							try {
-								SMSdroid.this.startActivity(new Intent(
-										Intent.ACTION_VIEW, Uri.parse(// .
-												SMSdroid.this.getString(// .
-														R.string.donate_url))));
-							} catch (ActivityNotFoundException e) {
-								Log.e(TAG, "no browser", e);
-							} finally {
-								SMSdroid.this.showDialog(DIALOG_POSTDONATE);
-							}
-						}
-					});
-			builder.setNegativeButton(android.R.string.cancel, null);
-			return builder.create();
-		case DIALOG_POSTDONATE:
-			builder = new Builder(this);
-			builder.setIcon(R.drawable.ic_menu_star);
-			builder.setTitle(R.string.remove_ads_);
-			builder.setMessage(R.string.postdonate);
-			builder.setPositiveButton(R.string.send_,
-					new DialogInterface.OnClickListener() {
-						public void onClick(final DialogInterface dialog,
-								final int which) {
-							final Intent in = new Intent(Intent.ACTION_SEND);
-							in.putExtra(Intent.EXTRA_EMAIL, new String[] {
-									SMSdroid.this.getString(// .
-											R.string.donate_mail), "" });
-							// FIXME: "" is a k9 hack. This is fixed in market
-							// on 26.01.10. wait some more time..
-							in.putExtra(Intent.EXTRA_TEXT, SMSdroid.this
-									.getImeiHash());
-							in.putExtra(Intent.EXTRA_SUBJECT, SMSdroid.this
-									.getString(// .
-									R.string.app_name)
-									+ " " + SMSdroid.this.getString(// .
-											R.string.donate_subject));
-							in.setType("text/plain");
-							SMSdroid.this.startActivity(in);
-						}
-					});
-			builder.setNegativeButton(android.R.string.cancel, null);
-			return builder.create();
 		default:
 			return null;
 		}
@@ -440,7 +385,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			this.startActivity(new Intent(this, Preferences.class));
 			return true;
 		case R.id.item_donate:
-			this.showDialog(DIALOG_PREDONATE);
+			this.startActivity(new Intent(this, DonationHelper.class));
 			return true;
 		case R.id.item_delete_all_threads:
 			deleteMessages(this, Uri.parse("content://sms/"),

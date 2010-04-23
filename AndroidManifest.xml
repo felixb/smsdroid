@@ -43,6 +43,20 @@
 				<data android:mimeType="vnd.android-dir/mms-sms" />
 			</intent-filter>
 		</activity>
+		<activity android:name="DonationHelper"
+			android:configChanges="orientation|keyboardHidden"
+			android:windowSoftInputMode="adjustResize">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="noads" android:host="websms" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="application/octet-stream" />
+			</intent-filter>
+		</activity>
 		<receiver android:name="SmsReceiver">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
