@@ -18,15 +18,7 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.security.KeyFactory;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.Signature;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,7 +36,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -53,6 +44,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -95,18 +87,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 
 	/** Preferences: hide ads. */
 	private static boolean prefsNoAds = false;
-	/** Hased IMEI. */
-	private static String imeiHash = null;
-	/** Crypto algorithm for signing UID hashs. */
-	private static final String ALGO = "RSA";
-	/** Crypto hash algorithm for signing UID hashs. */
-	private static final String SIGALGO = "SHA1with" + ALGO;
-	/** My public key for verifying UID hashs. */
-	private static final String KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNAD"
-			+ "CBiQKBgQCgnfT4bRMLOv3rV8tpjcEqsNmC1OJaaEYRaTHOCC"
-			+ "F4sCIZ3pEfDcNmrZZQc9Y0im351ekKOzUzlLLoG09bsaOeMd"
-			+ "Y89+o2O0mW9NnBch3l8K/uJ3FRn+8Li75SqoTqFj3yCrd9IT"
-			+ "sOJC7PxcR5TvNpeXsogcyxxo3fMdJdjkafYwIDAQAB";
 	/** Path to file containing signatures of UID Hash. */
 	private static final String NOADS_SIGNATURES = "/sdcard/websms.noads";
 
@@ -410,95 +390,28 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		final File f = new File(NOADS_SIGNATURES);
 		try {
 			if (f.exists()) {
-				final BufferedReader br = new BufferedReader(new FileReader(f));
-				final byte[] publicKey = Base64Coder.decode(KEY);
-				final KeyFactory keyFactory = KeyFactory.getInstance(ALGO);
-				PublicKey pk = keyFactory
-						.generatePublic(new X509EncodedKeySpec(publicKey));
-				final String h = this.getImeiHash();
-				boolean ret = false;
-				while (true) {
-					String l = br.readLine();
-					if (l == null) {
-						break;
-					}
-					try {
-						byte[] signature = Base64Coder.decode(l);
-						Signature sig = Signature.getInstance(SIGALGO);
-						sig.initVerify(pk);
-						sig.update(h.getBytes());
-						ret = sig.verify(signature);
-						if (ret) {
-							break;
-						}
-					} catch (IllegalArgumentException e) {
-						Log.w(TAG, "error reading line", e);
+				if (DonationHelper.loadSig(this, Uri.fromFile(f))) {
+					if (!f.delete()) {
+						Log.w(TAG, "error deleting signature!");
+						Toast.makeText(
+								this,
+								"could not delete .noads file!\n"
+										+ "please delete it yourself.",
+								Toast.LENGTH_LONG).show();
 					}
 				}
-				br.close();
-				f.delete();
-				p.edit().putBoolean(Preferences.PREFS_HIDEADS, ret).commit();
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "error reading signatures", e);
 		}
 		final boolean ret = p.getBoolean(Preferences.PREFS_HIDEADS, false);
 		if (ret != prefsNoAds) {
-			final HashMap<String, String> params = new HashMap<String, String>();
+			final HashMap<String, String> params = // .
+			new HashMap<String, String>();
 			params.put("value", String.valueOf(ret));
 			FlurryAgent.onEvent("switch prefsNoAds", params);
 		}
 		return ret;
-	}
-
-	/**
-	 * Get MD5 hash of the IMEI (device id).
-	 * 
-	 * @return MD5 hash of IMEI
-	 */
-	private String getImeiHash() {
-		if (imeiHash == null) {
-			// get imei
-			TelephonyManager mTelephonyMgr = (TelephonyManager) this
-					.getSystemService(TELEPHONY_SERVICE);
-			final String did = mTelephonyMgr.getDeviceId();
-			if (did != null) {
-				imeiHash = md5(did);
-			}
-		}
-		return imeiHash;
-	}
-
-	/**
-	 * Calculate MD5 Hash from String.
-	 * 
-	 * @param s
-	 *            input
-	 * @return hash
-	 */
-	private static String md5(final String s) {
-		try {
-			// Create MD5 Hash
-			MessageDigest digest = java.security.MessageDigest
-					.getInstance("MD5");
-			digest.update(s.getBytes());
-			byte[] messageDigest = digest.digest();
-			// Create Hex String
-			StringBuilder hexString = new StringBuilder(32);
-			int b;
-			for (int i = 0; i < messageDigest.length; i++) {
-				b = 0xFF & messageDigest[i];
-				if (b < 0x10) {
-					hexString.append('0' + Integer.toHexString(b));
-				} else {
-					hexString.append(Integer.toHexString(b));
-				}
-			}
-			return hexString.toString();
-		} catch (NoSuchAlgorithmException e) {
-			Log.e(TAG, null, e);
-		}
-		return "";
 	}
 
 	/**

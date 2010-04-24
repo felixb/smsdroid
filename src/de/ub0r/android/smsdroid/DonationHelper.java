@@ -19,9 +19,9 @@
 package de.ub0r.android.smsdroid;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
@@ -105,78 +105,12 @@ public class DonationHelper extends Activity implements OnClickListener {
 			return;
 		}
 		final Uri u = i.getData();
-		if (u == null) {
-			return;
-		}
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("uri", u.toString());
-		FlurryAgent.onEvent("donation helper", map);
-		if (u.getScheme().equals("noads")) {
-			final String p = u.getPath();
-			if (p == null || p.length() <= 1) {
-				// send IMEI hash via mail
-				sendImeiHash(this);
-				this.finish();
-			} else {
-				// check signature encoded in path
-				loadSig(this, p.substring(1).trim());
-				this.finish();
-			}
-		} else if (u.getScheme().equals("content")) {
-			InputStream is = null;
-			try {
-				is = this.getContentResolver().openInputStream(u);
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(is));
-				String s;
-				do {
-					s = reader.readLine();
-					if (s != null) {
-						EditText et = (EditText) this.findViewById(R.id.sig);
-						et.setText(s);
-						et.requestFocus();
-						if (loadSig(this, s)) {
-							break;
-						}
-					}
-				} while (s != null);
-			} catch (IOException e) {
-				Log.e(TAG, "Failed to load part data", e);
-			} finally {
-				if (is != null) {
-					try {
-						is.close();
-					} catch (IOException e) {
-						Log.e(TAG, "Failed to close stream", e);
-					}
-				}
-			}
+		if (u != null && u.toString().length() > 0) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("uri", u.toString());
+			FlurryAgent.onEvent("donation helper", map);
+			loadSig(this, u);
 			this.finish();
-		} else if (u.getScheme().equals("file")) {
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(u
-						.toString().substring("file://".length())));
-				String s;
-				do {
-					s = reader.readLine();
-					if (s != null) {
-						EditText et = (EditText) this.findViewById(R.id.sig);
-						et.setText(s);
-						et.requestFocus();
-						if (loadSig(this, s)) {
-							break;
-						}
-					}
-				} while (s != null);
-			} catch (IOException e) {
-				Log.e(TAG, "file loading file");
-			}
-			this.finish();
-		} else {
-			Toast.makeText(this, "unsupported intent", Toast.LENGTH_LONG)
-					.show();
-			FlurryAgent.onError("unsupported intent0", u.getScheme(),
-					"unsupported intent2");
 		}
 	}
 
@@ -251,6 +185,77 @@ public class DonationHelper extends Activity implements OnClickListener {
 			}
 		}
 		return imeiHash;
+	}
+
+	/**
+	 * Load signature.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param uri
+	 *            {@link Uri} to read signature
+	 * @return true if good signature
+	 */
+	public static boolean loadSig(final Context context, final Uri uri) {
+		boolean ret = false;
+		final String scheme = uri.getScheme();
+		if (scheme.equals("noads")) {
+			final String p = uri.getPath();
+			if (p == null || p.length() <= 1) {
+				// send IMEI hash via mail
+				sendImeiHash(context);
+			} else {
+				// check signature encoded in path
+				ret = loadSig(context, p.substring(1).trim());
+			}
+		} else if (scheme.equals("content") || scheme.equals("file")) {
+			try {
+				BufferedReader reader = getSigReader(context, uri);
+				String s;
+				do {
+					s = reader.readLine();
+					if (s != null) {
+						if (loadSig(context, s)) {
+							ret = true;
+							break;
+						}
+					}
+				} while (s != null);
+				reader.close();
+			} catch (IOException e) {
+				Log.e(TAG, "Failed to load signature: " + uri.toString(), e);
+			}
+		} else {
+			Toast.makeText(context, "unsupported intent", Toast.LENGTH_LONG)
+					.show();
+			FlurryAgent.onError("unsupported intent0", uri.getScheme(),
+					"unsupported intent2");
+		}
+		return ret;
+	}
+
+	/**
+	 * Create a {@link BufferedReader} to read the signature from.
+	 * 
+	 * @param context
+	 *            {@link Context} needed for content:// {@link Uri}s
+	 * @param uri
+	 *            {@link Uri}
+	 * @return {@link BufferedReader}
+	 * @throws FileNotFoundException
+	 *             FileNotFoundException
+	 */
+	private static BufferedReader getSigReader(final Context context,
+			final Uri uri) throws FileNotFoundException {
+		final String scheme = uri.getScheme();
+		if (scheme.equals("content")) {
+			return new BufferedReader(new InputStreamReader(context
+					.getContentResolver().openInputStream(uri)));
+		} else if (scheme.equals("file")) {
+			return new BufferedReader(new FileReader(uri.toString().substring(
+					"file://".length())));
+		}
+		return null;
 	}
 
 	/**
