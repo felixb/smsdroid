@@ -106,9 +106,6 @@ public class DonationHelper extends Activity implements OnClickListener {
 		}
 		final Uri u = i.getData();
 		if (u != null && u.toString().length() > 0) {
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("uri", u.toString());
-			FlurryAgent.onEvent("donation helper", map);
 			loadSig(this, u);
 			this.finish();
 		}
@@ -197,6 +194,9 @@ public class DonationHelper extends Activity implements OnClickListener {
 	 * @return true if good signature
 	 */
 	public static boolean loadSig(final Context context, final Uri uri) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("uri", uri.toString());
+		FlurryAgent.onEvent("loadSig()", map);
 		boolean ret = false;
 		final String scheme = uri.getScheme();
 		if (scheme.equals("noads")) {
@@ -269,17 +269,20 @@ public class DonationHelper extends Activity implements OnClickListener {
 	 */
 	public static boolean loadSig(final Context context, final String s) {
 		Log.i(TAG, "loadSig(ctx, " + s + ")");
-		final boolean ret = checkSig(context, s);
-		Log.i(TAG, "result: " + ret);
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
+		final boolean orig = prefs.getBoolean(Preferences.PREFS_HIDEADS, false);
+		final boolean ret = checkSig(context, s);
+		Log.i(TAG, "result: " + ret);
 		prefs.edit().putBoolean(Preferences.PREFS_HIDEADS, ret).commit();
 		// notify user
-		int text = R.string.sig_loaded;
-		if (!ret) {
-			text = R.string.sig_failed;
+		if (!orig || !ret) {
+			int text = R.string.sig_loaded;
+			if (!ret) {
+				text = R.string.sig_failed;
+			}
+			Toast.makeText(context, text, Toast.LENGTH_LONG).show();
 		}
-		Toast.makeText(context, text, Toast.LENGTH_LONG).show();
 		return ret;
 	}
 

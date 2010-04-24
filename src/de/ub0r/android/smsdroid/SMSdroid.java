@@ -44,7 +44,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -378,14 +377,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		try {
 			if (f.exists()) {
 				if (DonationHelper.loadSig(this, Uri.fromFile(f))) {
-					if (!f.delete()) {
-						Log.w(TAG, "error deleting signature!");
-						Toast.makeText(
-								this,
-								"could not delete .noads file!\n"
-										+ "please delete it yourself.",
-								Toast.LENGTH_LONG).show();
-					}
+					f.delete();
 				}
 			}
 		} catch (Exception e) {
