@@ -132,6 +132,8 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 			}
 			Log.d(TAG, "added   " + c.getId() + " " + c.getThreadId());
 			Log.d(TAG, "added.. " + c.getDate() + " " + c.getBody());
+			// Log.d(TAG, "notifyDataSetChanged()");
+			// this.notifyDataSetChanged();
 		} while (this.cursor.moveToNext());
 		Log.d(TAG, "notifyDataSetChanged()");
 		this.notifyDataSetChanged();
