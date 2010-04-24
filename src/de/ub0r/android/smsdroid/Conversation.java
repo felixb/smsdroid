@@ -18,9 +18,12 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
+import de.ub0r.android.smsdroid.cache.AsyncHelper;
 
 /**
  * Class holding a single conversation.
@@ -80,13 +83,23 @@ public class Conversation {
 	/** Read status. */
 	private int read;
 
+	/** Message count. */
+	private int count = -1;
+
+	/** Name. */
+	private String name = null;
+	/** Photo. */
+	private Bitmap photo = null;
+
 	/**
 	 * Default constructor.
 	 * 
+	 * @param context
+	 *            {@link Context}
 	 * @param cursor
 	 *            {@link Cursor} to read the data
 	 */
-	public Conversation(final Cursor cursor) {
+	public Conversation(final Context context, final Cursor cursor) {
 		this.id = cursor.getLong(INDEX_ID);
 		this.threadId = cursor.getLong(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
@@ -97,6 +110,8 @@ public class Conversation {
 		this.body = cursor.getString(INDEX_BODY);
 		this.type = cursor.getInt(INDEX_TYPE);
 		this.read = cursor.getInt(INDEX_READ);
+
+		AsyncHelper.fillConversation(context, this);
 	}
 
 	/**
@@ -156,5 +171,63 @@ public class Conversation {
 	 */
 	public final int getRead() {
 		return this.read;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public final String getName() {
+		return this.name;
+	}
+
+	/**
+	 * @return name, address or "..."
+	 */
+	public final String getDisplayName() {
+		if (this.name != null) {
+			return this.name;
+		} else if (this.address != null) {
+			return this.address;
+		} else {
+			return "...";
+		}
+	}
+
+	/**
+	 * @param n
+	 *            the name to set
+	 */
+	public final void setName(final String n) {
+		this.name = n;
+	}
+
+	/**
+	 * @return the photo
+	 */
+	public final Bitmap getPhoto() {
+		return this.photo;
+	}
+
+	/**
+	 * @param img
+	 *            the photo to set
+	 */
+	public final void setPhoto(final Bitmap img) {
+		this.photo = img;
+	}
+
+	/**
+	 * @return the count
+	 */
+	public final int getCount() {
+		return this.count;
+	}
+
+	/**
+	 * @param c
+	 *            the count to set
+	 */
+	public final void setCount(final int c) {
+		this.count = c;
 	}
 }

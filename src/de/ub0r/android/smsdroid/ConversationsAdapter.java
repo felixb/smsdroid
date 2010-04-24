@@ -21,6 +21,7 @@ package de.ub0r.android.smsdroid;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
 import android.provider.CallLog.Calls;
@@ -30,7 +31,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import de.ub0r.android.smsdroid.cache.AsyncHelper;
+import de.ub0r.android.smsdroid.cache.Threads;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -85,10 +86,17 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		c.startManagingCursor(cur);
 		cur.registerContentObserver(new ContentObserver(new Handler()) {
 			@Override
+			public boolean deliverSelfNotifications() {
+				return false;
+			}
+
+			@Override
 			public void onChange(final boolean selfChange) {
 				super.onChange(selfChange);
-				Log.d(TAG, "changed cursor");
-				ConversationsAdapter.this.buildArray();
+				Log.d(TAG, "ContentObserver.onChange(" + selfChange + ")");
+				if (!selfChange) {
+					ConversationsAdapter.this.buildArray();
+				}
 			}
 		});
 		this.cursor = cur;
@@ -108,7 +116,7 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		this.cursor.moveToFirst();
 		this.clear();
 		do {
-			final Conversation c = new Conversation(this.cursor);
+			final Conversation c = new Conversation(this.context, this.cursor);
 			final long d = c.getDate();
 			final int l = this.getCount();
 			boolean added = false;
@@ -127,6 +135,7 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 		} while (this.cursor.moveToNext());
 		Log.d(TAG, "notifyDataSetChanged()");
 		this.notifyDataSetChanged();
+		Threads.invalidate();
 	}
 
 	/**
@@ -136,18 +145,41 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 	public final View getView(final int position, final View convertView,
 			final ViewGroup parent) {
 		final Conversation c = this.getItem(position);
+		final long threadID = c.getThreadId();
+
 		View view = convertView;
-		TextView twBody;
+		TextView tvBody;
 		if (view == null) {
 			view = View.inflate(this.context, R.layout.conversationlist_item,
 					null);
-			twBody = (TextView) view.findViewById(R.id.body);
-			twBody.setTextSize(this.textSize);
+			tvBody = (TextView) view.findViewById(R.id.body);
+			tvBody.setTextSize(this.textSize);
 		} else {
-			twBody = (TextView) view.findViewById(R.id.body);
+			tvBody = (TextView) view.findViewById(R.id.body);
 		}
 
-		final long threadID = c.getThreadId();
+		final TextView tvName = (TextView) view.findViewById(R.id.addr);
+		final TextView tvCount = (TextView) view.findViewById(R.id.count);
+		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
+		if (SMSdroid.showContactPhoto) {
+			Bitmap b = c.getPhoto();
+			if (b != null) {
+				ivPhoto.setImageBitmap(b);
+			} else {
+				ivPhoto.setImageResource(R.drawable.ic_contact_picture);
+			}
+			ivPhoto.setVisibility(View.VISIBLE);
+		} else {
+			ivPhoto.setVisibility(View.GONE);
+		}
+		final int count = c.getCount();
+		if (count < 0) {
+			tvCount.setText("");
+		} else {
+			tvCount.setText("(" + c.getCount() + ")");
+		}
+		tvName.setText(c.getDisplayName());
+
 		int t = c.getType();
 		if (t == Calls.INCOMING_TYPE) {
 			((ImageView) view.findViewById(R.id.inout))
@@ -158,39 +190,26 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_outgoing_call);
 		}
+
+		// read status
 		int read = c.getRead();
 		if (read == 0) {
 			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
-		String address = c.getAddress();
-		Log.d(TAG, "p: " + address);
+
+		// body
 		String text = c.getBody();
 		if (text == null) {
 			text = this.context.getString(R.string.mms_conversation);
 		}
-		twBody.setText(text);
+		tvBody.setText(text);
+
+		// date
 		long time = c.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
 				Conversation.DATE_FORMAT, time));
-
-		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
-		ImageView iv = (ImageView) view.findViewById(R.id.photo);
-		if (SMSdroid.showContactPhoto) {
-			AsyncHelper.fillByAddress(this.context, address, twPerson, iv);
-			iv.setVisibility(View.VISIBLE);
-		} else {
-			AsyncHelper.fillByAddress(this.context, address, twPerson, null);
-			iv.setVisibility(View.GONE);
-		}
-		// TODO: move to Conversation
-		final Uri target = Uri.parse(MessageList.URI + threadID);
-		final Cursor cur = this.context.getContentResolver().query(target,
-				Message.PROJECTION, null, null, null);
-		TextView tv = (TextView) view.findViewById(R.id.count);
-		tv.setText("(" + cur.getCount() + ")");
-		cur.close();
 		return view;
 	}
 }

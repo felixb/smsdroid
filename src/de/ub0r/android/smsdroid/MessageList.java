@@ -26,8 +26,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -49,6 +47,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import com.flurry.android.FlurryAgent;
 
 import de.ub0r.android.smsdroid.cache.Persons;
+import de.ub0r.android.smsdroid.cache.Threads;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -76,13 +75,19 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Index in dialog: speak. */
 	private static final int WHICH_SPEAK = 5;
 
-	/** Address. */
-	private String address = null;
-	/** URI to resolve. */
-	static final String URI = "content://mms-sms/conversations/";
-
 	/** Used {@link Uri}. */
 	private Uri uri;
+	/** Thread id. */
+	private long threadId = -1;
+	/** Address. */
+	private String address = null;
+	/** Name. */
+	private String name = null;
+	/** Display Name (name if !=null, else address). */
+	private String displayName = null;
+
+	/** URI to resolve. */
+	static final String URI = "content://mms-sms/conversations/";
 
 	/** Dialog items shown if an item was long clicked. */
 	private String[] longItemClickDialog = null;
@@ -162,7 +167,17 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "got intent: " + this.uri.toString());
 
 		List<String> p = this.uri.getPathSegments();
-		String threadID = p.get(p.size() - 1);
+		this.threadId = Long.parseLong(p.get(p.size() - 1));
+		this.address = Threads.getAddress(this, this.threadId);
+		this.name = Persons.getName(this, this.address, false);
+		if (this.name == null) {
+			this.displayName = this.address;
+		} else {
+			this.displayName = this.name;
+		}
+		Log.d(TAG, "address: " + this.address);
+		Log.d(TAG, "name: " + this.name);
+		Log.d(TAG, "displayName: " + this.displayName);
 
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -184,34 +199,17 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 		MessagesAdapter adapter = new MessagesAdapter(this, this.uri, sort);
 		this.setListAdapter(adapter);
-		// TODO: use cached version of get address for thread
-		Cursor cursor;
-		try {
-			cursor = this.getContentResolver().query(this.uri,
-					Message.PROJECTION, null, null, sort);
-		} catch (SQLException e) {
-			Log.w(TAG, "error while query", e);
-			Message.PROJECTION[Conversation.INDEX_ADDRESS] // .
-			= Conversation.ADDRESS_HERO;
-			cursor = this.getContentResolver().query(this.uri,
-					Message.PROJECTION, null, null, sort);
-		}
-		if (cursor.moveToFirst()) {
-			String a = null;
-			do {
-				a = cursor.getString(Message.INDEX_ADDRESS);
-			} while (a == null && cursor.moveToNext());
-			Log.d(TAG, "p: " + a);
-			this.address = a;
-		}
-		String pers = Persons.getName(this, this.address);
-		if (pers == null) {
-			pers = this.address;
-		}
 
-		this.setTitle(this.getString(R.string.app_name) + " > " + pers);
-		((TextView) header.findViewById(R.id.text2)).setText(this.address);
-		this.setRead(threadID);
+		this.setTitle(this.getString(R.string.app_name) + " > "
+				+ this.displayName);
+		String str;
+		if (this.name == null) {
+			str = this.address;
+		} else {
+			str = this.name + " <" + this.address + ">";
+		}
+		((TextView) header.findViewById(R.id.text2)).setText(str);
+		this.setRead(this.threadId);
 	}
 
 	/**
@@ -220,7 +218,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * @param threadID
 	 *            thread id
 	 */
-	private void setRead(final String threadID) {
+	private void setRead(final long threadID) {
 		SMSdroid.markRead(this, Uri.parse(URI + threadID), 1);
 	}
 

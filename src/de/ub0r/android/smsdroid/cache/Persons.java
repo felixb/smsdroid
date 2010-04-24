@@ -45,7 +45,18 @@ public final class Persons {
 		boolean noPicutre = false;
 		/** Person's profile picture. */
 		Bitmap picture = null;
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String toString() {
+			return "[person/id: " + this.id + ",name: " + this.name + "]";
+		}
 	}
+
+	/** Person not found. */
+	private static final Person NOT_FOUND = new Person();
 
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.cp";
@@ -82,7 +93,8 @@ public final class Persons {
 	 */
 	private static Person getNameForAddress(final Context context,
 			final String address) {
-		Log.d(TAG, "a: " + address);
+		Log.d(TAG, "getNameForAddress(ctx, " + address + ")");
+		Person ret = NOT_FOUND;
 		// clean up number
 		String realAddress = address;
 		final Matcher m = PATTERN_CLEAN_NUMBER.matcher(realAddress);
@@ -94,24 +106,22 @@ public final class Persons {
 		final String[] proj = WRAPPER.getProjectionFilter();
 		if (uri != null) {
 			try {
-				Log.d(TAG, "uri: " + uri);
-				Log.d(TAG, "proj[0]: " + proj[0]);
-				Log.d(TAG, "proj[1]: " + proj[1]);
+				// Log.d(TAG, "uri: " + uri);
+				// Log.d(TAG, "proj[0]: " + proj[0]);
+				// Log.d(TAG, "proj[1]: " + proj[1]);
 				Cursor cursor = context.getContentResolver().query(uri, proj,
 						null, null, null);
 				if (cursor.moveToFirst()) {
-					final Person p = new Person();
-					p.id = cursor.getLong(INDEX_ID);
-					p.name = cursor.getString(INDEX_NAME);
-					cursor.close();
-					return p;
+					ret = new Person();
+					ret.id = cursor.getLong(INDEX_ID);
+					ret.name = cursor.getString(INDEX_NAME);
 				}
 				cursor.close();
 			} catch (Exception e) {
 				Log.e(TAG, "failed to fetch person", e);
 			}
 		}
-		return null;
+		return ret;
 	}
 
 	/**
@@ -125,7 +135,7 @@ public final class Persons {
 	 */
 	private static Bitmap getPictureForPerson(final Context context,
 			final Person person) {
-		if (person.noPicutre) {
+		if (person.noPicutre || person.id < 0) {
 			return null;
 		}
 		Bitmap b = WRAPPER.loadContactPhoto(context, person.id);
@@ -147,8 +157,12 @@ public final class Persons {
 	 *            {@link Person}
 	 * @return Person
 	 */
-	private static Person newEntry(final String address, final Person person) {
+	private static synchronized Person newEntry(final String address,
+			final Person person) {
 		Log.d(TAG, "put person to cache: " + address);
+		if (CACHE.get(address) != null) {
+			Log.d(TAG, "skip");
+		}
 		Person p = person;
 		if (p == null) {
 			p = new Person();
@@ -168,21 +182,28 @@ public final class Persons {
 	 *            {@link Context}
 	 * @param address
 	 *            person's address
+	 * @param giveAddress
+	 *            return address if name == null
 	 * @return person's name
 	 */
-	public static String getName(final Context context, final String address) {
+	public static String getName(final Context context, final String address,
+			final boolean giveAddress) {
 		if (address == null) {
 			return null;
 		}
 		Person p = CACHE.get(address);
 		if (p == null) {
-			// TODO: for targetView != null: spawn thread to do the work
 			p = getNameForAddress(context, address);
 			if (p != null) {
 				newEntry(address, p);
 			}
 		}
 		if (p != null) {
+			Log.d(TAG, "getName(ctx, " + address + ")");
+			Log.d(TAG, "return: " + p);
+			if (giveAddress && p.name == null) {
+				return address;
+			}
 			return p.name;
 		} else {
 			return null;
@@ -204,7 +225,8 @@ public final class Persons {
 		}
 		Person p = CACHE.get(address);
 		if (p == null) {
-			getName(context, address); // try to get contact from database
+			getName(context, address, false); // try to get contact from
+			// database
 			p = CACHE.get(address);
 		}
 		if (p != null) {
@@ -226,7 +248,8 @@ public final class Persons {
 			final String address) {
 		Person p = CACHE.get(address);
 		if (p == null) {
-			getName(context, address); // try to get contact from database
+			getName(context, address, false); // try to get contact from
+												// database
 			p = CACHE.get(address);
 		}
 		Bitmap b = null;

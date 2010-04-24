@@ -40,6 +40,15 @@ public final class Threads {
 		int count = -1;
 		/** Timestamp of last read. */
 		long lastCheck = -1;
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String toString() {
+			return "[thread/address: " + this.address + ",count: " + this.count
+					+ "]";
+		}
 	}
 
 	/** Tag for output. */
@@ -63,11 +72,13 @@ public final class Threads {
 	 *            {@link Context}
 	 * @param id
 	 *            thread id
+	 * @param thread
+	 *            {@link Thread}
 	 * @return {@link Thread}
 	 */
 	private static Thread getData(final Context context, final long id,
 			final Thread thread) {
-		Log.d(TAG, "id: " + id);
+		Log.d(TAG, "Threads.getData(ctx, " + id + ", " + thread + ")");
 		// address contains the phone number
 		Uri uri = Uri.parse("content://mms-sms/conversations/" + id);
 		try {
@@ -80,7 +91,7 @@ public final class Threads {
 					t = new Thread();
 				}
 				t.count = cursor.getCount();
-				if (t.address != null) {
+				if (t.address == null) {
 					String a = null;
 					do {
 						a = cursor.getString(Message.INDEX_ADDRESS);
@@ -107,8 +118,12 @@ public final class Threads {
 	 *            {@link Thread}
 	 * @return Person
 	 */
-	private static Thread newEntry(final long id, final Thread thread) {
+	private static synchronized Thread newEntry(final long id,
+			final Thread thread) {
 		Log.d(TAG, "put thread to cache: " + id);
+		if (CACHE.get(id) != null) {
+			Log.d(TAG, "skip");
+		}
 		Thread t = thread;
 		if (t == null) {
 			t = new Thread();
@@ -139,6 +154,8 @@ public final class Threads {
 			}
 		}
 		if (t != null) {
+			Log.d(TAG, "getAddress(ctx, " + id + ")");
+			Log.d(TAG, "return: " + t);
 			return t.address;
 		}
 		return null;

@@ -154,10 +154,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			if (l == 1) {
 				final String a = cursor.getString(Message.INDEX_ADDRESS);
 				Log.d(TAG, "p: " + a);
-				String rr = Persons.getName(context, a);
-				if (rr == null) {
-					rr = a;
-				}
+				final String rr = Persons.getName(context, a, true);
 				final String th = cursor.getString(Message.INDEX_THREADID);
 				n = new Notification(R.drawable.stat_notify_sms, rr, System
 						.currentTimeMillis());

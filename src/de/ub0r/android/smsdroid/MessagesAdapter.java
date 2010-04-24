@@ -18,6 +18,8 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.util.List;
+
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -30,7 +32,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import de.ub0r.android.smsdroid.cache.AsyncHelper;
+import de.ub0r.android.smsdroid.cache.Persons;
+import de.ub0r.android.smsdroid.cache.Threads;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -66,8 +69,16 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 	/** Sorting order. */
 	private final String sort;
 
-	/** Uri to represent. */
-	private final Uri uri;
+	/** Used {@link Uri}. */
+	private Uri uri;
+	/** Thread id. */
+	private long threadId = -1;
+	/** Address. */
+	private String address = null;
+	/** Name. */
+	private String name = null;
+	/** Display Name (name if !=null, else address). */
+	private String displayName = null;
 
 	/** Used text size. */
 	private final int textSize;
@@ -93,6 +104,18 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 		this.textSize = Preferences.getTextsize(c);
 		this.uri = u;
 		this.sort = s;
+		List<String> p = u.getPathSegments();
+		this.threadId = Long.parseLong(p.get(p.size() - 1));
+		this.address = Threads.getAddress(this.context, this.threadId);
+		this.name = Persons.getName(this.context, this.address, false);
+		if (this.name == null) {
+			this.displayName = this.address;
+		} else {
+			this.displayName = this.name;
+		}
+		Log.d(TAG, "address: " + this.address);
+		Log.d(TAG, "name: " + this.name);
+		Log.d(TAG, "displayName: " + this.displayName);
 
 		Cursor cur;
 		try {
@@ -110,10 +133,17 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 		c.startManagingCursor(cur);
 		cur.registerContentObserver(new ContentObserver(new Handler()) {
 			@Override
+			public boolean deliverSelfNotifications() {
+				return false;
+			}
+
+			@Override
 			public void onChange(final boolean selfChange) {
 				super.onChange(selfChange);
-				Log.d(TAG, "changed cursor");
-				MessagesAdapter.this.buildArray();
+				Log.d(TAG, "ContentObserver.onChange(" + selfChange + ")");
+				if (!selfChange) {
+					MessagesAdapter.this.buildArray();
+				}
 			}
 		});
 		this.cursor = cur;
@@ -177,11 +207,7 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
 
 		if (t == Calls.INCOMING_TYPE) {
-			final String address = m.getAddress(this.context);
-			Log.d(TAG, "p: " + address);
-			twPerson.setText(address);
-			// TODO: do only once!
-			AsyncHelper.fillByAddress(this.context, address, twPerson, null);
+			twPerson.setText(this.displayName);
 			view.setBackgroundResource(0);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .

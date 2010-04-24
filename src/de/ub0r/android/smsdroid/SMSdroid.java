@@ -141,20 +141,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 				buf.append(" | ");
 			}
 			Log.d(TAG, buf.toString());
-			if (c.moveToFirst()) {
-				do {
-					buf = new StringBuilder();
-					for (int i = 0; i < l; i++) {
-						buf.append(i + ":");
-						buf.append(c.getString(i));
-						buf.append(" | ");
-					}
-					Log.d(TAG, buf.toString());
-				} while (c.moveToNext());
-				c.close();
-			}
 		}
-		Log.d(TAG, "-*---GET HEADERS---*-");
 
 	}
 
@@ -466,7 +453,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			String[] items = this.longItemClickDialog;
 			final String a = c.getAddress();
 			Log.d(TAG, "p: " + a);
-			final String n = Persons.getName(this, a);
+			final String n = Persons.getName(this, a, false);
 			if (n == null) {
 				builder.setTitle(a);
 				items = items.clone();
