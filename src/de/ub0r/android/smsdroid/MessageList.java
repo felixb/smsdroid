@@ -18,8 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.List;
-
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -125,6 +123,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final Intent i = this.getIntent();
 		this.uri = i.getData();
 		if (this.uri != null) {
+			if (!this.uri.toString().startsWith(URI)) {
+				this.uri = Uri.parse(URI + this.uri.getLastPathSegment());
+			}
 			this.parseIntent(i);
 		}
 		final ListView list = this.getListView();
@@ -166,8 +167,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private void parseIntent(final Intent intent) {
 		Log.d(TAG, "got intent: " + this.uri.toString());
 
-		List<String> p = this.uri.getPathSegments();
-		this.threadId = Long.parseLong(p.get(p.size() - 1));
+		this.threadId = Long.parseLong(this.uri.getLastPathSegment());
 		this.address = Threads.getAddress(this, this.threadId);
 		this.name = Persons.getName(this, this.address, false);
 		if (this.name == null) {

@@ -40,7 +40,14 @@
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
-				<data android:mimeType="vnd.android-dir/mms-sms" />
+				<data android:mimeType="vnd.android-dir/mms-sms"
+					android:pathPrefix="/threadID/" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="vnd.android-dir/mms-sms"
+					android:pathPrefix="/conversations/" />
 			</intent-filter>
 		</activity>
 		<activity android:name="DonationHelper"
