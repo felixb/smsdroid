@@ -119,6 +119,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		this.setTheme(Preferences.getTheme(this));
 		this.setContentView(R.layout.messagelist);
+		Log.d(TAG, "onCreate()");
 
 		final Intent i = this.getIntent();
 		this.uri = i.getData();

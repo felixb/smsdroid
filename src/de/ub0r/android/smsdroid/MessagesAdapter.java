@@ -117,6 +117,7 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 		Log.d(TAG, "name: " + this.name);
 		Log.d(TAG, "displayName: " + this.displayName);
 
+		this.notifyDataSetChanged();
 		Cursor cur;
 		try {
 			cur = c.getContentResolver().query(this.uri,
@@ -147,13 +148,20 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 			}
 		});
 		this.cursor = cur;
-		this.buildArray();
+		final Thread t = new Thread() {
+			@Override
+			public void run() {
+				MessagesAdapter.this.buildArray();
+			}
+		};
+		t.start();
 	}
 
 	/**
 	 * Build the inner array.
 	 */
 	final void buildArray() {
+		Log.d(TAG, "buildArray()");
 		if (this.cursor == null) {
 			return;
 		}
@@ -184,6 +192,7 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 		} while (this.cursor.moveToNext());
 		Log.d(TAG, "notifyDataSetChanged()");
 		this.notifyDataSetChanged();
+		Log.d(TAG, "buildArray() - return");
 	}
 
 	/**
