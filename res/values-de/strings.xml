@@ -20,8 +20,10 @@
 	<string name="lang">de</string>
     <string name="about_">Über</string>
 	<string name="about_hint">Über diese App</string>
+	<string name="faq_hint">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
 	<string name="feedback_">Feedback</string>
 	<string name="feedback_hint">Bugreports, feature requests ...</string>
+	<string name="twitter_hint">Follow auf twitter.\nUpdate Infos etc...</string>
 	<string name="about0">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebeigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
 	<string name="author_">Autor:</string>
 	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11046415</string>
@@ -37,7 +39,7 @@
 	<string name="sig_failed">Fehler beim entfernen der Werbung!</string>
 	<string name="more_apps_">Mehr Apps..</string>
 	<string name="license">GPLv3 - siehe http://www.gnu.org/licenses/gpl-3.0.txt</string>
-	<string name="license_">Lizens:</string>
+	<string name="license_">Lizenz:</string>
 	<string name="settings">Einstellungen</string>
 	<string name="new_message">Neue Nachricht</string>
 	<string name="new_messages_">Neue Nachrichten</string>

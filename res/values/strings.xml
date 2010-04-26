@@ -23,8 +23,12 @@
 	<string name="changelog_">Changelog</string>
 	<string name="about_">About</string>
 	<string name="about_hint">About this app</string>
+	<string name="faq_">FAQ</string>
+	<string name="faq_hint">Some tips and tricks, how to set up this app.</string>
 	<string name="feedback_">Feedback</string>
 	<string name="feedback_hint">Report bugs, request features ...</string>
+	<string name="twitter_">twitter</string>
+	<string name="twitter_hint">Follow me on twitter.\nGet update notifications etc.</string>
 	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string>
 	<string name="author_">Author:</string>
 	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;</string>
