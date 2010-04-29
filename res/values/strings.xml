@@ -74,8 +74,6 @@
 	<string name="textsize_">Text size</string>
 	<string name="show_contact_photo_">Show photo</string>
 	<string name="show_contact_photo_hint">Show contact\'s photo in conversation list</string>
-	<string name="sort_messages_upsidedown_">Sort upside down</string>
-	<string name="sort_messages_upsidedown_hint">Sort messages in conversation upside down</string>
 	<string name="me">Me</string>
 	<string name="view_contact_">View contact</string>
 	<string name="add_contact_">Add to contacts</string>

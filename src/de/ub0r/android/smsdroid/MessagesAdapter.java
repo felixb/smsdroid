@@ -20,17 +20,14 @@ package de.ub0r.android.smsdroid;
 
 import java.util.List;
 
-import android.database.ContentObserver;
+import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.CallLog.Calls;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.smsdroid.cache.Persons;
 import de.ub0r.android.smsdroid.cache.Threads;
@@ -40,7 +37,7 @@ import de.ub0r.android.smsdroid.cache.Threads;
  * 
  * @author flx
  */
-public class MessagesAdapter extends ArrayAdapter<Message> {
+public class MessagesAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.msa";
 
@@ -49,25 +46,11 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 	/** SQL WHERE: read messages. */
 	static final String SELECTION_READ = "read = '1'";
 
-	/** Cursor's sort, upside down. */
-	public static final String SORT_USD = Calls.DATE + " ASC";
-	/** Cursor's sort, normal. */
-	public static final String SORT_NORM = Calls.DATE + " DESC";
-
 	/** Dateformat. //TODO: move me to xml */
 	private static final String DATE_FORMAT = Conversation.DATE_FORMAT;
 
 	/** Used background drawable for outgoing messages. */
 	private final int backgroundDrawableOut;
-
-	/** {@link MessageList}. */
-	private final MessageList context;
-
-	/** Inner {@link Cursor}. */
-	private Cursor cursor;
-
-	/** Sorting order. */
-	private final String sort;
 
 	/** Used {@link Uri}. */
 	private Uri uri;
@@ -90,24 +73,21 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 	 *            {@link MessageList}
 	 * @param u
 	 *            {@link Uri}
-	 * @param s
-	 *            sorting order.
 	 */
-	public MessagesAdapter(final MessageList c, final Uri u, final String s) {
-		super(c, R.layout.messagelist_item);
-		this.context = c;
-		if (Preferences.getTheme(this.context) == android.R.style.Theme_Black) {
+	public MessagesAdapter(final MessageList c, final Uri u) {
+		super(c, R.layout.messagelist_item, c.getContentResolver().query(u,
+				Conversation.PROJECTION, null, null, null), true);
+		if (Preferences.getTheme(c) == android.R.style.Theme_Black) {
 			this.backgroundDrawableOut = R.drawable.grey_dark;
 		} else {
 			this.backgroundDrawableOut = R.drawable.grey_light;
 		}
 		this.textSize = Preferences.getTextsize(c);
 		this.uri = u;
-		this.sort = s;
 		List<String> p = u.getPathSegments();
 		this.threadId = Long.parseLong(p.get(p.size() - 1));
-		this.address = Threads.getAddress(this.context, this.threadId);
-		this.name = Persons.getName(this.context, this.address, false);
+		this.address = Threads.getAddress(c, this.threadId);
+		this.name = Persons.getName(c, this.address, false);
 		if (this.name == null) {
 			this.displayName = this.address;
 		} else {
@@ -117,104 +97,23 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 		Log.d(TAG, "name: " + this.name);
 		Log.d(TAG, "displayName: " + this.displayName);
 
-		this.notifyDataSetChanged();
-		Cursor cur;
-		try {
-			cur = c.getContentResolver().query(this.uri,
-					Conversation.PROJECTION, null, null, this.sort);
-		} catch (SQLException e) {
-			Log.w(TAG, "error while query", e);
-			Conversation.PROJECTION[Conversation.INDEX_ADDRESS]// .
-			= Conversation.ADDRESS_HERO;
-			Conversation.PROJECTION[Conversation.INDEX_THREADID] // .
-			= Conversation.THREADID_HERO;
-			cur = c.getContentResolver().query(this.uri,
-					Conversation.PROJECTION, null, null, this.sort);
-		}
-		c.startManagingCursor(cur);
-		cur.registerContentObserver(new ContentObserver(new Handler()) {
-			@Override
-			public boolean deliverSelfNotifications() {
-				return false;
-			}
-
-			@Override
-			public void onChange(final boolean selfChange) {
-				super.onChange(selfChange);
-				Log.d(TAG, "ContentObserver.onChange(" + selfChange + ")");
-				if (!selfChange) {
-					MessagesAdapter.this.buildArray();
-				}
-			}
-		});
-		this.cursor = cur;
-		final Thread t = new Thread() {
-			@Override
-			public void run() {
-				MessagesAdapter.this.buildArray();
-			}
-		};
-		t.start();
-	}
-
-	/**
-	 * Build the inner array.
-	 */
-	final void buildArray() {
-		Log.d(TAG, "buildArray()");
-		if (this.cursor == null) {
-			return;
-		}
-		if (!this.cursor.requery()) {
-			return;
-		}
-		this.cursor.moveToFirst();
-		this.clear();
-		do {
-			final Message m = new Message(this.cursor);
-			final long d = m.getDate();
-			final int l = this.getCount();
-			boolean added = false;
-			for (int i = 0; i < l; i++) {
-				if ((this.sort == SORT_NORM && d > this.getItem(i).getDate())
-						|| (this.sort == SORT_USD && d < this.getItem(i)
-								.getDate())) {
-					this.insert(m, i);
-					added = true;
-					break;
-				}
-			}
-			if (!added) {
-				this.add(m);
-			}
-			Log.d(TAG, "added   " + m.getId() + " " + m.getThreadId());
-			Log.d(TAG, "added.. " + m.getDate() + " " + m.getBody());
-		} while (this.cursor.moveToNext());
-		Log.d(TAG, "notifyDataSetChanged()");
-		this.notifyDataSetChanged();
-		Log.d(TAG, "buildArray() - return");
+		// this.notifyDataSetChanged();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final View getView(final int position, final View convertView,
-			final ViewGroup parent) {
-		final Message m = this.getItem(position);
-		View view = convertView;
-		TextView twBody;
-		if (view == null) {
-			view = View.inflate(this.context, R.layout.messagelist_item, null);
-			twBody = (TextView) view.findViewById(R.id.body);
-			twBody.setTextSize(this.textSize);
-		} else {
-			twBody = (TextView) view.findViewById(R.id.body);
-		}
+	public final void bindView(final View view, final Context context,
+			final Cursor cursor) {
+		final Message m = new Message(cursor);
 
-		int t = m.getType();
 		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
+		TextView twBody = (TextView) view.findViewById(R.id.body);
+		twBody.setTextSize(this.textSize);
+		int t = m.getType();
 
+		// incoming / outgoing
 		if (t == Calls.INCOMING_TYPE) {
 			twPerson.setText(this.displayName);
 			view.setBackgroundResource(0);
@@ -228,21 +127,21 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_outgoing_call);
 		}
-		int read = m.getRead();
-		if (read == 0) {
+
+		// unread / read
+		if (m.getRead() == 0) {
 			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
+
 		String text = m.getBody();
 		if (text == null) {
-			text = this.context.getString(R.string.mms_not_supported);
+			text = context.getString(R.string.mms_not_supported);
 		}
 		twBody.setText(text);
 		long time = m.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
 				DATE_FORMAT, time));
-
-		return view;
 	}
 }

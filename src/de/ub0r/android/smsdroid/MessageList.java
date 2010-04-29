@@ -23,10 +23,8 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.text.ClipboardManager;
 import android.text.format.DateFormat;
@@ -180,25 +178,13 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "name: " + this.name);
 		Log.d(TAG, "displayName: " + this.displayName);
 
-		final SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
 		final ListView lv = this.getListView();
-		String sort;
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		((TextView) header.findViewById(R.id.text1)).setText(R.string.answer);
-		if (prefs.getBoolean(Preferences.PREFS_MSGLIST_SORT, true)) {
-			this.sortUSD = true;
-			sort = Message.SORT_USD;
-			lv.addFooterView(header);
-			lv.setStackFromBottom(true);
-		} else {
-			this.sortUSD = false;
-			sort = Message.SORT_NORM;
-			lv.addHeaderView(header);
-			lv.setStackFromBottom(false);
-		}
+		lv.addFooterView(header);
+		lv.setStackFromBottom(true);
 
-		MessagesAdapter adapter = new MessagesAdapter(this, this.uri, sort);
+		MessagesAdapter adapter = new MessagesAdapter(this, this.uri);
 		this.setListAdapter(adapter);
 
 		this.setTitle(this.getString(R.string.app_name) + " > "

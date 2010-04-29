@@ -62,8 +62,6 @@
 	<string name="textsize_">Schriftgrad</string>
 	<string name="show_contact_photo_">Zeige Foto</string>
 	<string name="show_contact_photo_hint">Zeige Kontaktfoto in Threadliste</string>
-	<string name="sort_messages_upsidedown_">Sortierung umdrehen</string>
-	<string name="sort_messages_upsidedown_hint">Sortierung in Nachrichtenliste umdrehen</string>
 	<string name="me">Ich</string>
 	<string name="view_contact_">Zeige Kontakt</string>
 	<string name="add_contact_">zu Kontakten hinzufügen</string>
