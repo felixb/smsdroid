@@ -23,6 +23,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CallLog.Calls;
@@ -252,7 +253,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		if (position == headerPos) { // header
 			this.startActivity(SMSdroid.getComposeIntent(this.address));
 		} else {
-			final Message m = (Message) parent.getItemAtPosition(position);
+			final Message m = new Message((Cursor) parent
+					.getItemAtPosition(position));
 			if (m.isMMS()) {
 				final Uri target = Uri.parse(MessageList.URI + m.getThreadId());
 				Intent i = new Intent(Intent.ACTION_VIEW, target);
@@ -280,7 +282,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			return true;
 		} else {
 			final Context context = this;
-			final Message m = (Message) parent.getItemAtPosition(position);
+			final Message m = new Message((Cursor) parent
+					.getItemAtPosition(position));
 			final Uri target = m.getUri();
 			final int read = m.getRead();
 			Builder builder = new Builder(context);
@@ -320,8 +323,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						StringBuilder sb = new StringBuilder();
 						final String a = m.getAddress(context);
 						final long d = m.getDate();
-						final String ds = DateFormat.format(context.getString(// .
-								R.string.DATEFORMAT_details), d).toString();
+						final String ds = DateFormat.format(// .
+								context.getString(// .
+										R.string.DATEFORMAT_details), d)
+								.toString();
 						String sentReceived;
 						String fromTo;
 						if (t == Calls.INCOMING_TYPE) {
