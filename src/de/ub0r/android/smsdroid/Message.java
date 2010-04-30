@@ -140,19 +140,17 @@ public class Message {
 	public final String getAddress(final Context context) {
 		// TODO: cache address for thread
 		if (this.address == null && context != null) {
-			final String select = Conversation.PROJECTION[// .
-					Conversation.INDEX_THREADID]
-					+ " = '"
-					+ this.getThreadId()
+			final String select = Message.PROJECTION[// .
+					Message.INDEX_THREADID]
+					+ " = '" + this.getThreadId()
 					+ "' and "
-					+ Conversation.PROJECTION[Conversation.INDEX_ADDRESS]
-					+ " != ''";
+					+ Message.PROJECTION[Message.INDEX_ADDRESS] + " != ''";
 			Log.d(TAG, "select: " + select);
 			final Cursor cur = context.getContentResolver().query(
-					Uri.parse("content://sms/"), Conversation.PROJECTION,
-					select, null, null);
+					Uri.parse("content://sms/"), Message.PROJECTION, select,
+					null, null);
 			if (cur != null && cur.moveToFirst()) {
-				this.address = cur.getString(Conversation.INDEX_ADDRESS);
+				this.address = cur.getString(Message.INDEX_ADDRESS);
 				Log.d(TAG, "found address: " + this.address);
 			}
 			cur.close();

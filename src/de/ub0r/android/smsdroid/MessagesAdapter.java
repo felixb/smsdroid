@@ -76,7 +76,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	 */
 	public MessagesAdapter(final MessageList c, final Uri u) {
 		super(c, R.layout.messagelist_item, c.getContentResolver().query(u,
-				Conversation.PROJECTION, null, null, null), true);
+				Message.PROJECTION, null, null, null), true);
 		if (Preferences.getTheme(c) == android.R.style.Theme_Black) {
 			this.backgroundDrawableOut = R.drawable.grey_dark;
 		} else {
