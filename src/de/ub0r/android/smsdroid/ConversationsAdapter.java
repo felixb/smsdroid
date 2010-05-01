@@ -18,14 +18,10 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.provider.CallLog.Calls;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
@@ -40,37 +36,11 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.coa";
 
-	/** URI to resolve. */
-	private static final Uri URI = Uri
-			.parse("content://mms-sms/conversations/");
-
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " DESC";
 
 	/** Used text size. */
 	private final int textSize;
-
-	/**
-	 * Check {@link Cursor} and projection.
-	 * 
-	 * @param cr
-	 *            {@link ContentResolver}
-	 * @return {@link Cursor}
-	 */
-	private static Cursor getConversationsCursor(final ContentResolver cr) {
-		Cursor cursor;
-		try {
-			cursor = cr.query(URI, Conversation.PROJECTION, null, null, SORT);
-		} catch (SQLException e) {
-			Log.w(TAG, "error while query", e);
-			Conversation.PROJECTION[Conversation.INDEX_ADDRESS] // .
-			= Conversation.ADDRESS_HERO;
-			Conversation.PROJECTION[Conversation.INDEX_THREADID] // .
-			= Conversation.THREADID_HERO;
-			cursor = cr.query(URI, Conversation.PROJECTION, null, null, SORT);
-		}
-		return cursor;
-	}
 
 	/**
 	 * Default Constructor.
@@ -79,8 +49,9 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	 *            {@link SMSdroid}
 	 */
 	public ConversationsAdapter(final SMSdroid c) {
-		super(c, R.layout.conversationlist_item, getConversationsCursor(c
-				.getContentResolver()), true);
+		super(c, R.layout.conversationlist_item, c.getContentResolver().query(
+				ConversationProvider.CONTENT_URI, Conversation.PROJECTION,
+				null, null, null), true);
 		this.textSize = Preferences.getTextsize(c);
 	}
 
