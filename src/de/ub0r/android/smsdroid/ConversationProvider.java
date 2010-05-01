@@ -25,7 +25,10 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
+import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.CursorWrapper;
+import android.database.DataSetObserver;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -143,6 +146,80 @@ public final class ConversationProvider extends ContentProvider {
 		final int l = PROJECTION.length;
 		for (int i = 0; i < l; i++) {
 			THREADS_PROJECTION_MAP.put(PROJECTION[i], PROJECTION[i]);
+		}
+	}
+
+	/**
+	 * Wrap around a {@link Cursor} an listen for changes on another.
+	 * 
+	 * @author flx
+	 */
+	private static class MyCursorWrapper extends CursorWrapper {
+		/** {@link Cursor} to listen on for changes. */
+		private final Cursor orig;
+
+		/**
+		 * Default Constructor.
+		 * 
+		 * @param cursor
+		 *            {@link Cursor} to wrap around
+		 * @param origCursor
+		 *            {@link Cursor} to listen on for changes
+		 */
+		public MyCursorWrapper(final Cursor cursor, final Cursor origCursor) {
+			super(cursor);
+			this.orig = origCursor;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void close() {
+			super.close();
+			this.orig.close();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void registerContentObserver(final ContentObserver observer) {
+			this.orig.registerContentObserver(observer);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void registerDataSetObserver(final DataSetObserver observer) {
+			this.orig.registerDataSetObserver(observer);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setNotificationUri(final ContentResolver cr, // .
+				final Uri uri) {
+			super.setNotificationUri(cr, uri);
+			this.orig.setNotificationUri(cr, URI);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void unregisterContentObserver(final ContentObserver observer) {
+			this.orig.unregisterContentObserver(observer);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void unregisterDataSetObserver(final DataSetObserver observer) {
+			this.orig.unregisterDataSetObserver(observer);
 		}
 	}
 
@@ -284,7 +361,7 @@ public final class ConversationProvider extends ContentProvider {
 	 * @param db
 	 *            {@link SQLiteDatabase}.
 	 */
-	private void updateSource(final SQLiteDatabase db) {
+	private Cursor updateSource(final SQLiteDatabase db) {
 		final ContentResolver cr = this.getContext().getContentResolver();
 		Cursor cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null,
 				null, DEFAULT_SORT_ORDER);
@@ -303,7 +380,7 @@ public final class ConversationProvider extends ContentProvider {
 		if (cout != null && cout.moveToFirst()) {
 			if (cin == null) {
 				Log.e(TAG, "cursor in == null");
-				return;
+				return cout;
 			}
 			long din = 0;
 			if (cin.moveToFirst()) {
@@ -334,7 +411,7 @@ public final class ConversationProvider extends ContentProvider {
 			} while (cout.moveToPrevious());
 		}
 		cin.close();
-		cout.close();
+		return cout;
 	}
 
 	/**
@@ -345,7 +422,7 @@ public final class ConversationProvider extends ContentProvider {
 			final String selection, final String[] selectionArgs,
 			final String sortOrder) {
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-		this.updateSource(db);
+		Cursor cout = this.updateSource(db);
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(THREADS_TABLE_NAME);
@@ -378,7 +455,7 @@ public final class ConversationProvider extends ContentProvider {
 		// Tell the cursor what uri to watch, so it knows when its source data
 		// changes
 		c.setNotificationUri(this.getContext().getContentResolver(), uri);
-		return c;
+		return new MyCursorWrapper(c, cout);
 	}
 
 	/**
