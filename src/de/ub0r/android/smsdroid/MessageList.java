@@ -83,7 +83,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Display Name (name if !=null, else address). */
 	private String displayName = null;
 
-	/** URI to resolve. */
+	/** ORIG_URI to resolve. */
 	static final String URI = "content://mms-sms/conversations/";
 
 	/** Dialog items shown if an item was long clicked. */

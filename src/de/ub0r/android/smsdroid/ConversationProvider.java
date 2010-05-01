@@ -85,8 +85,8 @@ public final class ConversationProvider extends ContentProvider {
 			"count", // 7
 	};
 
-	/** URI to resolve. */
-	private static final Uri URI = Uri
+	/** ORIG_URI to resolve. */
+	public static final Uri ORIG_URI = Uri
 			.parse("content://mms-sms/conversations/");
 	/** Cursor's projection (outgoing). */
 	public static final String[] PROJECTION_OUT = { //
@@ -203,7 +203,7 @@ public final class ConversationProvider extends ContentProvider {
 		public void setNotificationUri(final ContentResolver cr, // .
 				final Uri uri) {
 			super.setNotificationUri(cr, uri);
-			this.orig.setNotificationUri(cr, URI);
+			this.orig.setNotificationUri(cr, ORIG_URI);
 		}
 
 		/**
@@ -291,7 +291,7 @@ public final class ConversationProvider extends ContentProvider {
 		case THREAD_ID:
 			return CONTENT_ITEM_TYPE;
 		default:
-			throw new IllegalArgumentException("Unknown URI " + uri);
+			throw new IllegalArgumentException("Unknown ORIG_URI " + uri);
 		}
 	}
 
@@ -368,14 +368,14 @@ public final class ConversationProvider extends ContentProvider {
 				null, DEFAULT_SORT_ORDER);
 		Cursor cout;
 		try {
-			cout = cr
-					.query(URI, PROJECTION_OUT, null, null, DEFAULT_SORT_ORDER);
+			cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
+					DEFAULT_SORT_ORDER);
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
 			PROJECTION_OUT[INDEX_ADDRESS] = ADDRESS_HERO;
 			PROJECTION_OUT[INDEX_THREADID] = THREADID_HERO;
-			cout = cr
-					.query(URI, PROJECTION_OUT, null, null, DEFAULT_SORT_ORDER);
+			cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
+					DEFAULT_SORT_ORDER);
 		}
 
 		if (cout != null && cout.moveToFirst()) {
@@ -414,7 +414,7 @@ public final class ConversationProvider extends ContentProvider {
 		// internal db does have at least all the messages from external db
 		Cursor cin0 = db.query(THREADS_TABLE_NAME, PROJECTION, null, null,
 				null, null, PROJECTION[INDEX_THREADID] + " DESC");
-		Cursor cout0 = cr.query(URI, PROJECTION_OUT, null, null,
+		Cursor cout0 = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
 				PROJECTION[INDEX_THREADID] + " DESC");
 		if (cout0 != null && cin0 != null && // .
 				cout0.requery() && cin0.requery()) {
@@ -460,7 +460,8 @@ public final class ConversationProvider extends ContentProvider {
 			final String selection, final String[] selectionArgs,
 			final String sortOrder) {
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-		Cursor cout = this.updateSource(db);
+		// Cursor cout = this.updateSource(db);
+		this.updateSource(db);
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(THREADS_TABLE_NAME);
@@ -475,7 +476,7 @@ public final class ConversationProvider extends ContentProvider {
 					+ uri.getPathSegments().get(1));
 			break;
 		default:
-			throw new IllegalArgumentException("Unknown URI " + uri);
+			throw new IllegalArgumentException("Unknown ORIG_URI " + uri);
 		}
 
 		// If no sort order is specified use the default
@@ -493,7 +494,8 @@ public final class ConversationProvider extends ContentProvider {
 		// Tell the cursor what uri to watch, so it knows when its source data
 		// changes
 		c.setNotificationUri(this.getContext().getContentResolver(), uri);
-		return new MyCursorWrapper(c, cout);
+		// return new MyCursorWrapper(c, cout);
+		return c;
 	}
 
 	/**

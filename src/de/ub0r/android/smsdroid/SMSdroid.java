@@ -67,7 +67,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	/** Prefs: name for last version run. */
 	private static final String PREFS_LAST_RUN = "lastrun";
 
-	/** URI to resolve. */
+	/** ORIG_URI to resolve. */
 	static final Uri URI = Uri.parse("content://mms-sms/conversations/");
 
 	/** Dialog: updates. */

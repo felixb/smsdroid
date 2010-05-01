@@ -46,7 +46,7 @@ import de.ub0r.android.smsdroid.cache.Persons;
 public class SmsReceiver extends BroadcastReceiver {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.bcr";
-	/** URI to get messages from. */
+	/** ORIG_URI to get messages from. */
 	static final Uri URI = Uri.parse("content://sms/inbox");
 
 	/** Sort the newest message first. */

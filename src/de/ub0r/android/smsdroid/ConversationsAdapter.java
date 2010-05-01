@@ -19,8 +19,10 @@
 package de.ub0r.android.smsdroid;
 
 import android.content.Context;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.provider.CallLog.Calls;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,6 +44,9 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	/** Used text size. */
 	private final int textSize;
 
+	/** {@link Cursor} to the original Content to listen for changes. */
+	private final Cursor origCursor;
+
 	/**
 	 * Default Constructor.
 	 * 
@@ -53,6 +58,29 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 				ConversationProvider.CONTENT_URI, Conversation.PROJECTION,
 				null, null, null), true);
 		this.textSize = Preferences.getTextsize(c);
+		this.origCursor = c.getContentResolver().query(
+				ConversationProvider.ORIG_URI,
+				new String[] {
+						ConversationProvider.PROJECTION[// .
+						ConversationProvider.INDEX_ID],
+						ConversationProvider.PROJECTION[// .
+						ConversationProvider.INDEX_DATE] }, null, null, null);
+
+		// does not work.
+		if (this.origCursor != null) {
+			this.origCursor.registerContentObserver(new ContentObserver(
+					new Handler()) {
+				@Override
+				public void onChange(final boolean selfChange) {
+					super.onChange(selfChange);
+					if (!selfChange) {
+						// Log.d(TAG, "call notifyDataSetChanged();");
+						// ConversationsAdapter.this.getCursor().requery();
+						// ConversationsAdapter.this.notifyDataSetChanged();
+					}
+				}
+			});
+		}
 	}
 
 	/**
