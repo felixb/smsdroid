@@ -25,10 +25,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
-import android.database.ContentObserver;
 import android.database.Cursor;
-import android.database.CursorWrapper;
-import android.database.DataSetObserver;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -146,80 +143,6 @@ public final class ConversationProvider extends ContentProvider {
 		final int l = PROJECTION.length;
 		for (int i = 0; i < l; i++) {
 			THREADS_PROJECTION_MAP.put(PROJECTION[i], PROJECTION[i]);
-		}
-	}
-
-	/**
-	 * Wrap around a {@link Cursor} an listen for changes on another.
-	 * 
-	 * @author flx
-	 */
-	private static class MyCursorWrapper extends CursorWrapper {
-		/** {@link Cursor} to listen on for changes. */
-		private final Cursor orig;
-
-		/**
-		 * Default Constructor.
-		 * 
-		 * @param cursor
-		 *            {@link Cursor} to wrap around
-		 * @param origCursor
-		 *            {@link Cursor} to listen on for changes
-		 */
-		public MyCursorWrapper(final Cursor cursor, final Cursor origCursor) {
-			super(cursor);
-			this.orig = origCursor;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void close() {
-			super.close();
-			this.orig.close();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void registerContentObserver(final ContentObserver observer) {
-			this.orig.registerContentObserver(observer);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void registerDataSetObserver(final DataSetObserver observer) {
-			this.orig.registerDataSetObserver(observer);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setNotificationUri(final ContentResolver cr, // .
-				final Uri uri) {
-			super.setNotificationUri(cr, uri);
-			this.orig.setNotificationUri(cr, ORIG_URI);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void unregisterContentObserver(final ContentObserver observer) {
-			this.orig.unregisterContentObserver(observer);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void unregisterDataSetObserver(final DataSetObserver observer) {
-			this.orig.unregisterDataSetObserver(observer);
 		}
 	}
 
@@ -360,9 +283,8 @@ public final class ConversationProvider extends ContentProvider {
 	 * 
 	 * @param db
 	 *            {@link SQLiteDatabase}.
-	 * @return {@link Cursor} from external {@link ConversationProvider}
 	 */
-	private Cursor updateSource(final SQLiteDatabase db) {
+	private void updateSource(final SQLiteDatabase db) {
 		final ContentResolver cr = this.getContext().getContentResolver();
 		Cursor cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null,
 				null, DEFAULT_SORT_ORDER);
@@ -381,7 +303,7 @@ public final class ConversationProvider extends ContentProvider {
 		if (cout != null && cout.moveToFirst()) {
 			if (cin == null) {
 				Log.e(TAG, "cursor in == null");
-				return cout;
+				return;
 			}
 			long din = 0;
 			if (cin.moveToFirst()) {
@@ -411,28 +333,34 @@ public final class ConversationProvider extends ContentProvider {
 				}
 			} while (cout.moveToPrevious());
 		}
+		if (cin != null && !cin.isClosed()) {
+			cin.close();
+		}
+		if (cout != null && !cout.isClosed()) {
+			cout.close();
+		}
 		// internal db does have at least all the messages from external db
-		Cursor cin0 = db.query(THREADS_TABLE_NAME, PROJECTION, null, null,
-				null, null, PROJECTION[INDEX_THREADID] + " DESC");
-		Cursor cout0 = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
+		cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null, null,
 				PROJECTION[INDEX_THREADID] + " DESC");
-		if (cout0 != null && cin0 != null && // .
-				cout0.requery() && cin0.requery()) {
-			if (cout0.getCount() != cin0.getCount()) {
+		cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
+				PROJECTION[INDEX_THREADID] + " DESC");
+		if (cout != null && cin != null && // .
+				cout.requery() && cin.requery()) {
+			if (cout.getCount() != cin.getCount()) {
 				// hunt for deleted threads
-				if (!cout0.moveToFirst()) {
+				if (!cout.moveToFirst()) {
 					Log.d(TAG, "delete all rows");
 					db.delete(THREADS_TABLE_NAME, null, null);
-				} else if (!cin0.moveToFirst()) {
+				} else if (!cin.moveToFirst()) {
 					Log.e(TAG, "error selecting first row");
 				} else {
 					do {
-						final int tidin = cin0.getInt(INDEX_THREADID);
+						final int tidin = cin.getInt(INDEX_THREADID);
 						int tidout;
-						if (cout0.isAfterLast()) {
+						if (cout.isAfterLast()) {
 							tidout = -1;
 						} else {
-							tidout = cout0.getInt(INDEX_THREADID);
+							tidout = cout.getInt(INDEX_THREADID);
 						}
 						if (tidin != tidout) {
 							Log.d(TAG, "delete row: " + tidin);
@@ -440,16 +368,19 @@ public final class ConversationProvider extends ContentProvider {
 									PROJECTION[INDEX_THREADID] + " = " + tidin,
 									null);
 						} else {
-							cout0.moveToNext();
+							cout.moveToNext();
 						}
-					} while (cin0.moveToNext());
+					} while (cin.moveToNext());
 				}
 			}
-			cin0.close();
-			cout0.close();
 		}
-		cin.close();
-		return cout;
+		if (cin != null && !cin.isClosed()) {
+			cin.close();
+		}
+		if (cout != null && !cout.isClosed()) {
+			cout.close();
+		}
+		return;
 	}
 
 	/**
@@ -460,7 +391,6 @@ public final class ConversationProvider extends ContentProvider {
 			final String selection, final String[] selectionArgs,
 			final String sortOrder) {
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-		// Cursor cout = this.updateSource(db);
 		this.updateSource(db);
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -494,7 +424,6 @@ public final class ConversationProvider extends ContentProvider {
 		// Tell the cursor what uri to watch, so it knows when its source data
 		// changes
 		c.setNotificationUri(this.getContext().getContentResolver(), uri);
-		// return new MyCursorWrapper(c, cout);
 		return c;
 	}
 

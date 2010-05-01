@@ -103,9 +103,6 @@ public class Conversation {
 		this.id = cursor.getLong(INDEX_ID);
 		this.threadId = cursor.getLong(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
-		if (this.date < SMSdroid.MIN_DATE) {
-			this.date *= SMSdroid.MILLIS;
-		}
 		this.address = cursor.getString(INDEX_ADDRESS);
 		this.body = cursor.getString(INDEX_BODY);
 		this.type = cursor.getInt(INDEX_TYPE);

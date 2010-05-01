@@ -18,12 +18,16 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.content.AsyncQueryHandler;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.provider.CallLog.Calls;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
@@ -47,6 +51,48 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	/** {@link Cursor} to the original Content to listen for changes. */
 	private final Cursor origCursor;
 
+	private final BackgroundQueryHandler queryHandler;
+
+	private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
+
+	private final SMSdroid context;
+
+	/**
+	 * Handle queries in background.
+	 * 
+	 * @author flx
+	 */
+	private final class BackgroundQueryHandler extends AsyncQueryHandler {
+
+		/**
+		 * A helper class to help make handling asynchronous
+		 * {@link ContentResolver} queries easier.
+		 * 
+		 * @param contentResolver
+		 *            {@link ContentResolver}
+		 */
+		public BackgroundQueryHandler(final ContentResolver contentResolver) {
+			super(contentResolver);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		protected void onQueryComplete(final int token, final Object cookie,
+				final Cursor cursor) {
+			switch (token) {
+			case MESSAGE_LIST_QUERY_TOKEN:
+				ConversationsAdapter.this.changeCursor(cursor);
+				ConversationsAdapter.this.context
+						.setProgressBarIndeterminateVisibility(false);
+				return;
+			default:
+				return;
+			}
+		}
+	}
+
 	/**
 	 * Default Constructor.
 	 * 
@@ -54,9 +100,10 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	 *            {@link SMSdroid}
 	 */
 	public ConversationsAdapter(final SMSdroid c) {
-		super(c, R.layout.conversationlist_item, c.getContentResolver().query(
-				ConversationProvider.CONTENT_URI, Conversation.PROJECTION,
-				null, null, null), true);
+		super(c, R.layout.conversationlist_item, null, true);
+		this.context = c;
+		this.queryHandler = new BackgroundQueryHandler(c.getContentResolver());
+
 		this.textSize = Preferences.getTextsize(c);
 		this.origCursor = c.getContentResolver().query(
 				ConversationProvider.ORIG_URI,
@@ -74,12 +121,30 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 				public void onChange(final boolean selfChange) {
 					super.onChange(selfChange);
 					if (!selfChange) {
-						// Log.d(TAG, "call notifyDataSetChanged();");
-						// ConversationsAdapter.this.getCursor().requery();
-						// ConversationsAdapter.this.notifyDataSetChanged();
+						Log.d(TAG, "call startMsgListQuery();");
+						ConversationsAdapter.this.startMsgListQuery();
 					}
 				}
 			});
+		}
+
+		this.startMsgListQuery();
+	}
+
+	/**
+	 * Start ConversationList query.
+	 */
+	private void startMsgListQuery() {
+		// Cancel any pending queries
+		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
+		try {
+			// Kick off the new query
+			this.context.setProgressBarIndeterminateVisibility(true);
+			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
+					ConversationProvider.CONTENT_URI, Conversation.PROJECTION,
+					null, null, null);
+		} catch (SQLiteException e) {
+			Log.e(TAG, "error starting query", e);
 		}
 	}
 
