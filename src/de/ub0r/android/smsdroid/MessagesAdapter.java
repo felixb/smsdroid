@@ -18,8 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.List;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -30,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.smsdroid.cache.Persons;
-import de.ub0r.android.smsdroid.cache.Threads;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -55,7 +52,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	/** Used {@link Uri}. */
 	private Uri uri;
 	/** Thread id. */
-	private long threadId = -1;
+	private int threadId = -1;
 	/** Address. */
 	private String address = null;
 	/** Name. */
@@ -84,9 +81,8 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		}
 		this.textSize = Preferences.getTextsize(c);
 		this.uri = u;
-		List<String> p = u.getPathSegments();
-		this.threadId = Long.parseLong(p.get(p.size() - 1));
-		this.address = Threads.getAddress(c, this.threadId);
+		this.threadId = Integer.parseInt(u.getLastPathSegment());
+		this.address = Conversation.getConversation(this.threadId).getAddress();
 		this.name = Persons.getName(c, this.address, false);
 		if (this.name == null) {
 			this.displayName = this.address;

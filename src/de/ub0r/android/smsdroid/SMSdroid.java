@@ -96,7 +96,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	public static final long MILLIS = 1000L;
 
 	/** Show contact's photo. */
-	static boolean showContactPhoto = false;
+	public static boolean showContactPhoto = false;
 
 	/** Dialog items shown if an item was long clicked. */
 	private String[] longItemClickDialog = null;
@@ -420,8 +420,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		if (position == 0) { // header
 			this.startActivity(getComposeIntent(null));
 		} else {
-			final Conversation c = new Conversation(this, (Cursor) parent
-					.getItemAtPosition(position));
+			final Conversation c = Conversation.getConversation(this,
+					(Cursor) parent.getItemAtPosition(position));
 			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
 			final Intent i = new Intent(this, MessageList.class);
 			i.setData(target);
@@ -440,8 +440,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					.getString(R.string.new_message)));
 			return true;
 		} else {
-			final Conversation c = new Conversation(this, (Cursor) parent
-					.getItemAtPosition(position));
+			final Conversation c = Conversation.getConversation(this,
+					(Cursor) parent.getItemAtPosition(position));
 			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;

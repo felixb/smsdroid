@@ -19,12 +19,12 @@
 package de.ub0r.android.smsdroid.cache;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.widget.ImageView;
-import android.widget.TextView;
 import de.ub0r.android.smsdroid.Conversation;
-import de.ub0r.android.smsdroid.R;
+import de.ub0r.android.smsdroid.Message;
+import de.ub0r.android.smsdroid.SMSdroid;
 
 /**
  * @author flx
@@ -32,54 +32,21 @@ import de.ub0r.android.smsdroid.R;
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	/** {@link Context}. */
 	private final Context context;
-
-	/** Address. */
-	private String mAddress;
-	/** Thread id. */
-	private final long mThreadId;
 	/** {@link Conversation}. */
 	private final Conversation mConversation;
-	/** Photo. */
-	private Bitmap mPhoto = null;
-	/** Name. */
-	private String mName = null;
-	/** Message count. */
-	private int mCount = -1;
-
-	/** {@link TextView} for name. */
-	private final TextView targetTvName;
-	/** {@link ImageView} for photo. */
-	private final ImageView targetIvPhoto;
-	/** {@link TextView} for address. */
-	private final TextView targetTvAddress;
-	/** {@link TextView} for count. */
-	private final TextView targetTvCount;
 
 	/**
-	 * Fill Views by address.
+	 * Fill {@link Conversation}.
 	 * 
 	 * @param c
 	 *            {@link Context}
-	 * @param address
-	 *            address
-	 * @param tvName
-	 *            {@link TextView} for name
-	 * @param ivPhoto
-	 *            {@link ImageView} for photo
+	 * @param conv
+	 *            {@link Conversation}
 	 */
-	private AsyncHelper(final Context c, final String address,
-			final TextView tvName, final ImageView ivPhoto) {
+
+	private AsyncHelper(final Context c, final Conversation conv) {
 		this.context = c;
-
-		this.mThreadId = -1;
-		this.mConversation = null;
-		this.mAddress = address;
-
-		this.targetTvName = tvName;
-		this.targetIvPhoto = ivPhoto;
-
-		this.targetTvAddress = null;
-		this.targetTvCount = null;
+		this.mConversation = conv;
 	}
 
 	/**
@@ -95,22 +62,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		if (context == null || c == null || c.getThreadId() < 0) {
 			return;
 		}
-		final long tId = c.getThreadId();
-		String a = c.getAddress();
-		if (Threads.poke(tId) || true) {
-			if (a == null) {
-				a = Threads.getAddress(context, tId);
-				c.setAddress(a);
-			}
-			c.setCount(Threads.getCount(context, tId));
-			if (c.getName() == null) {
-				c.setName(Persons.getName(context, a, false));
-			}
-			if (c.getPhoto() == null) {
-				c.setPhoto(Persons.getPicture(context, a));
-			}
-		}
-		// TODO: fork thread to read address, name, photo, count
+		new AsyncHelper(context, c).execute((Void) null);
 	}
 
 	/**
@@ -118,86 +70,49 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected Void doInBackground(final Void... arg0) {
-		if (this.mThreadId < 0) { // run Persons
-			// in: mAddress
-			// out: *Photo, *Name
-			if (this.targetIvPhoto != null) {
-				this.mPhoto = Persons.getPicture(this.context, this.mAddress);
+		Uri uri = Uri.parse("content://mms-sms/conversations/"
+				+ this.mConversation.getId());
+		Cursor cursor = this.context.getContentResolver().query(uri,
+				Message.PROJECTION, null, null, null);
+
+		// count
+		this.mConversation.setCount(cursor.getCount());
+
+		// address
+		String address = this.mConversation.getAddress();
+		if (address == null) {
+			if (cursor.moveToLast()) {
+				do {
+					address = cursor.getString(Message.INDEX_ADDRESS);
+				} while (address == null && cursor.moveToPrevious());
 			}
-			if (this.targetTvName != null) {
-				this.mName = Persons
-						.getName(this.context, this.mAddress, false);
-			}
-		} else { // run Threads
-			// in: mThreadId
-			// out: *Address, *Count, *Name, *Photo
-			if (this.targetTvAddress != null || this.targetTvName != null
-					|| this.targetIvPhoto != null) {
-				this.mAddress = Threads
-						.getAddress(this.context, this.mThreadId);
-			}
-			if (this.targetTvCount != null) {
-				this.mCount = Threads.getCount(this.context, this.mThreadId);
-			}
-			if (this.targetTvName != null) {
-				this.mName = Persons
-						.getName(this.context, this.mAddress, false);
-			}
-			if (this.targetIvPhoto != null) {
-				this.mPhoto = Persons.getPicture(this.context, this.mAddress);
-			}
+		}
+		cursor.close();
+
+		// read
+		cursor = this.context.getContentResolver().query(uri,
+				Message.PROJECTION,
+				Message.PROJECTION[Message.INDEX_READ] + " = 0", null, null);
+		if (cursor.getCount() == 0) {
+			this.mConversation.setRead(1);
+		} else {
+			this.mConversation.setRead(0);
+		}
+		cursor.close();
+		cursor = null;
+
+		// name
+		if (this.mConversation.getName() == null) {
+			this.mConversation.setName(Persons.getName(this.context, address,
+					false));
+		}
+
+		// photo
+		if (SMSdroid.showContactPhoto && // .
+				this.mConversation.getPhoto() == null) {
+			this.mConversation.setPhoto(Persons.getPicture(this.context,
+					address));
 		}
 		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void onPreExecute() {
-		if (this.targetIvPhoto != null) {
-			this.targetIvPhoto.setImageResource(R.drawable.ic_contact_picture);
-		}
-		if (this.targetTvAddress != null) {
-			this.targetTvAddress.setText("...");
-		}
-		if (this.targetTvCount != null) {
-			this.targetTvCount.setText("");
-		}
-		if (this.targetTvName != null) {
-			if (this.mAddress != null) {
-				this.targetTvName.setText(this.mAddress);
-			} else {
-				this.targetTvName.setText("...");
-			}
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void onPostExecute(final Void result) {
-		if (this.targetIvPhoto != null && this.mPhoto != null) {
-			this.targetIvPhoto.setImageBitmap(this.mPhoto);
-		}
-		if (this.targetTvAddress != null && this.mAddress != null) {
-			this.targetTvAddress.setText(this.mAddress);
-		}
-		if (this.targetTvCount != null && this.mCount > 0) {
-			this.targetTvCount.setText("(" + this.mCount + ")");
-		}
-		if (this.targetTvName != null) {
-			if (this.mName != null) {
-				this.targetTvName.setText(this.mName);
-			} else if (this.mAddress != null) {
-				this.targetTvName.setText(this.mAddress);
-			}
-		}
-		if (this.mConversation != null
-				&& this.mConversation.getAddress() == null
-				&& this.mAddress != null) {
-			this.mConversation.setAddress(this.mAddress);
-		}
 	}
 }

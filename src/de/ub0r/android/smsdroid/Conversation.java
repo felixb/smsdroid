@@ -18,6 +18,8 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.util.HashMap;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -30,9 +32,13 @@ import de.ub0r.android.smsdroid.cache.AsyncHelper;
  * 
  * @author flx
  */
-public class Conversation {
+public final class Conversation {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.con";
+
+	/** Internal Cache. */
+	private static final HashMap<Integer, Conversation> CACHE = // .
+	new HashMap<Integer, Conversation>();
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -68,10 +74,13 @@ public class Conversation {
 	/** Cursors row in hero phones: thread_id. */
 	static final String THREADID_HERO = "_id";
 
+	/** Time of valid cache. */
+	private static long validCache = 0;
+
 	/** Id. */
-	private long id;
+	private int id;
 	/** ThreadId. */
-	private long threadId;
+	private int threadId;
 	/** Date. */
 	private long date;
 	/** Address. */
@@ -82,9 +91,10 @@ public class Conversation {
 	private int type;
 	/** Read status. */
 	private int read;
-
 	/** Message count. */
 	private int count = -1;
+	/** Last update. */
+	private long lastUpdate = 0;
 
 	/** Name. */
 	private String name = null;
@@ -99,9 +109,9 @@ public class Conversation {
 	 * @param cursor
 	 *            {@link Cursor} to read the data
 	 */
-	public Conversation(final Context context, final Cursor cursor) {
-		this.id = cursor.getLong(INDEX_ID);
-		this.threadId = cursor.getLong(INDEX_THREADID);
+	private Conversation(final Context context, final Cursor cursor) {
+		this.id = cursor.getInt(INDEX_ID);
+		this.threadId = cursor.getInt(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
 		this.address = cursor.getString(INDEX_ADDRESS);
 		this.body = cursor.getString(INDEX_BODY);
@@ -109,33 +119,99 @@ public class Conversation {
 		this.read = cursor.getInt(INDEX_READ);
 
 		AsyncHelper.fillConversation(context, this);
+		this.lastUpdate = System.currentTimeMillis();
+	}
+
+	/**
+	 * Update data.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param cursor
+	 *            {@link Cursor} to read from.
+	 */
+	private void update(final Context context, final Cursor cursor) {
+		this.id = cursor.getInt(INDEX_ID);
+		this.date = cursor.getLong(INDEX_DATE);
+		this.body = cursor.getString(INDEX_BODY);
+		this.type = cursor.getInt(INDEX_TYPE);
+		this.read = cursor.getInt(INDEX_READ);
+		if (this.lastUpdate < validCache) {
+			AsyncHelper.fillConversation(context, this);
+		}
+		this.lastUpdate = System.currentTimeMillis();
+	}
+
+	/**
+	 * Get a {@link Conversation}.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param cursor
+	 *            {@link Cursor} to read the data from
+	 * @return {@link Conversation}
+	 */
+	public static Conversation getConversation(final Context context,
+			final Cursor cursor) {
+		synchronized (CACHE) {
+			Conversation ret = CACHE.get(cursor
+					.getInt(ConversationProvider.INDEX_THREADID));
+			if (ret == null) {
+				ret = new Conversation(context, cursor);
+				CACHE.put(ret.getThreadId(), ret);
+			} else {
+				ret.update(context, cursor);
+			}
+			return ret;
+		}
+	}
+
+	/**
+	 * Get a {@link Conversation}.
+	 * 
+	 * @param threadId
+	 *            threadId
+	 * @return {@link Conversation}
+	 */
+	public static Conversation getConversation(final int threadId) {
+		synchronized (CACHE) {
+			Conversation ret = CACHE.get(threadId);
+			return ret;
+		}
+	}
+
+	/**
+	 * Invalidate Cache.
+	 */
+	public static void invalidate() {
+		validCache = System.currentTimeMillis();
 	}
 
 	/**
 	 * @return the id
 	 */
-	public final long getId() {
+	public int getId() {
 		return this.id;
 	}
 
 	/**
 	 * @return the threadId
 	 */
-	public final long getThreadId() {
+	public int getThreadId() {
 		return this.threadId;
 	}
 
 	/**
 	 * @return the date
 	 */
-	public final long getDate() {
+	public long getDate() {
 		return this.date;
 	}
 
 	/**
 	 * @return the address
 	 */
-	public final String getAddress() {
+	public String getAddress() {
 		return this.address;
 	}
 
@@ -145,42 +221,52 @@ public class Conversation {
 	 * @param a
 	 *            address
 	 */
-	public final void setAddress(final String a) {
+	public void setAddress(final String a) {
 		this.address = a;
 	}
 
 	/**
 	 * @return the body
 	 */
-	public final String getBody() {
+	public String getBody() {
 		return this.body;
 	}
 
 	/**
 	 * @return the type
 	 */
-	public final int getType() {
+	public int getType() {
 		return this.type;
 	}
 
 	/**
-	 * @return the read
+	 * @return the read status
 	 */
-	public final int getRead() {
+	public int getRead() {
 		return this.read;
+	}
+
+	/**
+	 * Set {@link Conversation}'s read status.
+	 * 
+	 * @param status
+	 *            read status
+	 */
+	public void setRead(final int status) {
+		this.read = status;
 	}
 
 	/**
 	 * @return the name
 	 */
-	public final String getName() {
+	public String getName() {
 		return this.name;
 	}
 
 	/**
 	 * @return name, address or "..."
 	 */
-	public final String getDisplayName() {
+	public String getDisplayName() {
 		if (this.name != null) {
 			return this.name;
 		} else if (this.address != null) {
@@ -194,14 +280,14 @@ public class Conversation {
 	 * @param n
 	 *            the name to set
 	 */
-	public final void setName(final String n) {
+	public void setName(final String n) {
 		this.name = n;
 	}
 
 	/**
 	 * @return the photo
 	 */
-	public final Bitmap getPhoto() {
+	public Bitmap getPhoto() {
 		return this.photo;
 	}
 
@@ -209,14 +295,14 @@ public class Conversation {
 	 * @param img
 	 *            the photo to set
 	 */
-	public final void setPhoto(final Bitmap img) {
+	public void setPhoto(final Bitmap img) {
 		this.photo = img;
 	}
 
 	/**
 	 * @return the count
 	 */
-	public final int getCount() {
+	public int getCount() {
 		return this.count;
 	}
 
@@ -224,7 +310,7 @@ public class Conversation {
 	 * @param c
 	 *            the count to set
 	 */
-	public final void setCount(final int c) {
+	public void setCount(final int c) {
 		this.count = c;
 	}
 }

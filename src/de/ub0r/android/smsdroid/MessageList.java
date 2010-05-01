@@ -44,7 +44,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import com.flurry.android.FlurryAgent;
 
 import de.ub0r.android.smsdroid.cache.Persons;
-import de.ub0r.android.smsdroid.cache.Threads;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -75,7 +74,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Used {@link Uri}. */
 	private Uri uri;
 	/** Thread id. */
-	private long threadId = -1;
+	private int threadId = -1;
 	/** Address. */
 	private String address = null;
 	/** Name. */
@@ -167,8 +166,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private void parseIntent(final Intent intent) {
 		Log.d(TAG, "got intent: " + this.uri.toString());
 
-		this.threadId = Long.parseLong(this.uri.getLastPathSegment());
-		this.address = Threads.getAddress(this, this.threadId);
+		this.threadId = Integer.parseInt(this.uri.getLastPathSegment());
+		this.address = Conversation.getConversation(this.threadId).getAddress();
 		this.name = Persons.getName(this, this.address, false);
 		if (this.name == null) {
 			this.displayName = this.address;
@@ -206,7 +205,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * @param threadID
 	 *            thread id
 	 */
-	private void setRead(final long threadID) {
+	private void setRead(final int threadID) {
 		SMSdroid.markRead(this, Uri.parse(URI + threadID), 1);
 	}
 

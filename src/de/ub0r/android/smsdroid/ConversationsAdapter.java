@@ -123,6 +123,8 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 					if (!selfChange) {
 						Log.d(TAG, "call startMsgListQuery();");
 						ConversationsAdapter.this.startMsgListQuery();
+						Log.d(TAG, "invalidate cache");
+						Conversation.invalidate();
 					}
 				}
 			});
@@ -154,7 +156,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final Conversation c = new Conversation(context, cursor);
+		final Conversation c = Conversation.getConversation(context, cursor);
 
 		final TextView tvBody = (TextView) view.findViewById(R.id.body);
 		tvBody.setTextSize(this.textSize);
