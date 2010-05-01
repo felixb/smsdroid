@@ -360,6 +360,7 @@ public final class ConversationProvider extends ContentProvider {
 	 * 
 	 * @param db
 	 *            {@link SQLiteDatabase}.
+	 * @return {@link Cursor} from external {@link ConversationProvider}
 	 */
 	private Cursor updateSource(final SQLiteDatabase db) {
 		final ContentResolver cr = this.getContext().getContentResolver();
@@ -371,10 +372,10 @@ public final class ConversationProvider extends ContentProvider {
 					.query(URI, PROJECTION_OUT, null, null, DEFAULT_SORT_ORDER);
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
-			PROJECTION[INDEX_ADDRESS] = ADDRESS_HERO;
-			PROJECTION[INDEX_THREADID] = THREADID_HERO;
-			cout = cr.query(URI, Conversation.PROJECTION, null, null,
-					DEFAULT_SORT_ORDER);
+			PROJECTION_OUT[INDEX_ADDRESS] = ADDRESS_HERO;
+			PROJECTION_OUT[INDEX_THREADID] = THREADID_HERO;
+			cout = cr
+					.query(URI, PROJECTION_OUT, null, null, DEFAULT_SORT_ORDER);
 		}
 
 		if (cout != null && cout.moveToFirst()) {
@@ -409,6 +410,43 @@ public final class ConversationProvider extends ContentProvider {
 					break;
 				}
 			} while (cout.moveToPrevious());
+		}
+		// internal db does have at least all the messages from external db
+		Cursor cin0 = db.query(THREADS_TABLE_NAME, PROJECTION, null, null,
+				null, null, PROJECTION[INDEX_THREADID] + " DESC");
+		Cursor cout0 = cr.query(URI, PROJECTION_OUT, null, null,
+				PROJECTION[INDEX_THREADID] + " DESC");
+		if (cout0 != null && cin0 != null && // .
+				cout0.requery() && cin0.requery()) {
+			if (cout0.getCount() != cin0.getCount()) {
+				// hunt for deleted threads
+				if (!cout0.moveToFirst()) {
+					Log.d(TAG, "delete all rows");
+					db.delete(THREADS_TABLE_NAME, null, null);
+				} else if (!cin0.moveToFirst()) {
+					Log.e(TAG, "error selecting first row");
+				} else {
+					do {
+						final int tidin = cin0.getInt(INDEX_THREADID);
+						int tidout;
+						if (cout0.isAfterLast()) {
+							tidout = -1;
+						} else {
+							tidout = cout0.getInt(INDEX_THREADID);
+						}
+						if (tidin != tidout) {
+							Log.d(TAG, "delete row: " + tidin);
+							db.delete(THREADS_TABLE_NAME,
+									PROJECTION[INDEX_THREADID] + " = " + tidin,
+									null);
+						} else {
+							cout0.moveToNext();
+						}
+					} while (cin0.moveToNext());
+				}
+			}
+			cin0.close();
+			cout0.close();
 		}
 		cin.close();
 		return cout;
