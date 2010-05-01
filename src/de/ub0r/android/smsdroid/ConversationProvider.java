@@ -43,11 +43,15 @@ public final class ConversationProvider extends ContentProvider {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.cvp";
 
+	/** Name of the {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "mms.db";
-	private static final int DATABASE_VERSION = 2;
+	/** Version of the {@link SQLiteDatabase}. */
+	private static final int DATABASE_VERSION = 1;
+	/** Table name for threads. */
 	private static final String THREADS_TABLE_NAME = "threads";
 
-	private static final HashMap<String, String> sThreadsProjectionMap;
+	/** {@link HashMap} for projection. */
+	private static final HashMap<String, String> THREADS_PROJECTION_MAP;
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -98,14 +102,20 @@ public final class ConversationProvider extends ContentProvider {
 	/** Cursors row in hero phones: thread_id. */
 	static final String THREADID_HERO = "_id AS " + PROJECTION[INDEX_THREADID];
 
+	/** Default sort order. */
 	public static final String DEFAULT_SORT_ORDER = PROJECTION[INDEX_DATE]
 			+ " DESC";
 
+	/** Internal id: threads. */
 	private static final int THREADS = 1;
+	/** Internal id: single thread. */
 	private static final int THREAD_ID = 2;
 
-	public static final String AUTHORITY = "de.ub0r.android.smsdroid.provider.conversations";
+	/** Authority. */
+	public static final String AUTHORITY = "de.ub0r.android.smsdroid."
+			+ "provider.conversations";
 
+	/** Content {@link Uri}. */
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/threads");
 
@@ -121,17 +131,18 @@ public final class ConversationProvider extends ContentProvider {
 	public static final String CONTENT_ITEM_TYPE = // .
 	"vnd.android.cursor.item/vnd.ub0r.thread";
 
-	private static final UriMatcher sUriMatcher;
+	/** {@link UriMatcher}. */
+	private static final UriMatcher URI_MATCHER;
 
 	static {
-		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(AUTHORITY, "threads", THREADS);
-		sUriMatcher.addURI(AUTHORITY, "threads/#", THREAD_ID);
+		URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+		URI_MATCHER.addURI(AUTHORITY, "threads", THREADS);
+		URI_MATCHER.addURI(AUTHORITY, "threads/#", THREAD_ID);
 
-		sThreadsProjectionMap = new HashMap<String, String>();
+		THREADS_PROJECTION_MAP = new HashMap<String, String>();
 		final int l = PROJECTION.length;
 		for (int i = 0; i < l; i++) {
-			sThreadsProjectionMap.put(PROJECTION[i], PROJECTION[i]);
+			THREADS_PROJECTION_MAP.put(PROJECTION[i], PROJECTION[i]);
 		}
 	}
 
@@ -140,10 +151,19 @@ public final class ConversationProvider extends ContentProvider {
 	 */
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 
+		/**
+		 * Default Constructor.
+		 * 
+		 * @param context
+		 *            {@link Context}
+		 */
 		DatabaseHelper(final Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void onCreate(final SQLiteDatabase db) {
 			Log.i(TAG, "create database");
@@ -158,6 +178,9 @@ public final class ConversationProvider extends ContentProvider {
 					+ PROJECTION[INDEX_COUNT] + " INTEGER" + ");");
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void onUpgrade(final SQLiteDatabase db, final int oldVersion,
 				final int newVersion) {
@@ -168,6 +191,7 @@ public final class ConversationProvider extends ContentProvider {
 		}
 	}
 
+	/** {@link DatabaseHelper}. */
 	private DatabaseHelper mOpenHelper;
 
 	/**
@@ -184,7 +208,7 @@ public final class ConversationProvider extends ContentProvider {
 	 */
 	@Override
 	public String getType(final Uri uri) {
-		switch (sUriMatcher.match(uri)) {
+		switch (URI_MATCHER.match(uri)) {
 		case THREADS:
 			return CONTENT_TYPE;
 		case THREAD_ID:
@@ -211,41 +235,106 @@ public final class ConversationProvider extends ContentProvider {
 		return true;
 	}
 
+	/**
+	 * Update a row in internal {@link SQLiteDatabase}.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}
+	 * @param cout
+	 *            {@link Cursor} from external {@link ConversationProvider}
+	 * @param din
+	 *            date from newest message in internal {@link SQLiteDatabase}
+	 * @return true if any change happend
+	 */
+	private boolean updateRow(final SQLiteDatabase db, final Cursor cout,
+			final long din) {
+		long dout = cout.getLong(INDEX_DATE);
+		if (dout < SMSdroid.MIN_DATE) {
+			dout *= SMSdroid.MILLIS;
+		}
+		if (dout > din) {
+			int tid = cout.getInt(INDEX_THREADID);
+			ContentValues cv = new ContentValues();
+			cv.put(PROJECTION[INDEX_DATE], dout);
+			cv.put(PROJECTION[INDEX_ADDRESS], // .
+					cout.getString(INDEX_ADDRESS));
+			cv.put(PROJECTION[INDEX_BODY], cout.getString(INDEX_BODY));
+			cv.put(PROJECTION[INDEX_THREADID], tid);
+			cv.put(PROJECTION[INDEX_TYPE], cout.getInt(INDEX_TYPE));
+			cv.put(PROJECTION[INDEX_READ], cout.getInt(INDEX_READ));
+			cv.put(PROJECTION[INDEX_COUNT], -1);
+			if (db.update(THREADS_TABLE_NAME, cv, PROJECTION[INDEX_THREADID]
+					+ " = " + tid, // .
+					null) == 0) {
+				Log.d(TAG, "insert row for thread: " + tid);
+				db.insert(THREADS_TABLE_NAME, PROJECTION[INDEX_ID], cv);
+			} else {
+				Log.d(TAG, "update row for thread: " + tid);
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Update internal {@link SQLiteDatabase} from external
+	 * {@link ConversationProvider}.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}.
+	 */
 	private void updateSource(final SQLiteDatabase db) {
-		db.delete(THREADS_TABLE_NAME, null, null);
 		final ContentResolver cr = this.getContext().getContentResolver();
-		Cursor cursor;
+		Cursor cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null,
+				null, DEFAULT_SORT_ORDER);
+		Cursor cout;
 		try {
-			cursor = cr.query(URI, PROJECTION_OUT, null, null,
-					DEFAULT_SORT_ORDER);
+			cout = cr
+					.query(URI, PROJECTION_OUT, null, null, DEFAULT_SORT_ORDER);
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
 			PROJECTION[INDEX_ADDRESS] = ADDRESS_HERO;
 			PROJECTION[INDEX_THREADID] = THREADID_HERO;
-			cursor = cr.query(URI, Conversation.PROJECTION, null, null,
+			cout = cr.query(URI, Conversation.PROJECTION, null, null,
 					DEFAULT_SORT_ORDER);
 		}
-		if (cursor != null && cursor.moveToFirst()) {
+
+		if (cout != null && cout.moveToFirst()) {
+			if (cin == null) {
+				Log.e(TAG, "cursor in == null");
+				return;
+			}
+			long din = 0;
+			if (cin.moveToFirst()) {
+				din = cin.getLong(INDEX_DATE);
+			}
+			// hunt for new sms
 			do {
-				ContentValues cv = new ContentValues();
-				cv.put(PROJECTION[INDEX_ID], cursor.getInt(INDEX_ID));
-				long d = cursor.getLong(INDEX_DATE);
-				if (d < SMSdroid.MIN_DATE) {
-					d *= SMSdroid.MILLIS;
+				if (!this.updateRow(db, cout, din)) {
+					break;
 				}
-				cv.put(PROJECTION[INDEX_DATE], d);
-				cv.put(PROJECTION[INDEX_ADDRESS], cursor
-						.getString(INDEX_ADDRESS));
-				cv.put(PROJECTION[INDEX_BODY], cursor.getString(INDEX_BODY));
-				cv.put(PROJECTION[INDEX_THREADID], cursor
-						.getInt(INDEX_THREADID));
-				cv.put(PROJECTION[INDEX_TYPE], cursor.getInt(INDEX_TYPE));
-				cv.put(PROJECTION[INDEX_READ], cursor.getInt(INDEX_READ));
-				cv.put(PROJECTION[INDEX_COUNT], -1);
-				db.insert(THREADS_TABLE_NAME, PROJECTION[INDEX_ID], cv);
-			} while (cursor.moveToNext());
+			} while (cout.moveToNext());
+
+			// hunt for new mms
+			if (!cout.moveToLast()) {
+				Log.e(TAG, "error moving cursor to end");
+			}
+			do {
+				long dout = cout.getLong(INDEX_DATE);
+				Log.d(TAG, "din:  " + din);
+				Log.d(TAG, "dout: " + dout);
+				if (dout * SMSdroid.MILLIS < din) {
+					continue;
+				} else if (dout > SMSdroid.MIN_DATE) {
+					break;
+				} else if (!this.updateRow(db, cout, din)) {
+					break;
+				}
+			} while (cout.moveToPrevious());
 		}
-		db.close();
+		cin.close();
+		cout.close();
 	}
 
 	/**
@@ -261,12 +350,12 @@ public final class ConversationProvider extends ContentProvider {
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(THREADS_TABLE_NAME);
 
-		switch (sUriMatcher.match(uri)) {
+		switch (URI_MATCHER.match(uri)) {
 		case THREADS:
-			qb.setProjectionMap(sThreadsProjectionMap);
+			qb.setProjectionMap(THREADS_PROJECTION_MAP);
 			break;
 		case THREAD_ID:
-			qb.setProjectionMap(sThreadsProjectionMap);
+			qb.setProjectionMap(THREADS_PROJECTION_MAP);
 			qb.appendWhere(PROJECTION[INDEX_ID] + "="
 					+ uri.getPathSegments().get(1));
 			break;
