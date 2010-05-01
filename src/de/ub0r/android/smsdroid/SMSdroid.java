@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
@@ -44,12 +45,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.HeaderViewListAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.flurry.android.FlurryAgent;
 
+import de.ub0r.android.smsdroid.cache.AsyncHelper;
 import de.ub0r.android.smsdroid.cache.Persons;
 
 /**
@@ -108,6 +112,16 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	public final void onStart() {
 		super.onStart();
 		FlurryAgent.onStartSession(this, FLURRYKEY);
+		ListAdapter la = this.getListAdapter();
+		if (la == null) {
+			AsyncHelper.setAdapter(null);
+		} else if (la instanceof ConversationsAdapter) {
+			AsyncHelper.setAdapter((ConversationsAdapter) la);
+		} else if (la instanceof HeaderViewListAdapter) {
+			AsyncHelper.setAdapter(// .
+					(ConversationsAdapter) ((HeaderViewListAdapter) la)
+							.getWrappedAdapter());
+		}
 	}
 
 	/**
@@ -117,6 +131,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	public final void onStop() {
 		super.onStop();
 		FlurryAgent.onEndSession(this);
+		AsyncHelper.setAdapter(null);
 	}
 
 	/**
@@ -153,9 +168,10 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	 */
 	static final void showRows(final Context context) {
 		// this.showRows(ContactsWrapper.getInstance().getUriFilter());
-		showRows(context, URI);
-		showRows(context, Uri.parse("content://sms/"));
-		showRows(context, Uri.parse("content://mms/"));
+		// showRows(context, URI);
+		// showRows(context, Uri.parse("content://sms/"));
+		// showRows(context, Uri.parse("content://mms/"));
+		// showRows(context, ConversationProvider.CONTENT_URI);
 		// showRows(context, Uri.parse("content://mms-sms/threads"));
 		// this.showRows(Uri.parse(MessageList.URI));
 	}
@@ -318,9 +334,13 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	 *            {@link Uri}
 	 * @param title
 	 *            title of {@link Dialog}
+	 * @param message
+	 *            message of the {@link Dialog}
+	 * @param activity
+	 *            {@link Activity} to finish when deleting.
 	 */
 	static final void deleteMessages(final Context context, final Uri uri,
-			final int title) {
+			final int title, final int message, final Activity activity) {
 		final Cursor mCursor = context.getContentResolver().query(uri,
 				Message.PROJECTION, null, null, null);
 		if (mCursor.getCount() <= 0) {
@@ -329,7 +349,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 
 		Builder builder = new Builder(context);
 		builder.setTitle(title);
-		builder.setMessage(R.string.delete_messages_question);
+		builder.setMessage(message);
 		builder.setNegativeButton(android.R.string.no, null);
 		builder.setPositiveButton(android.R.string.yes,
 				new DialogInterface.OnClickListener() {
@@ -337,6 +357,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					public void onClick(final DialogInterface dialog,
 							final int which) {
 						context.getContentResolver().delete(uri, null, null);
+						if (activity != null) {
+							activity.finish();
+						}
 						SmsReceiver.updateNewMessageNotification(context, null);
 					}
 				});
@@ -357,7 +380,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			return true;
 		case R.id.item_delete_all_threads:
 			deleteMessages(this, Uri.parse("content://sms/"),
-					R.string.delete_threads_);
+					R.string.delete_threads_, R.string.delete_threads_question,
+					null);
 			return true;
 		case R.id.item_mark_all_read:
 			markRead(this, Uri.parse("content://sms/"), 1);
@@ -484,7 +508,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 						break;
 					case WHICH_DELETE:
 						SMSdroid.deleteMessages(SMSdroid.this, target,
-								R.string.delete_thread_);
+								R.string.delete_thread_,
+								R.string.delete_thread_question, null);
 						break;
 					default:
 						break;

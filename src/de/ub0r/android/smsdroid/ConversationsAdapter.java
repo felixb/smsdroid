@@ -51,11 +51,12 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	/** {@link Cursor} to the original Content to listen for changes. */
 	private final Cursor origCursor;
 
+	/** {@link BackgroundQueryHandler}. */
 	private final BackgroundQueryHandler queryHandler;
-
+	/** Token for {@link BackgroundQueryHandler}: message list query. */
 	private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
-
-	private final SMSdroid context;
+	/** Reference to {@link SMSdroid}. */
+	private final SMSdroid activity;
 
 	/**
 	 * Handle queries in background.
@@ -84,7 +85,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 			switch (token) {
 			case MESSAGE_LIST_QUERY_TOKEN:
 				ConversationsAdapter.this.changeCursor(cursor);
-				ConversationsAdapter.this.context
+				ConversationsAdapter.this.activity
 						.setProgressBarIndeterminateVisibility(false);
 				return;
 			default:
@@ -101,7 +102,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	 */
 	public ConversationsAdapter(final SMSdroid c) {
 		super(c, R.layout.conversationlist_item, null, true);
-		this.context = c;
+		this.activity = c;
 		this.queryHandler = new BackgroundQueryHandler(c.getContentResolver());
 
 		this.textSize = Preferences.getTextsize(c);
@@ -141,7 +142,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
 		try {
 			// Kick off the new query
-			this.context.setProgressBarIndeterminateVisibility(true);
+			this.activity.setProgressBarIndeterminateVisibility(true);
 			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
 					ConversationProvider.CONTENT_URI, Conversation.PROJECTION,
 					null, null, null);

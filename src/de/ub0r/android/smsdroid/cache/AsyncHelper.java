@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import de.ub0r.android.smsdroid.Conversation;
+import de.ub0r.android.smsdroid.ConversationsAdapter;
 import de.ub0r.android.smsdroid.Message;
 import de.ub0r.android.smsdroid.SMSdroid;
 
@@ -30,6 +31,9 @@ import de.ub0r.android.smsdroid.SMSdroid;
  * @author flx
  */
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
+	/** {@link ConversationsAdapter} to invalidate on new data. */
+	private static ConversationsAdapter adapter = null;
+
 	/** {@link Context}. */
 	private final Context context;
 	/** {@link Conversation}. */
@@ -71,7 +75,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(final Void... arg0) {
 		Uri uri = Uri.parse("content://mms-sms/conversations/"
-				+ this.mConversation.getId());
+				+ this.mConversation.getThreadId());
 		Cursor cursor = this.context.getContentResolver().query(uri,
 				Message.PROJECTION, null, null, null);
 
@@ -114,5 +118,25 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 					address));
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onPostExecute(final Void result) {
+		if (adapter != null) {
+			adapter.notifyDataSetChanged();
+		}
+	}
+
+	/**
+	 * Set {@link ConversationsAdapter} to invalidate data after refreshing.
+	 * 
+	 * @param a
+	 *            {@link ConversationsAdapter}
+	 */
+	public static void setAdapter(final ConversationsAdapter a) {
+		adapter = a;
 	}
 }

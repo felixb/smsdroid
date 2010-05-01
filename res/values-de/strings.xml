@@ -79,7 +79,10 @@
 	<string name="all_threads_">Alle Threads</string>
 	<string name="message_options_">Nachrichtenoptionen</string>
 	<string name="compose_">Schreiben</string>
+	<string name="delete_message_question">Willst du wirklich diese Nachricht löschen?</string>
 	<string name="delete_messages_question">Willst du wirklich diese Nachrichten löschen?</string>
+	<string name="delete_thread_question">Willst du wirklich <b>alle Nachrichten dieses Threads</b> löschen?</string>
+	<string name="delete_threads_question">Willst du wirklich <b>alle Nachrichten</b> löschen?</string>
 	<string name="from_">Von:</string>
 	<string name="to_">An:</string>
 	<string name="type_">Typ:</string>

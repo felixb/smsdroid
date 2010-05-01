@@ -116,7 +116,8 @@ public final class Conversation {
 		this.address = cursor.getString(INDEX_ADDRESS);
 		this.body = cursor.getString(INDEX_BODY);
 		this.type = cursor.getInt(INDEX_TYPE);
-		this.read = cursor.getInt(INDEX_READ);
+		// this.read = cursor.getInt(INDEX_READ);
+		this.read = 1;
 
 		AsyncHelper.fillConversation(context, this);
 		this.lastUpdate = System.currentTimeMillis();
@@ -135,7 +136,7 @@ public final class Conversation {
 		this.date = cursor.getLong(INDEX_DATE);
 		this.body = cursor.getString(INDEX_BODY);
 		this.type = cursor.getInt(INDEX_TYPE);
-		this.read = cursor.getInt(INDEX_READ);
+		// this.read = cursor.getInt(INDEX_READ);
 		if (this.lastUpdate < validCache) {
 			AsyncHelper.fillConversation(context, this);
 		}

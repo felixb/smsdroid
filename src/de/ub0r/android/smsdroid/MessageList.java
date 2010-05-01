@@ -226,7 +226,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_delete_thread:
-			SMSdroid.deleteMessages(this, this.uri, R.string.delete_thread_);
+			SMSdroid.deleteMessages(this, this.uri, R.string.delete_thread_,
+					R.string.delete_thread_question, this);
 			return true;
 		case R.id.item_all_threads:
 			this.startActivity(new Intent(this, SMSdroid.class));
@@ -356,7 +357,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						break;
 					case WHICH_DELETE:
 						SMSdroid.deleteMessages(context, target,
-								R.string.delete_message_);
+								R.string.delete_message_,
+								R.string.delete_message_question, null);
 						break;
 					case WHICH_SPEAK:
 						// TODO: implement me
