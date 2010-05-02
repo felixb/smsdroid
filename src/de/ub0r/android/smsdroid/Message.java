@@ -35,28 +35,36 @@ public class Message {
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
+	/** INDEX: read. */
+	public static final int INDEX_READ = 1;
 	/** INDEX: date. */
-	public static final int INDEX_DATE = 1;
-	/** INDEX: address. */
-	public static final int INDEX_ADDRESS = 2;
+	public static final int INDEX_DATE = 2;
 	/** INDEX: thread_id. */
 	public static final int INDEX_THREADID = 3;
-	/** INDEX: body. */
-	public static final int INDEX_BODY = 4;
 	/** INDEX: type. */
-	public static final int INDEX_TYPE = 5;
-	/** INDEX: read. */
-	public static final int INDEX_READ = 6;
+	public static final int INDEX_TYPE = 4;
+	/** INDEX: address. */
+	public static final int INDEX_ADDRESS = 5;
+	/** INDEX: body. */
+	public static final int INDEX_BODY = 6;
 
 	/** Cursor's projection. */
 	public static final String[] PROJECTION = { //
 	"_id", // 0
-			Calls.DATE, // 1
-			"address", // 2
+			"read", // 1
+			Calls.DATE, // 2
 			"thread_id", // 3
-			"body", // 4
-			Calls.TYPE, // 5
-			"read", // 6
+			Calls.TYPE, // 4
+			"address", // 5
+			"body", // 6
+	};
+
+	/** Cursor's projection for set read/unread operations. */
+	public static final String[] PROJECTION_READ = { //
+	PROJECTION[INDEX_ID], // 0
+			PROJECTION[INDEX_READ], // 1
+			PROJECTION[INDEX_DATE], // 2
+			PROJECTION[INDEX_THREADID], // 3
 	};
 
 	/** SQL WHERE: unread messages. */
@@ -104,7 +112,7 @@ public class Message {
 		}
 		this.address = cursor.getString(INDEX_ADDRESS);
 		this.body = cursor.getString(INDEX_BODY);
-		if (SMSdroid.showEmoticons) {
+		if (SMSdroid.showEmoticons && this.body != null) {
 			this.body = SmileyParser.getInstance(context).addSmileySpans(
 					this.body);
 		}

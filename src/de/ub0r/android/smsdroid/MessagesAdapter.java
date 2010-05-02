@@ -82,7 +82,8 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		this.textSize = Preferences.getTextsize(c);
 		this.uri = u;
 		this.threadId = Integer.parseInt(u.getLastPathSegment());
-		this.address = Conversation.getConversation(this.threadId).getAddress();
+		this.address = Conversation.getConversation(c, this.threadId)
+				.getAddress();
 		this.name = Persons.getName(c, this.address, false);
 		if (this.name == null) {
 			this.displayName = this.address;
@@ -116,7 +117,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);
-		} else if (t == Calls.OUTGOING_TYPE) {
+		} else {
 			twPerson.setText(R.string.me);
 			view.setBackgroundResource(this.backgroundDrawableOut);
 			((ImageView) view.findViewById(R.id.inout))

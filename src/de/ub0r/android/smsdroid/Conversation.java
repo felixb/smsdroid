@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
+import android.util.Log;
 import de.ub0r.android.smsdroid.cache.AsyncHelper;
 
 /**
@@ -170,13 +171,30 @@ public final class Conversation {
 	/**
 	 * Get a {@link Conversation}.
 	 * 
+	 * @param context
+	 *            {@link Context}
 	 * @param threadId
 	 *            threadId
 	 * @return {@link Conversation}
 	 */
-	public static Conversation getConversation(final int threadId) {
+	public static Conversation getConversation(final Context context,
+			final int threadId) {
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(threadId);
+			if (ret == null) {
+				Cursor cursor = context
+						.getContentResolver()
+						.query(
+								ConversationProvider.CONTENT_URI,
+								ConversationProvider.PROJECTION,
+								ConversationProvider.PROJECTION[ConversationProvider.INDEX_THREADID]
+										+ " = " + threadId, null, null);
+				if (cursor != null && cursor.moveToFirst()) {
+					return getConversation(context, cursor);
+				} else {
+					Log.e(TAG, "did not found conversation: " + threadId);
+				}
+			}
 			return ret;
 		}
 	}

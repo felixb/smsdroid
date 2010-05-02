@@ -144,8 +144,8 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 			// Kick off the new query
 			this.activity.setProgressBarIndeterminateVisibility(true);
 			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
-					ConversationProvider.CONTENT_URI, Conversation.PROJECTION,
-					null, null, null);
+					ConversationProvider.CONTENT_URI,
+					ConversationProvider.PROJECTION, null, null, null);
 		} catch (SQLiteException e) {
 			Log.e(TAG, "error starting query", e);
 		}

@@ -90,6 +90,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 					address = cursor.getString(Message.INDEX_ADDRESS);
 				} while (address == null && cursor.moveToPrevious());
 			}
+			if (address != null) {
+				this.mConversation.setAddress(address);
+			}
 		}
 		cursor.close();
 

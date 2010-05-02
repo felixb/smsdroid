@@ -167,7 +167,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "got intent: " + this.uri.toString());
 
 		this.threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		this.address = Conversation.getConversation(this.threadId).getAddress();
+		this.address = Conversation.getConversation(this, this.threadId)
+				.getAddress();
 		this.name = Persons.getName(this, this.address, false);
 		if (this.name == null) {
 			this.displayName = this.address;
@@ -345,6 +346,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						sb.append("\n");
 						sb.append(fromTo + " ");
 						sb.append(a);
+						sb.append("\n");
 						sb.append(context.getString(R.string.type_));
 						if (m.isMMS()) {
 							sb.append(" MMS");

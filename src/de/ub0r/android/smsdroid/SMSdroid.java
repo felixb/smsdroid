@@ -315,9 +315,11 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		String select = Message.SELECTION_UNREAD.replace("0", String
 				.valueOf(1 - read));
 		final Cursor mCursor = context.getContentResolver().query(uri,
-				Message.PROJECTION, select, null, null);
+				Message.PROJECTION_READ, select, null, null);
 		if (mCursor.getCount() <= 0) {
 			if (uri.toString().equals("content://sms/")) {
+				SmsReceiver.updateNewMessageNotification(context, null);
+			} else if (uri.toString().equals("content://mms/")) {
 				SmsReceiver.updateNewMessageNotification(context, null);
 			}
 			return;
@@ -389,6 +391,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			return true;
 		case R.id.item_mark_all_read:
 			markRead(this, Uri.parse("content://sms/"), 1);
+			markRead(this, Uri.parse("content://mms/"), 1);
 			return true;
 		default:
 			return false;
