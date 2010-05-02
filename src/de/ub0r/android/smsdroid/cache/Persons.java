@@ -69,10 +69,10 @@ public final class Persons {
 	private static final HashMap<String, Person> CACHE = // .
 	new HashMap<String, Person>();
 
-	/** Index of id. */
-	private static final int INDEX_ID = 0;
-	/** Index of name. */
-	private static final int INDEX_NAME = 1;
+	/** Length of a international prefix, + notation. */
+	private static final int MIN_LEN_PLUS = "+49x".length();
+	/** Length of a international prefix, 00 notation. */
+	private static final int MIN_LEN_ZERO = "0049x".length();
 
 	/** Wrapper to use for contacts API. */
 	private static final ContactsWrapper WRAPPER = ContactsWrapper
@@ -91,7 +91,7 @@ public final class Persons {
 	 *            address
 	 * @return Person
 	 */
-	private static Person getNameForAddress(final Context context,
+	private static synchronized Person getNameForAddress(final Context context,
 			final String address) {
 		Log.d(TAG, "getNameForAddress(ctx, " + address + ")");
 		Person ret = NOT_FOUND;
@@ -101,8 +101,18 @@ public final class Persons {
 		if (m.find()) {
 			realAddress = m.group(1);
 		}
+		final int l = realAddress.length();
+		if (l > MIN_LEN_PLUS && realAddress.startsWith("+")) {
+			realAddress = "%" + realAddress.substring(MIN_LEN_PLUS);
+		} else if (l > MIN_LEN_ZERO && realAddress.startsWith("00")) {
+			realAddress = "%" + realAddress.substring(MIN_LEN_ZERO);
+		} else if (realAddress.startsWith("0")) {
+			realAddress = "%" + realAddress.substring(1);
+		}
 		// address contains the phone number
-		Uri uri = Uri.withAppendedPath(WRAPPER.getUriFilter(), realAddress);
+		Uri uri = Uri.withAppendedPath(WRAPPER.getUriFilter(), Uri
+				.encode(realAddress));
+		Log.d(TAG, "query: " + uri.toString());
 		final String[] proj = WRAPPER.getProjectionFilter();
 		if (uri != null) {
 			try {
@@ -111,10 +121,14 @@ public final class Persons {
 				// Log.d(TAG, "proj[1]: " + proj[1]);
 				Cursor cursor = context.getContentResolver().query(uri, proj,
 						null, null, null);
+
+				// where: proj[ContactsWrapper.FILTER_INDEX_NUMBER] + " like "
+				// + realAddress
 				if (cursor.moveToFirst()) {
 					ret = new Person();
-					ret.id = cursor.getLong(INDEX_ID);
-					ret.name = cursor.getString(INDEX_NAME);
+					ret.id = cursor.getLong(ContactsWrapper.FILTER_INDEX_ID);
+					ret.name = cursor
+							.getString(ContactsWrapper.FILTER_INDEX_NAME);
 				}
 				cursor.close();
 			} catch (Exception e) {
@@ -249,7 +263,7 @@ public final class Persons {
 		Person p = CACHE.get(address);
 		if (p == null) {
 			getName(context, address, false); // try to get contact from
-												// database
+			// database
 			p = CACHE.get(address);
 		}
 		Bitmap b = null;

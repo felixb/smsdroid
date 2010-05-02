@@ -35,6 +35,11 @@ public abstract class ContactsWrapper {
 	/** Tag for output. */
 	private static final String TAG = "SMSdroid.cw";
 
+	/** Index of id. */
+	public static final int FILTER_INDEX_ID = 0;
+	/** Index of name. */
+	public static final int FILTER_INDEX_NAME = 1;
+
 	/**
 	 * Static singleton instance of {@link ContactsWrapper} holding the
 	 * SDK-specific implementation of the class.

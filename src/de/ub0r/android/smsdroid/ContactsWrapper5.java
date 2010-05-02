@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 
@@ -37,12 +38,11 @@ import android.provider.ContactsContract.Contacts;
 public final class ContactsWrapper5 extends ContactsWrapper {
 	/** {@link Uri} for persons, content filter. */
 	private static final Uri API5_URI_CONTENT_FILTER = // .
-	ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI;
+	ContactsContract.PhoneLookup.CONTENT_FILTER_URI;
 
 	/** Projection for persons query, filter. */
 	private static final String[] API5_PROJECTION_FILTER = // .
-	new String[] { ContactsContract.Data.CONTACT_ID,
-			ContactsContract.Data.DISPLAY_NAME };
+	new String[] { BaseColumns._ID, ContactsContract.Data.DISPLAY_NAME };
 
 	/**
 	 * {@inheritDoc}
