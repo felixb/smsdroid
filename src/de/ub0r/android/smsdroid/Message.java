@@ -152,7 +152,6 @@ public class Message {
 	 * @return the address
 	 */
 	public final String getAddress(final Context context) {
-		// TODO: cache address for thread
 		if (this.address == null && context != null) {
 			final String select = Message.PROJECTION[// .
 					Message.INDEX_THREADID]

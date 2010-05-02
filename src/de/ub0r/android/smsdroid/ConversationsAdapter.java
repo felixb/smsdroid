@@ -157,7 +157,8 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final Conversation c = Conversation.getConversation(context, cursor);
+		final Conversation c = Conversation.getConversation(context, cursor,
+				false);
 
 		final TextView tvBody = (TextView) view.findViewById(R.id.body);
 		tvBody.setTextSize(this.textSize);

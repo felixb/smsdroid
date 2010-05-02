@@ -109,8 +109,11 @@ public final class Conversation {
 	 *            {@link Context}
 	 * @param cursor
 	 *            {@link Cursor} to read the data
+	 * @param sync
+	 *            fetch of information
 	 */
-	private Conversation(final Context context, final Cursor cursor) {
+	private Conversation(final Context context, final Cursor cursor,
+			final boolean sync) {
 		this.id = cursor.getInt(INDEX_ID);
 		this.threadId = cursor.getInt(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
@@ -120,7 +123,7 @@ public final class Conversation {
 		// this.read = cursor.getInt(INDEX_READ);
 		this.read = 1;
 
-		AsyncHelper.fillConversation(context, this);
+		AsyncHelper.fillConversation(context, this, sync);
 		this.lastUpdate = System.currentTimeMillis();
 	}
 
@@ -131,15 +134,18 @@ public final class Conversation {
 	 *            {@link Context}
 	 * @param cursor
 	 *            {@link Cursor} to read from.
+	 * @param sync
+	 *            fetch of information
 	 */
-	private void update(final Context context, final Cursor cursor) {
+	private void update(final Context context, final Cursor cursor,
+			final boolean sync) {
 		this.id = cursor.getInt(INDEX_ID);
 		this.date = cursor.getLong(INDEX_DATE);
 		this.body = cursor.getString(INDEX_BODY);
 		this.type = cursor.getInt(INDEX_TYPE);
 		// this.read = cursor.getInt(INDEX_READ);
 		if (this.lastUpdate < validCache) {
-			AsyncHelper.fillConversation(context, this);
+			AsyncHelper.fillConversation(context, this, sync);
 		}
 		this.lastUpdate = System.currentTimeMillis();
 	}
@@ -151,18 +157,20 @@ public final class Conversation {
 	 *            {@link Context}
 	 * @param cursor
 	 *            {@link Cursor} to read the data from
+	 * @param sync
+	 *            fetch of information
 	 * @return {@link Conversation}
 	 */
 	public static Conversation getConversation(final Context context,
-			final Cursor cursor) {
+			final Cursor cursor, final boolean sync) {
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(cursor
 					.getInt(ConversationProvider.INDEX_THREADID));
 			if (ret == null) {
-				ret = new Conversation(context, cursor);
+				ret = new Conversation(context, cursor, sync);
 				CACHE.put(ret.getThreadId(), ret);
 			} else {
-				ret.update(context, cursor);
+				ret.update(context, cursor, sync);
 			}
 			return ret;
 		}
@@ -181,7 +189,7 @@ public final class Conversation {
 			final int threadId) {
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(threadId);
-			if (ret == null) {
+			if (ret == null || ret.getAddress() == null) {
 				Cursor cursor = context.getContentResolver().query(
 						ConversationProvider.CONTENT_URI,
 						ConversationProvider.PROJECTION,
@@ -189,8 +197,7 @@ public final class Conversation {
 								ConversationProvider.INDEX_THREADID]
 								+ " = " + threadId, null, null);
 				if (cursor != null && cursor.moveToFirst()) {
-					// TODO: update should be forced synced
-					return getConversation(context, cursor);
+					return getConversation(context, cursor, true);
 				} else {
 					Log.e(TAG, "did not found conversation: " + threadId);
 				}

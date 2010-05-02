@@ -452,7 +452,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			this.startActivity(getComposeIntent(null));
 		} else {
 			final Conversation c = Conversation.getConversation(this,
-					(Cursor) parent.getItemAtPosition(position));
+					(Cursor) parent.getItemAtPosition(position), false);
 			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
 			final Intent i = new Intent(this, MessageList.class);
 			i.setData(target);
@@ -472,7 +472,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			return true;
 		} else {
 			final Conversation c = Conversation.getConversation(this,
-					(Cursor) parent.getItemAtPosition(position));
+					(Cursor) parent.getItemAtPosition(position), true);
 			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;

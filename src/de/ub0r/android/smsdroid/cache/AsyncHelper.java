@@ -22,6 +22,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import de.ub0r.android.smsdroid.Conversation;
 import de.ub0r.android.smsdroid.ConversationsAdapter;
 import de.ub0r.android.smsdroid.Message;
@@ -31,6 +32,9 @@ import de.ub0r.android.smsdroid.SMSdroid;
  * @author flx
  */
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
+	/** Tag for logging. */
+	static final String TAG = "SMSdroid.ash";
+
 	/** {@link ConversationsAdapter} to invalidate on new data. */
 	private static ConversationsAdapter adapter = null;
 
@@ -60,13 +64,21 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 *            {@link Context}
 	 * @param c
 	 *            {@link Conversation}
+	 * @param sync
+	 *            fetch of information
 	 */
 	public static void fillConversation(final Context context,
-			final Conversation c) {
+			final Conversation c, final boolean sync) {
+		Log.d(TAG, "fillConversation(ctx, conv, " + sync + ")");
 		if (context == null || c == null || c.getThreadId() < 0) {
 			return;
 		}
-		new AsyncHelper(context, c).execute((Void) null);
+		AsyncHelper helper = new AsyncHelper(context, c);
+		if (sync) {
+			helper.doInBackground((Void) null);
+		} else {
+			helper.execute((Void) null);
+		}
 	}
 
 	/**
@@ -84,6 +96,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 		// address
 		String address = this.mConversation.getAddress();
+		Log.d(TAG, "address: " + address);
 		if (address == null) {
 			if (cursor.moveToLast()) {
 				do {
@@ -92,6 +105,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			}
 			if (address != null) {
 				this.mConversation.setAddress(address);
+				Log.d(TAG, "new address: " + address);
 			}
 		}
 		cursor.close();
