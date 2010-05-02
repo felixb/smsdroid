@@ -47,9 +47,16 @@ public class SmsReceiver extends BroadcastReceiver {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.bcr";
 	/** {@link Uri} to get messages from. */
-	static final Uri URI_SMS = Uri.parse("content://sms/");
+	private static final Uri URI_SMS = Uri.parse("content://sms/");
 	/** {@link Uri} to get messages from. */
-	static final Uri URI_MMS = Uri.parse("content://mms/");
+	private static final Uri URI_MMS = Uri.parse("content://mms/");
+
+	/** Intent.action for receiving SMS. */
+	private final static String ACTION_SMS = // .
+	"android.provider.Telephony.SMS_RECEIVED";
+	/** Intent.action for receiving MMS. */
+	private final static String ACTION_MMS = // .
+	"android.provider.Telephony.WAP_PUSH_RECEIVED";
 
 	/** An unreadable MMS body. */
 	private static final String MMS_BODY = "<MMS>";
@@ -75,20 +82,25 @@ public class SmsReceiver extends BroadcastReceiver {
 	 */
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
-		Log.d(TAG, "got intent: " + intent.getAction());
-		Bundle b = intent.getExtras();
-		Object[] messages = (Object[]) b.get("pdus");
-		SmsMessage[] smsMessage = new SmsMessage[messages.length];
-		int l = messages.length;
-		for (int i = 0; i < l; i++) {
-			smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
-		}
+		final String action = intent.getAction();
+		Log.d(TAG, "got intent: " + action);
 		String t = null;
-		if (l > 0) {
-			t = smsMessage[0].getDisplayMessageBody();
+		if (action.equals(ACTION_SMS)) {
+			Bundle b = intent.getExtras();
+			Object[] messages = (Object[]) b.get("pdus");
+			SmsMessage[] smsMessage = new SmsMessage[messages.length];
+			int l = messages.length;
+			for (int i = 0; i < l; i++) {
+				smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
+			}
+			t = null;
+			if (l > 0) {
+				t = smsMessage[0].getDisplayMessageBody();
+			}
+		} else if (action.equals(ACTION_MMS)) {
+			t = MMS_BODY;
 		}
 
-		Log.d(TAG, "l: " + l);
 		Log.d(TAG, "t: " + t);
 		int count = MAX_SPINS;
 		do {
@@ -155,7 +167,7 @@ public class SmsReceiver extends BroadcastReceiver {
 	 */
 	private static int[] getUnreadMMS(final ContentResolver cr,
 			final String text) {
-		Log.d(TAG, "getUnreadMMS(cr)");
+		Log.d(TAG, "getUnreadMMS(cr, " + text + ")");
 		Cursor cursor = cr.query(URI_MMS, Message.PROJECTION_READ,
 				Message.SELECTION_UNREAD, null, null);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
