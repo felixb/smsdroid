@@ -173,6 +173,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		// showRows(context, URI);
 		// showRows(context, Uri.parse("content://sms/"));
 		// showRows(context, Uri.parse("content://mms/"));
+		// showRows(context, Uri.parse("content://mms/part/"));
 		// showRows(context, ConversationProvider.CONTENT_URI);
 		// showRows(context, Uri.parse("content://mms-sms/threads"));
 		// this.showRows(Uri.parse(MessageList.URI));
