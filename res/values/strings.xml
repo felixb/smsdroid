@@ -31,7 +31,7 @@
 	<string name="twitter_hint">Follow me on twitter.\nGet update notifications etc.</string>
 	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string>
 	<string name="author_">Author:</string>
-	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;</string>
+	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)</string>
 	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=5779152</string>
 	<string name="donate_mail">flx.yoo@gmail.com</string>
 	<string name="donate_subject">I\'m the donator. My sender hash is...</string>
