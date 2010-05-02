@@ -161,4 +161,33 @@
 		<item>1000_1000_1000</item>
 		<item>200_1000_200_1000</item>
 	</string-array>
+		<string-array name="emoticons">
+		<item>O:-)</item>
+		<item>8-)</item>
+		<item>8)</item>
+		<item>;-(</item>
+		<item>;(</item>
+		<item>:-?</item>
+		<item>:-)</item>
+		<item>:)</item>
+		<item>:-*</item>
+		<item>:*</item>
+		<item>:-D</item>
+		<item>:D</item>
+		<item>:-X</item>
+		<item>:-X</item>
+		<item>:x</item>
+		<item>:-$</item>
+		<item>:-(</item>
+		<item>:(</item>
+		<item>:o</item>
+		<item>:-P</item>
+		<item>:P</item>
+		<item>:p</item>
+		<item>:-\\</item>
+		<item>;-)</item>
+		<item>;)</item>
+		<item>o.O</item>
+		<item>:O</item>
+	</string-array>
 </resources>

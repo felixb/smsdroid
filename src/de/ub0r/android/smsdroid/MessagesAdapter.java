@@ -102,7 +102,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final Message m = new Message(cursor);
+		final Message m = new Message(context, cursor);
 
 		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
 		TextView twBody = (TextView) view.findViewById(R.id.body);
@@ -131,7 +131,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 
-		String text = m.getBody();
+		CharSequence text = m.getBody();
 		if (text == null) {
 			text = context.getString(R.string.mms_not_supported);
 		}

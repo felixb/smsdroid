@@ -253,7 +253,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		if (position == headerPos) { // header
 			this.startActivity(SMSdroid.getComposeIntent(this.address));
 		} else {
-			final Message m = new Message((Cursor) parent
+			final Message m = new Message(this, (Cursor) parent
 					.getItemAtPosition(position));
 			if (m.isMMS()) {
 				final Uri target = Uri.parse(MessageList.URI + m.getThreadId());
@@ -282,7 +282,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			return true;
 		} else {
 			final Context context = this;
-			final Message m = new Message((Cursor) parent
+			final Message m = new Message(this, (Cursor) parent
 					.getItemAtPosition(position));
 			final Uri target = m.getUri();
 			final int read = m.getRead();

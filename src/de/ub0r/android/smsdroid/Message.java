@@ -78,7 +78,7 @@ public class Message {
 	/** Address. */
 	private String address;
 	/** Body. */
-	private String body;
+	private CharSequence body;
 	/** Type. */
 	private int type;
 	/** Read status. */
@@ -90,10 +90,12 @@ public class Message {
 	/**
 	 * Default constructor.
 	 * 
+	 * @param context
+	 *            {@link Context} to spawn the {@link SmileyParser}.
 	 * @param cursor
 	 *            {@link Cursor} to read the data
 	 */
-	public Message(final Cursor cursor) {
+	public Message(final Context context, final Cursor cursor) {
 		this.id = cursor.getLong(INDEX_ID);
 		this.threadId = cursor.getLong(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
@@ -102,6 +104,7 @@ public class Message {
 		}
 		this.address = cursor.getString(INDEX_ADDRESS);
 		this.body = cursor.getString(INDEX_BODY);
+		this.body = SmileyParser.getInstance(context).addSmileySpans(this.body);
 		this.type = cursor.getInt(INDEX_TYPE);
 		this.read = cursor.getInt(INDEX_READ);
 		if (this.body == null) {
@@ -161,7 +164,7 @@ public class Message {
 	/**
 	 * @return the body
 	 */
-	public final String getBody() {
+	public final CharSequence getBody() {
 		return this.body;
 	}
 
