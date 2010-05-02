@@ -104,7 +104,10 @@ public class Message {
 		}
 		this.address = cursor.getString(INDEX_ADDRESS);
 		this.body = cursor.getString(INDEX_BODY);
-		this.body = SmileyParser.getInstance(context).addSmileySpans(this.body);
+		if (SMSdroid.showEmoticons) {
+			this.body = SmileyParser.getInstance(context).addSmileySpans(
+					this.body);
+		}
 		this.type = cursor.getInt(INDEX_TYPE);
 		this.read = cursor.getInt(INDEX_READ);
 		if (this.body == null) {

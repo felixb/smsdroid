@@ -74,6 +74,8 @@
 	<string name="textsize_">Text size</string>
 	<string name="show_contact_photo_">Show photo</string>
 	<string name="show_contact_photo_hint">Show contact\'s photo in conversation list</string>
+	<string name="show_emoticons_">Show emoticons</string>
+	<string name="show_emoticons_hint">Show emoticons in message list.</string>
 	<string name="me">Me</string>
 	<string name="view_contact_">View contact</string>
 	<string name="add_contact_">Add to contacts</string>

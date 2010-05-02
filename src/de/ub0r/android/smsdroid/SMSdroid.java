@@ -101,6 +101,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 
 	/** Show contact's photo. */
 	public static boolean showContactPhoto = false;
+	/** Show emoticons in {@link MessageList}. */
+	public static boolean showEmoticons = false;
 
 	/** Dialog items shown if an item was long clicked. */
 	private String[] longItemClickDialog = null;
@@ -202,6 +204,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 
 		showContactPhoto = prefs.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
 				false);
+		showEmoticons = prefs.getBoolean(Preferences.PREFS_EMOTICONS, false);
+
 		final ListView list = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		list.addHeaderView(header);
