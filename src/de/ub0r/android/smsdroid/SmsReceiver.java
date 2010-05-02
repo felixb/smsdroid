@@ -66,11 +66,6 @@ public class SmsReceiver extends BroadcastReceiver {
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
 		Log.d(TAG, "got intent: " + intent.getAction());
-		if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-				Preferences.PREFS_NOTIFICATION_ENABLE, true)) {
-			Log.d(TAG, "no notification needed");
-			return;
-		}
 		Bundle b = intent.getExtras();
 		Object[] messages = (Object[]) b.get("pdus");
 		SmsMessage[] smsMessage = new SmsMessage[messages.length];
@@ -116,18 +111,19 @@ public class SmsReceiver extends BroadcastReceiver {
 		final NotificationManager mNotificationMgr = // .
 		(NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-				Preferences.PREFS_NOTIFICATION_ENABLE, true)) {
+		final boolean enableNotifications = PreferenceManager
+				.getDefaultSharedPreferences(context).getBoolean(
+						Preferences.PREFS_NOTIFICATION_ENABLE, true);
+		if (!enableNotifications) {
 			mNotificationMgr.cancelAll();
-			Log.d(TAG, "no notification needed, return -1");
-			return -1; // FIXME: notification != widget
+			Log.d(TAG, "no notification needed!");
 		}
 		final Cursor cursor = context.getContentResolver().query(URI,
 				Message.PROJECTION, Message.SELECTION_UNREAD, null, SORT);
 		final int l = cursor.getCount();
 		Log.d(TAG, "l: " + l);
 		int ret = l;
-		if (text != null || l == 0) {
+		if (enableNotifications && (text != null || l == 0)) {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 		}
 		Uri uri = null;
@@ -156,8 +152,6 @@ public class SmsReceiver extends BroadcastReceiver {
 				Log.d(TAG, "p: " + a);
 				final String rr = Persons.getName(context, a, true);
 				final String th = cursor.getString(Message.INDEX_THREADID);
-				n = new Notification(R.drawable.stat_notify_sms, rr, System
-						.currentTimeMillis());
 				uri = Uri.parse(MessageList.URI + th);
 				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
 						MessageList.class);
@@ -165,11 +159,12 @@ public class SmsReceiver extends BroadcastReceiver {
 				i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_CANCEL_CURRENT);
-				n.setLatestEventInfo(context, rr, t, pIntent);
+				if (enableNotifications) {
+					n = new Notification(R.drawable.stat_notify_sms, rr, System
+							.currentTimeMillis());
+					n.setLatestEventInfo(context, rr, t, pIntent);
+				}
 			} else {
-				n = new Notification(R.drawable.stat_notify_sms, context
-						.getString(R.string.new_messages_), System
-						.currentTimeMillis());
 				uri = Uri.parse(MessageList.URI);
 				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
 						SMSdroid.class);
@@ -177,42 +172,52 @@ public class SmsReceiver extends BroadcastReceiver {
 				i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_CANCEL_CURRENT);
-				n.setLatestEventInfo(context, context
-						.getString(R.string.new_messages_), String.format(
-						context.getString(R.string.new_messages), l), pIntent);
-				n.number = l;
+				if (enableNotifications) {
+					n = new Notification(R.drawable.stat_notify_sms, context
+							.getString(R.string.new_messages_), System
+							.currentTimeMillis());
+					n.setLatestEventInfo(context, context
+							.getString(R.string.new_messages_), String.format(
+							context.getString(R.string.new_messages), l),
+							pIntent);
+					n.number = l;
+				}
 			}
-			n.flags |= Notification.FLAG_SHOW_LIGHTS;
-			n.ledARGB = Preferences.getLEDcolor(context);
-			int[] ledFlash = Preferences.getLEDflash(context);
-			n.ledOnMS = ledFlash[0];
-			n.ledOffMS = ledFlash[1];
-			final SharedPreferences p = PreferenceManager
-					.getDefaultSharedPreferences(context);
-			if (text != null) {
-				final boolean vibrate = p.getBoolean(Preferences.PREFS_VIBRATE,
-						false);
-				final String s = p.getString(Preferences.PREFS_SOUND, null);
-				Uri sound;
-				if (s == null || s.length() <= 0) {
-					sound = null;
-				} else {
-					sound = Uri.parse(s);
-				}
-				if (vibrate) {
-					final long[] pattern = Preferences
-							.getVibratorPattern(context);
-					if (pattern.length == 1 && pattern[0] == 0) {
-						n.defaults |= Notification.DEFAULT_VIBRATE;
+			if (enableNotifications) {
+				n.flags |= Notification.FLAG_SHOW_LIGHTS;
+				n.ledARGB = Preferences.getLEDcolor(context);
+				int[] ledFlash = Preferences.getLEDflash(context);
+				n.ledOnMS = ledFlash[0];
+				n.ledOffMS = ledFlash[1];
+				final SharedPreferences p = PreferenceManager
+						.getDefaultSharedPreferences(context);
+				if (text != null) {
+					final boolean vibrate = p.getBoolean(
+							Preferences.PREFS_VIBRATE, false);
+					final String s = p.getString(Preferences.PREFS_SOUND, null);
+					Uri sound;
+					if (s == null || s.length() <= 0) {
+						sound = null;
 					} else {
-						n.vibrate = pattern;
+						sound = Uri.parse(s);
 					}
+					if (vibrate) {
+						final long[] pattern = Preferences
+								.getVibratorPattern(context);
+						if (pattern.length == 1 && pattern[0] == 0) {
+							n.defaults |= Notification.DEFAULT_VIBRATE;
+						} else {
+							n.vibrate = pattern;
+						}
+					}
+					n.sound = sound;
 				}
-				n.sound = sound;
 			}
 			Log.d(TAG, "uri: " + uri);
-			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
-			mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
+			if (enableNotifications) {
+				mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
+				mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
+			}
 		}
 		Log.d(TAG, "return " + ret + " (2)");
 		AppWidgetManager.getInstance(context).updateAppWidget(
