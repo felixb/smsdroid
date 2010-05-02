@@ -91,6 +91,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Sort list upside down. */
 	private boolean sortUSD = true;
 
+	/** Current FooterView. */
+	private View currentHeader = null;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -182,7 +185,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final ListView lv = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		((TextView) header.findViewById(R.id.text1)).setText(R.string.answer);
+		if (this.currentHeader != null) {
+			lv.removeFooterView(this.currentHeader);
+		}
 		lv.addFooterView(header);
+		this.currentHeader = header;
 		lv.setStackFromBottom(true);
 
 		MessagesAdapter adapter = new MessagesAdapter(this, this.uri);

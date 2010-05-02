@@ -25,6 +25,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,7 +36,6 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
 import android.util.Log;
-import de.ub0r.android.smsdroid.cache.Persons;
 
 /**
  * Listen for new sms.
@@ -46,8 +46,18 @@ import de.ub0r.android.smsdroid.cache.Persons;
 public class SmsReceiver extends BroadcastReceiver {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.bcr";
-	/** ORIG_URI to get messages from. */
-	static final Uri URI = Uri.parse("content://sms/inbox");
+	/** {@link Uri} to get messages from. */
+	static final Uri URI_SMS = Uri.parse("content://sms/");
+	/** {@link Uri} to get messages from. */
+	static final Uri URI_MMS = Uri.parse("content://mms/");
+
+	/** An unreadable MMS body. */
+	private static final String MMS_BODY = "<MMS>";
+
+	/** Index: thread id. */
+	private static final int ID_TID = 0;
+	/** Index: count. */
+	private static final int ID_COUNT = 1;
 
 	/** Sort the newest message first. */
 	private static final String SORT = Calls.DATE + " DESC";
@@ -97,6 +107,111 @@ public class SmsReceiver extends BroadcastReceiver {
 	}
 
 	/**
+	 * Get unread SMS.
+	 * 
+	 * @param cr
+	 *            {@link ContentResolver} to query
+	 * @param text
+	 *            text of the last assumed unread message
+	 * @return [thread id (-1 if there are more), number of unread messages (-1
+	 *         if text does not match newest message)]
+	 */
+	private static int[] getUnreadSMS(final ContentResolver cr,
+			final String text) {
+		Log.d(TAG, "getUnreadSMS(cr, " + text + ")");
+		Cursor cursor = cr.query(URI_SMS, Message.PROJECTION,
+				Message.SELECTION_UNREAD, null, SORT);
+		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
+			if (text != null) { // try again!
+				return new int[] { -1, -1 };
+			} else {
+				return new int[] { 0, 0 };
+			}
+		}
+		if (text != null) {
+			final String t = cursor.getString(Message.INDEX_BODY);
+			if (t == null || !t.startsWith(text)) {
+				return new int[] { -1, -1 }; // try again!
+			}
+		}
+		int tid = cursor.getInt(Message.INDEX_THREADID);
+		while (cursor.moveToNext()) {
+			// check if following messages are from the same thread
+			if (tid != cursor.getInt(Message.INDEX_THREADID)) {
+				tid = -1;
+			}
+		}
+		return new int[] { tid, cursor.getCount() };
+	}
+
+	/**
+	 * Get unread MMS.
+	 * 
+	 * @param cr
+	 *            {@link ContentResolver} to query
+	 * @param text
+	 *            text of the last assumed unread message
+	 * @return [thread id (-1 if there are more), number of unread messages]
+	 */
+	private static int[] getUnreadMMS(final ContentResolver cr,
+			final String text) {
+		Log.d(TAG, "getUnreadMMS(cr)");
+		Cursor cursor = cr.query(URI_MMS, Message.PROJECTION_READ,
+				Message.SELECTION_UNREAD, null, null);
+		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
+			if (text == MMS_BODY) {
+				return new int[] { -1, -1 }; // try again!
+			} else {
+				return new int[] { 0, 0 };
+			}
+		}
+		int tid = cursor.getInt(Message.INDEX_THREADID);
+		while (cursor.moveToNext()) {
+			// check if following messages are from the same thread
+			if (tid != cursor.getInt(Message.INDEX_THREADID)) {
+				tid = -1;
+			}
+		}
+		return new int[] { tid, cursor.getCount() };
+	}
+
+	/**
+	 * Get unread messages (MMS and SMS).
+	 * 
+	 * @param cr
+	 *            {@link ContentResolver} to query
+	 * @param text
+	 *            text of the last assumed unread message
+	 * @return [thread id (-1 if there are more), number of unread messages (-1
+	 *         if text does not match newest message)]
+	 */
+	private static int[] getUnread(final ContentResolver cr, // .
+			final String text) {
+		Log.d(TAG, "getUnread(cr, " + text + ")");
+		String t = text;
+		if (t == MMS_BODY) {
+			t = null;
+		}
+		final int[] retSMS = getUnreadSMS(cr, t);
+		if (retSMS[ID_COUNT] == -1) {
+			// return to retry
+			return new int[] { -1, -1 };
+		}
+		final int[] retMMS = getUnreadMMS(cr, text);
+		if (retMMS[ID_COUNT] == -1) {
+			// return to retry
+			return new int[] { -1, -1 };
+		}
+		final int[] ret = new int[] { -1, retSMS[ID_COUNT] + retMMS[ID_COUNT] };
+		if (retMMS[ID_TID] <= 0 || retSMS[ID_TID] == retMMS[ID_TID]) {
+			ret[ID_TID] = retSMS[ID_TID];
+		} else if (retSMS[ID_TID] <= 0) {
+			ret[ID_TID] = retMMS[ID_TID];
+		}
+		return ret;
+	}
+
+	/**
 	 * Update new message {@link Notification}.
 	 * 
 	 * @param context
@@ -118,10 +233,14 @@ public class SmsReceiver extends BroadcastReceiver {
 			mNotificationMgr.cancelAll();
 			Log.d(TAG, "no notification needed!");
 		}
-		final Cursor cursor = context.getContentResolver().query(URI,
-				Message.PROJECTION, Message.SELECTION_UNREAD, null, SORT);
-		final int l = cursor.getCount();
+		final int[] status = getUnread(context.getContentResolver(), text);
+		final int l = status[ID_COUNT];
+		final int tid = status[ID_TID];
+
 		Log.d(TAG, "l: " + l);
+		if (l < 0) {
+			return l;
+		}
 		int ret = l;
 		if (enableNotifications && (text != null || l == 0)) {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
@@ -136,42 +255,38 @@ public class SmsReceiver extends BroadcastReceiver {
 					PendingIntent.FLAG_CANCEL_CURRENT);
 		} else {
 			Notification n = null;
-			cursor.moveToFirst();
-			final String t = cursor.getString(Message.INDEX_BODY);
-			Log.d(TAG, "t: " + t);
-			if (text != null) {
-				if (t.startsWith(text)) {
-					ret = l;
-				} else {
-					Log.d(TAG, "return -1 (1)");
-					return -1;
-				}
-			}
-			if (l == 1) {
-				final String a = cursor.getString(Message.INDEX_ADDRESS);
-				Log.d(TAG, "p: " + a);
-				final String rr = Persons.getName(context, a, true);
-				final String th = cursor.getString(Message.INDEX_THREADID);
-				uri = Uri.parse(MessageList.URI + th);
-				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
+			Intent i;
+			if (tid >= 0) {
+				uri = Uri.parse(MessageList.URI + tid);
+				i = new Intent(Intent.ACTION_VIEW, uri, context,
 						MessageList.class);
-				// add pending intent
-				i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_CANCEL_CURRENT);
+
 				if (enableNotifications) {
-					n = new Notification(R.drawable.stat_notify_sms, rr, System
+					Conversation conv = Conversation.getConversation(context,
+							tid);
+					String a = conv.getDisplayName();
+					n = new Notification(R.drawable.stat_notify_sms, a, System
 							.currentTimeMillis());
-					n.setLatestEventInfo(context, rr, t, pIntent);
+					if (l == 1) {
+						String body = conv.getBody();
+						if (body == null) {
+							body = context.getString(R.string.mms_conversation);
+						}
+						n.setLatestEventInfo(context, a, body, pIntent);
+					} else {
+						n.setLatestEventInfo(context, a, String.format(context
+								.getString(R.string.new_messages), l), pIntent);
+					}
 				}
 			} else {
 				uri = Uri.parse(MessageList.URI);
-				final Intent i = new Intent(Intent.ACTION_VIEW, uri, context,
+				i = new Intent(Intent.ACTION_VIEW, uri, context, // .
 						SMSdroid.class);
-				// add pending intent
-				i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_CANCEL_CURRENT);
+
 				if (enableNotifications) {
 					n = new Notification(R.drawable.stat_notify_sms, context
 							.getString(R.string.new_messages_), System
@@ -183,6 +298,9 @@ public class SmsReceiver extends BroadcastReceiver {
 					n.number = l;
 				}
 			}
+			// add pending intent
+			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+
 			if (enableNotifications) {
 				n.flags |= Notification.FLAG_SHOW_LIGHTS;
 				n.ledARGB = Preferences.getLEDcolor(context);

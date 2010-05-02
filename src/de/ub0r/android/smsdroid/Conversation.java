@@ -182,14 +182,14 @@ public final class Conversation {
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(threadId);
 			if (ret == null) {
-				Cursor cursor = context
-						.getContentResolver()
-						.query(
-								ConversationProvider.CONTENT_URI,
-								ConversationProvider.PROJECTION,
-								ConversationProvider.PROJECTION[ConversationProvider.INDEX_THREADID]
-										+ " = " + threadId, null, null);
+				Cursor cursor = context.getContentResolver().query(
+						ConversationProvider.CONTENT_URI,
+						ConversationProvider.PROJECTION,
+						ConversationProvider.PROJECTION[// .
+								ConversationProvider.INDEX_THREADID]
+								+ " = " + threadId, null, null);
 				if (cursor != null && cursor.moveToFirst()) {
+					// TODO: update should be forced synced
 					return getConversation(context, cursor);
 				} else {
 					Log.e(TAG, "did not found conversation: " + threadId);

@@ -191,7 +191,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);
-		} else if (t == Calls.OUTGOING_TYPE) {
+		} else {
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_outgoing_call);
