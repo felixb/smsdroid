@@ -148,6 +148,18 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 			text = context.getString(R.string.mms_not_supported);
 		}
 		twBody.setText(text);
+		/*
+		 * final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
+		 * btn.setOnClickListener(new OnClickListener() {
+		 * 
+		 * @Override public void onClick(final View v) { // TODO Auto-generated
+		 * method stub view.findViewById(R.id.label_downloading).setVisibility(
+		 * View.VISIBLE); btn.setVisibility(View.GONE); Intent intent = new
+		 * Intent( context, Class
+		 * .forName("com.android.mms.transaction.TransactionService"));
+		 * intent.putExtra("uri", m.getUri().toString());
+		 * intent.putExtra("type", 1); context.startService(intent); } });
+		 */
 		long time = m.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
 				DATE_FORMAT, time));

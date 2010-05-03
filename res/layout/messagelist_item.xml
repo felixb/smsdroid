@@ -48,5 +48,19 @@
 			android:maxWidth="178dip" android:maxHeight="178dip"
 			android:adjustViewBounds="true" android:background="@android:drawable/picture_frame"
 			android:layout_centerHorizontal="true" />
+
+<!--
+		<Button android:id="@+id/btn_download_msg"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical" android:text="@string/download"
+			android:visibility="visible" android:layout_centerHorizontal="true"
+			android:layout_below="@id/body" />
+		<TextView android:id="@+id/label_downloading"
+			android:layout_width="wrap_content" android:layout_height="fill_parent"
+			android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+			android:gravity="center" android:text="@string/downloading"
+			android:visibility="gone" android:layout_centerHorizontal="true"
+			android:layout_below="@id/btn_download_msg" />
+-->
 	</RelativeLayout>
 </LinearLayout>

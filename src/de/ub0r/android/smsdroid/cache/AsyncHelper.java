@@ -108,9 +108,12 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 				Log.d(TAG, "new address: " + address);
 			}
 		}
-		if (this.mConversation.getBody() == null && cursor.moveToFirst()) {
-			Message m = Message.getMessage(this.context, cursor);
-			this.mConversation.setBody(m.getBody().toString());
+		if (this.mConversation.getBody() == null && cursor.moveToLast()) {
+			final Message m = Message.getMessage(this.context, cursor);
+			final CharSequence b = m.getBody();
+			if (b != null) {
+				this.mConversation.setBody(b.toString());
+			}
 		}
 		cursor.close();
 
