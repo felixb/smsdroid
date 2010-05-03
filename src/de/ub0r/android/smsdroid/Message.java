@@ -258,15 +258,16 @@ public final class Message {
 			}
 			if (ct.startsWith("image/")) {
 				this.picture = BitmapFactory.decodeStream(is);
-				final Intent i = new Intent(Intent.ACTION_VIEW, uri);
-				i.setType(ct);
+				final Intent i = new Intent(Intent.ACTION_VIEW);
+				i.setDataAndType(uri, ct);
+				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 				// FIXME: i ignores uri
-				// this.contentIntent = i;
+				this.contentIntent = i;
 				continue; // skip the rest
 			} else if (ct.startsWith("video/") || ct.startsWith("audio/")) {
 				this.picture = BITMAP_PLAY;
-				final Intent i = new Intent(Intent.ACTION_VIEW, uri);
-				i.setType(ct);
+				final Intent i = new Intent(Intent.ACTION_VIEW);
+				i.setDataAndType(uri, ct);
 				// FIXME: i ignores uri
 				this.contentIntent = i;
 				continue; // skip the rest
