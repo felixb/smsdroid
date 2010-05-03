@@ -139,10 +139,13 @@ public final class Conversation {
 	 */
 	private void update(final Context context, final Cursor cursor,
 			final boolean sync) {
-		this.id = cursor.getInt(INDEX_ID);
-		this.date = cursor.getLong(INDEX_DATE);
-		this.body = cursor.getString(INDEX_BODY);
-		this.type = cursor.getInt(INDEX_TYPE);
+		long d = cursor.getLong(INDEX_DATE);
+		if (d != this.date) {
+			this.id = cursor.getInt(INDEX_ID);
+			this.date = d;
+			this.body = cursor.getString(INDEX_BODY);
+			this.type = cursor.getInt(INDEX_TYPE);
+		}
 		// this.read = cursor.getInt(INDEX_READ);
 		if (this.lastUpdate < validCache) {
 			AsyncHelper.fillConversation(context, this, sync);
@@ -256,6 +259,16 @@ public final class Conversation {
 	 */
 	public String getBody() {
 		return this.body;
+	}
+
+	/**
+	 * Set the body.
+	 * 
+	 * @param b
+	 *            body
+	 */
+	public void setBody(final String b) {
+		this.body = b;
 	}
 
 	/**

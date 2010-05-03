@@ -89,7 +89,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		Uri uri = Uri.parse("content://mms-sms/conversations/"
 				+ this.mConversation.getThreadId());
 		Cursor cursor = this.context.getContentResolver().query(uri,
-				Message.PROJECTION, null, null, null);
+				Message.PROJECTION_JOIN, null, null, null);
 
 		// count
 		this.mConversation.setCount(cursor.getCount());
@@ -107,6 +107,10 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 				this.mConversation.setAddress(address);
 				Log.d(TAG, "new address: " + address);
 			}
+		}
+		if (this.mConversation.getBody() == null) {
+			Message m = Message.getMessage(this.context, cursor);
+			this.mConversation.setBody(m.getBody().toString());
 		}
 		cursor.close();
 

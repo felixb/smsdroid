@@ -18,15 +18,20 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.ub0r.android.smsdroid.cache.Persons;
 
 /**
@@ -73,7 +78,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	 */
 	public MessagesAdapter(final MessageList c, final Uri u) {
 		super(c, R.layout.messagelist_item, c.getContentResolver().query(u,
-				Message.PROJECTION, null, null, null), true);
+				Message.PROJECTION_JOIN, null, null, null), true);
 		if (Preferences.getTheme(c) == android.R.style.Theme_Black) {
 			this.backgroundDrawableOut = R.drawable.grey_dark;
 		} else {
@@ -103,22 +108,28 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final Message m = new Message(context, cursor);
+		final Message m = Message.getMessage(context, cursor);
 
 		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
 		TextView twBody = (TextView) view.findViewById(R.id.body);
 		twBody.setTextSize(this.textSize);
 		int t = m.getType();
 
+		String subject = m.getSubject();
+		if (subject == null) {
+			subject = "";
+		} else {
+			subject = ": " + subject;
+		}
 		// incoming / outgoing
 		if (t == Calls.INCOMING_TYPE) {
-			twPerson.setText(this.displayName);
+			twPerson.setText(this.displayName + subject);
 			view.setBackgroundResource(0);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);
 		} else {
-			twPerson.setText(R.string.me);
+			twPerson.setText(context.getString(R.string.me) + subject);
 			view.setBackgroundResource(this.backgroundDrawableOut);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
@@ -140,5 +151,37 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		long time = m.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
 				DATE_FORMAT, time));
+
+		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);
+		final Bitmap pic = m.getPicture();
+		if (pic != null) {
+			if (pic == Message.BITMAP_PLAY) {
+				ivPicture.setImageResource(R.drawable.mms_play_btn);
+			} else {
+				ivPicture.setImageBitmap(pic);
+			}
+			ivPicture.setVisibility(View.VISIBLE);
+			final Intent i = m.getContentIntent();
+			if (i == null) {
+				ivPicture.setOnClickListener(null);
+			} else {
+				ivPicture.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(final View v) {
+						try {
+							context.startActivity(i);
+						} catch (ActivityNotFoundException e) {
+							Log.w(TAG, "activity not found", e);
+							Toast.makeText(context,
+									"no activity for data: " + i.getType(),
+									Toast.LENGTH_LONG).show();
+						}
+					}
+				});
+			}
+		} else {
+			ivPicture.setVisibility(View.GONE);
+			ivPicture.setOnClickListener(null);
+		}
 	}
 }

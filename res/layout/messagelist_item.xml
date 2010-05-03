@@ -42,5 +42,11 @@
 			android:layout_height="wrap_content" android:id="@+id/body"
 			android:text="@+id/body" android:layout_below="@+id/addr"
 			android:singleLine="false" android:autoLink="all" />
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/picture"
+			android:visibility="gone" android:layout_below="@id/body"
+			android:maxWidth="178dip" android:maxHeight="178dip"
+			android:adjustViewBounds="true" android:background="@android:drawable/picture_frame"
+			android:layout_centerHorizontal="true" />
 	</RelativeLayout>
 </LinearLayout>
