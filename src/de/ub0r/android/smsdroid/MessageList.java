@@ -260,16 +260,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
 		if (position == headerPos) { // header
 			this.startActivity(SMSdroid.getComposeIntent(this.address));
-		} else {
-			final Message m = Message.getMessage(this, (Cursor) parent
-					.getItemAtPosition(position));
-			if (m.isMMS()) {
-				final Uri target = Uri.parse(MessageList.URI + m.getThreadId());
-				Intent i = new Intent(Intent.ACTION_VIEW, target);
-				this.startActivity(Intent.createChooser(i, this
-						.getString(R.string.view_mms)));
-			}
-			return;
 		}
 	}
 

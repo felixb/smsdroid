@@ -28,6 +28,7 @@ import android.provider.CallLog.Calls;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
@@ -143,23 +144,36 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 
+		final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
 		CharSequence text = m.getBody();
 		if (text == null) {
-			text = context.getString(R.string.mms_not_supported);
+			btn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					// view.findViewById(R.id.label_downloading).setVisibility(
+					// View.VISIBLE);
+					// btn.setVisibility(View.GONE);
+					// Intent intent = new Intent();
+					// intent.setClassName("com.android.mms",
+					// ".transaction.TransactionService");
+					// intent.putExtra("uri", m.getUri().toString());
+					// intent.putExtra("type", 1);
+					// context.startService(intent);
+
+					final Uri target = Uri.parse(MessageList.URI
+							+ m.getThreadId());
+					Intent i = new Intent(Intent.ACTION_VIEW, target);
+					context.startActivity(Intent.createChooser(i, context
+							.getString(R.string.view_mms)));
+				}
+			});
+
+			btn.setVisibility(View.VISIBLE);
+		} else {
+			btn.setVisibility(View.GONE);
 		}
 		twBody.setText(text);
-		/*
-		 * final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
-		 * btn.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(final View v) { // TODO Auto-generated
-		 * method stub view.findViewById(R.id.label_downloading).setVisibility(
-		 * View.VISIBLE); btn.setVisibility(View.GONE); Intent intent = new
-		 * Intent( context, Class
-		 * .forName("com.android.mms.transaction.TransactionService"));
-		 * intent.putExtra("uri", m.getUri().toString());
-		 * intent.putExtra("type", 1); context.startService(intent); } });
-		 */
+
 		long time = m.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
 				DATE_FORMAT, time));
