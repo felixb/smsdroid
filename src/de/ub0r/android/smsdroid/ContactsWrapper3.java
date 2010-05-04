@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.provider.Contacts;
 import android.provider.Contacts.People;
 import android.provider.Contacts.PeopleColumns;
+import android.provider.Contacts.PhonesColumns;
 import android.provider.Contacts.People.Extensions;
 
 /**
@@ -39,11 +40,12 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 
 	/** {@link Uri} for persons, content filter. */
 	private static final Uri URI_CONTENT_FILTER = // .
-	Contacts.Phones.CONTENT_FILTER_URL;
+	Contacts.Phones.CONTENT_URI;
 
 	/** Projection for persons query, filter. */
 	private static final String[] PROJECTION_FILTER = // .
-	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME };
+	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME,
+			PhonesColumns.NUMBER };
 
 	/**
 	 * {@inheritDoc}

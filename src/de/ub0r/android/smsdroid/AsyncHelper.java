@@ -241,22 +241,19 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			realAddress = "%" + realAddress.substring(1);
 		}
 		// address contains the phone number
-		Uri uri = Uri.withAppendedPath(WRAPPER.getUriFilter(), Uri
-				.encode(realAddress));
-		Log.d(TAG, "query: " + uri.toString());
-		if (uri != null) {
-			final String[] proj = WRAPPER.getProjectionFilter();
-			try {
-				Cursor cursor = context.getContentResolver().query(uri, proj,
-						null, null, null);
-				// where: proj[ContactsWrapper.FILTER_INDEX_NUMBER] + " like "
-				// + realAddress
-				if (cursor != null && cursor.moveToFirst()) {
-					return cursor;
-				}
-			} catch (Exception e) {
-				Log.e(TAG, "failed to fetch contact", e);
+		final String[] proj = WRAPPER.getProjectionFilter();
+		final Uri uri = WRAPPER.getUriFilter();
+		final String where = proj[ContactsWrapper.FILTER_INDEX_NUMBER]
+				+ " like '" + realAddress + "'";
+		Log.d(TAG, "query: " + uri + " WHERE " + where);
+		try {
+			final Cursor cursor = context.getContentResolver().query(uri, proj,
+					where, null, null);
+			if (cursor != null && cursor.moveToFirst()) {
+				return cursor;
 			}
+		} catch (Exception e) {
+			Log.e(TAG, "failed to fetch contact", e);
 		}
 		return null;
 	}

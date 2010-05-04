@@ -38,12 +38,13 @@ import android.provider.ContactsContract.Contacts;
 public final class ContactsWrapper5 extends ContactsWrapper {
 	/** {@link Uri} for persons, content filter. */
 	private static final Uri API5_URI_CONTENT_FILTER = // .
-	ContactsContract.PhoneLookup.CONTENT_FILTER_URI;
+	ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
 	/** Projection for persons query, filter. */
 	// FIXME: use LOOKUP_KEY instead
 	private static final String[] API5_PROJECTION_FILTER = // .
-	new String[] { BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME };
+	new String[] { BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME,
+			ContactsContract.CommonDataKinds.Phone.NUMBER };
 
 	/**
 	 * {@inheritDoc}

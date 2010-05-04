@@ -39,6 +39,8 @@ public abstract class ContactsWrapper {
 	public static final int FILTER_INDEX_ID = 0;
 	/** Index of name. */
 	public static final int FILTER_INDEX_NAME = 1;
+	/** Index of number. */
+	public static final int FILTER_INDEX_NUMBER = 2;
 
 	/**
 	 * Static singleton instance of {@link ContactsWrapper} holding the
