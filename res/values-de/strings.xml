@@ -42,6 +42,7 @@
 	<string name="license_">Lizenz:</string>
 	<string name="settings">Einstellungen</string>
 	<string name="new_message">Neue Nachricht</string>
+	<string name="new_message_hint">Neue Nachricht schreiben</string>
 	<string name="new_messages_">Neue Nachrichten</string>
 	<string name="new_messages">%d ungelesene Nachrichten.</string>
 	<string name="answer">Antworten</string>

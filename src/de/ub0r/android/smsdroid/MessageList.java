@@ -43,7 +43,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.flurry.android.FlurryAgent;
 
-import de.ub0r.android.smsdroid.cache.Persons;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -172,7 +171,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.threadId = Integer.parseInt(this.uri.getLastPathSegment());
 		this.address = Conversation.getConversation(this, this.threadId)
 				.getAddress();
-		this.name = Persons.getName(this, this.address, false);
+		this.name = AsyncHelper.getContactName(this, this.address);
 		if (this.name == null) {
 			this.displayName = this.address;
 		} else {

@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import android.util.Log;
-import de.ub0r.android.smsdroid.cache.AsyncHelper;
 
 /**
  * Class holding a single conversation.

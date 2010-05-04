@@ -53,8 +53,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.flurry.android.FlurryAgent;
 
-import de.ub0r.android.smsdroid.cache.AsyncHelper;
-import de.ub0r.android.smsdroid.cache.Persons;
 
 /**
  * Main {@link ListActivity} showing conversations.
@@ -479,7 +477,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 			String[] items = this.longItemClickDialog;
 			final String a = c.getAddress();
 			Log.d(TAG, "p: " + a);
-			final String n = Persons.getName(this, a, false);
+			final String n = AsyncHelper.getContactName(this, a);
 			if (n == null) {
 				builder.setTitle(a);
 				items = items.clone();
@@ -503,8 +501,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 									.getInsertPickIntent(a);
 						} else {
 							final Uri uri = ContactsWrapper.getInstance()
-									.getContactUri(
-											Persons.getID(SMSdroid.this, a));
+									.getContactUri(c.getPersonId());
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
 						SMSdroid.this.startActivity(i);

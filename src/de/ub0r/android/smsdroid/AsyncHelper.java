@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
-package de.ub0r.android.smsdroid.cache;
+package de.ub0r.android.smsdroid;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,12 +28,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import de.ub0r.android.smsdroid.ContactsWrapper;
-import de.ub0r.android.smsdroid.Conversation;
-import de.ub0r.android.smsdroid.ConversationProvider;
-import de.ub0r.android.smsdroid.ConversationsAdapter;
-import de.ub0r.android.smsdroid.Message;
-import de.ub0r.android.smsdroid.SMSdroid;
 
 /**
  * @author flx
@@ -200,6 +194,24 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	public static void setAdapter(final ConversationsAdapter a) {
 		adapter = a;
+	}
+
+	/**
+	 * Get a contact's name by address.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param address
+	 *            address
+	 * @return name
+	 */
+	public static String getContactName(final Context context,
+			final String address) {
+		Cursor cursor = getContact(context, address);
+		if (cursor == null) {
+			return null;
+		}
+		return cursor.getString(ContactsWrapper.FILTER_INDEX_NAME);
 	}
 
 	/**

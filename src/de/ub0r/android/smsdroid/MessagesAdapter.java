@@ -33,7 +33,6 @@ import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import de.ub0r.android.smsdroid.cache.Persons;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -90,7 +89,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		this.threadId = Integer.parseInt(u.getLastPathSegment());
 		this.address = Conversation.getConversation(c, this.threadId)
 				.getAddress();
-		this.name = Persons.getName(c, this.address, false);
+		this.name = AsyncHelper.getContactName(c, this.address);
 		if (this.name == null) {
 			this.displayName = this.address;
 		} else {
