@@ -23,6 +23,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import android.util.Log;
@@ -122,6 +123,11 @@ public final class Conversation {
 		this.type = cursor.getInt(INDEX_TYPE);
 		// this.read = cursor.getInt(INDEX_READ);
 		this.read = 1;
+		int idName = cursor.getColumnIndex(ConversationProvider.PROJECTION[// .
+				ConversationProvider.INDEX_NAME]);
+		if (idName >= 0) {
+			this.name = cursor.getString(idName);
+		}
 
 		AsyncHelper.fillConversation(context, this, sync);
 		this.lastUpdate = System.currentTimeMillis();
@@ -145,6 +151,11 @@ public final class Conversation {
 			this.date = d;
 			this.body = cursor.getString(INDEX_BODY);
 			this.type = cursor.getInt(INDEX_TYPE);
+			int idName = cursor.getColumnIndex(ConversationProvider.// .
+					PROJECTION[ConversationProvider.INDEX_NAME]);
+			if (idName >= 0) {
+				this.name = cursor.getString(idName);
+			}
 		}
 		// this.read = cursor.getInt(INDEX_READ);
 		if (this.lastUpdate < validCache) {
@@ -351,5 +362,22 @@ public final class Conversation {
 	 */
 	public void setCount(final int c) {
 		this.count = c;
+	}
+
+	/**
+	 * @return {@link Uri} of this {@link Conversation}
+	 */
+	public Uri getUri() {
+		return Uri.withAppendedPath(SMSdroid.URI, // .
+				String.valueOf(this.threadId));
+	}
+
+	/**
+	 * @return {@link Uri} of this {@link Conversation} represented in the
+	 *         internal DataBase
+	 */
+	public Uri getInternalUri() {
+		return Uri.withAppendedPath(ConversationProvider.CONTENT_URI, String
+				.valueOf(this.threadId));
 	}
 }

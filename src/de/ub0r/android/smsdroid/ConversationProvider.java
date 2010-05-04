@@ -46,7 +46,7 @@ public final class ConversationProvider extends ContentProvider {
 	/** Name of the {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "mms.db";
 	/** Version of the {@link SQLiteDatabase}. */
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 	/** Table name for threads. */
 	private static final String THREADS_TABLE_NAME = "threads";
 
@@ -65,10 +65,8 @@ public final class ConversationProvider extends ContentProvider {
 	public static final int INDEX_BODY = 4;
 	/** INDEX: type. */
 	public static final int INDEX_TYPE = 5;
-	/** INDEX: read. */
-	public static final int INDEX_READ = 6;
-	/** INDEX: count. */
-	public static final int INDEX_COUNT = 7;
+	/** INDEX: name. */
+	public static final int INDEX_NAME = 6;
 
 	/** Cursor's projection. */
 	public static final String[] PROJECTION = { //
@@ -78,22 +76,20 @@ public final class ConversationProvider extends ContentProvider {
 			"thread_id", // 3
 			"body", // 4
 			Calls.TYPE, // 5
-			"read", // 6
-			"count", // 7
+			"name", // 6
 	};
 
 	/** ORIG_URI to resolve. */
 	public static final Uri ORIG_URI = Uri
 			.parse("content://mms-sms/conversations/");
 	/** Cursor's projection (outgoing). */
-	public static final String[] PROJECTION_OUT = { //
+	private static final String[] PROJECTION_OUT = { //
 	BaseColumns._ID, // 0
 			Calls.DATE, // 1
 			"address", // 2
 			"thread_id", // 3
 			"body", // 4
 			Calls.TYPE, // 5
-			"read", // 6
 	};
 
 	/** Cursors row in hero phones: address. */
@@ -174,8 +170,7 @@ public final class ConversationProvider extends ContentProvider {
 					+ PROJECTION[INDEX_THREADID] + " INTEGER,"
 					+ PROJECTION[INDEX_BODY] + " TEXT,"
 					+ PROJECTION[INDEX_TYPE] + " INTEGER,"
-					+ PROJECTION[INDEX_READ] + " INTEGER,"
-					+ PROJECTION[INDEX_COUNT] + " INTEGER" + ");");
+					+ PROJECTION[INDEX_NAME] + " TEXT" + ");");
 		}
 
 		/**
@@ -256,13 +251,14 @@ public final class ConversationProvider extends ContentProvider {
 			int tid = cout.getInt(INDEX_THREADID);
 			ContentValues cv = new ContentValues();
 			cv.put(PROJECTION[INDEX_DATE], dout);
-			cv.put(PROJECTION[INDEX_ADDRESS], // .
-					cout.getString(INDEX_ADDRESS));
+			String a = cout.getString(INDEX_ADDRESS);
+			if (a != null) {
+				cv.put(PROJECTION[INDEX_ADDRESS], a);
+			}
+			a = null;
 			cv.put(PROJECTION[INDEX_BODY], cout.getString(INDEX_BODY));
 			cv.put(PROJECTION[INDEX_THREADID], tid);
 			cv.put(PROJECTION[INDEX_TYPE], cout.getInt(INDEX_TYPE));
-			cv.put(PROJECTION[INDEX_READ], cout.getInt(INDEX_READ));
-			cv.put(PROJECTION[INDEX_COUNT], -1);
 			if (db.update(THREADS_TABLE_NAME, cv, PROJECTION[INDEX_THREADID]
 					+ " = " + tid, // .
 					null) == 0) {
@@ -433,6 +429,16 @@ public final class ConversationProvider extends ContentProvider {
 	@Override
 	public int update(final Uri uri, final ContentValues values,
 			final String selection, final String[] selectionArgs) {
-		throw new IllegalArgumentException("method not implemented");
+		int tid = -1;
+		try {
+			tid = Integer.parseInt(uri.getLastPathSegment());
+		} catch (NumberFormatException e) {
+			Log.e(TAG, "not a number: " + uri, e);
+			throw new IllegalArgumentException("method not implemented");
+		}
+		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+		int ret = db.update(THREADS_TABLE_NAME, values,
+				PROJECTION[INDEX_THREADID] + " = " + tid, null);
+		return ret;
 	}
 }

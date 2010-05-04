@@ -454,7 +454,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		} else {
 			final Conversation c = Conversation.getConversation(this,
 					(Cursor) parent.getItemAtPosition(position), false);
-			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
+			final Uri target = c.getUri();
 			final Intent i = new Intent(this, MessageList.class);
 			i.setData(target);
 			this.startActivity(i);
@@ -474,7 +474,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		} else {
 			final Conversation c = Conversation.getConversation(this,
 					(Cursor) parent.getItemAtPosition(position), true);
-			final Uri target = Uri.parse(MessageList.URI + c.getThreadId());
+			final Uri target = c.getUri();
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;
 			final String a = c.getAddress();

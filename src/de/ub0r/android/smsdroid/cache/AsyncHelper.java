@@ -18,12 +18,14 @@
  */
 package de.ub0r.android.smsdroid.cache;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import de.ub0r.android.smsdroid.Conversation;
+import de.ub0r.android.smsdroid.ConversationProvider;
 import de.ub0r.android.smsdroid.ConversationsAdapter;
 import de.ub0r.android.smsdroid.Message;
 import de.ub0r.android.smsdroid.SMSdroid;
@@ -86,8 +88,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected Void doInBackground(final Void... arg0) {
-		Uri uri = Uri.parse("content://mms-sms/conversations/"
-				+ this.mConversation.getThreadId());
+		ContentValues cv = new ContentValues();
+		Uri uri = this.mConversation.getUri();
 		Cursor cursor = this.context.getContentResolver().query(uri,
 				Message.PROJECTION_JOIN, null, null, null);
 
@@ -106,6 +108,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			if (address != null) {
 				this.mConversation.setAddress(address);
 				Log.d(TAG, "new address: " + address);
+				cv.put(ConversationProvider.PROJECTION[// .
+						ConversationProvider.INDEX_ADDRESS], address);
 			}
 		}
 		if (this.mConversation.getBody() == null && cursor.moveToLast()) {
@@ -115,7 +119,6 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 				this.mConversation.setBody(b.toString());
 			}
 		}
-		cursor.close();
 
 		// read
 		cursor = this.context.getContentResolver().query(uri,
@@ -126,14 +129,22 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		} else {
 			this.mConversation.setRead(0);
 		}
-		cursor.close();
-		cursor = null;
 
 		// name
 		if (this.mConversation.getName() == null) {
-			this.mConversation.setName(Persons.getName(this.context, address,
-					false));
+			String n = Persons.getName(this.context, address, false);
+			if (n != null) {
+				this.mConversation.setName(n);
+				cv.put(ConversationProvider.PROJECTION[// .
+						ConversationProvider.INDEX_NAME], n);
+			}
 		}
+		if (cv.size() > 0) {
+			this.context.getContentResolver().update(
+					this.mConversation.getInternalUri(), cv, null, null);
+		}
+		cursor.close();
+		cursor = null;
 
 		// photo
 		if (SMSdroid.showContactPhoto && // .

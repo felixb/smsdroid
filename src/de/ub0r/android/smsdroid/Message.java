@@ -408,7 +408,7 @@ public final class Message {
 	}
 
 	/**
-	 * @return {@link Uri} of this message
+	 * @return {@link Uri} of this {@link Message}
 	 */
 	public Uri getUri() {
 		if (this.isMms) {
