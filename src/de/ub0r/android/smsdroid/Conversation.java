@@ -42,6 +42,10 @@ public final class Conversation {
 	private static final HashMap<Integer, Conversation> CACHE = // .
 	new HashMap<Integer, Conversation>();
 
+	/** No photo available. */
+	public static final Bitmap NO_PHOTO = Bitmap.createBitmap(1, 1,
+			Bitmap.Config.RGB_565);
+
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
 	/** INDEX: date. */
@@ -83,6 +87,8 @@ public final class Conversation {
 	private int id;
 	/** ThreadId. */
 	private int threadId;
+	/** Contact's id. */
+	private int personId;
 	/** Date. */
 	private long date;
 	/** Address. */
@@ -127,6 +133,11 @@ public final class Conversation {
 				ConversationProvider.INDEX_NAME]);
 		if (idName >= 0) {
 			this.name = cursor.getString(idName);
+		}
+		int idPid = cursor.getColumnIndex(ConversationProvider.PROJECTION[// .
+				ConversationProvider.INDEX_PID]);
+		if (idPid >= 0) {
+			this.personId = cursor.getInt(idPid);
 		}
 
 		AsyncHelper.fillConversation(context, this, sync);
@@ -232,6 +243,23 @@ public final class Conversation {
 	 */
 	public int getId() {
 		return this.id;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public int getPersonId() {
+		return this.personId;
+	}
+
+	/**
+	 * Set the personId.
+	 * 
+	 * @param pid
+	 *            the personId
+	 */
+	public void setPersonId(final int pid) {
+		this.personId = pid;
 	}
 
 	/**

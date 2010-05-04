@@ -168,7 +168,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 
 		if (SMSdroid.showContactPhoto) {
 			Bitmap b = c.getPhoto();
-			if (b != null) {
+			if (b != null && b != Conversation.NO_PHOTO) {
 				ivPhoto.setImageBitmap(b);
 			} else {
 				ivPhoto.setImageResource(R.drawable.ic_contact_picture);

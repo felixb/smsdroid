@@ -41,8 +41,9 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 	ContactsContract.PhoneLookup.CONTENT_FILTER_URI;
 
 	/** Projection for persons query, filter. */
+	// FIXME: use LOOKUP_KEY instead
 	private static final String[] API5_PROJECTION_FILTER = // .
-	new String[] { BaseColumns._ID, ContactsContract.Data.DISPLAY_NAME };
+	new String[] { BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME };
 
 	/**
 	 * {@inheritDoc}

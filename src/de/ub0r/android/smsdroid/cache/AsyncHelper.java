@@ -18,12 +18,17 @@
  */
 package de.ub0r.android.smsdroid.cache;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import de.ub0r.android.smsdroid.ContactsWrapper;
 import de.ub0r.android.smsdroid.Conversation;
 import de.ub0r.android.smsdroid.ConversationProvider;
 import de.ub0r.android.smsdroid.ConversationsAdapter;
@@ -36,6 +41,19 @@ import de.ub0r.android.smsdroid.SMSdroid;
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	/** Tag for logging. */
 	static final String TAG = "SMSdroid.ash";
+
+	/** Pattern to clean up numbers. */
+	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern
+			.compile("<(\\+?[0-9]+)>");
+
+	/** Length of a international prefix, + notation. */
+	private static final int MIN_LEN_PLUS = "+49x".length();
+	/** Length of a international prefix, 00 notation. */
+	private static final int MIN_LEN_ZERO = "0049x".length();
+
+	/** Wrapper to use for contacts API. */
+	private static final ContactsWrapper WRAPPER = ContactsWrapper
+			.getInstance();
 
 	/** {@link ConversationsAdapter} to invalidate on new data. */
 	private static ConversationsAdapter adapter = null;
@@ -120,6 +138,24 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			}
 		}
 
+		// contact
+		int pid = this.mConversation.getPersonId();
+		if (pid == 0 && address != null) {
+			Cursor contact = getContact(this.context, address);
+			if (contact != null) {
+				pid = contact.getInt(ContactsWrapper.FILTER_INDEX_ID);
+				String n = contact.getString(ContactsWrapper.FILTER_INDEX_NAME);
+				this.mConversation.setPersonId(pid);
+				this.mConversation.setName(n);
+				cv.put(ConversationProvider.PROJECTION[// .
+						ConversationProvider.INDEX_PID], pid);
+				cv.put(ConversationProvider.PROJECTION[// .
+						ConversationProvider.INDEX_NAME], n);
+			} else {
+				this.mConversation.setPersonId(-1);
+			}
+		}
+
 		// read
 		cursor = this.context.getContentResolver().query(uri,
 				Message.PROJECTION,
@@ -130,15 +166,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			this.mConversation.setRead(0);
 		}
 
-		// name
-		if (this.mConversation.getName() == null) {
-			String n = Persons.getName(this.context, address, false);
-			if (n != null) {
-				this.mConversation.setName(n);
-				cv.put(ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_NAME], n);
-			}
-		}
+		// update changes
 		if (cv.size() > 0) {
 			this.context.getContentResolver().update(
 					this.mConversation.getInternalUri(), cv, null, null);
@@ -148,9 +176,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 		// photo
 		if (SMSdroid.showContactPhoto && // .
-				this.mConversation.getPhoto() == null) {
-			this.mConversation.setPhoto(Persons.getPicture(this.context,
-					address));
+				this.mConversation.getPhoto() == null && pid > 0) {
+			this.mConversation.setPhoto(getPictureForPerson(this.context, pid));
 		}
 		return null;
 	}
@@ -173,5 +200,71 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	public static void setAdapter(final ConversationsAdapter a) {
 		adapter = a;
+	}
+
+	/**
+	 * Get (id, name) for address.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param address
+	 *            address
+	 * @return {@link Cursor}
+	 */
+	private static synchronized Cursor getContact(final Context context,
+			final String address) {
+		Log.d(TAG, "getContact(ctx, " + address + ")");
+		// clean up number
+		String realAddress = address;
+		final Matcher m = PATTERN_CLEAN_NUMBER.matcher(realAddress);
+		if (m.find()) {
+			realAddress = m.group(1);
+		}
+		final int l = realAddress.length();
+		if (l > MIN_LEN_PLUS && realAddress.startsWith("+")) {
+			realAddress = "%" + realAddress.substring(MIN_LEN_PLUS);
+		} else if (l > MIN_LEN_ZERO && realAddress.startsWith("00")) {
+			realAddress = "%" + realAddress.substring(MIN_LEN_ZERO);
+		} else if (realAddress.startsWith("0")) {
+			realAddress = "%" + realAddress.substring(1);
+		}
+		// address contains the phone number
+		Uri uri = Uri.withAppendedPath(WRAPPER.getUriFilter(), Uri
+				.encode(realAddress));
+		Log.d(TAG, "query: " + uri.toString());
+		if (uri != null) {
+			final String[] proj = WRAPPER.getProjectionFilter();
+			try {
+				Cursor cursor = context.getContentResolver().query(uri, proj,
+						null, null, null);
+				// where: proj[ContactsWrapper.FILTER_INDEX_NUMBER] + " like "
+				// + realAddress
+				if (cursor != null && cursor.moveToFirst()) {
+					return cursor;
+				}
+			} catch (Exception e) {
+				Log.e(TAG, "failed to fetch contact", e);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get picture for contact.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param pid
+	 *            contact
+	 * @return {@link Bitmap}
+	 */
+	private static Bitmap getPictureForPerson(final Context context,
+			final int pid) {
+		Bitmap b = WRAPPER.loadContactPhoto(context, pid);
+		if (b == null) {
+			return Conversation.NO_PHOTO;
+		} else {
+			return b;
+		}
 	}
 }

@@ -46,7 +46,7 @@ public final class ConversationProvider extends ContentProvider {
 	/** Name of the {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "mms.db";
 	/** Version of the {@link SQLiteDatabase}. */
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	/** Table name for threads. */
 	private static final String THREADS_TABLE_NAME = "threads";
 
@@ -65,8 +65,10 @@ public final class ConversationProvider extends ContentProvider {
 	public static final int INDEX_BODY = 4;
 	/** INDEX: type. */
 	public static final int INDEX_TYPE = 5;
+	/** INDEX: person id. */
+	public static final int INDEX_PID = 6;
 	/** INDEX: name. */
-	public static final int INDEX_NAME = 6;
+	public static final int INDEX_NAME = 7;
 
 	/** Cursor's projection. */
 	public static final String[] PROJECTION = { //
@@ -76,7 +78,8 @@ public final class ConversationProvider extends ContentProvider {
 			"thread_id", // 3
 			"body", // 4
 			Calls.TYPE, // 5
-			"name", // 6
+			"pid", // 6
+			"name", // 7
 	};
 
 	/** ORIG_URI to resolve. */
@@ -170,6 +173,7 @@ public final class ConversationProvider extends ContentProvider {
 					+ PROJECTION[INDEX_THREADID] + " INTEGER,"
 					+ PROJECTION[INDEX_BODY] + " TEXT,"
 					+ PROJECTION[INDEX_TYPE] + " INTEGER,"
+					+ PROJECTION[INDEX_PID] + " INTEGER,"
 					+ PROJECTION[INDEX_NAME] + " TEXT" + ");");
 		}
 
