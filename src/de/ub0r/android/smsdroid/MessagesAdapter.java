@@ -122,14 +122,21 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		} else {
 			subject = ": " + subject;
 		}
-		// incoming / outgoing
+		// incoming / outgoing / pending
+		View pending = view.findViewById(R.id.pending);
 		if (t == Calls.INCOMING_TYPE) {
 			twPerson.setText(this.displayName + subject);
 			view.setBackgroundResource(0);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);
+			pending.setVisibility(View.GONE);
 		} else {
+			if (t != Calls.OUTGOING_TYPE) {
+				pending.setVisibility(View.VISIBLE);
+			} else {
+				pending.setVisibility(View.GONE);
+			}
 			twPerson.setText(context.getString(R.string.me) + subject);
 			view.setBackgroundResource(this.backgroundDrawableOut);
 			((ImageView) view.findViewById(R.id.inout))

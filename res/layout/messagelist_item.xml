@@ -21,7 +21,6 @@
 	android:orientation="horizontal" android:paddingRight="5dip">
 	<View android:id="@+id/read" android:background="#FF00AA00"
 		android:layout_height="fill_parent" android:layout_width="5dip"
-		android:layout_alignParentLeft="true" android:layout_centerVertical="true"
 		android:layout_marginRight="2dip" />
 	<RelativeLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
@@ -34,6 +33,10 @@
 			android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/date"
 			android:src="@drawable/ic_call_log_list_incoming_call"
 			android:scaleType="fitStart" />
+		<ImageView android:id="@+id/pending" android:layout_height="fill_parent"
+			android:layout_width="wrap_content" android:layout_marginLeft="2dip"
+			android:src="@drawable/ic_sms_mms_pending" android:visibility="gone"
+			android:layout_alignParentRight="true" android:layout_below="@+id/date" />
 		<TextView android:text="@+id/addr" android:id="@+id/addr"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:singleLine="true" android:layout_alignParentTop="true"
@@ -41,7 +44,8 @@
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/body"
 			android:text="@+id/body" android:layout_below="@+id/addr"
-			android:singleLine="false" android:autoLink="all" />
+			android:layout_toLeftOf="@+id/pending" android:singleLine="false"
+			android:autoLink="all" android:layout_alignParentLeft="true" />
 		<ImageView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/picture"
 			android:visibility="gone" android:layout_below="@id/body"
