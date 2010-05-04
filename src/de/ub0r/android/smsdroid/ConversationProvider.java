@@ -195,7 +195,13 @@ public final class ConversationProvider extends ContentProvider {
 	@Override
 	public int delete(final Uri uri, final String selection,
 			final String[] selectionArgs) {
-		throw new IllegalArgumentException("method not implemented");
+		if (uri.equals(CONTENT_URI)) {
+			final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+			int ret = db.delete(THREADS_TABLE_NAME, selection, selectionArgs);
+			return ret;
+		} else {
+			throw new IllegalArgumentException("method not implemented");
+		}
 	}
 
 	/**

@@ -89,13 +89,26 @@ public class Preferences extends PreferenceActivity {
 		// this.setTheme(theme);
 		this.addPreferencesFromResource(R.xml.prefs);
 
-		final Preference p = this.findPreference("send_logs");
+		Preference p = this.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
 					new Preference.OnPreferenceClickListener() {
 						public boolean onPreferenceClick(
 								final Preference preference) {
 							Preferences.this.collectAndSendLog();
+							return true;
+						}
+					});
+		}
+		p = this.findPreference("clear_cache");
+		if (p != null) {
+			p.setOnPreferenceClickListener(// .
+					new Preference.OnPreferenceClickListener() {
+						public boolean onPreferenceClick(
+								final Preference preference) {
+							Preferences.this.getContentResolver().delete(
+									ConversationProvider.CONTENT_URI, null,
+									null);
 							return true;
 						}
 					});

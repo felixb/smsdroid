@@ -78,9 +78,15 @@
 				android:data="market://search?q=pub:&quot;Felix Bechstein&quot;" />
 		</PreferenceScreen>
 	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/debug_">
+		<PreferenceScreen android:key="clear_cache"
+			android:title="@string/clear_cache_" android:summary="@string/clear_cache_hint">
+		</PreferenceScreen>
+	</PreferenceCategory>
 	<!--
-		<PreferenceCategory android:title="@string/debug_"> <PreferenceScreen
-		android:key="send_logs" android:title="@string/send_logs_"
+		<PreferenceScreen android:key="send_logs"
+		android:title="@string/send_logs_"
 		android:summary="@string/send_logs_hint"> </PreferenceScreen>
 		</PreferenceCategory>
 	-->

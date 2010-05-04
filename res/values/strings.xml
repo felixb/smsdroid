@@ -109,6 +109,8 @@
 	<string name="download_">Download</string>
 	<string name="downloading_">Downloading..</string>
 	<string name="debug_">Debug</string>
+	<string name="clear_cache_">Clear cache</string>
+	<string name="clear_cache_hint">Clear internal Database. Fetch all data again from external Database.</string>
 	<string name="send_logs_">Send logs</string>
 	<string name="send_logs_hint">Send your device \'s logs to the developer.</string>
 
