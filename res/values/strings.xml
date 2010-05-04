@@ -106,8 +106,10 @@
 	<string name="mms_conversation">&lt;MMS body&gt;</string>
 	<string name="mms_not_supported">This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.</string>
 	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
-	<string name="download">Download</string>
-	<string name="downloading">Downloading..</string>
+	<string name="download_">Download</string>
+	<string name="debug_">Debug</string>
+	<string name="send_logs_">Send logs</string>
+	<string name="send_logs_hint">Send your device \'s logs to the developer.</string>
 
 	<string name="not_implemented">Sorry, not yet implemented.</string>
 	

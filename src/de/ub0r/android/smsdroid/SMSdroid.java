@@ -64,7 +64,7 @@ import de.ub0r.android.smsdroid.cache.Persons;
 public class SMSdroid extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener {
 	/** Tag for output. */
-	private static final String TAG = "SMSdroid";
+	public static final String TAG = "SMSdroid";
 
 	/** Flurry's API key. */
 	public static final String FLURRYKEY = "Q63FP3PT9LWWR3GJXVG8";

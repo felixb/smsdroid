@@ -18,9 +18,18 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.util.List;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
@@ -30,6 +39,11 @@ import android.preference.PreferenceManager;
  * @author flx
  */
 public class Preferences extends PreferenceActivity {
+	/** Packagename of SendLog. */
+	public static final String SENDLOG_PACKAGE_NAME = "org.l6n.sendlog";
+	/** Classname of SendLog. */
+	public static final String SENDLOG_CLASS_NAME = ".SendLog";
+
 	/** Preference's name: vibrate on receive. */
 	static final String PREFS_VIBRATE = "receive_vibrate";
 	/** Preference's name: sound on receive. */
@@ -74,6 +88,72 @@ public class Preferences extends PreferenceActivity {
 		// final int theme = Preferences.getTheme(this);
 		// this.setTheme(theme);
 		this.addPreferencesFromResource(R.xml.prefs);
+
+		final Preference p = this.findPreference("send_logs");
+		if (p != null) {
+			p.setOnPreferenceClickListener(// .
+					new Preference.OnPreferenceClickListener() {
+						public boolean onPreferenceClick(
+								final Preference preference) {
+							Preferences.this.collectAndSendLog();
+							return true;
+						}
+					});
+		}
+	}
+
+	/**
+	 * Collect and send Log.
+	 */
+	final void collectAndSendLog() {
+		final PackageManager packageManager = this.getPackageManager();
+		final Intent intent = new Intent(Intent.ACTION_VIEW);
+		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+				PackageManager.MATCH_DEFAULT_ONLY);
+		final boolean isInstalled = list.size() > 0;
+
+		if (!isInstalled) {
+			new AlertDialog.Builder(this).setTitle(
+					this.getString(R.string.app_name)).setIcon(
+					android.R.drawable.ic_dialog_info).setMessage(
+					"Install the free SendLog application to "
+							+ "collect the device log and send "
+							+ "it to the developer.").setPositiveButton(
+					android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(final DialogInterface dialog,
+								final int whichButton) {
+							Intent marketIntent = new Intent(
+									Intent.ACTION_VIEW, Uri
+											.parse("market://search?q=pname:"
+													+ SENDLOG_PACKAGE_NAME));
+							marketIntent
+									.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							Preferences.this.startActivity(marketIntent);
+						}
+					}).setNegativeButton(android.R.string.cancel, null).show();
+		} else {
+			new AlertDialog.Builder(this).setTitle(
+					this.getString(R.string.app_name)).setIcon(
+					android.R.drawable.ic_dialog_info).setMessage(
+					"Run SendLog application.\nIt will collect the "
+							+ "device log and send it to the developer." + "\n"
+							+ "You will have an opportunity to review "
+							+ "and modify the data being sent.")
+					.setPositiveButton(android.R.string.ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										final DialogInterface dialog,
+										final int whichButton) {
+									intent.setClassName(SENDLOG_PACKAGE_NAME,
+											SENDLOG_CLASS_NAME); // FIXME
+									intent.addFlags(//
+											Intent.FLAG_ACTIVITY_NEW_TASK);
+									intent.setType("0||f@ub0r.de");
+									Preferences.this.startActivity(intent);
+								}
+							}).setNegativeButton(android.R.string.cancel, null)
+					.show();
+		}
 	}
 
 	/**

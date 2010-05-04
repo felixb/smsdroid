@@ -93,6 +93,10 @@
 	<string name="view_mms">MMS anzeigen</string>
 	<string name="mms_not_supported">Die Nachricht scheint eine MMS zu sein. Vielleicht willst du sie dir mit der standard MMS/SMS app herrunter laden?\nKlicke hier..</string>
 	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
+	<string name="download_">Download</string>
+	<string name="debug_">Debug</string>
+	<string name="send_logs_">Logs senden</string>
+	<string name="send_logs_hint">Logs von deinem Handy an den Entwickler senden.</string>
 	
 	<string-array name="themes">
 		<item>Dunkel</item>
