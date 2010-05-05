@@ -131,7 +131,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 					ic_call_log_list_incoming_call);
 			pending.setVisibility(View.GONE);
 		} else {
-			if (t != Calls.OUTGOING_TYPE) {
+			if (t > Calls.OUTGOING_TYPE) {
 				pending.setVisibility(View.VISIBLE);
 			} else {
 				pending.setVisibility(View.GONE);
