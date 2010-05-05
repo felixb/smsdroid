@@ -210,17 +210,11 @@ public class DonationHelper extends Activity implements OnClickListener {
 			}
 		} else if (scheme.equals("content") || scheme.equals("file")) {
 			try {
-				BufferedReader reader = getSigReader(context, uri);
-				String s;
-				do {
-					s = reader.readLine();
-					if (s != null) {
-						if (loadSig(context, s)) {
-							ret = true;
-							break;
-						}
-					}
-				} while (s != null);
+				final BufferedReader reader = getSigReader(context, uri);
+				final String s = reader.readLine();
+				if (s != null && loadSig(context, s)) {
+					ret = true;
+				}
 				reader.close();
 			} catch (IOException e) {
 				Log.e(TAG, "Failed to load signature: " + uri.toString(), e);

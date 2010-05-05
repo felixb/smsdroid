@@ -18,17 +18,13 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.List;
-import android.content.ComponentName;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -122,14 +118,12 @@ public class Preferences extends PreferenceActivity {
 		private final Intent i;
 
 		public FireIntent(final Activity activity, final Intent intent) {
-			a = activity;
-			i = intent;
+			this.a = activity;
+			this.i = intent;
 		}
 
-
-		public void onClick(final DialogInterface dialog,
-			final int whichButton) {
-			a.startActivity(i);
+		public void onClick(final DialogInterface dialog, final int whichButton) {
+			this.a.startActivity(this.i);
 		}
 	}
 
@@ -138,27 +132,29 @@ public class Preferences extends PreferenceActivity {
 	 */
 	final void collectAndSendLog() {
 		final PackageManager packageManager = this.getPackageManager();
-		Intent intent = packageManager.getLaunchIntentForPackage(SENDLOG_PACKAGE_NAME);
+		Intent intent = packageManager
+				.getLaunchIntentForPackage(SENDLOG_PACKAGE_NAME);
 		String message;
 		if (intent == null) {
-			intent = new Intent(Intent.ACTION_VIEW,
-			Uri.parse("market://search?q=pname:" + SENDLOG_PACKAGE_NAME));
+			intent = new Intent(Intent.ACTION_VIEW, Uri
+					.parse("market://search?q=pname:" + SENDLOG_PACKAGE_NAME));
 			message = "Install the free SendLog application to "
-				+ "collect the device log and send "
-				+ "it to the developer.";
+					+ "collect the device log and send "
+					+ "it to the developer.";
 		} else {
 			intent.setType("0||flx.yoo@gmail.com");
 			message = "Run SendLog application.\nIt will collect the "
-				+ "device log and send it to the developer." + "\n"
-				+ "You will have an opportunity to review "
-				+ "and modify the data being sent.";
+					+ "device log and send it to the developer." + "\n"
+					+ "You will have an opportunity to review "
+					+ "and modify the data being sent.";
 		}
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		new AlertDialog.Builder(this).setTitle(
 				this.getString(R.string.app_name)).setIcon(
 				android.R.drawable.ic_dialog_info).setMessage(message)
-				.setPositiveButton(android.R.string.ok, new FireIntent(this, intent))
-				.setNegativeButton(android.R.string.cancel, null).show();
+				.setPositiveButton(android.R.string.ok,
+						new FireIntent(this, intent)).setNegativeButton(
+						android.R.string.cancel, null).show();
 	}
 
 	/**
