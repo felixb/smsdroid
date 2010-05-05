@@ -113,16 +113,35 @@ public class Preferences extends PreferenceActivity {
 		}
 	}
 
+	/**
+	 * Fire a given {@link Intent}.
+	 * 
+	 * @author flx
+	 */
 	private static class FireIntent implements DialogInterface.OnClickListener {
+		/** {@link Activity}. */
 		private final Activity a;
+		/** {@link Intent}. */
 		private final Intent i;
 
+		/**
+		 * Default Constructor.
+		 * 
+		 * @param activity
+		 *            {@link Activity}
+		 * @param intent
+		 *            {@link Intent}
+		 */
 		public FireIntent(final Activity activity, final Intent intent) {
 			this.a = activity;
 			this.i = intent;
 		}
 
-		public void onClick(final DialogInterface dialog, final int whichButton) {
+		/**
+		 * {@inheritDoc}
+		 */
+		public void onClick(final DialogInterface dialog, // .
+				final int whichButton) {
 			this.a.startActivity(this.i);
 		}
 	}
