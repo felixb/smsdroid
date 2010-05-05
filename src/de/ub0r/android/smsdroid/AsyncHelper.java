@@ -207,6 +207,10 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	public static String getContactName(final Context context,
 			final String address) {
+		Log.d(TAG, "getContactName(ctx, " + address + ")");
+		if (address == null) {
+			return null;
+		}
 		Cursor cursor = getContact(context, address);
 		if (cursor == null) {
 			return null;
@@ -226,6 +230,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	private static synchronized Cursor getContact(final Context context,
 			final String address) {
 		Log.d(TAG, "getContact(ctx, " + address + ")");
+		if (address == null) {
+			return null;
+		}
 		// clean up number
 		String realAddress = address;
 		final Matcher m = PATTERN_CLEAN_NUMBER.matcher(realAddress);
