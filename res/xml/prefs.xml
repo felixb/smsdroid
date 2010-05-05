@@ -81,13 +81,8 @@
 
 	<PreferenceCategory android:title="@string/debug_">
 		<PreferenceScreen android:key="clear_cache"
-			android:title="@string/clear_cache_" android:summary="@string/clear_cache_hint">
-		</PreferenceScreen>
-	</PreferenceCategory>
-	<!--
+			android:title="@string/clear_cache_" android:summary="@string/clear_cache_hint" />
 		<PreferenceScreen android:key="send_logs"
-		android:title="@string/send_logs_"
-		android:summary="@string/send_logs_hint"> </PreferenceScreen>
-		</PreferenceCategory>
-	-->
+			android:title="@string/send_logs_" android:summary="@string/send_logs_hint" />
+	</PreferenceCategory>
 </PreferenceScreen>
