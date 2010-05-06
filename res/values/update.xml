@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>v0.0.12: Fix contact names/photos on android 2.x</item>
 		<item>v0.0.11: Handle MMS, fix some bugs</item>
 		<item>v0.0.10: Move some IO to background, add emotions, fix contacts w/o international prefix, fix disabled notification blocking widget, notify for new mms</item>
 		<item>v0.0.9: Fix some notification bugs, allow to set font size</item>
