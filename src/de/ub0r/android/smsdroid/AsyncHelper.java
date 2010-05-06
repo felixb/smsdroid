@@ -250,7 +250,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		// address contains the phone number
 		final String[] proj = WRAPPER.getProjectionFilter();
 		final Uri uri = WRAPPER.getUriFilter();
-		final String where = proj[ContactsWrapper.FILTER_INDEX_NUMBER]
+		final String where = "replace("
+				+ proj[ContactsWrapper.FILTER_INDEX_NUMBER] + ", \" \", \"\")"
 				+ " like '" + realAddress + "'";
 		Log.d(TAG, "query: " + uri + " WHERE " + where);
 		try {
