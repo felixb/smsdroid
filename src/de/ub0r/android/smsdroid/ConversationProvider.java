@@ -46,7 +46,7 @@ public final class ConversationProvider extends ContentProvider {
 	/** Name of the {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "mms.db";
 	/** Version of the {@link SQLiteDatabase}. */
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 	/** Table name for threads. */
 	private static final String THREADS_TABLE_NAME = "threads";
 
@@ -173,7 +173,7 @@ public final class ConversationProvider extends ContentProvider {
 					+ PROJECTION[INDEX_THREADID] + " INTEGER,"
 					+ PROJECTION[INDEX_BODY] + " TEXT,"
 					+ PROJECTION[INDEX_TYPE] + " INTEGER,"
-					+ PROJECTION[INDEX_PID] + " INTEGER,"
+					+ PROJECTION[INDEX_PID] + " TEXT," // .
 					+ PROJECTION[INDEX_NAME] + " TEXT" + ");");
 		}
 

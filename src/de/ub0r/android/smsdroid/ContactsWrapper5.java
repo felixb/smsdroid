@@ -20,13 +20,12 @@ package de.ub0r.android.smsdroid;
 
 import java.io.InputStream;
 
-import android.content.ContentUris;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 
@@ -36,14 +35,11 @@ import android.provider.ContactsContract.Contacts;
  * @author flx
  */
 public final class ContactsWrapper5 extends ContactsWrapper {
-	/** {@link Uri} for persons, content filter. */
-	private static final Uri API5_URI_CONTENT_FILTER = // .
-	ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-
 	/** Projection for persons query, filter. */
 	// FIXME: use LOOKUP_KEY instead
 	private static final String[] API5_PROJECTION_FILTER = // .
-	new String[] { BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME,
+	new String[] { ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY,
+			ContactsContract.PhoneLookup.DISPLAY_NAME,
 			ContactsContract.CommonDataKinds.Phone.NUMBER };
 
 	/**
@@ -51,10 +47,10 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 	 */
 	@Override
 	public Bitmap loadContactPhoto(final Context context, // .
-			final long contactId) {
-		InputStream is = Contacts.openContactPhotoInputStream(context
-				.getContentResolver(), ContentUris.withAppendedId(
-				Contacts.CONTENT_URI, contactId));
+			final String contactId) {
+		final ContentResolver cr = context.getContentResolver();
+		InputStream is = Contacts.openContactPhotoInputStream(cr, this
+				.getContactUri(cr, contactId));
 		if (is == null) {
 			return null;
 		}
@@ -66,15 +62,16 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 	 */
 	@Override
 	public Uri getUriFilter() {
-		return API5_URI_CONTENT_FILTER;
+		return ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Uri getContactUri(final long id) {
-		return Uri.withAppendedPath(Contacts.CONTENT_URI, String.valueOf(id));
+	public Uri getContactUri(final ContentResolver cr, final String id) {
+		return Contacts.lookupContact(cr, Uri.withAppendedPath(
+				Contacts.CONTENT_LOOKUP_URI, id));
 	}
 
 	/**

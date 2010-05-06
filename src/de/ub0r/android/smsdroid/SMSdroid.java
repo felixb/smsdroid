@@ -53,7 +53,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.flurry.android.FlurryAgent;
 
-
 /**
  * Main {@link ListActivity} showing conversations.
  * 
@@ -501,7 +500,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 									.getInsertPickIntent(a);
 						} else {
 							final Uri uri = ContactsWrapper.getInstance()
-									.getContactUri(c.getPersonId());
+									.getContactUri(
+											SMSdroid.this.getContentResolver(),
+											c.getPersonId());
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
 						SMSdroid.this.startActivity(i);

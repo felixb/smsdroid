@@ -19,7 +19,7 @@
 
 package de.ub0r.android.smsdroid;
 
-import android.content.ContentUris;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,11 +37,6 @@ import android.provider.Contacts.People.Extensions;
  */
 @SuppressWarnings("deprecation")
 public final class ContactsWrapper3 extends ContactsWrapper {
-
-	/** {@link Uri} for persons, content filter. */
-	private static final Uri URI_CONTENT_FILTER = // .
-	Contacts.Phones.CONTENT_URI;
-
 	/** Projection for persons query, filter. */
 	private static final String[] PROJECTION_FILTER = // .
 	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME,
@@ -60,15 +55,15 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 	 */
 	@Override
 	public Uri getUriFilter() {
-		return URI_CONTENT_FILTER;
+		return Contacts.Phones.CONTENT_URI;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Uri getContactUri(final long id) {
-		return Uri.withAppendedPath(People.CONTENT_URI, String.valueOf(id));
+	public Uri getContactUri(final ContentResolver cr, final String id) {
+		return Uri.withAppendedPath(People.CONTENT_URI, id);
 	}
 
 	/**
@@ -76,8 +71,8 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 	 */
 	@Override
 	public Bitmap loadContactPhoto(final Context context, // .
-			final long contactId) {
-		Uri uri = ContentUris.withAppendedId(People.CONTENT_URI, contactId);
+			final String contactId) {
+		Uri uri = Uri.withAppendedPath(People.CONTENT_URI, contactId);
 		return People.loadContactPhoto(context, uri,
 				R.drawable.ic_contact_picture, null);
 	}

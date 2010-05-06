@@ -133,11 +133,11 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		}
 
 		// contact
-		int pid = this.mConversation.getPersonId();
-		if (pid == 0 && address != null) {
-			Cursor contact = getContact(this.context, address);
+		String pid = this.mConversation.getPersonId();
+		if (pid == null && address != null) {
+			final Cursor contact = getContact(this.context, address);
 			if (contact != null) {
-				pid = contact.getInt(ContactsWrapper.FILTER_INDEX_ID);
+				pid = contact.getString(ContactsWrapper.FILTER_INDEX_ID);
 				String n = contact.getString(ContactsWrapper.FILTER_INDEX_NAME);
 				this.mConversation.setPersonId(pid);
 				this.mConversation.setName(n);
@@ -146,7 +146,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 				cv.put(ConversationProvider.PROJECTION[// .
 						ConversationProvider.INDEX_NAME], n);
 			} else {
-				this.mConversation.setPersonId(-1);
+				this.mConversation.setPersonId(Conversation.NO_CONTACT);
 			}
 		}
 
@@ -170,7 +170,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 		// photo
 		if (SMSdroid.showContactPhoto && // .
-				this.mConversation.getPhoto() == null && pid > 0) {
+				this.mConversation.getPhoto() == null && pid != null) {
 			this.mConversation.setPhoto(getPictureForPerson(this.context, pid));
 		}
 		return null;
@@ -262,6 +262,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		} catch (Exception e) {
 			Log.e(TAG, "failed to fetch contact", e);
 		}
+		Log.d(TAG, "nothing found!");
 		return null;
 	}
 
@@ -275,7 +276,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * @return {@link Bitmap}
 	 */
 	private static Bitmap getPictureForPerson(final Context context,
-			final int pid) {
+			final String pid) {
 		Bitmap b = WRAPPER.loadContactPhoto(context, pid);
 		if (b == null) {
 			return Conversation.NO_PHOTO;

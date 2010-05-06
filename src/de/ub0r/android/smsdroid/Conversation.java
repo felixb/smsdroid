@@ -41,6 +41,8 @@ public final class Conversation {
 	private static final HashMap<Integer, Conversation> CACHE = // .
 	new HashMap<Integer, Conversation>();
 
+	/** No contact available. */
+	public static final String NO_CONTACT = "-1";
 	/** No photo available. */
 	public static final Bitmap NO_PHOTO = Bitmap.createBitmap(1, 1,
 			Bitmap.Config.RGB_565);
@@ -87,7 +89,7 @@ public final class Conversation {
 	/** ThreadId. */
 	private int threadId;
 	/** Contact's id. */
-	private int personId;
+	private String personId;
 	/** Date. */
 	private long date;
 	/** Address. */
@@ -136,7 +138,7 @@ public final class Conversation {
 		int idPid = cursor.getColumnIndex(ConversationProvider.PROJECTION[// .
 				ConversationProvider.INDEX_PID]);
 		if (idPid >= 0) {
-			this.personId = cursor.getInt(idPid);
+			this.personId = cursor.getString(idPid);
 		}
 
 		AsyncHelper.fillConversation(context, this, sync);
@@ -247,7 +249,7 @@ public final class Conversation {
 	/**
 	 * @return the personId
 	 */
-	public int getPersonId() {
+	public String getPersonId() {
 		return this.personId;
 	}
 
@@ -257,7 +259,7 @@ public final class Conversation {
 	 * @param pid
 	 *            the personId
 	 */
-	public void setPersonId(final int pid) {
+	public void setPersonId(final String pid) {
 		this.personId = pid;
 	}
 

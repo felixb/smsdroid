@@ -19,6 +19,7 @@
 
 package de.ub0r.android.smsdroid;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -101,7 +102,7 @@ public abstract class ContactsWrapper {
 	 * @return {@link Bitmap}
 	 */
 	public abstract Bitmap loadContactPhoto(final Context context, // .
-			final long contactId);
+			final String contactId);
 
 	/**
 	 * Get {@link Uri} for filter contacts by address.
@@ -120,11 +121,14 @@ public abstract class ContactsWrapper {
 	/**
 	 * Get {@link Uri} to a Contact.
 	 * 
+	 * @param cr
+	 *            {@link ContentResolver}
 	 * @param id
 	 *            id of contact
 	 * @return {@link Uri}
 	 */
-	public abstract Uri getContactUri(final long id);
+	public abstract Uri getContactUri(final ContentResolver cr, // .
+			final String id);
 
 	/**
 	 * Insert or pick a Contact to add this address to.
