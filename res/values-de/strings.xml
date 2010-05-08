@@ -101,6 +101,10 @@
 	<string name="clear_cache_hint">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
 	<string name="send_logs_">Logs senden</string>
 	<string name="send_logs_hint">Logs von deinem Handy an den Entwickler senden.</string>
+	<string name="sendlog_run_">SendLog starten</string>
+	<string name="sendlog_run">SendLog wird die Logs aus deinem Gerät auslesen und zum Entwickler schicken.\nDu hast vor dem Senden die Möglichkeit die Daten zu begutachten und zu verändern.</string>
+	<string name="sendlog_install_">SendLog installieren</string>
+	<string name="sendlog_install">Installiere die kostenlose App SendLog um die Logs auszulesen und an den Entwickler zu schicken.</string>
 	
 	<string-array name="themes">
 		<item>Dunkel</item>

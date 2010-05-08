@@ -32,7 +32,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
-import android.util.Log;
 
 /**
  * Class holding a single message.
@@ -41,7 +40,7 @@ import android.util.Log;
  */
 public final class Message {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.msg";
+	static final String TAG = "msg";
 
 	/** Bitmap showing the play button. */
 	public static final Bitmap BITMAP_PLAY = Bitmap.createBitmap(1, 1,

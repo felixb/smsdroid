@@ -27,7 +27,6 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.provider.CallLog.Calls;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
@@ -40,7 +39,7 @@ import android.widget.TextView;
  */
 public class ConversationsAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.coa";
+	static final String TAG = "coa";
 
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " DESC";

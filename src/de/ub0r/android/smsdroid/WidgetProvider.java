@@ -22,7 +22,6 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -31,7 +30,7 @@ import android.widget.RemoteViews;
  */
 public final class WidgetProvider extends AppWidgetProvider {
 	/** Tag for output. */
-	private static final String TAG = "SMSdroid.wdp";
+	private static final String TAG = "wdp";
 
 	/**
 	 * {@inheritDoc}

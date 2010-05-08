@@ -34,14 +34,13 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import android.text.TextUtils;
-import android.util.Log;
 
 /**
  * @author flx
  */
 public final class ConversationProvider extends ContentProvider {
 	/** Tag for output. */
-	private static final String TAG = "SMSdroid.cvp";
+	private static final String TAG = "cvp";
 
 	/** Name of the {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "mms.db";

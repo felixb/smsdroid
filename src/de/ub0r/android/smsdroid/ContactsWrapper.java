@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.util.Log;
 
 /**
  * Wrap around contacts API.
@@ -34,7 +33,7 @@ import android.util.Log;
  */
 public abstract class ContactsWrapper {
 	/** Tag for output. */
-	private static final String TAG = "SMSdroid.cw";
+	private static final String TAG = "cw";
 
 	/** Index of id. */
 	public static final int FILTER_INDEX_ID = 0;

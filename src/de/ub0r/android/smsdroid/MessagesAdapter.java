@@ -25,7 +25,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -41,7 +40,7 @@ import android.widget.Toast;
  */
 public class MessagesAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.msa";
+	static final String TAG = "msa";
 
 	/** SQL WHERE: unread messages. */
 	static final String SELECTION_UNREAD = "read = '0'";

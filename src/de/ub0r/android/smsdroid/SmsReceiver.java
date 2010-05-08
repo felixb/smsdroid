@@ -35,7 +35,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
-import android.util.Log;
 
 /**
  * Listen for new sms.
@@ -45,7 +44,7 @@ import android.util.Log;
 @SuppressWarnings("deprecation")
 public class SmsReceiver extends BroadcastReceiver {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.bcr";
+	static final String TAG = "bcr";
 	/** {@link Uri} to get messages from. */
 	private static final Uri URI_SMS = Uri.parse("content://sms/");
 	/** {@link Uri} to get messages from. */

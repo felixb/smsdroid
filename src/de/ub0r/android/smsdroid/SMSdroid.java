@@ -38,7 +38,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,7 +60,7 @@ import com.flurry.android.FlurryAgent;
 public class SMSdroid extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener {
 	/** Tag for output. */
-	public static final String TAG = "SMSdroid";
+	public static final String TAG = "main";
 
 	/** Flurry's API key. */
 	public static final String FLURRYKEY = "Q63FP3PT9LWWR3GJXVG8";

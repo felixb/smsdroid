@@ -26,7 +26,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
-import android.util.Log;
 
 /**
  * Class holding a single conversation.
@@ -35,7 +34,7 @@ import android.util.Log;
  */
 public final class Conversation {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.con";
+	static final String TAG = "con";
 
 	/** Internal Cache. */
 	private static final HashMap<Integer, Conversation> CACHE = // .

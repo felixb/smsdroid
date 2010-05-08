@@ -39,7 +39,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -54,7 +53,7 @@ import com.flurry.android.FlurryAgent;
  */
 public class DonationHelper extends Activity implements OnClickListener {
 	/** Tag for output. */
-	private static final String TAG = SMSdroid.TAG + ".dh";
+	private static final String TAG = "dh";
 
 	/** Crypto algorithm for signing UID hashs. */
 	private static final String ALGO = "RSA";

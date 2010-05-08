@@ -27,14 +27,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 /**
  * @author flx
  */
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	/** Tag for logging. */
-	static final String TAG = "SMSdroid.ash";
+	static final String TAG = "ash";
 
 	/** Pattern to clean up numbers. */
 	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern
@@ -278,6 +277,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	private static Bitmap getPictureForPerson(final Context context,
 			final String pid) {
+		if (pid == null || pid == Conversation.NO_CONTACT) {
+			return Conversation.NO_PHOTO;
+		}
 		Bitmap b = WRAPPER.loadContactPhoto(context, pid);
 		if (b == null) {
 			return Conversation.NO_PHOTO;

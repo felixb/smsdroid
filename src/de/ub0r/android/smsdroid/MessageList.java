@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.provider.CallLog.Calls;
 import android.text.ClipboardManager;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,7 +51,7 @@ import com.flurry.android.FlurryAgent;
 public class MessageList extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener {
 	/** Tag for output. */
-	private static final String TAG = "SMSdroid.ml";
+	private static final String TAG = "ml";
 
 	/** Number of items. */
 	private static final int WHICH_N = 5;
