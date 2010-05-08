@@ -208,13 +208,15 @@ public final class Conversation {
 	 *            {@link Context}
 	 * @param threadId
 	 *            threadId
+	 * @param forceUpdate
+	 *            force an update of that {@link Conversation}
 	 * @return {@link Conversation}
 	 */
 	public static Conversation getConversation(final Context context,
-			final int threadId) {
+			final int threadId, final boolean forceUpdate) {
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(threadId);
-			if (ret == null || ret.getAddress() == null) {
+			if (ret == null || ret.getAddress() == null || forceUpdate) {
 				Cursor cursor = context.getContentResolver().query(
 						ConversationProvider.CONTENT_URI,
 						ConversationProvider.PROJECTION,

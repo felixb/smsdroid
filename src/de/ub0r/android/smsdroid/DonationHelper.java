@@ -149,7 +149,7 @@ public class DonationHelper extends Activity implements OnClickListener {
 		// FIXME: "" is a k9 hack. This is fixed in market
 		// on 26.01.10. wait some more time..
 		final StringBuilder buf = new StringBuilder();
-		buf.append(context.getString(R.string.app_name).split(" ", 2)[0]
+		buf.append(context.getString(R.string.app_name).replaceAll(" ", "")
 				.toLowerCase());
 		buf.append(':');
 		buf.append(getImeiHash(context));

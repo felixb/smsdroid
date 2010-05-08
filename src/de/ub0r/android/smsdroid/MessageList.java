@@ -42,7 +42,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.flurry.android.FlurryAgent;
 
-
 /**
  * {@link ListActivity} showing a single conversation.
  * 
@@ -168,7 +167,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "got intent: " + this.uri.toString());
 
 		this.threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		this.address = Conversation.getConversation(this, this.threadId)
+		this.address = Conversation.getConversation(this, this.threadId, false)
 				.getAddress();
 		this.name = AsyncHelper.getContactName(this, this.address);
 		if (this.name == null) {

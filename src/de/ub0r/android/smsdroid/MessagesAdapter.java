@@ -86,7 +86,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		this.textSize = Preferences.getTextsize(c);
 		this.uri = u;
 		this.threadId = Integer.parseInt(u.getLastPathSegment());
-		this.address = Conversation.getConversation(c, this.threadId)
+		this.address = Conversation.getConversation(c, this.threadId, false)
 				.getAddress();
 		this.name = AsyncHelper.getContactName(c, this.address);
 		if (this.name == null) {

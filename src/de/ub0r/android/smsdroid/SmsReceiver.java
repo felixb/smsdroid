@@ -51,10 +51,10 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static final Uri URI_MMS = Uri.parse("content://mms/");
 
 	/** Intent.action for receiving SMS. */
-	private final static String ACTION_SMS = // .
+	private static final String ACTION_SMS = // .
 	"android.provider.Telephony.SMS_RECEIVED";
 	/** Intent.action for receiving MMS. */
-	private final static String ACTION_MMS = // .
+	private static final String ACTION_MMS = // .
 	"android.provider.Telephony.WAP_PUSH_RECEIVED";
 
 	/** An unreadable MMS body. */
@@ -276,7 +276,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
 				if (enableNotifications) {
 					Conversation conv = Conversation.getConversation(context,
-							tid);
+							tid, true);
 					String a = conv.getDisplayName();
 					n = new Notification(R.drawable.stat_notify_sms, a, System
 							.currentTimeMillis());
