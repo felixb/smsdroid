@@ -27,7 +27,6 @@ import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.provider.CallLog.Calls;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -122,21 +121,38 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	 * @return {@link Cursor}
 	 */
 	private static Cursor getCursor(final ContentResolver cr, final Uri u) {
-		final Cursor c0 = cr.query(u, Message.PROJECTION_JOIN,
-				Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " < 3", null,
-				null);
+		final Cursor[] c = new Cursor[] { null, null, null };
+		final String type = Message.PROJECTION_JOIN[Message.INDEX_TYPE];
+		final String mtype = Message.PROJECTION_JOIN[Message.INDEX_MTYPE];
+
 		int tid = -1;
 		try {
 			tid = Integer.parseInt(u.getLastPathSegment());
 		} catch (Exception e) {
 			Log.e(TAG, "error parsing uri: " + u, e);
 		}
-		final Cursor c1 = cr.query(Uri.parse("content://sms/"),
-				Message.PROJECTION_SMS,
-				Message.PROJECTION_SMS[Message.INDEX_THREADID] + " = " + tid
-						+ " AND " + Message.PROJECTION_SMS[Message.INDEX_TYPE]
-						+ " > 2", null, null);
-		return new MergeCursor(new Cursor[] { c0, c1 });
+		final String twhere = Message.PROJECTION_SMS[Message.INDEX_THREADID]
+				+ " = " + tid + " AND (";
+
+		String where = twhere + type + " = " + Message.SMS_IN // .
+				+ " OR " + type + " = " + Message.SMS_OUT // .
+				+ " OR " + mtype + " = " + Message.MMS_TOLOAD // .
+				+ " OR " + mtype + " = " + Message.MMS_IN + ")";
+		// TODO + " OR " + mtype + Message.MMS_OUT;
+
+		c[0] = cr.query(u, Message.PROJECTION_JOIN, where, null, null);
+
+		where = twhere + type + " = " + Message.SMS_DRAFT + ")";
+		// + " OR " + type + " = " + Message.SMS_PENDING;
+
+		c[1] = cr.query(Uri.parse("content://sms/"), Message.PROJECTION_SMS,
+				where, null, Message.SORT_USD);
+
+		where = twhere + mtype + " = " + Message.MMS_DRAFT + ")";
+
+		c[2] = cr.query(Uri.parse("content://mms/"), Message.PROJECTION_MMS,
+				where, null, Message.SORT_USD);
+		return new MergeCursor(c);
 	}
 
 	/**
@@ -160,26 +176,32 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		}
 		// incoming / outgoing / pending
 		final View pending = view.findViewById(R.id.pending);
-		if (t == Calls.INCOMING_TYPE) {
+		int pendingvisability = View.GONE;
+		switch (t) {
+		case Message.SMS_DRAFT:
+			// TODO case Message.SMS_PENDING:
+		case Message.MMS_DRAFT:
+			pendingvisability = View.VISIBLE;
+		case Message.SMS_OUT: // handle drafts/pending here too
+			// TODO case Message.MMS_OUT:
+			twPerson.setText(context.getString(R.string.me) + subject);
+			view.setBackgroundResource(this.backgroundDrawableOut);
+			((ImageView) view.findViewById(R.id.inout))
+					.setImageResource(R.drawable.// .
+					ic_call_log_list_outgoing_call);
+			break;
+		case Message.SMS_IN:
+		case Message.MMS_IN:
+		default:
 			twPerson.setText(this.displayName + subject);
 			view.setBackgroundResource(this.backgroundDrawableIn);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);
 			pending.setVisibility(View.GONE);
-		} else {
-			if (t > Calls.OUTGOING_TYPE) {
-				// FIXME: contentprovider does not show drafts.
-				pending.setVisibility(View.VISIBLE);
-			} else {
-				pending.setVisibility(View.GONE);
-			}
-			twPerson.setText(context.getString(R.string.me) + subject);
-			view.setBackgroundResource(this.backgroundDrawableOut);
-			((ImageView) view.findViewById(R.id.inout))
-					.setImageResource(R.drawable.// .
-					ic_call_log_list_outgoing_call);
+			break;
 		}
+		pending.setVisibility(pendingvisability);
 
 		// unread / read
 		if (m.getRead() == 0) {

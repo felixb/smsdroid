@@ -68,6 +68,8 @@ public final class Message {
 	public static final int INDEX_BODY = 6;
 	/** INDEX: subject. */
 	public static final int INDEX_SUBJECT = 7;
+	/** INDEX: m_type. */
+	public static final int INDEX_MTYPE = 8;
 
 	/** INDEX: mid. */
 	public static final int INDEX_MID = 1;
@@ -97,6 +99,19 @@ public final class Message {
 	};
 
 	/** Cursor's projection. */
+	public static final String[] PROJECTION_MMS = { //
+	PROJECTION[INDEX_ID], // 0
+			PROJECTION[INDEX_READ], // 1
+			PROJECTION[INDEX_DATE], // 2
+			PROJECTION[INDEX_THREADID], // 3
+			"m_type", // 4
+			PROJECTION[INDEX_ID], // 5
+			PROJECTION[INDEX_ID], // 6
+			"sub", // 7
+			"m_type", // 8
+	};
+
+	/** Cursor's projection. */
 	public static final String[] PROJECTION_JOIN = { //
 	PROJECTION[INDEX_ID], // 0
 			PROJECTION[INDEX_READ], // 1
@@ -106,6 +121,7 @@ public final class Message {
 			PROJECTION[INDEX_ADDRESS], // 5
 			PROJECTION[INDEX_BODY], // 6
 			"sub", // 7
+			"m_type", // 8
 	};
 
 	/** Cursor's projection for set read/unread operations. */
@@ -135,6 +151,25 @@ public final class Message {
 	public static final String SORT_USD = Calls.DATE + " ASC";
 	/** Cursor's sort, normal. */
 	public static final String SORT_NORM = Calls.DATE + " DESC";
+
+	/** Type for incoming sms. */
+	public static final int SMS_IN = Calls.INCOMING_TYPE;
+	/** Type for outgoing sms. */
+	public static final int SMS_OUT = Calls.OUTGOING_TYPE;
+	/** Type for sms drafts. */
+	public static final int SMS_DRAFT = 3;
+	/** Type for pending sms. */
+	// TODO public static final int SMS_PENDING = 4;
+	/** Type for incoming mms. */
+	public static final int MMS_IN = 132;
+	/** Type for outgoing mms. */
+	// TODO public static final int MMS_OUT = 666;
+	/** Type for mms drafts. */
+	public static final int MMS_DRAFT = 128;
+	/** Type for pending mms. */
+	// public static final int MMS_PENDING = 128;
+	/** Type for not yet loaded mms. */
+	public static final int MMS_TOLOAD = 130;
 
 	/** Id. */
 	private long id;
@@ -175,11 +210,16 @@ public final class Message {
 		if (this.date < SMSdroid.MIN_DATE) {
 			this.date *= SMSdroid.MILLIS;
 		}
-		this.address = cursor.getString(INDEX_ADDRESS);
-		this.body = cursor.getString(INDEX_BODY);
-		if (SMSdroid.showEmoticons && this.body != null) {
-			this.body = SmileyParser.getInstance(context).addSmileySpans(
-					this.body);
+		if (cursor.getColumnIndex(PROJECTION_JOIN[INDEX_TYPE]) >= 0) {
+			this.address = cursor.getString(INDEX_ADDRESS);
+			this.body = cursor.getString(INDEX_BODY);
+			if (SMSdroid.showEmoticons && this.body != null) {
+				this.body = SmileyParser.getInstance(context).addSmileySpans(
+						this.body);
+			}
+		} else {
+			this.body = null;
+			this.address = null;
 		}
 		this.type = cursor.getInt(INDEX_TYPE);
 		this.read = cursor.getInt(INDEX_READ);
@@ -194,6 +234,20 @@ public final class Message {
 		} catch (IllegalStateException e) {
 			this.subject = null;
 		}
+		try {
+			int t = cursor.getInt(INDEX_MTYPE);
+			if (t != 0) {
+				this.type = t;
+			}
+		} catch (IllegalStateException e) {
+			this.subject = null;
+		}
+
+		Log.d(TAG, "threadId: " + this.threadId);
+		Log.d(TAG, "address: " + this.address);
+		Log.d(TAG, "subject: " + this.subject);
+		Log.d(TAG, "body: " + this.body);
+		Log.d(TAG, "type: " + this.type);
 	}
 
 	/**
@@ -273,7 +327,7 @@ public final class Message {
 				Log.e(TAG, "Failed to load part data", e);
 			}
 			if (is == null) {
-				Log.i(TAG, "InputStream for part " + pid + "is null");
+				Log.i(TAG, "InputStream for part " + pid + " is null");
 				if (iText >= 0 && ct.startsWith("text/")) {
 					this.body = cursor.getString(iText);
 				}
