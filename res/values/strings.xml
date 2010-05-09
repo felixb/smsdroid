@@ -170,10 +170,10 @@
 	</string-array>
 	<string-array name="vibrate_mode_values">
 		<item>0</item>
-		<item>1000</item>
-		<item>200_200_200_200_200</item>
-		<item>1000_500_1000_500_1000</item>
-		<item>200_250_1000_250_200_250_1000</item>
+		<item>10_1000</item>
+		<item>10_200_200_200_200_200</item>
+		<item>10_1000_500_1000_500_1000</item>
+		<item>10_200_250_1000_250_200_250_1000</item>
 	</string-array>
 		<string-array name="emoticons">
 		<item>O:-)</item>
