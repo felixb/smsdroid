@@ -121,7 +121,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	 * @return {@link Cursor}
 	 */
 	private static Cursor getCursor(final ContentResolver cr, final Uri u) {
-		final Cursor[] c = new Cursor[] { null, null, null };
+		final Cursor[] c = new Cursor[] { null, null };
 		final String type = Message.PROJECTION_JOIN[Message.INDEX_TYPE];
 		final String mtype = Message.PROJECTION_JOIN[Message.INDEX_MTYPE];
 
@@ -137,8 +137,8 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		String where = twhere + type + " = " + Message.SMS_IN // .
 				+ " OR " + type + " = " + Message.SMS_OUT // .
 				+ " OR " + mtype + " = " + Message.MMS_TOLOAD // .
-				+ " OR " + mtype + " = " + Message.MMS_IN + ")";
-		// TODO + " OR " + mtype + Message.MMS_OUT;
+				+ " OR " + mtype + " = " + Message.MMS_IN // .
+				+ " OR " + mtype + " = " + Message.MMS_OUT + ")";
 
 		c[0] = cr.query(u, Message.PROJECTION_JOIN, where, null, null);
 
@@ -148,10 +148,9 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		c[1] = cr.query(Uri.parse("content://sms/"), Message.PROJECTION_SMS,
 				where, null, Message.SORT_USD);
 
-		where = twhere + mtype + " = " + Message.MMS_DRAFT + ")";
-
-		c[2] = cr.query(Uri.parse("content://mms/"), Message.PROJECTION_MMS,
-				where, null, Message.SORT_USD);
+		// where = twhere + mtype + " = " + Message.MMS_DRAFT + ")";
+		// c[2] = cr.query(Uri.parse("content://mms/"), Message.PROJECTION_MMS,
+		// where, null, Message.SORT_USD);
 		return new MergeCursor(c);
 	}
 
@@ -180,7 +179,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		switch (t) {
 		case Message.SMS_DRAFT:
 			// TODO case Message.SMS_PENDING:
-		case Message.MMS_DRAFT:
+			// case Message.MMS_DRAFT:
 			pendingvisability = View.VISIBLE;
 		case Message.SMS_OUT: // handle drafts/pending here too
 			// TODO case Message.MMS_OUT:

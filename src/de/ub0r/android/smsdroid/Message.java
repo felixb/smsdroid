@@ -163,9 +163,9 @@ public final class Message {
 	/** Type for incoming mms. */
 	public static final int MMS_IN = 132;
 	/** Type for outgoing mms. */
-	// TODO public static final int MMS_OUT = 666;
+	public static final int MMS_OUT = 128;
 	/** Type for mms drafts. */
-	public static final int MMS_DRAFT = 128;
+	// public static final int MMS_DRAFT = 128;
 	/** Type for pending mms. */
 	// public static final int MMS_PENDING = 128;
 	/** Type for not yet loaded mms. */
