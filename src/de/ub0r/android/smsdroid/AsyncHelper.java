@@ -133,7 +133,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 		// contact
 		String pid = this.mConversation.getPersonId();
-		if (pid == null && address != null) {
+		if ((pid == null || pid.length() == 0) && address != null) {
 			final Cursor contact = getContact(this.context, address);
 			if (contact != null) {
 				pid = contact.getString(ContactsWrapper.FILTER_INDEX_ID);

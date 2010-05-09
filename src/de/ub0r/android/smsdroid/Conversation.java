@@ -162,6 +162,13 @@ public final class Conversation {
 			this.date = d;
 			this.body = cursor.getString(INDEX_BODY);
 			this.type = cursor.getInt(INDEX_TYPE);
+			String a = cursor.getString(INDEX_ADDRESS);
+			if (a != null && !a.equals(this.address)) {
+				this.address = a;
+				this.name = null;
+				this.photo = null;
+				this.personId = "";
+			}
 			int idName = cursor.getColumnIndex(ConversationProvider.// .
 					PROJECTION[ConversationProvider.INDEX_NAME]);
 			if (idName >= 0) {
@@ -230,6 +237,21 @@ public final class Conversation {
 				}
 			}
 			return ret;
+		}
+	}
+
+	/**
+	 * Remove a {@link Conversation} from cache.
+	 * 
+	 * @param threadId
+	 *            threadId
+	 */
+	public static void removeConversation(final int threadId) {
+		synchronized (CACHE) {
+			final Conversation c = CACHE.get(threadId);
+			if (c == null) {
+				CACHE.remove(c);
+			}
 		}
 	}
 

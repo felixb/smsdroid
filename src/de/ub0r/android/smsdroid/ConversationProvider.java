@@ -263,6 +263,8 @@ public final class ConversationProvider extends ContentProvider {
 			String a = cout.getString(INDEX_ADDRESS);
 			if (a != null) {
 				cv.put(PROJECTION[INDEX_ADDRESS], a);
+				cv.put(PROJECTION[INDEX_NAME], (String) null);
+				cv.put(PROJECTION[INDEX_PID], "");
 			}
 			a = null;
 			cv.put(PROJECTION[INDEX_BODY], cout.getString(INDEX_BODY));
@@ -368,6 +370,7 @@ public final class ConversationProvider extends ContentProvider {
 							tidout = cout.getInt(INDEX_THREADID);
 						}
 						if (tidin != tidout) {
+							Conversation.removeConversation(tidin);
 							Log.d(TAG, "delete row: " + tidin);
 							db.delete(THREADS_TABLE_NAME,
 									PROJECTION[INDEX_THREADID] + " = " + tidin,

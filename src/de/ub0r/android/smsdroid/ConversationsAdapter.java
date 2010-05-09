@@ -136,7 +136,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	/**
 	 * Start ConversationList query.
 	 */
-	public void startMsgListQuery() {
+	public final void startMsgListQuery() {
 		// Cancel any pending queries
 		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
 		try {
