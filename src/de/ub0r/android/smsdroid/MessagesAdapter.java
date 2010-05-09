@@ -130,7 +130,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 			subject = ": " + subject;
 		}
 		// incoming / outgoing / pending
-		View pending = view.findViewById(R.id.pending);
+		final View pending = view.findViewById(R.id.pending);
 		if (t == Calls.INCOMING_TYPE) {
 			twPerson.setText(this.displayName + subject);
 			view.setBackgroundResource(this.backgroundDrawableIn);

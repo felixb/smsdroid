@@ -130,13 +130,13 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 			});
 		}
 
-		this.startMsgListQuery();
+		// this.startMsgListQuery();
 	}
 
 	/**
 	 * Start ConversationList query.
 	 */
-	private void startMsgListQuery() {
+	public void startMsgListQuery() {
 		// Cancel any pending queries
 		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
 		try {

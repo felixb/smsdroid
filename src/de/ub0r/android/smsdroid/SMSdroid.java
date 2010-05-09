@@ -44,8 +44,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.HeaderViewListAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -103,6 +101,9 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	/** Dialog items shown if an item was long clicked. */
 	private String[] longItemClickDialog = null;
 
+	/** Conversations. */
+	private ConversationsAdapter adapter = null;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -110,16 +111,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	public final void onStart() {
 		super.onStart();
 		FlurryAgent.onStartSession(this, FLURRYKEY);
-		ListAdapter la = this.getListAdapter();
-		if (la == null) {
-			AsyncHelper.setAdapter(null);
-		} else if (la instanceof ConversationsAdapter) {
-			AsyncHelper.setAdapter((ConversationsAdapter) la);
-		} else if (la instanceof HeaderViewListAdapter) {
-			AsyncHelper.setAdapter(// .
-					(ConversationsAdapter) ((HeaderViewListAdapter) la)
-							.getWrappedAdapter());
-		}
+		AsyncHelper.setAdapter(this.adapter);
 	}
 
 	/**
@@ -206,8 +198,8 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		final ListView list = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		list.addHeaderView(header);
-		ConversationsAdapter adapter = new ConversationsAdapter(this);
-		this.setListAdapter(adapter);
+		this.adapter = new ConversationsAdapter(this);
+		this.setListAdapter(this.adapter);
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 		this.longItemClickDialog = new String[WHICH_N];
@@ -231,6 +223,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		if (!prefsNoAds) {
 			this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
 		}
+		this.adapter.startMsgListQuery();
 	}
 
 	/**

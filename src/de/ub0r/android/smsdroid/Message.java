@@ -180,6 +180,16 @@ public final class Message {
 	}
 
 	/**
+	 * Update {@link Message}.
+	 * 
+	 * @param cursor
+	 *            {@link Cursor} to read from
+	 */
+	public void update(final Cursor cursor) {
+		this.read = cursor.getInt(INDEX_READ);
+	}
+
+	/**
 	 * Fetch a part.
 	 * 
 	 * @param is
@@ -306,6 +316,8 @@ public final class Message {
 				ret = new Message(context, cursor);
 				CACHE.put(id, ret);
 				// TODO: limit cache size
+			} else {
+				ret.update(cursor);
 			}
 			return ret;
 		}
