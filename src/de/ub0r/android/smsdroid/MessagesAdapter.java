@@ -19,9 +19,11 @@
 package de.ub0r.android.smsdroid;
 
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -77,8 +79,8 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	 *            {@link Uri}
 	 */
 	public MessagesAdapter(final MessageList c, final Uri u) {
-		super(c, R.layout.messagelist_item, c.getContentResolver().query(u,
-				Message.PROJECTION_JOIN, null, null, null), true);
+		super(c, R.layout.messagelist_item,
+				getCursor(c.getContentResolver(), u), true);
 		boolean showBubbles = PreferenceManager.getDefaultSharedPreferences(c)
 				.getBoolean(Preferences.PREFS_BUBBLES, false);
 		if (showBubbles) {
@@ -108,6 +110,33 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		Log.d(TAG, "displayName: " + this.displayName);
 
 		// this.notifyDataSetChanged();
+	}
+
+	/**
+	 * Get the {@link Cursor}.
+	 * 
+	 * @param cr
+	 *            {@link ContentResolver}
+	 * @param u
+	 *            {@link Uri}
+	 * @return {@link Cursor}
+	 */
+	private static Cursor getCursor(final ContentResolver cr, final Uri u) {
+		final Cursor c0 = cr.query(u, Message.PROJECTION_JOIN,
+				Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " < 3", null,
+				null);
+		int tid = -1;
+		try {
+			tid = Integer.parseInt(u.getLastPathSegment());
+		} catch (Exception e) {
+			Log.e(TAG, "error parsing uri: " + u, e);
+		}
+		final Cursor c1 = cr.query(Uri.parse("content://sms/"),
+				Message.PROJECTION_SMS,
+				Message.PROJECTION_SMS[Message.INDEX_THREADID] + " = " + tid
+						+ " AND " + Message.PROJECTION_SMS[Message.INDEX_TYPE]
+						+ " > 2", null, null);
+		return new MergeCursor(new Cursor[] { c0, c1 });
 	}
 
 	/**

@@ -86,6 +86,17 @@ public final class Message {
 	};
 
 	/** Cursor's projection. */
+	public static final String[] PROJECTION_SMS = { //
+	PROJECTION[INDEX_ID], // 0
+			PROJECTION[INDEX_READ], // 1
+			PROJECTION[INDEX_DATE], // 2
+			PROJECTION[INDEX_THREADID], // 3
+			PROJECTION[INDEX_TYPE], // 4
+			PROJECTION[INDEX_ADDRESS], // 5
+			PROJECTION[INDEX_BODY], // 6
+	};
+
+	/** Cursor's projection. */
 	public static final String[] PROJECTION_JOIN = { //
 	PROJECTION[INDEX_ID], // 0
 			PROJECTION[INDEX_READ], // 1
@@ -178,7 +189,11 @@ public final class Message {
 		} else {
 			this.isMms = false;
 		}
-		this.subject = cursor.getString(INDEX_SUBJECT);
+		try {
+			this.subject = cursor.getString(INDEX_SUBJECT);
+		} catch (IllegalStateException e) {
+			this.subject = null;
+		}
 	}
 
 	/**
