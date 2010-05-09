@@ -182,7 +182,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 			// case Message.MMS_DRAFT:
 			pendingvisability = View.VISIBLE;
 		case Message.SMS_OUT: // handle drafts/pending here too
-			// TODO case Message.MMS_OUT:
+		case Message.MMS_OUT:
 			twPerson.setText(context.getString(R.string.me) + subject);
 			view.setBackgroundResource(this.backgroundDrawableOut);
 			((ImageView) view.findViewById(R.id.inout))
