@@ -21,7 +21,7 @@ package de.ub0r.android.smsdroid;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -46,9 +46,11 @@ public final class Message {
 	public static final Bitmap BITMAP_PLAY = Bitmap.createBitmap(1, 1,
 			Config.RGB_565);
 
+	/** Cache size. */
+	private static final int CAHCESIZE = 50;
 	/** Internal Cache. */
-	private static final HashMap<Integer, Message> CACHE = // .
-	new HashMap<Integer, Message>();
+	private static final LinkedHashMap<Integer, Message> CACHE = // .
+	new LinkedHashMap<Integer, Message>(26, 0.9f, true);
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -270,14 +272,12 @@ public final class Message {
 				final Intent i = new Intent(Intent.ACTION_VIEW);
 				i.setDataAndType(uri, ct);
 				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-				// FIXME: i ignores uri
 				this.contentIntent = i;
 				continue; // skip the rest
 			} else if (ct.startsWith("video/") || ct.startsWith("audio/")) {
 				this.picture = BITMAP_PLAY;
 				final Intent i = new Intent(Intent.ACTION_VIEW);
 				i.setDataAndType(uri, ct);
-				// FIXME: i ignores uri
 				this.contentIntent = i;
 				continue; // skip the rest
 			} else if (ct.startsWith("text/")) {
@@ -315,7 +315,16 @@ public final class Message {
 			if (ret == null) {
 				ret = new Message(context, cursor);
 				CACHE.put(id, ret);
-				// TODO: limit cache size
+				Log.d(TAG, "cachesize: " + CACHE.size());
+				while (CACHE.size() > CAHCESIZE) {
+					Integer i = CACHE.keySet().iterator().next();
+					Log.d(TAG, "rm msg. from cache: " + i);
+					Message cc = CACHE.remove(i);
+					if (cc == null) {
+						Log.w(TAG, "CACHE might be inconsistent!");
+						break;
+					}
+				}
 			} else {
 				ret.update(cursor);
 			}

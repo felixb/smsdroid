@@ -48,6 +48,9 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 	@Override
 	public Bitmap loadContactPhoto(final Context context, // .
 			final String contactId) {
+		if (contactId == null || contactId.length() == 0) {
+			return null;
+		}
 		final ContentResolver cr = context.getContentResolver();
 		InputStream is = Contacts.openContactPhotoInputStream(cr, this
 				.getContactUri(cr, contactId));

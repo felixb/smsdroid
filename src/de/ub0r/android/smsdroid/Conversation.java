@@ -18,7 +18,7 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -36,9 +36,11 @@ public final class Conversation {
 	/** Tag for logging. */
 	static final String TAG = "con";
 
+	/** Cache size. */
+	private static final int CAHCESIZE = 50;
 	/** Internal Cache. */
-	private static final HashMap<Integer, Conversation> CACHE = // .
-	new HashMap<Integer, Conversation>();
+	private static final LinkedHashMap<Integer, Conversation> CACHE = // .
+	new LinkedHashMap<Integer, Conversation>(26, 0.9f, true);
 
 	/** No contact available. */
 	public static final String NO_CONTACT = "-1";
@@ -201,6 +203,16 @@ public final class Conversation {
 			if (ret == null) {
 				ret = new Conversation(context, cursor, sync);
 				CACHE.put(ret.getThreadId(), ret);
+				Log.d(TAG, "cachesize: " + CACHE.size());
+				while (CACHE.size() > CAHCESIZE) {
+					Integer i = CACHE.keySet().iterator().next();
+					Log.d(TAG, "rm con. from cache: " + i);
+					Conversation cc = CACHE.remove(i);
+					if (cc == null) {
+						Log.w(TAG, "CACHE might be inconsistent!");
+						break;
+					}
+				}
 			} else {
 				ret.update(context, cursor, sync);
 			}
