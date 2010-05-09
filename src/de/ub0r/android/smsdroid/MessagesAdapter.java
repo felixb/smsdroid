@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,8 +51,8 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	/** Dateformat. //TODO: move me to xml */
 	private static final String DATE_FORMAT = Conversation.DATE_FORMAT;
 
-	/** Used background drawable for outgoing messages. */
-	private final int backgroundDrawableOut;
+	/** Used background drawable for messages. */
+	private final int backgroundDrawableIn, backgroundDrawableOut;
 
 	/** Used {@link Uri}. */
 	private Uri uri;
@@ -78,10 +79,18 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	public MessagesAdapter(final MessageList c, final Uri u) {
 		super(c, R.layout.messagelist_item, c.getContentResolver().query(u,
 				Message.PROJECTION_JOIN, null, null, null), true);
-		if (Preferences.getTheme(c) == android.R.style.Theme_Black) {
-			this.backgroundDrawableOut = R.drawable.grey_dark;
+		boolean showBubbles = PreferenceManager.getDefaultSharedPreferences(c)
+				.getBoolean(Preferences.PREFS_BUBBLES, false);
+		if (showBubbles) {
+			this.backgroundDrawableIn = R.drawable.bubble_in;
+			this.backgroundDrawableOut = R.drawable.bubble_out;
 		} else {
-			this.backgroundDrawableOut = R.drawable.grey_light;
+			if (Preferences.getTheme(c) == android.R.style.Theme_Black) {
+				this.backgroundDrawableOut = R.drawable.grey_dark;
+			} else {
+				this.backgroundDrawableOut = R.drawable.grey_light;
+			}
+			this.backgroundDrawableIn = 0;
 		}
 		this.textSize = Preferences.getTextsize(c);
 		this.uri = u;
@@ -124,13 +133,14 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		View pending = view.findViewById(R.id.pending);
 		if (t == Calls.INCOMING_TYPE) {
 			twPerson.setText(this.displayName + subject);
-			view.setBackgroundResource(0);
+			view.setBackgroundResource(this.backgroundDrawableIn);
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);
 			pending.setVisibility(View.GONE);
 		} else {
 			if (t > Calls.OUTGOING_TYPE) {
+				// FIXME: contentprovider does not show drafts.
 				pending.setVisibility(View.VISIBLE);
 			} else {
 				pending.setVisibility(View.GONE);

@@ -49,6 +49,8 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
 	/** Prefernece's name: show emoticons in messagelist. */
 	static final String PREFS_EMOTICONS = "show_emoticons";
+	/** Prefernece's name: show bubbles in messagelist. */
+	static final String PREFS_BUBBLES = "show_bubbles";
 	/** Preference's name: theme. */
 	private static final String PREFS_THEME = "theme";
 	/** Theme: black. */

@@ -28,6 +28,8 @@
 			android:title="@string/show_contact_photo_" android:summary="@string/show_contact_photo_hint" />
 		<CheckBoxPreference android:key="show_emoticons"
 			android:title="@string/show_emoticons_" android:summary="@string/show_emoticons_hint" />
+		<CheckBoxPreference android:key="show_bubbles"
+			android:title="@string/show_bubbles_" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/notification_">
 		<CheckBoxPreference android:key="notification_enable"
