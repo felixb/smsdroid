@@ -258,6 +258,15 @@ public final class Message {
 	 */
 	public void update(final Cursor cursor) {
 		this.read = cursor.getInt(INDEX_READ);
+		this.type = cursor.getInt(INDEX_TYPE);
+		try {
+			int t = cursor.getInt(INDEX_MTYPE);
+			if (t != 0) {
+				this.type = t;
+			}
+		} catch (IllegalStateException e) {
+			Log.e(TAG, "worong projection?", e);
+		}
 	}
 
 	/**
