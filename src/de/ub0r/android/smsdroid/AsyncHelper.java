@@ -39,11 +39,6 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern
 			.compile("<(\\+?[0-9]+)>");
 
-	/** Length of a international prefix, + notation. */
-	private static final int MIN_LEN_PLUS = "+49x".length();
-	/** Length of a international prefix, 00 notation. */
-	private static final int MIN_LEN_ZERO = "0049x".length();
-
 	/** Wrapper to use for contacts API. */
 	private static final ContactsWrapper WRAPPER = ContactsWrapper
 			.getInstance();
@@ -238,24 +233,10 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		if (m.find()) {
 			realAddress = m.group(1);
 		}
-		final int l = realAddress.length();
-		if (l > MIN_LEN_PLUS && realAddress.startsWith("+")) {
-			realAddress = "%" + realAddress.substring(MIN_LEN_PLUS);
-		} else if (l > MIN_LEN_ZERO && realAddress.startsWith("00")) {
-			realAddress = "%" + realAddress.substring(MIN_LEN_ZERO);
-		} else if (realAddress.startsWith("0")) {
-			realAddress = "%" + realAddress.substring(1);
-		}
 		// address contains the phone number
-		final String[] proj = WRAPPER.getProjectionFilter();
-		final Uri uri = WRAPPER.getUriFilter();
-		final String where = "replace("
-				+ proj[ContactsWrapper.FILTER_INDEX_NUMBER] + ", \" \", \"\")"
-				+ " like '" + realAddress + "'";
-		Log.d(TAG, "query: " + uri + " WHERE " + where);
 		try {
-			final Cursor cursor = context.getContentResolver().query(uri, proj,
-					where, null, null);
+			final Cursor cursor = WRAPPER.getContact(context
+					.getContentResolver(), realAddress);
 			if (cursor != null && cursor.moveToFirst()) {
 				return cursor;
 			}

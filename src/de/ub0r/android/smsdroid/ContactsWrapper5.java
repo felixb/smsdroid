@@ -23,11 +23,13 @@ import java.io.InputStream;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 /**
  * Helper class to set/unset background for api5 systems.
@@ -35,12 +37,19 @@ import android.provider.ContactsContract.Contacts;
  * @author flx
  */
 public final class ContactsWrapper5 extends ContactsWrapper {
+	/** Tag for output. */
+	private static final String TAG = "cw5";
+
 	/** Projection for persons query, filter. */
-	// FIXME: use LOOKUP_KEY instead
-	private static final String[] API5_PROJECTION_FILTER = // .
+	private static final String[] PROJECTION_FILTER = // .
 	new String[] { ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY,
 			ContactsContract.PhoneLookup.DISPLAY_NAME,
 			ContactsContract.CommonDataKinds.Phone.NUMBER };
+
+	/** Length of a international prefix, + notation. */
+	private static final int MIN_LEN_PLUS = "+49x".length();
+	/** Length of a international prefix, 00 notation. */
+	private static final int MIN_LEN_ZERO = "0049x".length();
 
 	/**
 	 * {@inheritDoc}
@@ -51,13 +60,18 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 		if (contactId == null || contactId.length() == 0) {
 			return null;
 		}
-		final ContentResolver cr = context.getContentResolver();
-		InputStream is = Contacts.openContactPhotoInputStream(cr, this
-				.getContactUri(cr, contactId));
-		if (is == null) {
+		try {
+			final ContentResolver cr = context.getContentResolver();
+			InputStream is = Contacts.openContactPhotoInputStream(cr, this
+					.getContactUri(cr, contactId));
+			if (is == null) {
+				return null;
+			}
+			return BitmapFactory.decodeStream(is);
+		} catch (Exception e) {
+			Log.e(TAG, "error getting photo: " + contactId, e);
 			return null;
 		}
-		return BitmapFactory.decodeStream(is);
 	}
 
 	/**
@@ -82,7 +96,49 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 	 */
 	@Override
 	public String[] getProjectionFilter() {
-		return API5_PROJECTION_FILTER;
+		return PROJECTION_FILTER;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Cursor getContact(final ContentResolver cr, // .
+			final String number) {
+
+		String realAddress = number;
+		final int l = realAddress.length();
+		if (l > MIN_LEN_PLUS && realAddress.startsWith("+")) {
+			realAddress = "%" + realAddress.substring(MIN_LEN_PLUS);
+		} else if (l > MIN_LEN_ZERO && realAddress.startsWith("00")) {
+			realAddress = "%" + realAddress.substring(MIN_LEN_ZERO);
+		} else if (realAddress.startsWith("0")) {
+			realAddress = "%" + realAddress.substring(1);
+		}
+
+		Uri uri; // = Uri.withAppendedPath(
+		// ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
+		// number); // FIXME: this is broken in android os; issue #8255
+		String[] proj; // = PROJECTION_FILTER;
+		uri = Uri.withAppendedPath(
+				android.provider.Contacts.Phones.CONTENT_FILTER_URL, number);
+		proj = ContactsWrapper3.PROJECTION_FILTER;
+		Log.d(TAG, "query: " + uri);
+		Cursor c = cr.query(uri, proj, null, null, null);
+		if (c.moveToFirst()) {
+			// FIXME: this is an workaround!
+			Cursor c0 = cr.query(Phone.CONTENT_URI, PROJECTION_FILTER,
+					PROJECTION_FILTER[FILTER_INDEX_NUMBER] + " = '"
+							+ c.getString(FILTER_INDEX_NUMBER) + "'", null,
+					null);
+			if (c0 != null && c0.moveToFirst()) {
+				Log.d(TAG, "id: " + c0.getString(FILTER_INDEX_ID));
+				Log.d(TAG, "name: " + c0.getString(FILTER_INDEX_NAME));
+				Log.d(TAG, "number: " + c0.getString(FILTER_INDEX_NUMBER));
+				return c0;
+			}
+		}
+		return null;
 	}
 
 	/**

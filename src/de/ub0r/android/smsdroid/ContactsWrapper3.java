@@ -22,6 +22,7 @@ package de.ub0r.android.smsdroid;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.Contacts;
@@ -37,8 +38,11 @@ import android.provider.Contacts.People.Extensions;
  */
 @SuppressWarnings("deprecation")
 public final class ContactsWrapper3 extends ContactsWrapper {
+	/** Tag for output. */
+	private static final String TAG = "cw3";
+
 	/** Projection for persons query, filter. */
-	private static final String[] PROJECTION_FILTER = // .
+	static final String[] PROJECTION_FILTER = // .
 	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME,
 			PhonesColumns.NUMBER };
 
@@ -75,6 +79,25 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 		Uri uri = Uri.withAppendedPath(People.CONTENT_URI, contactId);
 		return People.loadContactPhoto(context, uri,
 				R.drawable.ic_contact_picture, null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Cursor getContact(final ContentResolver cr, // .
+			final String number) {
+		final Uri uri = Uri.withAppendedPath(
+				Contacts.Phones.CONTENT_FILTER_URL, number);
+		Log.d(TAG, "query: " + uri);
+		Cursor c = cr.query(uri, PROJECTION_FILTER, null, null, null);
+		if (c.moveToFirst()) {
+			Log.d(TAG, "id: " + c.getString(FILTER_INDEX_ID));
+			Log.d(TAG, "name: " + c.getString(FILTER_INDEX_NAME));
+			Log.d(TAG, "number: " + c.getString(FILTER_INDEX_NUMBER));
+			return c;
+		}
+		return null;
 	}
 
 	/**

@@ -22,6 +22,7 @@ package de.ub0r.android.smsdroid;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -108,14 +109,16 @@ public abstract class ContactsWrapper {
 	 * 
 	 * @return {@link Uri}
 	 */
-	public abstract Uri getUriFilter();
+	@Deprecated
+	protected abstract Uri getUriFilter();
 
 	/**
 	 * Get projection for filter contacts by address.
 	 * 
 	 * @return projection
 	 */
-	public abstract String[] getProjectionFilter();
+	@Deprecated
+	protected abstract String[] getProjectionFilter();
 
 	/**
 	 * Get {@link Uri} to a Contact.
@@ -128,6 +131,18 @@ public abstract class ContactsWrapper {
 	 */
 	public abstract Uri getContactUri(final ContentResolver cr, // .
 			final String id);
+
+	/**
+	 * Get a Name for a given number.
+	 * 
+	 * @param cr
+	 *            {@link ContentResolver}
+	 * @param number
+	 *            number to look for
+	 * @return a {@link Cursor} matching the number
+	 */
+	public abstract Cursor getContact(final ContentResolver cr,
+			final String number);
 
 	/**
 	 * Insert or pick a Contact to add this address to.
