@@ -32,7 +32,9 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -54,6 +56,9 @@ import com.flurry.android.FlurryAgent;
 public class DonationHelper extends Activity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "dh";
+
+	/** Preference: did donation. */
+	private static final String PREFS_DIDDONATE = "diddonate";
 
 	/** Crypto algorithm for signing UID hashs. */
 	private static final String ALGO = "RSA";
@@ -118,9 +123,27 @@ public class DonationHelper extends Activity implements OnClickListener {
 		case R.id.donate:
 			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(this
 					.getString(R.string.donate_url))));
+			PreferenceManager.getDefaultSharedPreferences(this).edit()
+					.putBoolean(PREFS_DIDDONATE, true).commit();
 			return;
 		case R.id.send:
-			sendImeiHash(this);
+			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+					PREFS_DIDDONATE, false)) {
+				sendImeiHash(this);
+			} else {
+				new AlertDialog.Builder(this).setTitle(R.string.send_hash_)
+						.setMessage(R.string.postdonate_check)
+						.setPositiveButton(android.R.string.ok,
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(
+											final DialogInterface dialog,
+											final int which) {
+										sendImeiHash(DonationHelper.this);
+									}
+								}).setNegativeButton(android.R.string.cancel,
+								null).show();
+			}
 			return;
 		case R.id.ok:
 			final String s = ((EditText) this.findViewById(R.id.sig)).getText()

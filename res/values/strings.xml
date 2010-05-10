@@ -40,8 +40,9 @@
 	<string name="remove_ads_">Remove ads</string>
 	<string name="predonate">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating (via paypal). I\'ll remove the ads for you as soon as possible.\nThank you!\n\nFor all the WebSMS donators: the noads code is working for SMSdroid as well.</string>
 	<string name="postdonate">To remove ads, you need to send me the MD5 hash of your IMEI (unique id of your phone). This hash is a one-way-function. It is not traceable back to you.</string>
+	<string name="postdonate_check">Please check before sending, that you have already donated.</string>
 	<string name="send_hash_">Send hash</string>
-	<string name="signature_">You will get back a code, which you can paste here, to finally remove the ads:</string>
+	<string name="signature_">You will receive a code back, you have to enter here, to finally remove the ads:</string>
 	<string name="sig_loaded">Ads removed!</string>
 	<string name="sig_failed">Failed to remove ads!</string>
 	<string name="more_apps_">More Apps..</string>
