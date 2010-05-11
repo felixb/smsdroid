@@ -76,9 +76,14 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 	@Override
 	public Bitmap loadContactPhoto(final Context context, // .
 			final String contactId) {
-		Uri uri = Uri.withAppendedPath(People.CONTENT_URI, contactId);
-		return People.loadContactPhoto(context, uri,
-				R.drawable.ic_contact_picture, null);
+		try {
+			Uri uri = Uri.withAppendedPath(People.CONTENT_URI, contactId);
+			return People.loadContactPhoto(context, uri,
+					R.drawable.ic_contact_picture, null);
+		} catch (Exception e) {
+			Log.e(TAG, "error getting photo: " + contactId, e);
+			return null;
+		}
 	}
 
 	/**
