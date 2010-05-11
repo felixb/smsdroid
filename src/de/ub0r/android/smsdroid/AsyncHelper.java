@@ -258,7 +258,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	private static Bitmap getPictureForPerson(final Context context,
 			final String pid) {
-		if (pid == null || pid == Conversation.NO_CONTACT) {
+		if (pid == null || pid.length() == 0 || pid == Conversation.NO_CONTACT) {
 			return Conversation.NO_PHOTO;
 		}
 		Bitmap b = WRAPPER.loadContactPhoto(context, pid);

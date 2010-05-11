@@ -76,6 +76,9 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 	@Override
 	public Bitmap loadContactPhoto(final Context context, // .
 			final String contactId) {
+		if (contactId == null || contactId.length() == 0) {
+			return null;
+		}
 		try {
 			Uri uri = Uri.withAppendedPath(People.CONTENT_URI, contactId);
 			return People.loadContactPhoto(context, uri,
