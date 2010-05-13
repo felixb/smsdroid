@@ -105,32 +105,24 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 	@Override
 	public Cursor getContact(final ContentResolver cr, // .
 			final String number) {
-
-		String realAddress = number;
-		final int l = realAddress.length();
-		if (l > MIN_LEN_PLUS && realAddress.startsWith("+")) {
-			realAddress = "%" + realAddress.substring(MIN_LEN_PLUS);
-		} else if (l > MIN_LEN_ZERO && realAddress.startsWith("00")) {
-			realAddress = "%" + realAddress.substring(MIN_LEN_ZERO);
-		} else if (realAddress.startsWith("0")) {
-			realAddress = "%" + realAddress.substring(1);
-		}
-
-		Uri uri; // = Uri.withAppendedPath(
-		// ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
-		// number); // FIXME: this is broken in android os; issue #8255
-		String[] proj; // = PROJECTION_FILTER;
-		uri = Uri.withAppendedPath(
-				android.provider.Contacts.Phones.CONTENT_FILTER_URL, number);
-		proj = ContactsWrapper3.PROJECTION_FILTER;
+		Uri uri = Uri.withAppendedPath(
+				ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
+				number);
+		// FIXME: this is broken in android os; issue #8255
 		Log.d(TAG, "query: " + uri);
-		Cursor c = cr.query(uri, proj, null, null, null);
-		if (c.moveToFirst()) {
-			// FIXME: this is an workaround!
-			Cursor c0 = cr.query(Phone.CONTENT_URI, PROJECTION_FILTER,
-					PROJECTION_FILTER[FILTER_INDEX_NUMBER] + " = '"
-							+ c.getString(FILTER_INDEX_NUMBER) + "'", null,
-					null);
+		Cursor c = cr.query(uri, PROJECTION_FILTER, null, null, null);
+		if (c != null && c.moveToFirst()) {
+			return c;
+		}
+		// Fallback to API3
+		c = new ContactsWrapper3().getContact(cr, number);
+		if (c != null && c.moveToFirst()) {
+			// get orig API5 cursor for the real number
+			final String where = PROJECTION_FILTER[FILTER_INDEX_NUMBER]
+					+ " = '" + c.getString(FILTER_INDEX_NUMBER) + "'";
+			Log.d(TAG, "query: " + Phone.CONTENT_URI + " # " + where);
+			Cursor c0 = cr.query(Phone.CONTENT_URI, PROJECTION_FILTER, where,
+					null, null);
 			if (c0 != null && c0.moveToFirst()) {
 				Log.d(TAG, "id: " + c0.getString(FILTER_INDEX_ID));
 				Log.d(TAG, "name: " + c0.getString(FILTER_INDEX_NAME));

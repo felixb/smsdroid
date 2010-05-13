@@ -42,7 +42,7 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 	private static final String TAG = "cw3";
 
 	/** Projection for persons query, filter. */
-	static final String[] PROJECTION_FILTER = // .
+	private static final String[] PROJECTION_FILTER = // .
 	new String[] { Extensions.PERSON_ID, PeopleColumns.DISPLAY_NAME,
 			PhonesColumns.NUMBER };
 
