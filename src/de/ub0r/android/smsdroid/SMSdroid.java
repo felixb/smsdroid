@@ -19,6 +19,7 @@
 package de.ub0r.android.smsdroid;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -522,17 +523,25 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	/**
 	 * Convert time into formated date.
 	 * 
-	 * @param format
-	 *            format
+	 * @param context
+	 *            {@link Context}
 	 * @param time
 	 *            time
 	 * @return formated date.
 	 */
-	static final String getDate(final String format, final long time) {
+	static final String getDate(final Context context, final long time) {
 		long t = time;
 		if (t < MIN_DATE) {
 			t *= MILLIS;
 		}
-		return (String) DateFormat.format(format, t);
+		Calendar base = Calendar.getInstance();
+		base.set(Calendar.HOUR_OF_DAY, 0);
+		base.set(Calendar.MINUTE, 0);
+		base.set(Calendar.SECOND, 0);
+		if (t < base.getTimeInMillis()) {
+			return DateFormat.getDateFormat(context).format(t);
+		} else {
+			return DateFormat.getTimeFormat(context).format(t);
+		}
 	}
 }

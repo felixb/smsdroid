@@ -49,14 +49,9 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	/** SQL WHERE: read messages. */
 	static final String SELECTION_READ = "read = '1'";
 
-	/** Dateformat. //TODO: move me to xml */
-	private static final String DATE_FORMAT = Conversation.DATE_FORMAT;
-
 	/** Used background drawable for messages. */
 	private final int backgroundDrawableIn, backgroundDrawableOut;
 
-	/** Used {@link Uri}. */
-	private Uri uri;
 	/** Thread id. */
 	private int threadId = -1;
 	/** Address. */
@@ -94,7 +89,6 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 			this.backgroundDrawableIn = 0;
 		}
 		this.textSize = Preferences.getTextsize(c);
-		this.uri = u;
 		this.threadId = Integer.parseInt(u.getLastPathSegment());
 		this.address = Conversation.getConversation(c, this.threadId, false)
 				.getAddress();
@@ -241,7 +235,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 
 		long time = m.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
-				DATE_FORMAT, time));
+				context, time));
 
 		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);
 		final Bitmap pic = m.getPicture();

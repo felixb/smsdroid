@@ -214,6 +214,6 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 		// date
 		long time = c.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
-				Conversation.DATE_FORMAT, time));
+				context, time));
 	}
 }
