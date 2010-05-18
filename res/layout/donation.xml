@@ -30,15 +30,13 @@
 		<TextView android:text="@string/postdonate"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:autoLink="web" android:paddingTop="10dip" />
-		<Button android:text="@string/send_hash_" android:id="@+id/send"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" />
-
-		<TextView android:text="@string/signature_"
+		<TextView android:text="@string/paypal_id_"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:autoLink="web" android:paddingTop="10dip" />
-		<EditText android:id="@+id/sig" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" />
-		<Button android:text="@android:string/ok" android:id="@+id/ok"
+			android:autoLink="web" android:paddingTop="5dip" />
+		<EditText android:id="@+id/paypalid" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:hint="@string/paypal_id_hint"
+			android:singleLine="true" />
+		<Button android:text="@string/load_hash_" android:id="@+id/send"
 			android:layout_width="fill_parent" android:layout_height="wrap_content" />
 	</LinearLayout>
 </ScrollView>

@@ -18,7 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -397,16 +396,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	private boolean hideAds() {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		final File f = new File(NOADS_SIGNATURES);
-		try {
-			if (f.exists()) {
-				if (DonationHelper.loadSig(this, Uri.fromFile(f))) {
-					f.delete();
-				}
-			}
-		} catch (Exception e) {
-			Log.e(TAG, "error reading signatures", e);
-		}
 		final boolean ret = p.getBoolean(Preferences.PREFS_HIDEADS, false);
 		if (ret != prefsNoAds) {
 			final HashMap<String, String> params = // .
