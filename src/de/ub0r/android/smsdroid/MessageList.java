@@ -40,8 +40,6 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
-import com.flurry.android.FlurryAgent;
-
 /**
  * {@link ListActivity} showing a single conversation.
  * 
@@ -90,24 +88,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 	/** Current FooterView. */
 	private View currentHeader = null;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final void onStart() {
-		super.onStart();
-		FlurryAgent.onStartSession(this, SMSdroid.FLURRYKEY);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final void onStop() {
-		super.onStop();
-		FlurryAgent.onEndSession(this);
-	}
 
 	/**
 	 * {@inheritDoc}

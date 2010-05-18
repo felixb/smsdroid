@@ -19,7 +19,6 @@
 package de.ub0r.android.smsdroid;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
@@ -48,8 +47,6 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
-import com.flurry.android.FlurryAgent;
-
 /**
  * Main {@link ListActivity} showing conversations.
  * 
@@ -59,9 +56,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
-
-	/** Flurry's API key. */
-	public static final String FLURRYKEY = "Q63FP3PT9LWWR3GJXVG8";
 
 	/** Prefs: name for last version run. */
 	private static final String PREFS_LAST_RUN = "lastrun";
@@ -110,7 +104,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	@Override
 	public final void onStart() {
 		super.onStart();
-		FlurryAgent.onStartSession(this, FLURRYKEY);
 		AsyncHelper.setAdapter(this.adapter);
 	}
 
@@ -120,7 +113,6 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	@Override
 	public final void onStop() {
 		super.onStop();
-		FlurryAgent.onEndSession(this);
 		AsyncHelper.setAdapter(null);
 	}
 
@@ -396,14 +388,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 	private boolean hideAds() {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		final boolean ret = p.getBoolean(Preferences.PREFS_HIDEADS, false);
-		if (ret != prefsNoAds) {
-			final HashMap<String, String> params = // .
-			new HashMap<String, String>();
-			params.put("value", String.valueOf(ret));
-			FlurryAgent.onEvent("switch prefsNoAds", params);
-		}
-		return ret;
+		return p.getBoolean(Preferences.PREFS_HIDEADS, false);
 	}
 
 	/**
