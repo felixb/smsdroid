@@ -40,7 +40,6 @@
 	<string name="remove_ads_">Remove ads</string>
 	<string name="predonate">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating (via paypal). I\'ll remove the ads for you as soon as possible.\nThank you!\n\nFor all the WebSMS donators: the noads code is working for SMSdroid as well.</string>
 	<string name="postdonate">To remove ads, you need to load the noads code. It is available as soon the donation arrives. Please be patient and drop me a mail if it does not work after one day.</string>
-	<string name="postdonate_check">Please check before sending, that you have already donated.</string>
 	<string name="paypal_id_">To verify your donation your paypal id (mail address) is needed:</string>
 	<string name="paypal_id_hint">Paypal id</string>
 	<string name="load_hash_">Load noads code</string>
