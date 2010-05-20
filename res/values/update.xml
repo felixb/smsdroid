@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>v0.0.15: Inner changes, time format</item>
 		<item>v0.0.14: Work on issue #199</item>
 		<item>v0.0.13: Fix FC with empty contactId</item>
 		<item>v0.0.12: Fix contact names/photos on android 2.x, add bubbles, fix vibrator, fix sticky read messages, fix mms status, show pending/draft messages</item>
