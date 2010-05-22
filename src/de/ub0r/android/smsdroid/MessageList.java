@@ -147,8 +147,13 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "got intent: " + this.uri.toString());
 
 		this.threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		this.address = Conversation.getConversation(this, this.threadId, false)
-				.getAddress();
+		Conversation conv = Conversation.getConversation(this, this.threadId,
+				false);
+		if (conv != null) {
+			this.address = conv.getAddress();
+		} else {
+			this.address = null;
+		}
 		this.name = AsyncHelper.getContactName(this, this.address);
 		if (this.name == null) {
 			this.displayName = this.address;
