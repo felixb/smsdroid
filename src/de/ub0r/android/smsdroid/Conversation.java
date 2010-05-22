@@ -174,7 +174,10 @@ public final class Conversation {
 			int idName = cursor.getColumnIndex(ConversationProvider.// .
 					PROJECTION[ConversationProvider.INDEX_NAME]);
 			if (idName >= 0) {
-				this.name = cursor.getString(idName);
+				final String n = cursor.getString(idName);
+				if (n != null) {
+					this.name = n;
+				}
 			}
 		}
 		// this.read = cursor.getInt(INDEX_READ);
