@@ -50,22 +50,6 @@ public final class ContactsWrapper3 extends ContactsWrapper {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String[] getProjectionFilter() {
-		return PROJECTION_FILTER;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Uri getUriFilter() {
-		return Contacts.Phones.CONTENT_URI;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Uri getContactUri(final ContentResolver cr, final String id) {
 		return Uri.withAppendedPath(People.CONTENT_URI, id);
 	}

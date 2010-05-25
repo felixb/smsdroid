@@ -46,11 +46,6 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 			ContactsContract.PhoneLookup.DISPLAY_NAME,
 			ContactsContract.CommonDataKinds.Phone.NUMBER };
 
-	/** Length of a international prefix, + notation. */
-	private static final int MIN_LEN_PLUS = "+49x".length();
-	/** Length of a international prefix, 00 notation. */
-	private static final int MIN_LEN_ZERO = "0049x".length();
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -78,25 +73,9 @@ public final class ContactsWrapper5 extends ContactsWrapper {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Uri getUriFilter() {
-		return ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Uri getContactUri(final ContentResolver cr, final String id) {
 		return Contacts.lookupContact(cr, Uri.withAppendedPath(
 				Contacts.CONTENT_LOOKUP_URI, id));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String[] getProjectionFilter() {
-		return PROJECTION_FILTER;
 	}
 
 	/**

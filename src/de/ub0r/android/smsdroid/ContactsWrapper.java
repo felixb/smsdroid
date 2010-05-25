@@ -105,22 +105,6 @@ public abstract class ContactsWrapper {
 			final String contactId);
 
 	/**
-	 * Get {@link Uri} for filter contacts by address.
-	 * 
-	 * @return {@link Uri}
-	 */
-	@Deprecated
-	protected abstract Uri getUriFilter();
-
-	/**
-	 * Get projection for filter contacts by address.
-	 * 
-	 * @return projection
-	 */
-	@Deprecated
-	protected abstract String[] getProjectionFilter();
-
-	/**
 	 * Get {@link Uri} to a Contact.
 	 * 
 	 * @param cr
@@ -133,7 +117,7 @@ public abstract class ContactsWrapper {
 			final String id);
 
 	/**
-	 * Get a Name for a given number.
+	 * Get a {@link Cursor} with <id,name,number> for a given number.
 	 * 
 	 * @param cr
 	 *            {@link ContentResolver}
