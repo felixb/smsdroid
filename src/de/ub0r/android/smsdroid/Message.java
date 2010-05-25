@@ -32,6 +32,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
+import android.widget.Toast;
 
 /**
  * Class holding a single message.
@@ -225,7 +226,17 @@ public final class Message {
 		this.read = cursor.getInt(INDEX_READ);
 		if (this.body == null) {
 			this.isMms = true;
-			this.fetchMmsParts(context);
+			try {
+				this.fetchMmsParts(context);
+			} catch (OutOfMemoryError e) {
+				Log.e(TAG, "error loading parts", e);
+				try {
+					Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG)
+							.show();
+				} catch (Exception e1) {
+					Log.e(TAG, "error creating Toast", e1);
+				}
+			}
 		} else {
 			this.isMms = false;
 		}

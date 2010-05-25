@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>v0.1: Fix contact names, fix missing threads, fix some NPEs, catch OOMEs</item>
 		<item>v0.0.15: Inner changes, time format</item>
 		<item>v0.0.14: Work on issue #199</item>
 		<item>v0.0.13: Fix FC with empty contactId</item>
