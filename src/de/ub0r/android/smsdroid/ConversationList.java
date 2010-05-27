@@ -48,6 +48,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * Main {@link ListActivity} showing conversations.
