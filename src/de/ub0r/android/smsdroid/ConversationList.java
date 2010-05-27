@@ -46,14 +46,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import de.ub0r.android.lib.Log;
 
 /**
  * Main {@link ListActivity} showing conversations.
  * 
  * @author flx
  */
-public class ConversationList extends ListActivity implements OnItemClickListener,
-		OnItemLongClickListener {
+public class ConversationList extends ListActivity implements
+		OnItemClickListener, OnItemLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
 
@@ -459,7 +460,8 @@ public class ConversationList extends ListActivity implements OnItemClickListene
 					Intent i = null;
 					switch (which) {
 					case WHICH_ANSWER:
-						ConversationList.this.startActivity(getComposeIntent(a));
+						ConversationList.this
+								.startActivity(getComposeIntent(a));
 						break;
 					case WHICH_VIEW_CONTACT:
 						if (n == null) {
@@ -468,7 +470,8 @@ public class ConversationList extends ListActivity implements OnItemClickListene
 						} else {
 							final Uri uri = ContactsWrapper.getInstance()
 									.getContactUri(
-											ConversationList.this.getContentResolver(),
+											ConversationList.this
+													.getContentResolver(),
 											c.getPersonId());
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
@@ -480,8 +483,8 @@ public class ConversationList extends ListActivity implements OnItemClickListene
 						ConversationList.this.startActivity(i);
 						break;
 					case WHICH_DELETE:
-						ConversationList.deleteMessages(ConversationList.this, target,
-								R.string.delete_thread_,
+						ConversationList.deleteMessages(ConversationList.this,
+								target, R.string.delete_thread_,
 								R.string.delete_thread_question, null);
 						break;
 					default:

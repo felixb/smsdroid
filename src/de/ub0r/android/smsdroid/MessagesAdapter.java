@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.ub0r.android.lib.Log;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -234,8 +235,8 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		twBody.setText(text);
 
 		long time = m.getDate();
-		((TextView) view.findViewById(R.id.date)).setText(ConversationList.getDate(
-				context, time));
+		((TextView) view.findViewById(R.id.date)).setText(ConversationList
+				.getDate(context, time));
 
 		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);
 		final Bitmap pic = m.getPicture();

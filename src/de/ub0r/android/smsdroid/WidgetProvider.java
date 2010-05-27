@@ -24,6 +24,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
+import de.ub0r.android.lib.Log;
 
 /**
  * A widget provider.

@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+import de.ub0r.android.lib.Log;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -213,7 +214,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 
 		// date
 		long time = c.getDate();
-		((TextView) view.findViewById(R.id.date)).setText(ConversationList.getDate(
-				context, time));
+		((TextView) view.findViewById(R.id.date)).setText(ConversationList
+				.getDate(context, time));
 	}
 }

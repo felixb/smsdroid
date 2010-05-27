@@ -26,6 +26,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
+import de.ub0r.android.lib.Log;
 
 /**
  * Class holding a single conversation.

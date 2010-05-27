@@ -34,6 +34,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import android.text.TextUtils;
+import de.ub0r.android.lib.Log;
 
 /**
  * @author flx

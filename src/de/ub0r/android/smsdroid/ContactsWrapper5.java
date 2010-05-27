@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import de.ub0r.android.lib.Log;
 
 /**
  * Helper class to set/unset background for api5 systems.

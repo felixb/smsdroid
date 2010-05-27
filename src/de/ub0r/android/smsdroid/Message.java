@@ -33,6 +33,7 @@ import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
 import android.widget.Toast;
+import de.ub0r.android.lib.Log;
 
 /**
  * Class holding a single message.

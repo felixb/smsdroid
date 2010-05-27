@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import de.ub0r.android.lib.Log;
 
 /**
  * Preferences.

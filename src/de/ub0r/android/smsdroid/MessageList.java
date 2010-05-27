@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import de.ub0r.android.lib.Log;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -216,8 +217,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_delete_thread:
-			ConversationList.deleteMessages(this, this.uri, R.string.delete_thread_,
-					R.string.delete_thread_question, this);
+			ConversationList.deleteMessages(this, this.uri,
+					R.string.delete_thread_, R.string.delete_thread_question,
+					this);
 			return true;
 		case R.id.item_all_threads:
 			this.startActivity(new Intent(this, ConversationList.class));

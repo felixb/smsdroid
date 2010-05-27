@@ -45,6 +45,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
+import de.ub0r.android.lib.Log;
 
 /**
  * Display send IMEI hash, read signature..

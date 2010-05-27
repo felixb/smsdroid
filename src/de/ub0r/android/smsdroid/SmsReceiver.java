@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
+import de.ub0r.android.lib.Log;
 
 /**
  * Listen for new sms.

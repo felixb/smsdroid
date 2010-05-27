@@ -30,6 +30,7 @@ import android.provider.Contacts.People;
 import android.provider.Contacts.PeopleColumns;
 import android.provider.Contacts.PhonesColumns;
 import android.provider.Contacts.People.Extensions;
+import de.ub0r.android.lib.Log;
 
 /**
  * Implement {@link ContactsWrapper} for API 3 and 4.

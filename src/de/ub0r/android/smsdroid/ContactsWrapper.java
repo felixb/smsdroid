@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import de.ub0r.android.lib.Log;
 
 /**
  * Wrap around contacts API.
