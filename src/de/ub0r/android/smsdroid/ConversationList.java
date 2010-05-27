@@ -52,7 +52,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
  * 
  * @author flx
  */
-public class SMSdroid extends ListActivity implements OnItemClickListener,
+public class ConversationList extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
@@ -244,7 +244,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 							public void onClick(final DialogInterface d,
 									final int which) {
 								try {
-									SMSdroid.this.startActivity(// .
+									ConversationList.this.startActivity(// .
 											new Intent(
 													Intent.ACTION_VIEW,
 													Uri.parse(// .
@@ -459,7 +459,7 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 					Intent i = null;
 					switch (which) {
 					case WHICH_ANSWER:
-						SMSdroid.this.startActivity(getComposeIntent(a));
+						ConversationList.this.startActivity(getComposeIntent(a));
 						break;
 					case WHICH_VIEW_CONTACT:
 						if (n == null) {
@@ -468,19 +468,19 @@ public class SMSdroid extends ListActivity implements OnItemClickListener,
 						} else {
 							final Uri uri = ContactsWrapper.getInstance()
 									.getContactUri(
-											SMSdroid.this.getContentResolver(),
+											ConversationList.this.getContentResolver(),
 											c.getPersonId());
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
-						SMSdroid.this.startActivity(i);
+						ConversationList.this.startActivity(i);
 						break;
 					case WHICH_VIEW:
-						i = new Intent(SMSdroid.this, MessageList.class);
+						i = new Intent(ConversationList.this, MessageList.class);
 						i.setData(target);
-						SMSdroid.this.startActivity(i);
+						ConversationList.this.startActivity(i);
 						break;
 					case WHICH_DELETE:
-						SMSdroid.deleteMessages(SMSdroid.this, target,
+						ConversationList.deleteMessages(ConversationList.this, target,
 								R.string.delete_thread_,
 								R.string.delete_thread_question, null);
 						break;

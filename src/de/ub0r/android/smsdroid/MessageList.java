@@ -196,7 +196,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 *            thread id
 	 */
 	private void setRead(final int threadID) {
-		SMSdroid.markRead(this, Uri.parse(URI + threadID), 1);
+		ConversationList.markRead(this, Uri.parse(URI + threadID), 1);
 	}
 
 	/**
@@ -216,14 +216,14 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_delete_thread:
-			SMSdroid.deleteMessages(this, this.uri, R.string.delete_thread_,
+			ConversationList.deleteMessages(this, this.uri, R.string.delete_thread_,
 					R.string.delete_thread_question, this);
 			return true;
 		case R.id.item_all_threads:
-			this.startActivity(new Intent(this, SMSdroid.class));
+			this.startActivity(new Intent(this, ConversationList.class));
 			return true;
 		case R.id.item_compose:
-			this.startActivity(SMSdroid.getComposeIntent(null));
+			this.startActivity(ConversationList.getComposeIntent(null));
 			return true;
 		default:
 			return false;
@@ -241,7 +241,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
 		if (position == headerPos) { // header
-			this.startActivity(SMSdroid.getComposeIntent(this.address));
+			this.startActivity(ConversationList.getComposeIntent(this.address));
 		}
 	}
 
@@ -256,7 +256,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
 		if (position == headerPos) { // header
-			final Intent i = SMSdroid.getComposeIntent(this.address);
+			final Intent i = ConversationList.getComposeIntent(this.address);
 			this.startActivity(Intent.createChooser(i, this
 					.getString(R.string.answer)));
 			return true;
@@ -280,7 +280,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						final int which) {
 					switch (which) {
 					case WHICH_MARK_UNREAD:
-						SMSdroid.markRead(context, target, 1 - read);
+						ConversationList.markRead(context, target, 1 - read);
 						break;
 					case WHICH_FORWARD:
 						final Intent i = new Intent(Intent.ACTION_SEND);
@@ -337,7 +337,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						b.show();
 						break;
 					case WHICH_DELETE:
-						SMSdroid.deleteMessages(context, target,
+						ConversationList.deleteMessages(context, target,
 								R.string.delete_message_,
 								R.string.delete_message_question, null);
 						break;

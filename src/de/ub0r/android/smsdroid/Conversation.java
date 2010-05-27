@@ -435,7 +435,7 @@ public final class Conversation {
 	 * @return {@link Uri} of this {@link Conversation}
 	 */
 	public Uri getUri() {
-		return Uri.withAppendedPath(SMSdroid.URI, // .
+		return Uri.withAppendedPath(ConversationList.URI, // .
 				String.valueOf(this.threadId));
 	}
 

@@ -163,7 +163,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		cursor = null;
 
 		// photo
-		if (SMSdroid.showContactPhoto && // .
+		if (ConversationList.showContactPhoto && // .
 				this.mConversation.getPhoto() == null && pid != null) {
 			this.mConversation.setPhoto(getPictureForPerson(this.context, pid));
 		}

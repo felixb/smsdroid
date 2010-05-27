@@ -259,7 +259,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		Uri uri = null;
 		PendingIntent pIntent;
 		if (l == 0) {
-			final Intent i = new Intent(context, SMSdroid.class);
+			final Intent i = new Intent(context, ConversationList.class);
 			// add pending intent
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 			pIntent = PendingIntent.getActivity(context, 0, i,
@@ -294,7 +294,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			} else {
 				uri = Uri.parse(MessageList.URI);
 				i = new Intent(Intent.ACTION_VIEW, uri, context, // .
-						SMSdroid.class);
+						ConversationList.class);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_CANCEL_CURRENT);
 

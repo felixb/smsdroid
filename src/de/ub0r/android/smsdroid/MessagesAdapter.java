@@ -234,7 +234,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 		twBody.setText(text);
 
 		long time = m.getDate();
-		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
+		((TextView) view.findViewById(R.id.date)).setText(ConversationList.getDate(
 				context, time));
 
 		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);

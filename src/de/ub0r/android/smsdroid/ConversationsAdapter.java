@@ -54,8 +54,8 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	private final BackgroundQueryHandler queryHandler;
 	/** Token for {@link BackgroundQueryHandler}: message list query. */
 	private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
-	/** Reference to {@link SMSdroid}. */
-	private final SMSdroid activity;
+	/** Reference to {@link ConversationList}. */
+	private final ConversationList activity;
 
 	/**
 	 * Handle queries in background.
@@ -97,9 +97,9 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	 * Default Constructor.
 	 * 
 	 * @param c
-	 *            {@link SMSdroid}
+	 *            {@link ConversationList}
 	 */
-	public ConversationsAdapter(final SMSdroid c) {
+	public ConversationsAdapter(final ConversationList c) {
 		super(c, R.layout.conversationlist_item, null, true);
 		this.activity = c;
 		this.queryHandler = new BackgroundQueryHandler(c.getContentResolver());
@@ -165,7 +165,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 		final TextView tvCount = (TextView) view.findViewById(R.id.count);
 		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
 
-		if (SMSdroid.showContactPhoto) {
+		if (ConversationList.showContactPhoto) {
 			Bitmap b = c.getPhoto();
 			if (b != null && b != Conversation.NO_PHOTO) {
 				ivPhoto.setImageBitmap(b);
@@ -213,7 +213,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 
 		// date
 		long time = c.getDate();
-		((TextView) view.findViewById(R.id.date)).setText(SMSdroid.getDate(
+		((TextView) view.findViewById(R.id.date)).setText(ConversationList.getDate(
 				context, time));
 	}
 }

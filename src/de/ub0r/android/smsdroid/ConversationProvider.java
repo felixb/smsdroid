@@ -253,8 +253,8 @@ public final class ConversationProvider extends ContentProvider {
 	private boolean updateRow(final SQLiteDatabase db, final Cursor cout,
 			final long din) {
 		long dout = cout.getLong(INDEX_DATE);
-		if (dout < SMSdroid.MIN_DATE) {
-			dout *= SMSdroid.MILLIS;
+		if (dout < ConversationList.MIN_DATE) {
+			dout *= ConversationList.MILLIS;
 		}
 		if (dout > din) {
 			int tid = cout.getInt(INDEX_THREADID);
@@ -331,9 +331,9 @@ public final class ConversationProvider extends ContentProvider {
 				long dout = cout.getLong(INDEX_DATE);
 				Log.d(TAG, "din:  " + din);
 				Log.d(TAG, "dout: " + dout);
-				if (dout * SMSdroid.MILLIS < din) {
+				if (dout * ConversationList.MILLIS < din) {
 					continue;
-				} else if (dout > SMSdroid.MIN_DATE) {
+				} else if (dout > ConversationList.MIN_DATE) {
 					break;
 				} else if (!this.updateRow(db, cout, din)) {
 					break;

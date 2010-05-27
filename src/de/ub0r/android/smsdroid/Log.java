@@ -30,7 +30,7 @@ import android.net.Uri;
  */
 public final class Log {
 	/** Tag for output. */
-	public static final String TAG = "SMSdroid";
+	public static final String TAG = "ConversationList";
 
 	/** Packagename of SendLog. */
 	private static final String SENDLOG_PACKAGE_NAME = "org.l6n.sendlog";

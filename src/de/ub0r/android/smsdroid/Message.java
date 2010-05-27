@@ -208,13 +208,13 @@ public final class Message {
 		this.id = cursor.getLong(INDEX_ID);
 		this.threadId = cursor.getLong(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
-		if (this.date < SMSdroid.MIN_DATE) {
-			this.date *= SMSdroid.MILLIS;
+		if (this.date < ConversationList.MIN_DATE) {
+			this.date *= ConversationList.MILLIS;
 		}
 		if (cursor.getColumnIndex(PROJECTION_JOIN[INDEX_TYPE]) >= 0) {
 			this.address = cursor.getString(INDEX_ADDRESS);
 			this.body = cursor.getString(INDEX_BODY);
-			if (SMSdroid.showEmoticons && this.body != null) {
+			if (ConversationList.showEmoticons && this.body != null) {
 				this.body = SmileyParser.getInstance(context).addSmileySpans(
 						this.body);
 			}
@@ -246,9 +246,11 @@ public final class Message {
 			this.subject = null;
 		}
 		try {
-			int t = cursor.getInt(INDEX_MTYPE);
-			if (t != 0) {
-				this.type = t;
+			if (cursor.getColumnCount() > INDEX_MTYPE) {
+				final int t = cursor.getInt(INDEX_MTYPE);
+				if (t != 0) {
+					this.type = t;
+				}
 			}
 		} catch (IllegalStateException e) {
 			this.subject = null;
@@ -271,12 +273,14 @@ public final class Message {
 		this.read = cursor.getInt(INDEX_READ);
 		this.type = cursor.getInt(INDEX_TYPE);
 		try {
-			int t = cursor.getInt(INDEX_MTYPE);
-			if (t != 0) {
-				this.type = t;
+			if (cursor.getColumnCount() > INDEX_MTYPE) {
+				final int t = cursor.getInt(INDEX_MTYPE);
+				if (t != 0) {
+					this.type = t;
+				}
 			}
 		} catch (IllegalStateException e) {
-			Log.e(TAG, "worong projection?", e);
+			Log.e(TAG, "wrong projection?", e);
 		}
 	}
 
