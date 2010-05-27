@@ -42,8 +42,6 @@ public class Preferences extends PreferenceActivity {
 	private static final String PREFS_LED_FLASH = "receive_led_flash";
 	/** Preference's name: vibrator pattern. */
 	private static final String PREFS_VIBRATOR_PATTERN = "receive_vibrate_mode";
-	/** Preference's name: hide ads. */
-	static final String PREFS_HIDEADS = "hideads";
 	/** Preference's name: enable notifications. */
 	static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
 	/** Prefernece's name: show contact's photo. */

@@ -50,10 +50,9 @@
 					android:pathPrefix="/conversations/" />
 			</intent-filter>
 		</activity>
-		<activity android:name="DonationHelper"
+		<activity android:name="de.ub0r.android.lib.DonationHelper"
 			android:configChanges="orientation|keyboardHidden"
-			android:windowSoftInputMode="adjustResize">
-		</activity>
+			android:windowSoftInputMode="adjustResize" />
 		<receiver android:name="SmsReceiver">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />

@@ -17,7 +17,6 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-	<string name="lang">de</string>
     <string name="about_">Über</string>
 	<string name="about_hint">Über diese App</string>
 	<string name="faq_hint">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
@@ -27,17 +26,6 @@
 	<string name="about0">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebeigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
 	<string name="author_">Autor:</string>
 	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11046415</string>
-	<string name="donate_subject">Ich bin der Spender. Mein Hash ist...</string>
-	<string name="donate_">Spenden (Paypal)</string>
-	<string name="donate_remove_ads_">Spenden/Werbung entfernen</string>
-	<string name="remove_ads_">Werbung entfernen</string>
-	<string name="predonate">Dies ist eine open-source App. Sie ist und bleibt frei. Wenn du die App wirklich magst oder dich die Werbung nervt, kannst du gerne etwas spenden. Ich werde die Werbung so schnell wie möglich entfernen.\n\nAn alle WebSMS Spender: Der noads code funktioniert auch mit SMSdroid.</string>
-	<string name="postdonate">Um die Werbung zu entfernen musst du den noads Code laden. Er steht erst zur Verfügung, wenn die Spende bei mir eingegangen ist. Bitte sei geduldig und melde dich bei mir, wenn es nach einem Tag immernoch nicht funktioniert hat.</string>
-	<string name="paypal_id_">Um die Spende zu überprüfen, wird deine Paypal Id (Mail Adresse) benötigt:</string>
-	<string name="load_hash_">Noads Code laden</string>
-	<string name="signature_">Ich werde dir dann einen Code schicken, mit dem du die Werbung dann abschalten kannst.\Du kannst diesen Code hier unten einfügen:</string>
-	<string name="sig_loaded">Werbung entfernt!</string>
-	<string name="sig_failed">Fehler beim entfernen der Werbung!</string>
 	<string name="more_apps_">Mehr Apps..</string>
 	<string name="license">GPLv3 - siehe http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<string name="license_">Lizenz:</string>

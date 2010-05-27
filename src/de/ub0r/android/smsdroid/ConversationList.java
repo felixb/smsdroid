@@ -46,6 +46,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 
 /**
@@ -212,7 +213,7 @@ public class ConversationList extends ListActivity implements
 	@Override
 	protected final void onResume() {
 		super.onResume();
-		prefsNoAds = this.hideAds();
+		prefsNoAds = DonationHelper.hideAds(this);
 		if (!prefsNoAds) {
 			this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
 		}
@@ -379,17 +380,6 @@ public class ConversationList extends ListActivity implements
 		default:
 			return false;
 		}
-	}
-
-	/**
-	 * Check for signature updates.
-	 * 
-	 * @return true if ads should be hidden
-	 */
-	private boolean hideAds() {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		return p.getBoolean(Preferences.PREFS_HIDEADS, false);
 	}
 
 	/**
