@@ -26,6 +26,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -297,22 +298,26 @@ public class ConversationList extends ListActivity implements
 	 */
 	static final void markRead(final Context context, final Uri uri,
 			final int read) {
-		String select = Message.SELECTION_UNREAD.replace("0", String
+		if (uri == null) {
+			return;
+		}
+		final String select = Message.SELECTION_UNREAD.replace("0", String
 				.valueOf(1 - read));
-		final Cursor mCursor = context.getContentResolver().query(uri,
-				Message.PROJECTION_READ, select, null, null);
-		if (mCursor.getCount() <= 0) {
-			if (uri.toString().equals("content://sms/")) {
-				SmsReceiver.updateNewMessageNotification(context, null);
-			} else if (uri.toString().equals("content://mms/")) {
+		final ContentResolver cr = context.getContentResolver();
+		final Cursor cursor = cr.query(uri, Message.PROJECTION_READ, select,
+				null, null);
+		if (cursor != null && cursor.getCount() <= 0) {
+			String u = uri.toString();
+			if (u.equals("content://sms/") || u.equals("content://mms/")) {
 				SmsReceiver.updateNewMessageNotification(context, null);
 			}
+			cursor.close();
 			return;
 		}
 
 		final ContentValues cv = new ContentValues();
 		cv.put(Message.PROJECTION[Message.INDEX_READ], read);
-		context.getContentResolver().update(uri, cv, select, null);
+		cr.update(uri, cv, select, null);
 		SmsReceiver.updateNewMessageNotification(context, null);
 	}
 

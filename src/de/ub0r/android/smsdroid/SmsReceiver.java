@@ -276,20 +276,25 @@ public class SmsReceiver extends BroadcastReceiver {
 						PendingIntent.FLAG_CANCEL_CURRENT);
 
 				if (enableNotifications) {
-					Conversation conv = Conversation.getConversation(context,
-							tid, true);
-					String a = conv.getDisplayName();
-					n = new Notification(R.drawable.stat_notify_sms, a, System
-							.currentTimeMillis());
-					if (l == 1) {
-						String body = conv.getBody();
-						if (body == null) {
-							body = context.getString(R.string.mms_conversation);
+					final Conversation conv = Conversation.getConversation(
+							context, tid, true);
+					if (conv != null) {
+						final String a = conv.getDisplayName();
+						n = new Notification(R.drawable.stat_notify_sms, a,
+								System.currentTimeMillis());
+						if (l == 1) {
+							String body = conv.getBody();
+							if (body == null) {
+								body = context
+										.getString(R.string.mms_conversation);
+							}
+							n.setLatestEventInfo(context, a, body, pIntent);
+						} else {
+							n.setLatestEventInfo(context, a, String
+									.format(context
+											.getString(R.string.new_messages),
+											l), pIntent);
 						}
-						n.setLatestEventInfo(context, a, body, pIntent);
-					} else {
-						n.setLatestEventInfo(context, a, String.format(context
-								.getString(R.string.new_messages), l), pIntent);
 					}
 				}
 			} else {
