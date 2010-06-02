@@ -338,7 +338,7 @@ public class ConversationList extends ListActivity implements
 	static final void deleteMessages(final Context context, final Uri uri,
 			final int title, final int message, final Activity activity) {
 		final Cursor mCursor = context.getContentResolver().query(uri,
-				Message.PROJECTION, null, null, null);
+				Message.PROJECTION_READ, null, null, null);
 		if (mCursor.getCount() <= 0) {
 			return;
 		}
