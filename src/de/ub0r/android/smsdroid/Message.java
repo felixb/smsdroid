@@ -259,9 +259,9 @@ public final class Message {
 
 		Log.d(TAG, "threadId: " + this.threadId);
 		Log.d(TAG, "address: " + this.address);
-		Log.d(TAG, "subject: " + this.subject);
-		Log.d(TAG, "body: " + this.body);
-		Log.d(TAG, "type: " + this.type);
+		// Log.d(TAG, "subject: " + this.subject);
+		// Log.d(TAG, "body: " + this.body);
+		// Log.d(TAG, "type: " + this.type);
 	}
 
 	/**

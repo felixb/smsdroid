@@ -353,44 +353,43 @@ public final class ConversationProvider extends ContentProvider {
 				PROJECTION[INDEX_THREADID] + " DESC");
 		cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
 				PROJECTION[INDEX_THREADID] + " DESC");
-		if (cout != null && cin != null && // .
-				cout.requery() && cin.requery()) {
-			if (cout.getCount() != cin.getCount()) {
-				// hunt for deleted threads
-				if (!cout.moveToFirst()) {
-					Log.d(TAG, "delete all rows");
-					db.delete(THREADS_TABLE_NAME, null, null);
-				} else if (!cin.moveToFirst()) {
-					Log.e(TAG, "error selecting first row");
-				} else {
+		if (cout != null && cin != null && cout.getCount() != cin.getCount()) {
+			Log.d(TAG, "cout.n != cin.n");
+			// hunt for deleted threads
+			if (!cout.moveToFirst()) {
+				Log.d(TAG, "delete all rows");
+				db.delete(THREADS_TABLE_NAME, null, null);
+			} else if (!cin.moveToFirst()) {
+				Log.e(TAG, "error selecting first row");
+			} else {
+				do {
+					final int tidin = cin.getInt(INDEX_THREADID);
+					Log.d(TAG, "check tidin: " + tidin);
 					do {
-						final int tidin = cin.getInt(INDEX_THREADID);
-						Log.d(TAG, "check tidin: " + tidin);
-						do {
-							int tidout;
-							if (cout.isAfterLast()) {
-								tidout = -1;
-							} else {
-								tidout = cout.getInt(INDEX_THREADID);
-							}
-							Log.d(TAG, "check tidout: " + tidout);
-							if (tidin > tidout) {
-								Conversation.removeConversation(tidin);
-								Log.d(TAG, "delete tidin: " + tidin);
-								db.delete(THREADS_TABLE_NAME,
-										PROJECTION[INDEX_THREADID] + " = "
-												+ tidin, null);
-								break; // go to next internal row
-							} else if (tidin < tidout) {
-								// copy row from external to internal db
-								this.updateRow(db, cout, -1);
-							} else {
-								cout.moveToNext();
-								break; // rows are even. go to next pair.
-							}
-						} while (cout.moveToNext());
-					} while (cin.moveToNext());
-				}
+						int tidout;
+						if (cout.isAfterLast()) {
+							tidout = -1;
+						} else {
+							tidout = cout.getInt(INDEX_THREADID);
+						}
+						Log.d(TAG, "check tidout: " + tidout);
+						if (tidin > tidout) {
+							Conversation.removeConversation(tidin);
+							Log.d(TAG, "delete tidin: " + tidin);
+							db.delete(THREADS_TABLE_NAME,
+									PROJECTION[INDEX_THREADID] + " = " + tidin,
+									null);
+							break; // go to next internal row
+						} else if (tidin < tidout) {
+							// copy row from external to internal db
+							Log.d(TAG, "new row");
+							this.updateRow(db, cout, -1);
+						} else {
+							cout.moveToNext();
+							break; // rows are even. go to next pair.
+						}
+					} while (cout.moveToNext());
+				} while (cin.moveToNext());
 			}
 		}
 		if (cin != null && !cin.isClosed()) {
