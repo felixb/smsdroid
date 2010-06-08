@@ -356,6 +356,7 @@ public class ConversationList extends ListActivity implements
 						if (activity != null) {
 							activity.finish();
 						}
+						Message.flushCache();
 						SmsReceiver.updateNewMessageNotification(context, null);
 					}
 				});

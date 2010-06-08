@@ -427,6 +427,15 @@ public final class Message {
 	}
 
 	/**
+	 * Flush all cached messages.
+	 */
+	public static void flushCache() {
+		synchronized (CACHE) {
+			CACHE.clear();
+		}
+	}
+
+	/**
 	 * @return the id
 	 */
 	public long getId() {
