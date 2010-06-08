@@ -158,7 +158,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.currentHeader = header;
 		lv.setStackFromBottom(true);
 
-		MessagesAdapter adapter = new MessagesAdapter(this, this.uri);
+		MessageAdapter adapter = new MessageAdapter(this, this.uri);
 		this.setListAdapter(adapter);
 
 		this.setTitle(this.getString(R.string.app_name) + " > "

@@ -41,7 +41,7 @@ import de.ub0r.android.lib.Log;
  * 
  * @author flx
  */
-public class MessagesAdapter extends ResourceCursorAdapter {
+public class MessageAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "msa";
 
@@ -73,7 +73,7 @@ public class MessagesAdapter extends ResourceCursorAdapter {
 	 * @param u
 	 *            {@link Uri}
 	 */
-	public MessagesAdapter(final MessageList c, final Uri u) {
+	public MessageAdapter(final MessageList c, final Uri u) {
 		super(c, R.layout.messagelist_item,
 				getCursor(c.getContentResolver(), u), true);
 		boolean showBubbles = PreferenceManager.getDefaultSharedPreferences(c)

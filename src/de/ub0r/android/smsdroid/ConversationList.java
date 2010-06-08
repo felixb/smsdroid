@@ -100,7 +100,7 @@ public class ConversationList extends ListActivity implements
 	private String[] longItemClickDialog = null;
 
 	/** Conversations. */
-	private ConversationsAdapter adapter = null;
+	private ConversationAdapter adapter = null;
 
 	/**
 	 * {@inheritDoc}
@@ -194,7 +194,7 @@ public class ConversationList extends ListActivity implements
 		final ListView list = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		list.addHeaderView(header);
-		this.adapter = new ConversationsAdapter(this);
+		this.adapter = new ConversationAdapter(this);
 		this.setListAdapter(this.adapter);
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);

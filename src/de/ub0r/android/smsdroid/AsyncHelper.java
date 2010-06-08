@@ -45,8 +45,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	private static final ContactsWrapper WRAPPER = ContactsWrapper
 			.getInstance();
 
-	/** {@link ConversationsAdapter} to invalidate on new data. */
-	private static ConversationsAdapter adapter = null;
+	/** {@link ConversationAdapter} to invalidate on new data. */
+	private static ConversationAdapter adapter = null;
 
 	/** {@link Context}. */
 	private final Context context;
@@ -183,12 +183,12 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	}
 
 	/**
-	 * Set {@link ConversationsAdapter} to invalidate data after refreshing.
+	 * Set {@link ConversationAdapter} to invalidate data after refreshing.
 	 * 
 	 * @param a
-	 *            {@link ConversationsAdapter}
+	 *            {@link ConversationAdapter}
 	 */
-	public static void setAdapter(final ConversationsAdapter a) {
+	public static void setAdapter(final ConversationAdapter a) {
 		adapter = a;
 	}
 

@@ -38,7 +38,7 @@ import de.ub0r.android.lib.Log;
  * 
  * @author flx
  */
-public class ConversationsAdapter extends ResourceCursorAdapter {
+public class ConversationAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "coa";
 
@@ -84,8 +84,8 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 				final Cursor cursor) {
 			switch (token) {
 			case MESSAGE_LIST_QUERY_TOKEN:
-				ConversationsAdapter.this.changeCursor(cursor);
-				ConversationsAdapter.this.activity
+				ConversationAdapter.this.changeCursor(cursor);
+				ConversationAdapter.this.activity
 						.setProgressBarIndeterminateVisibility(false);
 				return;
 			default:
@@ -100,7 +100,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 	 * @param c
 	 *            {@link ConversationList}
 	 */
-	public ConversationsAdapter(final ConversationList c) {
+	public ConversationAdapter(final ConversationList c) {
 		super(c, R.layout.conversationlist_item, null, true);
 		this.activity = c;
 		this.queryHandler = new BackgroundQueryHandler(c.getContentResolver());
@@ -123,7 +123,7 @@ public class ConversationsAdapter extends ResourceCursorAdapter {
 					super.onChange(selfChange);
 					if (!selfChange) {
 						Log.d(TAG, "call startMsgListQuery();");
-						ConversationsAdapter.this.startMsgListQuery();
+						ConversationAdapter.this.startMsgListQuery();
 						Log.d(TAG, "invalidate cache");
 						Conversation.invalidate();
 					}
