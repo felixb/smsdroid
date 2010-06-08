@@ -318,7 +318,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			// add pending intent
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-			if (enableNotifications) {
+			if (enableNotifications && n != null) {
 				n.flags |= Notification.FLAG_SHOW_LIGHTS;
 				n.ledARGB = Preferences.getLEDcolor(context);
 				int[] ledFlash = Preferences.getLEDflash(context);
@@ -349,8 +349,8 @@ public class SmsReceiver extends BroadcastReceiver {
 				}
 			}
 			Log.d(TAG, "uri: " + uri);
-			if (enableNotifications) {
-				mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
+			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
+			if (enableNotifications && n != null) {
 				mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 			}
 		}
