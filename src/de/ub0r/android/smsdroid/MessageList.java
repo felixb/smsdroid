@@ -69,14 +69,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 	/** Used {@link Uri}. */
 	private Uri uri;
-	/** Thread id. */
-	private int threadId = -1;
-	/** Address. */
-	private String address = null;
-	/** Name. */
-	private String name = null;
-	/** Display Name (name if !=null, else address). */
-	private String displayName = null;
+	/** {@link Conversation} shown. */
+	private Conversation conv = null;
 
 	/** ORIG_URI to resolve. */
 	static final String URI = "content://mms-sms/conversations/";
@@ -147,23 +141,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private void parseIntent(final Intent intent) {
 		Log.d(TAG, "got intent: " + this.uri.toString());
 
-		this.threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		Conversation conv = Conversation.getConversation(this, this.threadId,
-				false);
-		if (conv != null) {
-			this.address = conv.getAddress();
-		} else {
-			this.address = null;
-		}
-		this.name = AsyncHelper.getContactName(this, this.address);
-		if (this.name == null) {
-			this.displayName = this.address;
-		} else {
-			this.displayName = this.name;
-		}
-		Log.d(TAG, "address: " + this.address);
-		Log.d(TAG, "name: " + this.name);
-		Log.d(TAG, "displayName: " + this.displayName);
+		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
+		this.conv = Conversation.getConversation(this, threadId, true);
+
+		Log.d(TAG, "address: " + this.conv.getAddress());
+		Log.d(TAG, "name: " + this.conv.getName());
+		Log.d(TAG, "displayName: " + this.conv.getDisplayName());
 
 		final ListView lv = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
@@ -179,25 +162,32 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.setListAdapter(adapter);
 
 		this.setTitle(this.getString(R.string.app_name) + " > "
-				+ this.displayName);
+				+ this.conv.getDisplayName());
 		String str;
-		if (this.name == null) {
-			str = this.address;
+		final String name = this.conv.getName();
+		if (name == null) {
+			str = this.conv.getAddress();
 		} else {
-			str = this.name + " <" + this.address + ">";
+			str = name + " <" + this.conv.getAddress() + ">";
 		}
 		((TextView) header.findViewById(R.id.text2)).setText(str);
-		this.setRead(this.threadId);
+		this.setRead();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected final void onPause() {
+		super.onPause();
+		this.setRead();
 	}
 
 	/**
 	 * Set all messages in a given thread as read.
-	 * 
-	 * @param threadID
-	 *            thread id
 	 */
-	private void setRead(final int threadID) {
-		ConversationList.markRead(this, Uri.parse(URI + threadID), 1);
+	private void setRead() {
+		ConversationList.markRead(this, this.conv.getUri(), 1);
 	}
 
 	/**
@@ -243,7 +233,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
 		if (position == headerPos) { // header
-			this.startActivity(ConversationList.getComposeIntent(this.address));
+			this.startActivity(ConversationList.getComposeIntent(this.conv
+					.getAddress()));
 		}
 	}
 
@@ -258,7 +249,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
 		if (position == headerPos) { // header
-			final Intent i = ConversationList.getComposeIntent(this.address);
+			final Intent i = ConversationList.getComposeIntent(this.conv
+					.getAddress());
 			this.startActivity(Intent.createChooser(i, this
 					.getString(R.string.answer)));
 			return true;
