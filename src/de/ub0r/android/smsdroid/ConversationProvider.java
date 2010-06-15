@@ -347,12 +347,13 @@ public final class ConversationProvider extends ContentProvider {
 		if (cout != null && !cout.isClosed()) {
 			cout.close();
 		}
+
 		// internal db --does-- *should* have at least all the messages from
 		// external db
 		cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null, null,
 				PROJECTION[INDEX_THREADID] + " DESC");
 		cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
-				PROJECTION[INDEX_THREADID] + " DESC");
+				PROJECTION_OUT[INDEX_THREADID] + " DESC");
 		if (cout != null && cin != null && cout.getCount() != cin.getCount()) {
 			Log.d(TAG, "cout.n != cin.n");
 			// hunt for deleted threads
@@ -361,6 +362,11 @@ public final class ConversationProvider extends ContentProvider {
 				db.delete(THREADS_TABLE_NAME, null, null);
 			} else if (!cin.moveToFirst()) {
 				Log.e(TAG, "error selecting first row");
+				do {
+					// copy row from external to internal db
+					Log.d(TAG, "new row");
+					this.updateRow(db, cout, -1);
+				} while (cout.moveToNext());
 			} else {
 				do {
 					final int tidin = cin.getInt(INDEX_THREADID);
