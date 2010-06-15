@@ -257,6 +257,15 @@ public final class Conversation {
 	}
 
 	/**
+	 * Flush all cached conversations.
+	 */
+	public static void flushCache() {
+		synchronized (CACHE) {
+			CACHE.clear();
+		}
+	}
+
+	/**
 	 * Remove a {@link Conversation} from cache.
 	 * 
 	 * @param threadId
