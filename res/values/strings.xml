@@ -30,7 +30,7 @@
 	<string name="twitter_hint">Follow me on twitter.\nGet update notifications etc.</string>
 	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string>
 	<string name="author_">Author:</string>
-	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)</string>
+	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)\ncore.equip http://corequip.de (icons)</string>
 	<string name="more_apps_">More Apps..</string>
 	<string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<string name="license_">License:</string>

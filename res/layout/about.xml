@@ -37,7 +37,7 @@
 			android:paddingTop="5dip" />
 		<TextView android:text="@string/author" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:paddingLeft="10dip"
-			android:autoLink="email" />
+			android:autoLink="all" />
 
 		<TextView android:text="@string/website_"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
