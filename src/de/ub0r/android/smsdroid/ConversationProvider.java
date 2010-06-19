@@ -247,41 +247,32 @@ public final class ConversationProvider extends ContentProvider {
 	 *            {@link SQLiteDatabase}
 	 * @param cout
 	 *            {@link Cursor} from external {@link ConversationProvider}
-	 * @param din
-	 *            date from newest message in internal {@link SQLiteDatabase}
-	 * @return true if any change happend
 	 */
-	private boolean updateRow(final SQLiteDatabase db, final Cursor cout,
-			final long din) {
+	private void updateRow(final SQLiteDatabase db, final Cursor cout) {
 		long dout = cout.getLong(INDEX_DATE);
 		if (dout < ConversationList.MIN_DATE) {
 			dout *= ConversationList.MILLIS;
 		}
-		if (dout > din) {
-			int tid = cout.getInt(INDEX_THREADID);
-			ContentValues cv = new ContentValues();
-			cv.put(PROJECTION[INDEX_DATE], dout);
-			String a = cout.getString(INDEX_ADDRESS);
-			if (a != null) {
-				cv.put(PROJECTION[INDEX_ADDRESS], a);
-				cv.put(PROJECTION[INDEX_NAME], (String) null);
-				cv.put(PROJECTION[INDEX_PID], "");
-			}
-			a = null;
-			cv.put(PROJECTION[INDEX_BODY], cout.getString(INDEX_BODY));
-			cv.put(PROJECTION[INDEX_THREADID], tid);
-			cv.put(PROJECTION[INDEX_TYPE], cout.getInt(INDEX_TYPE));
-			if (db.update(THREADS_TABLE_NAME, cv, PROJECTION[INDEX_THREADID]
-					+ " = " + tid, // .
-					null) == 0) {
-				Log.d(TAG, "insert row for thread: " + tid);
-				db.insert(THREADS_TABLE_NAME, PROJECTION[INDEX_ID], cv);
-			} else {
-				Log.d(TAG, "update row for thread: " + tid);
-			}
-			return true;
+		int tid = cout.getInt(INDEX_THREADID);
+		ContentValues cv = new ContentValues();
+		cv.put(PROJECTION[INDEX_DATE], dout);
+		String a = cout.getString(INDEX_ADDRESS);
+		if (a != null) {
+			cv.put(PROJECTION[INDEX_ADDRESS], a);
+			cv.put(PROJECTION[INDEX_NAME], (String) null);
+			cv.put(PROJECTION[INDEX_PID], "");
+		}
+		a = null;
+		cv.put(PROJECTION[INDEX_BODY], cout.getString(INDEX_BODY));
+		cv.put(PROJECTION[INDEX_THREADID], tid);
+		cv.put(PROJECTION[INDEX_TYPE], cout.getInt(INDEX_TYPE));
+		if (db.update(THREADS_TABLE_NAME, cv, PROJECTION[INDEX_THREADID]
+				+ " = " + tid, // .
+				null) == 0) {
+			Log.d(TAG, "insert row for thread: " + tid);
+			db.insert(THREADS_TABLE_NAME, PROJECTION[INDEX_ID], cv);
 		} else {
-			return false;
+			Log.d(TAG, "update row for thread: " + tid);
 		}
 	}
 
@@ -296,9 +287,20 @@ public final class ConversationProvider extends ContentProvider {
 		final ContentResolver cr = this.getContext().getContentResolver();
 		Cursor cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null,
 				null, DEFAULT_SORT_ORDER);
+
+		if (cin == null) {
+			Log.e(TAG, "cursor in == null");
+			return;
+		}
+		long din = 0;
+		if (cin.moveToFirst()) {
+			din = cin.getLong(INDEX_DATE);
+		}
+
 		Cursor cout;
+		// hunt for new sms
 		try {
-			cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
+			cout = cr.query(ORIG_URI, PROJECTION_OUT, "date > " + din, null,
 					DEFAULT_SORT_ORDER);
 		} catch (SQLException e) {
 			Log.w(TAG, "error while query", e);
@@ -307,40 +309,28 @@ public final class ConversationProvider extends ContentProvider {
 			cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
 					DEFAULT_SORT_ORDER);
 		}
-
 		if (cout != null && cout.moveToFirst()) {
-			if (cin == null) {
-				Log.e(TAG, "cursor in == null");
-				return;
-			}
-			long din = 0;
-			if (cin.moveToFirst()) {
-				din = cin.getLong(INDEX_DATE);
-			}
-			// hunt for new sms
-			do {
-				if (!this.updateRow(db, cout, din)) {
-					break;
-				}
-			} while (cout.moveToNext());
 
-			// hunt for new mms
-			if (!cout.moveToLast()) {
-				Log.e(TAG, "error moving cursor to end");
-			}
 			do {
-				long dout = cout.getLong(INDEX_DATE);
-				Log.d(TAG, "din:  " + din);
-				Log.d(TAG, "dout: " + dout);
-				if (dout * ConversationList.MILLIS < din) {
-					continue;
-				} else if (dout > ConversationList.MIN_DATE) {
-					break;
-				} else if (!this.updateRow(db, cout, din)) {
-					break;
-				}
-			} while (cout.moveToPrevious());
+				this.updateRow(db, cout);
+			} while (cout.moveToNext());
 		}
+		cout.close();
+
+		// hunt for new mms
+		if (din > 0) {
+			cout = cr
+					.query(ORIG_URI, PROJECTION_OUT, "date < "
+							+ ConversationList.MIN_DATE + " AND date > "
+							+ (din / ConversationList.MILLIS), null,
+							DEFAULT_SORT_ORDER);
+			if (cout != null && cout.moveToFirst()) {
+				do {
+					this.updateRow(db, cout);
+				} while (cout.moveToNext());
+			}
+		}
+
 		if (cin != null && !cin.isClosed()) {
 			cin.close();
 		}
@@ -365,7 +355,7 @@ public final class ConversationProvider extends ContentProvider {
 				do {
 					// copy row from external to internal db
 					Log.d(TAG, "new row");
-					this.updateRow(db, cout, -1);
+					this.updateRow(db, cout);
 				} while (cout.moveToNext());
 			} else {
 				do {
@@ -380,16 +370,26 @@ public final class ConversationProvider extends ContentProvider {
 						}
 						Log.d(TAG, "check tidout: " + tidout);
 						if (tidin > tidout) {
-							Conversation.removeConversation(tidin);
-							Log.d(TAG, "delete tidin: " + tidin);
-							db.delete(THREADS_TABLE_NAME,
-									PROJECTION[INDEX_THREADID] + " = " + tidin,
-									null);
+							final Cursor c = cr.query(ORIG_URI.buildUpon()
+									.appendPath(String.valueOf(tidin)).build(),
+									PROJECTION_OUT, null, null, null);
+							if (c == null || c.getCount() <= 0) {
+								Conversation.removeConversation(tidin);
+								Log.d(TAG, "delete tidin: " + tidin);
+								db.delete(THREADS_TABLE_NAME,
+										PROJECTION[INDEX_THREADID] + " = "
+												+ tidin, null);
+							} else {
+								Log.d(TAG, "skip: delete tidin: " + tidin);
+							}
+							if (c != null && !c.isClosed()) {
+								c.close();
+							}
 							break; // go to next internal row
 						} else if (tidin < tidout) {
 							// copy row from external to internal db
 							Log.d(TAG, "new row");
-							this.updateRow(db, cout, -1);
+							this.updateRow(db, cout);
 						} else {
 							cout.moveToNext();
 							break; // rows are even. go to next pair.
