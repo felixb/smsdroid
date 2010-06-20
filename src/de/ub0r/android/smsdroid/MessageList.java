@@ -187,7 +187,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * Set all messages in a given thread as read.
 	 */
 	private void setRead() {
-		ConversationList.markRead(this, this.conv.getUri(), 1);
+		if (this.conv != null) {
+			ConversationList.markRead(this, this.conv.getUri(), 1);
+		}
 	}
 
 	/**

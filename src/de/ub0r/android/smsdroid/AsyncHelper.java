@@ -97,6 +97,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(final Void... arg0) {
 		ContentValues cv = new ContentValues();
+		if (this.mConversation == null) {
+			return null;
+		}
 		Uri uri = this.mConversation.getUri();
 		Cursor cursor = this.context.getContentResolver().query(uri,
 				Message.PROJECTION_JOIN, null, null, null);
