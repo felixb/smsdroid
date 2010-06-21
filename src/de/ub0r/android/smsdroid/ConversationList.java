@@ -465,6 +465,7 @@ public class ConversationList extends ListActivity implements
 						if (n == null) {
 							i = ContactsWrapper.getInstance()
 									.getInsertPickIntent(a);
+							Conversation.flushCache();
 						} else {
 							final Uri uri = ContactsWrapper.getInstance()
 									.getContactUri(
@@ -476,7 +477,8 @@ public class ConversationList extends ListActivity implements
 						ConversationList.this.startActivity(i);
 						break;
 					case WHICH_VIEW:
-						i = new Intent(ConversationList.this, MessageList.class);
+						i = new Intent(ConversationList.this, // .
+								MessageList.class);
 						i.setData(target);
 						ConversationList.this.startActivity(i);
 						break;
