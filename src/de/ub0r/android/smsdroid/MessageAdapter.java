@@ -204,36 +204,6 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 
-		final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
-		CharSequence text = m.getBody();
-		if (text == null) {
-			btn.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(final View v) {
-					// view.findViewById(R.id.label_downloading).setVisibility(
-					// View.VISIBLE);
-					// btn.setVisibility(View.GONE);
-					// Intent intent = new Intent();
-					// intent.setClassName("com.android.mms",
-					// ".transaction.TransactionService");
-					// intent.putExtra("uri", m.getUri().toString());
-					// intent.putExtra("type", 1);
-					// context.startService(intent);
-
-					final Uri target = Uri.parse(MessageList.URI
-							+ m.getThreadId());
-					Intent i = new Intent(Intent.ACTION_VIEW, target);
-					context.startActivity(Intent.createChooser(i, context
-							.getString(R.string.view_mms)));
-				}
-			});
-
-			btn.setVisibility(View.VISIBLE);
-		} else {
-			btn.setVisibility(View.GONE);
-		}
-		twBody.setText(text);
-
 		long time = m.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(ConversationList
 				.getDate(context, time));
@@ -268,6 +238,41 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		} else {
 			ivPicture.setVisibility(View.GONE);
 			ivPicture.setOnClickListener(null);
+		}
+
+		final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
+		CharSequence text = m.getBody();
+		if (text == null && pic == null) {
+			btn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					// view.findViewById(R.id.label_downloading).setVisibility(
+					// View.VISIBLE);
+					// btn.setVisibility(View.GONE);
+					// Intent intent = new Intent();
+					// intent.setClassName("com.android.mms",
+					// ".transaction.TransactionService");
+					// intent.putExtra("uri", m.getUri().toString());
+					// intent.putExtra("type", 1);
+					// context.startService(intent);
+
+					final Uri target = Uri.parse(MessageList.URI
+							+ m.getThreadId());
+					Intent i = new Intent(Intent.ACTION_VIEW, target);
+					context.startActivity(Intent.createChooser(i, context
+							.getString(R.string.view_mms)));
+				}
+			});
+
+			btn.setVisibility(View.VISIBLE);
+		} else {
+			btn.setVisibility(View.GONE);
+		}
+		if (text == null) {
+			twBody.setVisibility(View.INVISIBLE);
+		} else {
+			twBody.setText(text);
+			twBody.setVisibility(View.VISIBLE);
 		}
 	}
 }
