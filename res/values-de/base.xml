@@ -16,16 +16,6 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 	-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:paddingTop="5dip" android:paddingBottom="5dip"
-	android:paddingRight="5dip">
-	<TextView android:text="@string/new_message" android:id="@+id/text1"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:paddingLeft="7dip" />
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:id="@+id/text2"
-		android:text="@string/new_message_hint" android:layout_below="@+id/text1"
-		android:singleLine="true" android:paddingLeft="5dip" />
-</RelativeLayout>
+<resources>
+	<string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11046415</string>
+</resources>

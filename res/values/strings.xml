@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009 Felix Bechstein
+		Copyright (C) 2009-2010 Felix Bechstein
 	-->
 	<!--
 		This file is part of SMSdroid. This program is free software; you can
@@ -17,21 +17,14 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-    <string name="app_name">SMSdroid</string>
-	<string name="app_version">0.1.2</string>
 	<string name="about_">About</string>
 	<string name="about_hint">About this app</string>
-	<string name="faq_">FAQ</string>
 	<string name="faq_hint">Some tips and tricks, how to set up this app.</string>
 	<string name="feedback_">Feedback</string>
 	<string name="feedback_hint">Report bugs, request features ...</string>
-	<string name="twitter_">twitter</string>
 	<string name="twitter_hint">Follow me on twitter.\nGet update notifications etc.</string>
 	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string>
-	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)\ncore.equip http://corequip.de (icons)</string>
 	<string name="more_apps_">More Apps..</string>
-	<string name="source">http://github.com/felixb/smsdroid</string>
-	<string name="website">http://code.google.com/p/websmsdroid/</string>
 	<string name="settings">Preferences</string>
 	<string name="new_message">New message</string>
 	<string name="new_message_hint">Compose a new message</string>
@@ -94,22 +87,13 @@
 	<string name="clear_cache_">Clear cache</string>
 	<string name="clear_cache_hint">Clear internal Database. Fetch all data again from external Database.</string>
 	<string name="not_implemented">Sorry, not yet implemented.</string>
-	
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>
 	</string-array>
-	<string-array name="themes_values">
-		<item>black</item>
-		<item>light</item>
-	</string-array>
 	<string-array name="textsize">
 		<item>Small</item>
 		<item>Medium</item>
-	</string-array>
-	<string-array name="textsize_values">
-		<item>small</item>
-		<item>medium</item>
 	</string-array>
 	<string-array name="led_color">
 		<item>Green</item>
@@ -119,21 +103,9 @@
 		<item>Magenta</item>
 		<item>Cyan</item>
 	</string-array>
-	<string-array name="led_color_values">
-		<item>65280</item>
-		<item>255</item>
-		<item>16711680</item>
-		<item>16753920</item>
-		<item>16711935</item>
-		<item>65535</item>
-	</string-array>
 	<string-array name="led_flash">
 		<item>Flashing</item>
 		<item>Consistently</item>
-	</string-array>
-	<string-array name="led_flash_values">
-		<item>500_2000</item>
-		<item>1_0</item>
 	</string-array>
 	<string-array name="vibrate_mode">
 		<item>Default</item>
@@ -141,41 +113,5 @@
 		<item>Multiple short</item>
 		<item>Multiple long</item>
 		<item>Short, long, short, long</item>
-	</string-array>
-	<string-array name="vibrate_mode_values">
-		<item>0</item>
-		<item>10_1000</item>
-		<item>10_200_200_200_200_200</item>
-		<item>10_1000_500_1000_500_1000</item>
-		<item>10_200_250_1000_250_200_250_1000</item>
-	</string-array>
-		<string-array name="emoticons">
-		<item>O:-)</item>
-		<item>8-)</item>
-		<item>8)</item>
-		<item>;-(</item>
-		<item>;(</item>
-		<item>:-?</item>
-		<item>:-)</item>
-		<item>:)</item>
-		<item>:-*</item>
-		<item>:*</item>
-		<item>:-D</item>
-		<item>:D</item>
-		<item>:-X</item>
-		<item>:-X</item>
-		<item>:x</item>
-		<item>:-$</item>
-		<item>:-(</item>
-		<item>:(</item>
-		<item>:o</item>
-		<item>:-P</item>
-		<item>:P</item>
-		<item>:p</item>
-		<item>:-\\</item>
-		<item>;-)</item>
-		<item>;)</item>
-		<item>o.O</item>
-		<item>:O</item>
 	</string-array>
 </resources>
