@@ -17,127 +17,128 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-<!--	<string name="author_">Author:</string> -->
-<!--	<string name="version_">Version:</string> -->
-<!--	<string name="license_">License:</string> -->
-<!--	<string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string> -->
-<!--	<string name="source_">Sourcescode:</string> -->
-<!--	<string name="website_">Website:</string> -->
-<!--	<string name="send_logs_">Send logs</string> -->
-<!--	<string name="send_logs_hint">Send your device\'s logs to the developer.\nDo this only if you was asked to do so.</string> -->
-<!--	<string name="sendlog_run_">Run SendLog</string> -->
-<!--	<string name="sendlog_run">SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.</string> -->
-<!--	<string name="sendlog_install_">Install SendLog</string> -->
-<!--	<string name="sendlog_install">Install the free SendLog application to collect the device log and send it to the developer.</string> -->
-<!--	<string name="donate_paypal_">Donate (Paypal)</string> -->
-<!--	<string name="donate_market_">Donate (Market)</string> -->
-<!--	<string name="donate_remove_ads_">Donate/remove ads</string> -->
-<!--	<string name="remove_ads_">Remove ads</string> -->
-<!--	<string name="predonate">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating. I\'ll remove the ads for you as soon as possible.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.</string> -->
-<!--	<string name="postdonate">To remove ads, you need to load the noads code. It is available as soon the donation arrives. Please be patient and drop me a mail if it does not work after one day.</string> -->
-<!--	<string name="donator_id_">To verify your donation your donation id (paypal mail address for paypal; gmail address for market) is needed:</string> -->
-<!--	<string name="donator_id_hint">Paypal/gmail address</string> -->
-<!--	<string name="load_hash_">Load noads code</string> -->
-<!--	<string name="sig_loaded">Ads removed!</string> -->
-<!--	<string name="sig_failed">Failed to remove ads!</string> -->
-<!--	<string name="accept_">Accept Terms</string> -->
-<!--	<string name="accept_missing">Please accept terms before sending the data.</string> -->
-<!--	<string name="terms">The app will send your donation id along with the md5-hash of your IMEI to the server (http://ub0r.de/donation/). The data is needed to verify your donation.\nThe data is never given to third party and used only for verifying your donation.\n\nIf your phone changes, the noads code will not work anymore. Please drop me a mail to get a new one.</string> -->
-<!--	<string name="about_">About</string> -->
-<!--	<string name="about_hint">About this app</string> -->
-<!--	<string name="faq_hint">Some tips and tricks, how to set up this app.</string> -->
-<!--	<string name="feedback_">Feedback</string> -->
-<!--	<string name="feedback_hint">Report bugs, request features ...</string> -->
-<!--	<string name="twitter_hint">Follow me on twitter.\nGet update notifications etc.</string> -->
-<!--	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string> -->
-<!--	<string name="more_apps_">More Apps..</string> -->
-<!--	<string name="settings">Preferences</string> -->
-<!--	<string name="new_message">New message</string> -->
-<!--	<string name="new_message_hint">Compose a new message</string> -->
-<!--	<string name="new_messages_">New messages</string> -->
-<!--	<string name="new_messages">%d unread messages.</string> -->
-<!--	<string name="answer">Answer</string> -->
-<!--	<string name="send_">Send</string> -->
-<!--	<string name="notification_">Notifications</string> -->
-<!--	<string name="notification_enable_">Enable notifications</string> -->
-<!--	<string name="notification_enable_hint">Enable notifications on receive</string> -->
-<!--	<string name="receive_vibrate_">Vibrate</string> -->
-<!--	<string name="receive_vibrate_hint">Vibrate on receive</string> -->
-<!--	<string name="receive_vibrate_mode_">Vibrator mode</string> -->
-<!--	<string name="receive_sound_">Sound</string> -->
-<!--	<string name="receive_sound_hint">Sound on receive</string> -->
-<!--	<string name="receive_led_color_">LED color</string> -->
-<!--	<string name="receive_led_flash_">LED mode</string> -->
-<!--	<string name="receive_led_flash_hint">Set LED flashing behaviour</string> -->
-<!--	<string name="appearance_">Appearance</string> -->
-<!--	<string name="theme_">Theme</string> -->
-<!--	<string name="textsize_">Text size</string> -->
-<!--	<string name="show_contact_photo_">Show photo</string> -->
-<!--	<string name="show_contact_photo_hint">Show contact\'s photo in conversation list</string> -->
-<!--	<string name="show_emoticons_">Show emoticons</string> -->
-<!--	<string name="show_emoticons_hint">Show emoticons in message list.</string> -->
-<!--	<string name="show_bubbles_">Show bubbles</string> -->
-<!--	<string name="me">Me</string> -->
-<!--	<string name="view_contact_">View contact</string> -->
-<!--	<string name="add_contact_">Add to contacts</string> -->
+	<string name="author_">Autor:</string>
+	<string name="version_">Versión:</string>
+	<string name="license_">Licencia:</string>
+	<string name="license">GPLv3 - ver http://www.gnu.org/licenses/gpl-3.0.txt</string>
+	<string name="source_">Código fuente:</string>
+	<string name="website_">Página web:</string>
+	<string name="send_logs_">Enviar logs</string>
+	<string name="send_logs_hint">Envía los logs de su dispositivo al desarrollador.\nHágalo sólo si se le solicitó.</string>
+
+	<string name="sendlog_run_">Ejecutar SendLog</string>
+	<string name="sendlog_run">SendLog recogerá los log del dispositivo y los enviará al desarrollador.\nPodrá revisar y modificar la información antes de enviarla.</string>
+	<string name="sendlog_install_">Instalar SendLog</string>
+	<string name="sendlog_install">Instala la aplicación gratuita SendLog para recoger los logs del dispositivo y enviarlos al desarrollador.</string>
+	<string name="donate_paypal_">Donar (Paypal)</string>
+	<string name="donate_market_">Donar (Market)</string>
+	<string name="donate_remove_ads_">Donar/eliminar publicidad</string>
+	<string name="remove_ads_">Eliminar publicidad</string>
+	<string name="predonate">Esta es una aplicación de código abierto liberada bajo licencia GPLv3. Es gratuita y lo seguirá siendo. Si realmente le gusta o le molesta la publicidad, por favor considere donar. La publicidad será eliminada lo antes posible.\n¡Gracias!\n\nLa donación eliminará la publicidad de todas las aplicaciones que proporciono.</string>
+	<string name="postdonate">Para eliminar la publicidad, necesita el código no-publi (<i>noads code</i>). Estará disponible tan pronto como llegue el donativo. Por favor, sea paciente y mándeme un correo si no funciona transcurrido un día.</string>
+	<string name="donator_id_">Para verificar su donativo es necesario su ID de donativo (dirección de correo de paypal para paypal; dirección de correo de gmail para el Market):</string>
+	<string name="donator_id_hint">Dirección de Paypal/gmail</string>
+	<string name="load_hash_">Cargar código no-publi</string>
+	<string name="sig_loaded">¡Publicidad eliminada!</string>
+	<string name="sig_failed">¡Error al eliminar la publicidad!</string>
+	<string name="accept_">Aceptar Condiciones</string>
+	<string name="accept_missing">Por favor, acepte las condiciones antes de enviar la información.</string>
+	<string name="terms">Esta aplicación enviará el identificador de su donativo junto con el md5-hash de su IMEI al servidor (http://ub0r.de/donation/). Esta información es necesaria para verificar su donativo.\nEsta información nunca será revelada a terceras personas o entidades, y únicamente será utilizada para verificar su donativo.\n\nSi cambia de teléfono el código no-publi (<i>noads code</i>) ya no funcionará. Por favor, contacte conmigo para obtener uno nuevo.</string>
+	<string name="about_">Acerca de</string>
+	<string name="about_hint">Acerca de esta aplicación</string>
+	<string name="faq_hint">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
+	<string name="feedback_">Retroalimentación</string>
+	<string name="feedback_hint">Avise sobre errores, sugiera características...</string>
+	<string name="twitter_hint">Sígame en twitter.\nObtenga notificaciones sobre actualizaciones, etc.</string>
+	<string name="about0">SMSdroid le permite leer sus sms, así como escribirlos con cualquier aplicación.</string>
+	<string name="more_apps_">Más Aplicaciones..</string>
+	<string name="settings">Preferencias</string>
+	<string name="new_message">Nuevo mensaje</string>
+	<string name="new_message_hint">Crea un nuevo mensaje</string>
+	<string name="new_messages_">Mensajes nuevos</string>
+	<string name="new_messages">%d mensajes sin leer.</string>
+	<string name="answer">Responder</string>
+	<string name="send_">Enviar</string>
+	<string name="notification_">Notificaciones</string>
+	<string name="notification_enable_">Habilitar notificaciones</string>
+	<string name="notification_enable_hint">Habilita notificaciones al recibir</string>
+	<string name="receive_vibrate_">Vibrar</string>
+	<string name="receive_vibrate_hint">Vibra al recibir</string>
+	<string name="receive_vibrate_mode_">Modo de vibración</string>
+	<string name="receive_sound_">Sonar</string>
+	<string name="receive_sound_hint">Suena al recibir</string>
+	<string name="receive_led_color_">Color de LED</string>
+	<string name="receive_led_flash_">Modo de LED</string>
+	<string name="receive_led_flash_hint">Establece el comportamiento del parpadeo del LED</string>
+	<string name="appearance_">Apariencia</string>
+	<string name="theme_">Tema</string>
+	<string name="textsize_">Tamaño del texto</string>
+	<string name="show_contact_photo_">Mostrar foto</string>
+	<string name="show_contact_photo_hint">Muestra la foto del contacto en la lista de conversaciones</string>
+	<string name="show_emoticons_">Mosrar emoticonos</string>
+	<string name="show_emoticons_hint">Muestra emoticonos en la lista de mensajes.</string>
+	<string name="show_bubbles_">Mostrar bocadillos</string>
+	<string name="me">Yo</string>
+	<string name="view_contact_">Ver contacto</string>
+	<string name="add_contact_">Añadir a contactos</string>
 <!--	<string name="view_thread_">View thread</string> -->
-<!--	<string name="delete_message_">Delete message</string> -->
+	<string name="delete_message_">Borrar mensaje</string>
 <!--	<string name="delete_thread_">Delete thread</string> -->
-<!--	<string name="forward_">Forward</string> -->
-<!--	<string name="copy_text_">Copy message text</string> -->
-<!--	<string name="view_details_">View messate details</string> -->
+	<string name="forward_">Reenviar</string>
+	<string name="copy_text_">Copiar texto del mensaje</string>
+	<string name="view_details_">Ver detalles del mensaje</string>
 <!--	<string name="spek_">Speak</string> -->
 <!--	<string name="delete_threads_">Delete all threads</string> -->
-<!--	<string name="mark_all_read_">Mark all as read</string> -->
-<!--	<string name="mark_read_">Mark read</string> -->
-<!--	<string name="mark_unread_">Mark unread</string> -->
+	<string name="mark_all_read_">Marcar todo como leído</string>
+	<string name="mark_read_">Marcar como leído</string>
+	<string name="mark_unread_">Marcar como no leído</string>
 <!--	<string name="all_threads_">All threads</string> -->
-<!--	<string name="message_options_">Message options</string> -->
-<!--	<string name="compose_">Compose</string> -->
-<!--	<string name="delete_message_question">Do you really want to delete this message?</string> -->
-<!--	<string name="delete_messages_question">Do you really want to delete these messages?</string> -->
+	<string name="message_options_">Opciones de mensaje</string>
+	<string name="compose_">Redactar</string>
+	<string name="delete_message_question">¿Realmente desea eliminar este mensaje?</string>
+	<string name="delete_messages_question">¿Realmente desea eliminar estos mensaje?</string>
 <!--	<string name="delete_thread_question">Do you really want to delete <b>all messages of this thread</b>?</string> -->
-<!--	<string name="delete_threads_question">Do you really want to delete <b>all messages</b>?</string> -->
-<!--	<string name="from_">From:</string> -->
-<!--	<string name="to_">To:</string> -->
-<!--	<string name="type_">Type:</string> -->
-<!--	<string name="sent_">Sent:</string> -->
-<!--	<string name="received_">Received:</string> -->
-<!--	<string name="view_mms">View MMS</string> -->
-<!--	<string name="mms_conversation">&lt;MMS body&gt;</string> -->
+	<string name="delete_threads_question">¿Realmente desea eliminar <b>todos los mensajes</b>?</string>
+	<string name="from_">Origen:</string>
+	<string name="to_">Destino:</string>
+	<string name="type_">Tipo:</string>
+	<string name="sent_">Enviado:</string>
+	<string name="received_"> Recibido:</string>
+	<string name="view_mms">Ver MMS</string>
+	<string name="mms_conversation">&lt;Cuerpo del MMS&gt;</string>
 <!--	<string name="mms_not_supported">This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.</string> -->
 <!--	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string> -->
-<!--	<string name="download_">Download</string> -->
-<!--	<string name="downloading_">Downloading..</string> -->
+	<string name="download_">Descargar</string>
+	<string name="downloading_">Descargando..</string>
 <!--	<string name="debug_">Debug</string> -->
-<!--	<string name="clear_cache_">Clear cache</string> -->
+	<string name="clear_cache_">Borrar caché</string>
 <!--	<string name="clear_cache_hint">Clear internal Database. Fetch all data again from external Database.</string> -->
 <!--	<string name="not_implemented">Sorry, not yet implemented.</string> -->
-<!--	<string-array name="themes"> -->
-<!--		<item>Black</item> -->
-<!--		<item>Light</item> -->
-<!--	</string-array> -->
-<!--	<string-array name="textsize"> -->
-<!--		<item>Small</item> -->
-<!--		<item>Medium</item> -->
-<!--	</string-array> -->
-<!--	<string-array name="led_color"> -->
-<!--		<item>Green</item> -->
-<!--		<item>Blue</item> -->
-<!--		<item>Red</item> -->
-<!--		<item>Orange</item> -->
-<!--		<item>Magenta</item> -->
-<!--		<item>Cyan</item> -->
-<!--	</string-array> -->
-<!--	<string-array name="led_flash"> -->
-<!--		<item>Flashing</item> -->
-<!--		<item>Consistently</item> -->
-<!--	</string-array> -->
-<!--	<string-array name="vibrate_mode"> -->
-<!--		<item>Default</item> -->
-<!--		<item>Long</item> -->
-<!--		<item>Multiple short</item> -->
-<!--		<item>Multiple long</item> -->
-<!--		<item>Short, long, short, long</item> -->
-<!--	</string-array> -->
+	<string-array name="themes">
+		<item>Oscuro</item>
+		<item>Claro</item>
+	</string-array>
+	<string-array name="textsize">
+		<item>Pequeño</item>
+		<item>Mediano</item>
+	</string-array>
+	<string-array name="led_color">
+		<item>Verde</item>
+		<item>Azul</item>
+		<item>Rojo</item>
+		<item>Naranja</item>
+		<item>Magenta</item>
+		<item>Cian</item>
+	</string-array>
+	<string-array name="led_flash">
+		<item>Intermitente</item>
+		<item>Fijo</item>
+	</string-array>
+	<string-array name="vibrate_mode">
+		<item>Por defecto</item>
+		<item>Larga</item>
+		<item>A intervalos breves</item>
+		<item>A intervalos largos</item>
+		<item>Breve, larga, breve, larga</item>
+	</string-array>
 </resources>
