@@ -25,7 +25,6 @@
 	<string name="website_">Página web:</string>
 	<string name="send_logs_">Enviar logs</string>
 	<string name="send_logs_hint">Envía los logs de su dispositivo al desarrollador.\nHágalo sólo si se le solicitó.</string>
-
 	<string name="sendlog_run_">Ejecutar SendLog</string>
 	<string name="sendlog_run">SendLog recogerá los log del dispositivo y los enviará al desarrollador.\nPodrá revisar y modificar la información antes de enviarla.</string>
 	<string name="sendlog_install_">Instalar SendLog</string>
@@ -81,23 +80,23 @@
 	<string name="me">Yo</string>
 	<string name="view_contact_">Ver contacto</string>
 	<string name="add_contact_">Añadir a contactos</string>
-<!--	<string name="view_thread_">View thread</string> -->
-	<string name="delete_message_">Borrar mensaje</string>
-<!--	<string name="delete_thread_">Delete thread</string> -->
+	<string name="view_thread_">Ver conversación</string>
+	<string name="delete_message_">Eliminar mensaje</string>
+	<string name="delete_thread_">Eliminar conversación</string>
 	<string name="forward_">Reenviar</string>
 	<string name="copy_text_">Copiar texto del mensaje</string>
 	<string name="view_details_">Ver detalles del mensaje</string>
 <!--	<string name="spek_">Speak</string> -->
-<!--	<string name="delete_threads_">Delete all threads</string> -->
+	<string name="delete_threads_">Eliminar todas las conversaciones</string>
 	<string name="mark_all_read_">Marcar todo como leído</string>
 	<string name="mark_read_">Marcar como leído</string>
 	<string name="mark_unread_">Marcar como no leído</string>
-<!--	<string name="all_threads_">All threads</string> -->
+	<string name="all_threads_">Todas las conversaciones</string>
 	<string name="message_options_">Opciones de mensaje</string>
 	<string name="compose_">Redactar</string>
 	<string name="delete_message_question">¿Realmente desea eliminar este mensaje?</string>
 	<string name="delete_messages_question">¿Realmente desea eliminar estos mensaje?</string>
-<!--	<string name="delete_thread_question">Do you really want to delete <b>all messages of this thread</b>?</string> -->
+	<string name="delete_thread_question">¿Realmente desea eliminar <b>todos los mensajes de esta conversación</b>Do you really want to delete <b>?</string>
 	<string name="delete_threads_question">¿Realmente desea eliminar <b>todos los mensajes</b>?</string>
 	<string name="from_">Origen:</string>
 	<string name="to_">Destino:</string>
@@ -106,14 +105,14 @@
 	<string name="received_"> Recibido:</string>
 	<string name="view_mms">Ver MMS</string>
 	<string name="mms_conversation">&lt;Cuerpo del MMS&gt;</string>
-<!--	<string name="mms_not_supported">This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.</string> -->
+	<string name="mms_not_supported"Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
 <!--	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string> -->
 	<string name="download_">Descargar</string>
 	<string name="downloading_">Descargando..</string>
-<!--	<string name="debug_">Debug</string> -->
+	<string name="debug_">Depurar</string>
 	<string name="clear_cache_">Borrar caché</string>
-<!--	<string name="clear_cache_hint">Clear internal Database. Fetch all data again from external Database.</string> -->
-<!--	<string name="not_implemented">Sorry, not yet implemented.</string> -->
+	<string name="clear_cache_hint">Borra la base de datos interna. Obtiene todos los datos de nuevo de bases de datos externas.</string>
+	<string name="not_implemented">Lo siento, función todavía no implementada</string>
 	<string-array name="themes">
 		<item>Oscuro</item>
 		<item>Claro</item>
