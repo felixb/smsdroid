@@ -105,7 +105,7 @@
 	<string name="received_"> Recibido:</string>
 	<string name="view_mms">Ver MMS</string>
 	<string name="mms_conversation">&lt;Cuerpo del MMS&gt;</string>
-	<string name="mms_not_supported"Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
+	<string name="mms_not_supported">Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
 <!--	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string> -->
 	<string name="download_">Descargar</string>
 	<string name="downloading_">Descargando..</string>
