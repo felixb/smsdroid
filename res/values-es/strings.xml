@@ -74,7 +74,7 @@
 	<string name="textsize_">Tamaño del texto</string>
 	<string name="show_contact_photo_">Mostrar foto</string>
 	<string name="show_contact_photo_hint">Muestra la foto del contacto en la lista de conversaciones</string>
-	<string name="show_emoticons_">Mosrar emoticonos</string>
+	<string name="show_emoticons_">Mostrar emoticonos</string>
 	<string name="show_emoticons_hint">Muestra emoticonos en la lista de mensajes.</string>
 	<string name="show_bubbles_">Mostrar bocadillos</string>
 	<string name="me">Yo</string>
