@@ -98,11 +98,11 @@
 	<string name="delete_messages_question">¿Realmente desea eliminar estos mensaje?</string>
 	<string name="delete_thread_question">¿Realmente desea eliminar <b>todos los mensajes de esta conversación</b>Do you really want to delete <b>?</string>
 	<string name="delete_threads_question">¿Realmente desea eliminar <b>todos los mensajes</b>?</string>
-	<string name="from_">Origen:</string>
-	<string name="to_">Destino:</string>
+	<string name="from_">De:</string>
+	<string name="to_">A:</string>
 	<string name="type_">Tipo:</string>
 	<string name="sent_">Enviado:</string>
-	<string name="received_"> Recibido:</string>
+	<string name="received_">Recibido:</string>
 	<string name="view_mms">Ver MMS</string>
 	<string name="mms_conversation">&lt;Cuerpo del MMS&gt;</string>
 	<string name="mms_not_supported">Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
