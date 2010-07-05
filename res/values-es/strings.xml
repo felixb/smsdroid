@@ -53,7 +53,7 @@
 	<string name="more_apps_">Más Aplicaciones..</string>
 	<string name="settings">Preferencias</string>
 	<string name="new_message">Nuevo mensaje</string>
-	<string name="new_message_hint">Crea un nuevo mensaje</string>
+	<string name="new_message_hint">Redactar un mensaje nuevo</string>
 	<string name="new_messages_">Mensajes nuevos</string>
 	<string name="new_messages">%d mensajes sin leer.</string>
 	<string name="answer">Responder</string>
@@ -96,7 +96,7 @@
 	<string name="compose_">Redactar</string>
 	<string name="delete_message_question">¿Realmente desea eliminar este mensaje?</string>
 	<string name="delete_messages_question">¿Realmente desea eliminar estos mensaje?</string>
-	<string name="delete_thread_question">¿Realmente desea eliminar <b>todos los mensajes de esta conversación</b>Do you really want to delete <b>?</string>
+	<string name="delete_thread_question">¿Realmente desea eliminar <b>todos los mensajes de esta conversación</b>?</string>
 	<string name="delete_threads_question">¿Realmente desea eliminar <b>todos los mensajes</b>?</string>
 	<string name="from_">De:</string>
 	<string name="to_">A:</string>
