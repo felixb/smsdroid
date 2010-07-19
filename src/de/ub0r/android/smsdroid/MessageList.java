@@ -128,6 +128,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		super.onNewIntent(intent);
 		this.uri = intent.getData();
 		if (this.uri != null) {
+			if (!this.uri.toString().startsWith(URI)) {
+				this.uri = Uri.parse(URI + this.uri.getLastPathSegment());
+			}
 			this.parseIntent(intent);
 		}
 	}
