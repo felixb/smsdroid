@@ -73,6 +73,7 @@
 			android:authorities="de.ub0r.android.smsdroid.provider.conversations" />
 		<!-- The application's publisher ID assigned by AdMob -->
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
+		<meta-data android:value="true" android:name="ADMOB_ALLOW_LOCATION_FOR_ADS" />
 	</application>
 	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="7" />
 	<supports-screens android:largeScreens="true"
