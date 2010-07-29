@@ -71,7 +71,7 @@ public class ConversationList extends ListActivity implements
 	private static final int DIALOG_UPDATE = 1;
 
 	/** Number of items. */
-	private static final int WHICH_N = 4;
+	private static final int WHICH_N = 5;
 	/** Index in dialog: answer. */
 	private static final int WHICH_ANSWER = 0;
 	/** Index in dialog: view/add contact. */
@@ -80,6 +80,8 @@ public class ConversationList extends ListActivity implements
 	private static final int WHICH_VIEW = 2;
 	/** Index in dialog: delete. */
 	private static final int WHICH_DELETE = 3;
+	/** Index in dialog: mar as spam */
+	private static final int WHICH_MARK_SPAM = 4;
 
 	/** Preferences: hide ads. */
 	private static boolean prefsNoAds = false;
@@ -207,6 +209,8 @@ public class ConversationList extends ListActivity implements
 				.getString(R.string.view_thread_);
 		this.longItemClickDialog[WHICH_DELETE] = this
 				.getString(R.string.delete_thread_);
+		this.longItemClickDialog[WHICH_MARK_SPAM] = this
+				.getString(R.string.filter_spam_);
 	}
 
 	/**
@@ -364,6 +368,14 @@ public class ConversationList extends ListActivity implements
 		builder.create().show();
 	}
 
+	static final void addToSpamlist(final Context context, final String addr) {
+		DBAdapter db = new DBAdapter(context);
+		db.open();
+		db.insertNr(addr);
+		Log.d(TAG, "Added " + addr + " to spam list");
+		db.close();
+	}
+
 	/**
 	 *{@inheritDoc}
 	 */
@@ -487,7 +499,9 @@ public class ConversationList extends ListActivity implements
 								target, R.string.delete_thread_,
 								R.string.delete_thread_question, null);
 						break;
-					default:
+					case WHICH_MARK_SPAM:
+						ConversationList.addToSpamlist(ConversationList.this, c
+								.getAddress());
 						break;
 					}
 				}

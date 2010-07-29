@@ -55,6 +55,7 @@
 	<string name="view_contact_">View contact</string>
 	<string name="add_contact_">Add to contacts</string>
 	<string name="view_thread_">View thread</string>
+	<string name="filter_spam_">blacklist sender</string>
 	<string name="delete_message_">Delete message</string>
 	<string name="delete_thread_">Delete thread</string>
 	<string name="forward_">Forward</string>
@@ -114,4 +115,5 @@
 		<item>Multiple long</item>
 		<item>Short, long, short, long</item>
 	</string-array>
+
 </resources>

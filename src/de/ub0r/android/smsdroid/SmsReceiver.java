@@ -96,6 +96,25 @@ public class SmsReceiver extends BroadcastReceiver {
 			t = null;
 			if (l > 0) {
 				t = smsMessage[0].getDisplayMessageBody();
+				// ! Check in blacklist db - filter spam
+				boolean q = false;
+				DBAdapter db = new DBAdapter(context);
+				db.open();
+				if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
+					Log.d(TAG, "Message from "
+							+ smsMessage[0].getOriginatingAddress()
+							+ " filtered.");
+					q = true;
+				} else {
+					Log.d(TAG, "Message from "
+							+ smsMessage[0].getOriginatingAddress()
+							+ " NOT filtered.");
+				}
+				db.getAllEntries();
+				db.close();
+				if (q) {
+					return;
+				}
 			}
 		} else if (action.equals(ACTION_MMS)) {
 			t = MMS_BODY;
