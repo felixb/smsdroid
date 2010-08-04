@@ -80,7 +80,7 @@ public class ConversationList extends ListActivity implements
 	private static final int WHICH_VIEW = 2;
 	/** Index in dialog: delete. */
 	private static final int WHICH_DELETE = 3;
-	/** Index in dialog: mar as spam */
+	/** Index in dialog: mark as spam */
 	private static final int WHICH_MARK_SPAM = 4;
 
 	/** Preferences: hide ads. */
@@ -368,11 +368,18 @@ public class ConversationList extends ListActivity implements
 		builder.create().show();
 	}
 
-	static final void addToSpamlist(final Context context, final String addr) {
+	static final void addToOrRemoveFromSpamlist(final Context context,
+			final String addr) {
 		DBAdapter db = new DBAdapter(context);
 		db.open();
-		db.insertNr(addr);
-		Log.d(TAG, "Added " + addr + " to spam list");
+		if (!db.isInDB(addr)) {
+			db.insertNr(addr);
+			Log.d(TAG, "Added " + addr + " to spam list");
+		} else {
+			db.removeNr(addr);
+			Log.d(TAG, "Removed " + addr + " from spam list");
+		}
+
 		db.close();
 	}
 
@@ -463,6 +470,13 @@ public class ConversationList extends ListActivity implements
 			} else {
 				builder.setTitle(n);
 			}
+			DBAdapter db = new DBAdapter(this.getApplicationContext());
+			db.open();
+			if (db.isInDB(a)) {
+				items[WHICH_MARK_SPAM] = this
+						.getString(R.string.dont_filter_spam_);
+			}
+			db.close();
 			builder.setItems(items, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(final DialogInterface dialog,
@@ -500,8 +514,8 @@ public class ConversationList extends ListActivity implements
 								R.string.delete_thread_question, null);
 						break;
 					case WHICH_MARK_SPAM:
-						ConversationList.addToSpamlist(ConversationList.this, c
-								.getAddress());
+						ConversationList.addToOrRemoveFromSpamlist(
+								ConversationList.this, c.getAddress());
 						break;
 					}
 				}

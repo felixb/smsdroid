@@ -80,4 +80,7 @@ public class DBAdapter {
 		return cursor.getInt(0);
 	}
 
+	public void removeNr(final String nr) {
+		this.db.delete(DATABASE_TABLE, "nr = \"" + nr + "\"", null);
+	}
 }

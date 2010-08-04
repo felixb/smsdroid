@@ -185,7 +185,14 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		} else {
 			tvCount.setText("(" + c.getCount() + ")");
 		}
-		tvName.setText(c.getDisplayName());
+		DBAdapter spam = new DBAdapter(context);
+		spam.open();
+		if (spam.isInDB(c.getAddress())) {
+			tvName.setText("[" + c.getDisplayName() + "]");
+		} else {
+			tvName.setText(c.getDisplayName());
+		}
+		spam.close();
 
 		int t = c.getType();
 		if (t == Calls.INCOMING_TYPE) {

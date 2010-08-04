@@ -82,6 +82,7 @@
 	<string name="add_contact_">zu Kontakten hinzufügen</string>
 	<string name="view_thread_">Thread anzeigen</string>
 	<string name="filter_spam_">Als Spam markieren</string>
+	<string name="dont_filter_spam_">Kein Spam</string>
 	<string name="delete_message_">Nachricht löschen</string>
 	<string name="delete_thread_">Thread löschen</string>
 	<string name="forward_">Weiterleiten</string>
