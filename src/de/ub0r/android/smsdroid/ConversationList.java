@@ -80,13 +80,11 @@ public class ConversationList extends ListActivity implements
 	private static final int WHICH_VIEW = 2;
 	/** Index in dialog: delete. */
 	private static final int WHICH_DELETE = 3;
-	/** Index in dialog: mark as spam */
+	/** Index in dialog: mark as spam. */
 	private static final int WHICH_MARK_SPAM = 4;
 
 	/** Preferences: hide ads. */
 	private static boolean prefsNoAds = false;
-	/** Path to file containing signatures of UID Hash. */
-	private static final String NOADS_SIGNATURES = "/sdcard/websms.noads";
 
 	/** Minimum date. */
 	public static final long MIN_DATE = 10000000000L;

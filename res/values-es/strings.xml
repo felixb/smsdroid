@@ -81,7 +81,8 @@
 	<string name="view_contact_">Ver contacto</string>
 	<string name="add_contact_">Añadir a contactos</string>
 	<string name="view_thread_">Ver conversación</string>
-	<string name="filter_spam_">blacklist sender</string>
+<!--	<string name="filter_spam_">Mark as Spam</string> -->
+<!--	<string name="dont_filter_spam_">Remove from Blacklist</string> -->
 	<string name="delete_message_">Eliminar mensaje</string>
 	<string name="delete_thread_">Eliminar conversación</string>
 	<string name="forward_">Reenviar</string>
