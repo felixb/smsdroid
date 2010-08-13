@@ -366,9 +366,17 @@ public class ConversationList extends ListActivity implements
 		builder.create().show();
 	}
 
-	static final void addToOrRemoveFromSpamlist(final Context context,
+	/**
+	 * Add or remove an entry to/from blacklist.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param addr
+	 *            address
+	 */
+	private static void addToOrRemoveFromSpamlist(final Context context,
 			final String addr) {
-		DBAdapter db = new DBAdapter(context);
+		final SpamDB db = new SpamDB(context);
 		db.open();
 		if (!db.isInDB(addr)) {
 			db.insertNr(addr);
@@ -377,7 +385,6 @@ public class ConversationList extends ListActivity implements
 			db.removeNr(addr);
 			Log.d(TAG, "Removed " + addr + " from spam list");
 		}
-
 		db.close();
 	}
 
@@ -468,9 +475,10 @@ public class ConversationList extends ListActivity implements
 			} else {
 				builder.setTitle(n);
 			}
-			DBAdapter db = new DBAdapter(this.getApplicationContext());
+			final SpamDB db = new SpamDB(this.getApplicationContext());
 			db.open();
 			if (db.isInDB(a)) {
+				items = items.clone();
 				items[WHICH_MARK_SPAM] = this
 						.getString(R.string.dont_filter_spam_);
 			}
@@ -514,6 +522,8 @@ public class ConversationList extends ListActivity implements
 					case WHICH_MARK_SPAM:
 						ConversationList.addToOrRemoveFromSpamlist(
 								ConversationList.this, c.getAddress());
+						break;
+					default:
 						break;
 					}
 				}

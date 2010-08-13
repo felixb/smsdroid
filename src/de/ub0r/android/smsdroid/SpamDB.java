@@ -21,7 +21,6 @@ package de.ub0r.android.smsdroid;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import de.ub0r.android.lib.Log;
@@ -29,33 +28,40 @@ import de.ub0r.android.lib.Log;
 /**
  * Database holding blacklisted numbers.
  * 
- * @author marek
+ * @author marek, flx
  */
-public final class DBAdapter {
-	int id = 0;
-	public static final String KEY_NR = "nr";
-	private static final String TAG = "DBAdapter";
+public final class SpamDB {
+	/** TAG for debug out. */
+	private static final String TAG = "blacklist";
 
+	/** Name of {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "spamlist";
-	private static final String DATABASE_TABLE = "numbers";
+	/** Version of {@link SQLiteDatabase}. */
 	private static final int DATABASE_VERSION = 1;
+	/** Table in {@link SQLiteDatabase}. */
+	private static final String DATABASE_TABLE = "numbers";
+	/** Key in table. */
+	public static final String KEY_NR = "nr";
+	/** Projection. */
+	public static final String[] PROJECTION = new String[] { KEY_NR };
 
-	private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS numbers (nr varchar(50) )";
+	/** SQL to create {@link SQLiteDatabase}. */
+	private static final String DATABASE_CREATE = // .
+	"CREATE TABLE IF NOT EXISTS numbers (nr varchar(50) )";
 
-	private final Context context;
-
-	private DatabaseHelper DBHelper;
+	/** {@link DatabaseHelper}. */
+	private DatabaseHelper dbHelper;
+	/** {@link SQLiteDatabase}. */
 	private SQLiteDatabase db;
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param ctx
+	 * @param context
 	 *            {@link Context}
 	 */
-	public DBAdapter(final Context ctx) {
-		this.context = ctx;
-		this.DBHelper = new DatabaseHelper(this.context);
+	public SpamDB(final Context context) {
+		this.dbHelper = new DatabaseHelper(context);
 	}
 
 	/**
@@ -64,6 +70,12 @@ public final class DBAdapter {
 	 * @author marek
 	 */
 	private static class DatabaseHelper extends SQLiteOpenHelper {
+		/**
+		 * Default constructor.
+		 * 
+		 * @param context
+		 *            {@link Context}
+		 */
 		DatabaseHelper(final Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
@@ -86,12 +98,10 @@ public final class DBAdapter {
 	/**
 	 * Open database.
 	 * 
-	 * @return {@link DBAdapter}
-	 * @throws SQLException
-	 *             SQLException
+	 * @return {@link SpamDB}
 	 */
-	public DBAdapter open() throws SQLException {
-		this.db = this.DBHelper.getWritableDatabase();
+	public SpamDB open() {
+		this.db = this.dbHelper.getWritableDatabase();
 		return this;
 	}
 
@@ -99,7 +109,7 @@ public final class DBAdapter {
 	 * Close database.
 	 */
 	public void close() {
-		this.DBHelper.close();
+		this.dbHelper.close();
 	}
 
 	/**
@@ -123,9 +133,13 @@ public final class DBAdapter {
 	 * @return true if number is blacklisted
 	 */
 	public boolean isInDB(final String nr) {
-		Cursor cursor = this.db.rawQuery("SELECT * from " + DATABASE_TABLE
-				+ " WHERE nr = \"" + nr + "\"", null);
-		return cursor.moveToFirst();
+		Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, KEY_NR
+				+ " = '" + nr + "'", null, null, null, null);
+		final boolean ret = cursor.moveToFirst();
+		if (!cursor.isClosed()) {
+			cursor.close();
+		}
+		return ret;
 	}
 
 	/**
@@ -133,14 +147,44 @@ public final class DBAdapter {
 	 * 
 	 * @return blacklist
 	 */
-	public int getAllEntries() {
-		Cursor cursor = this.db.rawQuery("SELECT COUNT(nr) FROM "
+	public int getEntrieCount() {
+		final Cursor cursor = this.db.rawQuery("SELECT COUNT(nr) FROM "
 				+ DATABASE_TABLE, null);
 		Log.d(TAG, cursor.toString());
+		int ret = 0;
 		if (cursor.moveToFirst()) {
-			return cursor.getInt(0);
+			ret = cursor.getInt(0);
 		}
-		return cursor.getInt(0);
+		if (!cursor.isClosed()) {
+			cursor.close();
+		}
+		return ret;
+	}
+
+	/**
+	 * Get all entries from blacklist.
+	 * 
+	 * @return array of entries
+	 */
+	public String[] getAllEntries() {
+		final Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, null,
+				null, null, null, null);
+		if (cursor == null) {
+			return null;
+		}
+		final String[] ret = new String[cursor.getCount()];
+		if (cursor.moveToFirst()) {
+			int i = 0;
+			do {
+				ret[i] = cursor.getString(0);
+				Log.d(TAG, "spam: " + ret[i]);
+				++i;
+			} while (cursor.moveToNext());
+		}
+		if (!cursor.isClosed()) {
+			cursor.close();
+		}
+		return ret;
 	}
 
 	/**
@@ -150,6 +194,6 @@ public final class DBAdapter {
 	 *            number
 	 */
 	public void removeNr(final String nr) {
-		this.db.delete(DATABASE_TABLE, "nr = \"" + nr + "\"", null);
+		this.db.delete(DATABASE_TABLE, KEY_NR + " = '" + nr + "'", null);
 	}
 }

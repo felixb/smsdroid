@@ -58,6 +58,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	/** Reference to {@link ConversationList}. */
 	private final ConversationList activity;
 
+	/** List of blocked numbers. */
+	private final String[] blacklist;
+
 	/**
 	 * Handle queries in background.
 	 * 
@@ -104,6 +107,11 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		super(c, R.layout.conversationlist_item, null, true);
 		this.activity = c;
 		this.queryHandler = new BackgroundQueryHandler(c.getContentResolver());
+		SpamDB spam = new SpamDB(c);
+		spam.open();
+		this.blacklist = spam.getAllEntries();
+		spam.close();
+		spam = null;
 
 		this.textSize = Preferences.getTextsize(c);
 		this.origCursor = c.getContentResolver().query(
@@ -130,7 +138,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 				}
 			});
 		}
-
 		// this.startMsgListQuery();
 	}
 
@@ -185,14 +192,11 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		} else {
 			tvCount.setText("(" + c.getCount() + ")");
 		}
-		DBAdapter spam = new DBAdapter(context);
-		spam.open();
-		if (spam.isInDB(c.getAddress())) {
+		if (this.isBlocked(c.getAddress())) {
 			tvName.setText("[" + c.getDisplayName() + "]");
 		} else {
 			tvName.setText(c.getDisplayName());
 		}
-		spam.close();
 
 		int t = c.getType();
 		if (t == Calls.INCOMING_TYPE) {
@@ -223,5 +227,25 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		long time = c.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(ConversationList
 				.getDate(context, time));
+	}
+
+	/**
+	 * Check if address is blacklisted.
+	 * 
+	 * @param addr
+	 *            address
+	 * @return true if address is blocked
+	 */
+	private boolean isBlocked(final String addr) {
+		if (addr == null) {
+			return false;
+		}
+		final int l = this.blacklist.length;
+		for (int i = 0; i < l; i++) {
+			if (addr.equals(this.blacklist[i])) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

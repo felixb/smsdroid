@@ -99,7 +99,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				// ! Check in blacklist db - filter spam
 				boolean q = false;
 				final String s = smsMessage[0].getOriginatingAddress();
-				DBAdapter db = new DBAdapter(context);
+				final SpamDB db = new SpamDB(context);
 				db.open();
 				if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
 					Log.d(TAG, "Message from " + s + " filtered.");
@@ -107,7 +107,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				} else {
 					Log.d(TAG, "Message from " + s + " NOT filtered.");
 				}
-				db.getAllEntries();
+				// db.getEntrieCount();
 				db.close();
 				if (q) {
 					return;
