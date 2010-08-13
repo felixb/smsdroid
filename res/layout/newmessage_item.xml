@@ -20,12 +20,18 @@
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:paddingTop="5dip" android:paddingBottom="5dip"
 	android:paddingRight="5dip">
+	<ImageView android:id="@+id/photo" android:layout_width="60dip"
+		android:layout_height="wrap_content" android:scaleType="fitCenter"
+		android:adjustViewBounds="true" android:paddingTop="3dip"
+		android:paddingBottom="3dip" android:paddingRight="5dip"
+		android:layout_gravity="center_vertical" android:visibility="gone" />
 	<TextView android:text="@string/new_message" android:id="@+id/text1"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:paddingLeft="7dip" />
+		android:paddingLeft="7dip" android:layout_toRightOf="@id/photo" />
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:id="@+id/text2"
 		android:text="@string/new_message_hint" android:layout_below="@+id/text1"
-		android:singleLine="true" android:paddingLeft="5dip" />
+		android:singleLine="true" android:paddingLeft="5dip"
+		android:layout_toRightOf="@id/photo" />
 </RelativeLayout>

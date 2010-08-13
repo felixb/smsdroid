@@ -22,6 +22,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.graphics.Bitmap;
@@ -76,7 +77,9 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	public MessageAdapter(final MessageList c, final Uri u) {
 		super(c, R.layout.messagelist_item,
 				getCursor(c.getContentResolver(), u), true);
-		boolean showBubbles = PreferenceManager.getDefaultSharedPreferences(c)
+		final SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(c);
+		boolean showBubbles = prefs
 				.getBoolean(Preferences.PREFS_BUBBLES, false);
 		if (showBubbles) {
 			this.backgroundDrawableIn = R.drawable.bubble_in;

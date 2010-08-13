@@ -23,9 +23,12 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.text.ClipboardManager;
 import android.text.format.DateFormat;
@@ -34,6 +37,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -154,6 +158,22 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final ListView lv = this.getListView();
 		final View header = View.inflate(this, R.layout.newmessage_item, null);
 		((TextView) header.findViewById(R.id.text1)).setText(R.string.answer);
+		final SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		final boolean showPhoto = prefs.getBoolean(
+				Preferences.PREFS_CONTACT_PHOTO, false);
+		if (showPhoto) {
+			final ImageView iv = (ImageView) header.findViewById(R.id.photo);
+			final Bitmap photo = this.conv.getPhoto();
+			if (photo != null && photo != Conversation.NO_PHOTO) {
+				iv.setImageBitmap(photo);
+				iv.setVisibility(View.VISIBLE);
+			} else {
+				iv.setVisibility(View.GONE);
+			}
+		} else {
+			header.findViewById(R.id.photo).setVisibility(View.GONE);
+		}
 		if (this.currentHeader != null) {
 			lv.removeFooterView(this.currentHeader);
 		}
