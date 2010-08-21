@@ -20,26 +20,12 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>v0.1.6: Fix FC with some numbers in blacklist, show photo in answer button</item>
 		<item>v0.1.5: Fix for smspopup, add spamfilter, allow install on sd card</item>
 		<item>v0.1.4: Add spanish translation</item>
 		<item>v0.1.3: Fix some NPEs, fix download button for picture only mms</item>
 		<item>v0.1.2: Fix some bugs</item>
 		<item>v0.1.1: Fix zombiemessages, mark thread as read on exit, fix some minor bugs</item>
 		<item>v0.1: Fix contact names, fix missing threads, fix some NPEs, catch OOMEs</item>
-		<item>v0.0.15: Inner changes, time format</item>
-		<item>v0.0.14: Work on issue #199</item>
-		<item>v0.0.13: Fix FC with empty contactId</item>
-		<item>v0.0.12: Fix contact names/photos on android 2.x, add bubbles, fix vibrator, fix sticky read messages, fix mms status, show pending/draft messages</item>
-		<item>v0.0.11: Handle MMS, fix some bugs</item>
-		<item>v0.0.10: Move some IO to background, add emotions, fix contacts w/o international prefix, fix disabled notification blocking widget, notify for new mms</item>
-		<item>v0.0.9: Fix some notification bugs, allow to set font size</item>
-		<item>v0.0.8: Fix some FCs</item>
-		<item>v0.0.7: Fix some layout bugs, add widget, fix notificaion</item>
-		<item>v0.0.6: Fix FC for Milestones, allow to choose sending app with longclick on compose/answer</item>
-		<item>v0.0.5: Change/fix layout, new icon, show outgoing messages in different color, fix some fc</item>
-		<item>v0.0.4: Fix ListView behaviour, allow to change notification settings, answer/call/view/add contact from thread, display message count</item>
-		<item>v0.0.3: Add contact photos, allow swap message list, fix light theme on prefs</item>
-		<item>v0.0.2: Fix name in notification, add theme support</item>
-		<item>v0.0.1: Initial market release</item>
 	</string-array>
 </resources>
