@@ -151,6 +151,13 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
 		this.conv = Conversation.getConversation(this, threadId, true);
 
+		if (this.conv == null) {
+			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
+					.show();
+			this.finish();
+			return;
+		}
+
 		Log.d(TAG, "address: " + this.conv.getAddress());
 		Log.d(TAG, "name: " + this.conv.getName());
 		Log.d(TAG, "displayName: " + this.conv.getDisplayName());

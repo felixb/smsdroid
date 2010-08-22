@@ -115,6 +115,7 @@
 	<string name="clear_cache_">Cache löschen</string>
 	<string name="clear_cache_hint">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
 <!--	<string name="not_implemented">Sorry, not yet implemented.</string> -->
+	<string name="error_conv_null">Fehler beim Laden des Threads!</string>
 	<string-array name="themes">
 		<item>Dunkel</item>
 		<item>Hell</item>

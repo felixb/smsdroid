@@ -89,6 +89,7 @@
 	<string name="clear_cache_">Clear cache</string>
 	<string name="clear_cache_hint">Clear internal Database. Fetch all data again from external Database.</string>
 	<string name="not_implemented">Sorry, not yet implemented.</string>
+	<string name="error_conv_null">Error getting conversation from DB!</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>
