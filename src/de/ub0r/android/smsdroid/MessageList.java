@@ -88,6 +88,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Current FooterView. */
 	private View currentHeader = null;
 
+	/** Marked a message unread? */
+	private boolean markedUnread = false;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -208,9 +211,20 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * {@inheritDoc}
 	 */
 	@Override
+	protected final void onResume() {
+		super.onResume();
+		this.markedUnread = false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	protected final void onPause() {
 		super.onPause();
-		this.setRead();
+		if (!this.markedUnread) {
+			this.setRead();
+		}
 	}
 
 	/**
@@ -307,6 +321,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					switch (which) {
 					case WHICH_MARK_UNREAD:
 						ConversationList.markRead(context, target, 1 - read);
+						MessageList.this.markedUnread = true;
 						break;
 					case WHICH_FORWARD:
 						final Intent i = new Intent(Intent.ACTION_SEND);
