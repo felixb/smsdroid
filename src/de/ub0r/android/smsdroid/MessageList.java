@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -208,12 +209,31 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	}
 
 	/**
+	 * Set selection to "answer" button.
+	 */
+	private void scrollToLastMessage() {
+		final ListView lv = this.getListView();
+		lv.setAdapter(new MessageAdapter(this, this.uri));
+		lv.setSelection(lv.getCount() - 1);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void onConfigurationChanged(final Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		this.scrollToLastMessage();
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected final void onResume() {
 		super.onResume();
 		this.markedUnread = false;
+		this.scrollToLastMessage();
 	}
 
 	/**
