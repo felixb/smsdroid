@@ -77,6 +77,11 @@ public class SmsReceiver extends BroadcastReceiver {
 	/** ID for new message notification. */
 	private static final int NOTIFICATION_ID_NEW = 1;
 
+	/** Last unread message's date. */
+	private static long lastUnreadDate = 0L;
+	/** Last unread message's body. */
+	private static String lastUnreadBody = null;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -151,23 +156,37 @@ public class SmsReceiver extends BroadcastReceiver {
 				Message.SELECTION_UNREAD, null, SORT);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text != null) { // try again!
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
 				return new int[] { -1, -1 };
 			} else {
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
 				return new int[] { 0, 0 };
 			}
 		}
-		if (text != null) {
-			final String t = cursor.getString(Message.INDEX_BODY);
-			if (t == null || !t.startsWith(text)) {
-				return new int[] { -1, -1 }; // try again!
+		final String t = cursor.getString(Message.INDEX_BODY);
+		if (text != null && (t == null || !t.startsWith(text))) {
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
 			}
+			return new int[] { -1, -1 }; // try again!
+		}
+		final long d = cursor.getLong(Message.INDEX_DATE);
+		if (d > lastUnreadDate) {
+			lastUnreadBody = t;
 		}
 		int tid = cursor.getInt(Message.INDEX_THREADID);
-		while (cursor.moveToNext()) {
+		while (cursor.moveToNext() && tid > -1) {
 			// check if following messages are from the same thread
 			if (tid != cursor.getInt(Message.INDEX_THREADID)) {
 				tid = -1;
 			}
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
 		}
 		return new int[] { tid, cursor.getCount() };
 	}
@@ -188,17 +207,33 @@ public class SmsReceiver extends BroadcastReceiver {
 				Message.SELECTION_UNREAD, null, null);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text == MMS_BODY) {
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
 				return new int[] { -1, -1 }; // try again!
 			} else {
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
+				}
 				return new int[] { 0, 0 };
 			}
 		}
 		int tid = cursor.getInt(Message.INDEX_THREADID);
-		while (cursor.moveToNext()) {
+		long d = cursor.getLong(Message.INDEX_DATE);
+		if (d < ConversationList.MIN_DATE) {
+			d *= ConversationList.MILLIS;
+		}
+		if (d > lastUnreadDate) {
+			lastUnreadBody = null;
+		}
+		while (cursor.moveToNext() && tid > -1) {
 			// check if following messages are from the same thread
 			if (tid != cursor.getInt(Message.INDEX_THREADID)) {
 				tid = -1;
 			}
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
 		}
 		return new int[] { tid, cursor.getCount() };
 	}
@@ -216,6 +251,8 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static int[] getUnread(final ContentResolver cr, // .
 			final String text) {
 		Log.d(TAG, "getUnread(cr, " + text + ")");
+		lastUnreadBody = null;
+		lastUnreadDate = 0L;
 		String t = text;
 		if (t == MMS_BODY) {
 			t = null;
@@ -299,7 +336,8 @@ public class SmsReceiver extends BroadcastReceiver {
 						n = new Notification(R.drawable.stat_notify_sms, a,
 								System.currentTimeMillis());
 						if (l == 1) {
-							String body = conv.getBody();
+							// String body = conv.getBody();
+							String body = lastUnreadBody;
 							if (body == null) {
 								body = context
 										.getString(R.string.mms_conversation);
