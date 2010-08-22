@@ -52,8 +52,9 @@
 	<string name="about0">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebeigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
 	<string name="more_apps_">Mehr Apps..</string>
 	<string name="settings">Einstellungen</string>
-	<string name="new_message">Neue Nachricht</string>
+	<string name="new_message_">Neue Nachricht</string>
 	<string name="new_message_hint">Neue Nachricht schreiben</string>
+	<string name="new_message">1 ungelesene Nachricht.</string>
 	<string name="new_messages_">Neue Nachrichten</string>
 	<string name="new_messages">%d ungelesene Nachrichten.</string>
 	<string name="answer">Antworten</string>
@@ -69,6 +70,8 @@
 	<string name="receive_led_color_">LED Farbe</string>
 	<string name="receive_led_flash_">LED Modus</string>
 	<string name="receive_led_flash_hint">LED Blinkverhalten</string>
+	<string name="receive_no_text_">Sender/Text verstecken</string>
+	<string name="receive_no_text_hint">Absender/Text in Benachrichtigung nicht anzeigen.</string>
 	<string name="appearance_">Erscheinung</string>
 	<string name="theme_">Theme</string>
 	<string name="textsize_">Schriftgrad</string>

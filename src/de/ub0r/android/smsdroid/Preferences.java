@@ -44,6 +44,8 @@ public class Preferences extends PreferenceActivity {
 	private static final String PREFS_VIBRATOR_PATTERN = "receive_vibrate_mode";
 	/** Preference's name: enable notifications. */
 	static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
+	/** Preference's name: hide sender/text in notifications. */
+	static final String PREFS_NOTIFICATION_PRIVACY = "receive_privacy";
 	/** Prefernece's name: show contact's photo. */
 	static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
 	/** Prefernece's name: show emoticons in messagelist. */

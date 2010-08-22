@@ -52,6 +52,9 @@
 			android:title="@string/receive_led_flash_" android:summary="@string/receive_led_flash_hint"
 			android:entries="@array/led_flash" android:entryValues="@array/led_flash_values"
 			android:dependency="notification_enable" />
+		<CheckBoxPreference android:key="receive_privacy"
+			android:title="@string/receive_no_text_" android:summary="@string/receive_no_text_hint"
+			android:dependency="notification_enable" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/about_">
 		<PreferenceScreen android:title="@string/about_"
@@ -80,7 +83,6 @@
 				android:data="market://search?q=pub:&quot;Felix Bechstein&quot;" />
 		</PreferenceScreen>
 	</PreferenceCategory>
-
 	<PreferenceCategory android:title="@string/debug_">
 		<PreferenceScreen android:key="clear_cache"
 			android:title="@string/clear_cache_" android:summary="@string/clear_cache_hint" />

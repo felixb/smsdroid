@@ -456,7 +456,7 @@ public class ConversationList extends ListActivity implements
 		if (position == 0) { // header
 			final Intent i = getComposeIntent(null);
 			this.startActivity(Intent.createChooser(i, this
-					.getString(R.string.new_message)));
+					.getString(R.string.new_message_)));
 			return true;
 		} else {
 			final Conversation c = Conversation.getConversation(this,

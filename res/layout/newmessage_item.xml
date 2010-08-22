@@ -25,7 +25,7 @@
 		android:adjustViewBounds="true" android:paddingTop="3dip"
 		android:paddingBottom="3dip" android:paddingRight="5dip"
 		android:layout_gravity="center_vertical" android:visibility="gone" />
-	<TextView android:text="@string/new_message" android:id="@+id/text1"
+	<TextView android:text="@string/new_message_" android:id="@+id/text1"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:paddingLeft="7dip" android:layout_toRightOf="@id/photo" />

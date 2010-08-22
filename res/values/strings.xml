@@ -26,8 +26,9 @@
 	<string name="about0">SMSdroid let\'s you read your sms and write sms with any other app.</string>
 	<string name="more_apps_">More Apps..</string>
 	<string name="settings">Preferences</string>
-	<string name="new_message">New message</string>
+	<string name="new_message_">New message</string>
 	<string name="new_message_hint">Compose a new message</string>
+	<string name="new_message">1 unread message.</string>
 	<string name="new_messages_">New messages</string>
 	<string name="new_messages">%d unread messages.</string>
 	<string name="answer">Answer</string>
@@ -43,6 +44,8 @@
 	<string name="receive_led_color_">LED color</string>
 	<string name="receive_led_flash_">LED mode</string>
 	<string name="receive_led_flash_hint">Set LED flashing behaviour</string>
+	<string name="receive_no_text_">Hide sender/text</string>
+	<string name="receive_no_text_hint">Hide sender/text in notification.</string>
 	<string name="appearance_">Appearance</string>
 	<string name="theme_">Theme</string>
 	<string name="textsize_">Text size</string>

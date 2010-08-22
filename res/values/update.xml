@@ -20,7 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
-		<item>HEAD: Fix NPE for unavailable conversations, let unread messages unread on conversation close, switch back to internal install due to problems with app/widget, fix scrolling messages when switch orientation</item>
+		<item>HEAD: Fix NPE for unavailable conversations, let unread messages unread on conversation close, switch back to internal install due to problems with app/widget, fix scrolling messages when switch orientation, allow to hide sender/text from notification</item>
 		<item>v0.1.6: Fix FC with some numbers in blacklist, show photo in answer button</item>
 		<item>v0.1.5: Fix for smspopup, add spamfilter, allow install on sd card</item>
 		<item>v0.1.4: Add spanish translation</item>

@@ -52,7 +52,7 @@
 	<string name="about0">SMSdroid le permite leer sus sms, así como escribirlos con cualquier aplicación.</string>
 	<string name="more_apps_">Más Aplicaciones..</string>
 	<string name="settings">Preferencias</string>
-	<string name="new_message">Nuevo mensaje</string>
+	<string name="new_message_">Nuevo mensaje</string>
 	<string name="new_message_hint">Redactar un mensaje nuevo</string>
 	<string name="new_messages_">Mensajes nuevos</string>
 	<string name="new_messages">%d mensajes sin leer.</string>

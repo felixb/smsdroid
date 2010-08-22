@@ -291,9 +291,12 @@ public class SmsReceiver extends BroadcastReceiver {
 		final NotificationManager mNotificationMgr = // .
 		(NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		final boolean enableNotifications = PreferenceManager
-				.getDefaultSharedPreferences(context).getBoolean(
-						Preferences.PREFS_NOTIFICATION_ENABLE, true);
+		final SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final boolean enableNotifications = prefs.getBoolean(
+				Preferences.PREFS_NOTIFICATION_ENABLE, true);
+		final boolean privateNotification = prefs.getBoolean(
+				Preferences.PREFS_NOTIFICATION_PRIVACY, false);
 		if (!enableNotifications) {
 			mNotificationMgr.cancelAll();
 			Log.d(TAG, "no notification needed!");
@@ -332,12 +335,25 @@ public class SmsReceiver extends BroadcastReceiver {
 					final Conversation conv = Conversation.getConversation(
 							context, tid, true);
 					if (conv != null) {
-						final String a = conv.getDisplayName();
+						String a;
+						if (privateNotification) {
+							if (l == 1) {
+								a = context.getString(R.string.new_message_);
+							} else {
+								a = context.getString(R.string.new_messages_);
+							}
+						} else {
+							a = conv.getDisplayName();
+						}
 						n = new Notification(R.drawable.stat_notify_sms, a,
 								System.currentTimeMillis());
 						if (l == 1) {
-							// String body = conv.getBody();
-							String body = lastUnreadBody;
+							String body;
+							if (privateNotification) {
+								body = context.getString(R.string.new_message);
+							} else {
+								body = lastUnreadBody;
+							}
 							if (body == null) {
 								body = context
 										.getString(R.string.mms_conversation);
