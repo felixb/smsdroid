@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -60,6 +61,10 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 
 	/** List of blocked numbers. */
 	private final String[] blacklist;
+
+	/** {@link ContactsWrapper}. */
+	private static final ContactsWrapper WRAPPER = ContactsWrapper
+			.getInstance();
 
 	/**
 	 * Handle queries in background.
@@ -181,6 +186,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 				ivPhoto.setImageResource(R.drawable.ic_contact_picture);
 			}
 			ivPhoto.setVisibility(View.VISIBLE);
+			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context,
+					ivPhoto, c.getAddress(), 2, null));
 		} else {
 			ivPhoto.setVisibility(View.GONE);
 		}

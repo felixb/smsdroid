@@ -45,6 +45,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -182,6 +183,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			} else {
 				iv.setVisibility(View.GONE);
 			}
+			iv
+					.setOnClickListener(ContactsWrapper.getInstance()
+							.getQuickContact(this, iv, this.conv.getAddress(),
+									2, null));
 		} else {
 			header.findViewById(R.id.photo).setVisibility(View.GONE);
 		}
