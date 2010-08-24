@@ -93,10 +93,20 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			this.backgroundDrawableIn = 0;
 		}
 		this.textSize = Preferences.getTextsize(c);
-		this.threadId = Integer.parseInt(u.getLastPathSegment());
-		this.address = Conversation.getConversation(c, this.threadId, false)
-				.getAddress();
-		this.name = AsyncHelper.getContactName(c, this.address);
+		if (u == null || u.getLastPathSegment() == null) {
+			this.threadId = -1;
+		} else {
+			this.threadId = Integer.parseInt(u.getLastPathSegment());
+		}
+		final Conversation conv = Conversation.getConversation(c,
+				this.threadId, false);
+		if (conv == null) {
+			this.address = null;
+			this.name = null;
+		} else {
+			this.address = conv.getAddress();
+			this.name = AsyncHelper.getContactName(c, this.address);
+		}
 		if (this.name == null) {
 			this.displayName = this.address;
 		} else {
@@ -105,8 +115,6 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		Log.d(TAG, "address: " + this.address);
 		Log.d(TAG, "name: " + this.name);
 		Log.d(TAG, "displayName: " + this.displayName);
-
-		// this.notifyDataSetChanged();
 	}
 
 	/**
@@ -138,17 +146,31 @@ public class MessageAdapter extends ResourceCursorAdapter {
 				+ " OR " + mtype + " = " + Message.MMS_IN // .
 				+ " OR " + mtype + " = " + Message.MMS_OUT + ")";
 
-		c[0] = cr.query(u, Message.PROJECTION_JOIN, where, null, null);
+		try {
+			c[0] = cr.query(u, Message.PROJECTION_JOIN, where, null, null);
+		} catch (NullPointerException e) {
+			Log.e(TAG, "error query: " + u.toString() + " / " + where, e);
+			c[0] = null;
+		}
 
 		where = twhere + type + " = " + Message.SMS_DRAFT + ")";
 		// + " OR " + type + " = " + Message.SMS_PENDING;
 
-		c[1] = cr.query(Uri.parse("content://sms/"), Message.PROJECTION_SMS,
-				where, null, Message.SORT_USD);
+		try {
+			c[1] = cr.query(Uri.parse("content://sms/"),
+					Message.PROJECTION_SMS, where, null, Message.SORT_USD);
+		} catch (NullPointerException e) {
+			Log.e(TAG, "error query: " + u.toString() + " / " + where, e);
+			c[1] = null;
+		}
 
-		// where = twhere + mtype + " = " + Message.MMS_DRAFT + ")";
-		// c[2] = cr.query(Uri.parse("content://mms/"), Message.PROJECTION_MMS,
-		// where, null, Message.SORT_USD);
+		if (c[1] == null || c[1].getCount() == 1) {
+			return c[0];
+		}
+		if (c[0] == null || c[0].getCount() == 1) {
+			return c[1];
+		}
+
 		return new MergeCursor(c);
 	}
 
@@ -182,7 +204,11 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		case Message.SMS_OUT: // handle drafts/pending here too
 		case Message.MMS_OUT:
 			twPerson.setText(context.getString(R.string.me) + subject);
-			view.setBackgroundResource(this.backgroundDrawableOut);
+			try {
+				view.setBackgroundResource(this.backgroundDrawableOut);
+			} catch (OutOfMemoryError e) {
+				Log.e(TAG, "OOM while setting bg", e);
+			}
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_outgoing_call);
@@ -191,7 +217,11 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		case Message.MMS_IN:
 		default:
 			twPerson.setText(this.displayName + subject);
-			view.setBackgroundResource(this.backgroundDrawableIn);
+			try {
+				view.setBackgroundResource(this.backgroundDrawableIn);
+			} catch (OutOfMemoryError e) {
+				Log.e(TAG, "OOM while setting bg", e);
+			}
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_incoming_call);

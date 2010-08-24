@@ -45,6 +45,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.DonationHelper;
@@ -437,14 +438,35 @@ public class ConversationList extends ListActivity implements
 	public final void onItemClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
 		if (position == 0) { // header
-			this.startActivity(getComposeIntent(null));
+			final Intent i = getComposeIntent(null);
+			try {
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
+						+ i.getData());
+				Toast.makeText(
+						this,
+						"error launching messaging app!\n"
+								+ "Please contact the developer.",
+						Toast.LENGTH_LONG).show();
+			}
 		} else {
 			final Conversation c = Conversation.getConversation(this,
 					(Cursor) parent.getItemAtPosition(position), false);
 			final Uri target = c.getUri();
 			final Intent i = new Intent(this, MessageList.class);
 			i.setData(target);
-			this.startActivity(i);
+			try {
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
+						+ i.getData());
+				Toast.makeText(
+						this,
+						"error launching messaging app!\n"
+								+ "Please contact the developer.",
+						Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 
