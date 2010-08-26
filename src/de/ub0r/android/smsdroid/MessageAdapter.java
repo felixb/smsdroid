@@ -164,10 +164,10 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			c[1] = null;
 		}
 
-		if (c[1] == null || c[1].getCount() == 1) {
+		if (c[1] == null || c[1].getCount() == 0) {
 			return c[0];
 		}
-		if (c[0] == null || c[0].getCount() == 1) {
+		if (c[0] == null || c[0].getCount() == 0) {
 			return c[1];
 		}
 
