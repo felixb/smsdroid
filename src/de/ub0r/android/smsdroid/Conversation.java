@@ -247,9 +247,14 @@ public final class Conversation {
 								ConversationProvider.INDEX_THREADID]
 								+ " = " + threadId, null, null);
 				if (cursor != null && cursor.moveToFirst()) {
-					return getConversation(context, cursor, true);
+					ret = getConversation(context, cursor, true);
+					cursor.close();
+					return ret;
 				} else {
 					Log.e(TAG, "did not found conversation: " + threadId);
+				}
+				if (cursor != null && !cursor.isClosed()) {
+					cursor.close();
 				}
 			}
 			return ret;
