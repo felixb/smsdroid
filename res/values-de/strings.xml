@@ -75,6 +75,7 @@
 	<string name="appearance_">Erscheinung</string>
 	<string name="theme_">Theme</string>
 	<string name="textsize_">Schriftgrad</string>
+	<string name="textsize_">Schriftgrad in Punkten; leer lassen für Standard</string>
 	<string name="show_contact_photo_">Zeige Foto</string>
 	<string name="show_contact_photo_hint">Zeige Kontaktfoto in Threadliste</string>
 	<string name="show_emoticons_">Zeige Smilies</string>

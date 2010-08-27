@@ -21,9 +21,8 @@
 		<ListPreference android:title="@string/theme_"
 			android:key="theme" android:entries="@array/themes"
 			android:entryValues="@array/themes_values" />
-		<ListPreference android:title="@string/textsize_"
-			android:key="textsize" android:entries="@array/textsize"
-			android:entryValues="@array/textsize_values" />
+		<EditTextPreference android:title="@string/textsize_"
+			android:key="textsizen" android:summary="@string/textsize_hint" />
 		<CheckBoxPreference android:key="show_contact_photo"
 			android:title="@string/show_contact_photo_" android:summary="@string/show_contact_photo_hint" />
 		<CheckBoxPreference android:key="show_emoticons"

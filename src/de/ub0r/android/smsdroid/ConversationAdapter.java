@@ -173,7 +173,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 				false);
 
 		final TextView tvBody = (TextView) view.findViewById(R.id.body);
-		tvBody.setTextSize(this.textSize);
+		if (this.textSize > 0) {
+			tvBody.setTextSize(this.textSize);
+		}
 		final TextView tvName = (TextView) view.findViewById(R.id.addr);
 		final TextView tvCount = (TextView) view.findViewById(R.id.count);
 		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);

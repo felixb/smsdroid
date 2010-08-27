@@ -28,10 +28,6 @@
 		<item>black</item>
 		<item>light</item>
 	</string-array>
-	<string-array name="textsize_values">
-		<item>small</item>
-		<item>medium</item>
-	</string-array>
 	<string-array name="led_color_values">
 		<item>65280</item>
 		<item>255</item>

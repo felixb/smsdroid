@@ -184,7 +184,9 @@ public class MessageAdapter extends ResourceCursorAdapter {
 
 		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
 		TextView twBody = (TextView) view.findViewById(R.id.body);
-		twBody.setTextSize(this.textSize);
+		if (this.textSize > 0) {
+			twBody.setTextSize(this.textSize);
+		}
 		int t = m.getType();
 
 		String subject = m.getSubject();

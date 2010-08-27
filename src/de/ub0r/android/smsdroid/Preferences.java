@@ -25,6 +25,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Utils;
 
 /**
  * Preferences.
@@ -59,15 +60,7 @@ public class Preferences extends PreferenceActivity {
 	/** Theme: light. */
 	private static final String THEME_LIGHT = "light";
 	/** Preference's name: textsize. */
-	private static final String PREFS_TEXTSIZE = "textsize";
-	/** Textsize: small. */
-	private static final String TEXTSIZE_SMALL = "small";
-	/** Textsize: medium. */
-	private static final String TEXTSIZE_MEDIUM = "medium";
-	/** Textsize: small. */
-	private static final int TEXTSIZE_SMALL_SP = 13;
-	/** Textsize: medium. */
-	private static final int TEXTSIZE_MEDIUM_SP = 16;
+	private static final String PREFS_TEXTSIZE = "textsizen";
 
 	/**
 	 * {@inheritDoc}
@@ -132,11 +125,8 @@ public class Preferences extends PreferenceActivity {
 	static final int getTextsize(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		final String s = p.getString(PREFS_TEXTSIZE, TEXTSIZE_SMALL);
-		if (s != null && TEXTSIZE_MEDIUM.equals(s)) {
-			return TEXTSIZE_MEDIUM_SP;
-		}
-		return TEXTSIZE_SMALL_SP;
+		final String s = p.getString(PREFS_TEXTSIZE, null);
+		return Utils.parseInt(s, 0);
 	}
 
 	/**
