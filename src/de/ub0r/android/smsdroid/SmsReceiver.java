@@ -318,7 +318,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		if (l == 0) {
 			final Intent i = new Intent(context, ConversationList.class);
 			// add pending intent
-			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			pIntent = PendingIntent.getActivity(context, 0, i,
 					PendingIntent.FLAG_CANCEL_CURRENT);
 		} else {
