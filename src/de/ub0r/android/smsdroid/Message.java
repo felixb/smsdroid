@@ -422,9 +422,6 @@ public final class Message {
 			} else {
 				ret.update(cursor);
 			}
-			if (cursor != null && !cursor.isClosed()) {
-				cursor.close();
-			}
 			return ret;
 		}
 	}
