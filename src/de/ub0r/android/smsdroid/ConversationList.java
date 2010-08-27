@@ -171,11 +171,16 @@ public class ConversationList extends ListActivity implements
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		final SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		final boolean showTitlebar = prefs.getBoolean(
+				Preferences.PREFS_SHOWTITLEBAR, true);
+		if (!showTitlebar) {
+			this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		}
 		this.setTheme(Preferences.getTheme(this));
 		this.setContentView(R.layout.conversationlist);
 
-		final SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
 		// display changelog?
 		String v0 = prefs.getString(PREFS_LAST_RUN, "");
 		String v1 = this.getString(R.string.app_version);

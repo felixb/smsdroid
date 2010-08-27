@@ -50,6 +50,8 @@
 	<string name="theme_">Theme</string>
 	<string name="textsize_">Text size</string>
 	<string name="textsize_hint">Text size in pixels; leave empty for default</string>
+	<string name="show_titlebar_">Show title bar</string>
+	<string name="show_titlebar_hint">Show title bar in main view. Without title bar, there is no way to see background activity.</string>
 	<string name="show_contact_photo_">Show photo</string>
 	<string name="show_contact_photo_hint">Show contact\'s photo in conversation list</string>
 	<string name="show_emoticons_">Show emoticons</string>

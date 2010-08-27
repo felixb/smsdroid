@@ -61,6 +61,8 @@ public class Preferences extends PreferenceActivity {
 	private static final String THEME_LIGHT = "light";
 	/** Preference's name: textsize. */
 	private static final String PREFS_TEXTSIZE = "textsizen";
+	/** Preference's name: show titlebar. */
+	public static final String PREFS_SHOWTITLEBAR = "show_titlebar";
 
 	/**
 	 * {@inheritDoc}

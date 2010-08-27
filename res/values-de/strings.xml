@@ -76,6 +76,8 @@
 	<string name="theme_">Theme</string>
 	<string name="textsize_">Schriftgrad</string>
 	<string name="textsize_">Schriftgrad in Punkten; leer lassen für Standard</string>
+	<string name="show_titlebar_">Zeige Titelleiste</string>
+	<string name="show_titlebar_hint">Zeige Titelleiste im Hauptbildschirm. Ohne Titelleiste wirst du nicht mehr auf Hintergrundaktivitäten hingewiesen.</string>
 	<string name="show_contact_photo_">Zeige Foto</string>
 	<string name="show_contact_photo_hint">Zeige Kontaktfoto in Threadliste</string>
 	<string name="show_emoticons_">Zeige Smilies</string>

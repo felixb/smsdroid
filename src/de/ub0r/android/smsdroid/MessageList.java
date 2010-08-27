@@ -37,6 +37,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -99,6 +100,13 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		final SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		final boolean showTitlebar = prefs.getBoolean(
+				Preferences.PREFS_SHOWTITLEBAR, true);
+		if (!showTitlebar) {
+			this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		}
 		this.setTheme(Preferences.getTheme(this));
 		this.setContentView(R.layout.messagelist);
 		Log.d(TAG, "onCreate()");
