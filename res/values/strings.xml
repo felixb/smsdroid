@@ -64,7 +64,7 @@
 	<string name="delete_thread_">Delete thread</string>
 	<string name="forward_">Forward</string>
 	<string name="copy_text_">Copy message text</string>
-	<string name="view_details_">View messate details</string>
+	<string name="view_details_">View message details</string>
 	<string name="spek_">Speak</string>
 	<string name="delete_threads_">Delete all threads</string>
 	<string name="mark_all_read_">Mark all as read</string>
