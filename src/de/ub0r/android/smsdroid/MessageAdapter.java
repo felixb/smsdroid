@@ -149,7 +149,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		try {
 			c[0] = cr.query(u, Message.PROJECTION_JOIN, where, null, null);
 		} catch (NullPointerException e) {
-			Log.e(TAG, "error query: " + u.toString() + " / " + where, e);
+			Log.e(TAG, "error query: " + u + " / " + where, e);
 			c[0] = null;
 		}
 
@@ -160,7 +160,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			c[1] = cr.query(Uri.parse("content://sms/"),
 					Message.PROJECTION_SMS, where, null, Message.SORT_USD);
 		} catch (NullPointerException e) {
-			Log.e(TAG, "error query: " + u.toString() + " / " + where, e);
+			Log.e(TAG, "error query: " + u + " / " + where, e);
 			c[1] = null;
 		}
 

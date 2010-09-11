@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>HEAD: Fix some FCs</item>
 		<item>v0.2.2: Fix hidden conversations with one message</item>
 		<item>v0.2.1: Fix some FCs, add QuickContact to contact\'s picture</item>
 		<item>v0.2: Fix NPE for unavailable conversations, let unread messages unread on conversation close, switch back to internal install due to problems with app/widget, fix scrolling messages when switch orientation, allow to hide sender/text from notification</item>
