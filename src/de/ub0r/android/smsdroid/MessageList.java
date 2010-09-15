@@ -147,11 +147,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 *            {@link Intent}
 	 */
 	private void parseIntent(final Intent intent) {
+		Log.d(TAG, "parseIntent(" + intent + ")");
 		if (intent == null) {
-			Log.d(TAG, "got intent: null");
 			return;
 		}
-		Log.d(TAG, "got intent: " + intent.getAction());
+		Log.d(TAG, "got action: " + intent.getAction());
 		Log.d(TAG, "got uri: " + intent.getData());
 
 		this.uri = intent.getData();
@@ -160,10 +160,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				this.uri = Uri.parse(URI + this.uri.getLastPathSegment());
 			}
 		} else {
-			final String tid = intent.getStringExtra("thread_id");
-			if (tid != null && tid.length() > 0) {
-				this.uri = Uri.parse(URI + tid);
-			}
+			final long tid = intent.getLongExtra("thread_id", -1L);
+			this.uri = Uri.parse(URI + tid);
 		}
 
 		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
