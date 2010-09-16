@@ -165,6 +165,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			if (tid < 0L) {
 				this.startActivity(ConversationList.getComposeIntent(null));
 				this.finish();
+				return;
 			}
 		}
 
