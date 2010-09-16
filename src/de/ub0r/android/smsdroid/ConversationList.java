@@ -429,6 +429,7 @@ public class ConversationList extends ListActivity implements
 	 */
 	static final Intent getComposeIntent(final String address) {
 		final Intent i = new Intent(Intent.ACTION_SENDTO);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		if (address == null) {
 			i.setData(Uri.parse("sms:"));
 		} else {

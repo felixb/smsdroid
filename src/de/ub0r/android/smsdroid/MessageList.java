@@ -162,6 +162,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		} else {
 			final long tid = intent.getLongExtra("thread_id", -1L);
 			this.uri = Uri.parse(URI + tid);
+			if (tid < 0L) {
+				this.startActivity(ConversationList.getComposeIntent(null));
+				this.finish();
+			}
 		}
 
 		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
