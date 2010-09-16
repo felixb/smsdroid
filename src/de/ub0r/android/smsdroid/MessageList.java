@@ -191,7 +191,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				Preferences.PREFS_CONTACT_PHOTO, false);
 		if (showPhoto) {
 			final ImageView iv = (ImageView) header.findViewById(R.id.photo);
-			final Bitmap photo = this.conv.getPhoto();
+			Bitmap photo = this.conv.getPhoto();
+			if (photo == null) {
+				AsyncHelper.fillConversation(this, this.conv, true);
+				photo = this.conv.getPhoto();
+			}
 			if (photo != null && photo != Conversation.NO_PHOTO) {
 				iv.setImageBitmap(photo);
 				iv.setVisibility(View.VISIBLE);
