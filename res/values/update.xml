@@ -20,6 +20,7 @@
 <resources>
 	<string-array name="updates">
 		<item>You may want to send sms with WebSMS for free / as cheap as possible.\n</item>
+		<item>HEAD: set custom locale</item>
 		<item>v0.2.3.2: another fix for LauncherPRO, start composer as new task, show photo when entering thread directly</item>
 		<item>v0.2.3.1: fix for LauncherPRO</item>
 		<item>v0.2.3: Fix some FCs</item>

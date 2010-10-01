@@ -46,6 +46,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
@@ -108,6 +109,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		}
 		this.setTheme(Preferences.getTheme(this));
+		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
 		Log.d(TAG, "onCreate()");
 

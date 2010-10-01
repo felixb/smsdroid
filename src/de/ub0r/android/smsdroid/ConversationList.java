@@ -50,6 +50,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
@@ -179,6 +180,7 @@ public class ConversationList extends ListActivity implements
 			this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		}
 		this.setTheme(Preferences.getTheme(this));
+		Utils.setLocale(this);
 		this.setContentView(R.layout.conversationlist);
 
 		// display changelog?

@@ -32,6 +32,9 @@
 			android:title="@string/show_emoticons_" android:summary="@string/show_emoticons_hint" />
 		<CheckBoxPreference android:key="show_bubbles"
 			android:title="@string/show_bubbles_" />
+		<ListPreference android:key="morelocale" android:title="@string/custom_language_"
+			android:summary="@string/custom_language_hint" android:entries="@array/lang_"
+			android:entryValues="@array/lang_values" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/notification_">
 		<CheckBoxPreference android:key="notification_enable"
