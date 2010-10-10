@@ -23,6 +23,8 @@
 <!--	<string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string> -->
 <!--	<string name="source_">Sourcescode:</string> -->
 <!--	<string name="website_">Website:</string> -->
+<!--	<string name="custom_language_">Custom language</string> -->
+<!--	<string name="custom_language_hint">Set a custom language.</string> -->
 	<string name="send_logs_">Logs senden</string>
 	<string name="send_logs_hint">Logs von deinem Handy an den Entwickler senden.\nBitte nur nach Aufforderung senden.</string>
 	<string name="sendlog_run_">SendLog starten</string>
@@ -43,6 +45,8 @@
 <!--	<string name="accept_">Accept Terms</string> -->
 <!--	<string name="accept_missing">Please accept terms before sending the data.</string> -->
 <!--	<string name="terms">The app will send your donation id along with the md5-hash of your IMEI to the server (http://ub0r.de/donation/). The data is needed to verify your donation.\nThe data is never given to third party and used only for verifying your donation.\n\nIf your phone changes, the <i>noads</i> code will not work anymore. Please drop me a mail to get a new one.</string> -->
+<!--	<string name="notify_">Forgot to remove the ads?</string> -->
+<!--	<string name="notify_text">To finally remove the ads, you nead to load the <b>noads</b> Code. Click to proceed.</string> -->
 	<string name="about_">Über</string>
 	<string name="about_hint">Über diese App</string>
 	<string name="faq_hint">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
@@ -75,7 +79,7 @@
 	<string name="appearance_">Erscheinung</string>
 	<string name="theme_">Theme</string>
 	<string name="textsize_">Schriftgrad</string>
-	<string name="textsize_">Schriftgrad in Punkten; leer lassen für Standard</string>
+	<string name="textsize_hint">Schriftgrad in Punkten; leer lassen für Standard</string>
 	<string name="show_titlebar_">Zeige Titelleiste</string>
 	<string name="show_titlebar_hint">Zeige Titelleiste im Hauptbildschirm. Ohne Titelleiste wirst du nicht mehr auf Hintergrundaktivitäten hingewiesen.</string>
 	<string name="show_contact_photo_">Zeige Foto</string>

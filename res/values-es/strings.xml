@@ -23,6 +23,8 @@
 	<string name="license">GPLv3 - ver http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<string name="source_">Código fuente:</string>
 	<string name="website_">Página web:</string>
+<!--	<string name="custom_language_">Custom language</string> -->
+<!--	<string name="custom_language_hint">Set a custom language.</string> -->
 	<string name="send_logs_">Enviar logs</string>
 	<string name="send_logs_hint">Envía los logs de su dispositivo al desarrollador.\nHágalo sólo si se le solicitó.</string>
 	<string name="sendlog_run_">Ejecutar SendLog</string>
@@ -43,6 +45,8 @@
 	<string name="accept_">Aceptar Condiciones</string>
 	<string name="accept_missing">Por favor, acepte las condiciones antes de enviar la información.</string>
 	<string name="terms">Esta aplicación enviará el identificador de su donativo junto con el md5-hash de su IMEI al servidor (http://ub0r.de/donation/). Esta información es necesaria para verificar su donativo.\nEsta información nunca será revelada a terceras personas o entidades, y únicamente será utilizada para verificar su donativo.\n\nSi cambia de teléfono el código no-publi (<i>noads code</i>) ya no funcionará. Por favor, contacte conmigo para obtener uno nuevo.</string>
+<!--	<string name="notify_">Forgot to remove the ads?</string> -->
+<!--	<string name="notify_text">To finally remove the ads, you nead to load the <b>noads</b> Code. Click to proceed.</string> -->
 	<string name="about_">Acerca de</string>
 	<string name="about_hint">Acerca de esta aplicación</string>
 	<string name="faq_hint">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
@@ -54,6 +58,7 @@
 	<string name="settings">Preferencias</string>
 	<string name="new_message_">Nuevo mensaje</string>
 	<string name="new_message_hint">Redactar un mensaje nuevo</string>
+<!--	<string name="new_message">1 unread message.</string> -->
 	<string name="new_messages_">Mensajes nuevos</string>
 	<string name="new_messages">%d mensajes sin leer.</string>
 	<string name="answer">Responder</string>
@@ -69,9 +74,14 @@
 	<string name="receive_led_color_">Color de LED</string>
 	<string name="receive_led_flash_">Modo de LED</string>
 	<string name="receive_led_flash_hint">Establece el comportamiento del parpadeo del LED</string>
+<!--	<string name="receive_no_text_">Hide sender/text</string> -->
+<!--	<string name="receive_no_text_hint">Hide sender/text in notification.</string> -->
 	<string name="appearance_">Apariencia</string>
 	<string name="theme_">Tema</string>
 	<string name="textsize_">Tamaño del texto</string>
+<!--	<string name="textsize_hint">Text size in pixels; leave empty for default</string> -->
+<!--	<string name="show_titlebar_">Show title bar</string> -->
+<!--	<string name="show_titlebar_hint">Show title bar in main view. Without title bar, there is no way to see background activity.</string> -->
 	<string name="show_contact_photo_">Mostrar foto</string>
 	<string name="show_contact_photo_hint">Muestra la foto del contacto en la lista de conversaciones</string>
 	<string name="show_emoticons_">Mostrar emoticonos</string>
@@ -115,6 +125,7 @@
 	<string name="clear_cache_">Borrar caché</string>
 	<string name="clear_cache_hint">Borra la base de datos interna. Obtiene todos los datos de nuevo de bases de datos externas.</string>
 	<string name="not_implemented">Lo siento, función todavía no implementada</string>
+<!--	<string name="error_conv_null">Error getting conversation from DB!</string> -->
 	<string-array name="themes">
 		<item>Oscuro</item>
 		<item>Claro</item>
