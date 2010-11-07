@@ -241,7 +241,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private void scrollToLastMessage() {
 		final ListView lv = this.getListView();
 		lv.setAdapter(new MessageAdapter(this, this.uri));
-		lv.setSelection(lv.getCount() - 1);
+		lv.setSelection(this.getListAdapter().getCount() - 1);
 	}
 
 	/**
