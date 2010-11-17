@@ -18,6 +18,7 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +88,11 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		if (sync) {
 			helper.doInBackground((Void) null);
 		} else {
-			helper.execute((Void) null);
+			try {
+				helper.execute((Void) null);
+			} catch (RejectedExecutionException e) {
+				Log.e(TAG, "rejected exceution", e);
+			}
 		}
 	}
 
