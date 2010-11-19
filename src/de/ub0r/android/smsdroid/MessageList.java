@@ -26,20 +26,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.text.ClipboardManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +50,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
-import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.lib.apis.TelephonyWrapper;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -55,9 +58,12 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * @author flx
  */
 public class MessageList extends ListActivity implements OnItemClickListener,
-		OnItemLongClickListener {
+		OnItemLongClickListener, OnClickListener, OnLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "ml";
+	/** {@link TelephonyWrapper}. */
+	public static final TelephonyWrapper TWRAPPER = TelephonyWrapper
+			.getInstance();
 
 	/** Number of items. */
 	private static final int WHICH_N = 5;
@@ -74,6 +80,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private static final int WHICH_DELETE = 4;
 	/** Index in dialog: speak. */
 	private static final int WHICH_SPEAK = 5;
+
+	/** Minimum length for showing sms length. */
+	private final int TEXT_LABLE_MIN_LEN = 50;
 
 	/** Used {@link Uri}. */
 	private Uri uri;
@@ -95,6 +104,52 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Marked a message unread? */
 	private boolean markedUnread = false;
 
+	/** {@link EditText} holding text. */
+	private EditText etText;
+	/** {@link TextView} for pasting text. */
+	private TextView tvPaste;
+	/** Text's label. */
+	private TextView etTextLabel;
+	/** {@link ClipboardManager}. */
+	private ClipboardManager cbmgr;
+
+	/** TextWatcher updating char count on writing. */
+	private TextWatcher textWatcher = new TextWatcher() {
+		/**
+		 * {@inheritDoc}
+		 */
+		public void afterTextChanged(final Editable s) {
+			final int len = s.length();
+			if (len == 0) {
+				if (MessageList.this.cbmgr.hasText()) {
+					MessageList.this.tvPaste.setVisibility(View.VISIBLE);
+				} else {
+					MessageList.this.tvPaste.setVisibility(View.GONE);
+				}
+				MessageList.this.etTextLabel.setVisibility(View.GONE);
+			} else {
+				MessageList.this.tvPaste.setVisibility(View.GONE);
+				if (len > MessageList.this.TEXT_LABLE_MIN_LEN) {
+					MessageList.this.etTextLabel.setVisibility(View.VISIBLE);
+					int[] l = TWRAPPER.calculateLength(s.toString(), false);
+					MessageList.this.etTextLabel.setText(l[0] + "/" + l[2]);
+				} else {
+					MessageList.this.etTextLabel.setVisibility(View.GONE);
+				}
+			}
+		}
+
+		/** Needed dummy. */
+		public void beforeTextChanged(final CharSequence s, final int start,
+				final int count, final int after) {
+		}
+
+		/** Needed dummy. */
+		public void onTextChanged(final CharSequence s, final int start,
+				final int before, final int count) {
+		}
+	};
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -113,11 +168,24 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.setContentView(R.layout.messagelist);
 		Log.d(TAG, "onCreate()");
 
+		this.cbmgr = (ClipboardManager) this
+				.getSystemService(CLIPBOARD_SERVICE);
+		this.etText = (EditText) this.findViewById(R.id.text);
+		this.etTextLabel = (TextView) this.findViewById(R.id.text_);
+		this.tvPaste = (TextView) this.findViewById(R.id.text_paste);
+
 		this.parseIntent(this.getIntent());
 
 		final ListView list = this.getListView();
 		list.setOnItemLongClickListener(this);
 		list.setOnItemClickListener(this);
+		View v = this.findViewById(R.id.send_);
+		v.setOnClickListener(this);
+		v.setOnLongClickListener(this);
+		this.tvPaste.setOnClickListener(this);
+		this.etText.addTextChangedListener(this.textWatcher);
+		this.textWatcher.afterTextChanged(this.etText.getEditableText());
+
 		this.longItemClickDialog = new String[WHICH_N];
 		this.longItemClickDialog[WHICH_MARK_UNREAD] = this
 				.getString(R.string.mark_unread_);
@@ -186,44 +254,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "displayName: " + this.conv.getDisplayName());
 
 		final ListView lv = this.getListView();
-		final View header = View.inflate(this, R.layout.newmessage_item, null);
-		((TextView) header.findViewById(R.id.text1)).setText(R.string.answer);
-		final SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		final boolean showPhoto = prefs.getBoolean(
-				Preferences.PREFS_CONTACT_PHOTO, false);
-		if (showPhoto) {
-			final ImageView iv = (ImageView) header.findViewById(R.id.photo);
-			Bitmap photo = this.conv.getPhoto();
-			if (photo == null) {
-				AsyncHelper.fillConversation(this, this.conv, true);
-				photo = this.conv.getPhoto();
-			}
-			if (photo != null && photo != Conversation.NO_PHOTO) {
-				iv.setImageBitmap(photo);
-				iv.setVisibility(View.VISIBLE);
-			} else {
-				iv.setVisibility(View.GONE);
-			}
-			iv
-					.setOnClickListener(ContactsWrapper.getInstance()
-							.getQuickContact(this, iv, this.conv.getAddress(),
-									2, null));
-		} else {
-			header.findViewById(R.id.photo).setVisibility(View.GONE);
-		}
-		if (this.currentHeader != null) {
-			lv.removeFooterView(this.currentHeader);
-		}
-		lv.addFooterView(header);
-		this.currentHeader = header;
 		lv.setStackFromBottom(true);
 
 		MessageAdapter adapter = new MessageAdapter(this, this.uri);
 		this.setListAdapter(adapter);
 
-		this.setTitle(this.getString(R.string.app_name) + " > "
-				+ this.conv.getDisplayName());
 		String str;
 		final String name = this.conv.getName();
 		if (name == null) {
@@ -231,7 +266,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		} else {
 			str = name + " <" + this.conv.getAddress() + ">";
 		}
-		((TextView) header.findViewById(R.id.text2)).setText(str);
+		this.setTitle(this.getString(R.string.app_name) + " > " + str);
 		this.setRead();
 	}
 
@@ -310,6 +345,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		case R.id.item_compose:
 			this.startActivity(ConversationList.getComposeIntent(null));
 			return true;
+		case R.id.item_answer:
+			this.startActivity(ConversationList.getComposeIntent(this.conv
+					.getAddress()));
+			return true;
 		default:
 			return false;
 		}
@@ -320,15 +359,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 */
 	public final void onItemClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
-		int headerPos = 0;
-		if (this.sortUSD) {
-			headerPos = parent.getAdapter().getCount() - 1;
-		}
-		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
-		if (position == headerPos) { // header
-			this.startActivity(ConversationList.getComposeIntent(this.conv
-					.getAddress()));
-		}
+		this.onItemLongClick(parent, view, position, id);
 	}
 
 	/**
@@ -336,110 +367,160 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 */
 	public final boolean onItemLongClick(final AdapterView<?> parent,
 			final View view, final int position, final long id) {
-		int headerPos = 0;
-		if (this.sortUSD) {
-			headerPos = parent.getAdapter().getCount() - 1;
+		final Context context = this;
+		final Message m = Message.getMessage(this, (Cursor) parent
+				.getItemAtPosition(position));
+		final Uri target = m.getUri();
+		final int read = m.getRead();
+		final int type = m.getType();
+		Builder builder = new Builder(context);
+		builder.setTitle(R.string.message_options_);
+		String[] items = this.longItemClickDialog;
+		if (read == 0) {
+			items = items.clone();
+			items[WHICH_MARK_UNREAD] = context.getString(R.string.mark_read_);
 		}
-		Log.d(TAG, "pos: " + position + " / header: " + headerPos);
-		if (position == headerPos) { // header
+		if (type == Message.SMS_DRAFT) {
+			items = items.clone();
+			items[WHICH_FORWARD] = context.getString(R.string.send_draft_);
+		}
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				switch (which) {
+				case WHICH_MARK_UNREAD:
+					ConversationList.markRead(context, target, 1 - read);
+					MessageList.this.markedUnread = true;
+					break;
+				case WHICH_FORWARD:
+					Intent i;
+					int resId;
+					if (type == Message.SMS_DRAFT) {
+						resId = R.string.send_draft_;
+						i = ConversationList
+								.getComposeIntent(MessageList.this.conv
+										.getAddress());
+					} else {
+						resId = R.string.forward_;
+						i = new Intent(Intent.ACTION_SEND);
+						i.setType("text/plain");
+					}
+					final CharSequence text = m.getBody();
+					i.putExtra(Intent.EXTRA_TEXT, text);
+					i.putExtra("sms_body", text);
+					context.startActivity(Intent.createChooser(i, context
+							.getString(resId)));
+					break;
+				case WHICH_COPY_TEXT:
+					final ClipboardManager cm = // .
+					(ClipboardManager) context.getSystemService(// .
+							Context.CLIPBOARD_SERVICE);
+					cm.setText(m.getBody());
+					break;
+				case WHICH_VIEW_DETAILS:
+					final int t = m.getType();
+					Builder b = new Builder(context);
+					b.setTitle(R.string.view_details_);
+					b.setCancelable(true);
+					StringBuilder sb = new StringBuilder();
+					final String a = m.getAddress(context);
+					final long d = m.getDate();
+					final String ds = DateFormat.format(// .
+							context.getString(// .
+									R.string.DATEFORMAT_details), d).toString();
+					String sentReceived;
+					String fromTo;
+					if (t == Calls.INCOMING_TYPE) {
+						sentReceived = context.getString(R.string.received_);
+						fromTo = context.getString(R.string.from_);
+					} else if (t == Calls.OUTGOING_TYPE) {
+						sentReceived = context.getString(R.string.sent_);
+						fromTo = context.getString(R.string.to_);
+					} else {
+						sentReceived = "ukwn:";
+						fromTo = "ukwn:";
+					}
+					sb.append(sentReceived + " ");
+					sb.append(ds);
+					sb.append("\n");
+					sb.append(fromTo + " ");
+					sb.append(a);
+					sb.append("\n");
+					sb.append(context.getString(R.string.type_));
+					if (m.isMMS()) {
+						sb.append(" MMS");
+					} else {
+						sb.append(" SMS");
+					}
+					b.setMessage(sb.toString());
+					b.setPositiveButton(android.R.string.ok, null);
+					b.show();
+					break;
+				case WHICH_DELETE:
+					ConversationList.deleteMessages(context, target,
+							R.string.delete_message_,
+							R.string.delete_message_question, null);
+					break;
+				case WHICH_SPEAK:
+					// TODO: implement me
+					Toast.makeText(context, R.string.not_implemented,
+							Toast.LENGTH_SHORT).show();
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		builder.show();
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void onClick(final View v) {
+		switch (v.getId()) {
+		case R.id.send_:
+			final String text = this.etText.getText().toString().trim();
+			if (text.length() == 0) {
+				return;
+			}
 			final Intent i = ConversationList.getComposeIntent(this.conv
 					.getAddress());
+			i.putExtra(Intent.EXTRA_TEXT, text);
+			i.putExtra("sms_body", text);
+			i.putExtra("AUTOSEND", "1");
+			this.startActivity(i);
+			this.etText.setText("");
+			return;
+		case R.id.text_paste:
+			final CharSequence s = this.cbmgr.getText();
+			this.etText.setText(s);
+			return;
+		default:
+			return;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean onLongClick(final View v) {
+		switch (v.getId()) {
+		case R.id.send_:
+			final String text = this.etText.getText().toString().trim();
+			if (text.length() == 0) {
+				return true;
+			}
+			final Intent i = ConversationList.getComposeIntent(this.conv
+					.getAddress());
+			i.putExtra(Intent.EXTRA_TEXT, text);
+			i.putExtra("sms_body", text);
 			this.startActivity(Intent.createChooser(i, this
 					.getString(R.string.answer)));
+			this.etText.setText("");
 			return true;
-		} else {
-			final Context context = this;
-			final Message m = Message.getMessage(this, (Cursor) parent
-					.getItemAtPosition(position));
-			final Uri target = m.getUri();
-			final int read = m.getRead();
-			Builder builder = new Builder(context);
-			builder.setTitle(R.string.message_options_);
-			String[] items = this.longItemClickDialog;
-			if (read == 0) {
-				items = items.clone();
-				items[WHICH_MARK_UNREAD] = context
-						.getString(R.string.mark_read_);
-			}
-			builder.setItems(items, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(final DialogInterface dialog,
-						final int which) {
-					switch (which) {
-					case WHICH_MARK_UNREAD:
-						ConversationList.markRead(context, target, 1 - read);
-						MessageList.this.markedUnread = true;
-						break;
-					case WHICH_FORWARD:
-						final Intent i = new Intent(Intent.ACTION_SEND);
-						i.setType("text/plain");
-						i.putExtra(Intent.EXTRA_TEXT, m.getBody());
-						context.startActivity(Intent.createChooser(i, context
-								.getString(R.string.forward_)));
-						break;
-					case WHICH_COPY_TEXT:
-						final ClipboardManager cm = // .
-						(ClipboardManager) context.getSystemService(// .
-								Context.CLIPBOARD_SERVICE);
-						cm.setText(m.getBody());
-						break;
-					case WHICH_VIEW_DETAILS:
-						final int t = m.getType();
-						Builder b = new Builder(context);
-						b.setTitle(R.string.view_details_);
-						b.setCancelable(true);
-						StringBuilder sb = new StringBuilder();
-						final String a = m.getAddress(context);
-						final long d = m.getDate();
-						final String ds = DateFormat.format(// .
-								context.getString(// .
-										R.string.DATEFORMAT_details), d)
-								.toString();
-						String sentReceived;
-						String fromTo;
-						if (t == Calls.INCOMING_TYPE) {
-							sentReceived = context
-									.getString(R.string.received_);
-							fromTo = context.getString(R.string.from_);
-						} else if (t == Calls.OUTGOING_TYPE) {
-							sentReceived = context.getString(R.string.sent_);
-							fromTo = context.getString(R.string.to_);
-						} else {
-							sentReceived = "ukwn:";
-							fromTo = "ukwn:";
-						}
-						sb.append(sentReceived + " ");
-						sb.append(ds);
-						sb.append("\n");
-						sb.append(fromTo + " ");
-						sb.append(a);
-						sb.append("\n");
-						sb.append(context.getString(R.string.type_));
-						if (m.isMMS()) {
-							sb.append(" MMS");
-						} else {
-							sb.append(" SMS");
-						}
-						b.setMessage(sb.toString());
-						b.setPositiveButton(android.R.string.ok, null);
-						b.show();
-						break;
-					case WHICH_DELETE:
-						ConversationList.deleteMessages(context, target,
-								R.string.delete_message_,
-								R.string.delete_message_question, null);
-						break;
-					case WHICH_SPEAK:
-						// TODO: implement me
-						Toast.makeText(context, R.string.not_implemented,
-								Toast.LENGTH_SHORT).show();
-						break;
-					default:
-						break;
-					}
-				}
-			});
-			builder.show();
+		default:
 			return true;
 		}
 	}

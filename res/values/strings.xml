@@ -66,6 +66,7 @@
 	<string name="delete_message_">Delete message</string>
 	<string name="delete_thread_">Delete thread</string>
 	<string name="forward_">Forward</string>
+	<string name="send_draft_">Send draft</string>
 	<string name="copy_text_">Copy message text</string>
 	<string name="view_details_">View message details</string>
 	<string name="spek_">Speak</string>
@@ -96,6 +97,8 @@
 	<string name="clear_cache_hint">Clear internal Database. Fetch all data again from external Database.</string>
 	<string name="not_implemented">Sorry, not yet implemented.</string>
 	<string name="error_conv_null">Error getting conversation from DB!</string>
+	<string name="text_hint">Text</string>
+	<string name="paste_">[Paste from clipboard]</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>
