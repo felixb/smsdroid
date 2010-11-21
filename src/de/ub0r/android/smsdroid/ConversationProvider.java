@@ -459,6 +459,10 @@ public final class ConversationProvider extends ContentProvider {
 		/** {@link HashMap} for projection. */
 		private static final HashMap<String, String> PROJECTION_MAP;
 
+		/** No photo available. */
+		public static final Bitmap NO_PHOTO = Bitmap.createBitmap(1, 1,
+				Bitmap.Config.RGB_565);
+
 		/** INDEX: id. */
 		public static final int INDEX_ID = 0;
 		/** INDEX: date. */
@@ -1138,6 +1142,7 @@ public final class ConversationProvider extends ContentProvider {
 		if (cursor != null && !cursor.isClosed()) {
 			cursor.close();
 		}
+		// TODO: trigger service to update names, pid, picture..
 	}
 
 	/**

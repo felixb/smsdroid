@@ -31,6 +31,7 @@ import android.os.AsyncTask;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.smsdroid.ConversationProvider.Messages;
+import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
  * @author flx
@@ -259,11 +260,11 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	private static Bitmap getPictureForPerson(final Context context,
 			final String pid) {
 		if (pid == null || pid.length() == 0 || pid == Conversation.NO_CONTACT) {
-			return Conversation.NO_PHOTO;
+			return Threads.NO_PHOTO;
 		}
 		Bitmap b = WRAPPER.loadContactPhoto(context, pid);
 		if (b == null) {
-			return Conversation.NO_PHOTO;
+			return Threads.NO_PHOTO;
 		} else {
 			return b;
 		}

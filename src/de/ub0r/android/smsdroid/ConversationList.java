@@ -38,6 +38,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -106,24 +107,6 @@ public class ConversationList extends ListActivity implements
 
 	/** Conversations. */
 	private ConversationAdapter adapter = null;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final void onStart() {
-		super.onStart();
-		AsyncHelper.setAdapter(this.adapter);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final void onStop() {
-		super.onStop();
-		AsyncHelper.setAdapter(null);
-	}
 
 	/**
 	 * Show all rows of a particular {@link Uri}.
@@ -379,7 +362,6 @@ public class ConversationList extends ListActivity implements
 						if (activity != null) {
 							activity.finish();
 						}
-						Conversation.flushCache();
 						SmsReceiver.updateNewMessageNotification(context, null);
 					}
 				});
@@ -513,8 +495,8 @@ public class ConversationList extends ListActivity implements
 			String[] items = this.longItemClickDialog;
 			final String a = currentCursor.getString(Threads.INDEX_ADDRESS);
 			Log.d(TAG, "p: " + a);
-			final String n = AsyncHelper.getContactName(this, a);
-			if (n == null) {
+			final String n = currentCursor.getString(Threads.INDEX_NAME);
+			if (TextUtils.isEmpty(n)) {
 				builder.setTitle(a);
 				items = items.clone();
 				items[WHICH_VIEW_CONTACT] = this
@@ -544,7 +526,6 @@ public class ConversationList extends ListActivity implements
 						if (n == null) {
 							i = ContactsWrapper.getInstance()
 									.getInsertPickIntent(a);
-							Conversation.flushCache();
 						} else {
 							final Uri uri = ContactsWrapper
 									.getInstance()

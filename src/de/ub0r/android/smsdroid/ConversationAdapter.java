@@ -34,7 +34,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
- * Adapter for the list of {@link Conversation}s.
+ * Adapter for the list of {@link Threads}s.
  * 
  * @author flx
  */
@@ -154,11 +154,11 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 				name, false);
 
 		if (ConversationList.showContactPhoto) {
-			// TODO: get rid of c
-			final Conversation c = Conversation.getConversation(context,
-					cursor, false);
-			Bitmap b = c.getPhoto();
-			if (b != null && b != Conversation.NO_PHOTO) {
+			Bitmap b = null;
+			if (pid != null && pid.length() > 0) {
+				b = WRAPPER.loadContactPhoto(context, pid);
+			}
+			if (b != null && b != Threads.NO_PHOTO) {
 				ivPhoto.setImageBitmap(b);
 			} else {
 				ivPhoto.setImageResource(R.drawable.ic_contact_picture);

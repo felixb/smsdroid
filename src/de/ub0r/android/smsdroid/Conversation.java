@@ -45,9 +45,6 @@ public final class Conversation {
 
 	/** No contact available. */
 	public static final String NO_CONTACT = "-1";
-	/** No photo available. */
-	public static final Bitmap NO_PHOTO = Bitmap.createBitmap(1, 1,
-			Bitmap.Config.RGB_565);
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;

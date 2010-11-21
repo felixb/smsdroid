@@ -77,8 +77,11 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 *            {@link MessageList}
 	 * @param u
 	 *            {@link Uri}
+	 * @param ccursor
+	 *            conversation {@link Cursor}
 	 */
-	public MessageAdapter(final MessageList c, final Uri u) {
+	public MessageAdapter(final MessageList c, final Uri u, // .
+			final Cursor ccursor) {
 		super(c, R.layout.messagelist_item,
 				getCursor(c.getContentResolver(), u), true);
 		final SharedPreferences prefs = PreferenceManager
@@ -98,10 +101,6 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		}
 		this.textSize = Preferences.getTextsize(c);
 		this.threadId = ContentUris.parseId(u);
-		// TODO: get ccursor from above
-		final Cursor ccursor = c.getContentResolver().query(
-				ContentUris.withAppendedId(Threads.CONTENT_URI, this.threadId),
-				Threads.PROJECTION, null, null, null);
 		if (ccursor != null && ccursor.moveToFirst()) {
 			this.address = ccursor.getString(Threads.INDEX_ADDRESS);
 			this.name = ccursor.getString(Threads.INDEX_NAME);

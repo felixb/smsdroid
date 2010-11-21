@@ -267,7 +267,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final ListView lv = this.getListView();
 		lv.setStackFromBottom(true);
 
-		MessageAdapter adapter = new MessageAdapter(this, this.uri);
+		MessageAdapter adapter = new MessageAdapter(this, this.uri, ccursor);
+		if (!ccursor.isClosed()) {
+			ccursor.close();
+		}
 		this.setListAdapter(adapter);
 
 		this.setTitle(this.getString(R.string.app_name) + " > "
@@ -280,7 +283,16 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 */
 	private void scrollToLastMessage() {
 		final ListView lv = this.getListView();
-		lv.setAdapter(new MessageAdapter(this, this.uri));
+		final Cursor ccursor = this.getContentResolver().query(
+				ContentUris.withAppendedId(Threads.CONTENT_URI, this.threadId),
+				Threads.PROJECTION, null, null, null);
+		if (ccursor == null || !ccursor.moveToFirst()) {
+			return;
+		}
+		lv.setAdapter(new MessageAdapter(this, this.uri, ccursor));
+		if (!ccursor.isClosed()) {
+			ccursor.close();
+		}
 		lv.setSelection(this.getListAdapter().getCount() - 1);
 	}
 
