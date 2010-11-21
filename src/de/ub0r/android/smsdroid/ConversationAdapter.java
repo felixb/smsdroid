@@ -21,11 +21,9 @@ package de.ub0r.android.smsdroid;
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
-import android.os.Handler;
 import android.provider.CallLog.Calls;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,6 +31,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -48,9 +47,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 
 	/** Used text size. */
 	private final int textSize;
-
-	/** {@link Cursor} to the original Content to listen for changes. */
-	private final Cursor origCursor;
 
 	/** {@link BackgroundQueryHandler}. */
 	private final BackgroundQueryHandler queryHandler;
@@ -119,31 +115,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		spam = null;
 
 		this.textSize = Preferences.getTextsize(c);
-		this.origCursor = c.getContentResolver().query(
-				ConversationProvider.ORIG_URI,
-				new String[] {
-						ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_ID],
-						ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_DATE] }, null, null, null);
-
-		// does not work.
-		if (this.origCursor != null) {
-			this.origCursor.registerContentObserver(new ContentObserver(
-					new Handler()) {
-				@Override
-				public void onChange(final boolean selfChange) {
-					super.onChange(selfChange);
-					if (!selfChange) {
-						Log.d(TAG, "call startMsgListQuery();");
-						ConversationAdapter.this.startMsgListQuery();
-						Log.d(TAG, "invalidate cache");
-						Conversation.invalidate();
-					}
-				}
-			});
-		}
-		// this.startMsgListQuery();
 	}
 
 	/**
@@ -156,8 +127,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			// Kick off the new query
 			this.activity.setProgressBarIndeterminateVisibility(true);
 			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
-					ConversationProvider.CONTENT_URI,
-					ConversationProvider.PROJECTION, null, null, null);
+					Threads.CONTENT_URI, Threads.PROJECTION, null, null, null);
 		} catch (SQLiteException e) {
 			Log.e(TAG, "error starting query", e);
 		}
@@ -169,9 +139,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final Conversation c = Conversation.getConversation(context, cursor,
-				false);
-
 		final TextView tvBody = (TextView) view.findViewById(R.id.body);
 		if (this.textSize > 0) {
 			tvBody.setTextSize(this.textSize);
@@ -180,7 +147,16 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		final TextView tvCount = (TextView) view.findViewById(R.id.count);
 		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
 
+		final String address = cursor.getString(Threads.INDEX_ADDRESS);
+		final String name = cursor.getString(Threads.INDEX_NAME);
+		final String pid = cursor.getString(Threads.INDEX_PID);
+		final String displayName = ConversationProvider.getDisplayName(address,
+				name, false);
+
 		if (ConversationList.showContactPhoto) {
+			// TODO: get rid of c
+			final Conversation c = Conversation.getConversation(context,
+					cursor, false);
 			Bitmap b = c.getPhoto();
 			if (b != null && b != Conversation.NO_PHOTO) {
 				ivPhoto.setImageBitmap(b);
@@ -189,25 +165,21 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			}
 			ivPhoto.setVisibility(View.VISIBLE);
 			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context,
-					ivPhoto, c.getAddress(), 2, null));
+					ivPhoto, address, 2, null));
 		} else {
 			ivPhoto.setVisibility(View.GONE);
 		}
 
 		// count
-		final int count = c.getCount();
-		if (count < 0) {
-			tvCount.setText("");
+		tvCount.setText("(" + cursor.getInt(Threads.INDEX_COUNT) + ")");
+
+		if (this.isBlocked(address)) {
+			tvName.setText("[" + displayName + "]");
 		} else {
-			tvCount.setText("(" + c.getCount() + ")");
-		}
-		if (this.isBlocked(c.getAddress())) {
-			tvName.setText("[" + c.getDisplayName() + "]");
-		} else {
-			tvName.setText(c.getDisplayName());
+			tvName.setText(displayName);
 		}
 
-		int t = c.getType();
+		int t = cursor.getInt(Threads.INDEX_TYPE);
 		if (t == Calls.INCOMING_TYPE) {
 			((ImageView) view.findViewById(R.id.inout))
 					.setImageResource(R.drawable.// .
@@ -219,21 +191,21 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		}
 
 		// read status
-		if (c.getRead() == 0) {
+		if (cursor.getInt(Threads.INDEX_READ) == 0) {
 			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 
 		// body
-		String text = c.getBody();
+		String text = cursor.getString(Threads.INDEX_BODY);
 		if (text == null) {
 			text = context.getString(R.string.mms_conversation);
 		}
 		tvBody.setText(text);
 
 		// date
-		long time = c.getDate();
+		long time = cursor.getLong(Threads.INDEX_DATE);
 		((TextView) view.findViewById(R.id.date)).setText(ConversationList
 				.getDate(context, time));
 	}

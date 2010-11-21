@@ -36,6 +36,7 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.smsdroid.ConversationProvider.Messages;
 
 /**
  * Listen for new sms.
@@ -46,10 +47,6 @@ import de.ub0r.android.lib.Log;
 public class SmsReceiver extends BroadcastReceiver {
 	/** Tag for logging. */
 	static final String TAG = "bcr";
-	/** {@link Uri} to get messages from. */
-	private static final Uri URI_SMS = Uri.parse("content://sms/");
-	/** {@link Uri} to get messages from. */
-	private static final Uri URI_MMS = Uri.parse("content://mms/");
 
 	/** Intent.action for receiving SMS. */
 	private static final String ACTION_SMS = // .
@@ -152,8 +149,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static int[] getUnreadSMS(final ContentResolver cr,
 			final String text) {
 		Log.d(TAG, "getUnreadSMS(cr, " + text + ")");
-		Cursor cursor = cr.query(URI_SMS, Message.PROJECTION,
-				Message.SELECTION_UNREAD, null, SORT);
+		Cursor cursor = cr.query(Messages.ORIG_URI_SMS,
+				Messages.ORIG_PROJECTION_SMS, Messages.SELECTION_UNREAD, null,
+				SORT);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text != null) { // try again!
 				if (cursor != null && !cursor.isClosed()) {
@@ -167,21 +165,21 @@ public class SmsReceiver extends BroadcastReceiver {
 				return new int[] { 0, 0 };
 			}
 		}
-		final String t = cursor.getString(Message.INDEX_BODY);
+		final String t = cursor.getString(Messages.INDEX_BODY);
 		if (text != null && (t == null || !t.startsWith(text))) {
 			if (cursor != null && !cursor.isClosed()) {
 				cursor.close();
 			}
 			return new int[] { -1, -1 }; // try again!
 		}
-		final long d = cursor.getLong(Message.INDEX_DATE);
+		final long d = cursor.getLong(Messages.INDEX_DATE);
 		if (d > lastUnreadDate) {
 			lastUnreadBody = t;
 		}
-		int tid = cursor.getInt(Message.INDEX_THREADID);
+		int tid = cursor.getInt(Messages.INDEX_THREADID);
 		while (cursor.moveToNext() && tid > -1) {
 			// check if following messages are from the same thread
-			if (tid != cursor.getInt(Message.INDEX_THREADID)) {
+			if (tid != cursor.getInt(Messages.INDEX_THREADID)) {
 				tid = -1;
 			}
 		}
@@ -203,8 +201,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static int[] getUnreadMMS(final ContentResolver cr,
 			final String text) {
 		Log.d(TAG, "getUnreadMMS(cr, " + text + ")");
-		Cursor cursor = cr.query(URI_MMS, Message.PROJECTION_READ,
-				Message.SELECTION_UNREAD, null, null);
+		Cursor cursor = cr.query(Messages.ORIG_URI_MMS,
+				Messages.ORIG_PROJECTION_MMS, Messages.SELECTION_UNREAD, null,
+				null);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text == MMS_BODY) {
 				if (cursor != null && !cursor.isClosed()) {
@@ -218,8 +217,8 @@ public class SmsReceiver extends BroadcastReceiver {
 				return new int[] { 0, 0 };
 			}
 		}
-		int tid = cursor.getInt(Message.INDEX_THREADID);
-		long d = cursor.getLong(Message.INDEX_DATE);
+		int tid = cursor.getInt(Messages.INDEX_THREADID);
+		long d = cursor.getLong(Messages.INDEX_DATE);
 		if (d < ConversationList.MIN_DATE) {
 			d *= ConversationList.MILLIS;
 		}
@@ -228,7 +227,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		}
 		while (cursor.moveToNext() && tid > -1) {
 			// check if following messages are from the same thread
-			if (tid != cursor.getInt(Message.INDEX_THREADID)) {
+			if (tid != cursor.getInt(Messages.INDEX_THREADID)) {
 				tid = -1;
 			}
 		}

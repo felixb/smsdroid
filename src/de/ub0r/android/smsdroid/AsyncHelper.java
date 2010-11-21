@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.smsdroid.ConversationProvider.Messages;
 
 /**
  * @author flx
@@ -107,7 +108,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		}
 		Uri uri = this.mConversation.getUri();
 		Cursor cursor = this.context.getContentResolver().query(uri,
-				Message.PROJECTION_JOIN, null, null, null);
+				Messages.PROJECTION, null, null, null);
 
 		// count
 		this.mConversation.setCount(cursor.getCount());
@@ -118,21 +119,13 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		if (address == null) {
 			if (cursor.moveToLast()) {
 				do {
-					address = cursor.getString(Message.INDEX_ADDRESS);
+					address = cursor.getString(Messages.INDEX_ADDRESS);
 				} while (address == null && cursor.moveToPrevious());
 			}
 			if (address != null) {
 				this.mConversation.setAddress(address);
 				Log.d(TAG, "new address: " + address);
-				cv.put(ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_ADDRESS], address);
-			}
-		}
-		if (this.mConversation.getBody() == null && cursor.moveToLast()) {
-			final Message m = Message.getMessage(this.context, cursor);
-			final CharSequence b = m.getBody();
-			if (b != null) {
-				this.mConversation.setBody(b.toString());
+				cv.put(ConversationProvider.Threads.ADDRESS, address);
 			}
 		}
 
@@ -145,10 +138,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 				String n = contact.getString(ContactsWrapper.FILTER_INDEX_NAME);
 				this.mConversation.setPersonId(pid);
 				this.mConversation.setName(n);
-				cv.put(ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_PID], pid);
-				cv.put(ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_NAME], n);
+				cv.put(ConversationProvider.Threads.PID, pid);
+				cv.put(ConversationProvider.Threads.NAME, n);
 			} else {
 				this.mConversation.setPersonId(Conversation.NO_CONTACT);
 			}
@@ -156,8 +147,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 		// read
 		cursor = this.context.getContentResolver().query(uri,
-				Message.PROJECTION,
-				Message.PROJECTION[Message.INDEX_READ] + " = 0", null, null);
+				Messages.PROJECTION, Messages.READ + " = 0", null, null);
 		if (cursor.getCount() == 0) {
 			this.mConversation.setRead(1);
 		} else {

@@ -132,13 +132,11 @@ public final class Conversation {
 		this.type = cursor.getInt(INDEX_TYPE);
 		// this.read = cursor.getInt(INDEX_READ);
 		this.read = 1;
-		int idName = cursor.getColumnIndex(ConversationProvider.PROJECTION[// .
-				ConversationProvider.INDEX_NAME]);
+		int idName = cursor.getColumnIndex(ConversationProvider.Threads.NAME);
 		if (idName >= 0) {
 			this.name = cursor.getString(idName);
 		}
-		int idPid = cursor.getColumnIndex(ConversationProvider.PROJECTION[// .
-				ConversationProvider.INDEX_PID]);
+		int idPid = cursor.getColumnIndex(ConversationProvider.Threads.PID);
 		if (idPid >= 0) {
 			this.personId = cursor.getString(idPid);
 		}
@@ -172,8 +170,8 @@ public final class Conversation {
 				this.photo = null;
 				this.personId = "";
 			}
-			int idName = cursor.getColumnIndex(ConversationProvider.// .
-					PROJECTION[ConversationProvider.INDEX_NAME]);
+			int idName = cursor
+					.getColumnIndex(ConversationProvider.Threads.NAME);
 			if (idName >= 0) {
 				final String n = cursor.getString(idName);
 				if (n != null) {
@@ -203,7 +201,7 @@ public final class Conversation {
 			final Cursor cursor, final boolean sync) {
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(cursor
-					.getInt(ConversationProvider.INDEX_THREADID));
+					.getInt(ConversationProvider.Threads.INDEX_ID));
 			if (ret == null) {
 				ret = new Conversation(context, cursor, sync);
 				CACHE.put(ret.getThreadId(), ret);
@@ -241,11 +239,10 @@ public final class Conversation {
 			Conversation ret = CACHE.get(threadId);
 			if (ret == null || ret.getAddress() == null || forceUpdate) {
 				Cursor cursor = context.getContentResolver().query(
-						ConversationProvider.CONTENT_URI,
-						ConversationProvider.PROJECTION,
-						ConversationProvider.PROJECTION[// .
-								ConversationProvider.INDEX_THREADID]
-								+ " = " + threadId, null, null);
+						ConversationProvider.Threads.CONTENT_URI,
+						ConversationProvider.Threads.PROJECTION,
+						ConversationProvider.Threads.ID + " = " + threadId,
+						null, null);
 				if (cursor != null && cursor.moveToFirst()) {
 					ret = getConversation(context, cursor, true);
 				} else {
@@ -457,7 +454,7 @@ public final class Conversation {
 	 *         internal DataBase
 	 */
 	public Uri getInternalUri() {
-		return Uri.withAppendedPath(ConversationProvider.CONTENT_URI, String
-				.valueOf(this.threadId));
+		return Uri.withAppendedPath(ConversationProvider.Threads.CONTENT_URI,
+				String.valueOf(this.threadId));
 	}
 }

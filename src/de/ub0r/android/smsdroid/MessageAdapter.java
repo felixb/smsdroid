@@ -18,13 +18,15 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.util.ArrayList;
+
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -36,6 +38,8 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.smsdroid.ConversationProvider.Messages;
+import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -55,7 +59,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	private final int backgroundDrawableIn, backgroundDrawableOut;
 
 	/** Thread id. */
-	private int threadId = -1;
+	private long threadId = -1;
 	/** Address. */
 	private String address = null;
 	/** Name. */
@@ -93,25 +97,20 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			this.backgroundDrawableIn = 0;
 		}
 		this.textSize = Preferences.getTextsize(c);
-		if (u == null || u.getLastPathSegment() == null) {
-			this.threadId = -1;
-		} else {
-			this.threadId = Integer.parseInt(u.getLastPathSegment());
-		}
-		final Conversation conv = Conversation.getConversation(c,
-				this.threadId, false);
-		if (conv == null) {
-			this.address = null;
-			this.name = null;
-		} else {
-			this.address = conv.getAddress();
-			this.name = AsyncHelper.getContactName(c, this.address);
+		this.threadId = -1L;
+		ContentUris.parseId(u);
+		final Cursor ccursor = c.getContentResolver().query(
+				ContentUris.withAppendedId(Threads.CONTENT_URI, this.threadId),
+				Threads.PROJECTION, null, null, null);
+		if (ccursor != null && ccursor.moveToFirst()) {
+			this.address = ccursor.getString(Threads.INDEX_ADDRESS);
+			this.name = ccursor.getString(Threads.INDEX_NAME);
 		}
 		if (this.name == null) {
-			this.displayName = this.address;
-		} else {
-			this.displayName = this.name;
+			// TODO: this.name = AsyncHelper.getContactName(c, this.address);
 		}
+		this.displayName = ConversationProvider.getDisplayName(this.address,
+				this.name, false);
 		Log.d(TAG, "address: " + this.address);
 		Log.d(TAG, "name: " + this.name);
 		Log.d(TAG, "displayName: " + this.displayName);
@@ -127,51 +126,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 * @return {@link Cursor}
 	 */
 	private static Cursor getCursor(final ContentResolver cr, final Uri u) {
-		final Cursor[] c = new Cursor[] { null, null };
-		final String type = Message.PROJECTION_JOIN[Message.INDEX_TYPE];
-		final String mtype = Message.PROJECTION_JOIN[Message.INDEX_MTYPE];
-
-		int tid = -1;
-		try {
-			tid = Integer.parseInt(u.getLastPathSegment());
-		} catch (Exception e) {
-			Log.e(TAG, "error parsing uri: " + u, e);
-		}
-		final String twhere = Message.PROJECTION_SMS[Message.INDEX_THREADID]
-				+ " = " + tid + " AND (";
-
-		String where = twhere + type + " = " + Message.SMS_IN // .
-				+ " OR " + type + " = " + Message.SMS_OUT // .
-				+ " OR " + mtype + " = " + Message.MMS_TOLOAD // .
-				+ " OR " + mtype + " = " + Message.MMS_IN // .
-				+ " OR " + mtype + " = " + Message.MMS_OUT + ")";
-
-		try {
-			c[0] = cr.query(u, Message.PROJECTION_JOIN, where, null, null);
-		} catch (NullPointerException e) {
-			Log.e(TAG, "error query: " + u + " / " + where, e);
-			c[0] = null;
-		}
-
-		where = twhere + type + " = " + Message.SMS_DRAFT + ")";
-		// + " OR " + type + " = " + Message.SMS_PENDING;
-
-		try {
-			c[1] = cr.query(Uri.parse("content://sms/"),
-					Message.PROJECTION_SMS, where, null, Message.SORT_USD);
-		} catch (NullPointerException e) {
-			Log.e(TAG, "error query: " + u + " / " + where, e);
-			c[1] = null;
-		}
-
-		if (c[1] == null || c[1].getCount() == 0) {
-			return c[0];
-		}
-		if (c[0] == null || c[0].getCount() == 0) {
-			return c[1];
-		}
-
-		return new MergeCursor(c);
+		return cr.query(ContentUris.withAppendedId(Messages.THREAD_URI,
+				ContentUris.parseId(u)), Messages.PROJECTION, null, null, null);
 	}
 
 	/**
@@ -180,16 +136,14 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	@Override
 	public final void bindView(final View view, final Context context,
 			final Cursor cursor) {
-		final Message m = Message.getMessage(context, cursor);
-
 		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
 		TextView twBody = (TextView) view.findViewById(R.id.body);
 		if (this.textSize > 0) {
 			twBody.setTextSize(this.textSize);
 		}
-		int t = m.getType();
+		int t = cursor.getInt(Messages.INDEX_TYPE);
 
-		String subject = m.getSubject();
+		String subject = cursor.getString(Messages.INDEX_SUBJECT);
 		if (subject == null) {
 			subject = "";
 		} else {
@@ -199,12 +153,11 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		final View pending = view.findViewById(R.id.pending);
 		int pendingvisability = View.GONE;
 		switch (t) {
-		case Message.SMS_DRAFT:
-			// TODO case Message.SMS_PENDING:
+		case Messages.TYPE_SMS_DRAFT:
 			// case Message.MMS_DRAFT:
 			pendingvisability = View.VISIBLE;
-		case Message.SMS_OUT: // handle drafts/pending here too
-		case Message.MMS_OUT:
+		case Messages.TYPE_SMS_OUT: // handle drafts/pending here too
+		case Messages.TYPE_MMS_OUT:
 			twPerson.setText(context.getString(R.string.me) + subject);
 			try {
 				view.setBackgroundResource(this.backgroundDrawableOut);
@@ -215,8 +168,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 					.setImageResource(R.drawable.// .
 					ic_call_log_list_outgoing_call);
 			break;
-		case Message.SMS_IN:
-		case Message.MMS_IN:
+		case Messages.TYPE_SMS_IN:
+		case Messages.TYPE_MMS_IN:
 		default:
 			twPerson.setText(this.displayName + subject);
 			try {
@@ -233,50 +186,70 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		pending.setVisibility(pendingvisability);
 
 		// unread / read
-		if (m.getRead() == 0) {
+		if (cursor.getInt(Messages.INDEX_READ) == 0) {
 			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
 		} else {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 
-		long time = m.getDate();
+		long time = cursor.getLong(Messages.INDEX_DATE);
 		((TextView) view.findViewById(R.id.date)).setText(ConversationList
 				.getDate(context, time));
 
+		CharSequence text = cursor.getString(Messages.INDEX_BODY);
 		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);
-		final Bitmap pic = m.getPicture();
-		if (pic != null) {
-			if (pic == Message.BITMAP_PLAY) {
-				ivPicture.setImageResource(R.drawable.mms_play_btn);
-			} else {
-				ivPicture.setImageBitmap(pic);
-			}
-			ivPicture.setVisibility(View.VISIBLE);
-			final Intent i = m.getContentIntent();
-			if (i == null) {
-				ivPicture.setOnClickListener(null);
-			} else {
-				ivPicture.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						try {
-							context.startActivity(i);
-						} catch (ActivityNotFoundException e) {
-							Log.w(TAG, "activity not found", e);
-							Toast.makeText(context,
-									"no activity for data: " + i.getType(),
-									Toast.LENGTH_LONG).show();
+		Bitmap pic = null;
+		Intent contentIntent = null;
+		if (t > 100) {
+			final ArrayList<Object> mms = Messages.getParts(context
+					.getContentResolver(), cursor.getLong(Messages.INDEX_ID));
+			if (mms != null) {
+				final int l = mms.size();
+				for (int i = 0; i < l; i++) {
+					final Object o = mms.get(i);
+					if (o instanceof CharSequence) {
+						if (text == null) {
+							text = (CharSequence) o;
 						}
+					} else if (o instanceof Bitmap) {
+						pic = (Bitmap) o;
+					} else if (o instanceof Intent) {
+						contentIntent = (Intent) o;
 					}
-				});
+				}
 			}
-		} else {
+			if (pic != null) {
+				if (pic == Messages.BITMAP_PLAY) {
+					ivPicture.setImageResource(R.drawable.mms_play_btn);
+				} else {
+					ivPicture.setImageBitmap(pic);
+				}
+				final Intent i = contentIntent;
+				ivPicture.setVisibility(View.VISIBLE);
+				if (i == null) {
+					ivPicture.setOnClickListener(null);
+				} else {
+					ivPicture.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(final View v) {
+							try {
+								context.startActivity(i);
+							} catch (ActivityNotFoundException e) {
+								Log.w(TAG, "activity not found", e);
+								Toast.makeText(context,
+										"no activity for data: " + i.getType(),
+										Toast.LENGTH_LONG).show();
+							}
+						}
+					});
+				}
+			}
+		}
+		if (pic == null) {
 			ivPicture.setVisibility(View.GONE);
 			ivPicture.setOnClickListener(null);
 		}
-
 		final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
-		CharSequence text = m.getBody();
 		if (text == null && pic == null) {
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
@@ -291,8 +264,9 @@ public class MessageAdapter extends ResourceCursorAdapter {
 					// intent.putExtra("type", 1);
 					// context.startService(intent);
 
-					final Uri target = Uri.parse(MessageList.URI
-							+ m.getThreadId());
+					final Uri target = ContentUris.withAppendedId(
+							Threads.ORIG_URI, cursor
+									.getLong(Messages.INDEX_THREADID));
 					Intent i = new Intent(Intent.ACTION_VIEW, target);
 					context.startActivity(Intent.createChooser(i, context
 							.getString(R.string.view_mms)));
@@ -306,6 +280,9 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		if (text == null) {
 			twBody.setVisibility(View.INVISIBLE);
 		} else {
+			if (ConversationList.showEmoticons) {
+				text = SmileyParser.getInstance(context).addSmileySpans(text);
+			}
 			twBody.setText(text);
 			twBody.setVisibility(View.VISIBLE);
 		}

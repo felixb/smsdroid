@@ -20,6 +20,7 @@ package de.ub0r.android.smsdroid;
 
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,6 +52,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.TelephonyWrapper;
+import de.ub0r.android.smsdroid.ConversationProvider.Messages;
+import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -97,9 +100,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 	/** Sort list upside down. */
 	private boolean sortUSD = true;
-
-	/** Current FooterView. */
-	private View currentHeader = null;
 
 	/** Marked a message unread? */
 	private boolean markedUnread = false;
@@ -225,33 +225,40 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "got uri: " + intent.getData());
 
 		this.uri = intent.getData();
-		if (this.uri != null) {
-			if (!this.uri.toString().startsWith(URI)) {
-				this.uri = Uri.parse(URI + this.uri.getLastPathSegment());
-			}
-		} else {
-			final long tid = intent.getLongExtra("thread_id", -1L);
-			this.uri = Uri.parse(URI + tid);
-			if (tid < 0L) {
-				this.startActivity(ConversationList.getComposeIntent(null));
-				this.finish();
-				return;
-			}
+		long threadId = intent.getLongExtra("thread_id", -1L);
+		if (threadId < 0L && this.uri != null) {
+			threadId = ContentUris.parseId(this.uri);
+		}
+		if (threadId < 0L) {
+			this.startActivity(ConversationList.getComposeIntent(null));
+			this.finish();
+			return;
 		}
 
-		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		this.conv = Conversation.getConversation(this, threadId, true);
+		this.uri = ContentUris.withAppendedId(Messages.THREAD_URI, threadId);
+		this.conv = Conversation.getConversation(this, (int) threadId, true);
+		final Cursor ccursor = this.getContentResolver().query(
+				ContentUris.withAppendedId(Threads.CONTENT_URI, threadId),
+				Threads.PROJECTION, null, null, null);
 
-		if (this.conv == null) {
+		if (this.conv == null || ccursor == null || !ccursor.moveToFirst()) {
 			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
 					.show();
 			this.finish();
 			return;
 		}
 
-		Log.d(TAG, "address: " + this.conv.getAddress());
-		Log.d(TAG, "name: " + this.conv.getName());
-		Log.d(TAG, "displayName: " + this.conv.getDisplayName());
+		final String address = ccursor.getString(Threads.INDEX_ADDRESS);
+		final String name = ccursor.getString(Threads.INDEX_NAME);
+		final String displayName = ConversationProvider.getDisplayName(address,
+				name, false);
+		final String fullDisplayName = ConversationProvider.getDisplayName(
+				address, name, true);
+
+		Log.d(TAG, "address: " + address);
+		Log.d(TAG, "name: " + name);
+		Log.d(TAG, "displayName: " + displayName);
+		Log.d(TAG, "fullDisplayName: " + fullDisplayName);
 
 		final ListView lv = this.getListView();
 		lv.setStackFromBottom(true);
@@ -259,14 +266,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		MessageAdapter adapter = new MessageAdapter(this, this.uri);
 		this.setListAdapter(adapter);
 
-		String str;
-		final String name = this.conv.getName();
-		if (name == null) {
-			str = this.conv.getAddress();
-		} else {
-			str = name + " <" + this.conv.getAddress() + ">";
-		}
-		this.setTitle(this.getString(R.string.app_name) + " > " + str);
+		this.setTitle(this.getString(R.string.app_name) + " > "
+				+ fullDisplayName);
 		this.setRead();
 	}
 
@@ -368,11 +369,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onItemLongClick(final AdapterView<?> parent,
 			final View view, final int position, final long id) {
 		final Context context = this;
-		final Message m = Message.getMessage(this, (Cursor) parent
-				.getItemAtPosition(position));
-		final Uri target = m.getUri();
-		final int read = m.getRead();
-		final int type = m.getType();
+		final Cursor currentCursor = (Cursor) parent
+				.getItemAtPosition(position);
+		final Uri target = ContentUris.withAppendedId(Messages.CONTENT_URI, id);
+		final int read = currentCursor.getInt(Messages.INDEX_READ);
+		final int type = currentCursor.getInt(Messages.INDEX_TYPE);
 		Builder builder = new Builder(context);
 		builder.setTitle(R.string.message_options_);
 		String[] items = this.longItemClickDialog;
@@ -380,7 +381,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			items = items.clone();
 			items[WHICH_MARK_UNREAD] = context.getString(R.string.mark_read_);
 		}
-		if (type == Message.SMS_DRAFT) {
+		if (type == Messages.TYPE_SMS_DRAFT) {
 			items = items.clone();
 			items[WHICH_FORWARD] = context.getString(R.string.send_draft_);
 		}
@@ -395,7 +396,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				case WHICH_FORWARD:
 					Intent i;
 					int resId;
-					if (type == Message.SMS_DRAFT) {
+					if (type == Messages.TYPE_SMS_DRAFT) {
 						resId = R.string.send_draft_;
 						i = ConversationList
 								.getComposeIntent(MessageList.this.conv
@@ -405,7 +406,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						i = new Intent(Intent.ACTION_SEND);
 						i.setType("text/plain");
 					}
-					final CharSequence text = m.getBody();
+					final String text = currentCursor
+							.getString(Messages.INDEX_BODY);
 					i.putExtra(Intent.EXTRA_TEXT, text);
 					i.putExtra("sms_body", text);
 					context.startActivity(Intent.createChooser(i, context
@@ -415,16 +417,17 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					final ClipboardManager cm = // .
 					(ClipboardManager) context.getSystemService(// .
 							Context.CLIPBOARD_SERVICE);
-					cm.setText(m.getBody());
+					cm.setText(currentCursor.getString(Messages.INDEX_BODY));
 					break;
 				case WHICH_VIEW_DETAILS:
-					final int t = m.getType();
+					final int t = currentCursor.getInt(Messages.INDEX_TYPE);
 					Builder b = new Builder(context);
 					b.setTitle(R.string.view_details_);
 					b.setCancelable(true);
 					StringBuilder sb = new StringBuilder();
-					final String a = m.getAddress(context);
-					final long d = m.getDate();
+					final String a = currentCursor
+							.getString(Messages.INDEX_ADDRESS);
+					final long d = currentCursor.getLong(Messages.INDEX_DATE);
 					final String ds = DateFormat.format(// .
 							context.getString(// .
 									R.string.DATEFORMAT_details), d).toString();
@@ -447,7 +450,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					sb.append(a);
 					sb.append("\n");
 					sb.append(context.getString(R.string.type_));
-					if (m.isMMS()) {
+					if (t > 100) {
 						sb.append(" MMS");
 					} else {
 						sb.append(" SMS");

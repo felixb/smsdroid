@@ -27,6 +27,7 @@ import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,6 +53,8 @@ import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.smsdroid.ConversationProvider.Messages;
+import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
  * Main {@link ListActivity} showing conversations.
@@ -311,22 +314,24 @@ public class ConversationList extends ListActivity implements
 		if (uri == null) {
 			return;
 		}
-		final String select = Message.SELECTION_UNREAD.replace("0", String
+		final String select = Messages.SELECTION_UNREAD.replace("0", String
 				.valueOf(1 - read));
 		final ContentResolver cr = context.getContentResolver();
-		final Cursor cursor = cr.query(uri, Message.PROJECTION_READ, select,
-				null, null);
+		final Cursor cursor = cr.query(uri, Messages.PROJECTION, select, null,
+				null);
 		if (cursor != null && cursor.getCount() <= 0) {
-			String u = uri.toString();
-			if (u.equals("content://sms/") || u.equals("content://mms/")) {
+			if (uri.equals(Messages.CONTENT_URI)) {
 				SmsReceiver.updateNewMessageNotification(context, null);
 			}
 			cursor.close();
 			return;
 		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
 
 		final ContentValues cv = new ContentValues();
-		cv.put(Message.PROJECTION[Message.INDEX_READ], read);
+		cv.put(Messages.READ, read);
 		cr.update(uri, cv, select, null);
 		SmsReceiver.updateNewMessageNotification(context, null);
 	}
@@ -347,13 +352,21 @@ public class ConversationList extends ListActivity implements
 	 */
 	static final void deleteMessages(final Context context, final Uri uri,
 			final int title, final int message, final Activity activity) {
-		final Cursor mCursor = context.getContentResolver().query(uri,
-				Message.PROJECTION_READ, null, null, null);
-		if (mCursor.getCount() <= 0) {
+		final ContentResolver cr = context.getContentResolver();
+		final Cursor cursor = cr.query(uri, Messages.PROJECTION, null, null,
+				null);
+		if (cursor == null) {
+			return;
+		}
+		final int l = cursor.getCount();
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		if (l == 0) {
 			return;
 		}
 
-		Builder builder = new Builder(context);
+		final Builder builder = new Builder(context);
 		builder.setTitle(title);
 		builder.setMessage(message);
 		builder.setNegativeButton(android.R.string.no, null);
@@ -362,12 +375,11 @@ public class ConversationList extends ListActivity implements
 					@Override
 					public void onClick(final DialogInterface dialog,
 							final int which) {
-						context.getContentResolver().delete(uri, null, null);
+						cr.delete(uri, null, null);
 						if (activity != null) {
 							activity.finish();
 						}
 						Conversation.flushCache();
-						Message.flushCache();
 						SmsReceiver.updateNewMessageNotification(context, null);
 					}
 				});
@@ -459,9 +471,13 @@ public class ConversationList extends ListActivity implements
 						Toast.LENGTH_LONG).show();
 			}
 		} else {
-			final Conversation c = Conversation.getConversation(this,
-					(Cursor) parent.getItemAtPosition(position), false);
-			final Uri target = c.getUri();
+			final Cursor currentCursor = (Cursor) parent
+					.getItemAtPosition(position);
+			// final Conversation c = Conversation.getConversation(this,
+			// currentCursor, false);
+			// TODO
+			final Uri target = ContentUris.withAppendedId(Threads.ORIG_URI,
+					currentCursor.getLong(Threads.INDEX_ID));
 			final Intent i = new Intent(this, MessageList.class);
 			i.setData(target);
 			try {

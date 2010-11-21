@@ -18,22 +18,31 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import android.text.TextUtils;
+import de.ub0r.android.lib.DbUtils;
 import de.ub0r.android.lib.Log;
 
 /**
@@ -46,89 +55,560 @@ public final class ConversationProvider extends ContentProvider {
 	/** Name of the {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "mms.db";
 	/** Version of the {@link SQLiteDatabase}. */
-	private static final int DATABASE_VERSION = 5;
-	/** Table name for threads. */
-	private static final String THREADS_TABLE_NAME = "threads";
-
-	/** {@link HashMap} for projection. */
-	private static final HashMap<String, String> THREADS_PROJECTION_MAP;
-
-	/** INDEX: id. */
-	public static final int INDEX_ID = 0;
-	/** INDEX: date. */
-	public static final int INDEX_DATE = 1;
-	/** INDEX: address. */
-	public static final int INDEX_ADDRESS = 2;
-	/** INDEX: thread_id. */
-	public static final int INDEX_THREADID = 3;
-	/** INDEX: body. */
-	public static final int INDEX_BODY = 4;
-	/** INDEX: type. */
-	public static final int INDEX_TYPE = 5;
-	/** INDEX: person id. */
-	public static final int INDEX_PID = 6;
-	/** INDEX: name. */
-	public static final int INDEX_NAME = 7;
-
-	/** Cursor's projection. */
-	public static final String[] PROJECTION = { //
-	BaseColumns._ID, // 0
-			Calls.DATE, // 1
-			"address", // 2
-			"thread_id", // 3
-			"body", // 4
-			Calls.TYPE, // 5
-			"pid", // 6
-			"name", // 7
-	};
-
-	/** ORIG_URI to resolve. */
-	public static final Uri ORIG_URI = Uri
-			.parse("content://mms-sms/conversations/");
-	/** Cursor's projection (outgoing). */
-	private static final String[] PROJECTION_OUT = { //
-	BaseColumns._ID, // 0
-			Calls.DATE, // 1
-			"address", // 2
-			"thread_id", // 3
-			"body", // 4
-			Calls.TYPE, // 5
-	};
-
-	/** Cursors row in hero phones: address. */
-	static final String ADDRESS_HERO = "recipient_address AS "
-			+ PROJECTION[INDEX_ADDRESS];
-	/** Cursors row in hero phones: thread_id. */
-	static final String THREADID_HERO = "_id AS " + PROJECTION[INDEX_THREADID];
-
-	/** Default sort order. */
-	public static final String DEFAULT_SORT_ORDER = PROJECTION[INDEX_DATE]
-			+ " DESC";
-
-	/** Internal id: threads. */
-	private static final int THREADS = 1;
-	/** Internal id: single thread. */
-	private static final int THREAD_ID = 2;
+	private static final int DATABASE_VERSION = 20;
 
 	/** Authority. */
 	public static final String AUTHORITY = "de.ub0r.android.smsdroid."
 			+ "provider.conversations";
 
-	/** Content {@link Uri}. */
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-			+ "/threads");
+	/**
+	 * Class holding all messages.
+	 * 
+	 * @author flx
+	 */
+	public static final class Messages {
+		/** Table name. */
+		private static final String TABLE = "messages";
+		/** {@link HashMap} for projection. */
+		private static final HashMap<String, String> PROJECTION_MAP;
+
+		/** Bitmap showing the play button. */
+		public static final Bitmap BITMAP_PLAY = Bitmap.createBitmap(1, 1,
+				Config.RGB_565);
+
+		/** INDEX: id. */
+		public static final int INDEX_ID = 0;
+		/** INDEX: date. */
+		public static final int INDEX_DATE = 1;
+		/** INDEX: address. */
+		public static final int INDEX_ADDRESS = 2;
+		/** INDEX: thread_id. */
+		public static final int INDEX_THREADID = 3;
+		/** INDEX: body. */
+		public static final int INDEX_BODY = 4;
+		/** INDEX: type. */
+		public static final int INDEX_TYPE = 5;
+		/** INDEX: read. */
+		public static final int INDEX_READ = 6;
+		/** INDEX: subject. */
+		public static final int INDEX_SUBJECT = 7;
+
+		/** Id. */
+		public static final String ID = BaseColumns._ID;
+		/** Date. */
+		public static final String DATE = Calls.DATE;
+		/** Address. */
+		public static final String ADDRESS = "address";
+		/** thread_id. */
+		public static final String THREADID = "thread_id";
+		/** body. */
+		public static final String BODY = "body";
+		/** type. */
+		public static final String TYPE = Calls.TYPE;
+		/** read. */
+		public static final String READ = "read";
+		/** Subject. */
+		public static final String SUBJECT = "subject";
+
+		/** Type for incoming sms. */
+		public static final int TYPE_SMS_IN = Calls.INCOMING_TYPE;
+		/** Type for outgoing sms. */
+		public static final int TYPE_SMS_OUT = Calls.OUTGOING_TYPE;
+		/** Type for sms drafts. */
+		public static final int TYPE_SMS_DRAFT = 3;
+		/** Type for incoming mms. */
+		public static final int TYPE_MMS_IN = 132;
+		/** Type for outgoing mms. */
+		public static final int TYPE_MMS_OUT = 128;
+		/** Type for mms drafts. */
+		// public static final int MMS_DRAFT = 128;
+		/** Type for not yet loaded mms. */
+		public static final int TYPE_MMS_TOLOAD = 130;
+
+		/** Where clause matching sms. */
+		public static final String WHERE_TYPE_SMS = TYPE + " < 100";
+		/** Where clause matching sms. */
+		public static final String WHERE_TYPE_MMS = TYPE + " > 100";
+
+		/** {@link Cursor}'s projection. */
+		public static final String[] PROJECTION = { //
+		ID, // 0
+				DATE, // 1
+				ADDRESS, // 2
+				THREADID, // 3
+				BODY, // 4
+				TYPE, // 5
+				READ, // 6
+				SUBJECT, // 7
+		};
+
+		/** Index for parts: id. */
+		public static final int PARTS_INDEX_ID = 0;
+		/** Index for parts: mid. */
+		public static final int PARTS_INDEX_MID = 1;
+		/** Index for parts: ct. */
+		public static final int PARTS_INDEX_CT = 2;
+
+		/** id. */
+		public static final String PARTS_ID = "_id";
+		/** mid. */
+		public static final String PARTS_MID = "mid";
+		/** ct. */
+		public static final String PARTS_CT = "ct";
+		/** text. */
+		public static final String PARTS_TEXT = "text";
+
+		/** {@link Uri} for parts. */
+		private static final Uri URI_PARTS = Uri.parse("content://mms/part/");
+
+		/** Cursor's projection for parts. */
+		public static final String[] PROJECTION_PARTS = { //
+		PARTS_ID, // 0
+				PARTS_MID, // 1
+				PARTS_CT, // 2
+		};
+
+		/** Remote {@link Cursor}'s projection. */
+		public static final String[] ORIG_PROJECTION_SMS = PROJECTION;
+
+		/** Remote {@link Cursor}'s projection. */
+		public static final String[] ORIG_PROJECTION_MMS = new String[] { // .
+		ID, // 0
+				DATE, // 1
+				THREADID, // 2
+				READ, // 3
+		};
+
+		/** Default sort order. */
+		public static final String DEFAULT_SORT_ORDER = DATE + " ASC";
+
+		/** Content {@link Uri}. */
+		public static final Uri CONTENT_URI = Uri.parse("content://"
+				+ AUTHORITY + "/messages");
+		/** Content {@link Uri}. */
+		public static final Uri THREAD_URI = Uri.parse("content://" + AUTHORITY
+				+ "/conversation");
+		/** {@link Uri} of real sms database. */
+		public static final Uri ORIG_URI_SMS = Uri.parse("content://sms/");
+		/** {@link Uri} of real mms database. */
+		public static final Uri ORIG_URI_MMS = Uri.parse("content://mms/");
+
+		/** SQL WHERE: unread messages. */
+		static final String SELECTION_UNREAD = "read = '0'";
+		/** SQL WHERE: read messages. */
+		static final String SELECTION_READ = "read = '1'";
+
+		/**
+		 * The MIME type of {@link #CONTENT_URI} providing a list of threads.
+		 */
+		public static final String CONTENT_TYPE = // .
+		"vnd.android.cursor.dir/vnd.ub0r.message";
+
+		/**
+		 * The MIME type of a {@link #CONTENT_URI} single thread.
+		 */
+		public static final String CONTENT_ITEM_TYPE = // .
+		"vnd.android.cursor.item/vnd.ub0r.message";
+
+		static {
+			PROJECTION_MAP = new HashMap<String, String>();
+			final int l = PROJECTION.length;
+			for (int i = 0; i < l; i++) {
+				PROJECTION_MAP.put(PROJECTION[i], PROJECTION[i]);
+			}
+		}
+
+		/**
+		 * Create table in {@link SQLiteDatabase}.
+		 * 
+		 * @param db
+		 *            {@link SQLiteDatabase}
+		 */
+		public static void onCreate(final SQLiteDatabase db) {
+			Log.i(TAG, "create table: " + TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE);
+			db.execSQL("CREATE TABLE " + TABLE + " (" // .
+					+ ID + " LONG," // .
+					+ DATE + " LONG,"// .
+					+ ADDRESS + " TEXT,"// .
+					+ THREADID + " LONG,"// .
+					+ BODY + " TEXT,"// .
+					+ TYPE + " INTEGER," // .
+					+ READ + " INTEGER," // .
+					+ SUBJECT + " TEXT" // .
+					+ ");");
+		}
+
+		/**
+		 * Upgrade table.
+		 * 
+		 * @param db
+		 *            {@link SQLiteDatabase}
+		 * @param oldVersion
+		 *            old version
+		 * @param newVersion
+		 *            new version
+		 */
+		public static void onUpgrade(final SQLiteDatabase db,
+				final int oldVersion, final int newVersion) {
+			Log.w(TAG, "Upgrading table: " + TABLE);
+			onCreate(db);
+		}
+
+		/**
+		 * Get {@link Cursor} holding MMS parts for mid.
+		 * 
+		 * @param cr
+		 *            {@link ContentResolver}
+		 * @param mid
+		 *            message's id
+		 * @return {@link Cursor}
+		 */
+		public static Cursor getPartsCursor(final ContentResolver cr, // .
+				final long mid) {
+			return cr.query(URI_PARTS, null, PARTS_MID + " = " + mid, null,
+					null);
+		}
+
+		/**
+		 * Get MMS parts as {@link Object}s (Bitmap, {@link CharSequence},
+		 * {@link Intent}).
+		 * 
+		 * @param cr
+		 *            {@link ContentResolver}
+		 * @param mid
+		 *            MMS's id
+		 * @return {@link ArrayList} of parts
+		 */
+		public static ArrayList<Object> getParts(final ContentResolver cr,
+				final long mid) {
+			Cursor cursor = getPartsCursor(cr, mid);
+			if (cursor == null || !cursor.moveToFirst()) {
+				return null;
+			}
+			final ArrayList<Object> ret = new ArrayList<Object>();
+			final int iID = cursor.getColumnIndex(PARTS_ID);
+			final int iCT = cursor.getColumnIndex(PARTS_CT);
+			final int iText = cursor.getColumnIndex(PARTS_TEXT);
+			do {
+				final long pid = cursor.getLong(iID);
+				final String ct = cursor.getString(iCT);
+				Log.d(TAG, "part: " + pid + " " + ct);
+
+				// get part
+				InputStream is = getPart(cr, pid);
+				if (is == null) {
+					Log.i(TAG, "InputStream for part " + pid + " is null");
+					if (iText >= 0 && ct.startsWith("text/")) {
+						ret.add(cursor.getString(iText));
+					}
+					continue;
+				}
+				if (ct == null) {
+					continue;
+				}
+				final Intent i = Messages.getPartContentIntent(pid, ct);
+				if (i != null) {
+					ret.add(i);
+				}
+				final Object o = Messages.getPartObject(ct, is);
+				if (o != null) {
+					ret.add(o);
+				}
+
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						Log.e(TAG, "Failed to close stream", e);
+					} // Ignore
+				}
+			} while (cursor.moveToNext());
+			return ret;
+		}
+
+		/**
+		 * Get MMS part's {@link Uri}.
+		 * 
+		 * @param pid
+		 *            part's id
+		 * @return {@link Uri}
+		 */
+		public static Uri getPartUri(final long pid) {
+			return ContentUris.withAppendedId(URI_PARTS, pid);
+		}
+
+		/**
+		 * Get content's {@link Intent} for MMS part.
+		 * 
+		 * @param pid
+		 *            part's id
+		 * @param ct
+		 *            part's content type
+		 * @return {@link Intent}
+		 */
+		public static Intent getPartContentIntent(final long pid,
+				final String ct) {
+			if (ct.startsWith("image/")) {
+				final Intent i = new Intent(Intent.ACTION_VIEW);
+				i.setDataAndType(getPartUri(pid), ct);
+				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+				return i;
+			} else if (ct.startsWith("video/") || ct.startsWith("audio/")) {
+				final Intent i = new Intent(Intent.ACTION_VIEW);
+				i.setDataAndType(getPartUri(pid), ct);
+				return i;
+			}
+			return null;
+		}
+
+		/**
+		 * Get MMS part's picture or text.
+		 * 
+		 * @param ct
+		 *            part's content type
+		 * @param is
+		 *            {@link InputStream}
+		 * @return {@link Bitmap} or {@link CharSequence}
+		 */
+		public static Object getPartObject(final String ct, // .
+				final InputStream is) {
+			if (is == null) {
+				return null;
+			}
+			if (ct.startsWith("image/")) {
+				return BitmapFactory.decodeStream(is);
+			} else if (ct.startsWith("video/") || ct.startsWith("audio/")) {
+				return BITMAP_PLAY;
+			} else if (ct.startsWith("text/")) {
+				return fetchPart(is);
+			}
+			return null;
+		}
+
+		/**
+		 * Fetch a part.
+		 * 
+		 * @param is
+		 *            {@link InputStream}
+		 * @return part
+		 */
+		private static CharSequence fetchPart(final InputStream is) {
+			Log.d(TAG, "fetchPart(cr, is)");
+			String ret = null;
+			// get part
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			try {
+				byte[] buffer = new byte[256];
+				int len = is.read(buffer);
+				while (len >= 0) {
+					baos.write(buffer, 0, len);
+					len = is.read(buffer);
+				}
+				ret = new String(baos.toByteArray());
+				Log.d(TAG, ret);
+			} catch (IOException e) {
+				Log.e(TAG, "Failed to load part data", e);
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						Log.e(TAG, "Failed to close stream", e);
+					} // Ignore
+				}
+			}
+			return ret;
+		}
+
+		/**
+		 * Get MMS part as {@link InputStream}.
+		 * 
+		 * @param cr
+		 *            {@link ContentResolver}
+		 * @param pid
+		 *            part's id
+		 * @return {@link InputStream}
+		 */
+		public static InputStream getPart(final ContentResolver cr,
+				final long pid) {
+			InputStream is = null;
+			final Uri uri = getPartUri(pid);
+			try {
+				is = cr.openInputStream(uri);
+			} catch (IOException e) {
+				Log.e(TAG, "Failed to load part data", e);
+			}
+			return is;
+		}
+
+		/** Default constructor. */
+		private Messages() {
+			// nothing here.
+		}
+	}
 
 	/**
-	 * The MIME type of {@link #CONTENT_URI} providing a list of threads.
+	 * Class holding all threads.
+	 * 
+	 * @author flx
 	 */
-	public static final String CONTENT_TYPE = // .
-	"vnd.android.cursor.dir/vnd.ub0r.thread";
+	public static final class Threads {
+		/** Table name. */
+		private static final String TABLE = "threads";
+		/** {@link HashMap} for projection. */
+		private static final HashMap<String, String> PROJECTION_MAP;
 
-	/**
-	 * The MIME type of a {@link #CONTENT_URI} single thread.
-	 */
-	public static final String CONTENT_ITEM_TYPE = // .
-	"vnd.android.cursor.item/vnd.ub0r.thread";
+		/** INDEX: id. */
+		public static final int INDEX_ID = 0;
+		/** INDEX: date. */
+		public static final int INDEX_DATE = 1;
+		/** INDEX: address. */
+		public static final int INDEX_ADDRESS = 2;
+		/** INDEX: body. */
+		public static final int INDEX_BODY = 3;
+		/** INDEX: type. */
+		public static final int INDEX_TYPE = 4;
+		/** INDEX: person id. */
+		public static final int INDEX_PID = 5;
+		/** INDEX: name. */
+		public static final int INDEX_NAME = 6;
+		/** INDEX: count. */
+		public static final int INDEX_COUNT = 7;
+		/** INDEX: read. */
+		public static final int INDEX_READ = 8;
+
+		/** Id. */
+		public static final String ID = BaseColumns._ID;
+		/** Date. */
+		public static final String DATE = Calls.DATE;
+		/** Address. */
+		public static final String ADDRESS = "address";
+		/** body. */
+		public static final String BODY = "body";
+		/** type. */
+		public static final String TYPE = Calls.TYPE;
+		/** person id. */
+		public static final String PID = "pid";
+		/** name. */
+		public static final String NAME = "name";
+		/** count. */
+		public static final String COUNT = "count";
+		/** read. */
+		public static final String READ = "read";
+
+		/** Cursor's projection. */
+		public static final String[] PROJECTION = { //
+		ID, // 0
+				DATE, // 1
+				ADDRESS, // 2
+				BODY, // 3
+				TYPE, // 4
+				PID, // 5
+				NAME, // 6
+				COUNT, // 7
+				READ, // 8
+		};
+
+		/** ORIG_URI to resolve. */
+		public static final Uri ORIG_URI = Uri
+				.parse("content://mms-sms/conversations/");
+		/** Cursor's projection (outgoing). */
+		private static final String[] PROJECTION_OUT = { //
+		BaseColumns._ID, // 0
+				Calls.DATE, // 1
+				"address", // 2
+				"thread_id", // 3
+				"body", // 4
+				Calls.TYPE, // 5
+		};
+
+		/** Cursors row in hero phones: address. */
+		static final String ADDRESS_HERO = "recipient_address AS " + ADDRESS;
+		/** Cursors row in hero phones: thread_id. */
+		static final String THREADID_HERO = "_id AS " + ID;
+
+		/** Default sort order. */
+		public static final String DEFAULT_SORT_ORDER = DATE + " DESC";
+
+		/** Content {@link Uri}. */
+		public static final Uri CONTENT_URI = Uri.parse("content://"
+				+ AUTHORITY + "/threads");
+
+		/**
+		 * The MIME type of {@link #CONTENT_URI} providing a list of threads.
+		 */
+		public static final String CONTENT_TYPE = // .
+		"vnd.android.cursor.dir/vnd.ub0r.thread";
+
+		/**
+		 * The MIME type of a {@link #CONTENT_URI} single thread.
+		 */
+		public static final String CONTENT_ITEM_TYPE = // .
+		"vnd.android.cursor.item/vnd.ub0r.thread";
+
+		static {
+			PROJECTION_MAP = new HashMap<String, String>();
+			final int l = PROJECTION.length;
+			for (int i = 0; i < l; i++) {
+				PROJECTION_MAP.put(PROJECTION[i], PROJECTION[i]);
+			}
+		}
+
+		/**
+		 * Create table in {@link SQLiteDatabase}.
+		 * 
+		 * @param db
+		 *            {@link SQLiteDatabase}
+		 */
+		public static void onCreate(final SQLiteDatabase db) {
+			Log.i(TAG, "create table: " + TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE);
+			db.execSQL("CREATE TABLE " + TABLE + " (" // .
+					+ ID + " LONG," // .
+					+ DATE + " LONG,"// .
+					+ ADDRESS + " TEXT,"// .
+					+ BODY + " TEXT,"// .
+					+ TYPE + " INTEGER," // .
+					+ PID + " TEXT," // .
+					+ NAME + " TEXT,"// .
+					+ COUNT + " INTEGER," // .
+					+ READ + " INTEGER" // .
+					+ ");");
+		}
+
+		/**
+		 * Upgrade table.
+		 * 
+		 * @param db
+		 *            {@link SQLiteDatabase}
+		 * @param oldVersion
+		 *            old version
+		 * @param newVersion
+		 *            new version
+		 */
+		public static void onUpgrade(final SQLiteDatabase db,
+				final int oldVersion, final int newVersion) {
+			Log.w(TAG, "Upgrading table: " + TABLE);
+			onCreate(db);
+		}
+
+		/** Default constructor. */
+		private Threads() {
+			// nothing here.
+		}
+	}
+
+	/** Internal id: threads. */
+	private static final int THREADS = 1;
+	/** Internal id: single thread. */
+	private static final int THREAD_ID = 2;
+	/** Internal id: messages. */
+	private static final int MESSAGES = 3;
+	/** Internal id: single message. */
+	private static final int MESSAGE_ID = 4;
+	/** Internal id: messages from a single thread. */
+	private static final int MESSAGES_TID = 5;
 
 	/** {@link UriMatcher}. */
 	private static final UriMatcher URI_MATCHER;
@@ -137,12 +617,9 @@ public final class ConversationProvider extends ContentProvider {
 		URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 		URI_MATCHER.addURI(AUTHORITY, "threads", THREADS);
 		URI_MATCHER.addURI(AUTHORITY, "threads/#", THREAD_ID);
-
-		THREADS_PROJECTION_MAP = new HashMap<String, String>();
-		final int l = PROJECTION.length;
-		for (int i = 0; i < l; i++) {
-			THREADS_PROJECTION_MAP.put(PROJECTION[i], PROJECTION[i]);
-		}
+		URI_MATCHER.addURI(AUTHORITY, "messages", MESSAGES);
+		URI_MATCHER.addURI(AUTHORITY, "messages/#", MESSAGE_ID);
+		URI_MATCHER.addURI(AUTHORITY, "conversation/#", MESSAGES_TID);
 	}
 
 	/**
@@ -166,15 +643,8 @@ public final class ConversationProvider extends ContentProvider {
 		@Override
 		public void onCreate(final SQLiteDatabase db) {
 			Log.i(TAG, "create database");
-			db.execSQL("CREATE TABLE " + THREADS_TABLE_NAME + " ("
-					+ PROJECTION[INDEX_ID] + " INTEGER PRIMARY KEY,"
-					+ PROJECTION[INDEX_DATE] + " INTEGER,"
-					+ PROJECTION[INDEX_ADDRESS] + " TEXT,"
-					+ PROJECTION[INDEX_THREADID] + " INTEGER,"
-					+ PROJECTION[INDEX_BODY] + " TEXT,"
-					+ PROJECTION[INDEX_TYPE] + " INTEGER,"
-					+ PROJECTION[INDEX_PID] + " TEXT," // .
-					+ PROJECTION[INDEX_NAME] + " TEXT" + ");");
+			Threads.onCreate(db);
+			Messages.onCreate(db);
 		}
 
 		/**
@@ -185,8 +655,8 @@ public final class ConversationProvider extends ContentProvider {
 				final int newVersion) {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 					+ newVersion + ", which will destroy all old data");
-			db.execSQL("DROP TABLE IF EXISTS " + THREADS_TABLE_NAME);
-			this.onCreate(db);
+			Threads.onUpgrade(db, oldVersion, newVersion);
+			Messages.onUpgrade(db, oldVersion, newVersion);
 		}
 	}
 
@@ -199,13 +669,44 @@ public final class ConversationProvider extends ContentProvider {
 	@Override
 	public int delete(final Uri uri, final String selection,
 			final String[] selectionArgs) {
-		if (uri.equals(CONTENT_URI)) {
-			final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-			int ret = db.delete(THREADS_TABLE_NAME, selection, selectionArgs);
-			return ret;
-		} else {
-			throw new IllegalArgumentException("method not implemented");
+		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+		int ret = 0;
+		switch (URI_MATCHER.match(uri)) {
+		case MESSAGES:
+			// TODO: delete in remote DB too!
+			ret = db.delete(Messages.TABLE, selection, selectionArgs);
+			this.updateThreads(db);
+			break;
+		case MESSAGE_ID:
+			// TODO: delete in remote DB too!
+			ret = db.delete(Messages.TABLE, DbUtils.sqlAnd(Messages.ID + "="
+					+ ContentUris.parseId(uri), selection), selectionArgs);
+			this.updateThreads(db);
+			break;
+		case MESSAGES_TID:
+			// TODO: delete in remote DB too!
+			ret = db
+					.delete(Messages.TABLE, DbUtils.sqlAnd(Messages.THREADID
+							+ "=" + ContentUris.parseId(uri), selection),
+							selectionArgs);
+			this.updateThreads(db);
+			break;
+		case THREADS:
+			// TODO: delete in remote DB too!
+			ret = db.delete(Threads.TABLE, selection, selectionArgs);
+			break;
+		case THREAD_ID:
+			// TODO: delete in remote DB too!
+			ret = db.delete(Threads.TABLE, DbUtils.sqlAnd(Threads.ID + "="
+					+ ContentUris.parseId(uri), selection), selectionArgs);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown Uri " + uri);
 		}
+		if (ret > 0) {
+			this.getContext().getContentResolver().notifyChange(uri, null);
+		}
+		return ret;
 	}
 
 	/**
@@ -214,12 +715,16 @@ public final class ConversationProvider extends ContentProvider {
 	@Override
 	public String getType(final Uri uri) {
 		switch (URI_MATCHER.match(uri)) {
+		case MESSAGES:
+			return Messages.CONTENT_TYPE;
+		case MESSAGE_ID:
+			return Messages.CONTENT_ITEM_TYPE;
 		case THREADS:
-			return CONTENT_TYPE;
+			return Threads.CONTENT_TYPE;
 		case THREAD_ID:
-			return CONTENT_ITEM_TYPE;
+			return Threads.CONTENT_ITEM_TYPE;
 		default:
-			throw new IllegalArgumentException("Unknown ORIG_URI " + uri);
+			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
 	}
 
@@ -228,7 +733,28 @@ public final class ConversationProvider extends ContentProvider {
 	 */
 	@Override
 	public Uri insert(final Uri uri, final ContentValues values) {
-		throw new IllegalArgumentException("method not implemented");
+		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+		long id = -1L;
+		switch (URI_MATCHER.match(uri)) {
+		case MESSAGES:
+			// TODO: delete in remote DB too!
+			id = db.insert(Messages.TABLE, null, values);
+			long threadId = -1L;
+			threadId = values.getAsLong(Messages.THREADID);
+			this.updateThread(db, threadId);
+			break;
+		case THREADS:
+			// TODO: delete in remote DB too!
+			id = db.insert(Threads.TABLE, null, values);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown Uri " + uri);
+		}
+		if (id >= 0L) {
+			this.getContext().getContentResolver().notifyChange(uri, null);
+		}
+		return ContentUris.withAppendedId(uri, id);
+
 	}
 
 	/**
@@ -241,173 +767,6 @@ public final class ConversationProvider extends ContentProvider {
 	}
 
 	/**
-	 * Update a row in internal {@link SQLiteDatabase}.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}
-	 * @param cout
-	 *            {@link Cursor} from external {@link ConversationProvider}
-	 */
-	private void updateRow(final SQLiteDatabase db, final Cursor cout) {
-		long dout = cout.getLong(INDEX_DATE);
-		if (dout < ConversationList.MIN_DATE) {
-			dout *= ConversationList.MILLIS;
-		}
-		int tid = cout.getInt(INDEX_THREADID);
-		ContentValues cv = new ContentValues();
-		cv.put(PROJECTION[INDEX_DATE], dout);
-		String a = cout.getString(INDEX_ADDRESS);
-		if (a != null) {
-			cv.put(PROJECTION[INDEX_ADDRESS], a);
-			cv.put(PROJECTION[INDEX_NAME], (String) null);
-			cv.put(PROJECTION[INDEX_PID], "");
-		}
-		a = null;
-		cv.put(PROJECTION[INDEX_BODY], cout.getString(INDEX_BODY));
-		cv.put(PROJECTION[INDEX_THREADID], tid);
-		cv.put(PROJECTION[INDEX_TYPE], cout.getInt(INDEX_TYPE));
-		if (db.update(THREADS_TABLE_NAME, cv, PROJECTION[INDEX_THREADID]
-				+ " = " + tid, // .
-				null) == 0) {
-			Log.d(TAG, "insert row for thread: " + tid);
-			db.insert(THREADS_TABLE_NAME, PROJECTION[INDEX_ID], cv);
-		} else {
-			Log.d(TAG, "update row for thread: " + tid);
-		}
-	}
-
-	/**
-	 * Update internal {@link SQLiteDatabase} from external
-	 * {@link ConversationProvider}.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}.
-	 */
-	private void updateSource(final SQLiteDatabase db) {
-		final ContentResolver cr = this.getContext().getContentResolver();
-		Cursor cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null,
-				null, DEFAULT_SORT_ORDER);
-
-		if (cin == null) {
-			Log.e(TAG, "cursor in == null");
-			return;
-		}
-		long din = 0;
-		if (cin.moveToFirst()) {
-			din = cin.getLong(INDEX_DATE);
-		}
-
-		Cursor cout;
-		// hunt for new sms
-		try {
-			cout = cr.query(ORIG_URI, PROJECTION_OUT, "date > " + din, null,
-					DEFAULT_SORT_ORDER);
-		} catch (SQLException e) {
-			Log.w(TAG, "error while query", e);
-			PROJECTION_OUT[INDEX_ADDRESS] = ADDRESS_HERO;
-			PROJECTION_OUT[INDEX_THREADID] = THREADID_HERO;
-			cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
-					DEFAULT_SORT_ORDER);
-		}
-		if (cout != null && cout.moveToFirst()) {
-
-			do {
-				this.updateRow(db, cout);
-			} while (cout.moveToNext());
-		}
-		cout.close();
-
-		// hunt for new mms
-		if (din > 0) {
-			cout = cr
-					.query(ORIG_URI, PROJECTION_OUT, "date < "
-							+ ConversationList.MIN_DATE + " AND date > "
-							+ (din / ConversationList.MILLIS), null,
-							DEFAULT_SORT_ORDER);
-			if (cout != null && cout.moveToFirst()) {
-				do {
-					this.updateRow(db, cout);
-				} while (cout.moveToNext());
-			}
-		}
-
-		if (cin != null && !cin.isClosed()) {
-			cin.close();
-		}
-		if (cout != null && !cout.isClosed()) {
-			cout.close();
-		}
-
-		// internal db --does-- *should* have at least all the messages from
-		// external db
-		cin = db.query(THREADS_TABLE_NAME, PROJECTION, null, null, null, null,
-				PROJECTION[INDEX_THREADID] + " DESC");
-		cout = cr.query(ORIG_URI, PROJECTION_OUT, null, null,
-				PROJECTION_OUT[INDEX_THREADID] + " DESC");
-		if (cout != null && cin != null && cout.getCount() != cin.getCount()) {
-			Log.d(TAG, "cout.n != cin.n");
-			// hunt for deleted threads
-			if (!cout.moveToFirst()) {
-				Log.d(TAG, "delete all rows");
-				db.delete(THREADS_TABLE_NAME, null, null);
-			} else if (!cin.moveToFirst()) {
-				Log.e(TAG, "error selecting first row");
-				do {
-					// copy row from external to internal db
-					Log.d(TAG, "new row");
-					this.updateRow(db, cout);
-				} while (cout.moveToNext());
-			} else {
-				do {
-					final int tidin = cin.getInt(INDEX_THREADID);
-					Log.d(TAG, "check tidin: " + tidin);
-					do {
-						int tidout;
-						if (cout.isAfterLast()) {
-							tidout = -1;
-						} else {
-							tidout = cout.getInt(INDEX_THREADID);
-						}
-						Log.d(TAG, "check tidout: " + tidout);
-						if (tidin > tidout) {
-							final Cursor c = cr.query(ORIG_URI.buildUpon()
-									.appendPath(String.valueOf(tidin)).build(),
-									PROJECTION_OUT, null, null, null);
-							if (c == null || c.getCount() <= 0) {
-								Conversation.removeConversation(tidin);
-								Log.d(TAG, "delete tidin: " + tidin);
-								db.delete(THREADS_TABLE_NAME,
-										PROJECTION[INDEX_THREADID] + " = "
-												+ tidin, null);
-							} else {
-								Log.d(TAG, "skip: delete tidin: " + tidin);
-							}
-							if (c != null && !c.isClosed()) {
-								c.close();
-							}
-							break; // go to next internal row
-						} else if (tidin < tidout) {
-							// copy row from external to internal db
-							Log.d(TAG, "new row");
-							this.updateRow(db, cout);
-						} else {
-							cout.moveToNext();
-							break; // rows are even. go to next pair.
-						}
-					} while (cout.moveToNext());
-				} while (cin.moveToNext());
-			}
-		}
-		if (cin != null && !cin.isClosed()) {
-			cin.close();
-		}
-		if (cout != null && !cout.isClosed()) {
-			cout.close();
-		}
-		return;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -415,30 +774,35 @@ public final class ConversationProvider extends ContentProvider {
 			final String selection, final String[] selectionArgs,
 			final String sortOrder) {
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-		this.updateSource(db);
+		this.sync(db);
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-		qb.setTables(THREADS_TABLE_NAME);
+		// If no sort order is specified use the default
+		String orderBy = sortOrder;
 
 		switch (URI_MATCHER.match(uri)) {
-		case THREADS:
-			qb.setProjectionMap(THREADS_PROJECTION_MAP);
+		case MESSAGE_ID:
+			qb.appendWhere(Messages.ID + "=" + ContentUris.parseId(uri));
+		case MESSAGES_TID:
+			qb.appendWhere(Messages.THREADID + "=" + ContentUris.parseId(uri));
+		case MESSAGES:
+			qb.setTables(Messages.TABLE);
+			qb.setProjectionMap(Messages.PROJECTION_MAP);
+			if (TextUtils.isEmpty(orderBy)) {
+				orderBy = Messages.DEFAULT_SORT_ORDER;
+			}
 			break;
 		case THREAD_ID:
-			qb.setProjectionMap(THREADS_PROJECTION_MAP);
-			qb.appendWhere(PROJECTION[INDEX_ID] + "="
-					+ uri.getPathSegments().get(1));
+			qb.appendWhere(Threads.ID + "=" + ContentUris.parseId(uri));
+		case THREADS:
+			qb.setTables(Threads.TABLE);
+			qb.setProjectionMap(Threads.PROJECTION_MAP);
+			if (TextUtils.isEmpty(orderBy)) {
+				orderBy = Threads.DEFAULT_SORT_ORDER;
+			}
 			break;
 		default:
-			throw new IllegalArgumentException("Unknown ORIG_URI " + uri);
-		}
-
-		// If no sort order is specified use the default
-		String orderBy;
-		if (TextUtils.isEmpty(sortOrder)) {
-			orderBy = DEFAULT_SORT_ORDER;
-		} else {
-			orderBy = sortOrder;
+			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
 
 		// Run the query
@@ -457,16 +821,344 @@ public final class ConversationProvider extends ContentProvider {
 	@Override
 	public int update(final Uri uri, final ContentValues values,
 			final String selection, final String[] selectionArgs) {
-		int tid = -1;
-		try {
-			tid = Integer.parseInt(uri.getLastPathSegment());
-		} catch (NumberFormatException e) {
-			Log.e(TAG, "not a number: " + uri, e);
-			throw new IllegalArgumentException("method not implemented");
-		}
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-		int ret = db.update(THREADS_TABLE_NAME, values,
-				PROJECTION[INDEX_THREADID] + " = " + tid, null);
+		int ret = 0;
+		switch (URI_MATCHER.match(uri)) {
+		case MESSAGES:
+			// TODO: delete in remote DB too!
+			ret = db.update(Messages.TABLE, values, selection, selectionArgs);
+			break;
+		case MESSAGE_ID:
+			// TODO: delete in remote DB too!
+			ret = db
+					.update(Messages.TABLE, values, DbUtils.sqlAnd(Messages.ID
+							+ "=" + ContentUris.parseId(uri), selection),
+							selectionArgs);
+			break;
+		case THREADS:
+			// TODO: delete in remote DB too!
+			ret = db.update(Threads.TABLE, values, selection, selectionArgs);
+			break;
+		case THREAD_ID:
+			// TODO: delete in remote DB too!
+			ret = db
+					.update(Threads.TABLE, values, DbUtils.sqlAnd(Threads.ID
+							+ "=" + ContentUris.parseId(uri), selection),
+							selectionArgs);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown Uri " + uri);
+		}
+		if (ret > 0) {
+			this.getContext().getContentResolver().notifyChange(uri, null);
+		}
 		return ret;
+	}
+
+	/**
+	 * Add a SMS to internal database.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}
+	 * @param rcursor
+	 *            {@link Cursor}
+	 * @return added?
+	 */
+	private boolean addSMS(final SQLiteDatabase db, final Cursor rcursor) {
+		boolean ret = false;
+		final ContentValues values = new ContentValues();
+		final long mid = rcursor.getLong(Messages.INDEX_ID);
+		final long tid = rcursor.getLong(Messages.INDEX_THREADID);
+		values.put(Messages.ID, mid);
+		values.put(Messages.ADDRESS, rcursor.getString(Messages.INDEX_ADDRESS));
+		values.put(Messages.BODY, rcursor.getString(Messages.INDEX_BODY));
+		values.put(Messages.DATE, rcursor.getLong(Messages.INDEX_DATE));
+		values.put(Messages.THREADID, tid);
+		values.put(Messages.TYPE, rcursor.getInt(Messages.INDEX_TYPE));
+		values.put(Messages.READ, rcursor.getInt(Messages.INDEX_READ));
+		final int i = db.update(Messages.TABLE, values, Messages.ID + " = "
+				+ mid, null);
+		if (i > 0) {
+			Log.d(TAG, "update sms: " + mid + "/" + tid + " " + values);
+			ret = true;
+		} else {
+			Log.d(TAG, "add sms: " + mid + "/" + tid + " " + values);
+			final long l = db.insert(Messages.TABLE, null, values);
+			if (l >= 0L) {
+				ret = true;
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * Get new SMS.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}
+	 * @param cr
+	 *            {@link ContentResolver}
+	 * @param date
+	 *            date of newest internal message
+	 * @return database changed?
+	 */
+	private boolean getNewSMS(final SQLiteDatabase db,
+			final ContentResolver cr, final long date) {
+		boolean ret = false;
+		// get new sms
+		Cursor rcursor = cr.query(Messages.ORIG_URI_SMS,
+				Messages.ORIG_PROJECTION_SMS, Messages.DATE + " > " + date,
+				null, null);
+		if (rcursor != null && rcursor.moveToFirst()) {
+			do {
+				ret |= this.addSMS(db, rcursor);
+			} while (rcursor.moveToNext());
+		}
+		if (rcursor != null && !rcursor.isClosed()) {
+			rcursor.close();
+		}
+
+		// check message count and check all messages if not equal
+		final String sortOrder = " DESC, " + Messages.ID + " DESC";
+		rcursor = cr.query(Messages.ORIG_URI_SMS, Messages.ORIG_PROJECTION_SMS,
+				null, null, Messages.DATE + sortOrder);
+		Cursor lcursor = db.query(Messages.TABLE, Messages.PROJECTION,
+				Messages.WHERE_TYPE_SMS, null, null, null, Messages.DATE
+						+ sortOrder);
+		if (rcursor == null || lcursor == null) {
+			return false;
+		}
+		if (!rcursor.moveToFirst()) {
+			// no remote message: delete all
+			db.delete(Messages.TABLE, null, null);
+			lcursor.requery();
+		}
+		int rcount = rcursor.getCount();
+		int lcount = lcursor.getCount();
+		if (rcount != lcount) {
+			rcursor.moveToFirst();
+			lcursor.moveToFirst();
+			// walk through all messages
+			do {
+				long rdate = rcursor.getLong(Messages.INDEX_DATE);
+				Log.d(TAG, "rdate: " + rdate);
+				do {
+					long ldate;
+					if (lcursor.isAfterLast() || lcount == 0) {
+						ldate = -1L;
+					} else {
+						ldate = lcursor.getLong(Messages.INDEX_DATE);
+					}
+					Log.d(TAG, "ldate: " + ldate);
+					Log.d(TAG, "rdate-ldate: " + (rdate - ldate));
+					if (ldate < rdate) {
+						// add sms and check next remote
+						this.addSMS(db, rcursor);
+						break;
+					} else if (ldate > rdate) {
+						// delete local sms and check next local
+						db.delete(Messages.TABLE,
+								Messages.DATE + " = " + ldate, null);
+					} else {
+						// check both next
+						lcursor.moveToNext();
+						break;
+					}
+				} while (lcursor.moveToNext());
+			} while (rcursor.moveToNext());
+		}
+		if (!rcursor.isClosed()) {
+			rcursor.close();
+		}
+		if (!lcursor.isClosed()) {
+			lcursor.close();
+		}
+
+		// check read messages
+		// set all internal messages to read
+		ContentValues values = new ContentValues();
+		values.put(Messages.READ, 1);
+		int i = db.update(Messages.TABLE, values, Messages.READ + " = 0", null);
+		if (i > 0) {
+			ret = true;
+		}
+		// set unread messages unread internally
+		rcursor = cr.query(Messages.ORIG_URI_SMS, Messages.ORIG_PROJECTION_SMS,
+				Messages.READ + " = 0", null, null);
+		if (rcursor != null && rcursor.moveToFirst()) {
+			ret = true;
+			values.put(Messages.READ, 0);
+			do {
+				db.update(Messages.TABLE, values, Messages.ID + " = "
+						+ rcursor.getLong(Messages.INDEX_ID), null);
+			} while (rcursor.moveToNext());
+		}
+		if (rcursor != null && !rcursor.isClosed()) {
+			rcursor.close();
+		}
+
+		// check draft messages
+		// set all internal drafts as sent
+		values = new ContentValues();
+		values.put(Messages.TYPE, Messages.TYPE_SMS_OUT);
+		i = db.update(Messages.TABLE, values, Messages.TYPE + " = "
+				+ Messages.TYPE_SMS_DRAFT, null);
+		if (i > 0) {
+			ret = true;
+		}
+		// set draft messages as draft internally
+		rcursor = cr.query(Messages.ORIG_URI_SMS, Messages.ORIG_PROJECTION_SMS,
+				Messages.TYPE + " = " + Messages.TYPE_SMS_DRAFT, null, null);
+		if (rcursor != null && rcursor.moveToFirst()) {
+			ret = true;
+			values.put(Messages.TYPE, Messages.TYPE_SMS_DRAFT);
+			do {
+				db.update(Messages.TABLE, values, Messages.ID + " = "
+						+ rcursor.getLong(Messages.INDEX_ID), null);
+			} while (rcursor.moveToNext());
+		}
+		if (rcursor != null && !rcursor.isClosed()) {
+			rcursor.close();
+		}
+		return ret;
+	}
+
+	/**
+	 * Get new MMS.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}
+	 * @param cr
+	 *            {@link ContentResolver}
+	 * @param date
+	 *            date of newest internal message
+	 * @return database changed?
+	 */
+	private boolean getNewMMS(final SQLiteDatabase db,
+			final ContentResolver cr, final long date) {
+		boolean ret = false;
+		// TODO: fetch new mms
+		return ret;
+	}
+
+	/**
+	 * Update internal {@link SQLiteDatabase} from external
+	 * {@link ConversationProvider}.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}.
+	 */
+	private void sync(final SQLiteDatabase db) {
+		boolean changed = false;
+		final ContentResolver cr = this.getContext().getContentResolver();
+
+		// get last internal message
+		final Cursor lcursor = db.query(Messages.TABLE, Messages.PROJECTION,
+				null, null, null, null, Messages.DATE + " DESC");
+		long lmaxdate = -1L;
+		if (lcursor == null) {
+			Log.e(TAG, "lcursor = null");
+			return;
+		}
+		if (lcursor.moveToFirst()) {
+			lmaxdate = lcursor.getLong(Messages.INDEX_DATE);
+		}
+		if (!lcursor.isClosed()) {
+			lcursor.close();
+		}
+		// get new messages
+		changed |= this.getNewSMS(db, cr, lmaxdate);
+		changed |= this.getNewMMS(db, cr, lmaxdate);
+
+		if (changed) {
+			this.updateThreads(db);
+		}
+	}
+
+	/**
+	 * Update Threads table from Messages.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}
+	 * @param threadId
+	 *            thread's ID, -1 for all
+	 */
+	private void updateThread(final SQLiteDatabase db, final long threadId) {
+		final String[] proj = new String[] {// .
+		Messages.DATE, // 0
+				Messages.BODY, // 1
+				Messages.ADDRESS, // 2
+				"min(" + Messages.READ + ")", // 3
+				Messages.TYPE, // 4
+				"count(" + Messages.ID + ")", // 5
+		};
+
+		final Cursor cursor = db.query(Messages.TABLE, proj, Messages.THREADID
+				+ " = " + threadId, null, null, null, Messages.DATE + " ASC");
+		if (cursor != null && cursor.moveToFirst()) {
+			final ContentValues values = new ContentValues();
+			values.put(Threads.DATE, cursor.getLong(0));
+			values.put(Threads.BODY, cursor.getString(1));
+			values.put(Threads.ADDRESS, cursor.getString(2));
+			values.put(Threads.READ, cursor.getInt(3));
+			values.put(Threads.TYPE, cursor.getInt(4));
+			values.put(Threads.COUNT, cursor.getInt(5));
+			Log.d(TAG, "update thread: " + threadId + "/ " + values);
+			int ret = db.update(Threads.TABLE, values, Threads.ID + " = "
+					+ threadId, null);
+			if (ret <= 0) {
+				Log.d(TAG, "insert thread: " + threadId);
+				values.put(Threads.ID, threadId);
+				db.insert(Threads.TABLE, null, values);
+			}
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+
+	}
+
+	/**
+	 * Update Threads table from Messages.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}
+	 */
+	private void updateThreads(final SQLiteDatabase db) {
+		final String[] proj = new String[] {// .
+		Messages.THREADID, // 0
+		};
+		final Cursor cursor = db.query(Messages.TABLE, proj, null, null,
+				Messages.THREADID, null, Messages.THREADID);
+		if (cursor != null && cursor.moveToFirst()) {
+			do {
+				this.updateThread(db, cursor.getLong(0));
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+	}
+
+	/**
+	 * Get display name.
+	 * 
+	 * @param address
+	 *            address
+	 * @param name
+	 *            name
+	 * @param full
+	 *            true for "name &lt;address&gt;"
+	 * @return display name
+	 */
+	public static String getDisplayName(final String address,
+			final String name, final boolean full) {
+		if (name == null) {
+			return address;
+		}
+		if (full) {
+			return name + "<" + address + ">";
+		}
+		return name;
 	}
 }
