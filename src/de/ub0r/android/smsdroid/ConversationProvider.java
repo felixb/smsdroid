@@ -1153,7 +1153,7 @@ public final class ConversationProvider extends ContentProvider {
 	 */
 	public static String getDisplayName(final String address,
 			final String name, final boolean full) {
-		if (name == null) {
+		if (name == null || name.trim().length() == 0) {
 			return address;
 		}
 		if (full) {

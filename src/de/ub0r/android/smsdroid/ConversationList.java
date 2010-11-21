@@ -505,12 +505,13 @@ public class ConversationList extends ListActivity implements
 					.getString(R.string.new_message_)));
 			return true;
 		} else {
-			final Conversation c = Conversation.getConversation(this,
-					(Cursor) parent.getItemAtPosition(position), true);
-			final Uri target = c.getUri();
+			final Cursor currentCursor = (Cursor) parent
+					.getItemAtPosition(position);
+			final Uri target = ContentUris.withAppendedId(ConversationList.URI,
+					currentCursor.getLong(Threads.INDEX_ID));
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;
-			final String a = c.getAddress();
+			final String a = currentCursor.getString(Threads.INDEX_ADDRESS);
 			Log.d(TAG, "p: " + a);
 			final String n = AsyncHelper.getContactName(this, a);
 			if (n == null) {
@@ -545,11 +546,13 @@ public class ConversationList extends ListActivity implements
 									.getInsertPickIntent(a);
 							Conversation.flushCache();
 						} else {
-							final Uri uri = ContactsWrapper.getInstance()
+							final Uri uri = ContactsWrapper
+									.getInstance()
 									.getContactUri(
 											ConversationList.this
 													.getContentResolver(),
-											c.getPersonId());
+											currentCursor
+													.getString(Threads.INDEX_PID));
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
 						ConversationList.this.startActivity(i);
@@ -567,7 +570,8 @@ public class ConversationList extends ListActivity implements
 						break;
 					case WHICH_MARK_SPAM:
 						ConversationList.addToOrRemoveFromSpamlist(
-								ConversationList.this, c.getAddress());
+								ConversationList.this, currentCursor
+										.getString(Threads.INDEX_ADDRESS));
 						break;
 					default:
 						break;

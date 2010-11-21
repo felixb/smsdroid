@@ -42,7 +42,7 @@ import de.ub0r.android.smsdroid.ConversationProvider.Messages;
 import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
- * Adapter for the list of {@link Conversation}s.
+ * Adapter for the list of {@link Messages}s.
  * 
  * @author flx
  */
@@ -97,8 +97,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			this.backgroundDrawableIn = 0;
 		}
 		this.textSize = Preferences.getTextsize(c);
-		this.threadId = -1L;
-		ContentUris.parseId(u);
+		this.threadId = ContentUris.parseId(u);
+		// TODO: get ccursor from above
 		final Cursor ccursor = c.getContentResolver().query(
 				ContentUris.withAppendedId(Threads.CONTENT_URI, this.threadId),
 				Threads.PROJECTION, null, null, null);

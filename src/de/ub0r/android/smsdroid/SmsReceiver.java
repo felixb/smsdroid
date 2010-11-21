@@ -26,6 +26,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.smsdroid.ConversationProvider.Messages;
+import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
  * Listen for new sms.
@@ -331,9 +333,11 @@ public class SmsReceiver extends BroadcastReceiver {
 						PendingIntent.FLAG_CANCEL_CURRENT);
 
 				if (enableNotifications) {
-					final Conversation conv = Conversation.getConversation(
-							context, tid, true);
-					if (conv != null) {
+					final Cursor ccursor = context.getContentResolver().query(
+							ContentUris
+									.withAppendedId(Threads.CONTENT_URI, tid),
+							Threads.PROJECTION, null, null, null);
+					if (ccursor != null && ccursor.moveToFirst()) {
 						String a;
 						if (privateNotification) {
 							if (l == 1) {
@@ -342,7 +346,9 @@ public class SmsReceiver extends BroadcastReceiver {
 								a = context.getString(R.string.new_messages_);
 							}
 						} else {
-							a = conv.getDisplayName();
+							a = ConversationProvider.getDisplayName(ccursor
+									.getString(Threads.INDEX_ADDRESS), ccursor
+									.getString(Threads.INDEX_NAME), false);
 						}
 						n = new Notification(R.drawable.stat_notify_sms, a,
 								System.currentTimeMillis());

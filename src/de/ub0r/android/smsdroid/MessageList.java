@@ -89,8 +89,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 	/** Used {@link Uri}. */
 	private Uri uri;
-	/** {@link Conversation} shown. */
-	private Conversation conv = null;
 
 	/** ORIG_URI to resolve. */
 	static final String URI = "content://mms-sms/conversations/";
@@ -112,6 +110,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private TextView etTextLabel;
 	/** {@link ClipboardManager}. */
 	private ClipboardManager cbmgr;
+	/** Address. */
+	private String address;
+	/** Name. */
+	private String name;
+	/** Thread's id. */
+	private long threadId;
 
 	/** TextWatcher updating char count on writing. */
 	private TextWatcher textWatcher = new TextWatcher() {
@@ -225,38 +229,38 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		Log.d(TAG, "got uri: " + intent.getData());
 
 		this.uri = intent.getData();
-		long threadId = intent.getLongExtra("thread_id", -1L);
-		if (threadId < 0L && this.uri != null) {
-			threadId = ContentUris.parseId(this.uri);
+		this.threadId = intent.getLongExtra("thread_id", -1L);
+		if (this.threadId < 0L && this.uri != null) {
+			this.threadId = ContentUris.parseId(this.uri);
 		}
-		if (threadId < 0L) {
+		if (this.threadId < 0L) {
 			this.startActivity(ConversationList.getComposeIntent(null));
 			this.finish();
 			return;
 		}
 
-		this.uri = ContentUris.withAppendedId(Messages.THREAD_URI, threadId);
-		this.conv = Conversation.getConversation(this, (int) threadId, true);
+		this.uri = ContentUris.withAppendedId(Messages.THREAD_URI,
+				this.threadId);
 		final Cursor ccursor = this.getContentResolver().query(
-				ContentUris.withAppendedId(Threads.CONTENT_URI, threadId),
+				ContentUris.withAppendedId(Threads.CONTENT_URI, this.threadId),
 				Threads.PROJECTION, null, null, null);
 
-		if (this.conv == null || ccursor == null || !ccursor.moveToFirst()) {
+		if (ccursor == null || !ccursor.moveToFirst()) {
 			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
 					.show();
 			this.finish();
 			return;
 		}
 
-		final String address = ccursor.getString(Threads.INDEX_ADDRESS);
-		final String name = ccursor.getString(Threads.INDEX_NAME);
-		final String displayName = ConversationProvider.getDisplayName(address,
-				name, false);
+		this.address = ccursor.getString(Threads.INDEX_ADDRESS);
+		this.name = ccursor.getString(Threads.INDEX_NAME);
+		final String displayName = ConversationProvider.getDisplayName(
+				this.address, this.name, false);
 		final String fullDisplayName = ConversationProvider.getDisplayName(
-				address, name, true);
+				this.address, this.name, true);
 
-		Log.d(TAG, "address: " + address);
-		Log.d(TAG, "name: " + name);
+		Log.d(TAG, "address: " + this.address);
+		Log.d(TAG, "name: " + this.name);
 		Log.d(TAG, "displayName: " + displayName);
 		Log.d(TAG, "fullDisplayName: " + fullDisplayName);
 
@@ -314,9 +318,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * Set all messages in a given thread as read.
 	 */
 	private void setRead() {
-		if (this.conv != null) {
-			ConversationList.markRead(this, this.conv.getUri(), 1);
-		}
+		ConversationList.markRead(this, ContentUris.withAppendedId(
+				Messages.THREAD_URI, this.threadId), 1);
 	}
 
 	/**
@@ -347,8 +350,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.startActivity(ConversationList.getComposeIntent(null));
 			return true;
 		case R.id.item_answer:
-			this.startActivity(ConversationList.getComposeIntent(this.conv
-					.getAddress()));
+			this.startActivity(ConversationList.getComposeIntent(this.address));
 			return true;
 		default:
 			return false;
@@ -399,8 +401,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					if (type == Messages.TYPE_SMS_DRAFT) {
 						resId = R.string.send_draft_;
 						i = ConversationList
-								.getComposeIntent(MessageList.this.conv
-										.getAddress());
+								.getComposeIntent(MessageList.this.address);
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -488,8 +489,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			if (text.length() == 0) {
 				return;
 			}
-			final Intent i = ConversationList.getComposeIntent(this.conv
-					.getAddress());
+			final Intent i = ConversationList.getComposeIntent(this.address);
 			i.putExtra(Intent.EXTRA_TEXT, text);
 			i.putExtra("sms_body", text);
 			i.putExtra("AUTOSEND", "1");
@@ -515,8 +515,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			if (text.length() == 0) {
 				return true;
 			}
-			final Intent i = ConversationList.getComposeIntent(this.conv
-					.getAddress());
+			final Intent i = ConversationList.getComposeIntent(this.address);
 			i.putExtra(Intent.EXTRA_TEXT, text);
 			i.putExtra("sms_body", text);
 			this.startActivity(Intent.createChooser(i, this
