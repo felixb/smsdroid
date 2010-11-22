@@ -737,28 +737,7 @@ public final class ConversationProvider extends ContentProvider {
 	 */
 	@Override
 	public Uri insert(final Uri uri, final ContentValues values) {
-		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-		long id = -1L;
-		switch (URI_MATCHER.match(uri)) {
-		case MESSAGES:
-			// TODO: delete in remote DB too!
-			id = db.insert(Messages.TABLE, null, values);
-			long threadId = -1L;
-			threadId = values.getAsLong(Messages.THREADID);
-			this.updateThread(db, threadId);
-			break;
-		case THREADS:
-			// TODO: delete in remote DB too!
-			id = db.insert(Threads.TABLE, null, values);
-			break;
-		default:
-			throw new IllegalArgumentException("Unknown Uri " + uri);
-		}
-		if (id >= 0L) {
-			this.getContext().getContentResolver().notifyChange(uri, null);
-		}
-		return ContentUris.withAppendedId(uri, id);
-
+		throw new IllegalArgumentException("Method not implemented");
 	}
 
 	/**
