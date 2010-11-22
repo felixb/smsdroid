@@ -24,11 +24,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.AlertDialog.Builder;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -169,14 +173,15 @@ public final class ConversationProvider extends ContentProvider {
 		};
 
 		/** Remote {@link Cursor}'s projection. */
-		public static final String[] ORIG_PROJECTION_SMS = PROJECTION;
+		private static final String[] ORIG_PROJECTION_SMS = PROJECTION;
 
 		/** Remote {@link Cursor}'s projection. */
-		public static final String[] ORIG_PROJECTION_MMS = new String[] { // .
+		private static final String[] ORIG_PROJECTION_MMS = new String[] { // .
 		ID, // 0
 				DATE, // 1
 				THREADID, // 2
 				READ, // 3
+				TYPE, // 4
 		};
 
 		/** Default sort order. */
@@ -189,9 +194,9 @@ public final class ConversationProvider extends ContentProvider {
 		public static final Uri THREAD_URI = Uri.parse("content://" + AUTHORITY
 				+ "/conversation");
 		/** {@link Uri} of real sms database. */
-		public static final Uri ORIG_URI_SMS = Uri.parse("content://sms/");
+		private static final Uri ORIG_URI_SMS = Uri.parse("content://sms/");
 		/** {@link Uri} of real mms database. */
-		public static final Uri ORIG_URI_MMS = Uri.parse("content://mms/");
+		private static final Uri ORIG_URI_MMS = Uri.parse("content://mms/");
 
 		/** SQL WHERE: unread messages. */
 		static final String SELECTION_UNREAD = "read = '0'";
@@ -517,20 +522,6 @@ public final class ConversationProvider extends ContentProvider {
 		/** ORIG_URI to resolve. */
 		public static final Uri ORIG_URI = Uri
 				.parse("content://mms-sms/conversations/");
-		/** Cursor's projection (outgoing). */
-		private static final String[] PROJECTION_OUT = { //
-		BaseColumns._ID, // 0
-				Calls.DATE, // 1
-				"address", // 2
-				"thread_id", // 3
-				"body", // 4
-				Calls.TYPE, // 5
-		};
-
-		/** Cursors row in hero phones: address. */
-		static final String ADDRESS_HERO = "recipient_address AS " + ADDRESS;
-		/** Cursors row in hero phones: thread_id. */
-		static final String THREADID_HERO = "_id AS " + ID;
 
 		/** Default sort order. */
 		public static final String DEFAULT_SORT_ORDER = DATE + " DESC";
@@ -673,43 +664,53 @@ public final class ConversationProvider extends ContentProvider {
 	@Override
 	public int delete(final Uri uri, final String selection,
 			final String[] selectionArgs) {
+		Log.d(TAG, "delete: " + uri + " w: " + selection);
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+		final ContentResolver cr = this.getContext().getContentResolver();
 		int ret = 0;
 		switch (URI_MATCHER.match(uri)) {
 		case MESSAGES:
-			// TODO: delete in remote DB too!
 			ret = db.delete(Messages.TABLE, selection, selectionArgs);
+			cr.delete(Messages.ORIG_URI_SMS, selection, selectionArgs);
+			cr.delete(Messages.ORIG_URI_MMS, selection, selectionArgs);
 			this.updateThreads(db);
 			break;
 		case MESSAGE_ID:
-			// TODO: delete in remote DB too!
+			final long mid = ContentUris.parseId(uri);
 			ret = db.delete(Messages.TABLE, DbUtils.sqlAnd(Messages.ID + "="
-					+ ContentUris.parseId(uri), selection), selectionArgs);
+					+ mid, selection), selectionArgs);
+			if (mid >= 0L) {
+				cr.delete(ContentUris
+						.withAppendedId(Messages.ORIG_URI_SMS, mid), selection,
+						selectionArgs);
+			} else {
+				cr.delete(ContentUris.withAppendedId(Messages.ORIG_URI_MMS, -1L
+						* mid), selection, selectionArgs);
+			}
 			this.updateThreads(db);
 			break;
 		case MESSAGES_TID:
-			// TODO: delete in remote DB too!
-			ret = db
-					.delete(Messages.TABLE, DbUtils.sqlAnd(Messages.THREADID
-							+ "=" + ContentUris.parseId(uri), selection),
-							selectionArgs);
-			this.updateThreads(db);
+		case THREAD_ID:
+			final long tid = ContentUris.parseId(uri);
+			ret = db.delete(Messages.TABLE, DbUtils.sqlAnd(Messages.THREADID
+					+ "=" + tid, selection), selectionArgs);
+			ret += db.delete(Threads.TABLE, DbUtils.sqlAnd(Threads.ID + "="
+					+ tid, selection), selectionArgs);
+			cr.delete(ContentUris.withAppendedId(Threads.CONTENT_URI, tid),
+					selection, selectionArgs);
 			break;
 		case THREADS:
-			// TODO: delete in remote DB too!
 			ret = db.delete(Threads.TABLE, selection, selectionArgs);
-			break;
-		case THREAD_ID:
-			// TODO: delete in remote DB too!
-			ret = db.delete(Threads.TABLE, DbUtils.sqlAnd(Threads.ID + "="
-					+ ContentUris.parseId(uri), selection), selectionArgs);
+			cr.delete(Threads.CONTENT_URI, selection, selectionArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown Uri " + uri);
 		}
 		if (ret > 0) {
-			this.getContext().getContentResolver().notifyChange(uri, null);
+			cr.notifyChange(Messages.CONTENT_URI, null);
+			this.sync(db);
 		}
+		Log.d(TAG, "exit delete(): " + ret);
 		return ret;
 	}
 
@@ -756,6 +757,7 @@ public final class ConversationProvider extends ContentProvider {
 	public Cursor query(final Uri uri, final String[] projection,
 			final String selection, final String[] selectionArgs,
 			final String sortOrder) {
+		Log.d(TAG, "query: " + uri + " w: " + selection);
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
 		this.sync(db);
 
@@ -766,8 +768,20 @@ public final class ConversationProvider extends ContentProvider {
 		switch (URI_MATCHER.match(uri)) {
 		case MESSAGE_ID:
 			qb.appendWhere(Messages.ID + "=" + ContentUris.parseId(uri));
+			qb.setTables(Messages.TABLE);
+			qb.setProjectionMap(Messages.PROJECTION_MAP);
+			if (TextUtils.isEmpty(orderBy)) {
+				orderBy = Messages.DEFAULT_SORT_ORDER;
+			}
+			break;
 		case MESSAGES_TID:
 			qb.appendWhere(Messages.THREADID + "=" + ContentUris.parseId(uri));
+			qb.setTables(Messages.TABLE);
+			qb.setProjectionMap(Messages.PROJECTION_MAP);
+			if (TextUtils.isEmpty(orderBy)) {
+				orderBy = Messages.DEFAULT_SORT_ORDER;
+			}
+			break;
 		case MESSAGES:
 			qb.setTables(Messages.TABLE);
 			qb.setProjectionMap(Messages.PROJECTION_MAP);
@@ -795,6 +809,7 @@ public final class ConversationProvider extends ContentProvider {
 		// Tell the cursor what uri to watch, so it knows when its source data
 		// changes
 		c.setNotificationUri(this.getContext().getContentResolver(), uri);
+		Log.d(TAG, "exit query(): " + c.getCount());
 		return c;
 	}
 
@@ -804,37 +819,51 @@ public final class ConversationProvider extends ContentProvider {
 	@Override
 	public int update(final Uri uri, final ContentValues values,
 			final String selection, final String[] selectionArgs) {
+		Log.d(TAG, "update: " + uri + " w: " + selection + " " + values);
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+		final ContentResolver cr = this.getContext().getContentResolver();
 		int ret = 0;
 		switch (URI_MATCHER.match(uri)) {
 		case MESSAGES:
-			// TODO: delete in remote DB too!
 			ret = db.update(Messages.TABLE, values, selection, selectionArgs);
+			cr.update(Messages.ORIG_URI_SMS, values, selection, selectionArgs);
+			cr.update(Messages.ORIG_URI_MMS, values, selection, selectionArgs);
 			break;
 		case MESSAGE_ID:
-			// TODO: delete in remote DB too!
-			ret = db
-					.update(Messages.TABLE, values, DbUtils.sqlAnd(Messages.ID
-							+ "=" + ContentUris.parseId(uri), selection),
-							selectionArgs);
+			final long mid = ContentUris.parseId(uri);
+			ret = db.update(Messages.TABLE, values, DbUtils.sqlAnd(Messages.ID
+					+ "=" + mid, selection), selectionArgs);
+			if (mid >= 0L) {
+				cr.update(ContentUris
+						.withAppendedId(Messages.ORIG_URI_SMS, mid), values,
+						selection, selectionArgs);
+			} else {
+				cr.update(ContentUris.withAppendedId(Messages.ORIG_URI_MMS, -1L
+						* mid), values, selection, selectionArgs);
+			}
 			break;
 		case THREADS:
-			// TODO: delete in remote DB too!
 			ret = db.update(Threads.TABLE, values, selection, selectionArgs);
+			cr.update(Threads.ORIG_URI, values, selection, null);
 			break;
+		case MESSAGES_TID:
 		case THREAD_ID:
-			// TODO: delete in remote DB too!
-			ret = db
-					.update(Threads.TABLE, values, DbUtils.sqlAnd(Threads.ID
-							+ "=" + ContentUris.parseId(uri), selection),
-							selectionArgs);
+			final long tid = ContentUris.parseId(uri);
+			ret = db.update(Threads.TABLE, values, DbUtils.sqlAnd(Threads.ID
+					+ "=" + tid, selection), selectionArgs);
+			ret += db.update(Messages.TABLE, values, DbUtils.sqlAnd(
+					Messages.THREADID + "=" + tid, selection), selectionArgs);
+			cr.update(ContentUris.withAppendedId(Threads.ORIG_URI, tid),
+					values, selection, null);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown Uri " + uri);
 		}
 		if (ret > 0) {
-			this.getContext().getContentResolver().notifyChange(uri, null);
+			cr.notifyChange(Messages.CONTENT_URI, null);
+			this.updateThreads(db);
 		}
+		Log.d(TAG, "exit update(): " + ret);
 		return ret;
 	}
 
@@ -866,6 +895,52 @@ public final class ConversationProvider extends ContentProvider {
 			ret = true;
 		} else {
 			Log.d(TAG, "add sms: " + mid + "/" + tid + " " + values);
+			final long l = db.insert(Messages.TABLE, null, values);
+			if (l >= 0L) {
+				ret = true;
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * Add a MMS to internal database.
+	 * 
+	 * @param db
+	 *            {@link SQLiteDatabase}
+	 * @param rcursor
+	 *            {@link Cursor}
+	 * @return added?
+	 */
+	private boolean addMMS(final SQLiteDatabase db, final Cursor rcursor) {
+		boolean ret = false;
+		final ContentValues values = new ContentValues();
+		final int iMId = rcursor.getColumnIndex(Messages.ID);
+		final int iThreadId = rcursor.getColumnIndex(Messages.THREADID);
+		final int iDate = rcursor.getColumnIndex(Messages.DATE);
+		final int iType = rcursor.getColumnIndex(Messages.TYPE);
+		final int iRead = rcursor.getColumnIndex(Messages.READ);
+		final int iText = rcursor.getColumnIndex("text");
+		final long mid = rcursor.getLong(iMId);
+		final long tid = rcursor.getLong(iThreadId);
+		long date = rcursor.getLong(iDate);
+		date = getDate(date);
+		values.put(Messages.ID, -1 * mid);
+		values.put(Messages.DATE, date);
+		values.put(Messages.THREADID, tid);
+		values.put(Messages.TYPE, rcursor.getInt(iType));
+		values.put(Messages.READ, rcursor.getInt(iRead));
+		if (iText >= 0) {
+			final String text = rcursor.getString(iText);
+			values.put(Messages.BODY, text);
+		}
+		final int i = db.update(Messages.TABLE, values, Messages.ID + " = "
+				+ mid, null);
+		if (i > 0) {
+			Log.d(TAG, "update mms: " + mid + "/" + tid + " " + values);
+			ret = true;
+		} else {
+			Log.d(TAG, "add mms: " + mid + "/" + tid + " " + values);
 			final long l = db.insert(Messages.TABLE, null, values);
 			if (l >= 0L) {
 				ret = true;
@@ -913,8 +988,11 @@ public final class ConversationProvider extends ContentProvider {
 		}
 		if (!rcursor.moveToFirst()) {
 			// no remote message: delete all
-			db.delete(Messages.TABLE, null, null);
-			lcursor.requery();
+			int r = db.delete(Messages.TABLE, Messages.WHERE_TYPE_SMS, null);
+			if (r > 0) {
+				ret = true;
+				lcursor.requery();
+			}
 		}
 		int rcount = rcursor.getCount();
 		int lcount = lcursor.getCount();
@@ -936,12 +1014,13 @@ public final class ConversationProvider extends ContentProvider {
 					Log.d(TAG, "rdate-ldate: " + (rdate - ldate));
 					if (ldate < rdate) {
 						// add sms and check next remote
-						this.addSMS(db, rcursor);
+						ret |= this.addSMS(db, rcursor);
 						break;
 					} else if (ldate > rdate) {
 						// delete local sms and check next local
 						db.delete(Messages.TABLE,
 								Messages.DATE + " = " + ldate, null);
+						ret = true;
 					} else {
 						// check both next
 						lcursor.moveToNext();
@@ -961,7 +1040,8 @@ public final class ConversationProvider extends ContentProvider {
 		// set all internal messages to read
 		ContentValues values = new ContentValues();
 		values.put(Messages.READ, 1);
-		int i = db.update(Messages.TABLE, values, Messages.READ + " = 0", null);
+		int i = db.update(Messages.TABLE, values, Messages.READ + " = 0"
+				+ " AND " + Messages.WHERE_TYPE_MMS, null);
 		if (i > 0) {
 			ret = true;
 		}
@@ -1020,7 +1100,109 @@ public final class ConversationProvider extends ContentProvider {
 	private boolean getNewMMS(final SQLiteDatabase db,
 			final ContentResolver cr, final long date) {
 		boolean ret = false;
-		// TODO: fetch new mms
+		// get new mms
+		Cursor rcursor = cr.query(Messages.ORIG_URI_MMS, null, Messages.DATE
+				+ " > " + (date / ConversationList.MILLIS), null, null);
+		if (rcursor != null && rcursor.moveToFirst()) {
+			do {
+				ret |= this.addMMS(db, rcursor);
+			} while (rcursor.moveToNext());
+		}
+		if (rcursor != null && !rcursor.isClosed()) {
+			rcursor.close();
+		}
+
+		// check message count and check all messages if not equal
+		final String sortOrder = " DESC, " + Messages.ID + " DESC";
+		rcursor = cr.query(Messages.ORIG_URI_MMS, null, null, null,
+				Messages.DATE + sortOrder);
+		Cursor lcursor = db.query(Messages.TABLE, Messages.PROJECTION,
+				Messages.WHERE_TYPE_MMS, null, null, null, Messages.DATE
+						+ sortOrder);
+		if (rcursor == null || lcursor == null) {
+			return false;
+		}
+		if (!rcursor.moveToFirst()) {
+			// no remote message: delete all
+			final int r = db.delete(Messages.TABLE, Messages.WHERE_TYPE_MMS,
+					null);
+			if (r > 0) {
+				ret = true;
+				lcursor.requery();
+			}
+		}
+		final int iMId = rcursor.getColumnIndex(Messages.ID);
+		final int iThreadId = rcursor.getColumnIndex(Messages.THREADID);
+		final int iDate = rcursor.getColumnIndex(Messages.DATE);
+		final int iType = rcursor.getColumnIndex(Messages.TYPE);
+		final int iRead = rcursor.getColumnIndex(Messages.READ);
+		final int iText = rcursor.getColumnIndex("text");
+		int rcount = rcursor.getCount();
+		int lcount = lcursor.getCount();
+		if (rcount != lcount) {
+			rcursor.moveToFirst();
+			lcursor.moveToFirst();
+			// walk through all messages
+			do {
+				long rdate = getDate(rcursor.getLong(iDate));
+				Log.d(TAG, "rdate: " + rdate);
+				do {
+					long ldate;
+					if (lcursor.isAfterLast() || lcount == 0) {
+						ldate = -1L;
+					} else {
+						ldate = lcursor.getLong(Messages.INDEX_DATE);
+					}
+					Log.d(TAG, "ldate: " + ldate);
+					Log.d(TAG, "rdate-ldate: " + (rdate - ldate));
+					if (ldate < rdate) {
+						// add mms and check next remote
+						ret |= this.addMMS(db, rcursor);
+						break;
+					} else if (ldate > rdate) {
+						// delete local mms and check next local
+						db.delete(Messages.TABLE,
+								Messages.DATE + " = " + ldate, null);
+						ret = true;
+					} else {
+						// check both next
+						lcursor.moveToNext();
+						break;
+					}
+				} while (lcursor.moveToNext());
+			} while (rcursor.moveToNext());
+		}
+		if (!rcursor.isClosed()) {
+			rcursor.close();
+		}
+		if (!lcursor.isClosed()) {
+			lcursor.close();
+		}
+
+		// check read messages
+		// set all internal messages to read
+		ContentValues values = new ContentValues();
+		values.put(Messages.READ, 1);
+		int i = db.update(Messages.TABLE, values, Messages.READ + " = 0"
+				+ " AND " + Messages.WHERE_TYPE_MMS, null);
+		if (i > 0) {
+			ret = true;
+		}
+		// set unread messages unread internally
+		rcursor = cr.query(Messages.ORIG_URI_MMS, null, Messages.READ + " = 0",
+				null, null);
+		if (rcursor != null && rcursor.moveToFirst()) {
+			ret = true;
+			values.put(Messages.READ, 0);
+			do {
+				db.update(Messages.TABLE, values, Messages.ID + " = "
+						+ (-1L * rcursor.getLong(iMId)), null);
+			} while (rcursor.moveToNext());
+		}
+		if (rcursor != null && !rcursor.isClosed()) {
+			rcursor.close();
+		}
+
 		return ret;
 	}
 
@@ -1031,7 +1213,7 @@ public final class ConversationProvider extends ContentProvider {
 	 * @param db
 	 *            {@link SQLiteDatabase}.
 	 */
-	private void sync(final SQLiteDatabase db) {
+	private synchronized void sync(final SQLiteDatabase db) {
 		boolean changed = false;
 		final ContentResolver cr = this.getContext().getContentResolver();
 
@@ -1055,6 +1237,7 @@ public final class ConversationProvider extends ContentProvider {
 
 		if (changed) {
 			this.updateThreads(db);
+			cr.notifyChange(Messages.CONTENT_URI, null);
 		}
 	}
 
@@ -1108,19 +1291,47 @@ public final class ConversationProvider extends ContentProvider {
 	 *            {@link SQLiteDatabase}
 	 */
 	private void updateThreads(final SQLiteDatabase db) {
-		final String[] proj = new String[] {// .
-		Messages.THREADID, // 0
-		};
-		final Cursor cursor = db.query(Messages.TABLE, proj, null, null,
-				Messages.THREADID, null, Messages.THREADID);
-		if (cursor != null && cursor.moveToFirst()) {
+		final String[] mproj = new String[] { Messages.THREADID };
+		final String[] cproj = new String[] { Threads.ID };
+		final Cursor mcursor = db.query(Messages.TABLE, mproj, null, null,
+				Messages.THREADID, null, Messages.THREADID + " ASC");
+		final Cursor ccursor = db.query(Threads.TABLE, cproj, null, null, null,
+				null, Threads.ID + " ASC");
+		if (mcursor != null && ccursor != null && mcursor.moveToFirst()) {
+			ccursor.moveToFirst();
+			long mtid = -1L;
 			do {
-				this.updateThread(db, cursor.getLong(0));
-			} while (cursor.moveToNext());
+				mtid = mcursor.getLong(0);
+				long ctid = -1L;
+				Log.d(TAG, "mtid: " + mtid);
+				if (!ccursor.isAfterLast()) {
+					do {
+						ctid = ccursor.getLong(0);
+						Log.d(TAG, "ctid: " + ctid);
+						if (ctid < mtid) {
+							Log.d(TAG, "delete: tid=" + ctid);
+							db.delete(Threads.TABLE, Threads.ID + " = " + ctid,
+									null);
+						} else {
+							break;
+						}
+					} while (ccursor.moveToNext());
+				}
+				this.updateThread(db, mtid);
+				if (ctid == mtid) {
+					ccursor.moveToNext();
+				}
+			} while (mcursor.moveToNext());
+			Log.d(TAG, "delete: tid>" + mtid);
+			db.delete(Threads.TABLE, Threads.ID + " > " + mtid, null);
 		}
-		if (cursor != null && !cursor.isClosed()) {
-			cursor.close();
+		if (mcursor != null && !mcursor.isClosed()) {
+			mcursor.close();
 		}
+		if (ccursor != null && !ccursor.isClosed()) {
+			ccursor.close();
+		}
+
 		// TODO: trigger service to update names, pid, picture..
 	}
 
@@ -1144,5 +1355,105 @@ public final class ConversationProvider extends ContentProvider {
 			return name + "<" + address + ">";
 		}
 		return name;
+	}
+
+	/**
+	 * Mark all messages with a given {@link Uri} as read.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param uri
+	 *            {@link Uri}
+	 * @param read
+	 *            read status
+	 */
+	public static void markRead(final Context context, final Uri uri,
+			final int read) {
+		if (uri == null) {
+			return;
+		}
+		final String select = Messages.SELECTION_UNREAD.replace("0", String
+				.valueOf(1 - read));
+		final ContentResolver cr = context.getContentResolver();
+		final Cursor cursor = cr.query(uri, Messages.PROJECTION, select, null,
+				null);
+		if (cursor != null && cursor.getCount() <= 0) {
+			if (uri.equals(Messages.CONTENT_URI)) {
+				SmsReceiver.updateNewMessageNotification(context, null);
+			}
+			cursor.close();
+			return;
+		}
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+
+		final ContentValues cv = new ContentValues();
+		cv.put(Messages.READ, read);
+		cr.update(uri, cv, select, null);
+		SmsReceiver.updateNewMessageNotification(context, null);
+	}
+
+	/**
+	 * Delete messages with a given {@link Uri}.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param uri
+	 *            {@link Uri}
+	 * @param title
+	 *            title of {@link Dialog}
+	 * @param message
+	 *            message of the {@link Dialog}
+	 * @param activity
+	 *            {@link Activity} to finish when deleting.
+	 */
+	public static void deleteMessages(final Context context, final Uri uri,
+			final int title, final int message, final Activity activity) {
+		final ContentResolver cr = context.getContentResolver();
+		final Cursor cursor = cr.query(uri, Messages.PROJECTION, null, null,
+				null);
+		if (cursor == null) {
+			return;
+		}
+		final int l = cursor.getCount();
+		if (cursor != null && !cursor.isClosed()) {
+			cursor.close();
+		}
+		if (l == 0) {
+			return;
+		}
+
+		final Builder builder = new Builder(context);
+		builder.setTitle(title);
+		builder.setMessage(message);
+		builder.setNegativeButton(android.R.string.no, null);
+		builder.setPositiveButton(android.R.string.yes,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int which) {
+						cr.delete(uri, null, null);
+						if (activity != null) {
+							activity.finish();
+						}
+						SmsReceiver.updateNewMessageNotification(context, null);
+					}
+				});
+		builder.create().show();
+	}
+
+	/**
+	 * Fix MMS date.
+	 * 
+	 * @param date
+	 *            date
+	 * @return date as milliseconds since epoch
+	 */
+	public static long getDate(final long date) {
+		if (date > ConversationList.MIN_DATE) {
+			return date;
+		}
+		return date * ConversationList.MILLIS;
 	}
 }

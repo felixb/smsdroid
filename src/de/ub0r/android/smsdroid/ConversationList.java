@@ -21,14 +21,11 @@ package de.ub0r.android.smsdroid;
 import java.util.Calendar;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -283,92 +280,6 @@ public class ConversationList extends ListActivity implements
 	}
 
 	/**
-	 * Mark all messages with a given {@link Uri} as read.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param uri
-	 *            {@link Uri}
-	 * @param read
-	 *            read status
-	 */
-	static final void markRead(final Context context, final Uri uri,
-			final int read) {
-		if (uri == null) {
-			return;
-		}
-		final String select = Messages.SELECTION_UNREAD.replace("0", String
-				.valueOf(1 - read));
-		final ContentResolver cr = context.getContentResolver();
-		final Cursor cursor = cr.query(uri, Messages.PROJECTION, select, null,
-				null);
-		if (cursor != null && cursor.getCount() <= 0) {
-			if (uri.equals(Messages.CONTENT_URI)) {
-				SmsReceiver.updateNewMessageNotification(context, null);
-			}
-			cursor.close();
-			return;
-		}
-		if (cursor != null && !cursor.isClosed()) {
-			cursor.close();
-		}
-
-		final ContentValues cv = new ContentValues();
-		cv.put(Messages.READ, read);
-		cr.update(uri, cv, select, null);
-		SmsReceiver.updateNewMessageNotification(context, null);
-	}
-
-	/**
-	 * Delete messages with a given {@link Uri}.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param uri
-	 *            {@link Uri}
-	 * @param title
-	 *            title of {@link Dialog}
-	 * @param message
-	 *            message of the {@link Dialog}
-	 * @param activity
-	 *            {@link Activity} to finish when deleting.
-	 */
-	static final void deleteMessages(final Context context, final Uri uri,
-			final int title, final int message, final Activity activity) {
-		final ContentResolver cr = context.getContentResolver();
-		final Cursor cursor = cr.query(uri, Messages.PROJECTION, null, null,
-				null);
-		if (cursor == null) {
-			return;
-		}
-		final int l = cursor.getCount();
-		if (cursor != null && !cursor.isClosed()) {
-			cursor.close();
-		}
-		if (l == 0) {
-			return;
-		}
-
-		final Builder builder = new Builder(context);
-		builder.setTitle(title);
-		builder.setMessage(message);
-		builder.setNegativeButton(android.R.string.no, null);
-		builder.setPositiveButton(android.R.string.yes,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog,
-							final int which) {
-						cr.delete(uri, null, null);
-						if (activity != null) {
-							activity.finish();
-						}
-						SmsReceiver.updateNewMessageNotification(context, null);
-					}
-				});
-		builder.create().show();
-	}
-
-	/**
 	 * Add or remove an entry to/from blacklist.
 	 * 
 	 * @param context
@@ -403,13 +314,12 @@ public class ConversationList extends ListActivity implements
 			this.startActivity(new Intent(this, DonationHelper.class));
 			return true;
 		case R.id.item_delete_all_threads:
-			deleteMessages(this, Uri.parse("content://sms/"),
+			ConversationProvider.deleteMessages(this, Messages.CONTENT_URI,
 					R.string.delete_threads_, R.string.delete_threads_question,
 					null);
 			return true;
 		case R.id.item_mark_all_read:
-			markRead(this, Uri.parse("content://sms/"), 1);
-			markRead(this, Uri.parse("content://mms/"), 1);
+			ConversationProvider.markRead(this, Messages.CONTENT_URI, 1);
 			return true;
 		default:
 			return false;
@@ -527,13 +437,12 @@ public class ConversationList extends ListActivity implements
 							i = ContactsWrapper.getInstance()
 									.getInsertPickIntent(a);
 						} else {
-							final Uri uri = ContactsWrapper
-									.getInstance()
+							final Uri uri = ContactsWrapper.getInstance()
 									.getContactUri(
 											ConversationList.this
 													.getContentResolver(),
-											currentCursor
-													.getString(Threads.INDEX_PID));
+											currentCursor.getString(// .
+													Threads.INDEX_PID));
 							i = new Intent(Intent.ACTION_VIEW, uri);
 						}
 						ConversationList.this.startActivity(i);
@@ -545,8 +454,9 @@ public class ConversationList extends ListActivity implements
 						ConversationList.this.startActivity(i);
 						break;
 					case WHICH_DELETE:
-						ConversationList.deleteMessages(ConversationList.this,
-								target, R.string.delete_thread_,
+						ConversationProvider.deleteMessages(
+								ConversationList.this, target,
+								R.string.delete_thread_,
 								R.string.delete_thread_question, null);
 						break;
 					case WHICH_MARK_SPAM:
@@ -586,6 +496,17 @@ public class ConversationList extends ListActivity implements
 			return DateFormat.getDateFormat(context).format(t);
 		} else {
 			return DateFormat.getTimeFormat(context).format(t);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected final void onDestroy() {
+		super.onDestroy();
+		if (this.adapter != null) {
+			this.adapter.close();
 		}
 	}
 }

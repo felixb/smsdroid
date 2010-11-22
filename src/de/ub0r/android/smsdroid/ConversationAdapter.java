@@ -21,6 +21,7 @@ package de.ub0r.android.smsdroid;
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
@@ -31,6 +32,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.smsdroid.ConversationProvider.Messages;
 import de.ub0r.android.smsdroid.ConversationProvider.Threads;
 
 /**
@@ -107,7 +109,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	public ConversationAdapter(final ConversationList c) {
 		super(c, R.layout.conversationlist_item, null, true);
 		this.activity = c;
-		this.queryHandler = new BackgroundQueryHandler(c.getContentResolver());
+		final ContentResolver cr = c.getContentResolver();
+		this.queryHandler = new BackgroundQueryHandler(cr);
 		SpamDB spam = new SpamDB(c);
 		spam.open();
 		this.blacklist = spam.getAllEntries();
@@ -115,6 +118,15 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		spam = null;
 
 		this.textSize = Preferences.getTextsize(c);
+
+		cr.registerContentObserver(Messages.CONTENT_URI, false,
+				new ContentObserver(this.queryHandler) {
+					@Override
+					public void onChange(final boolean selfChange) {
+						super.onChange(selfChange);
+						ConversationAdapter.this.startMsgListQuery();
+					}
+				});
 	}
 
 	/**
@@ -228,5 +240,15 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Close {@link Cursor}.
+	 */
+	public final void close() {
+		final Cursor c = this.getCursor();
+		if (c != null && !c.isClosed()) {
+			c.close();
+		}
 	}
 }

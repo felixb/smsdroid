@@ -117,6 +117,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Thread's id. */
 	private long threadId;
 
+	/** Current {@link MessageAdapter}. */
+	private MessageAdapter adapter = null;
+
 	/** TextWatcher updating char count on writing. */
 	private TextWatcher textWatcher = new TextWatcher() {
 		/**
@@ -160,6 +163,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		final boolean showTitlebar = prefs.getBoolean(
@@ -215,6 +219,17 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected final void onDestroy() {
+		super.onDestroy();
+		if (this.adapter != null) {
+			this.adapter.close();
+		}
+	}
+
+	/**
 	 * Parse data pushed by {@link Intent}.
 	 * 
 	 * @param intent
@@ -267,11 +282,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final ListView lv = this.getListView();
 		lv.setStackFromBottom(true);
 
-		MessageAdapter adapter = new MessageAdapter(this, this.uri, ccursor);
+		this.adapter = new MessageAdapter(this, this.uri, ccursor);
+		this.adapter.startMsgListQuery();
 		if (!ccursor.isClosed()) {
 			ccursor.close();
 		}
-		this.setListAdapter(adapter);
+		this.setListAdapter(this.adapter);
 
 		this.setTitle(this.getString(R.string.app_name) + " > "
 				+ fullDisplayName);
@@ -289,7 +305,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		if (ccursor == null || !ccursor.moveToFirst()) {
 			return;
 		}
-		lv.setAdapter(new MessageAdapter(this, this.uri, ccursor));
+		if (this.adapter != null) {
+			this.adapter.close();
+		}
+		this.adapter = new MessageAdapter(this, this.uri, ccursor);
+		lv.setAdapter(this.adapter);
+		this.adapter.startMsgListQuery();
 		if (!ccursor.isClosed()) {
 			ccursor.close();
 		}
@@ -330,7 +351,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * Set all messages in a given thread as read.
 	 */
 	private void setRead() {
-		ConversationList.markRead(this, ContentUris.withAppendedId(
+		ConversationProvider.markRead(this, ContentUris.withAppendedId(
 				Messages.THREAD_URI, this.threadId), 1);
 	}
 
@@ -351,7 +372,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_delete_thread:
-			ConversationList.deleteMessages(this, this.uri,
+			ConversationProvider.deleteMessages(this, this.uri,
 					R.string.delete_thread_, R.string.delete_thread_question,
 					this);
 			return true;
@@ -404,7 +425,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			public void onClick(final DialogInterface dialog, final int which) {
 				switch (which) {
 				case WHICH_MARK_UNREAD:
-					ConversationList.markRead(context, target, 1 - read);
+					ConversationProvider.markRead(context, target, 1 - read);
 					MessageList.this.markedUnread = true;
 					break;
 				case WHICH_FORWARD:
@@ -473,7 +494,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					b.show();
 					break;
 				case WHICH_DELETE:
-					ConversationList.deleteMessages(context, target,
+					ConversationProvider.deleteMessages(context, target,
 							R.string.delete_message_,
 							R.string.delete_message_question, null);
 					break;

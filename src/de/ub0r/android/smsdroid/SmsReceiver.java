@@ -151,9 +151,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static int[] getUnreadSMS(final ContentResolver cr,
 			final String text) {
 		Log.d(TAG, "getUnreadSMS(cr, " + text + ")");
-		Cursor cursor = cr.query(Messages.ORIG_URI_SMS,
-				Messages.ORIG_PROJECTION_SMS, Messages.SELECTION_UNREAD, null,
-				SORT);
+		Cursor cursor = cr.query(Messages.CONTENT_URI, Messages.PROJECTION,
+				Messages.SELECTION_UNREAD + " AND " + Messages.WHERE_TYPE_SMS,
+				null, SORT);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text != null) { // try again!
 				if (cursor != null && !cursor.isClosed()) {
@@ -203,9 +203,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static int[] getUnreadMMS(final ContentResolver cr,
 			final String text) {
 		Log.d(TAG, "getUnreadMMS(cr, " + text + ")");
-		Cursor cursor = cr.query(Messages.ORIG_URI_MMS,
-				Messages.ORIG_PROJECTION_MMS, Messages.SELECTION_UNREAD, null,
-				null);
+		Cursor cursor = cr.query(Messages.CONTENT_URI, Messages.PROJECTION,
+				Messages.SELECTION_UNREAD + " AND " + Messages.WHERE_TYPE_MMS,
+				null, null);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text == MMS_BODY) {
 				if (cursor != null && !cursor.isClosed()) {
@@ -370,6 +370,9 @@ public class SmsReceiver extends BroadcastReceiver {
 											.getString(R.string.new_messages),
 											l), pIntent);
 						}
+					}
+					if (ccursor != null && !ccursor.isClosed()) {
+						ccursor.close();
 					}
 				}
 			} else {

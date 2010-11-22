@@ -21,12 +21,15 @@ package de.ub0r.android.smsdroid;
 import java.util.ArrayList;
 
 import android.content.ActivityNotFoundException;
+import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -70,6 +73,54 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	/** Used text size. */
 	private final int textSize;
 
+	/** {@link BackgroundQueryHandler}. */
+	private final BackgroundQueryHandler queryHandler;
+
+	/** Token for {@link BackgroundQueryHandler}: message list query. */
+	private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
+
+	/** Reference to {@link ConversationList}. */
+	private final MessageList activity;
+
+	/** {@link Uri}. */
+	private final Uri uri;
+
+	/**
+	 * Handle queries in background.
+	 * 
+	 * @author flx
+	 */
+	private final class BackgroundQueryHandler extends AsyncQueryHandler {
+
+		/**
+		 * A helper class to help make handling asynchronous
+		 * {@link ContentResolver} queries easier.
+		 * 
+		 * @param contentResolver
+		 *            {@link ContentResolver}
+		 */
+		public BackgroundQueryHandler(final ContentResolver contentResolver) {
+			super(contentResolver);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		protected void onQueryComplete(final int token, final Object cookie,
+				final Cursor cursor) {
+			switch (token) {
+			case MESSAGE_LIST_QUERY_TOKEN:
+				MessageAdapter.this.changeCursor(cursor);
+				MessageAdapter.this.activity
+						.setProgressBarIndeterminateVisibility(false);
+				return;
+			default:
+				return;
+			}
+		}
+	}
+
 	/**
 	 * Default Constructor.
 	 * 
@@ -82,8 +133,12 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 */
 	public MessageAdapter(final MessageList c, final Uri u, // .
 			final Cursor ccursor) {
-		super(c, R.layout.messagelist_item,
-				getCursor(c.getContentResolver(), u), true);
+		super(c, R.layout.messagelist_item, null, true);
+		this.uri = ContentUris.withAppendedId(Messages.THREAD_URI, ContentUris
+				.parseId(u));
+		this.activity = c;
+		final ContentResolver cr = c.getContentResolver();
+		this.queryHandler = new BackgroundQueryHandler(cr);
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(c);
 		boolean showBubbles = prefs
@@ -113,20 +168,31 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		Log.d(TAG, "address: " + this.address);
 		Log.d(TAG, "name: " + this.name);
 		Log.d(TAG, "displayName: " + this.displayName);
+
+		cr.registerContentObserver(Messages.CONTENT_URI, false,
+				new ContentObserver(this.queryHandler) {
+					@Override
+					public void onChange(final boolean selfChange) {
+						super.onChange(selfChange);
+						MessageAdapter.this.startMsgListQuery();
+					}
+				});
 	}
 
 	/**
-	 * Get the {@link Cursor}.
-	 * 
-	 * @param cr
-	 *            {@link ContentResolver}
-	 * @param u
-	 *            {@link Uri}
-	 * @return {@link Cursor}
+	 * Start ConversationList query.
 	 */
-	private static Cursor getCursor(final ContentResolver cr, final Uri u) {
-		return cr.query(ContentUris.withAppendedId(Messages.THREAD_URI,
-				ContentUris.parseId(u)), Messages.PROJECTION, null, null, null);
+	public final void startMsgListQuery() {
+		// Cancel any pending queries
+		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
+		try {
+			// Kick off the new query
+			this.activity.setProgressBarIndeterminateVisibility(true);
+			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
+					this.uri, Messages.PROJECTION, null, null, null);
+		} catch (SQLiteException e) {
+			Log.e(TAG, "error starting query", e);
+		}
 	}
 
 	/**
@@ -284,6 +350,16 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			}
 			twBody.setText(text);
 			twBody.setVisibility(View.VISIBLE);
+		}
+	}
+
+	/**
+	 * Close {@link Cursor}.
+	 */
+	public final void close() {
+		final Cursor c = this.getCursor();
+		if (c != null && !c.isClosed()) {
+			c.close();
 		}
 	}
 }
