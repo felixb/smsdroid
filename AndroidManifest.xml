@@ -75,6 +75,7 @@
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
 		</receiver>
+		<service android:name=".ContactsService" android:exported="false" />
 		<provider android:name="ConversationProvider"
 			android:authorities="de.ub0r.android.smsdroid.provider.conversations" />
 		<!-- The application's publisher ID assigned by AdMob -->

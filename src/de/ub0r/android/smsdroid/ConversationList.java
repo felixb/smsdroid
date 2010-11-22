@@ -399,7 +399,7 @@ public class ConversationList extends ListActivity implements
 		} else {
 			final Cursor currentCursor = (Cursor) parent
 					.getItemAtPosition(position);
-			final Uri target = ContentUris.withAppendedId(ConversationList.URI,
+			final Uri target = ContentUris.withAppendedId(Threads.CONTENT_URI,
 					currentCursor.getLong(Threads.INDEX_ID));
 			Builder builder = new Builder(this);
 			String[] items = this.longItemClickDialog;

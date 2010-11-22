@@ -37,6 +37,7 @@ import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
@@ -847,14 +848,19 @@ public final class ConversationProvider extends ContentProvider {
 			cr.update(Threads.ORIG_URI, values, selection, null);
 			break;
 		case MESSAGES_TID:
-		case THREAD_ID:
-			final long tid = ContentUris.parseId(uri);
-			ret = db.update(Threads.TABLE, values, DbUtils.sqlAnd(Threads.ID
-					+ "=" + tid, selection), selectionArgs);
+			long tid = ContentUris.parseId(uri);
 			ret += db.update(Messages.TABLE, values, DbUtils.sqlAnd(
 					Messages.THREADID + "=" + tid, selection), selectionArgs);
-			cr.update(ContentUris.withAppendedId(Threads.ORIG_URI, tid),
-					values, selection, null);
+		case THREAD_ID:
+			tid = ContentUris.parseId(uri);
+			ret = db.update(Threads.TABLE, values, DbUtils.sqlAnd(Threads.ID
+					+ "=" + tid, selection), selectionArgs);
+			try {
+				cr.update(ContentUris.withAppendedId(Threads.ORIG_URI, tid),
+						values, selection, null);
+			} catch (SQLiteException e) {
+				Log.w(TAG, "unable to update Threads.ORIG_URI", e);
+			}
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown Uri " + uri);
@@ -1237,7 +1243,7 @@ public final class ConversationProvider extends ContentProvider {
 
 		if (changed) {
 			this.updateThreads(db);
-			cr.notifyChange(Messages.CONTENT_URI, null);
+			// FIXME: cr.notifyChange(Messages.CONTENT_URI, null);
 		}
 	}
 
@@ -1332,7 +1338,7 @@ public final class ConversationProvider extends ContentProvider {
 			ccursor.close();
 		}
 
-		// TODO: trigger service to update names, pid, picture..
+		ContactsService.startService(this.getContext());
 	}
 
 	/**
@@ -1352,7 +1358,7 @@ public final class ConversationProvider extends ContentProvider {
 			return address;
 		}
 		if (full) {
-			return name + "<" + address + ">";
+			return name + " <" + address + ">";
 		}
 		return name;
 	}
