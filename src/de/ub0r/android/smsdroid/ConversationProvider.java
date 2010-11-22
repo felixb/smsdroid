@@ -62,6 +62,9 @@ public final class ConversationProvider extends ContentProvider {
 	/** Version of the {@link SQLiteDatabase}. */
 	private static final int DATABASE_VERSION = 20;
 
+	/** Size of buffer for fetching parts. */
+	private static final int BUFFSIZE = 1024;
+
 	/** Authority. */
 	public static final String AUTHORITY = "de.ub0r.android.smsdroid."
 			+ "provider.conversations";
@@ -177,13 +180,14 @@ public final class ConversationProvider extends ContentProvider {
 		private static final String[] ORIG_PROJECTION_SMS = PROJECTION;
 
 		/** Remote {@link Cursor}'s projection. */
-		private static final String[] ORIG_PROJECTION_MMS = new String[] { // .
-		ID, // 0
-				DATE, // 1
-				THREADID, // 2
-				READ, // 3
-				TYPE, // 4
-		};
+		// private static final String[] ORIG_PROJECTION_MMS = new String[] { //
+		// .
+		// ID, // 0
+		// DATE, // 1
+		// THREADID, // 2
+		// READ, // 3
+		// TYPE, // 4
+		// };
 
 		/** Default sort order. */
 		public static final String DEFAULT_SORT_ORDER = DATE + " ASC";
@@ -270,10 +274,10 @@ public final class ConversationProvider extends ContentProvider {
 		 *            message's id
 		 * @return {@link Cursor}
 		 */
-		public static Cursor getPartsCursor(final ContentResolver cr, // .
+		private static Cursor getPartsCursor(final ContentResolver cr, // .
 				final long mid) {
-			return cr.query(URI_PARTS, null, PARTS_MID + " = " + mid, null,
-					null);
+			return cr.query(URI_PARTS, null, PARTS_MID + " = " + -1L * mid,
+					null, null);
 		}
 
 		/**
@@ -313,11 +317,11 @@ public final class ConversationProvider extends ContentProvider {
 				if (ct == null) {
 					continue;
 				}
-				final Intent i = Messages.getPartContentIntent(pid, ct);
+				final Intent i = getPartContentIntent(pid, ct);
 				if (i != null) {
 					ret.add(i);
 				}
-				final Object o = Messages.getPartObject(ct, is);
+				final Object o = getPartObject(ct, is);
 				if (o != null) {
 					ret.add(o);
 				}
@@ -340,7 +344,7 @@ public final class ConversationProvider extends ContentProvider {
 		 *            part's id
 		 * @return {@link Uri}
 		 */
-		public static Uri getPartUri(final long pid) {
+		private static Uri getPartUri(final long pid) {
 			return ContentUris.withAppendedId(URI_PARTS, pid);
 		}
 
@@ -353,7 +357,7 @@ public final class ConversationProvider extends ContentProvider {
 		 *            part's content type
 		 * @return {@link Intent}
 		 */
-		public static Intent getPartContentIntent(final long pid,
+		private static Intent getPartContentIntent(final long pid,
 				final String ct) {
 			if (ct.startsWith("image/")) {
 				final Intent i = new Intent(Intent.ACTION_VIEW);
@@ -377,7 +381,7 @@ public final class ConversationProvider extends ContentProvider {
 		 *            {@link InputStream}
 		 * @return {@link Bitmap} or {@link CharSequence}
 		 */
-		public static Object getPartObject(final String ct, // .
+		private static Object getPartObject(final String ct, // .
 				final InputStream is) {
 			if (is == null) {
 				return null;
@@ -405,7 +409,7 @@ public final class ConversationProvider extends ContentProvider {
 			// get part
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
-				byte[] buffer = new byte[256];
+				byte[] buffer = new byte[BUFFSIZE];
 				int len = is.read(buffer);
 				while (len >= 0) {
 					baos.write(buffer, 0, len);
@@ -436,7 +440,7 @@ public final class ConversationProvider extends ContentProvider {
 		 *            part's id
 		 * @return {@link InputStream}
 		 */
-		public static InputStream getPart(final ContentResolver cr,
+		private static InputStream getPart(final ContentResolver cr,
 				final long pid) {
 			InputStream is = null;
 			final Uri uri = getPartUri(pid);
@@ -1138,11 +1142,11 @@ public final class ConversationProvider extends ContentProvider {
 			}
 		}
 		final int iMId = rcursor.getColumnIndex(Messages.ID);
-		final int iThreadId = rcursor.getColumnIndex(Messages.THREADID);
+		// final int iThreadId = rcursor.getColumnIndex(Messages.THREADID);
 		final int iDate = rcursor.getColumnIndex(Messages.DATE);
-		final int iType = rcursor.getColumnIndex(Messages.TYPE);
-		final int iRead = rcursor.getColumnIndex(Messages.READ);
-		final int iText = rcursor.getColumnIndex("text");
+		// final int iType = rcursor.getColumnIndex(Messages.TYPE);
+		// final int iRead = rcursor.getColumnIndex(Messages.READ);
+		// final int iText = rcursor.getColumnIndex("text");
 		int rcount = rcursor.getCount();
 		int lcount = lcursor.getCount();
 		if (rcount != lcount) {
