@@ -196,6 +196,9 @@ public final class ConversationProvider extends ContentProvider {
 		public static final Uri CONTENT_URI = Uri.parse("content://"
 				+ AUTHORITY + "/messages");
 		/** Content {@link Uri}. */
+		public static final Uri CACHE_URI = Uri.parse("content://" + AUTHORITY
+				+ "cache/messages");
+		/** Content {@link Uri}. */
 		public static final Uri THREAD_URI = Uri.parse("content://" + AUTHORITY
 				+ "/conversation");
 		/** {@link Uri} of real sms database. */
@@ -534,6 +537,9 @@ public final class ConversationProvider extends ContentProvider {
 		/** Content {@link Uri}. */
 		public static final Uri CONTENT_URI = Uri.parse("content://"
 				+ AUTHORITY + "/threads");
+		/** Content {@link Uri}. */
+		public static final Uri CACHE_URI = Uri.parse("content://" + AUTHORITY
+				+ "cache/threads");
 
 		/**
 		 * The MIME type of {@link #CONTENT_URI} providing a list of threads.
@@ -609,6 +615,10 @@ public final class ConversationProvider extends ContentProvider {
 	private static final int MESSAGE_ID = 4;
 	/** Internal id: messages from a single thread. */
 	private static final int MESSAGES_TID = 5;
+	/** Internal id: cache for messages. */
+	private static final int MESSAGES_CACHE = 6;
+	/** Internal id: cache for threads. */
+	private static final int THREADS_CACHE = 7;
 
 	/** {@link UriMatcher}. */
 	private static final UriMatcher URI_MATCHER;
@@ -620,6 +630,8 @@ public final class ConversationProvider extends ContentProvider {
 		URI_MATCHER.addURI(AUTHORITY, "messages", MESSAGES);
 		URI_MATCHER.addURI(AUTHORITY, "messages/#", MESSAGE_ID);
 		URI_MATCHER.addURI(AUTHORITY, "conversation/#", MESSAGES_TID);
+		URI_MATCHER.addURI(AUTHORITY, "cache/threads", THREADS_CACHE);
+		URI_MATCHER.addURI(AUTHORITY, "cache/messages", MESSAGES_CACHE);
 	}
 
 	/**
@@ -674,6 +686,12 @@ public final class ConversationProvider extends ContentProvider {
 		final ContentResolver cr = this.getContext().getContentResolver();
 		int ret = 0;
 		switch (URI_MATCHER.match(uri)) {
+		case MESSAGES_CACHE:
+			ret = db.delete(Messages.TABLE, selection, selectionArgs);
+			break;
+		case THREADS_CACHE:
+			ret = db.delete(Threads.TABLE, selection, selectionArgs);
+			break;
 		case MESSAGES:
 			ret = db.delete(Messages.TABLE, selection, selectionArgs);
 			cr.delete(Messages.ORIG_URI_SMS, selection, selectionArgs);
@@ -1115,7 +1133,7 @@ public final class ConversationProvider extends ContentProvider {
 				+ " > " + (date / ConversationList.MILLIS), null, null);
 		if (rcursor != null && rcursor.moveToFirst()) {
 			do {
-				ret |= this.addMMS(db, rcursor);
+				// FIXME ret |= this.addMMS(db, rcursor);
 			} while (rcursor.moveToNext());
 		}
 		if (rcursor != null && !rcursor.isClosed()) {
@@ -1167,7 +1185,7 @@ public final class ConversationProvider extends ContentProvider {
 					Log.d(TAG, "rdate-ldate: " + (rdate - ldate));
 					if (ldate < rdate) {
 						// add mms and check next remote
-						ret |= this.addMMS(db, rcursor);
+						// FIXME ret |= this.addMMS(db, rcursor);
 						break;
 					} else if (ldate > rdate) {
 						// delete local mms and check next local
