@@ -75,9 +75,9 @@
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
 		</receiver>
-		<service android:name=".ContactsService" android:exported="false" />
+		<service android:name=".SyncService" android:exported="false" />
 		<provider android:name="ConversationProvider"
-			android:authorities="de.ub0r.android.smsdroid.provider.conversations" />
+			android:authorities="de.ub0r.android.smsdroid.messages" />
 		<!-- The application's publisher ID assigned by AdMob -->
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
 		<meta-data android:value="true" android:name="ADMOB_ALLOW_LOCATION_FOR_ADS" />

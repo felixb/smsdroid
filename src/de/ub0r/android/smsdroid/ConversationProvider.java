@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.AlertDialog.Builder;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -67,7 +66,7 @@ public final class ConversationProvider extends ContentProvider {
 
 	/** Authority. */
 	public static final String AUTHORITY = "de.ub0r.android.smsdroid."
-			+ "provider.conversations";
+			+ "messages";
 
 	/**
 	 * Class holding all messages.
@@ -197,7 +196,10 @@ public final class ConversationProvider extends ContentProvider {
 				+ AUTHORITY + "/messages");
 		/** Content {@link Uri}. */
 		public static final Uri CACHE_URI = Uri.parse("content://" + AUTHORITY
-				+ "cache/messages");
+				+ "/cache/messages");
+		/** Content {@link Uri}. */
+		public static final Uri CACHE_THREADS_URI = Uri.parse("content://"
+				+ AUTHORITY + "/cache/conversations");
 		/** Content {@link Uri}. */
 		public static final Uri THREAD_URI = Uri.parse("content://" + AUTHORITY
 				+ "/conversation");
@@ -539,7 +541,7 @@ public final class ConversationProvider extends ContentProvider {
 				+ AUTHORITY + "/threads");
 		/** Content {@link Uri}. */
 		public static final Uri CACHE_URI = Uri.parse("content://" + AUTHORITY
-				+ "cache/threads");
+				+ "/cache/threads");
 
 		/**
 		 * The MIME type of {@link #CONTENT_URI} providing a list of threads.
@@ -619,6 +621,8 @@ public final class ConversationProvider extends ContentProvider {
 	private static final int MESSAGES_CACHE = 6;
 	/** Internal id: cache for threads. */
 	private static final int THREADS_CACHE = 7;
+	/** Internal id: cache for conversations. */
+	private static final int CONVERSATIONS_CACHE = 8;
 
 	/** {@link UriMatcher}. */
 	private static final UriMatcher URI_MATCHER;
@@ -632,6 +636,8 @@ public final class ConversationProvider extends ContentProvider {
 		URI_MATCHER.addURI(AUTHORITY, "conversation/#", MESSAGES_TID);
 		URI_MATCHER.addURI(AUTHORITY, "cache/threads", THREADS_CACHE);
 		URI_MATCHER.addURI(AUTHORITY, "cache/messages", MESSAGES_CACHE);
+		URI_MATCHER.addURI(AUTHORITY, "cache/conversations",
+				CONVERSATIONS_CACHE);
 	}
 
 	/**
@@ -696,10 +702,20 @@ public final class ConversationProvider extends ContentProvider {
 			ret = db.delete(Messages.TABLE, selection, selectionArgs);
 			cr.delete(Messages.ORIG_URI_SMS, selection, selectionArgs);
 			cr.delete(Messages.ORIG_URI_MMS, selection, selectionArgs);
-			this.updateThreads(db);
+			SyncService.syncThreads(this.getContext(), -1L);
 			break;
 		case MESSAGE_ID:
 			final long mid = ContentUris.parseId(uri);
+			long tid = -1L;
+			Cursor c = db.query(Messages.TABLE,
+					new String[] { Messages.THREADID },
+					Messages.ID + "=" + mid, null, null, null, null);
+			if (c != null && c.moveToFirst()) {
+				tid = c.getLong(0);
+			}
+			if (c != null && !c.isClosed()) {
+				c.close();
+			}
 			ret = db.delete(Messages.TABLE, DbUtils.sqlAnd(Messages.ID + "="
 					+ mid, selection), selectionArgs);
 			if (mid >= 0L) {
@@ -710,11 +726,11 @@ public final class ConversationProvider extends ContentProvider {
 				cr.delete(ContentUris.withAppendedId(Messages.ORIG_URI_MMS, -1L
 						* mid), selection, selectionArgs);
 			}
-			this.updateThreads(db);
+			SyncService.syncThreads(this.getContext(), tid);
 			break;
 		case MESSAGES_TID:
 		case THREAD_ID:
-			final long tid = ContentUris.parseId(uri);
+			tid = ContentUris.parseId(uri);
 			ret = db.delete(Messages.TABLE, DbUtils.sqlAnd(Messages.THREADID
 					+ "=" + tid, selection), selectionArgs);
 			ret += db.delete(Threads.TABLE, DbUtils.sqlAnd(Threads.ID + "="
@@ -761,7 +777,21 @@ public final class ConversationProvider extends ContentProvider {
 	 */
 	@Override
 	public Uri insert(final Uri uri, final ContentValues values) {
-		throw new IllegalArgumentException("Method not implemented");
+		Log.d(TAG, "insert: " + uri + " " + values);
+		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+		long ret = -1L;
+		switch (URI_MATCHER.match(uri)) {
+		case MESSAGES_CACHE:
+			ret = db.insert(Messages.TABLE, null, values);
+			break;
+		case THREADS_CACHE:
+			ret = db.insert(Threads.TABLE, null, values);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown Uri " + uri);
+		}
+		Log.d(TAG, "exit insert(): " + ret);
+		return ContentUris.withAppendedId(uri, ret);
 	}
 
 	/**
@@ -805,6 +835,20 @@ public final class ConversationProvider extends ContentProvider {
 				orderBy = Messages.DEFAULT_SORT_ORDER;
 			}
 			break;
+		case CONVERSATIONS_CACHE:
+			if (TextUtils.isEmpty(orderBy)) {
+				orderBy = Messages.DEFAULT_SORT_ORDER;
+			}
+			Log.d(TAG, "return Cursor directly");
+			return db.query(Messages.TABLE, projection, selection,
+					selectionArgs, Messages.THREADID, null, orderBy);
+		case MESSAGES_CACHE:
+			if (TextUtils.isEmpty(orderBy)) {
+				orderBy = Messages.DEFAULT_SORT_ORDER;
+			}
+			Log.d(TAG, "return Cursor directly");
+			return db.query(Messages.TABLE, projection, selection,
+					selectionArgs, null, null, orderBy);
 		case MESSAGES:
 			qb.setTables(Messages.TABLE);
 			qb.setProjectionMap(Messages.PROJECTION_MAP);
@@ -812,6 +856,13 @@ public final class ConversationProvider extends ContentProvider {
 				orderBy = Messages.DEFAULT_SORT_ORDER;
 			}
 			break;
+		case THREADS_CACHE:
+			if (TextUtils.isEmpty(orderBy)) {
+				orderBy = Threads.DEFAULT_SORT_ORDER;
+			}
+			Log.d(TAG, "return Cursor directly");
+			return db.query(Threads.TABLE, projection, selection,
+					selectionArgs, null, null, orderBy);
 		case THREAD_ID:
 			qb.appendWhere(Threads.ID + "=" + ContentUris.parseId(uri));
 		case THREADS:
@@ -826,8 +877,8 @@ public final class ConversationProvider extends ContentProvider {
 		}
 
 		// Run the query
-		Cursor c = qb.query(db, projection, selection, selectionArgs, null,
-				null, orderBy);
+		final Cursor c = qb.query(db, projection, selection, selectionArgs,
+				null, null, orderBy);
 
 		// Tell the cursor what uri to watch, so it knows when its source data
 		// changes
@@ -846,7 +897,14 @@ public final class ConversationProvider extends ContentProvider {
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
 		final ContentResolver cr = this.getContext().getContentResolver();
 		int ret = 0;
-		switch (URI_MATCHER.match(uri)) {
+		final int u = URI_MATCHER.match(uri);
+		switch (u) {
+		case MESSAGES_CACHE:
+			ret = db.update(Messages.TABLE, values, selection, selectionArgs);
+			break;
+		case THREADS_CACHE:
+			ret = db.update(Threads.TABLE, values, selection, selectionArgs);
+			break;
 		case MESSAGES:
 			ret = db.update(Messages.TABLE, values, selection, selectionArgs);
 			cr.update(Messages.ORIG_URI_SMS, values, selection, selectionArgs);
@@ -889,7 +947,9 @@ public final class ConversationProvider extends ContentProvider {
 		}
 		if (ret > 0) {
 			cr.notifyChange(Messages.CONTENT_URI, null);
-			this.updateThreads(db);
+			if (u != MESSAGES_CACHE && u != THREADS_CACHE) {
+				SyncService.syncThreads(this.getContext(), -1);
+			}
 		}
 		Log.d(TAG, "exit update(): " + ret);
 		return ret;
@@ -1264,103 +1324,9 @@ public final class ConversationProvider extends ContentProvider {
 		changed |= this.getNewMMS(db, cr, lmaxdate);
 
 		if (changed) {
-			this.updateThreads(db);
+			SyncService.syncThreads(this.getContext(), -1L);
 			// FIXME: cr.notifyChange(Messages.CONTENT_URI, null);
 		}
-	}
-
-	/**
-	 * Update Threads table from Messages.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}
-	 * @param threadId
-	 *            thread's ID, -1 for all
-	 */
-	private void updateThread(final SQLiteDatabase db, final long threadId) {
-		final String[] proj = new String[] {// .
-		Messages.DATE, // 0
-				Messages.BODY, // 1
-				Messages.ADDRESS, // 2
-				"min(" + Messages.READ + ")", // 3
-				Messages.TYPE, // 4
-				"count(" + Messages.ID + ")", // 5
-		};
-
-		final Cursor cursor = db.query(Messages.TABLE, proj, Messages.THREADID
-				+ " = " + threadId, null, null, null, Messages.DATE + " ASC");
-		if (cursor != null && cursor.moveToFirst()) {
-			final ContentValues values = new ContentValues();
-			values.put(Threads.DATE, cursor.getLong(0));
-			values.put(Threads.BODY, cursor.getString(1));
-			values.put(Threads.ADDRESS, cursor.getString(2));
-			values.put(Threads.READ, cursor.getInt(3));
-			values.put(Threads.TYPE, cursor.getInt(4));
-			values.put(Threads.COUNT, cursor.getInt(5));
-			Log.d(TAG, "update thread: " + threadId + "/ " + values);
-			int ret = db.update(Threads.TABLE, values, Threads.ID + " = "
-					+ threadId, null);
-			if (ret <= 0) {
-				Log.d(TAG, "insert thread: " + threadId);
-				values.put(Threads.ID, threadId);
-				db.insert(Threads.TABLE, null, values);
-			}
-		}
-		if (cursor != null && !cursor.isClosed()) {
-			cursor.close();
-		}
-
-	}
-
-	/**
-	 * Update Threads table from Messages.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}
-	 */
-	private void updateThreads(final SQLiteDatabase db) {
-		final String[] mproj = new String[] { Messages.THREADID };
-		final String[] cproj = new String[] { Threads.ID };
-		final Cursor mcursor = db.query(Messages.TABLE, mproj, null, null,
-				Messages.THREADID, null, Messages.THREADID + " ASC");
-		final Cursor ccursor = db.query(Threads.TABLE, cproj, null, null, null,
-				null, Threads.ID + " ASC");
-		if (mcursor != null && ccursor != null && mcursor.moveToFirst()) {
-			ccursor.moveToFirst();
-			long mtid = -1L;
-			do {
-				mtid = mcursor.getLong(0);
-				long ctid = -1L;
-				Log.d(TAG, "mtid: " + mtid);
-				if (!ccursor.isAfterLast()) {
-					do {
-						ctid = ccursor.getLong(0);
-						Log.d(TAG, "ctid: " + ctid);
-						if (ctid < mtid) {
-							Log.d(TAG, "delete: tid=" + ctid);
-							db.delete(Threads.TABLE, Threads.ID + " = " + ctid,
-									null);
-						} else {
-							break;
-						}
-					} while (ccursor.moveToNext());
-				}
-				this.updateThread(db, mtid);
-				if (ctid == mtid) {
-					ccursor.moveToNext();
-				}
-			} while (mcursor.moveToNext());
-			Log.d(TAG, "delete: tid>" + mtid);
-			db.delete(Threads.TABLE, Threads.ID + " > " + mtid, null);
-		}
-		if (mcursor != null && !mcursor.isClosed()) {
-			mcursor.close();
-		}
-		if (ccursor != null && !ccursor.isClosed()) {
-			ccursor.close();
-		}
-
-		ContactsService.startService(this.getContext());
 	}
 
 	/**
@@ -1430,9 +1396,9 @@ public final class ConversationProvider extends ContentProvider {
 	 * @param uri
 	 *            {@link Uri}
 	 * @param title
-	 *            title of {@link Dialog}
+	 *            title of Dialog
 	 * @param message
-	 *            message of the {@link Dialog}
+	 *            message of the Dialog
 	 * @param activity
 	 *            {@link Activity} to finish when deleting.
 	 */

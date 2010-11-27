@@ -213,6 +213,9 @@ public class ConversationList extends ListActivity implements
 			this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
 		}
 		this.adapter.startMsgListQuery();
+
+		// FIXME:
+		SyncService.syncThreads(this, -1L);
 	}
 
 	/**
