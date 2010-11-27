@@ -69,6 +69,13 @@ public final class SyncService extends IntentService {
 	private static final String ACTION_SYNC_THREADS = "de.ub0r.android"
 			+ ".smsdroid.SYNC_THREADS";
 
+	/** Queue for sync contacts. */
+	private static int queueContacts = 0;
+	/** Queue for sync messages. */
+	private static int queueMessages = 0;
+	/** Queue for sync threads. */
+	private static int queueThreads = 0;
+
 	/**
 	 * Default Constructor.
 	 */
@@ -83,16 +90,19 @@ public final class SyncService extends IntentService {
 	 * @param context
 	 *            {@link Context}
 	 */
-	public static void syncContacts(final Context context) {
+	public static synchronized void syncContacts(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		final long lastRun = p.getLong(PREFS_LASTRUN, 0L);
-		if (lastRun + MIN_WAIT_TIME < System.currentTimeMillis()) {
+		if (lastRun + MIN_WAIT_TIME < System.currentTimeMillis()
+				&& queueContacts <= 0) {
 			Log.d(TAG, "call startService: " + ACTION_SYNC_CONTACTS);
+			++queueContacts;
 			context.startService(new Intent(ACTION_SYNC_CONTACTS, null,
 					context, SyncService.class));
 		} else {
-			Log.d(TAG, "skip startService: " + ACTION_SYNC_CONTACTS);
+			Log.i(TAG, "skip startService: " + ACTION_SYNC_CONTACTS + " / "
+					+ queueContacts);
 		}
 	}
 
@@ -103,10 +113,16 @@ public final class SyncService extends IntentService {
 	 * @param context
 	 *            {@link Context}
 	 */
-	public static void syncMessages(final Context context) {
-		Log.d(TAG, "call startService: " + ACTION_SYNC_MESSAGES);
-		context.startService(new Intent(ACTION_SYNC_MESSAGES, null, context,
-				SyncService.class));
+	public static synchronized void syncMessages(final Context context) {
+		if (queueMessages <= 0) {
+			Log.d(TAG, "call startService: " + ACTION_SYNC_MESSAGES);
+			++queueMessages;
+			context.startService(new Intent(ACTION_SYNC_MESSAGES, null,
+					context, SyncService.class));
+		} else {
+			Log.i(TAG, "skip startService: " + ACTION_SYNC_MESSAGES + " / "
+					+ queueMessages);
+		}
 	}
 
 	/**
@@ -118,15 +134,23 @@ public final class SyncService extends IntentService {
 	 * @param threadId
 	 *            thread to sync
 	 */
-	public static void syncThreads(final Context context, final long threadId) {
-		Log.d(TAG, "call startService: " + ACTION_SYNC_THREADS);
-		Log.d(TAG, "threadId: " + threadId);
-		final Intent i = new Intent(ACTION_SYNC_THREADS, null, context,
-				SyncService.class);
-		if (threadId >= 0L) {
-			i.setData(ContentUris.withAppendedId(Threads.CACHE_URI, threadId));
+	public static synchronized void syncThreads(final Context context,
+			final long threadId) {
+		if (queueThreads <= 0) {
+			Log.d(TAG, "call startService: " + ACTION_SYNC_THREADS);
+			Log.d(TAG, "threadId: " + threadId);
+			final Intent i = new Intent(ACTION_SYNC_THREADS, null, context,
+					SyncService.class);
+			if (threadId >= 0L) {
+				i.setData(ContentUris.withAppendedId(Threads.CACHE_URI,
+						threadId));
+			}
+			++queueThreads;
+			context.startService(i);
+		} else {
+			Log.i(TAG, "skip startService: " + ACTION_SYNC_THREADS + " / "
+					+ queueThreads);
 		}
-		context.startService(i);
 	}
 
 	@Override
@@ -138,8 +162,10 @@ public final class SyncService extends IntentService {
 			return;
 		} else if (action.equals(ACTION_SYNC_CONTACTS)) {
 			this.syncContacts(intent);
+			queueContacts = 0;
 		} else if (action.equals(ACTION_SYNC_MESSAGES)) {
 			this.syncMessages(intent);
+			queueMessages = 0;
 		} else if (action.equals(ACTION_SYNC_THREADS)) {
 			if (uri == null) {
 				this.syncThreads(intent);
@@ -147,6 +173,7 @@ public final class SyncService extends IntentService {
 				final long threadId = ContentUris.parseId(uri);
 				this.syncThread(threadId);
 			}
+			queueThreads = 0;
 		} else {
 			return;
 		}
