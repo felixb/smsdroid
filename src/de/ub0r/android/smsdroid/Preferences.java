@@ -92,10 +92,10 @@ public class Preferences extends PreferenceActivity {
 						public boolean onPreferenceClick(
 								final Preference preference) {
 							Preferences.this.getContentResolver().delete(
-									ConversationProvider.Messages.CACHE_URI,
+									MessageProvider.Messages.CACHE_URI,
 									null, null);
 							Preferences.this.getContentResolver().delete(
-									ConversationProvider.Threads.CACHE_URI,
+									MessageProvider.Threads.CACHE_URI,
 									null, null);
 							return true;
 						}

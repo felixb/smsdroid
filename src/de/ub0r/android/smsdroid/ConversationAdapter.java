@@ -32,8 +32,8 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
-import de.ub0r.android.smsdroid.ConversationProvider.Messages;
-import de.ub0r.android.smsdroid.ConversationProvider.Threads;
+import de.ub0r.android.smsdroid.MessageProvider.Messages;
+import de.ub0r.android.smsdroid.MessageProvider.Threads;
 
 /**
  * Adapter for the list of {@link Threads}s.
@@ -162,7 +162,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		final String address = cursor.getString(Threads.INDEX_ADDRESS);
 		final String name = cursor.getString(Threads.INDEX_NAME);
 		final String pid = cursor.getString(Threads.INDEX_PID);
-		final String displayName = ConversationProvider.getDisplayName(address,
+		final String displayName = MessageProvider.getDisplayName(address,
 				name, false);
 
 		if (ConversationList.showContactPhoto) {

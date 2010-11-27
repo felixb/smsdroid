@@ -33,8 +33,8 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
-import de.ub0r.android.smsdroid.ConversationProvider.Messages;
-import de.ub0r.android.smsdroid.ConversationProvider.Threads;
+import de.ub0r.android.smsdroid.MessageProvider.Messages;
+import de.ub0r.android.smsdroid.MessageProvider.Threads;
 
 /**
  * {@link IntentService} updating contacts information.

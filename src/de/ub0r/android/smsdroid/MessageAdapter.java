@@ -41,8 +41,8 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.ub0r.android.lib.Log;
-import de.ub0r.android.smsdroid.ConversationProvider.Messages;
-import de.ub0r.android.smsdroid.ConversationProvider.Threads;
+import de.ub0r.android.smsdroid.MessageProvider.Messages;
+import de.ub0r.android.smsdroid.MessageProvider.Threads;
 
 /**
  * Adapter for the list of {@link Messages}s.
@@ -163,7 +163,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		if (this.name == null) {
 			// TODO: this.name = AsyncHelper.getContactName(c, this.address);
 		}
-		this.displayName = ConversationProvider.getDisplayName(this.address,
+		this.displayName = MessageProvider.getDisplayName(this.address,
 				this.name, false);
 		Log.d(TAG, "address: " + this.address);
 		Log.d(TAG, "name: " + this.name);

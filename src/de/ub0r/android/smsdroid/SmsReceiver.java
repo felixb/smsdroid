@@ -37,8 +37,8 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
 import de.ub0r.android.lib.Log;
-import de.ub0r.android.smsdroid.ConversationProvider.Messages;
-import de.ub0r.android.smsdroid.ConversationProvider.Threads;
+import de.ub0r.android.smsdroid.MessageProvider.Messages;
+import de.ub0r.android.smsdroid.MessageProvider.Threads;
 
 /**
  * Listen for new sms.
@@ -346,7 +346,7 @@ public class SmsReceiver extends BroadcastReceiver {
 								a = context.getString(R.string.new_messages_);
 							}
 						} else {
-							a = ConversationProvider.getDisplayName(ccursor
+							a = MessageProvider.getDisplayName(ccursor
 									.getString(Threads.INDEX_ADDRESS), ccursor
 									.getString(Threads.INDEX_NAME), false);
 						}

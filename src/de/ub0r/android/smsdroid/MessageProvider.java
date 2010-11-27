@@ -52,9 +52,9 @@ import de.ub0r.android.lib.Log;
 /**
  * @author flx
  */
-public final class ConversationProvider extends ContentProvider {
+public final class MessageProvider extends ContentProvider {
 	/** Tag for output. */
-	private static final String TAG = "cvp";
+	private static final String TAG = "msgp";
 
 	/** Name of the {@link SQLiteDatabase}. */
 	private static final String DATABASE_NAME = "mms.db";
@@ -1296,7 +1296,7 @@ public final class ConversationProvider extends ContentProvider {
 
 	/**
 	 * Update internal {@link SQLiteDatabase} from external
-	 * {@link ConversationProvider}.
+	 * {@link MessageProvider}.
 	 * 
 	 * @param db
 	 *            {@link SQLiteDatabase}.

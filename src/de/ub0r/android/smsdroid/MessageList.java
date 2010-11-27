@@ -52,8 +52,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.TelephonyWrapper;
-import de.ub0r.android.smsdroid.ConversationProvider.Messages;
-import de.ub0r.android.smsdroid.ConversationProvider.Threads;
+import de.ub0r.android.smsdroid.MessageProvider.Messages;
+import de.ub0r.android.smsdroid.MessageProvider.Threads;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -269,9 +269,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 		this.address = ccursor.getString(Threads.INDEX_ADDRESS);
 		this.name = ccursor.getString(Threads.INDEX_NAME);
-		final String displayName = ConversationProvider.getDisplayName(
+		final String displayName = MessageProvider.getDisplayName(
 				this.address, this.name, false);
-		final String fullDisplayName = ConversationProvider.getDisplayName(
+		final String fullDisplayName = MessageProvider.getDisplayName(
 				this.address, this.name, true);
 
 		Log.d(TAG, "address: " + this.address);
@@ -351,7 +351,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * Set all messages in a given thread as read.
 	 */
 	private void setRead() {
-		ConversationProvider.markRead(this, ContentUris.withAppendedId(
+		MessageProvider.markRead(this, ContentUris.withAppendedId(
 				Messages.THREAD_URI, this.threadId), 1);
 	}
 
@@ -372,7 +372,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_delete_thread:
-			ConversationProvider.deleteMessages(this, this.uri,
+			MessageProvider.deleteMessages(this, this.uri,
 					R.string.delete_thread_, R.string.delete_thread_question,
 					this);
 			return true;
@@ -425,7 +425,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			public void onClick(final DialogInterface dialog, final int which) {
 				switch (which) {
 				case WHICH_MARK_UNREAD:
-					ConversationProvider.markRead(context, target, 1 - read);
+					MessageProvider.markRead(context, target, 1 - read);
 					MessageList.this.markedUnread = true;
 					break;
 				case WHICH_FORWARD:
@@ -494,7 +494,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					b.show();
 					break;
 				case WHICH_DELETE:
-					ConversationProvider.deleteMessages(context, target,
+					MessageProvider.deleteMessages(context, target,
 							R.string.delete_message_,
 							R.string.delete_message_question, null);
 					break;

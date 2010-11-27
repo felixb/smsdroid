@@ -51,8 +51,8 @@ import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.ContactsWrapper;
-import de.ub0r.android.smsdroid.ConversationProvider.Messages;
-import de.ub0r.android.smsdroid.ConversationProvider.Threads;
+import de.ub0r.android.smsdroid.MessageProvider.Messages;
+import de.ub0r.android.smsdroid.MessageProvider.Threads;
 
 /**
  * Main {@link ListActivity} showing conversations.
@@ -317,12 +317,12 @@ public class ConversationList extends ListActivity implements
 			this.startActivity(new Intent(this, DonationHelper.class));
 			return true;
 		case R.id.item_delete_all_threads:
-			ConversationProvider.deleteMessages(this, Messages.CONTENT_URI,
+			MessageProvider.deleteMessages(this, Messages.CONTENT_URI,
 					R.string.delete_threads_, R.string.delete_threads_question,
 					null);
 			return true;
 		case R.id.item_mark_all_read:
-			ConversationProvider.markRead(this, Messages.CONTENT_URI, 1);
+			MessageProvider.markRead(this, Messages.CONTENT_URI, 1);
 			return true;
 		default:
 			return false;
@@ -457,7 +457,7 @@ public class ConversationList extends ListActivity implements
 						ConversationList.this.startActivity(i);
 						break;
 					case WHICH_DELETE:
-						ConversationProvider.deleteMessages(
+						MessageProvider.deleteMessages(
 								ConversationList.this, target,
 								R.string.delete_thread_,
 								R.string.delete_thread_question, null);
