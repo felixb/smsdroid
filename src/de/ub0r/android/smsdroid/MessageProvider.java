@@ -176,10 +176,10 @@ public final class MessageProvider extends ContentProvider {
 		};
 
 		/** Remote {@link Cursor}'s projection. */
-		private static final String[] ORIG_PROJECTION_SMS = PROJECTION;
+		public static final String[] ORIG_PROJECTION_SMS = PROJECTION;
 
 		/** Remote {@link Cursor}'s projection. */
-		// private static final String[] ORIG_PROJECTION_MMS = new String[] { //
+		// public static final String[] ORIG_PROJECTION_MMS = new String[] { //
 		// .
 		// ID, // 0
 		// DATE, // 1
@@ -204,9 +204,9 @@ public final class MessageProvider extends ContentProvider {
 		public static final Uri THREAD_URI = Uri.parse("content://" + AUTHORITY
 				+ "/conversation");
 		/** {@link Uri} of real sms database. */
-		private static final Uri ORIG_URI_SMS = Uri.parse("content://sms/");
+		public static final Uri ORIG_URI_SMS = Uri.parse("content://sms/");
 		/** {@link Uri} of real mms database. */
-		private static final Uri ORIG_URI_MMS = Uri.parse("content://mms/");
+		public static final Uri ORIG_URI_MMS = Uri.parse("content://mms/");
 
 		/** SQL WHERE: unread messages. */
 		static final String SELECTION_UNREAD = "read = '0'";
@@ -747,7 +747,7 @@ public final class MessageProvider extends ContentProvider {
 		}
 		if (ret > 0) {
 			cr.notifyChange(Messages.CONTENT_URI, null);
-			this.sync(db);
+			SyncService.syncMessages(this.getContext());
 		}
 		Log.d(TAG, "exit delete(): " + ret);
 		return ret;
@@ -812,13 +812,17 @@ public final class MessageProvider extends ContentProvider {
 			final String sortOrder) {
 		Log.d(TAG, "query: " + uri + " w: " + selection);
 		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
-		this.sync(db);
+		int uid = URI_MATCHER.match(uri);
+		if (uid != CONVERSATIONS_CACHE && uid != MESSAGES_CACHE
+				&& uid != THREADS_CACHE) {
+			SyncService.syncMessages(this.getContext());
+		}
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		// If no sort order is specified use the default
 		String orderBy = sortOrder;
 
-		switch (URI_MATCHER.match(uri)) {
+		switch (uid) {
 		case MESSAGE_ID:
 			qb.appendWhere(Messages.ID + "=" + ContentUris.parseId(uri));
 			qb.setTables(Messages.TABLE);
@@ -956,380 +960,6 @@ public final class MessageProvider extends ContentProvider {
 	}
 
 	/**
-	 * Add a SMS to internal database.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}
-	 * @param rcursor
-	 *            {@link Cursor}
-	 * @return added?
-	 */
-	private boolean addSMS(final SQLiteDatabase db, final Cursor rcursor) {
-		boolean ret = false;
-		final ContentValues values = new ContentValues();
-		final long mid = rcursor.getLong(Messages.INDEX_ID);
-		final long tid = rcursor.getLong(Messages.INDEX_THREADID);
-		values.put(Messages.ID, mid);
-		values.put(Messages.ADDRESS, rcursor.getString(Messages.INDEX_ADDRESS));
-		values.put(Messages.BODY, rcursor.getString(Messages.INDEX_BODY));
-		values.put(Messages.DATE, rcursor.getLong(Messages.INDEX_DATE));
-		values.put(Messages.THREADID, tid);
-		values.put(Messages.TYPE, rcursor.getInt(Messages.INDEX_TYPE));
-		values.put(Messages.READ, rcursor.getInt(Messages.INDEX_READ));
-		final int i = db.update(Messages.TABLE, values, Messages.ID + " = "
-				+ mid, null);
-		if (i > 0) {
-			Log.d(TAG, "update sms: " + mid + "/" + tid + " " + values);
-			ret = true;
-		} else {
-			Log.d(TAG, "add sms: " + mid + "/" + tid + " " + values);
-			final long l = db.insert(Messages.TABLE, null, values);
-			if (l >= 0L) {
-				ret = true;
-			}
-		}
-		return ret;
-	}
-
-	/**
-	 * Add a MMS to internal database.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}
-	 * @param rcursor
-	 *            {@link Cursor}
-	 * @return added?
-	 */
-	private boolean addMMS(final SQLiteDatabase db, final Cursor rcursor) {
-		boolean ret = false;
-		final ContentValues values = new ContentValues();
-		final int iMId = rcursor.getColumnIndex(Messages.ID);
-		final int iThreadId = rcursor.getColumnIndex(Messages.THREADID);
-		final int iDate = rcursor.getColumnIndex(Messages.DATE);
-		final int iType = rcursor.getColumnIndex(Messages.TYPE);
-		final int iRead = rcursor.getColumnIndex(Messages.READ);
-		final int iText = rcursor.getColumnIndex("text");
-		final long mid = rcursor.getLong(iMId);
-		final long tid = rcursor.getLong(iThreadId);
-		long date = rcursor.getLong(iDate);
-		date = getDate(date);
-		values.put(Messages.ID, -1 * mid);
-		values.put(Messages.DATE, date);
-		values.put(Messages.THREADID, tid);
-		values.put(Messages.TYPE, rcursor.getInt(iType));
-		values.put(Messages.READ, rcursor.getInt(iRead));
-		if (iText >= 0) {
-			final String text = rcursor.getString(iText);
-			values.put(Messages.BODY, text);
-		}
-		final int i = db.update(Messages.TABLE, values, Messages.ID + " = "
-				+ mid, null);
-		if (i > 0) {
-			Log.d(TAG, "update mms: " + mid + "/" + tid + " " + values);
-			ret = true;
-		} else {
-			Log.d(TAG, "add mms: " + mid + "/" + tid + " " + values);
-			final long l = db.insert(Messages.TABLE, null, values);
-			if (l >= 0L) {
-				ret = true;
-			}
-		}
-		return ret;
-	}
-
-	/**
-	 * Get new SMS.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}
-	 * @param cr
-	 *            {@link ContentResolver}
-	 * @param date
-	 *            date of newest internal message
-	 * @return database changed?
-	 */
-	private boolean getNewSMS(final SQLiteDatabase db,
-			final ContentResolver cr, final long date) {
-		boolean ret = false;
-		// get new sms
-		Cursor rcursor = cr.query(Messages.ORIG_URI_SMS,
-				Messages.ORIG_PROJECTION_SMS, Messages.DATE + " > " + date,
-				null, null);
-		if (rcursor != null && rcursor.moveToFirst()) {
-			do {
-				ret |= this.addSMS(db, rcursor);
-			} while (rcursor.moveToNext());
-		}
-		if (rcursor != null && !rcursor.isClosed()) {
-			rcursor.close();
-		}
-
-		// check message count and check all messages if not equal
-		final String sortOrder = " DESC, " + Messages.ID + " DESC";
-		rcursor = cr.query(Messages.ORIG_URI_SMS, Messages.ORIG_PROJECTION_SMS,
-				null, null, Messages.DATE + sortOrder);
-		Cursor lcursor = db.query(Messages.TABLE, Messages.PROJECTION,
-				Messages.WHERE_TYPE_SMS, null, null, null, Messages.DATE
-						+ sortOrder);
-		if (rcursor == null || lcursor == null) {
-			return false;
-		}
-		if (!rcursor.moveToFirst()) {
-			// no remote message: delete all
-			int r = db.delete(Messages.TABLE, Messages.WHERE_TYPE_SMS, null);
-			if (r > 0) {
-				ret = true;
-				lcursor.requery();
-			}
-		}
-		int rcount = rcursor.getCount();
-		int lcount = lcursor.getCount();
-		if (rcount != lcount) {
-			rcursor.moveToFirst();
-			lcursor.moveToFirst();
-			// walk through all messages
-			do {
-				long rdate = rcursor.getLong(Messages.INDEX_DATE);
-				Log.d(TAG, "rdate: " + rdate);
-				do {
-					long ldate;
-					if (lcursor.isAfterLast() || lcount == 0) {
-						ldate = -1L;
-					} else {
-						ldate = lcursor.getLong(Messages.INDEX_DATE);
-					}
-					Log.d(TAG, "ldate: " + ldate);
-					Log.d(TAG, "rdate-ldate: " + (rdate - ldate));
-					if (ldate < rdate) {
-						// add sms and check next remote
-						ret |= this.addSMS(db, rcursor);
-						break;
-					} else if (ldate > rdate) {
-						// delete local sms and check next local
-						db.delete(Messages.TABLE,
-								Messages.DATE + " = " + ldate, null);
-						ret = true;
-					} else {
-						// check both next
-						lcursor.moveToNext();
-						break;
-					}
-				} while (lcursor.moveToNext());
-			} while (rcursor.moveToNext());
-		}
-		if (!rcursor.isClosed()) {
-			rcursor.close();
-		}
-		if (!lcursor.isClosed()) {
-			lcursor.close();
-		}
-
-		// check read messages
-		// set all internal messages to read
-		ContentValues values = new ContentValues();
-		values.put(Messages.READ, 1);
-		int i = db.update(Messages.TABLE, values, Messages.READ + " = 0"
-				+ " AND " + Messages.WHERE_TYPE_MMS, null);
-		if (i > 0) {
-			ret = true;
-		}
-		// set unread messages unread internally
-		rcursor = cr.query(Messages.ORIG_URI_SMS, Messages.ORIG_PROJECTION_SMS,
-				Messages.READ + " = 0", null, null);
-		if (rcursor != null && rcursor.moveToFirst()) {
-			ret = true;
-			values.put(Messages.READ, 0);
-			do {
-				db.update(Messages.TABLE, values, Messages.ID + " = "
-						+ rcursor.getLong(Messages.INDEX_ID), null);
-			} while (rcursor.moveToNext());
-		}
-		if (rcursor != null && !rcursor.isClosed()) {
-			rcursor.close();
-		}
-
-		// check draft messages
-		// set all internal drafts as sent
-		values = new ContentValues();
-		values.put(Messages.TYPE, Messages.TYPE_SMS_OUT);
-		i = db.update(Messages.TABLE, values, Messages.TYPE + " = "
-				+ Messages.TYPE_SMS_DRAFT, null);
-		if (i > 0) {
-			ret = true;
-		}
-		// set draft messages as draft internally
-		rcursor = cr.query(Messages.ORIG_URI_SMS, Messages.ORIG_PROJECTION_SMS,
-				Messages.TYPE + " = " + Messages.TYPE_SMS_DRAFT, null, null);
-		if (rcursor != null && rcursor.moveToFirst()) {
-			ret = true;
-			values.put(Messages.TYPE, Messages.TYPE_SMS_DRAFT);
-			do {
-				db.update(Messages.TABLE, values, Messages.ID + " = "
-						+ rcursor.getLong(Messages.INDEX_ID), null);
-			} while (rcursor.moveToNext());
-		}
-		if (rcursor != null && !rcursor.isClosed()) {
-			rcursor.close();
-		}
-		return ret;
-	}
-
-	/**
-	 * Get new MMS.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}
-	 * @param cr
-	 *            {@link ContentResolver}
-	 * @param date
-	 *            date of newest internal message
-	 * @return database changed?
-	 */
-	private boolean getNewMMS(final SQLiteDatabase db,
-			final ContentResolver cr, final long date) {
-		boolean ret = false;
-		// get new mms
-		Cursor rcursor = cr.query(Messages.ORIG_URI_MMS, null, Messages.DATE
-				+ " > " + (date / ConversationList.MILLIS), null, null);
-		if (rcursor != null && rcursor.moveToFirst()) {
-			do {
-				// FIXME ret |= this.addMMS(db, rcursor);
-			} while (rcursor.moveToNext());
-		}
-		if (rcursor != null && !rcursor.isClosed()) {
-			rcursor.close();
-		}
-
-		// check message count and check all messages if not equal
-		final String sortOrder = " DESC, " + Messages.ID + " DESC";
-		rcursor = cr.query(Messages.ORIG_URI_MMS, null, null, null,
-				Messages.DATE + sortOrder);
-		Cursor lcursor = db.query(Messages.TABLE, Messages.PROJECTION,
-				Messages.WHERE_TYPE_MMS, null, null, null, Messages.DATE
-						+ sortOrder);
-		if (rcursor == null || lcursor == null) {
-			return false;
-		}
-		if (!rcursor.moveToFirst()) {
-			// no remote message: delete all
-			final int r = db.delete(Messages.TABLE, Messages.WHERE_TYPE_MMS,
-					null);
-			if (r > 0) {
-				ret = true;
-				lcursor.requery();
-			}
-		}
-		final int iMId = rcursor.getColumnIndex(Messages.ID);
-		// final int iThreadId = rcursor.getColumnIndex(Messages.THREADID);
-		final int iDate = rcursor.getColumnIndex(Messages.DATE);
-		// final int iType = rcursor.getColumnIndex(Messages.TYPE);
-		// final int iRead = rcursor.getColumnIndex(Messages.READ);
-		// final int iText = rcursor.getColumnIndex("text");
-		int rcount = rcursor.getCount();
-		int lcount = lcursor.getCount();
-		if (rcount != lcount) {
-			rcursor.moveToFirst();
-			lcursor.moveToFirst();
-			// walk through all messages
-			do {
-				long rdate = getDate(rcursor.getLong(iDate));
-				Log.d(TAG, "rdate: " + rdate);
-				do {
-					long ldate;
-					if (lcursor.isAfterLast() || lcount == 0) {
-						ldate = -1L;
-					} else {
-						ldate = lcursor.getLong(Messages.INDEX_DATE);
-					}
-					Log.d(TAG, "ldate: " + ldate);
-					Log.d(TAG, "rdate-ldate: " + (rdate - ldate));
-					if (ldate < rdate) {
-						// add mms and check next remote
-						// FIXME ret |= this.addMMS(db, rcursor);
-						break;
-					} else if (ldate > rdate) {
-						// delete local mms and check next local
-						db.delete(Messages.TABLE,
-								Messages.DATE + " = " + ldate, null);
-						ret = true;
-					} else {
-						// check both next
-						lcursor.moveToNext();
-						break;
-					}
-				} while (lcursor.moveToNext());
-			} while (rcursor.moveToNext());
-		}
-		if (!rcursor.isClosed()) {
-			rcursor.close();
-		}
-		if (!lcursor.isClosed()) {
-			lcursor.close();
-		}
-
-		// check read messages
-		// set all internal messages to read
-		ContentValues values = new ContentValues();
-		values.put(Messages.READ, 1);
-		int i = db.update(Messages.TABLE, values, Messages.READ + " = 0"
-				+ " AND " + Messages.WHERE_TYPE_MMS, null);
-		if (i > 0) {
-			ret = true;
-		}
-		// set unread messages unread internally
-		rcursor = cr.query(Messages.ORIG_URI_MMS, null, Messages.READ + " = 0",
-				null, null);
-		if (rcursor != null && rcursor.moveToFirst()) {
-			ret = true;
-			values.put(Messages.READ, 0);
-			do {
-				db.update(Messages.TABLE, values, Messages.ID + " = "
-						+ (-1L * rcursor.getLong(iMId)), null);
-			} while (rcursor.moveToNext());
-		}
-		if (rcursor != null && !rcursor.isClosed()) {
-			rcursor.close();
-		}
-
-		return ret;
-	}
-
-	/**
-	 * Update internal {@link SQLiteDatabase} from external
-	 * {@link MessageProvider}.
-	 * 
-	 * @param db
-	 *            {@link SQLiteDatabase}.
-	 */
-	private synchronized void sync(final SQLiteDatabase db) {
-		boolean changed = false;
-		final ContentResolver cr = this.getContext().getContentResolver();
-
-		// get last internal message
-		final Cursor lcursor = db.query(Messages.TABLE, Messages.PROJECTION,
-				null, null, null, null, Messages.DATE + " DESC");
-		long lmaxdate = -1L;
-		if (lcursor == null) {
-			Log.e(TAG, "lcursor = null");
-			return;
-		}
-		if (lcursor.moveToFirst()) {
-			lmaxdate = lcursor.getLong(Messages.INDEX_DATE);
-		}
-		if (!lcursor.isClosed()) {
-			lcursor.close();
-		}
-		// get new messages
-		changed |= this.getNewSMS(db, cr, lmaxdate);
-		changed |= this.getNewMMS(db, cr, lmaxdate);
-
-		if (changed) {
-			SyncService.syncThreads(this.getContext(), -1L);
-			// FIXME: cr.notifyChange(Messages.CONTENT_URI, null);
-		}
-	}
-
-	/**
 	 * Get display name.
 	 * 
 	 * @param address
@@ -1435,19 +1065,5 @@ public final class MessageProvider extends ContentProvider {
 					}
 				});
 		builder.create().show();
-	}
-
-	/**
-	 * Fix MMS date.
-	 * 
-	 * @param date
-	 *            date
-	 * @return date as milliseconds since epoch
-	 */
-	public static long getDate(final long date) {
-		if (date > ConversationList.MIN_DATE) {
-			return date;
-		}
-		return date * ConversationList.MILLIS;
 	}
 }
