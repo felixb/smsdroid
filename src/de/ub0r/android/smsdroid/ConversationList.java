@@ -48,6 +48,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import de.ub0r.android.lib.Changelog;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
@@ -63,14 +64,8 @@ public class ConversationList extends ListActivity implements
 	/** Tag for output. */
 	public static final String TAG = "main";
 
-	/** Prefs: name for last version run. */
-	private static final String PREFS_LAST_RUN = "lastrun";
-
 	/** ORIG_URI to resolve. */
 	static final Uri URI = Uri.parse("content://mms-sms/conversations/");
-
-	/** Dialog: updates. */
-	private static final int DIALOG_UPDATE = 1;
 
 	/** Number of items. */
 	private static final int WHICH_N = 5;
@@ -183,14 +178,16 @@ public class ConversationList extends ListActivity implements
 		Utils.setLocale(this);
 		this.setContentView(R.layout.conversationlist);
 
-		// display changelog?
-		String v0 = prefs.getString(PREFS_LAST_RUN, "");
-		String v1 = this.getString(R.string.app_version);
-		if (!v0.equals(v1)) {
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.putString(PREFS_LAST_RUN, v1);
-			editor.commit();
-			this.showDialog(DIALOG_UPDATE);
+		Changelog.showChangelog(this);
+		final List<ResolveInfo> ri = this.getPackageManager()
+				.queryBroadcastReceivers(
+						new Intent("de.ub0r.android.websms.connector.INFO"), 0);
+		if (ri.size() == 0) {
+			final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(// .
+					"market://details?id=de.ub0r.android.websms"));
+			Changelog.showNotes(this, "get WebSMS", null, intent);
+		} else {
+			Changelog.showNotes(this, null, null, null);
 		}
 
 		showRows(this);
@@ -230,57 +227,6 @@ public class ConversationList extends ListActivity implements
 			this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
 		}
 		this.adapter.startMsgListQuery();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final Dialog onCreateDialog(final int id) {
-		Builder builder;
-		switch (id) {
-		case DIALOG_UPDATE:
-			builder = new Builder(this);
-			builder.setTitle(R.string.changelog_);
-			final String[] changes = this.getResources().getStringArray(
-					R.array.updates);
-			final StringBuilder buf = new StringBuilder();
-			final List<ResolveInfo> ri = this
-					.getPackageManager()
-					.queryBroadcastReceivers(
-							new Intent("de.ub0r.android.websms.connector.INFO"),
-							0);
-			if (ri.size() == 0) {
-				buf.append(changes[0]);
-				builder.setNeutralButton("get WebSMS",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(final DialogInterface d,
-									final int which) {
-								try {
-									ConversationList.this.startActivity(// .
-											new Intent(
-													Intent.ACTION_VIEW,
-													Uri.parse(// .
-															"market://search?q=pname:de.ub0r.android.websms")));
-								} catch (ActivityNotFoundException e) {
-									Log.e(TAG, "no market", e);
-								}
-							}
-						});
-			}
-			for (int i = 1; i < changes.length; i++) {
-				buf.append("\n\n");
-				buf.append(changes[i]);
-			}
-			builder.setIcon(android.R.drawable.ic_menu_info_details);
-			builder.setMessage(buf.toString().trim());
-			builder.setCancelable(true);
-			builder.setPositiveButton(android.R.string.ok, null);
-			return builder.create();
-		default:
-			return null;
-		}
 	}
 
 	/**

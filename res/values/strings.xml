@@ -126,5 +126,8 @@
 		<item>Multiple long</item>
 		<item>Short, long, short, long</item>
 	</string-array>
-
+	<string-array name="notes_from_dev">
+		<item>Dec. 2010: Try a long-click on answer/send/compose buttons to use your non-standard app for sending.</item>
+		<item>You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!</item>
+	</string-array>
 </resources>
