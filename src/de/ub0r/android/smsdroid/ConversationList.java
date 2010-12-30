@@ -296,12 +296,7 @@ public class ConversationList extends ListActivity implements
 	 */
 	static final void deleteMessages(final Context context, final Uri uri,
 			final int title, final int message, final Activity activity) {
-		final Cursor mCursor = context.getContentResolver().query(uri,
-				Message.PROJECTION_READ, null, null, null);
-		if (mCursor.getCount() <= 0) {
-			return;
-		}
-
+		Log.i(TAG, "deleteMessages(..," + uri + " ,..)");
 		Builder builder = new Builder(context);
 		builder.setTitle(title);
 		builder.setMessage(message);
@@ -311,13 +306,18 @@ public class ConversationList extends ListActivity implements
 					@Override
 					public void onClick(final DialogInterface dialog,
 							final int which) {
-						context.getContentResolver().delete(uri, null, null);
-						if (activity != null) {
+						final int ret = context.getContentResolver().delete(
+								uri, null, null);
+						Log.d(TAG, "deleted: " + ret);
+						if (activity != null && !activity.isFinishing()) {
 							activity.finish();
 						}
-						Conversation.flushCache();
-						Message.flushCache();
-						SmsReceiver.updateNewMessageNotification(context, null);
+						if (ret > 0) {
+							Conversation.flushCache();
+							Message.flushCache();
+							SmsReceiver.updateNewMessageNotification(context,
+									null);
+						}
 					}
 				});
 		builder.create().show();

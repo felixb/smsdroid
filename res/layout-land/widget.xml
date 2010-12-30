@@ -32,10 +32,4 @@
 		android:textColor="#FF84B02C" android:textStyle="bold"
 		android:textSize="14dip" android:background="@drawable/widget_counter_bg"
 		android:gravity="center" android:paddingLeft="1dip" />
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/app_name"
-		android:layout_centerHorizontal="true" android:textSize="13dip"
-		android:layout_alignParentBottom="true" android:textColor="@android:color/white"
-		android:paddingBottom="0dip" android:layout_marginBottom="3dip"
-		android:background="@drawable/widget_label_bg" />
 </RelativeLayout>
