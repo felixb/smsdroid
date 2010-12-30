@@ -93,6 +93,7 @@
 	<uses-permission android:name="android.permission.RECEIVE_MMS" />
 	<uses-permission android:name="android.permission.READ_SMS" />
 	<uses-permission android:name="android.permission.WRITE_SMS" />
+	<uses-permission android:name="android.permission.CALL_PHONE" />
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<!-- AdMob SDK permissions -->
 	<uses-permission android:name="android.permission.INTERNET" />

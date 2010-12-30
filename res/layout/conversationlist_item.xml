@@ -25,9 +25,10 @@
 		android:visibility="invisible" android:layout_marginRight="2dip" />
 	<ImageView android:id="@+id/photo" android:layout_width="60dip"
 		android:layout_height="wrap_content" android:scaleType="fitCenter"
-		android:adjustViewBounds="true" android:paddingTop="3dip"
-		android:paddingBottom="3dip" android:paddingRight="5dip"
-		android:layout_gravity="center_vertical" />
+		android:adjustViewBounds="true" android:layout_gravity="center_vertical"
+		style="?android:attr/quickContactBadgeStyleWindowSmall"
+		android:layout_marginTop="3dip" android:layout_marginBottom="3dip"
+		android:layout_marginRight="5dip" />
 	<RelativeLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<TextView android:layout_width="wrap_content"

@@ -68,17 +68,19 @@ public class ConversationList extends ListActivity implements
 	static final Uri URI = Uri.parse("content://mms-sms/conversations/");
 
 	/** Number of items. */
-	private static final int WHICH_N = 5;
+	private static final int WHICH_N = 6;
 	/** Index in dialog: answer. */
 	private static final int WHICH_ANSWER = 0;
+	/** Index in dialog: answer. */
+	private static final int WHICH_CALL = 1;
 	/** Index in dialog: view/add contact. */
-	private static final int WHICH_VIEW_CONTACT = 1;
+	private static final int WHICH_VIEW_CONTACT = 2;
 	/** Index in dialog: view. */
-	private static final int WHICH_VIEW = 2;
+	private static final int WHICH_VIEW = 3;
 	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 3;
+	private static final int WHICH_DELETE = 4;
 	/** Index in dialog: mark as spam. */
-	private static final int WHICH_MARK_SPAM = 4;
+	private static final int WHICH_MARK_SPAM = 5;
 
 	/** Preferences: hide ads. */
 	private static boolean prefsNoAds = false;
@@ -206,6 +208,7 @@ public class ConversationList extends ListActivity implements
 		this.longItemClickDialog = new String[WHICH_N];
 		this.longItemClickDialog[WHICH_ANSWER] = this
 				.getString(R.string.answer);
+		this.longItemClickDialog[WHICH_CALL] = this.getString(R.string.call);
 		this.longItemClickDialog[WHICH_VIEW_CONTACT] = this
 				.getString(R.string.view_contact_);
 		this.longItemClickDialog[WHICH_VIEW] = this
@@ -468,6 +471,11 @@ public class ConversationList extends ListActivity implements
 					case WHICH_ANSWER:
 						ConversationList.this
 								.startActivity(getComposeIntent(a));
+						break;
+					case WHICH_CALL:
+						i = new Intent(Intent.ACTION_CALL, Uri
+								.parse("tel:" + a));
+						ConversationList.this.startActivity(i);
 						break;
 					case WHICH_VIEW_CONTACT:
 						if (n == null) {

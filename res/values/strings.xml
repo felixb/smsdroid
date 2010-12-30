@@ -31,6 +31,7 @@
 	<string name="new_message">1 unread message.</string>
 	<string name="new_messages_">New messages</string>
 	<string name="new_messages">%d unread messages.</string>
+	<string name="call">Call</string>
 	<string name="answer">Answer</string>
 	<string name="send_">Send</string>
 	<string name="notification_">Notifications</string>

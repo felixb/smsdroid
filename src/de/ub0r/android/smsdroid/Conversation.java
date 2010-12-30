@@ -89,39 +89,8 @@ public final class Conversation {
 			READ, // 5
 	};
 
-	/** INDEX: id. */
-	public static final int INDEX_ID = 0;
-	/** INDEX: date. */
-	public static final int INDEX_DATE = 1;
-	/** INDEX: address. */
-	public static final int INDEX_ADDRESS = 2;
-	/** INDEX: thread_id. */
-	public static final int INDEX_THREADID = 3;
-	/** INDEX: body. */
-	public static final int INDEX_BODY = 4;
-	/** INDEX: type. */
-	public static final int INDEX_TYPE = 5;
-	/** INDEX: read. */
-	public static final int INDEX_READ = 6;
-
 	/** Dateformat. //TODO: move me to xml */
 	static final String DATE_FORMAT = "dd.MM. kk:mm";
-
-	/** Cursor's projection. */
-	public static final String[] PROJECTION = { //
-	BaseColumns._ID, // 0
-			Calls.DATE, // 1
-			"address", // 2
-			"thread_id", // 3
-			"body", // 4
-			Calls.TYPE, // 5
-			"read", // 6
-	};
-
-	/** Cursors row in hero phones: address. */
-	static final String ADDRESS_HERO = "recipient_address";
-	/** Cursors row in hero phones: thread_id. */
-	static final String THREADID_HERO = "_id";
 
 	/** Time of valid cache. */
 	private static long validCache = 0;
@@ -202,28 +171,20 @@ public final class Conversation {
 	 */
 	private void update(final Context context, final Cursor cursor,
 			final boolean sync) {
-		long d = cursor.getLong(INDEX_DATE);
+		long d = cursor.getLong(INDEX_SIMPLE_DATE);
 		if (d != this.date) {
-			this.id = cursor.getInt(INDEX_ID);
+			this.id = cursor.getInt(INDEX_SIMPLE_ID);
 			this.date = d;
-			this.body = cursor.getString(INDEX_BODY);
-			String a = cursor.getString(INDEX_ADDRESS);
-			if (a != null && !a.equals(this.address)) {
-				this.address = a;
-				this.name = null;
-				this.photo = null;
-				this.personId = "";
-			}
-			// int idName = cursor.getColumnIndex(ConversationProvider.// .
-			// PROJECTION[ConversationProvider.INDEX_NAME]);
-			// if (idName >= 0) {
-			// final String n = cursor.getString(idName);
-			// if (n != null) {
-			// this.name = n;
-			// }
+			this.body = cursor.getString(INDEX_SIMPLE_BODY);
+			// String a = cursor.getString(INDEX_SIMPLE_ADDRESS);
+			// if (a != null && !a.equals(this.address)) {
+			// this.address = a;
+			// this.name = null;
+			// this.photo = null;
+			// this.personId = "";
 			// }
 		}
-		// this.read = cursor.getInt(INDEX_READ);
+		this.read = cursor.getInt(INDEX_SIMPLE_READ);
 		if (this.lastUpdate < validCache) {
 			AsyncHelper.fillConversation(context, this, sync);
 		}

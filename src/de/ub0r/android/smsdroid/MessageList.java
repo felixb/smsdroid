@@ -349,6 +349,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.startActivity(ConversationList.getComposeIntent(this.conv
 					.getAddress()));
 			return true;
+		case R.id.item_call:
+			this.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+					+ this.conv.getAddress())));
+			return true;
 		default:
 			return false;
 		}
