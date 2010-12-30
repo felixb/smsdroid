@@ -111,7 +111,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	public ConversationAdapter(final ConversationList c) {
 		super(c, R.layout.conversationlist_item, null, true);
 		this.activity = c;
-		this.queryHandler = new BackgroundQueryHandler(c.getContentResolver());
+		final ContentResolver cr = c.getContentResolver();
+		this.queryHandler = new BackgroundQueryHandler(cr);
 		SpamDB spam = new SpamDB(c);
 		spam.open();
 		this.blacklist = spam.getAllEntries();
@@ -119,15 +120,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		spam = null;
 
 		this.textSize = Preferences.getTextsize(c);
-		this.origCursor = c.getContentResolver().query(
-				ConversationProvider.ORIG_URI,
-				new String[] {
-						ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_ID],
-						ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_DATE] }, null, null, null);
+		this.origCursor = cr.query(Conversation.URI_SIMPLE,
+				Conversation.PROJECTION_SIMPLE, null, null, null);
 
-		// does not work.
 		if (this.origCursor != null) {
 			this.origCursor.registerContentObserver(new ContentObserver(
 					new Handler()) {
@@ -156,8 +151,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			// Kick off the new query
 			this.activity.setProgressBarIndeterminateVisibility(true);
 			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
-					ConversationProvider.CONTENT_URI,
-					ConversationProvider.PROJECTION, null, null, null);
+					Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE,
+					null, null, null);
 		} catch (SQLiteException e) {
 			Log.e(TAG, "error starting query", e);
 		}
@@ -205,17 +200,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			tvName.setText("[" + c.getDisplayName() + "]");
 		} else {
 			tvName.setText(c.getDisplayName());
-		}
-
-		int t = c.getType();
-		if (t == Calls.INCOMING_TYPE) {
-			((ImageView) view.findViewById(R.id.inout))
-					.setImageResource(R.drawable.// .
-					ic_call_log_list_incoming_call);
-		} else {
-			((ImageView) view.findViewById(R.id.inout))
-					.setImageResource(R.drawable.// .
-					ic_call_log_list_outgoing_call);
 		}
 
 		// read status

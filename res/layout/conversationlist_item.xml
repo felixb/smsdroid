@@ -33,23 +33,19 @@
 		<TextView android:layout_width="wrap_content"
 			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
 			android:layout_height="wrap_content" android:id="@+id/date"
-			android:text="@+id/date" />
-		<ImageView android:layout_width="12sp"
-			android:layout_height="18sp" android:id="@+id/inout"
-			android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/date"
-			android:src="@drawable/ic_call_log_list_incoming_call"
-			android:scaleType="fitStart" />
+			android:text="@id/date" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_alignParentTop="true"
-			android:layout_toLeftOf="@+id/inout" android:id="@+id/count"
-			android:text="@+id/count" android:textAppearance="?android:attr/textAppearanceMedium" />
+			android:layout_toLeftOf="@id/date" android:id="@+id/count"
+			android:text="(@id/count)" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:paddingRight="2dip" />
 		<TextView android:text="@+id/addr" android:id="@+id/addr"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_toLeftOf="@+id/count" android:layout_alignParentLeft="true"
 			android:singleLine="true" android:textAppearance="?android:attr/textAppearanceMedium" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/body"
-			android:text="@+id/body" android:layout_below="@+id/addr"
+			android:text="@id/body" android:layout_below="@+id/addr"
 			android:singleLine="true" />
 	</RelativeLayout>
 </LinearLayout>

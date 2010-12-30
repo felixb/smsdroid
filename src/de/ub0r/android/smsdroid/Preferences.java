@@ -85,19 +85,6 @@ public class Preferences extends PreferenceActivity {
 						}
 					});
 		}
-		p = this.findPreference("clear_cache");
-		if (p != null) {
-			p.setOnPreferenceClickListener(// .
-					new Preference.OnPreferenceClickListener() {
-						public boolean onPreferenceClick(
-								final Preference preference) {
-							Preferences.this.getContentResolver().delete(
-									ConversationProvider.CONTENT_URI, null,
-									null);
-							return true;
-						}
-					});
-		}
 	}
 
 	/**

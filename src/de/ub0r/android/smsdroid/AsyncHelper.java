@@ -22,6 +22,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -106,8 +107,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			return null;
 		}
 		Uri uri = this.mConversation.getUri();
-		Cursor cursor = this.context.getContentResolver().query(uri,
-				Message.PROJECTION_JOIN, null, null, null);
+		final ContentResolver cr = this.context.getContentResolver();
+		Cursor cursor = cr
+				.query(uri, Message.PROJECTION_JOIN, null, null, null);
 
 		// count
 		this.mConversation.setCount(cursor.getCount());
@@ -124,8 +126,6 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			if (address != null) {
 				this.mConversation.setAddress(address);
 				Log.d(TAG, "new address: " + address);
-				cv.put(ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_ADDRESS], address);
 			}
 		}
 		if (this.mConversation.getBody() == null && cursor.moveToLast()) {
@@ -145,10 +145,6 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 				String n = contact.getString(ContactsWrapper.FILTER_INDEX_NAME);
 				this.mConversation.setPersonId(pid);
 				this.mConversation.setName(n);
-				cv.put(ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_PID], pid);
-				cv.put(ConversationProvider.PROJECTION[// .
-						ConversationProvider.INDEX_NAME], n);
 			} else {
 				this.mConversation.setPersonId(Conversation.NO_CONTACT);
 			}
@@ -162,12 +158,6 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			this.mConversation.setRead(1);
 		} else {
 			this.mConversation.setRead(0);
-		}
-
-		// update changes
-		if (cv.size() > 0) {
-			this.context.getContentResolver().update(
-					this.mConversation.getInternalUri(), cv, null, null);
 		}
 		cursor.close();
 		cursor = null;
