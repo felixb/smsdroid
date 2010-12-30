@@ -17,7 +17,7 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="@string/appearance_">
+	<PreferenceScreen android:title="@string/appearance_">
 		<ListPreference android:title="@string/theme_"
 			android:key="theme" android:entries="@array/themes"
 			android:entryValues="@array/themes_values" />
@@ -35,8 +35,8 @@
 		<ListPreference android:key="morelocale" android:title="@string/custom_language_"
 			android:summary="@string/custom_language_hint" android:entries="@array/lang_"
 			android:entryValues="@array/lang_values" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/notification_">
+	</PreferenceScreen>
+	<PreferenceScreen android:title="@string/notification_">
 		<CheckBoxPreference android:key="notification_enable"
 			android:title="@string/notification_enable_" android:summary="@string/notification_enable_hint"
 			android:defaultValue="true" />
@@ -60,7 +60,7 @@
 		<CheckBoxPreference android:key="receive_privacy"
 			android:title="@string/receive_no_text_" android:summary="@string/receive_no_text_hint"
 			android:dependency="notification_enable" />
-	</PreferenceCategory>
+	</PreferenceScreen>
 	<PreferenceCategory android:title="@string/about_">
 		<PreferenceScreen android:title="@string/about_"
 			android:summary="@string/about_hint">

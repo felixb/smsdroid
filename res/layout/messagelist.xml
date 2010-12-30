@@ -16,18 +16,38 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 	-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
 	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:drawSelectorOnTop="false"
 		android:scrollingCache="true" android:fastScrollEnabled="true"
 		android:choiceMode="singleChoice" android:background="?android:attr/colorBackground"
 		android:cacheColorHint="?android:attr/colorBackground"
-		android:layout_weight="1" />
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="horizontal"
-		style="@android:style/ButtonBar">
+		android:layout_weight="1" android:layout_above="@+id/answerbar"
+		android:layout_below="@+id/titlebar" />
+	<RelativeLayout android:id="@+id/titlebar"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		style="@android:style/ButtonBar" android:layout_alignParentTop="True">
+		<TextView android:id="@+id/title" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="SMSdroid"
+			android:layout_alignParentTop="true" android:textStyle="bold"
+			android:textColor="#FFFFFFFF" />
+		<TextView android:id="@+id/contact" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/title"
+			android:text="@+id/contact" android:textStyle="bold"
+			android:textColor="#FFFFFFFF" />
+		<ImageView android:id="@+id/photo" android:layout_width="50dip"
+			android:layout_height="wrap_content" android:scaleType="fitCenter"
+			android:adjustViewBounds="true" android:layout_gravity="center_vertical"
+			android:layout_alignParentRight="true" android:visibility="gone"
+			style="?android:attr/quickContactBadgeStyleWindowSmall"
+			android:layout_marginTop="2dip" android:layout_marginBottom="2dip"
+			android:layout_marginLeft="5dip" />
+	</RelativeLayout>
+	<LinearLayout android:id="@+id/answerbar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" style="@android:style/ButtonBar"
+		android:layout_alignParentBottom="true">
 		<RelativeLayout android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:addStatesFromChildren="true"
 			android:layout_weight="1">
@@ -53,4 +73,4 @@
 		<Button android:id="@+id/send_" android:layout_width="wrap_content"
 			android:layout_height="fill_parent" android:text="@string/send_" />
 	</LinearLayout>
-</LinearLayout>
+</RelativeLayout>

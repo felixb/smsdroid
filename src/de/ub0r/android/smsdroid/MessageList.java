@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,6 +44,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
+import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.lib.apis.TelephonyWrapper;
 
 /**
@@ -63,6 +66,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private static final String TAG = "ml";
 	/** {@link TelephonyWrapper}. */
 	public static final TelephonyWrapper TWRAPPER = TelephonyWrapper
+			.getInstance();
+
+	/** {@link ContactsWrapper}. */
+	private static final ContactsWrapper WRAPPER = ContactsWrapper
 			.getInstance();
 
 	/** Number of items. */
@@ -240,18 +247,20 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 
 		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		this.conv = Conversation.getConversation(this, threadId, true);
+		final Conversation c = Conversation.getConversation(this, threadId,
+				true);
+		this.conv = c;
 
-		if (this.conv == null) {
+		if (c == null) {
 			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
 					.show();
 			this.finish();
 			return;
 		}
 
-		Log.d(TAG, "address: " + this.conv.getAddress());
-		Log.d(TAG, "name: " + this.conv.getName());
-		Log.d(TAG, "displayName: " + this.conv.getDisplayName());
+		Log.d(TAG, "address: " + c.getAddress());
+		Log.d(TAG, "name: " + c.getName());
+		Log.d(TAG, "displayName: " + c.getDisplayName());
 
 		final ListView lv = this.getListView();
 		lv.setStackFromBottom(true);
@@ -260,13 +269,23 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.setListAdapter(adapter);
 
 		String str;
-		final String name = this.conv.getName();
+		final String name = c.getName();
 		if (name == null) {
-			str = this.conv.getAddress();
+			str = c.getAddress();
 		} else {
-			str = name + " <" + this.conv.getAddress() + ">";
+			final ImageView ivPhoto = (ImageView) this.findViewById(R.id.photo);
+			Bitmap b = c.getPhoto();
+			if (b != null && b != Conversation.NO_PHOTO) {
+				ivPhoto.setImageBitmap(b);
+			} else {
+				ivPhoto.setImageResource(R.drawable.ic_contact_picture);
+			}
+			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this, ivPhoto, c
+					.getAddress(), 2, null));
+			ivPhoto.setVisibility(View.VISIBLE);
+			str = name + " <" + c.getAddress() + ">";
 		}
-		this.setTitle(this.getString(R.string.app_name) + " > " + str);
+		((TextView) this.findViewById(R.id.contact)).setText(str);
 		this.setRead();
 	}
 
@@ -277,6 +296,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final ListView lv = this.getListView();
 		lv.setAdapter(new MessageAdapter(this, this.uri));
 		lv.setSelection(this.getListAdapter().getCount() - 1);
+		this.etText.requestFocus();
 	}
 
 	/**

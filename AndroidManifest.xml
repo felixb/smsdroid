@@ -37,7 +37,7 @@
 		<activity android:name=".Preferences" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".About" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".MessageList" android:configChanges="orientation|keyboardHidden"
-			android:launchMode="singleTop">
+			android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
