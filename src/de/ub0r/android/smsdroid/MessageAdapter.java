@@ -46,13 +46,19 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	/** Tag for logging. */
 	static final String TAG = "msa";
 
-	/** SQL WHERE: unread messages. */
-	static final String SELECTION_UNREAD = "read = '0'";
-	/** SQL WHERE: read messages. */
-	static final String SELECTION_READ = "read = '1'";
-
 	/** Used background drawable for messages. */
 	private final int backgroundDrawableIn, backgroundDrawableOut;
+
+	/** General WHERE clause. */
+	private static final String WHERE = // .
+	Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " != " + Message.SMS_DRAFT;
+
+	/** WHERE clause for drafts. */
+	private static final String WHERE_DRAFT = // .
+	Message.PROJECTION_SMS[Message.INDEX_THREADID] + " = ? AND "
+			+ Message.PROJECTION_SMS[Message.INDEX_TYPE] + " = "
+			+ Message.SMS_DRAFT;
+	// + " OR " + type + " = " + Message.SMS_PENDING;
 
 	/** Thread id. */
 	private int threadId = -1;
@@ -127,9 +133,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 * @return {@link Cursor}
 	 */
 	private static Cursor getCursor(final ContentResolver cr, final Uri u) {
+		Log.d(TAG, "getCursor(" + u + ")");
 		final Cursor[] c = new Cursor[] { null, null };
-		final String type = Message.PROJECTION_JOIN[Message.INDEX_TYPE];
-		final String mtype = Message.PROJECTION_JOIN[Message.INDEX_MTYPE];
 
 		int tid = -1;
 		try {
@@ -137,30 +142,23 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		} catch (Exception e) {
 			Log.e(TAG, "error parsing uri: " + u, e);
 		}
-		final String twhere = Message.PROJECTION_SMS[Message.INDEX_THREADID]
-				+ " = " + tid + " AND (";
-
-		String where = twhere + type + " = " + Message.SMS_IN // .
-				+ " OR " + type + " = " + Message.SMS_OUT // .
-				+ " OR " + mtype + " = " + Message.MMS_TOLOAD // .
-				+ " OR " + mtype + " = " + Message.MMS_IN // .
-				+ " OR " + mtype + " = " + Message.MMS_OUT + ")";
 
 		try {
-			c[0] = cr.query(u, Message.PROJECTION_JOIN, where, null, null);
+			Log.d(TAG, "where: " + WHERE);
+			c[0] = cr.query(u, Message.PROJECTION_JOIN, WHERE, null, null);
 		} catch (NullPointerException e) {
-			Log.e(TAG, "error query: " + u + " / " + where, e);
+			Log.e(TAG, "error query: " + u + " / " + WHERE, e);
 			c[0] = null;
 		}
 
-		where = twhere + type + " = " + Message.SMS_DRAFT + ")";
-		// + " OR " + type + " = " + Message.SMS_PENDING;
-
+		final String[] sel = new String[] { String.valueOf(tid) };
 		try {
+			Log.d(TAG, "where: " + WHERE_DRAFT + " / sel: " + sel);
 			c[1] = cr.query(Uri.parse("content://sms/"),
-					Message.PROJECTION_SMS, where, null, Message.SORT_USD);
+					Message.PROJECTION_SMS, WHERE_DRAFT, sel, Message.SORT_USD);
 		} catch (NullPointerException e) {
-			Log.e(TAG, "error query: " + u + " / " + where, e);
+			Log.e(TAG, "error query: " + u + " / " + WHERE_DRAFT + " sel: "
+					+ sel, e);
 			c[1] = null;
 		}
 

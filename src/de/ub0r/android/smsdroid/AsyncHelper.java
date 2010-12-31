@@ -23,7 +23,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -102,7 +101,6 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected Void doInBackground(final Void... arg0) {
-		ContentValues cv = new ContentValues();
 		if (this.mConversation == null) {
 			return null;
 		}
@@ -151,9 +149,9 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		}
 
 		// read
-		cursor = this.context.getContentResolver().query(uri,
-				Message.PROJECTION,
-				Message.PROJECTION[Message.INDEX_READ] + " = 0", null, null);
+		// TODO: obsolete?
+		cursor = cr.query(uri, Message.PROJECTION,
+				Message.SELECTION_READ_UNREAD, Message.SELECTION_UNREAD, null);
 		if (cursor.getCount() == 0) {
 			this.mConversation.setRead(1);
 		} else {
