@@ -16,15 +16,8 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 	-->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:title="@string/new_message_" android:id="@+id/item_compose"
-		android:icon="@drawable/ic_menu_compose" />
-	<item android:title="@string/mark_all_read_" android:id="@+id/item_mark_all_read"
-		android:icon="@drawable/ic_menu_mark" />
-	<item android:title="@string/delete_threads_" android:id="@+id/item_delete_all_threads"
-		android:icon="@android:drawable/ic_menu_delete" />
-	<item android:title="@string/settings" android:id="@+id/item_settings"
-		android:icon="@android:drawable/ic_menu_preferences" />
-	<item android:id="@+id/item_donate" android:icon="@drawable/ic_menu_star"
-		android:title="@string/donate_remove_ads_" />
-</menu>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:state_pressed="true" android:drawable="@drawable/highlight_pressed" />
+	<item android:state_focused="true" android:state_window_focused="true"
+		android:drawable="@drawable/highlight_selected" />
+</selector>

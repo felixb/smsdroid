@@ -93,8 +93,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			switch (token) {
 			case MESSAGE_LIST_QUERY_TOKEN:
 				ConversationAdapter.this.changeCursor(cursor);
-				ConversationAdapter.this.activity
-						.setProgressBarIndeterminateVisibility(false);
+				ConversationAdapter.this.activity.pbProgress
+						.setVisibility(View.GONE);
 				return;
 			default:
 				return;
@@ -149,7 +149,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
 		try {
 			// Kick off the new query
-			this.activity.setProgressBarIndeterminateVisibility(true);
+			ConversationAdapter.this.activity.pbProgress
+					.setVisibility(View.VISIBLE);
 			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
 					Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE,
 					null, null, null);

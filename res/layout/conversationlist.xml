@@ -26,9 +26,27 @@
 		android:gravity="bottom" app:backgroundColor="?android:attr/colorBackground"
 		app:textColor="?android:attr/textColorPrimary"
 		app:keywords="android mobile handy cellphone google htc market app sms message game" />
+	<RelativeLayout android:id="@+id/titlebar"
+		android:layout_width="wrap_content" android:layout_height="48dip"
+		style="@android:style/ButtonBar" android:layout_alignParentTop="true">
+		<TextView android:id="@+id/title" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/app_name"
+			android:layout_centerInParent="true" android:layout_alignParentLeft="true"
+			android:textStyle="bold" android:textColor="#FFFFFFFF" />
+		<ImageView android:id="@+id/compose" android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:scaleType="fitCenter"
+			android:adjustViewBounds="true" android:layout_gravity="center_vertical"
+			android:focusable="true" android:layout_alignParentRight="true"
+			android:paddingBottom="2dip" android:paddingLeft="5dip"
+			android:src="@drawable/ic_title_compose" android:background="@drawable/highlight" />
+		<ProgressBar android:id="@+id/progess"
+			android:layout_width="40dip" android:layout_height="40dip"
+			android:layout_centerInParent="true" android:layout_toLeftOf="@id/compose"
+			android:visibility="gone" />
+	</RelativeLayout>
 	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:drawSelectorOnTop="false"
 		android:scrollingCache="true" android:fastScrollEnabled="true"
 		android:choiceMode="singleChoice" android:cacheColorHint="?android:attr/colorBackground"
-		android:layout_above="@id/ad" />
+		android:layout_above="@id/ad" android:layout_below="@id/titlebar" />
 </RelativeLayout>

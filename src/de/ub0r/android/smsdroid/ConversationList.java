@@ -42,9 +42,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -59,8 +62,9 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public class ConversationList extends ListActivity implements
-		OnItemClickListener, OnItemLongClickListener {
+public final class ConversationList extends ListActivity implements
+		OnItemClickListener, OnItemLongClickListener, OnClickListener,
+		OnLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
 
@@ -101,11 +105,14 @@ public class ConversationList extends ListActivity implements
 	/** Conversations. */
 	private ConversationAdapter adapter = null;
 
+	/** {@link ProgressBar} in title bar. */
+	ProgressBar pbProgress = null;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void onStart() {
+	public void onStart() {
 		super.onStart();
 		AsyncHelper.setAdapter(this.adapter);
 	}
@@ -114,7 +121,7 @@ public class ConversationList extends ListActivity implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void onStop() {
+	public void onStop() {
 		super.onStop();
 		AsyncHelper.setAdapter(null);
 	}
@@ -127,7 +134,7 @@ public class ConversationList extends ListActivity implements
 	 * @param u
 	 *            {@link Uri}
 	 */
-	static final void showRows(final Context context, final Uri u) {
+	static void showRows(final Context context, final Uri u) {
 		Log.d(TAG, "-----GET HEADERS-----");
 		Log.d(TAG, "-- " + u.toString() + " --");
 		Cursor c = context.getContentResolver()
@@ -151,7 +158,7 @@ public class ConversationList extends ListActivity implements
 	 * @param context
 	 *            {@link Context}
 	 */
-	static final void showRows(final Context context) {
+	static void showRows(final Context context) {
 		// this.showRows(ContactsWrapper.getInstance().getUriFilter());
 		// showRows(context, URI);
 		// showRows(context, Uri.parse("content://sms/"));
@@ -166,19 +173,23 @@ public class ConversationList extends ListActivity implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void onCreate(final Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		final boolean showTitlebar = prefs.getBoolean(
 				Preferences.PREFS_SHOWTITLEBAR, true);
-		if (!showTitlebar) {
-			this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		}
+
 		this.setTheme(Preferences.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.conversationlist);
+		if (!showTitlebar) {
+			this.findViewById(R.id.titlebar).setVisibility(View.GONE);
+		}
+		this.pbProgress = (ProgressBar) this.findViewById(R.id.progess);
+		final ImageView iv = (ImageView) this.findViewById(R.id.compose);
+		iv.setOnClickListener(this);
+		iv.setOnLongClickListener(this);
 
 		Changelog.showChangelog(this);
 		final List<ResolveInfo> ri = this.getPackageManager()
@@ -199,8 +210,6 @@ public class ConversationList extends ListActivity implements
 		showEmoticons = prefs.getBoolean(Preferences.PREFS_EMOTICONS, false);
 
 		final ListView list = this.getListView();
-		final View header = View.inflate(this, R.layout.newmessage_item, null);
-		list.addHeaderView(header);
 		this.adapter = new ConversationAdapter(this);
 		this.setListAdapter(this.adapter);
 		list.setOnItemClickListener(this);
@@ -223,7 +232,7 @@ public class ConversationList extends ListActivity implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected final void onResume() {
+	protected void onResume() {
 		super.onResume();
 		prefsNoAds = DonationHelper.hideAds(this);
 		if (!prefsNoAds) {
@@ -236,7 +245,7 @@ public class ConversationList extends ListActivity implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final boolean onCreateOptionsMenu(final Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		MenuInflater inflater = this.getMenuInflater();
 		inflater.inflate(R.menu.conversationlist, menu);
 		if (prefsNoAds) {
@@ -255,8 +264,7 @@ public class ConversationList extends ListActivity implements
 	 * @param read
 	 *            read status
 	 */
-	static final void markRead(final Context context, final Uri uri,
-			final int read) {
+	static void markRead(final Context context, final Uri uri, final int read) {
 		if (uri == null) {
 			return;
 		}
@@ -294,7 +302,7 @@ public class ConversationList extends ListActivity implements
 	 * @param activity
 	 *            {@link Activity} to finish when deleting.
 	 */
-	static final void deleteMessages(final Context context, final Uri uri,
+	static void deleteMessages(final Context context, final Uri uri,
 			final int title, final int message, final Activity activity) {
 		Log.i(TAG, "deleteMessages(..," + uri + " ,..)");
 		final Builder builder = new Builder(context);
@@ -349,8 +357,11 @@ public class ConversationList extends ListActivity implements
 	 *{@inheritDoc}
 	 */
 	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.item_compose:
+			this.onClick(this.findViewById(R.id.compose));
+			return true;
 		case R.id.item_settings: // start settings activity
 			this.startActivity(new Intent(this, Preferences.class));
 			return true;
@@ -378,7 +389,7 @@ public class ConversationList extends ListActivity implements
 	 *            address
 	 * @return {@link Intent}
 	 */
-	static final Intent getComposeIntent(final String address) {
+	static Intent getComposeIntent(final String address) {
 		final Intent i = new Intent(Intent.ACTION_SENDTO);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		if (address == null) {
@@ -392,128 +403,101 @@ public class ConversationList extends ListActivity implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void onItemClick(final AdapterView<?> parent, final View view,
+	public void onItemClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
-		if (position == 0) { // header
-			final Intent i = getComposeIntent(null);
-			try {
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
-						+ i.getData());
-				Toast.makeText(
-						this,
-						"error launching messaging app!\n"
-								+ "Please contact the developer.",
-						Toast.LENGTH_LONG).show();
-			}
-		} else {
-			final Conversation c = Conversation.getConversation(this,
-					(Cursor) parent.getItemAtPosition(position), false);
-			final Uri target = c.getUri();
-			final Intent i = new Intent(this, MessageList.class);
-			i.setData(target);
-			try {
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
-						+ i.getData());
-				Toast.makeText(
-						this,
-						"error launching messaging app!\n"
-								+ "Please contact the developer.",
-						Toast.LENGTH_LONG).show();
-			}
+		final Conversation c = Conversation.getConversation(this,
+				(Cursor) parent.getItemAtPosition(position), false);
+		final Uri target = c.getUri();
+		final Intent i = new Intent(this, MessageList.class);
+		i.setData(target);
+		try {
+			this.startActivity(i);
+		} catch (ActivityNotFoundException e) {
+			Log.e(TAG, "error launching intent: " + i.getAction() + ", "
+					+ i.getData());
+			Toast.makeText(
+					this,
+					"error launching messaging app!\n"
+							+ "Please contact the developer.",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean onItemLongClick(final AdapterView<?> parent,
+	public boolean onItemLongClick(final AdapterView<?> parent,
 			final View view, final int position, final long id) {
-		if (position == 0) { // header
-			final Intent i = getComposeIntent(null);
-			this.startActivity(Intent.createChooser(i, this
-					.getString(R.string.new_message_)));
-			return true;
+		final Conversation c = Conversation.getConversation(this,
+				(Cursor) parent.getItemAtPosition(position), true);
+		final Uri target = c.getUri();
+		Builder builder = new Builder(this);
+		String[] items = this.longItemClickDialog;
+		final String a = c.getAddress();
+		Log.d(TAG, "p: " + a);
+		final String n = AsyncHelper.getContactName(this, a);
+		if (n == null) {
+			builder.setTitle(a);
+			items = items.clone();
+			items[WHICH_VIEW_CONTACT] = this.getString(R.string.add_contact_);
 		} else {
-			final Conversation c = Conversation.getConversation(this,
-					(Cursor) parent.getItemAtPosition(position), true);
-			final Uri target = c.getUri();
-			Builder builder = new Builder(this);
-			String[] items = this.longItemClickDialog;
-			final String a = c.getAddress();
-			Log.d(TAG, "p: " + a);
-			final String n = AsyncHelper.getContactName(this, a);
-			if (n == null) {
-				builder.setTitle(a);
-				items = items.clone();
-				items[WHICH_VIEW_CONTACT] = this
-						.getString(R.string.add_contact_);
-			} else {
-				builder.setTitle(n);
-			}
-			final SpamDB db = new SpamDB(this.getApplicationContext());
-			db.open();
-			if (db.isInDB(a)) {
-				items = items.clone();
-				items[WHICH_MARK_SPAM] = this
-						.getString(R.string.dont_filter_spam_);
-			}
-			db.close();
-			builder.setItems(items, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(final DialogInterface dialog,
-						final int which) {
-					Intent i = null;
-					switch (which) {
-					case WHICH_ANSWER:
-						ConversationList.this
-								.startActivity(getComposeIntent(a));
-						break;
-					case WHICH_CALL:
-						i = new Intent(Intent.ACTION_CALL, Uri
-								.parse("tel:" + a));
-						ConversationList.this.startActivity(i);
-						break;
-					case WHICH_VIEW_CONTACT:
-						if (n == null) {
-							i = ContactsWrapper.getInstance()
-									.getInsertPickIntent(a);
-							Conversation.flushCache();
-						} else {
-							final Uri uri = ContactsWrapper.getInstance()
-									.getContactUri(
-											ConversationList.this
-													.getContentResolver(),
-											c.getPersonId());
-							i = new Intent(Intent.ACTION_VIEW, uri);
-						}
-						ConversationList.this.startActivity(i);
-						break;
-					case WHICH_VIEW:
-						i = new Intent(ConversationList.this, // .
-								MessageList.class);
-						i.setData(target);
-						ConversationList.this.startActivity(i);
-						break;
-					case WHICH_DELETE:
-						ConversationList.deleteMessages(ConversationList.this,
-								target, R.string.delete_thread_,
-								R.string.delete_thread_question, null);
-						break;
-					case WHICH_MARK_SPAM:
-						ConversationList.addToOrRemoveFromSpamlist(
-								ConversationList.this, c.getAddress());
-						break;
-					default:
-						break;
-					}
-				}
-			});
-			builder.create().show();
+			builder.setTitle(n);
 		}
+		final SpamDB db = new SpamDB(this.getApplicationContext());
+		db.open();
+		if (db.isInDB(a)) {
+			items = items.clone();
+			items[WHICH_MARK_SPAM] = this.getString(R.string.dont_filter_spam_);
+		}
+		db.close();
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				Intent i = null;
+				switch (which) {
+				case WHICH_ANSWER:
+					ConversationList.this.startActivity(getComposeIntent(a));
+					break;
+				case WHICH_CALL:
+					i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + a));
+					ConversationList.this.startActivity(i);
+					break;
+				case WHICH_VIEW_CONTACT:
+					if (n == null) {
+						i = ContactsWrapper.getInstance()
+								.getInsertPickIntent(a);
+						Conversation.flushCache();
+					} else {
+						final Uri uri = ContactsWrapper.getInstance()
+								.getContactUri(
+										ConversationList.this
+												.getContentResolver(),
+										c.getPersonId());
+						i = new Intent(Intent.ACTION_VIEW, uri);
+					}
+					ConversationList.this.startActivity(i);
+					break;
+				case WHICH_VIEW:
+					i = new Intent(ConversationList.this, // .
+							MessageList.class);
+					i.setData(target);
+					ConversationList.this.startActivity(i);
+					break;
+				case WHICH_DELETE:
+					ConversationList.deleteMessages(ConversationList.this,
+							target, R.string.delete_thread_,
+							R.string.delete_thread_question, null);
+					break;
+				case WHICH_MARK_SPAM:
+					ConversationList.addToOrRemoveFromSpamlist(
+							ConversationList.this, c.getAddress());
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		builder.create().show();
 		return true;
 	}
 
@@ -526,7 +510,7 @@ public class ConversationList extends ListActivity implements
 	 *            time
 	 * @return formated date.
 	 */
-	static final String getDate(final Context context, final long time) {
+	static String getDate(final Context context, final long time) {
 		long t = time;
 		if (t < MIN_DATE) {
 			t *= MILLIS;
@@ -539,6 +523,47 @@ public class ConversationList extends ListActivity implements
 			return DateFormat.getDateFormat(context).format(t);
 		} else {
 			return DateFormat.getTimeFormat(context).format(t);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onClick(final View v) {
+		switch (v.getId()) {
+		case R.id.compose:
+			final Intent i = getComposeIntent(null);
+			try {
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
+						+ i.getData());
+				Toast.makeText(
+						this,
+						"error launching messaging app!\n"
+								+ "Please contact the developer.",
+						Toast.LENGTH_LONG).show();
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onLongClick(final View v) {
+		switch (v.getId()) {
+		case R.id.compose:
+			final Intent i = getComposeIntent(null);
+			this.startActivity(Intent.createChooser(i, this
+					.getString(R.string.new_message_)));
+			return true;
+		default:
+			return false;
 		}
 	}
 }

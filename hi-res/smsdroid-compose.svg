@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="140"
+   height="90"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="smsdroid-icon.svgz">
+  <title
+     id="title8245">SMSdroid-Icons</title>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8"
+     inkscape:cx="43.273463"
+     inkscape:cy="44.620035"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-global="true"
+     inkscape:object-paths="true"
+     inkscape:snap-nodes="true"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     inkscape:window-x="-3"
+     inkscape:window-y="-2"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       id="grid7200"
+       type="xygrid"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8149">
+      <stop
+         style="stop-color:#2e9bff;stop-opacity:1"
+         offset="0"
+         id="stop8151" />
+      <stop
+         id="stop8153"
+         offset="0.4198494"
+         style="stop-color:#0681f3;stop-opacity:1" />
+      <stop
+         style="stop-color:#00519c;stop-opacity:1"
+         offset="1"
+         id="stop8155" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient8046">
+      <stop
+         id="stop8048"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         id="stop8050"
+         offset="1"
+         style="stop-color:#c8c8c8;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="128.22583"
+       x2="131.5"
+       y1="72.737183"
+       x1="131.5"
+       id="linearGradient8052"
+       xlink:href="#linearGradient8046"
+       inkscape:collect="always" />
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:menu-tooltip="Adds a colorizable drop shadow inside"
+       inkscape:menu="Shadows and Glows"
+       inkscape:label="Inner Shadow"
+       id="filter8113">
+      <feGaussianBlur
+         result="result8"
+         stdDeviation="16.871058823529413"
+         id="feGaussianBlur8115" />
+      <feOffset
+         result="result11"
+         dy="33.546325878594253"
+         dx="0"
+         id="feOffset8117" />
+      <feComposite
+         operator="in"
+         in="SourceGraphic"
+         result="result6"
+         in2="result11"
+         id="feComposite8119" />
+      <feFlood
+         flood-color="rgb(0,0,0)"
+         flood-opacity="0.76489028213166144"
+         in="result6"
+         result="result10"
+         id="feFlood8121" />
+      <feBlend
+         result="result12"
+         in="result6"
+         mode="normal"
+         in2="result10"
+         id="feBlend8123" />
+      <feComposite
+         operator="in"
+         result="result2"
+         in2="SourceGraphic"
+         id="feComposite8125" />
+    </filter>
+    <filter
+       id="filter8135"
+       inkscape:collect="always"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur8137"
+         stdDeviation="1.9613239"
+         inkscape:collect="always" />
+    </filter>
+    <linearGradient
+       gradientTransform="matrix(0.66666667,0,0,0.66666667,111.66668,44.787391)"
+       y2="128.22583"
+       x2="131.5"
+       y1="72.737183"
+       x1="131.5"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient8147"
+       xlink:href="#linearGradient8149"
+       inkscape:collect="always" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8046"
+       id="linearGradient8237"
+       gradientUnits="userSpaceOnUse"
+       x1="131.5"
+       y1="72.737183"
+       x2="131.5"
+       y2="128.22583" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8046"
+       id="linearGradient8239"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.66666667,0,0,0.66666667,111.66668,44.787391)"
+       x1="131.5"
+       y1="72.737183"
+       x2="131.5"
+       y2="128.22583" />
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>SMSdroid-Icons</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>core.equip</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:source />
+        <dc:relation />
+        <dc:rights>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:rights>
+        <dc:date>2010-06-13</dc:date>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Backs"
+     style="display:inline"
+     transform="translate(-70,0)">
+    <rect
+       transform="translate(-30,-52.362183)"
+       y="86.362183"
+       x="185"
+       height="48"
+       width="48"
+       id="rect8139"
+       style="color:#000000;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       inkscape:export-filename="c:\Users\Ben Utzer\Pictures\Inkscape\websms\smsdroid-icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Icone"
+     transform="translate(-100,-52.362183)"
+     style="display:inline">
+    <path
+       transform="matrix(0.96389418,0,0,0.95375142,5.3964446,4.5858309)"
+       style="opacity:0.87205386;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter8135);enable-background:accumulate"
+       d="m 113.85751,71.362183 64.28534,0 0,47.139497 -34.25599,0 -13.96491,12.86051 -2.14097,0 0.005,-12.86051 -13.92912,0 0,-47.139497 3.6e-4,0 z"
+       id="path8127"
+       sodipodi:nodetypes="cccccccccc" />
+    <path
+       sodipodi:nodetypes="cccccccccc"
+       id="rect7202"
+       d="m 116.00034,72.362183 59.99966,0 0,43.996867 -31.97226,0 -13.03392,12.00314 -1.99824,0 0.005,-12.00314 -13.00052,0 0,-43.996867 3.4e-4,0 z"
+       style="opacity:0.89562288000000001;color:#000000;fill:url(#linearGradient8237);fill-opacity:1.0;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    <path
+       transform="matrix(0.05141894,0,0,0.05141894,129.60224,66.452888)"
+       d="m 53.162517,542.68174 c 81.151183,43.00429 179.145113,74.65911 271.762213,76.66645 100.76311,3.28123 190.35851,-29.60879 278.26557,-76.70513 0.11664,29.80202 0.0389,59.60384 0.0389,89.40566 C 523.58381,681.1911 421.83083,718.98205 326.9943,721.84046 224.59007,724.9269 138.67636,685.1671 53.124221,632.04872 53.1631,602.2469 53.046462,572.44508 53.1631,542.68174 z M 164.3663,310.09556 c 39.10877,0 78.21754,0 117.36402,0 0,39.1183 0,78.2364 0,117.35469 -39.14648,0 -78.25525,0 -117.36402,0 0,-39.11829 0,-78.23639 0,-117.35469 z m 221.12162,0 c 39.10858,0 78.21754,0 117.36403,0 0,39.1183 0,78.2364 0,117.35469 -39.14649,0 -78.25545,0 -117.36403,0 0,-39.11829 0,-78.23639 0,-117.35469 z"
+       style="fill:#ffffff;filter:url(#filter8113)"
+       id="path8110" />
+    <path
+       sodipodi:nodetypes="cccccccccc"
+       id="path8141"
+       d="m 113.85751,71.362183 64.28534,0 0,47.139497 -34.25599,0 -13.96491,12.86051 -2.14097,0 0.005,-12.86051 -13.92912,0 0,-47.139497 3.6e-4,0 z"
+       style="opacity:0.87205386;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter8135);enable-background:accumulate"
+       transform="matrix(0.64259612,0,0,0.63245335,115.2643,48.304655)" />
+    <path
+       style="opacity:0.89562288;color:#000000;fill:url(#linearGradient8239);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 189.00024,93.437907 39.99977,0 0,28.922183 -21.31484,0 -8.68928,8.00209 -1.33216,0 0.003,-8.00209 -8.66701,0 0,-28.922183 2.3e-4,0 2.9e-4,0 z"
+       id="path8143"
+       sodipodi:nodetypes="ccccccccccc" />
+    <path
+       sodipodi:nodetypes="ccccsccccccccccccc"
+       id="path8145"
+       style="fill:#ffffff;filter:url(#filter8113)"
+       d="m 56.39419,531.20791 c 81.15118,43.00429 184.59156,75.71881 277.20866,77.72615 100.76311,3.28123 189.07761,-30.66849 276.98467,-77.76483 0.11664,29.80202 0.0389,59.60384 0.0389,89.40566 -79.64539,49.14238 -180.11747,87.99303 -274.954,90.85144 -102.40423,3.08644 -193.76439,-37.73306 -279.316527,-90.85144 0.03888,-29.80182 -0.07776,-59.60364 0.03888,-89.36698 l -5.83e-4,0 z M 173.04442,299.68143 c 39.10877,0 78.21754,0 117.36402,0 0,39.1183 0,78.2364 0,117.35469 -39.14648,0 -78.25525,0 -117.36402,0 0,-39.11829 0,-78.23639 0,-117.35469 z m 204.20493,-0.66616 c 39.10858,0 78.21754,0 117.36403,0 0,39.1183 0,78.2364 0,117.35469 -39.14649,0 -78.25545,0 -117.36403,0 0,-39.11829 0,-78.23639 0,-117.35469 z"
+       transform="matrix(0.03427929,0,0,0.03427929,198.06817,89.089316)" />
+  </g>
+</svg>

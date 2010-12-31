@@ -39,7 +39,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
@@ -167,12 +166,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				.getDefaultSharedPreferences(this);
 		final boolean showTitlebar = prefs.getBoolean(
 				Preferences.PREFS_SHOWTITLEBAR, true);
-		if (!showTitlebar) {
-			this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		}
 		this.setTheme(Preferences.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
+		if (!showTitlebar) {
+			this.findViewById(R.id.titlebar).setVisibility(View.GONE);
+		}
 		Log.d(TAG, "onCreate()");
 
 		this.cbmgr = (ClipboardManager) this
