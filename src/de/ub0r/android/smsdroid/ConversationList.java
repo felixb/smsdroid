@@ -297,7 +297,7 @@ public class ConversationList extends ListActivity implements
 	static final void deleteMessages(final Context context, final Uri uri,
 			final int title, final int message, final Activity activity) {
 		Log.i(TAG, "deleteMessages(..," + uri + " ,..)");
-		Builder builder = new Builder(context);
+		final Builder builder = new Builder(context);
 		builder.setTitle(title);
 		builder.setMessage(message);
 		builder.setNegativeButton(android.R.string.no, null);
@@ -320,7 +320,7 @@ public class ConversationList extends ListActivity implements
 						}
 					}
 				});
-		builder.create().show();
+		builder.show();
 	}
 
 	/**
