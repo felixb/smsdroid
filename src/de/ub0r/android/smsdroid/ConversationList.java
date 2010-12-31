@@ -265,26 +265,18 @@ public final class ConversationList extends ListActivity implements
 	 *            read status
 	 */
 	static void markRead(final Context context, final Uri uri, final int read) {
+		Log.d(TAG, "markRead(" + uri + "," + read + ")");
 		if (uri == null) {
 			return;
 		}
-		final String select = Message.SELECTION_UNREAD.replace("0", String
-				.valueOf(1 - read));
-		final ContentResolver cr = context.getContentResolver();
-		final Cursor cursor = cr.query(uri, Message.PROJECTION_READ, select,
-				null, null);
-		if (cursor != null && cursor.getCount() <= 0) {
-			String u = uri.toString();
-			if (u.equals("content://sms/") || u.equals("content://mms/")) {
-				SmsReceiver.updateNewMessageNotification(context, null);
-			}
-			cursor.close();
-			return;
+		String[] sel = Message.SELECTION_UNREAD;
+		if (read == 0) {
+			sel = Message.SELECTION_READ;
 		}
-
+		final ContentResolver cr = context.getContentResolver();
 		final ContentValues cv = new ContentValues();
 		cv.put(Message.PROJECTION[Message.INDEX_READ], read);
-		cr.update(uri, cv, select, null);
+		cr.update(uri, cv, Message.SELECTION_READ_UNREAD, sel);
 		SmsReceiver.updateNewMessageNotification(context, null);
 	}
 

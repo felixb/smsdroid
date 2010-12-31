@@ -144,10 +144,13 @@ public final class Message {
 			"ct", // 2
 	};
 
+	/** SQL WHERE: read/unread messages. */
+	static final String SELECTION_READ_UNREAD = "read = ?";
+
 	/** SQL WHERE: unread messages. */
-	static final String SELECTION_UNREAD = "read = '0'";
+	static final String[] SELECTION_UNREAD = new String[] { "0" };
 	/** SQL WHERE: read messages. */
-	static final String SELECTION_READ = "read = '1'";
+	static final String[] SELECTION_READ = new String[] { "1" };
 
 	/** Cursor's sort, upside down. */
 	public static final String SORT_USD = Calls.DATE + " ASC";

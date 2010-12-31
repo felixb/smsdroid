@@ -153,7 +153,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			final String text) {
 		Log.d(TAG, "getUnreadSMS(cr, " + text + ")");
 		Cursor cursor = cr.query(URI_SMS, Message.PROJECTION,
-				Message.SELECTION_UNREAD, null, SORT);
+				Message.SELECTION_READ_UNREAD, Message.SELECTION_UNREAD, SORT);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text != null) { // try again!
 				if (cursor != null && !cursor.isClosed()) {
@@ -204,7 +204,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			final String text) {
 		Log.d(TAG, "getUnreadMMS(cr, " + text + ")");
 		Cursor cursor = cr.query(URI_MMS, Message.PROJECTION_READ,
-				Message.SELECTION_UNREAD, null, null);
+				Message.SELECTION_READ_UNREAD, Message.SELECTION_UNREAD, null);
 		if (cursor == null || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text == MMS_BODY) {
 				if (cursor != null && !cursor.isClosed()) {
