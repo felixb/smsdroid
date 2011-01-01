@@ -18,7 +18,9 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +35,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.ub0r.android.lib.Log;
 
 /**
@@ -260,7 +263,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			ivPicture.setOnClickListener(null);
 		}
 
-		final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
+		Button btn = (Button) view.findViewById(R.id.btn_download_msg);
 		CharSequence text = m.getBody();
 		if (text == null && pic == null) {
 			btn.setOnClickListener(new OnClickListener() {
@@ -290,9 +293,38 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		}
 		if (text == null) {
 			twBody.setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.btn_import_contact).setVisibility(View.GONE);
 		} else {
 			twBody.setText(text);
 			twBody.setVisibility(View.VISIBLE);
+			String stext = text.toString();
+			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
+				stext = stext.replaceAll(".*BEGIN:VCARD", "BEGIN:VCARD");
+				stext = stext.replaceAll("END:VCARD.*", "END:VCARD");
+				btn = (Button) view.findViewById(R.id.btn_import_contact);
+				btn.setVisibility(View.VISIBLE);
+				btn.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(final View v) {
+						final Intent i = new Intent(Intent.ACTION_VIEW);
+						Uri uri = ContentUris.withAppendedId(
+								MessageProvider.CONTENT_URI, m.getId());
+						i.setDataAndType(uri, "text/x-vcard");
+						try {
+							context.startActivity(i);
+						} catch (ActivityNotFoundException e) {
+							Log.e(TAG, "activity not found (text/x-vcard): "
+									+ i.getAction(), e);
+							Toast.makeText(context,
+									"Activity not found: text/x-vcard",
+									Toast.LENGTH_LONG).show();
+						}
+					}
+				});
+			} else {
+				view.findViewById(R.id.btn_import_contact).setVisibility(
+						View.GONE);
+			}
 		}
 	}
 }
