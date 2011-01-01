@@ -58,6 +58,10 @@
 	<string name="show_emoticons_">Show emoticons</string>
 	<string name="show_emoticons_hint">Show emoticons in message list.</string>
 	<string name="show_bubbles_">Show bubbles</string>
+	<string name="hide_paste_">Hide "paste" button</string>
+	<string name="hide_paste_hint">Hide "paste" button on text field.</string>
+	<string name="show_full_date_">Show full date</string>
+	<string name="show_full_date_hint">Show full date and time on every message.</string>
 	<string name="me">Me</string>
 	<string name="view_contact_">View contact</string>
 	<string name="add_contact_">Add to contacts</string>

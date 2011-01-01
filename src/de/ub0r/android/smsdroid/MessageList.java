@@ -127,7 +127,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		public void afterTextChanged(final Editable s) {
 			final int len = s.length();
 			if (len == 0) {
-				if (MessageList.this.cbmgr.hasText()) {
+				if (MessageList.this.cbmgr.hasText()
+						&& !PreferenceManager.getDefaultSharedPreferences(
+								MessageList.this).getBoolean(
+								Preferences.PREFS_HIDE_PASTE, false)) {
 					MessageList.this.tvPaste.setVisibility(View.VISIBLE);
 				} else {
 					MessageList.this.tvPaste.setVisibility(View.GONE);

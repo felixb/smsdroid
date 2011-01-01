@@ -108,6 +108,15 @@ public final class ConversationList extends ListActivity implements
 	/** {@link ProgressBar} in title bar. */
 	ProgressBar pbProgress = null;
 
+	/** {@link Calendar} holding today 00:00. */
+	private static final Calendar CAL_TODAY = Calendar.getInstance();
+	static {
+		CAL_TODAY.set(Calendar.HOUR_OF_DAY, 0);
+		CAL_TODAY.set(Calendar.MINUTE, 0);
+		CAL_TODAY.set(Calendar.SECOND, 0);
+		CAL_TODAY.set(Calendar.MILLISECOND, 0);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -238,6 +247,11 @@ public final class ConversationList extends ListActivity implements
 		if (!prefsNoAds) {
 			this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
 		}
+		CAL_TODAY.setTimeInMillis(System.currentTimeMillis());
+		CAL_TODAY.set(Calendar.HOUR_OF_DAY, 0);
+		CAL_TODAY.set(Calendar.MINUTE, 0);
+		CAL_TODAY.set(Calendar.SECOND, 0);
+		CAL_TODAY.set(Calendar.MILLISECOND, 0);
 		this.adapter.startMsgListQuery();
 	}
 
@@ -507,11 +521,11 @@ public final class ConversationList extends ListActivity implements
 		if (t < MIN_DATE) {
 			t *= MILLIS;
 		}
-		Calendar base = Calendar.getInstance();
-		base.set(Calendar.HOUR_OF_DAY, 0);
-		base.set(Calendar.MINUTE, 0);
-		base.set(Calendar.SECOND, 0);
-		if (t < base.getTimeInMillis()) {
+		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				Preferences.PREFS_FULL_DATE, false)) {
+			return DateFormat.getTimeFormat(context).format(t) + " "
+					+ DateFormat.getDateFormat(context).format(t);
+		} else if (t < CAL_TODAY.getTimeInMillis()) {
 			return DateFormat.getDateFormat(context).format(t);
 		} else {
 			return DateFormat.getTimeFormat(context).format(t);

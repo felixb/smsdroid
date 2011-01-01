@@ -53,6 +53,10 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_EMOTICONS = "show_emoticons";
 	/** Prefernece's name: show bubbles in messagelist. */
 	static final String PREFS_BUBBLES = "show_bubbles";
+	/** Prefernece's name: show full date and time. */
+	static final String PREFS_FULL_DATE = "show_full_date";
+	/** Prefernece's name: hide paste button. */
+	static final String PREFS_HIDE_PASTE = "hide_paste";
 	/** Preference's name: theme. */
 	private static final String PREFS_THEME = "theme";
 	/** Theme: black. */
