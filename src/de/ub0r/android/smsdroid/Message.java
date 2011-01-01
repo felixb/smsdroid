@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.LinkedHashMap;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -332,7 +333,7 @@ public final class Message {
 	private void fetchMmsParts(final Context context) {
 		final ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(URI_PARTS, null, PROJECTION_PARTS[INDEX_MID]
-				+ " = " + this.id, null, null);
+				+ " = ?", new String[] { String.valueOf(this.id) }, null);
 		if (cursor == null || !cursor.moveToFirst()) {
 			return;
 		}
@@ -347,8 +348,7 @@ public final class Message {
 			// get part
 			InputStream is = null;
 
-			final Uri uri = Uri
-					.withAppendedPath(URI_PARTS, String.valueOf(pid));
+			final Uri uri = ContentUris.withAppendedId(URI_PARTS, pid);
 			try {
 				is = cr.openInputStream(uri);
 			} catch (IOException e) {

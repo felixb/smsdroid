@@ -134,7 +134,7 @@ public final class SpamDB {
 	 */
 	public boolean isInDB(final String nr) {
 		Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, KEY_NR
-				+ " = '" + nr + "'", null, null, null, null);
+				+ " = '?'", new String[] { nr }, null, null, null);
 		final boolean ret = cursor.moveToFirst();
 		if (!cursor.isClosed()) {
 			cursor.close();
@@ -194,6 +194,6 @@ public final class SpamDB {
 	 *            number
 	 */
 	public void removeNr(final String nr) {
-		this.db.delete(DATABASE_TABLE, KEY_NR + " = '" + nr + "'", null);
+		this.db.delete(DATABASE_TABLE, KEY_NR + " = '?'", new String[] { nr });
 	}
 }
