@@ -427,6 +427,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
 						i.setType("text/plain");
+						i.putExtra("forwarded_message", true);
 					}
 					final CharSequence text = m.getBody();
 					i.putExtra(Intent.EXTRA_TEXT, text);
