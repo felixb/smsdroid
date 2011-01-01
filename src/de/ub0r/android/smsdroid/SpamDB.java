@@ -133,8 +133,9 @@ public final class SpamDB {
 	 * @return true if number is blacklisted
 	 */
 	public boolean isInDB(final String nr) {
-		Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, KEY_NR
-				+ " = '?'", new String[] { nr }, null, null, null);
+		Log.d(TAG, "isInDB(" + nr + ")");
+		final Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, KEY_NR
+				+ " = ?", new String[] { nr }, null, null, null);
 		final boolean ret = cursor.moveToFirst();
 		if (!cursor.isClosed()) {
 			cursor.close();
