@@ -100,6 +100,8 @@
 	<string name="error_conv_null">Error getting conversation from DB!</string>
 	<string name="text_hint">Text</string>
 	<string name="paste_">[Paste from clipboard]</string>
+	<string name="attachment_saved">Saved attachment on SD card as:</string>
+	<string name="attachment_not_saved">Could not save attachment.</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>

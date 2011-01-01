@@ -19,9 +19,14 @@
 package de.ub0r.android.smsdroid;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.LinkedHashMap;
+
+import org.apache.commons.io.IOUtils;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -32,7 +37,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.CallLog.Calls;
+import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.widget.Toast;
 import de.ub0r.android.lib.Log;
 
@@ -48,6 +56,9 @@ public final class Message {
 	/** Bitmap showing the play button. */
 	public static final Bitmap BITMAP_PLAY = Bitmap.createBitmap(1, 1,
 			Config.RGB_565);
+
+	/** Filename for saved attachments. */
+	public static final String ATTACHMENT_FILE = "mms.";
 
 	/** Cache size. */
 	private static final int CAHCESIZE = 50;
@@ -534,6 +545,81 @@ public final class Message {
 	}
 
 	/**
+	 * Get a {@link OnLongClickListener} to save the attachment.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return {@link OnLongClickListener}
+	 */
+	public OnLongClickListener getSaveAttachmentListener(// .
+			final Context context) {
+		if (this.contentIntent == null) {
+			return null;
+		}
+
+		return new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(final View v) {
+				try {
+					Log.d(TAG, "save attachment: " + Message.this.id);
+					String fn = ATTACHMENT_FILE;
+					final Intent ci = Message.this.contentIntent;
+					final String ct = ci.getType();
+					Log.d(TAG, "content type: " + ct);
+					if (ct.startsWith("image/")) {
+						if (ct.equals("image/jpeg")) {
+							fn += "jpg";
+						} else if (ct.equals("image/gif")) {
+							fn += "gif";
+						} else {
+							fn += "png";
+						}
+					} else if (ct.startsWith("audio/")) {
+						if (ct.equals("audio/3gpp")) {
+							fn += "3gpp";
+						} else if (ct.equals("audio/mpeg")) {
+							fn += "mp3";
+						} else if (ct.equals("audio/mid")) {
+							fn += "mid";
+						} else {
+							fn += "wav";
+						}
+					} else if (ct.startsWith("video/")) {
+						if (ct.equals("video/3gpp")) {
+							fn += "3gpp";
+						} else {
+							fn += "avi";
+						}
+					} else {
+						fn += "ukn";
+					}
+					final File file = Message.this.createUniqueFile(Environment
+							.getExternalStorageDirectory(), // .
+							fn);
+					InputStream in = context.getContentResolver()
+							.openInputStream(ci.getData());
+					OutputStream out = new FileOutputStream(file);
+					IOUtils.copy(in, out);
+					out.flush();
+					out.close();
+					in.close();
+					Log.i(TAG, "attachment saved: " + file.getPath());
+					Toast.makeText(
+							context,
+							context.getString(R.string.attachment_saved) + " "
+									+ fn, Toast.LENGTH_LONG).show();
+					return true;
+				} catch (IOException e) {
+					Log.e(TAG, "IO ERROR", e);
+					Toast.makeText(context, R.string.attachment_not_saved,
+							Toast.LENGTH_LONG).show();
+				}
+				return true;
+			}
+		};
+	}
+
+	/**
 	 * @return {@link Uri} of this {@link Message}
 	 */
 	public Uri getUri() {
@@ -542,5 +628,40 @@ public final class Message {
 		} else {
 			return Uri.parse("content://sms/" + this.id);
 		}
+	}
+
+	/**
+	 * Creates a unique file in the given directory by appending a hyphen and a
+	 * number to the given filename.
+	 * 
+	 * @author k9mail team
+	 * @param directory
+	 *            directory name
+	 * @param filename
+	 *            file name
+	 * @return path to file
+	 */
+	private File createUniqueFile(final File directory, final String filename) {
+		File file = new File(directory, filename);
+		if (!file.exists()) {
+			return file;
+		}
+		// Get the extension of the file, if any.
+		int index = filename.lastIndexOf('.');
+		String format;
+		if (index != -1) {
+			String name = filename.substring(0, index);
+			String extension = filename.substring(index);
+			format = name + "-%d" + extension;
+		} else {
+			format = filename + "-%d";
+		}
+		for (int i = 2; i < Integer.MAX_VALUE; i++) {
+			file = new File(directory, String.format(format, i));
+			if (!file.exists()) {
+				return file;
+			}
+		}
+		return null;
 	}
 }

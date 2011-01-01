@@ -18,7 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +33,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.ub0r.android.lib.Log;
 
 /**
@@ -253,23 +251,10 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			}
 			ivPicture.setVisibility(View.VISIBLE);
 			final Intent i = m.getContentIntent();
-			if (i == null) {
-				ivPicture.setOnClickListener(null);
-			} else {
-				ivPicture.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(final View v) {
-						try {
-							context.startActivity(i);
-						} catch (ActivityNotFoundException e) {
-							Log.w(TAG, "activity not found", e);
-							Toast.makeText(context,
-									"no activity for data: " + i.getType(),
-									Toast.LENGTH_LONG).show();
-						}
-					}
-				});
-			}
+			ivPicture.setOnClickListener(SMSdroid.getOnClickStartActivity(
+					context, i));
+			ivPicture.setOnLongClickListener(m
+					.getSaveAttachmentListener(context));
 		} else {
 			ivPicture.setVisibility(View.GONE);
 			ivPicture.setOnClickListener(null);
