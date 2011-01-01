@@ -51,13 +51,15 @@ public class MessageAdapter extends ResourceCursorAdapter {
 
 	/** General WHERE clause. */
 	private static final String WHERE = // .
-	Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " != " + Message.SMS_DRAFT;
+	"(" + Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " != "
+			+ Message.SMS_DRAFT + " OR "
+			+ Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " IS NULL)";
 
 	/** WHERE clause for drafts. */
 	private static final String WHERE_DRAFT = // .
-	Message.PROJECTION_SMS[Message.INDEX_THREADID] + " = ? AND "
+	"(" + Message.PROJECTION_SMS[Message.INDEX_THREADID] + " = ? AND "
 			+ Message.PROJECTION_SMS[Message.INDEX_TYPE] + " = "
-			+ Message.SMS_DRAFT;
+			+ Message.SMS_DRAFT + ")";
 	// + " OR " + type + " = " + Message.SMS_PENDING;
 
 	/** Thread id. */
