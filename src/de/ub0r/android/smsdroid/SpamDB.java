@@ -115,13 +115,16 @@ public final class SpamDB {
 	/**
 	 * Insert a number into the spam database.
 	 * 
-	 * @param number
+	 * @param nr
 	 *            number
 	 * @return id in database
 	 */
-	public long insertNr(final String number) {
+	public long insertNr(final String nr) {
+		if (nr == null) {
+			return -1L;
+		}
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_NR, number);
+		initialValues.put(KEY_NR, nr);
 		return this.db.insert(DATABASE_TABLE, null, initialValues);
 	}
 
@@ -134,6 +137,9 @@ public final class SpamDB {
 	 */
 	public boolean isInDB(final String nr) {
 		Log.d(TAG, "isInDB(" + nr + ")");
+		if (nr == null) {
+			return false;
+		}
 		final Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, KEY_NR
 				+ " = ?", new String[] { nr }, null, null, null);
 		final boolean ret = cursor.moveToFirst();
@@ -195,6 +201,9 @@ public final class SpamDB {
 	 *            number
 	 */
 	public void removeNr(final String nr) {
+		if (nr == null) {
+			return;
+		}
 		this.db.delete(DATABASE_TABLE, KEY_NR + " = '?'", new String[] { nr });
 	}
 }
