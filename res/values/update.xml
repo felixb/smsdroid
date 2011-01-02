@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>HEAD: Answer directly in SMSdroid</item>
+		<item>HEAD: Answer directly in SMSdroid, new titlebars, fix sticky unread messages, speed up db queries, save mms attachments to sd card, fix forwarding with stock messaging app, show full date, import vcards, call from conversation/message</item>
 		<item>v0.2.4: Add Russian translation, set custom locale, fix scroll to bottom</item>
 		<item>v0.2.3.2: another fix for LauncherPRO, start composer as new task, show photo when entering thread directly</item>
 		<item>v0.2.3.1: fix for LauncherPRO</item>
