@@ -17,5 +17,9 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-	<string formatted="false" name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11046415</string>
+	<string name="dummy">Dummy</string>
+	<string-array name="notes_from_dev">
+		<item>You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!</item>
+		<item>Dec. 2010: Try a long-click on answer/send/compose buttons to use your non-standard app for sending.</item>
+	</string-array>
 </resources>

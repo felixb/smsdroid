@@ -17,142 +17,121 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-<!--	<string name="author_">Author:</string> -->
-<!--	<string name="version_">Version:</string> -->
-<!--	<string name="license_">License:</string> -->
-<!--	<string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string> -->
-<!--	<string name="source_">Sourcescode:</string> -->
-<!--	<string name="website_">Website:</string> -->
-<!--	<string name="custom_language_">Custom language</string> -->
-<!--	<string name="custom_language_hint">Set a custom language.</string> -->
-	<string name="send_logs_">Logs senden</string>
-	<string name="send_logs_hint">Logs von deinem Handy an den Entwickler senden.\nBitte nur nach Aufforderung senden.</string>
-	<string name="sendlog_run_">SendLog starten</string>
-	<string name="sendlog_run">SendLog wird die Logs aus deinem Gerät auslesen und zum Entwickler schicken.\nDu hast vor dem Senden die Möglichkeit die Daten zu begutachten und zu verändern.</string>
-	<string name="sendlog_install_">SendLog installieren</string>
-	<string name="sendlog_install">Installiere die kostenlose App SendLog um die Logs auszulesen und an den Entwickler zu schicken.</string>
-<!--	<string name="donate_paypal_">Donate (Paypal)</string> -->
-<!--	<string name="donate_market_">Donate (Market)</string> -->
-<!--	<string name="donate_remove_ads_">Donate/remove ads</string> -->
-<!--	<string name="remove_ads_">Remove ads</string> -->
-<!--	<string name="predonate">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating. I\'ll remove the ads for you as soon as possible.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.</string> -->
-<!--	<string name="postdonate">To remove ads, you need to load the <i>noads</i> code. It is available as soon the donation arrives. Please be patient and drop me a mail if it does not work after one day.</string> -->
-<!--	<string name="donator_id_">To verify your donation your donation id (paypal mail address for paypal; gmail address for market) is needed:</string> -->
-<!--	<string name="donator_id_hint">Paypal/gmail address</string> -->
-<!--	<string name="load_hash_">Load <i>noads</i> code</string> -->
-<!--	<string name="sig_loaded">Ads removed!</string> -->
-<!--	<string name="sig_failed">Failed to remove ads!</string> -->
-<!--	<string name="accept_">Accept Terms</string> -->
-<!--	<string name="accept_missing">Please accept terms before sending the data.</string> -->
-<!--	<string name="terms">The app will send your donation id along with the md5-hash of your IMEI to the server (http://ub0r.de/donation/). The data is needed to verify your donation.\nThe data is never given to third party and used only for verifying your donation.\n\nIf your phone changes, the <i>noads</i> code will not work anymore. Please drop me a mail to get a new one.</string> -->
-<!--	<string name="notify_">Forgot to remove the ads?</string> -->
-<!--	<string name="notify_text">To finally remove the ads, you nead to load the <b>noads</b> Code. Click to proceed.</string> -->
-	<string name="about_">Über</string>
-	<string name="about_hint">Über diese App</string>
-	<string name="faq_hint">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
-	<string name="feedback_">Feedback</string>
-	<string name="feedback_hint">Bugreports, feature requests ...</string>
-	<string name="twitter_hint">Follow auf twitter.\nUpdate Infos etc...</string>
-	<string name="about0">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebeigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
-	<string name="more_apps_">Mehr Apps..</string>
-	<string name="settings">Einstellungen</string>
-	<string name="new_message_">Neue Nachricht</string>
-	<string name="new_message_hint">Neue Nachricht schreiben</string>
-	<string name="new_message">1 ungelesene Nachricht.</string>
-	<string name="new_messages_">Neue Nachrichten</string>
-	<string name="new_messages">%d ungelesene Nachrichten.</string>
-	<string name="answer">Antworten</string>
-	<string name="send_">Senden</string>
-	<string name="notification_">Benachrictigungen</string>
-	<string name="notification_enable_">Benachrichtigungen aktivieren</string>
-	<string name="notification_enable_hint">Benachrichtigungen bei neuen Nachrichten aktivieren</string>
-	<string name="receive_vibrate_">Vibrieren</string>
-	<string name="receive_vibrate_hint">Vibrieren bei neuen Nachrichten</string>
-	<string name="receive_vibrate_mode_">Vibrationsmodus</string>
-	<string name="receive_sound_">Sound</string>
-	<string name="receive_sound_hint">Sound bei neuen Nachrichten</string>
-	<string name="receive_led_color_">LED Farbe</string>
-	<string name="receive_led_flash_">LED Modus</string>
-	<string name="receive_led_flash_hint">LED Blinkverhalten</string>
-	<string name="receive_no_text_">Sender/Text verstecken</string>
-	<string name="receive_no_text_hint">Absender/Text in Benachrichtigung nicht anzeigen.</string>
-	<string name="appearance_">Erscheinung</string>
-	<string name="theme_">Theme</string>
-	<string name="textsize_">Schriftgrad</string>
-	<string name="textsize_hint">Schriftgrad in Punkten; leer lassen für Standard</string>
-	<string name="show_titlebar_">Zeige Titelleiste</string>
-	<string name="show_titlebar_hint">Zeige Titelleiste im Hauptbildschirm. Ohne Titelleiste wirst du nicht mehr auf Hintergrundaktivitäten hingewiesen.</string>
-	<string name="show_contact_photo_">Zeige Foto</string>
-	<string name="show_contact_photo_hint">Zeige Kontaktfoto in Threadliste</string>
-	<string name="show_emoticons_">Zeige Smilies</string>
-	<string name="show_emoticons_hint">Zeige Smilies in Nachrichtenliste.</string>
-	<string name="show_bubbles_">Zeige Sprechblasen</string>
-	<string name="me">Ich</string>
-	<string name="view_contact_">Zeige Kontakt</string>
-	<string name="add_contact_">zu Kontakten hinzufügen</string>
-	<string name="view_thread_">Thread anzeigen</string>
-	<string name="filter_spam_">Als Spam markieren</string>
-	<string name="dont_filter_spam_">Kein Spam</string>
-	<string name="delete_message_">Nachricht löschen</string>
-	<string name="delete_thread_">Thread löschen</string>
-	<string name="forward_">Weiterleiten</string>
-	<string name="send_draft_">Entwurf senden</string>
-	<string name="copy_text_">Nachrichtentext kopieren</string>
-	<string name="view_details_">Nachrichtendetails anzeigen</string>
-	<string name="spek_">Vorlesen</string>
-	<string name="delete_threads_">Alle Threads löschen</string>
-	<string name="mark_all_read_">Alles als gelesen markieren</string>
-	<string name="mark_read_">Als gelesen markieren</string>
-	<string name="mark_unread_">Als ungelesen markieren</string>
-	<string name="all_threads_">Alle Threads</string>
-	<string name="message_options_">Nachrichtenoptionen</string>
-	<string name="compose_">Schreiben</string>
-	<string name="delete_message_question">Willst du wirklich diese Nachricht löschen?</string>
-	<string name="delete_messages_question">Willst du wirklich diese Nachrichten löschen?</string>
-	<string name="delete_thread_question">Willst du wirklich <b>alle Nachrichten dieses Threads</b> löschen?</string>
-	<string name="delete_threads_question">Willst du wirklich <b>alle Nachrichten</b> löschen?</string>
-	<string name="from_">Von:</string>
-	<string name="to_">An:</string>
-	<string name="type_">Typ:</string>
-	<string name="sent_">Gesendet:</string>
-	<string name="received_">Empfangen:</string>
-	<string name="view_mms">MMS anzeigen</string>
-<!--	<string name="mms_conversation">&lt;MMS body&gt;</string> -->
-	<string name="mms_not_supported">Die Nachricht scheint eine MMS zu sein. Vielleicht willst du sie dir mit der standard MMS/SMS app herrunter laden?\nKlicke hier..</string>
-	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
-	<string name="download_">Herunterladen</string>
-	<string name="downloading_">Lade herunter..</string>
-	<string name="debug_">Debug</string>
-	<string name="clear_cache_">Cache löschen</string>
-	<string name="clear_cache_hint">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
-<!--	<string name="not_implemented">Sorry, not yet implemented.</string> -->
-	<string name="error_conv_null">Fehler beim Laden des Threads!</string>
-	<string name="paste_">[Aus Zwischenablage einfügen]</string>
-	<string-array name="themes">
-		<item>Dunkel</item>
-		<item>Hell</item>
-	</string-array>
-	<string-array name="textsize">
-		<item>Klein</item>
-		<item>Mittel</item>
-	</string-array>
-	<string-array name="led_color">
-		<item>Grün</item>
-		<item>Blau</item>
-		<item>Rot</item>
-		<item>Orange</item>
-		<item>Magenta</item>
-		<item>Cyan</item>
-	</string-array>
-	<string-array name="led_flash">
-		<item>Blinkend</item>
-		<item>Durchgehend</item>
-	</string-array>
-	<string-array name="vibrate_mode">
-		<item>Default</item>
-		<item>Lang</item>
-		<item>Mehrmals kurz</item>
-		<item>Mehrmals lang</item>
-		<item>Kurz, lang, kurz, lang</item>
-	</string-array>
+  <string formatted="false" name="about_">Über</string>
+  <string formatted="false" name="about_hint">Über diese App</string>
+  <string formatted="false" name="faq_hint">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
+  <string formatted="false" name="feedback_">Feedback</string>
+  <string formatted="false" name="feedback_hint">Bugreports, feature requests ...</string>
+  <string formatted="false" name="twitter_hint">Follow auf twitter.\nUpdate Infos etc...</string>
+  <string formatted="false" name="about0">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebeigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
+  <string formatted="false" name="more_apps_">Mehr Apps..</string>
+  <string formatted="false" name="settings">Einstellungen</string>
+  <string formatted="false" name="new_message_">Neue Nachricht</string>
+  <string formatted="false" name="new_message_hint">Neue Nachricht schreiben</string>
+  <string formatted="false" name="new_message">1 ungelesene Nachricht.</string>
+  <string formatted="false" name="new_messages_">Neue Nachrichten</string>
+  <string formatted="false" name="new_messages">%d ungelesene Nachrichten.</string>
+  <string formatted="false" name="call">Anrufen</string>
+  <string formatted="false" name="answer">Antworten</string>
+  <string formatted="false" name="send_">Senden</string>
+  <string formatted="false" name="notification_">Benachrictigungen</string>
+  <string formatted="false" name="notification_enable_">Benachrichtigungen aktivieren</string>
+  <string formatted="false" name="notification_enable_hint">Benachrichtigungen bei neuen Nachrichten aktivieren</string>
+  <string formatted="false" name="receive_vibrate_">Vibrieren</string>
+  <string formatted="false" name="receive_vibrate_hint">Vibrieren bei neuen Nachrichten</string>
+  <string formatted="false" name="receive_vibrate_mode_">Vibrationsmodus</string>
+  <string formatted="false" name="receive_sound_">Sound</string>
+  <string formatted="false" name="receive_sound_hint">Sound bei neuen Nachrichten</string>
+  <string formatted="false" name="receive_led_color_">LED Farbe</string>
+  <string formatted="false" name="receive_led_flash_">LED Modus</string>
+  <string formatted="false" name="receive_led_flash_hint">LED Blinkverhalten</string>
+  <string formatted="false" name="receive_no_text_">Sender/Text verstecken</string>
+  <string formatted="false" name="receive_no_text_hint">Absender/Text in Benachrichtigung nicht anzeigen.</string>
+  <string formatted="false" name="appearance_">Erscheinung</string>
+  <string formatted="false" name="theme_">Theme</string>
+  <string formatted="false" name="textsize_">Schriftgrad</string>
+  <string formatted="false" name="textsize_hint">Schriftgrad in Punkten; leer lassen für Standard</string>
+  <string formatted="false" name="show_titlebar_">Zeige Titelleiste</string>
+  <string formatted="false" name="show_titlebar_hint">Zeige Titelleiste im Hauptbildschirm. Ohne Titelleiste wirst du nicht mehr auf Hintergrundaktivitäten hingewiesen.</string>
+  <string formatted="false" name="show_contact_photo_">Zeige Foto</string>
+  <string formatted="false" name="show_contact_photo_hint">Zeige Kontaktfoto in Threadliste</string>
+  <string formatted="false" name="show_emoticons_">Zeige Smilies</string>
+  <string formatted="false" name="show_emoticons_hint">Zeige Smilies in Nachrichtenliste.</string>
+  <string formatted="false" name="show_bubbles_">Zeige Sprechblasen</string>
+  <string formatted="false" name="hide_paste_">"Einfügen" Button ausblenden</string>
+  <string formatted="false" name="hide_paste_hint">"Einfügen" Button auf dem Textfeld ausblenden.</string>
+  <string formatted="false" name="show_full_date_">Volles Datum zeigen</string>
+  <string formatted="false" name="show_full_date_hint">Volles Datum und Uhrzeit bei allen Nachrichten anzeigen.</string>
+  <string formatted="false" name="me">Ich</string>
+  <string formatted="false" name="view_contact_">Zeige Kontakt</string>
+  <string formatted="false" name="add_contact_">zu Kontakten hinzufügen</string>
+  <string formatted="false" name="view_thread_">Thread anzeigen</string>
+  <string formatted="false" name="filter_spam_">Als Spam markieren</string>
+  <string formatted="false" name="dont_filter_spam_">Kein Spam</string>
+  <string formatted="false" name="delete_message_">Nachricht löschen</string>
+  <string formatted="false" name="delete_thread_">Thread löschen</string>
+  <string formatted="false" name="forward_">Weiterleiten</string>
+  <string formatted="false" name="send_draft_">Entwurf senden</string>
+  <string formatted="false" name="copy_text_">Nachrichtentext kopieren</string>
+  <string formatted="false" name="view_details_">Nachrichtendetails anzeigen</string>
+  <string formatted="false" name="spek_">Vorlesen</string>
+  <string formatted="false" name="delete_threads_">Alle Threads löschen</string>
+  <string formatted="false" name="mark_all_read_">Alles als gelesen markieren</string>
+  <string formatted="false" name="mark_read_">Als gelesen markieren</string>
+  <string formatted="false" name="mark_unread_">Als ungelesen markieren</string>
+  <string formatted="false" name="all_threads_">Alle Threads</string>
+  <string formatted="false" name="message_options_">Nachrichtenoptionen</string>
+  <string formatted="false" name="compose_">Schreiben</string>
+  <string formatted="false" name="delete_message_question">Willst du wirklich diese Nachricht löschen?</string>
+  <string formatted="false" name="delete_messages_question">Willst du wirklich diese Nachrichten löschen?</string>
+  <string formatted="false" name="delete_thread_question">Willst du wirklich  löschen?</string>
+  <string formatted="false" name="delete_threads_question">Willst du wirklich  löschen?</string>
+  <string formatted="false" name="from_">Von:</string>
+  <string formatted="false" name="to_">An:</string>
+  <string formatted="false" name="type_">Typ:</string>
+  <string formatted="false" name="sent_">Gesendet:</string>
+  <string formatted="false" name="received_">Empfangen:</string>
+  <string formatted="false" name="view_mms">MMS anzeigen</string>
+  <string formatted="false" name="mms_conversation">&lt;MMS body&gt;</string>
+  <string formatted="false" name="mms_not_supported">Die Nachricht scheint eine MMS zu sein. Vielleicht willst du sie dir mit der standard MMS/SMS app herrunter laden?\nKlicke hier..</string>
+  <string formatted="false" name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
+  <string formatted="false" name="import_contact_">Kontakt importieren</string>
+  <string formatted="false" name="download_">Herunterladen</string>
+  <string formatted="false" name="downloading_">Lade herunter..</string>
+  <string formatted="false" name="debug_">Debug</string>
+  <string formatted="false" name="clear_cache_">Cache löschen</string>
+  <string formatted="false" name="clear_cache_hint">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
+  <string formatted="false" name="not_implemented">Diese Funktion ist noch nicht implementiert.</string>
+  <string formatted="false" name="error_conv_null">Fehler beim Laden des Threads!</string>
+  <string formatted="false" name="text_hint">Text</string>
+  <string formatted="false" name="paste_">[Aus Zwischenablage einfügen]</string>
+  <string formatted="false" name="attachment_saved">Anhang auf SD Karte gespeichert als:</string>
+  <string formatted="false" name="attachment_not_saved">Konnte Anhang nicht speichern.</string>
+  <string-array name="themes">
+    <item>Dunkel</item>
+    <item>Hell</item>
+  </string-array>
+  <string-array name="textsize">
+    <item>Klein</item>
+    <item>Mittel</item>
+  </string-array>
+  <string-array name="led_color">
+    <item>Grün</item>
+    <item>Blau</item>
+    <item>Rot</item>
+    <item>Orange</item>
+    <item>Magenta</item>
+    <item>Cyan</item>
+  </string-array>
+  <string-array name="led_flash">
+    <item>Blinkend</item>
+    <item>Durchgehend</item>
+  </string-array>
+  <string-array name="vibrate_mode">
+    <item>Default</item>
+    <item>Lang</item>
+    <item>Mehrmals kurz</item>
+    <item>Mehrmals lang</item>
+    <item>Kurz, lang, kurz, lang</item>
+  </string-array>
 </resources>

@@ -17,140 +17,121 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-	<string name="author_">Автор:</string>
-	<string name="version_">Версия:</string>
-	<string name="license_">Лицензия:</string>
-	<string name="license">GPLv3 - смотри http://www.gnu.org/licenses/gpl-3.0.txt</string>
-	<string name="source_">Исходники:</string>
-	<string name="website_">Сайт:</string>
-	<string name="custom_language_">Выбор языка</string>
-	<string name="custom_language_hint">Выберите язык интерфейса.</string>
-	<string name="send_logs_">Отослать лог</string>
-	<string name="send_logs_hint">Отсылает лог с Вашего устройства разработчику. \nСделайте это только если Вас попросили.</string>
-	<string name="sendlog_run_">Запустить SendLog</string>
-	<string name="sendlog_run">SendLog получит лог с Вашего девайса и отправит разработчику.\nУ Вас будет возможность просмотреть и изменить отсылаемые данные.</string>
-	<string name="sendlog_install_">Установить SendLog</string>
-	<string name="sendlog_install">Установите SendLog для получения лога с Вашего устройства и отправки разработчику.</string>
-	<string name="donate_paypal_">Поддержать разработчика (Paypal)</string>
-	<string name="donate_market_">Поддержать разработчика (Market)</string>
-	<string name="donate_remove_ads_">Поддержать разработчика/убрать рекламу</string>
-	<string name="remove_ads_">Убрать рекламу</string>
-	<string name="predonate">Это open-source приложение с лицензией GPLv3. Использование бесплатное и будет оставаться таким. Если Вам понравилось приложение или раздражает реклама, можете сделать пожертвование. Я удалю рекламу как можно скорее.\nСпасибо!\n\nПожертвование удалит рекламу из всех приложений, поддерживаемых мной.</string>
-	<string name="postdonate">Чтобы удалить рекламу Вам необходимо загрузить <i>noads</i> код. Загрузка станет доступна сразу после получения пожертвования. Пожалуйста, будьте терпеливы. Напишите мне, если не заработает через 1 день.</string>
-	<string name="donator_id_">Чтобы подтвердить Ваше пожертвование необходим ID: (paypal e-mail адрес для paypal; gmail e-mail адрес для market):</string>
-	<string name="donator_id_hint">Paypal/gmail адрес</string>
-	<string name="load_hash_">Загрузить <i>noads</i> код</string>
-	<string name="sig_loaded">Реклама удалена!</string>
-	<string name="sig_failed">Ошибка удаления рекламы!</string>
-	<string name="accept_">Принять условия</string>
-	<string name="accept_missing">Пожалуйста, согласитесь с условиями перед отправкой данных.</string>
-	<string name="terms">Приложение отправит Ваш ID вместе с md5-суммой IMEI Вашего устройства на сервер (http://ub0r.de/donation/). Данные необходимы для подтверждения пожертвования.\nДанные будут использованы только для подтверждения пожертвования и никогда не будут переданы третьим лицам.\n\nПосле смены устройства <i>noads</i> код не будет работать. Напишите мне для получения нового.</string>
-	<string name="notify_">Забыли удалить рекламу?</string>
-	<string name="notify_text">Для удаления рекламы загрузите <b>noads</b> код. Нажмите для продолжения.</string>
-	<string name="about_">О программе</string>
-	<string name="about_hint">Описание программы</string>
-	<string name="faq_hint">Советы и подсказки по настройке программы.</string>
-	<string name="feedback_">Отзывы</string>
-	<string name="feedback_hint">Сообщить об ошибке, запрос на расширение функционала..</string>
-	<string name="twitter_hint">Следите на Twitter.\nУзнайте об обновлениях и т.п.</string>
-	<string name="about0">SMSdroid - прграмма для чтения СМС. Позволит отправлять Ваши СМС через любое другое приложение.</string>
-	<string name="more_apps_">Больше приложений..</string>
-	<string name="settings">Настройки</string>
-	<string name="new_message_">Новое сообщение</string>
-	<string name="new_message_hint">Создать новое сообщение</string>
-	<string name="new_message">1 новое сообщение.</string>
-	<string name="new_messages_">Новые сообщения</string>
-	<string name="new_messages">%d новых сообщений.</string>
-	<string name="answer">Ответить</string>
-	<string name="send_">Отправить</string>
-	<string name="notification_">Уведомления</string>
-	<string name="notification_enable_">Разрешить уведомления</string>
-	<string name="notification_enable_hint">Разрешить уведомления при получении</string>
-	<string name="receive_vibrate_">Вибрация</string>
-	<string name="receive_vibrate_hint">Вибрация при получении</string>
-	<string name="receive_vibrate_mode_">Режим вибрации</string>
-	<string name="receive_sound_">Звук</string>
-	<string name="receive_sound_hint">Звук при получении</string>
-	<string name="receive_led_color_">Цвет светодиода</string>
-	<string name="receive_led_flash_">Режим светодиода</string>
-	<string name="receive_led_flash_hint">Настройка поведения светодиода</string>
-	<string name="receive_no_text_">Не показывать отправителя/текст</string>
-	<string name="receive_no_text_hint">Не показывать отправителя/текст в области уведомлений.</string>
-	<string name="appearance_">Внешний вид</string>
-	<string name="theme_">Тема</string>
-	<string name="textsize_">Размер текста</string>
-	<string name="textsize_hint">Размер текста в пикселях; оставьте пустым для значения по умолчанию</string>
-	<string name="show_titlebar_">Показ в обл. уведомлений</string>
-	<string name="show_titlebar_hint">Показывать фоновые процессы в области уведомлений в главном окне. Без этого фоновые процессы не видны.</string>
-	<string name="show_contact_photo_">Показывать фото</string>
-	<string name="show_contact_photo_hint">Показывать фото контакта в листе диалога</string>
-	<string name="show_emoticons_">Показывать смайлы</string>
-	<string name="show_emoticons_hint">Показывать смайлы в сообщении.</string>
-	<string name="show_bubbles_">Сообщения в пузырях</string>
-	<string name="me">Я</string>
-	<string name="view_contact_">Показать контакт</string>
-	<string name="add_contact_">Добавить контакт</string>
-	<string name="view_thread_">Смотреть диалог</string>
-	<string name="filter_spam_">Пометить как спам</string>
-	<string name="dont_filter_spam_">Удалить из чёрного списка</string>
-	<string name="delete_message_">Удалить сообщение</string>
-	<string name="delete_thread_">Удалить диалог</string>
-	<string name="forward_">Переслать</string>
-	<string name="copy_text_">Копировать текст сообщения</string>
-	<string name="view_details_">Показать детали сообщения</string>
-	<string name="spek_">Говорить</string>
-	<string name="delete_threads_">Удалить все диалоги</string>
-	<string name="mark_all_read_">Пометить все как прочитанные</string>
-	<string name="mark_read_">Пометить как прочитанное</string>
-	<string name="mark_unread_">Пометить как непрочитанное</string>
-	<string name="all_threads_">Все диалоги</string>
-	<string name="message_options_">Опции сообщения</string>
-	<string name="compose_">Создать</string>
-	<string name="delete_message_question">Вы действительно хотите удалить это сообщение?</string>
-	<string name="delete_messages_question">Вы действительно хотите удалить эти сообщеия?</string>
-	<string name="delete_thread_question">Вы действительно хотите удалить <b>все сообщения этого диалога</b>?</string>
-	<string name="delete_threads_question">Вы действительно хотите удалить <b>абсолютно все сообщения</b>?</string>
-	<string name="from_">От:</string>
-	<string name="to_">Кому:</string>
-	<string name="type_">Тип:</string>
-	<string name="sent_">Отправлено:</string>
-	<string name="received_">Получено:</string>
-	<string name="view_mms">Показать ММС</string>
-	<string name="mms_conversation">&lt;ММС body&gt;</string>
-	<string name="mms_not_supported">Это сообщение может являться ММС. Вы можете попробовать загрузить его, используя стандартное СМС/ММС приложение.\nНажмите для продолжения.</string>
-	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
-	<string name="download_">Загрузить</string>
-	<string name="downloading_">Загрузка..</string>
-	<string name="debug_">Отладка</string>
-	<string name="clear_cache_">Очистить кеш</string>
-	<string name="clear_cache_hint">Очистит внутреннюю базу данных. Удалит все данные из внешней базы данных.</string>
-	<string name="not_implemented">Извините, не выполнено до конца.</string>
-	<string name="error_conv_null">Ошибка получения сообщений из БД!</string>
-	<string-array name="themes">
-		<item>Тёмная</item>
-		<item>Светлая</item>
-	</string-array>
-	<string-array name="textsize">
-		<item>Маленький</item>
-		<item>Средний</item>
-	</string-array>
-	<string-array name="led_color">
-		<item>Зелёный</item>
-		<item>Синий</item>
-		<item>Красный</item>
-		<item>Оранжевый</item>
-		<item>Пурпурный</item>
-		<item>Голубой</item>
-	</string-array>
-	<string-array name="led_flash">
-		<item>Мигать</item>
-		<item>Непрерывно</item>
-	</string-array>
-	<string-array name="vibrate_mode">
-		<item>По умолчанию</item>
-		<item>Длинный</item>
-		<item>Множественный короткий</item>
-		<item>Множественный длинный</item>
-		<item>Короткий - длинный - короткий - длинный</item>
-	</string-array>
+  <string formatted="false" name="about_">О программе</string>
+  <string formatted="false" name="about_hint">Описание программы</string>
+  <string formatted="false" name="faq_hint">Советы и подсказки по настройке программы.</string>
+  <string formatted="false" name="feedback_">Отзывы</string>
+  <string formatted="false" name="feedback_hint">Сообщить об ошибке, запрос на расширение функционала..</string>
+  <string formatted="false" name="twitter_hint">Следите на Twitter.\nУзнайте об обновлениях и т.п.</string>
+  <string formatted="false" name="about0">SMSdroid - прграмма для чтения СМС. Позволит отправлять Ваши СМС через любое другое приложение.</string>
+  <string formatted="false" name="more_apps_">Больше приложений..</string>
+  <string formatted="false" name="settings">Настройки</string>
+  <string formatted="false" name="new_message_">Новое сообщение</string>
+  <string formatted="false" name="new_message_hint">Создать новое сообщение</string>
+  <string formatted="false" name="new_message">1 новое сообщение.</string>
+  <string formatted="false" name="new_messages_">Новые сообщения</string>
+  <string formatted="false" name="new_messages">%d новых сообщений.</string>
+  <string formatted="false" name="call">Call</string>
+  <string formatted="false" name="answer">Ответить</string>
+  <string formatted="false" name="send_">Отправить</string>
+  <string formatted="false" name="notification_">Уведомления</string>
+  <string formatted="false" name="notification_enable_">Разрешить уведомления</string>
+  <string formatted="false" name="notification_enable_hint">Разрешить уведомления при получении</string>
+  <string formatted="false" name="receive_vibrate_">Вибрация</string>
+  <string formatted="false" name="receive_vibrate_hint">Вибрация при получении</string>
+  <string formatted="false" name="receive_vibrate_mode_">Режим вибрации</string>
+  <string formatted="false" name="receive_sound_">Звук</string>
+  <string formatted="false" name="receive_sound_hint">Звук при получении</string>
+  <string formatted="false" name="receive_led_color_">Цвет светодиода</string>
+  <string formatted="false" name="receive_led_flash_">Режим светодиода</string>
+  <string formatted="false" name="receive_led_flash_hint">Настройка поведения светодиода</string>
+  <string formatted="false" name="receive_no_text_">Не показывать отправителя/текст</string>
+  <string formatted="false" name="receive_no_text_hint">Не показывать отправителя/текст в области уведомлений.</string>
+  <string formatted="false" name="appearance_">Внешний вид</string>
+  <string formatted="false" name="theme_">Тема</string>
+  <string formatted="false" name="textsize_">Размер текста</string>
+  <string formatted="false" name="textsize_hint">Размер текста в пикселях; оставьте пустым для значения по умолчанию</string>
+  <string formatted="false" name="show_titlebar_">Показ в обл. уведомлений</string>
+  <string formatted="false" name="show_titlebar_hint">Показывать фоновые процессы в области уведомлений в главном окне. Без этого фоновые процессы не видны.</string>
+  <string formatted="false" name="show_contact_photo_">Показывать фото</string>
+  <string formatted="false" name="show_contact_photo_hint">Показывать фото контакта в листе диалога</string>
+  <string formatted="false" name="show_emoticons_">Показывать смайлы</string>
+  <string formatted="false" name="show_emoticons_hint">Показывать смайлы в сообщении.</string>
+  <string formatted="false" name="show_bubbles_">Сообщения в пузырях</string>
+  <string formatted="false" name="hide_paste_">Hide "paste" button</string>
+  <string formatted="false" name="hide_paste_hint">Hide "paste" button on text field.</string>
+  <string formatted="false" name="show_full_date_">Show full date</string>
+  <string formatted="false" name="show_full_date_hint">Show full date and time on every message.</string>
+  <string formatted="false" name="me">Я</string>
+  <string formatted="false" name="view_contact_">Показать контакт</string>
+  <string formatted="false" name="add_contact_">Добавить контакт</string>
+  <string formatted="false" name="view_thread_">Смотреть диалог</string>
+  <string formatted="false" name="filter_spam_">Пометить как спам</string>
+  <string formatted="false" name="dont_filter_spam_">Удалить из чёрного списка</string>
+  <string formatted="false" name="delete_message_">Удалить сообщение</string>
+  <string formatted="false" name="delete_thread_">Удалить диалог</string>
+  <string formatted="false" name="forward_">Переслать</string>
+  <string formatted="false" name="send_draft_">Send draft</string>
+  <string formatted="false" name="copy_text_">Копировать текст сообщения</string>
+  <string formatted="false" name="view_details_">Показать детали сообщения</string>
+  <string formatted="false" name="spek_">Говорить</string>
+  <string formatted="false" name="delete_threads_">Удалить все диалоги</string>
+  <string formatted="false" name="mark_all_read_">Пометить все как прочитанные</string>
+  <string formatted="false" name="mark_read_">Пометить как прочитанное</string>
+  <string formatted="false" name="mark_unread_">Пометить как непрочитанное</string>
+  <string formatted="false" name="all_threads_">Все диалоги</string>
+  <string formatted="false" name="message_options_">Опции сообщения</string>
+  <string formatted="false" name="compose_">Создать</string>
+  <string formatted="false" name="delete_message_question">Вы действительно хотите удалить это сообщение?</string>
+  <string formatted="false" name="delete_messages_question">Вы действительно хотите удалить эти сообщеия?</string>
+  <string formatted="false" name="delete_thread_question">Вы действительно хотите удалить ?</string>
+  <string formatted="false" name="delete_threads_question">Вы действительно хотите удалить ?</string>
+  <string formatted="false" name="from_">От:</string>
+  <string formatted="false" name="to_">Кому:</string>
+  <string formatted="false" name="type_">Тип:</string>
+  <string formatted="false" name="sent_">Отправлено:</string>
+  <string formatted="false" name="received_">Получено:</string>
+  <string formatted="false" name="view_mms">Показать ММС</string>
+  <string formatted="false" name="mms_conversation">&lt;ММС body&gt;</string>
+  <string formatted="false" name="mms_not_supported">Это сообщение может являться ММС. Вы можете попробовать загрузить его, используя стандартное СМС/ММС приложение.\nНажмите для продолжения.</string>
+  <string formatted="false" name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
+  <string formatted="false" name="import_contact_">Import contact</string>
+  <string formatted="false" name="download_">Загрузить</string>
+  <string formatted="false" name="downloading_">Загрузка..</string>
+  <string formatted="false" name="debug_">Отладка</string>
+  <string formatted="false" name="clear_cache_">Очистить кеш</string>
+  <string formatted="false" name="clear_cache_hint">Очистит внутреннюю базу данных. Удалит все данные из внешней базы данных.</string>
+  <string formatted="false" name="not_implemented">Извините, не выполнено до конца.</string>
+  <string formatted="false" name="error_conv_null">Ошибка получения сообщений из БД!</string>
+  <string formatted="false" name="text_hint">Text</string>
+  <string formatted="false" name="paste_">[Paste from clipboard]</string>
+  <string formatted="false" name="attachment_saved">Saved attachment on SD card as:</string>
+  <string formatted="false" name="attachment_not_saved">Could not save attachment.</string>
+  <string-array name="themes">
+    <item>Тёмная</item>
+    <item>Светлая</item>
+  </string-array>
+  <string-array name="textsize">
+    <item>Маленький</item>
+    <item>Средний</item>
+  </string-array>
+  <string-array name="led_color">
+    <item>Зелёный</item>
+    <item>Синий</item>
+    <item>Красный</item>
+    <item>Оранжевый</item>
+    <item>Пурпурный</item>
+    <item>Голубой</item>
+  </string-array>
+  <string-array name="led_flash">
+    <item>Мигать</item>
+    <item>Непрерывно</item>
+  </string-array>
+  <string-array name="vibrate_mode">
+    <item>По умолчанию</item>
+    <item>Длинный</item>
+    <item>Множественный короткий</item>
+    <item>Множественный длинный</item>
+    <item>Короткий - длинный - короткий - длинный</item>
+  </string-array>
 </resources>
