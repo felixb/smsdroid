@@ -34,7 +34,7 @@
   <string formatted="false" name="call">Anrufen</string>
   <string formatted="false" name="answer">Antworten</string>
   <string formatted="false" name="send_">Senden</string>
-  <string formatted="false" name="notification_">Benachrictigungen</string>
+  <string formatted="false" name="notification_">Benachrichtigungen</string>
   <string formatted="false" name="notification_enable_">Benachrichtigungen aktivieren</string>
   <string formatted="false" name="notification_enable_hint">Benachrichtigungen bei neuen Nachrichten aktivieren</string>
   <string formatted="false" name="receive_vibrate_">Vibrieren</string>
@@ -47,6 +47,13 @@
   <string formatted="false" name="receive_led_flash_hint">LED Blinkverhalten</string>
   <string formatted="false" name="receive_no_text_">Sender/Text verstecken</string>
   <string formatted="false" name="receive_no_text_hint">Absender/Text in Benachrichtigung nicht anzeigen.</string>
+  <string formatted="false" name="behavior_">Verhalten</string>
+  <string formatted="false" name="autosend_">Autosend</string>
+  <string formatted="false" name="autosend_hint">Antworten automatisch absenden. Zur Zeit unterstützt nur WebSMS dieses Feature. An sonsten wird der Text an die sendende App übergeben.</string>
+  <string formatted="false" name="show_text_filed_">Textfeld zeigen</string>
+  <string formatted="false" name="show_text_filed_hint">Zeige das Textfeld statt dem Antworten Button.</string>
+  <string formatted="false" name="show_target_app_">Zeige Ziel App</string>
+  <string formatted="false" name="show_target_app_hint">Zeige Ziel App zum Senden auf \"senden\" Button.</string>
   <string formatted="false" name="appearance_">Erscheinung</string>
   <string formatted="false" name="theme_">Theme</string>
   <string formatted="false" name="textsize_">Schriftgrad</string>

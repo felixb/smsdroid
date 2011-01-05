@@ -23,6 +23,7 @@
 		android:label="@string/app_name">
 		<activity android:name=".ConversationList" android:label="@string/app_name"
 			android:configChanges="orientation|keyboardHidden"
+			android:windowSoftInputMode="stateHidden|adjustResize"
 			android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -37,6 +38,7 @@
 		<activity android:name=".Preferences" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".About" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".MessageList" android:configChanges="orientation|keyboardHidden"
+			android:windowSoftInputMode="stateHidden|adjustResize"
 			android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />

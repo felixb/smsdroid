@@ -20,6 +20,7 @@
 	<string name="dummy">Dummy</string>
 	<string-array name="notes_from_dev">
 		<item>Vielleicht möchtest du mit WebSMS gratis oder sehr günstig SMS senden. Es werden viele verschiedene Anbieter unterstützt.</item>
-		<item>Dez. 2010: Versuche einen langen Klick auf Antworten / Senden / Neue Nachricht, um über eine nicht-Standard-App zu senden.</item>
+		<item></item>
+		<item>Jan. 2011: Versuche einen langen Klick auf Antworten / Senden / Neue Nachricht, um eine andere als deine Standard-App zum Senden zu benutzen.</item>
 	</string-array>
 </resources>

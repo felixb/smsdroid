@@ -67,6 +67,12 @@ public class Preferences extends PreferenceActivity {
 	private static final String PREFS_TEXTSIZE = "textsizen";
 	/** Preference's name: show titlebar. */
 	public static final String PREFS_SHOWTITLEBAR = "show_titlebar";
+	/** Preference's name: enable autosend. */
+	public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
+	/** Preference's name: show textfield. */
+	public static final String PREFS_SHOWTEXTFIELD = "show_textfield";
+	/** Preference's name: show target app. */
+	public static final String PREFS_SHOWTARGETAPP = "show_target_app";
 
 	/**
 	 * {@inheritDoc}

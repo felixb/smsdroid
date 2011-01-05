@@ -17,6 +17,18 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceScreen android:title="@string/behavior_">
+		<CheckBoxPreference android:key="enable_autosend"
+			android:defaultValue="true" android:title="@string/autosend_"
+			android:summary="@string/autosend_hint"
+			android:disableDependentsState="true" />
+		<CheckBoxPreference android:key="show_textfield"
+			android:defaultValue="true" android:title="@string/show_text_filed_"
+			android:summary="@string/show_text_filed_hint" android:dependency="enable_autosend" />
+		<CheckBoxPreference android:key="show_target_app"
+			android:defaultValue="true" android:title="@string/show_target_app_"
+			android:summary="@string/show_target_app_hint" />
+	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/appearance_">
 		<ListPreference android:title="@string/theme_"
 			android:key="theme" android:entries="@array/themes"

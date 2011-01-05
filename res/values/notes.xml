@@ -20,6 +20,7 @@
 	<string name="dummy">Dummy</string>
 	<string-array name="notes_from_dev">
 		<item>You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!</item>
-		<item>Dec. 2010: Try a long-click on answer/send/compose buttons to use your non-standard app for sending.</item>
+		<item></item>
+		<item>Jan. 2011: Try a long-click on answer/send/compose buttons to use an other than your standard app for sending.</item>
 	</string-array>
 </resources>

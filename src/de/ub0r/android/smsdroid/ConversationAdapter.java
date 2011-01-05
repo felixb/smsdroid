@@ -153,7 +153,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 					.setVisibility(View.VISIBLE);
 			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
 					Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE,
-					null, null, null);
+					null, null, SORT);
 		} catch (SQLiteException e) {
 			Log.e(TAG, "error starting query", e);
 		}

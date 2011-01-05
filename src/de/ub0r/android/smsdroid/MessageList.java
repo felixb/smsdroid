@@ -20,6 +20,8 @@ package de.ub0r.android.smsdroid;
 
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,6 +44,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -118,6 +121,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private TextView etTextLabel;
 	/** {@link ClipboardManager}. */
 	private ClipboardManager cbmgr;
+	
+	/** Enable autosend. */
+	boolean enableAutosend = true;
+	/** Show textfield. */
+	boolean showTextField = true;
+
 
 	/** TextWatcher updating char count on writing. */
 	private TextWatcher textWatcher = new TextWatcher() {
@@ -169,6 +178,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				.getDefaultSharedPreferences(this);
 		final boolean showTitlebar = prefs.getBoolean(
 				Preferences.PREFS_SHOWTITLEBAR, true);
+		this.enableAutosend = prefs.getBoolean(
+				Preferences.PREFS_ENABLE_AUTOSEND, true);
+		this.showTextField = enableAutosend || prefs.getBoolean(
+				Preferences.PREFS_SHOWTEXTFIELD, true);
 		this.setTheme(Preferences.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
@@ -182,6 +195,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.etText = (EditText) this.findViewById(R.id.text);
 		this.etTextLabel = (TextView) this.findViewById(R.id.text_);
 		this.tvPaste = (TextView) this.findViewById(R.id.text_paste);
+		
+		if (!this.showTextField) {
+			this.findViewById(R.id.text_layout).setVisibility(View.GONE);
+		}
 
 		this.parseIntent(this.getIntent());
 
@@ -298,7 +315,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final ListView lv = this.getListView();
 		lv.setAdapter(new MessageAdapter(this, this.uri));
 		lv.setSelection(this.getListAdapter().getCount() - 1);
-		this.etText.requestFocus();
+		// this.etText.requestFocus();
 	}
 
 	/**
@@ -318,6 +335,25 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		super.onResume();
 		this.markedUnread = false;
 		this.scrollToLastMessage();
+
+		final Button btn = (Button) this.findViewById(R.id.send_);
+		if (this.showTextField) {
+			final Intent i = buildIntent();
+			final PackageManager pm = this.getPackageManager();
+			ActivityInfo ai = null;
+			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Preferences.PREFS_SHOWTARGETAPP, true)) {
+				ai = i.resolveActivityInfo(pm, 0);
+			}
+			if (ai == null) {
+				btn.setText(R.string.send_);
+				this.etText.setMinLines(1);
+			} else {
+				btn.setText(this.getString(R.string.send_) + "\n(" + ai.loadLabel(pm) + ")");
+				this.etText.setMinLines(2);
+			}
+		} else {
+			btn.setText(R.string.answer);
+		}
 	}
 
 	/**
@@ -503,20 +539,29 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	}
 
 	/**
+	 * Build an {@link Intent} for sending it.
+	 *
+	 * @return {@link Intent}
+	 */
+	private final Intent buildIntent() {
+		final String text = this.etText.getText().toString().trim();
+		final Intent i = ConversationList.getComposeIntent(this.conv
+				.getAddress());
+		i.putExtra(Intent.EXTRA_TEXT, text);
+		i.putExtra("sms_body", text);
+		if (this.enableAutosend && text.length() > 0) {
+			i.putExtra("AUTOSEND", "1");
+		}
+		return i;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public final void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.send_:
-			final String text = this.etText.getText().toString().trim();
-			if (text.length() == 0) {
-				return;
-			}
-			final Intent i = ConversationList.getComposeIntent(this.conv
-					.getAddress());
-			i.putExtra(Intent.EXTRA_TEXT, text);
-			i.putExtra("sms_body", text);
-			i.putExtra("AUTOSEND", "1");
+			final Intent i = buildIntent();
 			this.startActivity(i);
 			this.etText.setText("");
 			return;

@@ -41,16 +41,15 @@
 			android:adjustViewBounds="true" android:layout_gravity="center_vertical"
 			android:layout_alignParentRight="true" android:visibility="gone"
 			style="?android:attr/quickContactBadgeStyleWindowSmall"
-			 android:layout_marginBottom="2dip"
-			android:layout_marginLeft="5dip" />
+			android:layout_marginBottom="2dip" android:layout_marginLeft="5dip" />
 	</RelativeLayout>
 	<LinearLayout android:id="@+id/answerbar"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:orientation="horizontal" style="@android:style/ButtonBar"
 		android:layout_alignParentBottom="true">
-		<RelativeLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:addStatesFromChildren="true"
-			android:layout_weight="1">
+		<RelativeLayout android:id="@+id/text_layout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:addStatesFromChildren="true" android:layout_weight="1">
 			<EditText android:id="@+id/text" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:hint="@string/text_hint"
 				android:imeOptions="actionDone|flagNoEnterAction" android:maxLines="4"
