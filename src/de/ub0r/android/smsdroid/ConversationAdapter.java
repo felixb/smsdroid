@@ -227,6 +227,16 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		long time = c.getDate();
 		((TextView) view.findViewById(R.id.date)).setText(ConversationList
 				.getDate(context, time));
+
+		// presence
+		ImageView ivPresence = (ImageView) view.findViewById(R.id.presence);
+		if (contact.getPresenceState() > 0) {
+			ivPresence.setImageResource(Contact.getPresenceRes(contact
+					.getPresenceState()));
+			ivPresence.setVisibility(View.VISIBLE);
+		} else {
+			ivPresence.setVisibility(View.GONE);
+		}
 	}
 
 	/**

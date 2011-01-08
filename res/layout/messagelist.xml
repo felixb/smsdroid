@@ -42,6 +42,10 @@
 			android:layout_alignParentRight="true" android:visibility="gone"
 			style="?android:attr/quickContactBadgeStyleWindowSmall"
 			android:layout_marginBottom="2dip" android:layout_marginLeft="5dip" />
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/presence"
+			android:layout_toLeftOf="@+id/photo" 
+			android:visibility="gone" />
 	</RelativeLayout>
 	<LinearLayout android:id="@+id/answerbar"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"

@@ -44,9 +44,14 @@
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_toLeftOf="@+id/count" android:layout_alignParentLeft="true"
 			android:singleLine="true" android:textAppearance="?android:attr/textAppearanceMedium" />
-		<TextView android:layout_width="wrap_content"
+		<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/presence"
+			android:layout_below="@+id/addr" android:layout_alignParentRight="true"
+			android:visibility="gone" />
+		<TextView android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:id="@+id/body"
 			android:text="@id/body" android:layout_below="@+id/addr"
-			android:singleLine="true" />
+			android:layout_toLeftOf="@id/presence" android:maxLines="2"
+			android:ellipsize="end" />
 	</RelativeLayout>
 </LinearLayout>

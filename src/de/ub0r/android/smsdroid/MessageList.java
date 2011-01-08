@@ -299,6 +299,16 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		((TextView) this.findViewById(R.id.contact)).setText(contact
 				.getNameAndNumber());
+
+		// presence
+		ImageView ivPresence = (ImageView) this.findViewById(R.id.presence);
+		if (contact.getPresenceState() > 0) {
+			ivPresence.setImageResource(Contact.getPresenceRes(contact
+					.getPresenceState()));
+			ivPresence.setVisibility(View.VISIBLE);
+		} else {
+			ivPresence.setVisibility(View.GONE);
+		}
 		this.setRead();
 	}
 
