@@ -37,6 +37,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.apis.Contact;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -113,8 +114,9 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			this.address = null;
 			this.name = null;
 		} else {
-			this.address = conv.getContact().getNumber();
-			this.name = AsyncHelper.getContactName(c, this.address);
+			final Contact contact = conv.getContact();
+			this.address = contact.getNumber();
+			this.name = contact.getName();
 		}
 		if (this.name == null) {
 			this.displayName = this.address;

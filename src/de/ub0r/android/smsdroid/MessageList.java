@@ -121,6 +121,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private boolean enableAutosend = true;
 	/** Show textfield. */
 	private boolean showTextField = true;
+	/** Show {@link Contact}'s photo. */
+	private boolean showPhoto = false;
 
 	/** Default {@link Drawable} for {@link Contact}s. */
 	private Drawable defaultContactAvatar = null;
@@ -171,14 +173,16 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		final SharedPreferences prefs = PreferenceManager
+		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		final boolean showTitlebar = prefs.getBoolean(
+		final boolean showTitlebar = p.getBoolean(
 				Preferences.PREFS_SHOWTITLEBAR, true);
-		this.enableAutosend = prefs.getBoolean(
+		this.enableAutosend = p.getBoolean(
 				Preferences.PREFS_ENABLE_AUTOSEND, true);
 		this.showTextField = this.enableAutosend
-				|| prefs.getBoolean(Preferences.PREFS_SHOWTEXTFIELD, true);
+				|| p.getBoolean(Preferences.PREFS_SHOWTEXTFIELD, true);
+		this.showPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
+				false);
 		this.setTheme(Preferences.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
@@ -187,8 +191,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		}
 		Log.d(TAG, "onCreate()");
 
-		this.defaultContactAvatar = this.getResources().getDrawable(
-				R.drawable.ic_contact_picture);
+		if (this.showPhoto) {
+			this.defaultContactAvatar = this.getResources().getDrawable(
+					R.drawable.ic_contact_picture);
+		}
 
 		this.cbmgr = (ClipboardManager) this
 				.getSystemService(CLIPBOARD_SERVICE);
@@ -270,6 +276,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				true);
 		this.conv = c;
 		final Contact contact = c.getContact();
+		contact.update(this, false, true);
 
 		if (c == null) {
 			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
@@ -289,7 +296,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.setListAdapter(adapter);
 
 		final String name = contact.getName();
-		if (name != null) {
+		if (this.showPhoto && name != null) {
 			final ImageView ivPhoto = (ImageView) this.findViewById(R.id.photo);
 			ivPhoto.setImageDrawable(contact.getAvatar(this,
 					this.defaultContactAvatar));

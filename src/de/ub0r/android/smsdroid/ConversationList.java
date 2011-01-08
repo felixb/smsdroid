@@ -55,6 +55,7 @@ import de.ub0r.android.lib.Changelog;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
+import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
@@ -440,9 +441,10 @@ public final class ConversationList extends ListActivity implements
 		final Uri target = c.getUri();
 		Builder builder = new Builder(this);
 		String[] items = this.longItemClickDialog;
-		final String a = c.getContact().getNumber();
+		final Contact contact = c.getContact();
+		final String a = contact.getNumber();
 		Log.d(TAG, "p: " + a);
-		final String n = AsyncHelper.getContactName(this, a);
+		final String n = contact.getName();
 		if (n == null) {
 			builder.setTitle(a);
 			items = items.clone();

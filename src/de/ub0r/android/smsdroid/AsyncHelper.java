@@ -19,14 +19,10 @@
 package de.ub0r.android.smsdroid;
 
 import java.util.concurrent.RejectedExecutionException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import de.ub0r.android.lib.Log;
-import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * @author flx
@@ -34,14 +30,6 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	/** Tag for logging. */
 	static final String TAG = "ash";
-
-	/** Pattern to clean up numbers. */
-	private static final Pattern PATTERN_CLEAN_NUMBER = Pattern
-			.compile("<(\\+?[0-9]+)>");
-
-	/** Wrapper to use for contacts API. */
-	private static final ContactsWrapper WRAPPER = ContactsWrapper
-			.getInstance();
 
 	/** {@link ConversationAdapter} to invalidate on new data. */
 	private static ConversationAdapter adapter = null;
@@ -104,6 +92,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		if (this.conv == null) {
 			return null;
 		}
+		Log.d(TAG, "doInBackground()");
 		this.changed = this.conv.getContact().update(this.context, true,
 				ConversationList.showContactPhoto);
 		return null;
@@ -127,62 +116,5 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	public static void setAdapter(final ConversationAdapter a) {
 		adapter = a;
-	}
-
-	/**
-	 * Get a contact's name by address.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param address
-	 *            address
-	 * @return name
-	 */
-	public static String getContactName(final Context context,
-			final String address) {
-		Log.d(TAG, "getContactName(ctx, " + address + ")");
-		if (address == null) {
-			return null;
-		}
-		Cursor cursor = getContact(context, address);
-		if (cursor == null) {
-			return null;
-		}
-		return cursor.getString(ContactsWrapper.FILTER_INDEX_NAME);
-	}
-
-	/**
-	 * Get (id, name) for address.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param address
-	 *            address
-	 * @return {@link Cursor}
-	 */
-	private static synchronized Cursor getContact(final Context context,
-			final String address) {
-		Log.d(TAG, "getContact(ctx, " + address + ")");
-		if (address == null) {
-			return null;
-		}
-		// clean up number
-		String realAddress = address;
-		final Matcher m = PATTERN_CLEAN_NUMBER.matcher(realAddress);
-		if (m.find()) {
-			realAddress = m.group(1);
-		}
-		// address contains the phone number
-		try {
-			final Cursor cursor = WRAPPER.getContact(context
-					.getContentResolver(), realAddress);
-			if (cursor != null && cursor.moveToFirst()) {
-				return cursor;
-			}
-		} catch (Exception e) {
-			Log.e(TAG, "failed to fetch contact", e);
-		}
-		Log.d(TAG, "nothing found!");
-		return null;
 	}
 }

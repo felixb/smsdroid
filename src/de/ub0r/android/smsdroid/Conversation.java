@@ -157,6 +157,7 @@ public final class Conversation {
 	 */
 	private void update(final Context context, final Cursor cursor,
 			final boolean sync) {
+		Log.d(TAG, "update(" + this.threadId + "," + sync + ")");
 		long d = cursor.getLong(INDEX_SIMPLE_DATE);
 		if (d != this.date) {
 			this.id = cursor.getInt(INDEX_SIMPLE_ID);
@@ -188,6 +189,7 @@ public final class Conversation {
 	 */
 	public static Conversation getConversation(final Context context,
 			final Cursor cursor, final boolean sync) {
+		Log.d(TAG, "getConversation(" + sync + ")");
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(cursor.getInt(INDEX_SIMPLE_ID));
 			if (ret == null) {
@@ -223,6 +225,7 @@ public final class Conversation {
 	 */
 	public static Conversation getConversation(final Context context,
 			final int threadId, final boolean forceUpdate) {
+		Log.d(TAG, "getConversation(" + threadId + ")");
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(threadId);
 			if (ret == null || ret.getContact().getNumber() == null
@@ -230,14 +233,12 @@ public final class Conversation {
 				Cursor cursor = context.getContentResolver().query(URI_SIMPLE,
 						PROJECTION_SIMPLE, ID + " = ?",
 						new String[] { String.valueOf(threadId) }, null);
-				if (cursor != null && cursor.moveToFirst()) {
+				if (cursor.moveToFirst()) {
 					ret = getConversation(context, cursor, true);
 				} else {
 					Log.e(TAG, "did not found conversation: " + threadId);
 				}
-				if (cursor != null && !cursor.isClosed()) {
-					cursor.close();
-				}
+				cursor.close();
 			}
 			return ret;
 		}
