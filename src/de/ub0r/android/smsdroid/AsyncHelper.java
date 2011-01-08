@@ -22,11 +22,8 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -52,20 +49,23 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	/** {@link Context}. */
 	private final Context context;
 	/** {@link Conversation}. */
-	private final Conversation mConversation;
+	private final Conversation conv;
+
+	/** Changed anything? */
+	private boolean changed = false;
 
 	/**
 	 * Fill {@link Conversation}.
 	 * 
 	 * @param c
 	 *            {@link Context}
-	 * @param conv
+	 * @param con
 	 *            {@link Conversation}
 	 */
 
-	private AsyncHelper(final Context c, final Conversation conv) {
+	private AsyncHelper(final Context c, final Conversation con) {
 		this.context = c;
-		this.mConversation = conv;
+		this.conv = con;
 	}
 
 	/**
@@ -101,70 +101,11 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected Void doInBackground(final Void... arg0) {
-		if (this.mConversation == null) {
+		if (this.conv == null) {
 			return null;
 		}
-		Uri uri = this.mConversation.getUri();
-		final ContentResolver cr = this.context.getContentResolver();
-		Cursor cursor = cr
-				.query(uri, Message.PROJECTION_JOIN, null, null, null);
-
-		// count
-		this.mConversation.setCount(cursor.getCount());
-
-		// address
-		String address = this.mConversation.getAddress();
-		Log.d(TAG, "address: " + address);
-		if (address == null) {
-			if (cursor.moveToLast()) {
-				do {
-					address = cursor.getString(Message.INDEX_ADDRESS);
-				} while (address == null && cursor.moveToPrevious());
-			}
-			if (address != null) {
-				this.mConversation.setAddress(address);
-				Log.d(TAG, "new address: " + address);
-			}
-		}
-		if (this.mConversation.getBody() == null && cursor.moveToLast()) {
-			final Message m = Message.getMessage(this.context, cursor);
-			final CharSequence b = m.getBody();
-			if (b != null) {
-				this.mConversation.setBody(b.toString());
-			}
-		}
-
-		// contact
-		String pid = this.mConversation.getPersonId();
-		if ((pid == null || pid.length() == 0) && address != null) {
-			final Cursor contact = getContact(this.context, address);
-			if (contact != null) {
-				pid = contact.getString(ContactsWrapper.FILTER_INDEX_ID);
-				String n = contact.getString(ContactsWrapper.FILTER_INDEX_NAME);
-				this.mConversation.setPersonId(pid);
-				this.mConversation.setName(n);
-			} else {
-				this.mConversation.setPersonId(Conversation.NO_CONTACT);
-			}
-		}
-
-		// read
-		// TODO: obsolete?
-		cursor = cr.query(uri, Message.PROJECTION,
-				Message.SELECTION_READ_UNREAD, Message.SELECTION_UNREAD, null);
-		if (cursor.getCount() == 0) {
-			this.mConversation.setRead(1);
-		} else {
-			this.mConversation.setRead(0);
-		}
-		cursor.close();
-		cursor = null;
-
-		// photo
-		if (ConversationList.showContactPhoto && // .
-				this.mConversation.getPhoto() == null && pid != null) {
-			this.mConversation.setPhoto(getPictureForPerson(this.context, pid));
-		}
+		this.changed = this.conv.getContact().update(this.context, true,
+				ConversationList.showContactPhoto);
 		return null;
 	}
 
@@ -173,7 +114,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected void onPostExecute(final Void result) {
-		if (adapter != null) {
+		if (this.changed && adapter != null) {
 			adapter.notifyDataSetChanged();
 		}
 	}
@@ -243,27 +184,5 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		}
 		Log.d(TAG, "nothing found!");
 		return null;
-	}
-
-	/**
-	 * Get picture for contact.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param pid
-	 *            contact
-	 * @return {@link Bitmap}
-	 */
-	private static Bitmap getPictureForPerson(final Context context,
-			final String pid) {
-		if (pid == null || pid.length() == 0 || pid == Conversation.NO_CONTACT) {
-			return Conversation.NO_PHOTO;
-		}
-		Bitmap b = WRAPPER.loadContactPhoto(context, pid);
-		if (b == null) {
-			return Conversation.NO_PHOTO;
-		} else {
-			return b;
-		}
 	}
 }

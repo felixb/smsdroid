@@ -23,10 +23,12 @@ import java.util.LinkedHashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.apis.Contact;
 
 /**
  * Class holding a single conversation.
@@ -43,8 +45,6 @@ public final class Conversation {
 	private static final LinkedHashMap<Integer, Conversation> CACHE = // .
 	new LinkedHashMap<Integer, Conversation>(26, 0.9f, true);
 
-	/** No contact available. */
-	public static final String NO_CONTACT = "-1";
 	/** No photo available. */
 	public static final Bitmap NO_PHOTO = Bitmap.createBitmap(1, 1,
 			Bitmap.Config.RGB_565);
@@ -59,8 +59,8 @@ public final class Conversation {
 	public static final String DATE = Calls.DATE;
 	/** count. */
 	public static final String COUNT = "message_count";
-	/** person id. */
-	public static final String PID = "recipient_ids";
+	/** number id. */
+	public static final String NID = "recipient_ids";
 	/** body. */
 	public static final String BODY = "snippet";
 	/** read. */
@@ -73,7 +73,7 @@ public final class Conversation {
 	/** INDEX: count. */
 	public static final int INDEX_SIMPLE_COUNT = 2;
 	/** INDEX: person id. */
-	public static final int INDEX_SIMPLE_PID = 3;
+	public static final int INDEX_SIMPLE_NID = 3;
 	/** INDEX: body. */
 	public static final int INDEX_SIMPLE_BODY = 4;
 	/** INDEX: read. */
@@ -84,12 +84,12 @@ public final class Conversation {
 	ID, // 0
 			DATE, // 1
 			COUNT, // 2
-			PID, // 3
+			NID, // 3
 			BODY, // 4
 			READ, // 5
 	};
 
-	/** Dateformat. //TODO: move me to xml */
+	/** Date format. //TODO: move me to xml */
 	static final String DATE_FORMAT = "dd.MM. kk:mm";
 
 	/** Time of valid cache. */
@@ -99,12 +99,16 @@ public final class Conversation {
 	private int id;
 	/** ThreadId. */
 	private int threadId;
+	/** Contact. */
+	private Contact contact;
+	/** NumerId. */
+	// private long numberId;
 	/** Contact's id. */
-	private String personId;
+	// private String contactId;
 	/** Date. */
 	private long date;
 	/** Address. */
-	private String address;
+	// private String address;
 	/** Body. */
 	private String body;
 	/** Read status. */
@@ -112,12 +116,12 @@ public final class Conversation {
 	/** Message count. */
 	private int count = -1;
 	/** Last update. */
-	private long lastUpdate = 0;
+	private long lastUpdate = 0L;
 
 	/** Name. */
-	private String name = null;
+	// private String name = null;
 	/** Photo. */
-	private Bitmap photo = null;
+	// private Bitmap photo = null;
 
 	/**
 	 * Default constructor.
@@ -131,29 +135,12 @@ public final class Conversation {
 	 */
 	private Conversation(final Context context, final Cursor cursor,
 			final boolean sync) {
-		// this.id = cursor.getInt(INDEX_SIMPLE_ID);
 		this.threadId = cursor.getInt(INDEX_SIMPLE_ID);
 		this.date = cursor.getLong(INDEX_SIMPLE_DATE);
-		// this.address = cursor.getString(INDEX_ADDRESS);
 		this.body = cursor.getString(INDEX_SIMPLE_BODY);
 		this.read = cursor.getInt(INDEX_SIMPLE_READ);
 		this.count = cursor.getInt(INDEX_SIMPLE_COUNT);
-		// int idName = cursor.getColumnIndex(ConversationProvider.PROJECTION[//
-		// .
-		// ConversationProvider.INDEX_NAME]);
-		// if (idName >= 0) {
-		// this.name = cursor.getString(idName);
-		// }
-		int idPid = -1;
-		// int idPid = cursor.getColumnIndex(ConversationProvider.PROJECTION[//
-		// .
-		// ConversationProvider.INDEX_PID]);
-		if (idPid < 0) {
-			cursor.getColumnIndex(PID);
-		}
-		if (idPid >= 0) {
-			this.personId = cursor.getString(idPid);
-		}
+		this.contact = new Contact(cursor.getInt(INDEX_SIMPLE_NID));
 
 		AsyncHelper.fillConversation(context, this, sync);
 		this.lastUpdate = System.currentTimeMillis();
@@ -176,19 +163,17 @@ public final class Conversation {
 			this.id = cursor.getInt(INDEX_SIMPLE_ID);
 			this.date = d;
 			this.body = cursor.getString(INDEX_SIMPLE_BODY);
-			// String a = cursor.getString(INDEX_SIMPLE_ADDRESS);
-			// if (a != null && !a.equals(this.address)) {
-			// this.address = a;
-			// this.name = null;
-			// this.photo = null;
-			// this.personId = "";
-			// }
 		}
+		this.count = cursor.getInt(INDEX_SIMPLE_COUNT);
 		this.read = cursor.getInt(INDEX_SIMPLE_READ);
+		final int nid = cursor.getInt(INDEX_SIMPLE_NID);
+		if (nid != this.contact.getRecipientId()) {
+			this.contact = new Contact(nid);
+		}
 		if (this.lastUpdate < validCache) {
 			AsyncHelper.fillConversation(context, this, sync);
+			this.lastUpdate = System.currentTimeMillis();
 		}
-		this.lastUpdate = System.currentTimeMillis();
 	}
 
 	/**
@@ -297,20 +282,40 @@ public final class Conversation {
 	}
 
 	/**
-	 * @return the personId
+	 * @return the numberId
 	 */
-	public String getPersonId() {
-		return this.personId;
+	@Deprecated
+	public long getNumberId() {
+		return this.contact.getRecipientId();
 	}
 
 	/**
-	 * Set the personId.
+	 * Set the numberId.
+	 * 
+	 * @param nid
+	 *            the numberId
+	 */
+	public void setNumberId(final long nid) {
+		this.contact = new Contact(nid);
+	}
+
+	/**
+	 * @return the contactId
+	 */
+	@Deprecated
+	public String getContactId() {
+		return this.contact.getLookUpKey();
+	}
+
+	/**
+	 * Set the contactId.
 	 * 
 	 * @param pid
-	 *            the personId
+	 *            the contactId
 	 */
-	public void setPersonId(final String pid) {
-		this.personId = pid;
+	@Deprecated
+	public void setContactId(final String pid) {
+		// FIXME this.contactId = pid;
 	}
 
 	/**
@@ -328,10 +333,20 @@ public final class Conversation {
 	}
 
 	/**
+	 * Get {@link Contact}.
+	 * 
+	 * @return {@link Contact}
+	 */
+	public Contact getContact() {
+		return this.contact;
+	}
+
+	/**
 	 * @return the address
 	 */
+	@Deprecated
 	public String getAddress() {
-		return this.address;
+		return this.contact.getNumber();
 	}
 
 	/**
@@ -340,8 +355,9 @@ public final class Conversation {
 	 * @param a
 	 *            address
 	 */
+	@Deprecated
 	public void setAddress(final String a) {
-		this.address = a;
+		this.contact.setNumber(a);
 	}
 
 	/**
@@ -381,44 +397,58 @@ public final class Conversation {
 	/**
 	 * @return the name
 	 */
+	@Deprecated
 	public String getName() {
-		return this.name;
+		return this.contact.getName();
 	}
 
 	/**
 	 * @return name, address or "..."
 	 */
+	@Deprecated
 	public String getDisplayName() {
-		if (this.name != null) {
-			return this.name;
-		} else if (this.address != null) {
-			return this.address;
-		} else {
-			return "...";
-		}
+		return this.contact.getDisplayName();
+	}
+
+	/**
+	 * @return "name &lt;address&gt;"
+	 */
+	@Deprecated
+	public String getFullDisplayName() {
+		return this.contact.getNameAndNumber();
 	}
 
 	/**
 	 * @param n
 	 *            the name to set
 	 */
+	@Deprecated
 	public void setName(final String n) {
-		this.name = n;
+		this.contact.setName(n);
 	}
 
 	/**
-	 * @return the photo
+	 * Get {@link Contact}'s avatar.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param defaultValue
+	 *            default {@link Drawable}
+	 * @return {@link Contact}'s avatar
 	 */
-	public Bitmap getPhoto() {
-		return this.photo;
+	@Deprecated
+	public Drawable getPhoto(final Context context, // .
+			final Drawable defaultValue) {
+		return this.contact.getAvatar(context, defaultValue);
 	}
 
 	/**
 	 * @param img
 	 *            the photo to set
 	 */
+	@Deprecated
 	public void setPhoto(final Bitmap img) {
-		this.photo = img;
+
 	}
 
 	/**

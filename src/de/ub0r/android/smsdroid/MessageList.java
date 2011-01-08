@@ -27,7 +27,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -54,6 +54,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
+import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.lib.apis.TelephonyWrapper;
 
@@ -121,6 +122,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Show textfield. */
 	private boolean showTextField = true;
 
+	/** Default {@link Drawable} for {@link Contact}s. */
+	private Drawable defaultContactAvatar = null;
+
 	/** TextWatcher updating char count on writing. */
 	private TextWatcher textWatcher = new TextWatcher() {
 		/**
@@ -182,6 +186,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.findViewById(R.id.titlebar).setVisibility(View.GONE);
 		}
 		Log.d(TAG, "onCreate()");
+
+		this.defaultContactAvatar = this.getResources().getDrawable(
+				R.drawable.ic_contact_picture);
 
 		this.cbmgr = (ClipboardManager) this
 				.getSystemService(CLIPBOARD_SERVICE);
@@ -262,6 +269,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final Conversation c = Conversation.getConversation(this, threadId,
 				true);
 		this.conv = c;
+		final Contact contact = c.getContact();
 
 		if (c == null) {
 			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
@@ -270,9 +278,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			return;
 		}
 
-		Log.d(TAG, "address: " + c.getAddress());
-		Log.d(TAG, "name: " + c.getName());
-		Log.d(TAG, "displayName: " + c.getDisplayName());
+		Log.d(TAG, "address: " + contact.getNumber());
+		Log.d(TAG, "name: " + contact.getName());
+		Log.d(TAG, "displayName: " + contact.getDisplayName());
 
 		final ListView lv = this.getListView();
 		lv.setStackFromBottom(true);
@@ -280,24 +288,17 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		MessageAdapter adapter = new MessageAdapter(this, this.uri);
 		this.setListAdapter(adapter);
 
-		String str;
-		final String name = c.getName();
-		if (name == null) {
-			str = c.getAddress();
-		} else {
+		final String name = contact.getName();
+		if (name != null) {
 			final ImageView ivPhoto = (ImageView) this.findViewById(R.id.photo);
-			Bitmap b = c.getPhoto();
-			if (b != null && b != Conversation.NO_PHOTO) {
-				ivPhoto.setImageBitmap(b);
-			} else {
-				ivPhoto.setImageResource(R.drawable.ic_contact_picture);
-			}
-			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this, ivPhoto, c
-					.getAddress(), 2, null));
+			ivPhoto.setImageDrawable(contact.getAvatar(this,
+					this.defaultContactAvatar));
+			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this, ivPhoto,
+					contact.getLookUpUri(this.getContentResolver()), 2, null));
 			ivPhoto.setVisibility(View.VISIBLE);
-			str = name + " <" + c.getAddress() + ">";
 		}
-		((TextView) this.findViewById(R.id.contact)).setText(str);
+		((TextView) this.findViewById(R.id.contact)).setText(contact
+				.getNameAndNumber());
 		this.setRead();
 	}
 
@@ -383,11 +384,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			return true;
 		case R.id.item_answer:
 			this.startActivity(ConversationList.getComposeIntent(this.conv
-					.getAddress()));
+					.getContact().getNumber()));
 			return true;
 		case R.id.item_call:
 			this.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-					+ this.conv.getAddress())));
+					+ this.conv.getContact().getNumber())));
 			return true;
 		default:
 			return false;
@@ -439,7 +440,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						resId = R.string.send_draft_;
 						i = ConversationList
 								.getComposeIntent(MessageList.this.conv
-										.getAddress());
+										.getContact().getNumber());
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -524,7 +525,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private Intent buildIntent() {
 		final String text = this.etText.getText().toString().trim();
 		final Intent i = ConversationList.getComposeIntent(this.conv
-				.getAddress());
+				.getContact().getNumber());
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
 		if (this.enableAutosend && text.length() > 0) {
@@ -563,7 +564,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				return true;
 			}
 			final Intent i = ConversationList.getComposeIntent(this.conv
-					.getAddress());
+					.getContact().getNumber());
 			i.putExtra(Intent.EXTRA_TEXT, text);
 			i.putExtra("sms_body", text);
 			this.startActivity(Intent.createChooser(i, this

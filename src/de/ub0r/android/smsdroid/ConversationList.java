@@ -184,9 +184,9 @@ public final class ConversationList extends ListActivity implements
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		final SharedPreferences prefs = PreferenceManager
+		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		final boolean showTitlebar = prefs.getBoolean(
+		final boolean showTitlebar = p.getBoolean(
 				Preferences.PREFS_SHOWTITLEBAR, true);
 
 		this.setTheme(Preferences.getTheme(this));
@@ -213,10 +213,6 @@ public final class ConversationList extends ListActivity implements
 		}
 
 		showRows(this);
-
-		showContactPhoto = prefs.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
-				false);
-		showEmoticons = prefs.getBoolean(Preferences.PREFS_EMOTICONS, false);
 
 		final ListView list = this.getListView();
 		this.adapter = new ConversationAdapter(this);
@@ -252,6 +248,12 @@ public final class ConversationList extends ListActivity implements
 		CAL_TODAY.set(Calendar.MINUTE, 0);
 		CAL_TODAY.set(Calendar.SECOND, 0);
 		CAL_TODAY.set(Calendar.MILLISECOND, 0);
+
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		showContactPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
+				false);
+		showEmoticons = p.getBoolean(Preferences.PREFS_EMOTICONS, false);
 		this.adapter.startMsgListQuery();
 	}
 
@@ -478,7 +480,7 @@ public final class ConversationList extends ListActivity implements
 								.getContactUri(
 										ConversationList.this
 												.getContentResolver(),
-										c.getPersonId());
+										c.getContactId());
 						i = new Intent(Intent.ACTION_VIEW, uri);
 					}
 					ConversationList.this.startActivity(i);

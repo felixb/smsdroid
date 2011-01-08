@@ -24,7 +24,7 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
-import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.provider.CallLog.Calls;
 import android.view.View;
@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
@@ -65,6 +66,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	/** {@link ContactsWrapper}. */
 	private static final ContactsWrapper WRAPPER = ContactsWrapper
 			.getInstance();
+
+	/** Default {@link Drawable} for {@link Contact}s. */
+	private Drawable defaultContactAvatar = null;
 
 	/**
 	 * Handle queries in background.
@@ -119,6 +123,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		spam.close();
 		spam = null;
 
+		this.defaultContactAvatar = c.getResources().getDrawable(
+				R.drawable.ic_contact_picture);
+
 		this.textSize = Preferences.getTextsize(c);
 		this.origCursor = cr.query(Conversation.URI_SIMPLE,
 				Conversation.PROJECTION_SIMPLE, null, null, null);
@@ -167,6 +174,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			final Cursor cursor) {
 		final Conversation c = Conversation.getConversation(context, cursor,
 				false);
+		final Contact contact = c.getContact();
 
 		final TextView tvBody = (TextView) view.findViewById(R.id.body);
 		if (this.textSize > 0) {
@@ -177,15 +185,13 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
 
 		if (ConversationList.showContactPhoto) {
-			Bitmap b = c.getPhoto();
-			if (b != null && b != Conversation.NO_PHOTO) {
-				ivPhoto.setImageBitmap(b);
-			} else {
-				ivPhoto.setImageResource(R.drawable.ic_contact_picture);
-			}
+			ivPhoto.setImageDrawable(contact.getAvatar(this.activity,
+					this.defaultContactAvatar));
 			ivPhoto.setVisibility(View.VISIBLE);
-			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context,
-					ivPhoto, c.getAddress(), 2, null));
+			ivPhoto.setOnClickListener(WRAPPER
+					.getQuickContact(context, ivPhoto, contact
+							.getLookUpUri(context.getContentResolver()), 2,
+							null));
 		} else {
 			ivPhoto.setVisibility(View.GONE);
 		}
@@ -197,10 +203,10 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		} else {
 			tvCount.setText("(" + c.getCount() + ")");
 		}
-		if (this.isBlocked(c.getAddress())) {
-			tvName.setText("[" + c.getDisplayName() + "]");
+		if (this.isBlocked(contact.getNumber())) {
+			tvName.setText("[" + contact.getDisplayName() + "]");
 		} else {
-			tvName.setText(c.getDisplayName());
+			tvName.setText(contact.getDisplayName());
 		}
 
 		// read status
