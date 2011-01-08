@@ -113,7 +113,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			this.address = null;
 			this.name = null;
 		} else {
-			this.address = conv.getAddress();
+			this.address = conv.getContact().getNumber();
 			this.name = AsyncHelper.getContactName(c, this.address);
 		}
 		if (this.name == null) {

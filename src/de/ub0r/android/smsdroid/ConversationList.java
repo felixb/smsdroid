@@ -251,8 +251,7 @@ public final class ConversationList extends ListActivity implements
 
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		showContactPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
-				false);
+		showContactPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO, false);
 		showEmoticons = p.getBoolean(Preferences.PREFS_EMOTICONS, false);
 		this.adapter.startMsgListQuery();
 	}
@@ -441,7 +440,7 @@ public final class ConversationList extends ListActivity implements
 		final Uri target = c.getUri();
 		Builder builder = new Builder(this);
 		String[] items = this.longItemClickDialog;
-		final String a = c.getAddress();
+		final String a = c.getContact().getNumber();
 		Log.d(TAG, "p: " + a);
 		final String n = AsyncHelper.getContactName(this, a);
 		if (n == null) {
@@ -476,11 +475,7 @@ public final class ConversationList extends ListActivity implements
 								.getInsertPickIntent(a);
 						Conversation.flushCache();
 					} else {
-						final Uri uri = ContactsWrapper.getInstance()
-								.getContactUri(
-										ConversationList.this
-												.getContentResolver(),
-										c.getContactId());
+						final Uri uri = c.getContact().getUri();
 						i = new Intent(Intent.ACTION_VIEW, uri);
 					}
 					ConversationList.this.startActivity(i);
@@ -498,7 +493,7 @@ public final class ConversationList extends ListActivity implements
 					break;
 				case WHICH_MARK_SPAM:
 					ConversationList.addToOrRemoveFromSpamlist(
-							ConversationList.this, c.getAddress());
+							ConversationList.this, c.getContact().getNumber());
 					break;
 				default:
 					break;

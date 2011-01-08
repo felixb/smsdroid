@@ -343,7 +343,7 @@ public class SmsReceiver extends BroadcastReceiver {
 								a = context.getString(R.string.new_messages_);
 							}
 						} else {
-							a = conv.getDisplayName();
+							a = conv.getContact().getDisplayName();
 						}
 						n = new Notification(R.drawable.stat_notify_sms, a,
 								System.currentTimeMillis());

@@ -23,7 +23,6 @@ import java.util.LinkedHashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
@@ -226,7 +225,8 @@ public final class Conversation {
 			final int threadId, final boolean forceUpdate) {
 		synchronized (CACHE) {
 			Conversation ret = CACHE.get(threadId);
-			if (ret == null || ret.getAddress() == null || forceUpdate) {
+			if (ret == null || ret.getContact().getNumber() == null
+					|| forceUpdate) {
 				Cursor cursor = context.getContentResolver().query(URI_SIMPLE,
 						PROJECTION_SIMPLE, ID + " = ?",
 						new String[] { String.valueOf(threadId) }, null);
@@ -282,14 +282,6 @@ public final class Conversation {
 	}
 
 	/**
-	 * @return the numberId
-	 */
-	@Deprecated
-	public long getNumberId() {
-		return this.contact.getRecipientId();
-	}
-
-	/**
 	 * Set the numberId.
 	 * 
 	 * @param nid
@@ -297,25 +289,6 @@ public final class Conversation {
 	 */
 	public void setNumberId(final long nid) {
 		this.contact = new Contact(nid);
-	}
-
-	/**
-	 * @return the contactId
-	 */
-	@Deprecated
-	public String getContactId() {
-		return this.contact.getLookUpKey();
-	}
-
-	/**
-	 * Set the contactId.
-	 * 
-	 * @param pid
-	 *            the contactId
-	 */
-	@Deprecated
-	public void setContactId(final String pid) {
-		// FIXME this.contactId = pid;
 	}
 
 	/**
@@ -339,25 +312,6 @@ public final class Conversation {
 	 */
 	public Contact getContact() {
 		return this.contact;
-	}
-
-	/**
-	 * @return the address
-	 */
-	@Deprecated
-	public String getAddress() {
-		return this.contact.getNumber();
-	}
-
-	/**
-	 * Set {@link Conversation}'s address.
-	 * 
-	 * @param a
-	 *            address
-	 */
-	@Deprecated
-	public void setAddress(final String a) {
-		this.contact.setNumber(a);
 	}
 
 	/**
@@ -392,63 +346,6 @@ public final class Conversation {
 	 */
 	public void setRead(final int status) {
 		this.read = status;
-	}
-
-	/**
-	 * @return the name
-	 */
-	@Deprecated
-	public String getName() {
-		return this.contact.getName();
-	}
-
-	/**
-	 * @return name, address or "..."
-	 */
-	@Deprecated
-	public String getDisplayName() {
-		return this.contact.getDisplayName();
-	}
-
-	/**
-	 * @return "name &lt;address&gt;"
-	 */
-	@Deprecated
-	public String getFullDisplayName() {
-		return this.contact.getNameAndNumber();
-	}
-
-	/**
-	 * @param n
-	 *            the name to set
-	 */
-	@Deprecated
-	public void setName(final String n) {
-		this.contact.setName(n);
-	}
-
-	/**
-	 * Get {@link Contact}'s avatar.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param defaultValue
-	 *            default {@link Drawable}
-	 * @return {@link Contact}'s avatar
-	 */
-	@Deprecated
-	public Drawable getPhoto(final Context context, // .
-			final Drawable defaultValue) {
-		return this.contact.getAvatar(context, defaultValue);
-	}
-
-	/**
-	 * @param img
-	 *            the photo to set
-	 */
-	@Deprecated
-	public void setPhoto(final Bitmap img) {
-
 	}
 
 	/**
