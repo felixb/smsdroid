@@ -55,6 +55,8 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_BUBBLES = "show_bubbles";
 	/** Prefernece's name: show full date and time. */
 	static final String PREFS_FULL_DATE = "show_full_date";
+	/** Prefernece's name: hide send button. */
+	static final String PREFS_HIDE_SEND = "hide_send";
 	/** Prefernece's name: hide paste button. */
 	static final String PREFS_HIDE_PASTE = "hide_paste";
 	/** Preference's name: theme. */

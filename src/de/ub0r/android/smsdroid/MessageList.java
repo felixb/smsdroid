@@ -177,11 +177,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				.getDefaultSharedPreferences(this);
 		final boolean showTitlebar = p.getBoolean(
 				Preferences.PREFS_SHOWTITLEBAR, true);
-		this.enableAutosend = p.getBoolean(
-				Preferences.PREFS_ENABLE_AUTOSEND, true);
+		this.enableAutosend = p.getBoolean(Preferences.PREFS_ENABLE_AUTOSEND,
+				true);
 		this.showTextField = this.enableAutosend
 				|| p.getBoolean(Preferences.PREFS_SHOWTEXTFIELD, true);
-		this.showPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO,
+		this.showPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO, false);
+		final boolean hideSend = p.getBoolean(Preferences.PREFS_HIDE_SEND,
 				false);
 		this.setTheme(Preferences.getTheme(this));
 		Utils.setLocale(this);
@@ -194,6 +195,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		if (this.showPhoto) {
 			this.defaultContactAvatar = this.getResources().getDrawable(
 					R.drawable.ic_contact_picture);
+		}
+		if (hideSend) {
+			this.findViewById(R.id.send_).setVisibility(View.GONE);
 		}
 
 		this.cbmgr = (ClipboardManager) this
@@ -332,7 +336,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 		final Button btn = (Button) this.findViewById(R.id.send_);
 		if (this.showTextField) {
-			final Intent i = this.buildIntent();
+			final Intent i = this.buildIntent(true);
 			final PackageManager pm = this.getPackageManager();
 			ActivityInfo ai = null;
 			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
@@ -400,8 +404,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.startActivity(ConversationList.getComposeIntent(null));
 			return true;
 		case R.id.item_answer:
-			this.startActivity(ConversationList.getComposeIntent(this.conv
-					.getContact().getNumber()));
+			this.send(true, false);
 			return true;
 		case R.id.item_call:
 			this.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
@@ -537,15 +540,17 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/**
 	 * Build an {@link Intent} for sending it.
 	 * 
+	 * @param autosend
+	 *            autosend
 	 * @return {@link Intent}
 	 */
-	private Intent buildIntent() {
+	private Intent buildIntent(final boolean autosend) {
 		final String text = this.etText.getText().toString().trim();
 		final Intent i = ConversationList.getComposeIntent(this.conv
 				.getContact().getNumber());
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
-		if (this.enableAutosend && text.length() > 0) {
+		if (autosend && this.enableAutosend && text.length() > 0) {
 			i.putExtra("AUTOSEND", "1");
 		}
 		return i;
@@ -557,9 +562,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.send_:
-			final Intent i = this.buildIntent();
-			this.startActivity(i);
-			this.etText.setText("");
+			this.send(true, false);
 			return;
 		case R.id.text_paste:
 			final CharSequence s = this.cbmgr.getText();
@@ -576,20 +579,29 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onLongClick(final View v) {
 		switch (v.getId()) {
 		case R.id.send_:
-			final String text = this.etText.getText().toString().trim();
-			if (text.length() == 0) {
-				return true;
-			}
-			final Intent i = ConversationList.getComposeIntent(this.conv
-					.getContact().getNumber());
-			i.putExtra(Intent.EXTRA_TEXT, text);
-			i.putExtra("sms_body", text);
-			this.startActivity(Intent.createChooser(i, this
-					.getString(R.string.answer)));
-			this.etText.setText("");
+			this.send(false, true);
 			return true;
 		default:
 			return true;
 		}
+	}
+
+	/**
+	 * Answer/send message.
+	 * 
+	 * @param autosend
+	 *            enable autosend
+	 * @param showChooser
+	 *            show chooser
+	 */
+	private void send(final boolean autosend, final boolean showChooser) {
+		final Intent i = this.buildIntent(autosend);
+		if (showChooser) {
+			this.startActivity(i);
+		} else {
+			this.startActivity(Intent.createChooser(i, this
+					.getString(R.string.answer)));
+		}
+		this.etText.setText("");
 	}
 }

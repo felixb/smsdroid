@@ -65,6 +65,8 @@
   <string formatted="false" name="show_emoticons_">Zeige Smilies</string>
   <string formatted="false" name="show_emoticons_hint">Zeige Smilies in Nachrichtenliste.</string>
   <string formatted="false" name="show_bubbles_">Zeige Sprechblasen</string>
+  <string formatted="false" name="hide_send_">"Senden" Button ausblenden</string>
+  <string formatted="false" name="hide_send_hint">"Senden" Button neben dem Textfeld ausblenden.</string>
   <string formatted="false" name="hide_paste_">"Einfügen" Button ausblenden</string>
   <string formatted="false" name="hide_paste_hint">"Einfügen" Button auf dem Textfeld ausblenden.</string>
   <string formatted="false" name="show_full_date_">Volles Datum zeigen</string>

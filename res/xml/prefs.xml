@@ -46,6 +46,8 @@
 			android:title="@string/show_bubbles_" />
 		<CheckBoxPreference android:key="show_full_date"
 			android:title="@string/show_full_date_" android:summary="@string/show_full_date_hint" />
+		<CheckBoxPreference android:key="hide_send"
+			android:title="@string/hide_send_" android:summary="@string/hide_send_hint" />
 		<CheckBoxPreference android:key="hide_paste"
 			android:title="@string/hide_paste_" android:summary="@string/hide_paste_hint" />
 		<ListPreference android:key="morelocale" android:title="@string/custom_language_"
