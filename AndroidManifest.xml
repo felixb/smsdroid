@@ -83,6 +83,12 @@
 		<provider android:name=".MessageProvider"
 			android:authorities="de.ub0r.android.smsdroid" />
 		<!-- The application's publisher ID assigned by AdMob -->
+		<receiver android:name="com.admob.android.ads.analytics.InstallReceiver"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
 		<meta-data android:value="true" android:name="ADMOB_ALLOW_LOCATION_FOR_ADS" />
 	</application>
@@ -111,5 +117,4 @@
 	<!-- AdMob SDK permissions -->
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
 </manifest>
