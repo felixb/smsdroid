@@ -116,6 +116,7 @@
   <string formatted="false" name="paste_">[Aus Zwischenablage einfügen]</string>
   <string formatted="false" name="attachment_saved">Anhang auf SD Karte gespeichert als:</string>
   <string formatted="false" name="attachment_not_saved">Konnte Anhang nicht speichern.</string>
+	<string formatted="false" name="chooser_">Auswahl</string>
   <string-array name="themes">
     <item>Dunkel</item>
     <item>Hell</item>

@@ -94,6 +94,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Minimum length for showing sms length. */
 	private static final int TEXT_LABLE_MIN_LEN = 50;
 
+	/** Package name for System's chooser. */
+	private static String chooserPackage = null;
+
 	/** Used {@link Uri}. */
 	private Uri uri;
 	/** {@link Conversation} shown. */
@@ -336,7 +339,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 		final Button btn = (Button) this.findViewById(R.id.send_);
 		if (this.showTextField) {
-			final Intent i = this.buildIntent(true);
+			final Intent i = this.buildIntent(this.enableAutosend, false);
 			final PackageManager pm = this.getPackageManager();
 			ActivityInfo ai = null;
 			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
@@ -347,9 +350,24 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				btn.setText(R.string.send_);
 				this.etText.setMinLines(1);
 			} else {
-				btn.setText(this.getString(R.string.send_) + "\n("
-						+ ai.loadLabel(pm) + ")");
-				this.etText.setMinLines(2);
+				if (chooserPackage == null) {
+					final ActivityInfo cai = this.buildIntent(
+							this.enableAutosend, true).resolveActivityInfo(pm,
+							0);
+					if (cai != null) {
+						chooserPackage = cai.packageName;
+					}
+				}
+				if (ai.packageName.equals(chooserPackage)) {
+					btn.setText(this.getString(R.string.send_) + "\n("
+							+ this.getString(R.string.chooser_) + ")");
+					this.etText.setMinLines(2);
+				} else {
+					Log.d(TAG, "ai.pn: " + ai.packageName);
+					btn.setText(this.getString(R.string.send_) + "\n("
+							+ ai.loadLabel(pm) + ")");
+					this.etText.setMinLines(2);
+				}
 			}
 		} else {
 			btn.setText(R.string.answer);
@@ -538,25 +556,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	}
 
 	/**
-	 * Build an {@link Intent} for sending it.
-	 * 
-	 * @param autosend
-	 *            autosend
-	 * @return {@link Intent}
-	 */
-	private Intent buildIntent(final boolean autosend) {
-		final String text = this.etText.getText().toString().trim();
-		final Intent i = ConversationList.getComposeIntent(this.conv
-				.getContact().getNumber());
-		i.putExtra(Intent.EXTRA_TEXT, text);
-		i.putExtra("sms_body", text);
-		if (autosend && this.enableAutosend && text.length() > 0) {
-			i.putExtra("AUTOSEND", "1");
-		}
-		return i;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public final void onClick(final View v) {
@@ -587,6 +586,31 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	}
 
 	/**
+	 * Build an {@link Intent} for sending it.
+	 * 
+	 * @param autosend
+	 *            autosend
+	 * @param showChooser
+	 *            show chooser
+	 * @return {@link Intent}
+	 */
+	private Intent buildIntent(final boolean autosend, final boolean showChooser) {
+		final String text = this.etText.getText().toString().trim();
+		final Intent i = ConversationList.getComposeIntent(this.conv
+				.getContact().getNumber());
+		i.putExtra(Intent.EXTRA_TEXT, text);
+		i.putExtra("sms_body", text);
+		if (autosend && this.enableAutosend && text.length() > 0) {
+			i.putExtra("AUTOSEND", "1");
+		}
+		if (showChooser) {
+			return Intent.createChooser(i, this.getString(R.string.answer));
+		} else {
+			return i;
+		}
+	}
+
+	/**
 	 * Answer/send message.
 	 * 
 	 * @param autosend
@@ -595,13 +619,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 *            show chooser
 	 */
 	private void send(final boolean autosend, final boolean showChooser) {
-		final Intent i = this.buildIntent(autosend);
-		if (showChooser) {
-			this.startActivity(i);
-		} else {
-			this.startActivity(Intent.createChooser(i, this
-					.getString(R.string.answer)));
-		}
+		final Intent i = this.buildIntent(autosend, showChooser);
+		this.startActivity(i);
 		this.etText.setText("");
 	}
 }
