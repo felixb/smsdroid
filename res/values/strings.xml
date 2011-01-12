@@ -69,6 +69,8 @@
 	<string name="hide_send_hint">Hide "send" button near text field.</string>
 	<string name="hide_paste_">Hide "paste" button</string>
 	<string name="hide_paste_hint">Hide "paste" button on text field.</string>
+	<string name="hide_widget_label_">Hide widget\'s label</string>
+	<string name="hide_widget_label_hint">Hide the label of the widget.</string>
 	<string name="show_full_date_">Show full date</string>
 	<string name="show_full_date_hint">Show full date and time on every message.</string>
 	<string name="me">Me</string>

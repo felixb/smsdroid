@@ -22,6 +22,8 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
 import de.ub0r.android.lib.Log;
@@ -56,6 +58,8 @@ public final class WidgetProvider extends AppWidgetProvider {
 	 */
 	static RemoteViews getRemoteViews(final Context context, final int count,
 			final PendingIntent pIntent) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.widget);
 		views.setTextViewText(R.id.text1, String.valueOf(count));
@@ -63,6 +67,11 @@ public final class WidgetProvider extends AppWidgetProvider {
 			views.setViewVisibility(R.id.text1, View.GONE);
 		} else {
 			views.setViewVisibility(R.id.text1, View.VISIBLE);
+		}
+		if (p.getBoolean(Preferences.PREFS_HIDE_WIDGET_LABEL, false)) {
+			views.setViewVisibility(R.id.label, View.GONE);
+		} else {
+			views.setViewVisibility(R.id.label, View.VISIBLE);
 		}
 		if (pIntent != null) {
 			views.setOnClickPendingIntent(R.id.widget, pIntent);

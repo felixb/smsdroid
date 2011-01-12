@@ -59,6 +59,8 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_HIDE_SEND = "hide_send";
 	/** Prefernece's name: hide paste button. */
 	static final String PREFS_HIDE_PASTE = "hide_paste";
+	/** Prefernece's name: hide widget's label. */
+	static final String PREFS_HIDE_WIDGET_LABEL = "hide_widget_label";
 	/** Preference's name: theme. */
 	private static final String PREFS_THEME = "theme";
 	/** Theme: black. */
