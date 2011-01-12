@@ -204,6 +204,6 @@ public final class SpamDB {
 		if (nr == null) {
 			return;
 		}
-		this.db.delete(DATABASE_TABLE, KEY_NR + " = '?'", new String[] { nr });
+		this.db.delete(DATABASE_TABLE, KEY_NR + " = ?", new String[] { nr });
 	}
 }

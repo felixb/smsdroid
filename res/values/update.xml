@@ -19,6 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
+		<item>HEAD: Fix remove numbers from spamDB</item>
 		<item>v0.5.2: Hide send button, show presence, fix contact names/photos, minor changes, fix scrolling down in MessageList, fix photo in MessageList</item>
 		<item>v0.5.1: Show target app for sending on send button, allow to switch back behavior for answering, fix sort, fix messagelist</item>
 		<item>v0.5: Answer directly in SMSdroid, new titlebars, fix sticky unread messages, speed up db queries, save mms attachments to sd card, fix forwarding with stock messaging app, show full date, import vcards, call from conversation/message</item>
