@@ -37,6 +37,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -445,7 +446,7 @@ public final class ConversationList extends ListActivity implements
 		final String a = contact.getNumber();
 		Log.d(TAG, "p: " + a);
 		final String n = contact.getName();
-		if (n == null) {
+		if (TextUtils.isEmpty(n)) {
 			builder.setTitle(a);
 			items = items.clone();
 			items[WHICH_VIEW_CONTACT] = this.getString(R.string.add_contact_);

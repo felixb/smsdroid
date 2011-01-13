@@ -113,15 +113,12 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		if (conv == null) {
 			this.address = null;
 			this.name = null;
+			this.displayName = null;
 		} else {
 			final Contact contact = conv.getContact();
 			this.address = contact.getNumber();
 			this.name = contact.getName();
-		}
-		if (this.name == null) {
-			this.displayName = this.address;
-		} else {
-			this.displayName = this.name;
+			this.displayName = contact.getDisplayName();
 		}
 		Log.d(TAG, "address: " + this.address);
 		Log.d(TAG, "name: " + this.name);
