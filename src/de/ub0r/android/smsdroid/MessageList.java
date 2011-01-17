@@ -282,8 +282,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final Conversation c = Conversation.getConversation(this, threadId,
 				true);
 		this.conv = c;
-		final Contact contact = c.getContact();
-		contact.update(this, false, true);
 
 		if (c == null) {
 			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
@@ -291,6 +289,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.finish();
 			return;
 		}
+
+		final Contact contact = c.getContact();
+		contact.update(this, false, true);
 
 		Log.d(TAG, "address: " + contact.getNumber());
 		Log.d(TAG, "name: " + contact.getName());
