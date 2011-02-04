@@ -421,6 +421,9 @@ public class SmsReceiver extends BroadcastReceiver {
 			Log.d(TAG, "uri: " + uri);
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 			if (enableNotifications && n != null) {
+				if (lastUnreadDate > 0L) {
+					n.when = lastUnreadDate;
+				}
 				mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 			}
 		}
