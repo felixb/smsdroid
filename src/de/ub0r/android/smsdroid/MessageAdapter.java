@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2011 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -23,12 +23,10 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -87,21 +85,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	public MessageAdapter(final MessageList c, final Uri u) {
 		super(c, R.layout.messagelist_item,
 				getCursor(c.getContentResolver(), u), true);
-		final SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(c);
-		boolean showBubbles = prefs
-				.getBoolean(Preferences.PREFS_BUBBLES, false);
-		if (showBubbles) {
-			this.backgroundDrawableIn = R.drawable.bubble_in;
-			this.backgroundDrawableOut = R.drawable.bubble_out;
-		} else {
-			if (Preferences.getTheme(c) == android.R.style.Theme_Black) {
-				this.backgroundDrawableOut = R.drawable.grey_dark;
-			} else {
-				this.backgroundDrawableOut = R.drawable.grey_light;
-			}
-			this.backgroundDrawableIn = 0;
-		}
+		this.backgroundDrawableIn = Preferences.getBubblesIn(c);
+		this.backgroundDrawableOut = Preferences.getBubblesOut(c);
 		this.textSize = Preferences.getTextsize(c);
 		if (u == null || u.getLastPathSegment() == null) {
 			this.threadId = -1;

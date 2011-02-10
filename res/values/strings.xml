@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
+		Copyright (C) 2009-2011 Felix Bechstein
 	-->
 	<!--
 		This file is part of SMSdroid. This program is free software; you can
@@ -49,6 +49,7 @@
 	<string name="receive_no_text_hint">Hide sender/text in notification.</string>
 	<string name="behavior_">Behavior</string>
 	<string name="autosend_">Autosend</string>
+	<string name="appearance_and_behavior_">Appearance &amp; behavior</string>
 	<string name="autosend_hint">Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.</string>
 	<string name="show_text_filed_">Show text filed</string>
 	<string name="show_text_filed_hint">Show text filed instead of answer button.</string>
@@ -119,6 +120,35 @@
 	<string name="attachment_saved">Saved attachment on SD card as:</string>
 	<string name="attachment_not_saved">Could not save attachment.</string>
 	<string name="chooser_">Chooser</string>
+	<string name="bubbles_in_">Bubbles in</string>
+	<string name="bubbles_in_hint">Bubbles for incoming messages</string>
+	<string name="bubbles_out_">Bubbles out</string>
+	<string name="bubbles_out_hint">Bubbles for outgoing messages</string>
+	<string name="bubbles_nothing">Nothing</string>
+	<string name="bubbles_plain_dark_gray">Plain dark gray</string>
+	<string name="bubbles_plain_light_gray">Plain light gray</string>
+	<string name="bubbles_old_turquoise_left">Old turquoise left</string>
+	<string name="bubbles_old_turquoise_right">Old turquoise right</string>
+	<string name="bubbles_old_green_left">Old green left</string>
+	<string name="bubbles_old_green_right">Old green right</string>
+	<string name="bubbles_blue_left">Blue left</string>
+	<string name="bubbles_blue_right">Blue right</string>
+	<string name="bubbles_brown_left">Brown left</string>
+	<string name="bubbles_brown_right">Brown right</string>
+	<string name="bubbles_gray_left">Gray left</string>
+	<string name="bubbles_gray_right">Gray right</string>
+	<string name="bubbles_green_left">Green left</string>
+	<string name="bubbles_green_right">Green right</string>
+	<string name="bubbles_orange_left">Orange left</string>
+	<string name="bubbles_orange_right">Orange right</string>
+	<string name="bubbles_pink_left">Pink left</string>
+	<string name="bubbles_pink_right">Pink right</string>
+	<string name="bubbles_purple_left">Purple left</string>
+	<string name="bubbles_purple_right">Purple right</string>
+	<string name="bubbles_white_left">White left</string>
+	<string name="bubbles_white_right">White right</string>
+	<string name="bubbles_yellow_left">Yellow left</string>
+	<string name="bubbles_yellow_right">Yellow right</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>

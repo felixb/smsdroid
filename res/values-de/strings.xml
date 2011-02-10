@@ -55,6 +55,7 @@
   <string formatted="false" name="show_target_app_">Zeige Ziel App</string>
   <string formatted="false" name="show_target_app_hint">Zeige Ziel App zum Senden auf \"senden\" Button.</string>
   <string formatted="false" name="appearance_">Erscheinung</string>
+  <string formatted="false" name="appearance_and_behavior_">Darstellung &amp; Verhalten</string>
   <string formatted="false" name="theme_">Theme</string>
   <string formatted="false" name="textsize_">Schriftgrad</string>
   <string formatted="false" name="textsize_hint">Schriftgrad in Punkten; leer lassen für Standard</string>
@@ -69,8 +70,8 @@
   <string formatted="false" name="hide_send_hint">"Senden" Button neben dem Textfeld ausblenden.</string>
   <string formatted="false" name="hide_paste_">"Einfügen" Button ausblenden</string>
   <string formatted="false" name="hide_paste_hint">"Einfügen" Button auf dem Textfeld ausblenden.</string>
-	<string formatted="false" name="hide_widget_label_">Widget-Titel ausblenden</string>
-	<string formatted="false" name="hide_widget_label_hint">Blende den Titel des Widgets aus.</string>
+  <string formatted="false" name="hide_widget_label_">Widget-Titel ausblenden</string>
+  <string formatted="false" name="hide_widget_label_hint">Blende den Titel des Widgets aus.</string>
   <string formatted="false" name="show_full_date_">Volles Datum zeigen</string>
   <string formatted="false" name="show_full_date_hint">Volles Datum und Uhrzeit bei allen Nachrichten anzeigen.</string>
   <string formatted="false" name="me">Ich</string>
@@ -118,7 +119,36 @@
   <string formatted="false" name="paste_">[Aus Zwischenablage einfügen]</string>
   <string formatted="false" name="attachment_saved">Anhang auf SD Karte gespeichert als:</string>
   <string formatted="false" name="attachment_not_saved">Konnte Anhang nicht speichern.</string>
-	<string formatted="false" name="chooser_">Auswahl</string>
+  <string formatted="false" name="chooser_">Auswahl</string>
+  <string formatted="false" name="bubbles_in_">Bubbles ein</string>
+  <string formatted="false" name="bubbles_in_hint">Bubbles für eingehende Nachrichten</string>
+  <string formatted="false" name="bubbles_out_">Bubbles aus</string>
+  <string formatted="false" name="bubbles_out_hint">Bubbles für ausgehende Nachrichten</string>
+  <string formatted="false" name="bubbles_nothing">Nichts</string>
+  <string formatted="false" name="bubbles_plain_dark_gray">Blankes Dunkelgrau</string>
+  <string formatted="false" name="bubbles_plain_light_gray">Blankes Hellgrau</string>
+  <string formatted="false" name="bubbles_old_turquoise_left">Altes Türkis links</string>
+  <string formatted="false" name="bubbles_old_turquoise_right">Altes Türkis rechts</string>
+  <string formatted="false" name="bubbles_old_green_left">Altes Grün links</string>
+  <string formatted="false" name="bubbles_old_green_right">Altes Grün rechts</string>
+  <string formatted="false" name="bubbles_blue_left">Blau links</string>
+  <string formatted="false" name="bubbles_blue_right">Blau rechts</string>
+  <string formatted="false" name="bubbles_brown_left">Braun links</string>
+  <string formatted="false" name="bubbles_brown_right">Braun rechts</string>
+  <string formatted="false" name="bubbles_gray_left">Grau links</string>
+  <string formatted="false" name="bubbles_gray_right">Grau rechts</string>
+  <string formatted="false" name="bubbles_green_left">Grün links</string>
+  <string formatted="false" name="bubbles_green_right">Grün rechts</string>
+  <string formatted="false" name="bubbles_orange_left">Orange links</string>
+  <string formatted="false" name="bubbles_orange_right">Orange rechts</string>
+  <string formatted="false" name="bubbles_pink_left">Pink links</string>
+  <string formatted="false" name="bubbles_pink_right">Pink rechts</string>
+  <string formatted="false" name="bubbles_purple_left">Lila links</string>
+  <string formatted="false" name="bubbles_purple_right">Lila rechts</string>
+  <string formatted="false" name="bubbles_white_left">Weiß links</string>
+  <string formatted="false" name="bubbles_white_right">Weiß rechts</string>
+  <string formatted="false" name="bubbles_yellow_left">Gelb links</string>
+  <string formatted="false" name="bubbles_yellow_right">Gelb rechts</string>
   <string-array name="themes">
     <item>Dunkel</item>
     <item>Hell</item>

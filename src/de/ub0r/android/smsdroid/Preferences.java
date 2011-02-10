@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2011 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -18,12 +18,18 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.SimpleAdapter;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 
@@ -53,6 +59,10 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_EMOTICONS = "show_emoticons";
 	/** Prefernece's name: show bubbles in messagelist. */
 	static final String PREFS_BUBBLES = "show_bubbles";
+	/** Preference's name: bubbles for incoming messages. */
+	private static final String PREFS_BUBBLES_IN = "bubbles_in";
+	/** Preference's name: bubbles for outgoing messages. */
+	private static final String PREFS_BUBBLES_OUT = "bubbles_out";
 	/** Prefernece's name: show full date and time. */
 	static final String PREFS_FULL_DATE = "show_full_date";
 	/** Prefernece's name: hide send button. */
@@ -78,6 +88,116 @@ public class Preferences extends PreferenceActivity {
 	/** Preference's name: show target app. */
 	public static final String PREFS_SHOWTARGETAPP = "show_target_app";
 
+	/** Drawable resources for bubbles. */
+	private static final int[] BUBBLES_IMG = new int[] { 0, // .
+			R.drawable.gray_dark, // .
+			R.drawable.gray_light, // .
+			R.drawable.bubble_old_green_left, // .
+			R.drawable.bubble_old_green_right, // .
+			R.drawable.bubble_old_turquoise_left, // .
+			R.drawable.bubble_old_turquoise_right, // .
+			R.drawable.bubble_blue_left, // .
+			R.drawable.bubble_blue_right, // .
+			R.drawable.bubble_brown_left, // .
+			R.drawable.bubble_brown_right, // .
+			R.drawable.bubble_gray_left, // .
+			R.drawable.bubble_gray_right, // .
+			R.drawable.bubble_green_left, // .
+			R.drawable.bubble_green_right, // .
+			R.drawable.bubble_orange_left, // .
+			R.drawable.bubble_orange_right, // .
+			R.drawable.bubble_pink_left, // .
+			R.drawable.bubble_pink_right, // .
+			R.drawable.bubble_purple_left, // .
+			R.drawable.bubble_purple_right, // .
+			R.drawable.bubble_white_left, // .
+			R.drawable.bubble_white_right, // .
+			R.drawable.bubble_yellow_left, // .
+			R.drawable.bubble_yellow_right, // .
+	};
+	/** String resources for bubbles. */
+	private static final int[] BUBBLES_STR = new int[] {
+			R.string.bubbles_nothing, // .
+			R.string.bubbles_plain_dark_gray, // .
+			R.string.bubbles_plain_light_gray, // .
+			R.string.bubbles_old_green_left, // .
+			R.string.bubbles_old_green_right, // .
+			R.string.bubbles_old_turquoise_left, // .
+			R.string.bubbles_old_turquoise_right, // .
+			R.string.bubbles_blue_left, // .
+			R.string.bubbles_blue_right, // .
+			R.string.bubbles_brown_left, // .
+			R.string.bubbles_brown_right, // .
+			R.string.bubbles_gray_left, // .
+			R.string.bubbles_gray_right, // .
+			R.string.bubbles_green_left, // .
+			R.string.bubbles_green_right, // .
+			R.string.bubbles_orange_left, // .
+			R.string.bubbles_orange_right, // .
+			R.string.bubbles_pink_left, // .
+			R.string.bubbles_pink_right, // .
+			R.string.bubbles_purple_left, // .
+			R.string.bubbles_purple_right, // .
+			R.string.bubbles_white_left, // .
+			R.string.bubbles_white_right, // .
+			R.string.bubbles_yellow_left, // .
+			R.string.bubbles_yellow_right, // .
+	};
+
+	/**
+	 * Listen to clicks on "bubble" preferences.
+	 * 
+	 * @author flx
+	 */
+	private static class OnBubblesClickListener implements
+			Preference.OnPreferenceClickListener {
+		/** {@link Context}. */
+		private final Context ctx;
+
+		/**
+		 * Default constructor.
+		 * 
+		 * @param context
+		 *            {@link Context}
+		 */
+		public OnBubblesClickListener(final Context context) {
+			this.ctx = context;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean onPreferenceClick(final Preference preference) {
+			final Builder b = new Builder(this.ctx);
+			final int l = BUBBLES_STR.length;
+			final String[] cols = new String[] { "icon", "text" };
+			final ArrayList<HashMap<String, Object>> rows // .
+			= new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < l; i++) {
+				final HashMap<String, Object> m = // .
+				new HashMap<String, Object>(2);
+				m.put(cols[0], BUBBLES_IMG[i]);
+				m.put(cols[1], this.ctx.getString(BUBBLES_STR[i]));
+				rows.add(m);
+			}
+			b.setAdapter(new SimpleAdapter(this.ctx, rows,
+					R.layout.bubbles_item, cols, new int[] { android.R.id.icon,
+							android.R.id.text1 }),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(final DialogInterface dialog,
+								final int which) {
+							preference.getEditor().putInt(preference.getKey(),
+									which).commit();
+						}
+					});
+			b.setNegativeButton(android.R.string.cancel, null);
+			b.show();
+			return true;
+		}
+	};
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -88,7 +208,16 @@ public class Preferences extends PreferenceActivity {
 		// this.setTheme(theme);
 		this.addPreferencesFromResource(R.xml.prefs);
 
-		Preference p = this.findPreference("send_logs");
+		final OnBubblesClickListener obcl = new OnBubblesClickListener(this);
+		Preference p = this.findPreference(PREFS_BUBBLES_IN);
+		if (p != null) {
+			p.setOnPreferenceClickListener(obcl);
+		}
+		p = this.findPreference(PREFS_BUBBLES_OUT);
+		if (p != null) {
+			p.setOnPreferenceClickListener(obcl);
+		}
+		p = this.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
 					new Preference.OnPreferenceClickListener() {
@@ -119,7 +248,7 @@ public class Preferences extends PreferenceActivity {
 	}
 
 	/**
-	 * Get Textsize from Preferences.
+	 * Get text's size from Preferences.
 	 * 
 	 * @param context
 	 *            {@link Context}
@@ -182,5 +311,41 @@ public class Preferences extends PreferenceActivity {
 			ret[i] = Long.parseLong(ss[i]);
 		}
 		return ret;
+	}
+
+	/**
+	 * Get drawable resource for bubble for incoming messages.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return resource id
+	 */
+	static final int getBubblesIn(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final int i = p.getInt(PREFS_BUBBLES_IN,
+				R.drawable.bubble_old_turquoise_left);
+		if (i >= 0 && i < BUBBLES_IMG.length) {
+			return BUBBLES_IMG[i];
+		}
+		return R.drawable.bubble_old_turquoise_left;
+	}
+
+	/**
+	 * Get drawable resource for bubble for outgoing messages.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return resource id
+	 */
+	static final int getBubblesOut(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final int i = p.getInt(PREFS_BUBBLES_OUT,
+				R.drawable.bubble_old_green_right);
+		if (i >= 0 && i < BUBBLES_IMG.length) {
+			return BUBBLES_IMG[i];
+		}
+		return R.drawable.bubble_old_green_right;
 	}
 }
