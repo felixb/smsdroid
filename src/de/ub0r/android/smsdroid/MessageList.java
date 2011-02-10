@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2011 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -34,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.text.ClipboardManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.Menu;
@@ -76,20 +77,24 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			.getInstance();
 
 	/** Number of items. */
-	private static final int WHICH_N = 5;
-	// private static final int WHICH_N = 6;
+	private static final int WHICH_N = 7;
+	// private static final int WHICH_N = 8;
+	/** Index in dialog: mark view/add contact. */
+	private static final int WHICH_VIEW_CONTACT = 0;
+	/** Index in dialog: mark call contact. */
+	private static final int WHICH_CALL = 1;
 	/** Index in dialog: mark read/unread. */
-	private static final int WHICH_MARK_UNREAD = 0;
+	private static final int WHICH_MARK_UNREAD = 2;
 	/** Index in dialog: forward. */
-	private static final int WHICH_FORWARD = 1;
+	private static final int WHICH_FORWARD = 3;
 	/** Index in dialog: copy text. */
-	private static final int WHICH_COPY_TEXT = 2;
+	private static final int WHICH_COPY_TEXT = 4;
 	/** Index in dialog: view details. */
-	private static final int WHICH_VIEW_DETAILS = 3;
+	private static final int WHICH_VIEW_DETAILS = 5;
 	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 4;
+	private static final int WHICH_DELETE = 6;
 	/** Index in dialog: speak. */
-	private static final int WHICH_SPEAK = 5;
+	private static final int WHICH_SPEAK = 7;
 
 	/** Minimum length for showing sms length. */
 	private static final int TEXT_LABLE_MIN_LEN = 50;
@@ -106,7 +111,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	static final String URI = "content://mms-sms/conversations/";
 
 	/** Dialog items shown if an item was long clicked. */
-	private String[] longItemClickDialog = null;
+	private final String[] longItemClickDialog = new String[WHICH_N];
 
 	/** Marked a message unread? */
 	private boolean markedUnread = false;
@@ -225,7 +230,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.etText.addTextChangedListener(this.textWatcher);
 		this.textWatcher.afterTextChanged(this.etText.getEditableText());
 
-		this.longItemClickDialog = new String[WHICH_N];
 		this.longItemClickDialog[WHICH_MARK_UNREAD] = this
 				.getString(R.string.mark_unread_);
 		this.longItemClickDialog[WHICH_FORWARD] = this
@@ -455,7 +459,20 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final int type = m.getType();
 		Builder builder = new Builder(context);
 		builder.setTitle(R.string.message_options_);
+
+		final Contact contact = this.conv.getContact();
+		final String a = contact.getNumber();
+		Log.d(TAG, "p: " + a);
+		final String n = contact.getName();
+
 		String[] items = this.longItemClickDialog;
+		if (TextUtils.isEmpty(n)) {
+			items[WHICH_VIEW_CONTACT] = this.getString(R.string.add_contact_);
+		} else {
+			items[WHICH_VIEW_CONTACT] = this.getString(R.string.view_contact_);
+		}
+		items[WHICH_CALL] = this.getString(R.string.call) + " "
+				+ contact.getDisplayName();
 		if (read == 0) {
 			items = items.clone();
 			items[WHICH_MARK_UNREAD] = context.getString(R.string.mark_read_);
@@ -467,13 +484,29 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
+				Intent i = null;
 				switch (which) {
+				case WHICH_VIEW_CONTACT:
+					if (n == null) {
+						i = ContactsWrapper.getInstance()
+								.getInsertPickIntent(a);
+						Conversation.flushCache();
+					} else {
+						final Uri u = MessageList.this.conv.getContact()
+								.getUri();
+						i = new Intent(Intent.ACTION_VIEW, u);
+					}
+					MessageList.this.startActivity(i);
+					break;
+				case WHICH_CALL:
+					MessageList.this.startActivity(new Intent(
+							Intent.ACTION_CALL, Uri.parse("tel:" + a)));
+					break;
 				case WHICH_MARK_UNREAD:
 					ConversationList.markRead(context, target, 1 - read);
 					MessageList.this.markedUnread = true;
 					break;
 				case WHICH_FORWARD:
-					Intent i;
 					int resId;
 					if (type == Message.SMS_DRAFT) {
 						resId = R.string.send_draft_;
