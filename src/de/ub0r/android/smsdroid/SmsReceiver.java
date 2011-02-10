@@ -176,6 +176,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		}
 		final long d = cursor.getLong(Message.INDEX_DATE);
 		if (d > lastUnreadDate) {
+			lastUnreadDate = d;
 			lastUnreadBody = t;
 		}
 		int tid = cursor.getInt(Message.INDEX_THREADID);
@@ -224,6 +225,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			d *= ConversationList.MILLIS;
 		}
 		if (d > lastUnreadDate) {
+			lastUnreadDate = d;
 			lastUnreadBody = null;
 		}
 		while (cursor.moveToNext() && tid > -1) {
@@ -346,7 +348,7 @@ public class SmsReceiver extends BroadcastReceiver {
 							a = conv.getContact().getDisplayName();
 						}
 						n = new Notification(R.drawable.stat_notify_sms, a,
-								System.currentTimeMillis());
+								lastUnreadDate);
 						if (l == 1) {
 							String body;
 							if (privateNotification) {
@@ -376,8 +378,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
 				if (enableNotifications) {
 					n = new Notification(R.drawable.stat_notify_sms, context
-							.getString(R.string.new_messages_), System
-							.currentTimeMillis());
+							.getString(R.string.new_messages_), lastUnreadDate);
 					n.setLatestEventInfo(context, context
 							.getString(R.string.new_messages_), String.format(
 							context.getString(R.string.new_messages), l),
@@ -421,9 +422,6 @@ public class SmsReceiver extends BroadcastReceiver {
 			Log.d(TAG, "uri: " + uri);
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 			if (enableNotifications && n != null) {
-				if (lastUnreadDate > 0L) {
-					n.when = lastUnreadDate;
-				}
 				mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
 			}
 		}
