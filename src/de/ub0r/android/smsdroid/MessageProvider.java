@@ -51,7 +51,7 @@ public final class MessageProvider extends ContentProvider {
 	@Override
 	public int delete(final Uri uri, final String selection,
 			final String[] selectionArgs) {
-		throw new IllegalStateException("not implemented");
+		throw new UnsupportedOperationException("not implemented");
 	}
 
 	/**
@@ -59,7 +59,7 @@ public final class MessageProvider extends ContentProvider {
 	 */
 	@Override
 	public String getType(final Uri uri) {
-		throw new IllegalStateException("not implemented");
+		throw new UnsupportedOperationException("not implemented");
 	}
 
 	/**
@@ -67,7 +67,7 @@ public final class MessageProvider extends ContentProvider {
 	 */
 	@Override
 	public Uri insert(final Uri uri, final ContentValues values) {
-		throw new IllegalStateException("not implemented");
+		throw new UnsupportedOperationException("not implemented");
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class MessageProvider extends ContentProvider {
 	public Cursor query(final Uri uri, final String[] projection,
 			final String selection, final String[] selectionArgs,
 			final String sortOrder) {
-		throw new IllegalStateException("not implemented");
+		throw new UnsupportedOperationException("not implemented");
 	}
 
 	/**
@@ -94,7 +94,7 @@ public final class MessageProvider extends ContentProvider {
 	@Override
 	public int update(final Uri uri, final ContentValues values,
 			final String selection, final String[] selectionArgs) {
-		throw new IllegalStateException("not implemented");
+		throw new UnsupportedOperationException("not implemented");
 	}
 
 	/**

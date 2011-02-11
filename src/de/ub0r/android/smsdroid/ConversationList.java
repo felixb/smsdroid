@@ -184,8 +184,28 @@ public final class ConversationList extends ListActivity implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void onNewIntent(final Intent intent) {
+		final Intent i = intent;
+		Log.d(TAG, "got intent: " + i.getAction());
+		Log.d(TAG, "got uri: " + i.getData());
+		final Bundle b = i.getExtras();
+		Log.d(TAG, "user_query: " + b.get("user_query"));
+		Log.d(TAG, "got extra: " + b);
+		final String query = i.getStringExtra("user_query");
+		Log.d(TAG, "user query: " + query);
+		// TODO: do something with search query
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		final Intent i = this.getIntent();
+		Log.d(TAG, "got intent: " + i.getAction());
+		Log.d(TAG, "got uri: " + i.getData());
+		Log.d(TAG, "got extra: " + i.getExtras());
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		final boolean showTitlebar = p.getBoolean(

@@ -34,6 +34,11 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<data android:mimeType="vnd.android-dir/mms-sms" />
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+			<meta-data android:name="android.app.searchable"
+				android:resource="@xml/searchable" />
 		</activity>
 		<activity android:name=".Preferences" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".About" android:configChanges="orientation|keyboardHidden" />
@@ -51,6 +56,9 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<data android:mimeType="vnd.android-dir/mms-sms"
 					android:pathPrefix="/conversations/" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
 		</activity>
 		<activity android:name="de.ub0r.android.lib.DonationHelper"
@@ -82,6 +90,9 @@
 		</receiver>
 		<provider android:name=".MessageProvider"
 			android:authorities="de.ub0r.android.smsdroid" />
+		<provider android:name=".SearchProvider"
+			android:authorities="de.ub0r.android.smsdroid.SearchProvider"
+			android:syncable="false" />
 		<!-- The application's publisher ID assigned by AdMob -->
 		<receiver android:name="com.admob.android.ads.analytics.InstallReceiver"
 			android:exported="true">
@@ -91,6 +102,9 @@
 		</receiver>
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
 		<meta-data android:value="true" android:name="ADMOB_ALLOW_LOCATION_FOR_ADS" />
+
+		<meta-data android:name="android.app.default_searchable"
+			android:value=".ConversationList" />
 	</application>
 	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="8" />
 	<supports-screens android:smallScreens="true"
