@@ -26,8 +26,12 @@
 				android:title="@string/bubbles_in_" android:summary="@string/bubbles_in_hint" />
 			<PreferenceScreen android:key="bubbles_out"
 				android:title="@string/bubbles_out_" android:summary="@string/bubbles_out_hint" />
-			<EditTextPreference android:title="@string/textsize_"
-				android:key="textsizen" android:summary="@string/textsize_hint" />
+			<EditTextPreference android:key="textsizen"
+				android:title="@string/textsize_" android:summary="@string/textsize_hint" />
+			<PreferenceScreen android:key="textcolor"
+				android:title="@string/textcolor_" android:summary="@string/textcolor_hint" />
+			<CheckBoxPreference android:key="text_color_ignore_conv"
+				android:title="@string/textcolor_ignore_conv_" android:summary="@string/textcolor_ignore_conv_hint" />
 			<CheckBoxPreference android:key="show_titlebar"
 				android:defaultValue="true" android:title="@string/show_titlebar_"
 				android:summary="@string/show_titlebar_hint" />

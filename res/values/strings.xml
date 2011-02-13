@@ -59,6 +59,10 @@
 	<string name="theme_">Theme</string>
 	<string name="textsize_">Text size</string>
 	<string name="textsize_hint">Text size in pixels; leave empty for default</string>
+	<string name="textcolor_">Text color</string>
+	<string name="textcolor_hint">Message text\'s color.</string>
+	<string name="textcolor_ignore_conv_">Ignore text color for threads</string>
+	<string name="textcolor_ignore_conv_hint">Ignore text color in list of threads.</string>
 	<string name="show_titlebar_">Show title bar</string>
 	<string name="show_titlebar_hint">Show title bar in main view. Without title bar, there is no way to see background activity.</string>
 	<string name="show_contact_photo_">Show photo</string>

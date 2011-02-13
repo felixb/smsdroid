@@ -71,8 +71,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	/** Display Name (name if !=null, else address). */
 	private String displayName = null;
 
-	/** Used text size. */
-	private final int textSize;
+	/** Used text size/color. */
+	private final int textSize, textColor;
 
 	/**
 	 * Default Constructor.
@@ -88,6 +88,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		this.backgroundDrawableIn = Preferences.getBubblesIn(c);
 		this.backgroundDrawableOut = Preferences.getBubblesOut(c);
 		this.textSize = Preferences.getTextsize(c);
+		this.textColor = Preferences.getTextcolor(c);
 		if (u == null || u.getLastPathSegment() == null) {
 			this.threadId = -1;
 		} else {
@@ -167,10 +168,17 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			final Cursor cursor) {
 		final Message m = Message.getMessage(context, cursor);
 
-		final TextView twPerson = (TextView) view.findViewById(R.id.addr);
-		TextView twBody = (TextView) view.findViewById(R.id.body);
+		final TextView tvPerson = (TextView) view.findViewById(R.id.addr);
+		final TextView tvBody = (TextView) view.findViewById(R.id.body);
+		final TextView tvDate = (TextView) view.findViewById(R.id.date);
 		if (this.textSize > 0) {
-			twBody.setTextSize(this.textSize);
+			tvBody.setTextSize(this.textSize);
+		}
+		final int col = this.textColor;
+		if (col != 0) {
+			tvPerson.setTextColor(col);
+			tvBody.setTextColor(col);
+			tvDate.setTextColor(col);
 		}
 		int t = m.getType();
 
@@ -190,7 +198,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			pendingvisability = View.VISIBLE;
 		case Message.SMS_OUT: // handle drafts/pending here too
 		case Message.MMS_OUT:
-			twPerson.setText(context.getString(R.string.me) + subject);
+			tvPerson.setText(context.getString(R.string.me) + subject);
 			try {
 				view.setBackgroundResource(this.backgroundDrawableOut);
 			} catch (OutOfMemoryError e) {
@@ -203,7 +211,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		case Message.SMS_IN:
 		case Message.MMS_IN:
 		default:
-			twPerson.setText(this.displayName + subject);
+			tvPerson.setText(this.displayName + subject);
 			try {
 				view.setBackgroundResource(this.backgroundDrawableIn);
 			} catch (OutOfMemoryError e) {
@@ -224,9 +232,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
 		}
 
-		long time = m.getDate();
-		((TextView) view.findViewById(R.id.date)).setText(ConversationList
-				.getDate(context, time));
+		final long time = m.getDate();
+		tvDate.setText(ConversationList.getDate(context, time));
 
 		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);
 		final Bitmap pic = m.getPicture();
@@ -276,11 +283,11 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			btn.setVisibility(View.GONE);
 		}
 		if (text == null) {
-			twBody.setVisibility(View.INVISIBLE);
+			tvBody.setVisibility(View.INVISIBLE);
 			view.findViewById(R.id.btn_import_contact).setVisibility(View.GONE);
 		} else {
-			twBody.setText(text);
-			twBody.setVisibility(View.VISIBLE);
+			tvBody.setText(text);
+			tvBody.setVisibility(View.VISIBLE);
 			String stext = text.toString();
 			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
 				stext = stext.replaceAll(".*BEGIN:VCARD", "BEGIN:VCARD");

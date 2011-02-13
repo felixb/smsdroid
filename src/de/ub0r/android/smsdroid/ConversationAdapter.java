@@ -47,8 +47,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	/** Cursor's sort. */
 	public static final String SORT = Calls.DATE + " DESC";
 
-	/** Used text size. */
-	private final int textSize;
+	/** Used text size, color. */
+	private final int textSize, textColor;
 
 	/** {@link Cursor} to the original Content to listen for changes. */
 	private final Cursor origCursor;
@@ -127,6 +127,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 				R.drawable.ic_contact_picture);
 
 		this.textSize = Preferences.getTextsize(c);
+		this.textColor = Preferences.getTextcolor(c);
 		this.origCursor = cr.query(Conversation.URI_SIMPLE,
 				Conversation.PROJECTION_SIMPLE, null, null, null);
 
@@ -176,12 +177,20 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 				false);
 		final Contact contact = c.getContact();
 
+		final TextView tvPerson = (TextView) view.findViewById(R.id.addr);
+		final TextView tvCount = (TextView) view.findViewById(R.id.count);
 		final TextView tvBody = (TextView) view.findViewById(R.id.body);
+		final TextView tvDate = (TextView) view.findViewById(R.id.date);
 		if (this.textSize > 0) {
 			tvBody.setTextSize(this.textSize);
 		}
-		final TextView tvName = (TextView) view.findViewById(R.id.addr);
-		final TextView tvCount = (TextView) view.findViewById(R.id.count);
+		final int col = this.textColor;
+		if (col != 0) {
+			tvPerson.setTextColor(col);
+			tvBody.setTextColor(col);
+			tvCount.setTextColor(col);
+			tvDate.setTextColor(col);
+		}
 		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
 
 		if (ConversationList.showContactPhoto) {
@@ -204,9 +213,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			tvCount.setText("(" + c.getCount() + ")");
 		}
 		if (this.isBlocked(contact.getNumber())) {
-			tvName.setText("[" + contact.getDisplayName() + "]");
+			tvPerson.setText("[" + contact.getDisplayName() + "]");
 		} else {
-			tvName.setText(contact.getDisplayName());
+			tvPerson.setText(contact.getDisplayName());
 		}
 
 		// read status
@@ -225,8 +234,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 
 		// date
 		long time = c.getDate();
-		((TextView) view.findViewById(R.id.date)).setText(ConversationList
-				.getDate(context, time));
+		tvDate.setText(ConversationList.getDate(context, time));
 
 		// presence
 		ImageView ivPresence = (ImageView) view.findViewById(R.id.presence);

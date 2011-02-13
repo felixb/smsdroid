@@ -21,6 +21,8 @@ package de.ub0r.android.smsdroid;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,6 +41,9 @@ import de.ub0r.android.lib.Utils;
  * @author flx
  */
 public class Preferences extends PreferenceActivity {
+	/** Tag for logging. */
+	static final String TAG = "prefs";
+
 	/** Preference's name: vibrate on receive. */
 	static final String PREFS_VIBRATE = "receive_vibrate";
 	/** Preference's name: sound on receive. */
@@ -77,16 +82,23 @@ public class Preferences extends PreferenceActivity {
 	private static final String THEME_BLACK = "black";
 	/** Theme: light. */
 	private static final String THEME_LIGHT = "light";
-	/** Preference's name: textsize. */
+	/** Preference's name: text size. */
 	private static final String PREFS_TEXTSIZE = "textsizen";
-	/** Preference's name: show titlebar. */
+	/** Preference's name: text color. */
+	private static final String PREFS_TEXTCOLOR = "textcolor";
+	/** Preference's name: ignore text color for list ov threads. */
+	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = "text_color_ignore_conv";
+	/** Preference's name: show title bar. */
 	public static final String PREFS_SHOWTITLEBAR = "show_titlebar";
 	/** Preference's name: enable autosend. */
 	public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
-	/** Preference's name: show textfield. */
+	/** Preference's name: show text field. */
 	public static final String PREFS_SHOWTEXTFIELD = "show_textfield";
 	/** Preference's name: show target app. */
 	public static final String PREFS_SHOWTARGETAPP = "show_target_app";
+
+	/** Default color. */
+	private static final int BLACK = 0xff000000;
 
 	/** Drawable resources for bubbles. */
 	private static final int[] BUBBLES_IMG = new int[] { 0, // .
@@ -217,6 +229,53 @@ public class Preferences extends PreferenceActivity {
 		if (p != null) {
 			p.setOnPreferenceClickListener(obcl);
 		}
+		p = this.findPreference(PREFS_TEXTCOLOR);
+		if (p != null) {
+			p.setOnPreferenceClickListener(// .
+					new Preference.OnPreferenceClickListener() {
+						@Override
+						public boolean onPreferenceClick(
+								final Preference preference) {
+							final SharedPreferences prefs = PreferenceManager
+									.getDefaultSharedPreferences(// .
+									Preferences.this);
+
+							int c = prefs.getInt(PREFS_TEXTCOLOR, 0);
+							if (c == 0) {
+								c = BLACK;
+							}
+
+							final AmbilWarnaDialog dialog = // .
+							new AmbilWarnaDialog(Preferences.this, c,
+									new OnAmbilWarnaListener() {
+										@Override
+										public void onOk(
+												final AmbilWarnaDialog dialog,
+												final int color) {
+											prefs.edit().putInt(
+													PREFS_TEXTCOLOR, color)
+													.commit();
+										}
+
+										@Override
+										public void onCancel(
+												final AmbilWarnaDialog dialog) {
+											// nothing to do
+										}
+
+										public void onReset(
+												final AmbilWarnaDialog dialog) {
+											prefs.edit().putInt(
+													PREFS_TEXTCOLOR, 0)
+													.commit();
+										}
+									});
+
+							dialog.show();
+							return true;
+						}
+					});
+		}
 		p = this.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
@@ -258,7 +317,27 @@ public class Preferences extends PreferenceActivity {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_TEXTSIZE, null);
+		Log.d(TAG, "text size: " + s);
 		return Utils.parseInt(s, 0);
+	}
+
+	/**
+	 * Get text's color from Preferences.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return theme
+	 */
+	static final int getTextcolor(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		if (context instanceof ConversationList
+				&& p.getBoolean(PREFS_TEXTCOLOR_IGNORE_CONV, false)) {
+			return 0;
+		}
+		final int ret = p.getInt(PREFS_TEXTCOLOR, 0);
+		Log.d(TAG, "text color: " + ret);
+		return ret;
 	}
 
 	/**
