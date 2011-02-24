@@ -347,7 +347,8 @@ public class SmsReceiver extends BroadcastReceiver {
 						} else {
 							a = conv.getContact().getDisplayName();
 						}
-						n = new Notification(R.drawable.stat_notify_sms, a,
+						n = new Notification(Preferences
+								.getNotificationItem(context), a,
 								lastUnreadDate);
 						if (l == 1) {
 							String body;

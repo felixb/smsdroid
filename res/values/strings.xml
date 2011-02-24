@@ -124,6 +124,11 @@
 	<string name="attachment_saved">Saved attachment on SD card as:</string>
 	<string name="attachment_not_saved">Could not save attachment.</string>
 	<string name="chooser_">Chooser</string>
+	<string name="notification_icon_">Notification icon</string>
+	<string name="notification_default_">Default</string>
+	<string name="notification_black_">Black</string>
+	<string name="notification_green_">Green</string>
+	<string name="notification_yellow_">Yellow</string>
 	<string name="bubbles_in_">Bubbles in</string>
 	<string name="bubbles_in_hint">Bubbles for incoming messages</string>
 	<string name="bubbles_out_">Bubbles out</string>

@@ -58,6 +58,8 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_NOTIFICATION_ENABLE = "notification_enable";
 	/** Preference's name: hide sender/text in notifications. */
 	static final String PREFS_NOTIFICATION_PRIVACY = "receive_privacy";
+	/** Preference's name: icon for notifications. */
+	private static final String PREFS_NOTIFICATION_ICON = "notification_icon";
 	/** Prefernece's name: show contact's photo. */
 	static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
 	/** Prefernece's name: show emoticons in messagelist. */
@@ -87,7 +89,8 @@ public class Preferences extends PreferenceActivity {
 	/** Preference's name: text color. */
 	private static final String PREFS_TEXTCOLOR = "textcolor";
 	/** Preference's name: ignore text color for list ov threads. */
-	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = "text_color_ignore_conv";
+	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = // .
+	"text_color_ignore_conv";
 	/** Preference's name: show title bar. */
 	public static final String PREFS_SHOWTITLEBAR = "show_titlebar";
 	/** Preference's name: enable autosend. */
@@ -99,6 +102,22 @@ public class Preferences extends PreferenceActivity {
 
 	/** Default color. */
 	private static final int BLACK = 0xff000000;
+
+	/** Drawable resources for notification icons. */
+	private static final int[] NOTIFICAION_IMG = new int[] {
+			R.drawable.stat_notify_sms, // .
+			R.drawable.stat_notify_sms_black, // .
+			R.drawable.stat_notify_sms_green, // .
+			R.drawable.stat_notify_sms_yellow, // .
+	};
+
+	/** String resources for notification icons. */
+	private static final int[] NOTIFICAION_STR = new int[] {
+			R.string.notification_default_, // .
+			R.string.notification_black_, // .
+			R.string.notification_green_, // .
+			R.string.notification_yellow_, // .
+	};
 
 	/** Drawable resources for bubbles. */
 	private static final int[] BUBBLES_IMG = new int[] { 0, // .
@@ -154,6 +173,60 @@ public class Preferences extends PreferenceActivity {
 			R.string.bubbles_white_right, // .
 			R.string.bubbles_yellow_left, // .
 			R.string.bubbles_yellow_right, // .
+	};
+
+	/**
+	 * Listen to clicks on "notification icon" preferences.
+	 * 
+	 * @author flx
+	 */
+	private static class OnNotificationIconClickListener implements
+			Preference.OnPreferenceClickListener {
+		/** {@link Context}. */
+		private final Context ctx;
+
+		/**
+		 * Default constructor.
+		 * 
+		 * @param context
+		 *            {@link Context}
+		 */
+		public OnNotificationIconClickListener(final Context context) {
+			this.ctx = context;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean onPreferenceClick(final Preference preference) {
+			final Builder b = new Builder(this.ctx);
+			final int l = NOTIFICAION_STR.length;
+			final String[] cols = new String[] { "icon", "text" };
+			final ArrayList<HashMap<String, Object>> rows // .
+			= new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < l; i++) {
+				final HashMap<String, Object> m = // .
+				new HashMap<String, Object>(2);
+				m.put(cols[0], NOTIFICAION_IMG[i]);
+				m.put(cols[1], this.ctx.getString(NOTIFICAION_STR[i]));
+				rows.add(m);
+			}
+			b.setAdapter(new SimpleAdapter(this.ctx, rows,
+					R.layout.notification_icons_item, cols, new int[] {
+							android.R.id.icon, android.R.id.text1 }),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(final DialogInterface dialog,
+								final int which) {
+							preference.getEditor().putInt(preference.getKey(),
+									which).commit();
+						}
+					});
+			b.setNegativeButton(android.R.string.cancel, null);
+			b.show();
+			return true;
+		}
 	};
 
 	/**
@@ -220,8 +293,14 @@ public class Preferences extends PreferenceActivity {
 		// this.setTheme(theme);
 		this.addPreferencesFromResource(R.xml.prefs);
 
+		Preference p = this.findPreference(PREFS_NOTIFICATION_ICON);
+		if (p != null) {
+			p.setOnPreferenceClickListener(new OnNotificationIconClickListener(
+					this));
+		}
+
 		final OnBubblesClickListener obcl = new OnBubblesClickListener(this);
-		Preference p = this.findPreference(PREFS_BUBBLES_IN);
+		p = this.findPreference(PREFS_BUBBLES_IN);
 		if (p != null) {
 			p.setOnPreferenceClickListener(obcl);
 		}
@@ -390,6 +469,24 @@ public class Preferences extends PreferenceActivity {
 			ret[i] = Long.parseLong(ss[i]);
 		}
 		return ret;
+	}
+
+	/**
+	 * Get drawable resource for notification icon.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return resource id
+	 */
+	static final int getNotificationItem(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final int i = p.getInt(PREFS_NOTIFICATION_ICON,
+				R.drawable.stat_notify_sms);
+		if (i >= 0 && i < NOTIFICAION_IMG.length) {
+			return NOTIFICAION_IMG[i];
+		}
+		return R.drawable.stat_notify_sms;
 	}
 
 	/**

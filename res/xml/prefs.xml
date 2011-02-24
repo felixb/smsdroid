@@ -22,6 +22,8 @@
 			<ListPreference android:title="@string/theme_"
 				android:key="theme" android:entries="@array/themes"
 				android:entryValues="@array/themes_values" />
+			<PreferenceScreen android:key="notification_icon"
+				android:title="@string/notification_icon_" android:dependency="notification_enable" />
 			<PreferenceScreen android:key="bubbles_in"
 				android:title="@string/bubbles_in_" android:summary="@string/bubbles_in_hint" />
 			<PreferenceScreen android:key="bubbles_out"
