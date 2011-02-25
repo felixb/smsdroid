@@ -20,12 +20,6 @@
 	xmlns:app="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
 	android:layout_height="fill_parent" android:layout_width="fill_parent"
 	android:background="?android:attr/colorBackground">
-	<com.admob.android.ads.AdView android:id="@+id/ad"
-		android:layout_alignParentBottom="true" android:visibility="gone"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:gravity="bottom" app:backgroundColor="?android:attr/colorBackground"
-		app:textColor="?android:attr/textColorPrimary"
-		app:keywords="android mobile handy cellphone google htc market app sms message game" />
 	<RelativeLayout android:id="@+id/titlebar"
 		android:layout_width="wrap_content" android:layout_height="48dip"
 		style="@android:style/ButtonBar" android:layout_alignParentTop="true">
@@ -44,9 +38,15 @@
 			android:layout_centerInParent="true" android:layout_toLeftOf="@id/compose"
 			android:visibility="gone" />
 	</RelativeLayout>
+	<com.admob.android.ads.AdView android:id="@+id/ad"
+		android:layout_alignParentBottom="true" android:visibility="gone"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:gravity="bottom" app:backgroundColor="?android:attr/colorBackground"
+		app:textColor="?android:attr/textColorPrimary"
+		app:keywords="android mobile handy cellphone google htc market app sms message game" />
 	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:drawSelectorOnTop="false"
 		android:scrollingCache="true" android:fastScrollEnabled="true"
 		android:choiceMode="singleChoice" android:cacheColorHint="?android:attr/colorBackground"
-		android:layout_above="@id/ad" android:layout_below="@id/titlebar" />
+		android:layout_below="@id/titlebar" android:layout_above="@id/ad" />
 </RelativeLayout>

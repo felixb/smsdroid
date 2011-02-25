@@ -100,6 +100,9 @@
 				<action android:name="com.android.vending.INSTALL_REFERRER" />
 			</intent-filter>
 		</receiver>
+		<activity android:name="com.admob.android.ads.AdMobActivity"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+			android:configChanges="orientation|keyboard|keyboardHidden" />
 		<meta-data android:value="a14b9f701ee348f" android:name="ADMOB_PUBLISHER_ID" />
 		<meta-data android:value="true" android:name="ADMOB_ALLOW_LOCATION_FOR_ADS" />
 
