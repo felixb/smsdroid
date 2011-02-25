@@ -242,8 +242,7 @@ public final class ConversationList extends ListActivity implements
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 		this.longItemClickDialog = new String[WHICH_N];
-		this.longItemClickDialog[WHICH_ANSWER] = this
-				.getString(R.string.answer);
+		this.longItemClickDialog[WHICH_ANSWER] = this.getString(R.string.reply);
 		this.longItemClickDialog[WHICH_CALL] = this.getString(R.string.call);
 		this.longItemClickDialog[WHICH_VIEW_CONTACT] = this
 				.getString(R.string.view_contact_);

@@ -77,24 +77,23 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			.getInstance();
 
 	/** Number of items. */
-	private static final int WHICH_N = 7;
-	// private static final int WHICH_N = 8;
+	private static final int WHICH_N = 8;
 	/** Index in dialog: mark view/add contact. */
 	private static final int WHICH_VIEW_CONTACT = 0;
 	/** Index in dialog: mark call contact. */
 	private static final int WHICH_CALL = 1;
 	/** Index in dialog: mark read/unread. */
 	private static final int WHICH_MARK_UNREAD = 2;
+	/** Index in dialog: reply. */
+	private static final int WHICH_REPLY = 3;
 	/** Index in dialog: forward. */
-	private static final int WHICH_FORWARD = 3;
+	private static final int WHICH_FORWARD = 4;
 	/** Index in dialog: copy text. */
-	private static final int WHICH_COPY_TEXT = 4;
+	private static final int WHICH_COPY_TEXT = 5;
 	/** Index in dialog: view details. */
-	private static final int WHICH_VIEW_DETAILS = 5;
+	private static final int WHICH_VIEW_DETAILS = 6;
 	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 6;
-	/** Index in dialog: speak. */
-	private static final int WHICH_SPEAK = 7;
+	private static final int WHICH_DELETE = 7;
 
 	/** Minimum length for showing sms length. */
 	private static final int TEXT_LABLE_MIN_LEN = 50;
@@ -232,6 +231,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 		this.longItemClickDialog[WHICH_MARK_UNREAD] = this
 				.getString(R.string.mark_unread_);
+		this.longItemClickDialog[WHICH_REPLY] = this.getString(R.string.reply);
 		this.longItemClickDialog[WHICH_FORWARD] = this
 				.getString(R.string.forward_);
 		this.longItemClickDialog[WHICH_COPY_TEXT] = this
@@ -375,7 +375,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 				}
 			}
 		} else {
-			btn.setText(R.string.answer);
+			btn.setText(R.string.reply);
 		}
 	}
 
@@ -506,6 +506,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					ConversationList.markRead(context, target, 1 - read);
 					MessageList.this.markedUnread = true;
 					break;
+				case WHICH_REPLY:
+					MessageList.this.startActivity(ConversationList
+							.getComposeIntent(a));
+					break;
 				case WHICH_FORWARD:
 					int resId;
 					if (type == Message.SMS_DRAFT) {
@@ -575,11 +579,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 							R.string.delete_message_,
 							R.string.delete_message_question, null);
 					break;
-				case WHICH_SPEAK:
-					// TODO: implement me
-					Toast.makeText(context, R.string.not_implemented,
-							Toast.LENGTH_SHORT).show();
-					break;
 				default:
 					break;
 				}
@@ -628,7 +627,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 *            show chooser
 	 * @return {@link Intent}
 	 */
-	private Intent buildIntent(final boolean autosend, final boolean showChooser) {
+	private Intent buildIntent(final boolean autosend, // .
+			final boolean showChooser) {
 		final String text = this.etText.getText().toString().trim();
 		final Intent i = ConversationList.getComposeIntent(this.conv
 				.getContact().getNumber());
@@ -638,7 +638,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			i.putExtra("AUTOSEND", "1");
 		}
 		if (showChooser) {
-			return Intent.createChooser(i, this.getString(R.string.answer));
+			return Intent.createChooser(i, this.getString(R.string.reply));
 		} else {
 			return i;
 		}

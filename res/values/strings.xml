@@ -33,6 +33,7 @@
 	<string name="new_messages">%d unread messages.</string>
 	<string name="call">Call</string>
 	<string name="answer">Answer</string>
+	<string name="reply">Reply</string>
 	<string name="send_">Send</string>
 	<string name="notification_">Notifications</string>
 	<string name="notification_enable_">Enable notifications</string>

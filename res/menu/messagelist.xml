@@ -19,7 +19,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:title="@string/compose_" android:id="@+id/item_compose"
 		android:icon="@drawable/ic_menu_compose" android:orderInCategory="1" />
-	<item android:title="@string/answer" android:id="@+id/item_answer"
+	<item android:title="@string/reply" android:id="@+id/item_answer"
 		android:icon="@drawable/android:ic_menu_send" android:orderInCategory="2" />
 	<item android:title="@string/call" android:id="@+id/item_call"
 		android:icon="@drawable/android:ic_menu_call" android:orderInCategory="3" />
