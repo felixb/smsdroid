@@ -21,9 +21,9 @@
 	android:orientation="horizontal" android:paddingRight="7dip">
 	<View android:id="@+id/read" android:background="#FF00AA00"
 		android:layout_height="fill_parent" android:layout_width="5dip"
-		android:layout_marginRight="2dip" />
+		android:layout_marginRight="1dip" />
 	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content" android:id="@+id/layout">
 		<TextView android:layout_width="wrap_content"
 			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
 			android:layout_height="wrap_content" android:id="@+id/date"

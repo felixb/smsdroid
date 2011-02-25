@@ -200,7 +200,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		case Message.MMS_OUT:
 			tvPerson.setText(context.getString(R.string.me) + subject);
 			try {
-				view.setBackgroundResource(this.backgroundDrawableOut);
+				view.findViewById(R.id.layout).setBackgroundResource(
+						this.backgroundDrawableOut);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
@@ -213,7 +214,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		default:
 			tvPerson.setText(this.displayName + subject);
 			try {
-				view.setBackgroundResource(this.backgroundDrawableIn);
+				view.findViewById(R.id.layout).setBackgroundResource(
+						this.backgroundDrawableIn);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
