@@ -33,6 +33,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.SimpleAdapter;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Market;
 import de.ub0r.android.lib.Utils;
 
 /**
@@ -355,6 +356,9 @@ public class Preferences extends PreferenceActivity {
 						}
 					});
 		}
+		Market.setOnPreferenceClickListener(this, this
+				.findPreference("more_apps"), null, "Felix+Bechstein",
+				"http://code.google.com/u/felix.bechstein/");
 		p = this.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .

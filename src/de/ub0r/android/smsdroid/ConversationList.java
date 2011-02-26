@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2011 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
@@ -55,6 +54,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Changelog;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Market;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -227,8 +227,8 @@ public final class ConversationList extends ListActivity implements
 				.queryBroadcastReceivers(
 						new Intent("de.ub0r.android.websms.connector.INFO"), 0);
 		if (ri.size() == 0) {
-			final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(// .
-					"market://details?id=de.ub0r.android.websms"));
+			final Intent intent = Market.getInstallAppIntent(this,
+					"de.ub0r.android.websms", Market.ALT_WEBSMS);
 			Changelog.showNotes(this, "get WebSMS", null, intent);
 		} else {
 			Changelog.showNotes(this, null, null, null);
@@ -324,9 +324,9 @@ public final class ConversationList extends ListActivity implements
 	 * @param uri
 	 *            {@link Uri}
 	 * @param title
-	 *            title of {@link Dialog}
+	 *            title of Dialog
 	 * @param message
-	 *            message of the {@link Dialog}
+	 *            message of the Dialog
 	 * @param activity
 	 *            {@link Activity} to finish when deleting.
 	 */
