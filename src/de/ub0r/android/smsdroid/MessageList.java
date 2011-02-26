@@ -430,7 +430,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.send(true, false);
 			return true;
 		case R.id.item_call:
-			this.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:"
 					+ this.conv.getContact().getNumber())));
 			return true;
 		default:
@@ -500,7 +500,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					break;
 				case WHICH_CALL:
 					MessageList.this.startActivity(new Intent(
-							Intent.ACTION_CALL, Uri.parse("tel:" + a)));
+							Intent.ACTION_VIEW, Uri.parse("tel:" + a)));
 					break;
 				case WHICH_MARK_UNREAD:
 					ConversationList.markRead(context, target, 1 - read);

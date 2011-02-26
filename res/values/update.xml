@@ -19,6 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
+		<item>HEAD: show dialer instead of calling directly (and reduce permissions)</item>
 		<item>v0.6: new bubbles and notification icons by daniel kalinic, set text color, fix notification timestamp</item>
 		<item>v0.5.4: fix for android 1.5</item>
 		<item>v0.5.3: Fix remove numbers from spamDB, readd widget\'s title and allow to disable it, minor changes</item>

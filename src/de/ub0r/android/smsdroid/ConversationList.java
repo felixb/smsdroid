@@ -488,7 +488,7 @@ public final class ConversationList extends ListActivity implements
 					ConversationList.this.startActivity(getComposeIntent(a));
 					break;
 				case WHICH_CALL:
-					i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + a));
+					i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));
 					ConversationList.this.startActivity(i);
 					break;
 				case WHICH_VIEW_CONTACT:
