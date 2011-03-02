@@ -107,6 +107,7 @@ public class Preferences extends PreferenceActivity {
 	/** Drawable resources for notification icons. */
 	private static final int[] NOTIFICAION_IMG = new int[] {
 			R.drawable.stat_notify_sms, // .
+			R.drawable.stat_notify_email_generic, // .
 			R.drawable.stat_notify_sms_black, // .
 			R.drawable.stat_notify_sms_green, // .
 			R.drawable.stat_notify_sms_yellow, // .
@@ -115,6 +116,7 @@ public class Preferences extends PreferenceActivity {
 	/** String resources for notification icons. */
 	private static final int[] NOTIFICAION_STR = new int[] {
 			R.string.notification_default_, // .
+			R.string.notification_gingerbread_, // .
 			R.string.notification_black_, // .
 			R.string.notification_green_, // .
 			R.string.notification_yellow_, // .
