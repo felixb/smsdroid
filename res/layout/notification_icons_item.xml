@@ -21,7 +21,7 @@
 	android:orientation="horizontal">
 	<ImageView android:layout_width="50dip"
 		android:layout_height="50dip" android:padding="5dip"
-		android:scaleType="fitXY" android:id="@android:id/icon"
+		android:scaleType="fitCenter" android:id="@android:id/icon"
 		android:gravity="center_vertical" android:src="@drawable/bubble_blue_left" />
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:id="@android:id/text1"
