@@ -89,6 +89,13 @@ public class SmsReceiver extends BroadcastReceiver {
 	public final void onReceive(final Context context, final Intent intent) {
 		final String action = intent.getAction();
 		Log.d(TAG, "got intent: " + action);
+		try {
+			Log.d(TAG, "sleep(" + SLEEP + ")");
+			Thread.sleep(SLEEP);
+		} catch (InterruptedException e) {
+			Log.d(TAG, "interrupted in spinlock", e);
+			e.printStackTrace();
+		}
 		String t = null;
 		if (action.equals(ACTION_SMS)) {
 			Bundle b = intent.getExtras();
@@ -127,6 +134,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		do {
 			Log.d(TAG, "spin: " + count);
 			try {
+				Log.d(TAG, "sleep(" + SLEEP + ")");
 				Thread.sleep(SLEEP);
 			} catch (InterruptedException e) {
 				Log.d(TAG, "interrupted in spinlock", e);
