@@ -128,6 +128,7 @@
 	<string name="notification_icon_">Notification icon</string>
 	<string name="notification_default_">Default</string>
 	<string name="notification_gingerbread_">Gingerbread</string>
+	<string name="notification_gingerbread_mail_">Gingerbread mail</string>
 	<string name="notification_black_">Black</string>
 	<string name="notification_green_">Green</string>
 	<string name="notification_yellow_">Yellow</string>
