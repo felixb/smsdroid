@@ -22,4 +22,23 @@
        -->
 <resources>
   <string name="about_" formatted="false" orig="About">À propos</string>
+  <string name="about_hint" formatted="false" orig="About this app">À propos de cette application</string>
+  <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Quelques trucs et astuces, comment faire fonctionner cette application</string>
+  <string name="feedback_" formatted="false" orig="Feedback">Commentaires</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Signaler des bugs, demander de nouvelles fonctionnalités</string>
+  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc.">Suivre sur twitter\nNotifications de mise à jour etc</string>
+  <string name="about0" formatted="false" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid vous permet de lire vos sms, et de les écrire avec n\'importe quelle autre application</string>
+  <string name="more_apps_" formatted="false" orig="More Apps..">Plus d\'applications ...</string>
+  <string name="settings" formatted="false" orig="Preferences">Préférences</string>
+  <string name="new_message_" formatted="false" orig="New message">Nouveau message</string>
+  <string name="new_message_hint" formatted="false" orig="Compose a new message">Composez un nouveau message</string>
+  <string name="new_message" formatted="false" orig="1 unread message.">1 message non lu</string>
+  <string name="new_messages_" formatted="false" orig="New messages">Nouveaux messages</string>
+  <string name="new_messages" formatted="false" orig="%d unread messages.">%d messages non lus</string>
+  <string name="call" formatted="false" orig="Call">Appeler</string>
+  <string name="answer" formatted="false" orig="Answer">Répondre</string>
+  <string name="reply" formatted="false" orig="Reply">Réponse</string>
+  <string name="send_" formatted="false" orig="Send">Envoyer</string>
+  <string name="notification_" formatted="false" orig="Notifications">Notifications</string>
+  <string name="notification_enable_" formatted="false" orig="Enable notifications">Activer les notifications</string>
 </resources>
