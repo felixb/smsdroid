@@ -41,4 +41,35 @@
   <string name="send_" formatted="false" orig="Send">Envoyer</string>
   <string name="notification_" formatted="false" orig="Notifications">Notifications</string>
   <string name="notification_enable_" formatted="false" orig="Enable notifications">Activer les notifications</string>
+  <string name="notification_enable_hint" formatted="false" orig="Enable notifications on receive">Activer la notification lors de la réception</string>
+  <string name="receive_vibrate_" formatted="false" orig="Vibrate">Vibreur</string>
+  <string name="receive_vibrate_hint" formatted="false" orig="Vibrate on receive">Vibre lors de la réception</string>
+  <string name="receive_vibrate_mode_" formatted="false" orig="Vibrator mode">Mode vibreur</string>
+  <string name="receive_sound_" formatted="false" orig="Sound">Son</string>
+  <string name="receive_sound_hint" formatted="false" orig="Sound on receive">Son lors de la réception</string>
+  <string name="receive_led_color_" formatted="false" orig="LED color">Couleur de la LED</string>
+  <string name="receive_led_flash_" formatted="false" orig="LED mode">Mode LED</string>
+  <string name="receive_led_flash_hint" formatted="false" orig="Set LED flashing behaviour">Choisir le type de clignotement LED</string>
+  <string name="receive_no_text_" formatted="false" orig="Hide sender/text">Cacher l\'expéditeur/le texte</string>
+  <string name="receive_no_text_hint" formatted="false" orig="Hide sender/text in notification.">Cacher l\'expéditeur/le texte lors de la notification</string>
+  <string name="behavior_" formatted="false" orig="Behavior">Comportement</string>
+  <string name="autosend_" formatted="false" orig="Autosend">Réponse automatique</string>
+  <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp;amp; behavior">Apparence et comportement</string>
+  <string name="autosend_hint" formatted="false" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Envoie des réponses automatiques. Actuellement, seule l\'application WebSMS supporte cette fonction. Les autres applications montreront simplement le texte.</string>
+  <string name="appearance_" formatted="false" orig="Appearance">Apparence</string>
+  <string name="theme_" formatted="false" orig="Theme">Thème</string>
+  <string name="textsize_" formatted="false" orig="Text size">Taille du texte</string>
+  <string name="textsize_hint" formatted="false" orig="Text size in pixels; leave empty for default">Taille du texte en pixels ; laisser vide pour utiliser la taille par défaut</string>
+  <string name="textcolor_" formatted="false" orig="Text color">Couleur du texte</string>
+  <string name="textcolor_hint" formatted="false" orig="Message text\'s color.">Couleur du texte dans les messages</string>
+  <string name="textcolor_ignore_conv_" formatted="false" orig="Ignore text color for threads">Ignorer la couleur du texte pour les fils de discussions</string>
+  <string name="textcolor_ignore_conv_hint" formatted="false" orig="Ignore text color in list of threads.">Ignorer la couleur du texte pour la liste des fils de discussions</string>
+  <string name="show_titlebar_" formatted="false" orig="Show title bar">Montrer la barre de titre</string>
+  <string name="show_contact_photo_" formatted="false" orig="Show photo">Montrer la photo</string>
+  <string name="show_contact_photo_hint" formatted="false" orig="Show contact\'s photo in conversation list">Montrer la photo du contact dans la liste de discussion</string>
+  <string name="show_emoticons_" formatted="false" orig="Show emoticons">Montrer les émoticônes</string>
+  <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list.">Montre les émoticônes dans la liste des messages</string>
+  <string name="show_bubbles_" formatted="false" orig="Show bubbles">Montrer les bulles</string>
+  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Cacher le bouton "envoyer"</string>
+  <string name="hide_send_hint" formatted="false" orig="Hide &quot;send&quot; button near text field.">Cache le bouton "envoyer" près de la zone de texte</string>
 </resources>
