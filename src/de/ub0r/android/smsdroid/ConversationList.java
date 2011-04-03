@@ -186,14 +186,18 @@ public final class ConversationList extends ListActivity implements
 	@Override
 	public void onNewIntent(final Intent intent) {
 		final Intent i = intent;
-		Log.d(TAG, "got intent: " + i.getAction());
-		Log.d(TAG, "got uri: " + i.getData());
-		final Bundle b = i.getExtras();
-		Log.d(TAG, "user_query: " + b.get("user_query"));
-		Log.d(TAG, "got extra: " + b);
-		final String query = i.getStringExtra("user_query");
-		Log.d(TAG, "user query: " + query);
-		// TODO: do something with search query
+		if (i != null) {
+			Log.d(TAG, "got intent: " + i.getAction());
+			Log.d(TAG, "got uri: " + i.getData());
+			final Bundle b = i.getExtras();
+			if (b != null) {
+				Log.d(TAG, "user_query: " + b.get("user_query"));
+				Log.d(TAG, "got extra: " + b);
+			}
+			final String query = i.getStringExtra("user_query");
+			Log.d(TAG, "user query: " + query);
+			// TODO: do something with search query
+		}
 	}
 
 	/**

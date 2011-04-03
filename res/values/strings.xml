@@ -120,8 +120,12 @@
 	<string name="clear_cache_hint">Clear internal Database. Fetch all data again from external Database.</string>
 	<string name="not_implemented">Sorry, not yet implemented.</string>
 	<string name="error_conv_null">Error getting conversation from DB!</string>
+	<string name="error_sending_failed">Sending failed</string>
+	<string name="error_missing_text">Missing text!</string>
+	<string name="error_missing_reciepient">Missing reciepient!</string>
 	<string name="text_hint">Text</string>
 	<string name="paste_">[Paste from clipboard]</string>
+	<string name="restore_">Restore last message</string>
 	<string name="attachment_saved">Saved attachment on SD card as:</string>
 	<string name="attachment_not_saved">Could not save attachment.</string>
 	<string name="chooser_">Chooser</string>

@@ -61,6 +61,16 @@
 				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
 		</activity>
+		<activity android:name=".Sender" android:label="@string/sender_name"
+			android:configChanges="orientation|keyboardHidden"
+			android:windowSoftInputMode="stateHidden|adjustResize"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.intent.action.SENDTO" />
+				<data android:scheme="smsto" />
+			</intent-filter>
+		</activity>
 		<activity android:name="de.ub0r.android.lib.DonationHelper"
 			android:configChanges="orientation|keyboardHidden"
 			android:windowSoftInputMode="adjustResize" />
@@ -128,6 +138,7 @@
 	<uses-permission android:name="android.permission.RECEIVE_MMS" />
 	<uses-permission android:name="android.permission.READ_SMS" />
 	<uses-permission android:name="android.permission.WRITE_SMS" />
+	<uses-permission android:name="android.permission.SEND_SMS" />
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<!-- AdMob SDK permissions -->

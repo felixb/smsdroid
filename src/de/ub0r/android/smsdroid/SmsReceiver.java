@@ -19,6 +19,7 @@
 
 package de.ub0r.android.smsdroid;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,6 +27,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -82,6 +84,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	/** Last unread message's body. */
 	private static String lastUnreadBody = null;
 
+	/** Red lights. */
+	final static int RED = 0xFFFF0000;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -97,7 +102,10 @@ public class SmsReceiver extends BroadcastReceiver {
 			e.printStackTrace();
 		}
 		String t = null;
-		if (action.equals(ACTION_SMS)) {
+		if (action.equals(Sender.MESSAGE_SENT_ACTION)) {
+			this.handleSent(context, intent, this.getResultCode());
+			return;
+		} else if (action.equals(ACTION_SMS)) {
 			Bundle b = intent.getExtras();
 			Object[] messages = (Object[]) b.get("pdus");
 			SmsMessage[] smsMessage = new SmsMessage[messages.length];
@@ -439,5 +447,105 @@ public class SmsReceiver extends BroadcastReceiver {
 				new ComponentName(context, WidgetProvider.class),
 				WidgetProvider.getRemoteViews(context, l, pIntent));
 		return ret;
+	}
+
+	/**
+	 * Update failed message notification.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param uri
+	 *            {@link Uri} to message
+	 */
+	private void updateFailedNotification(final Context context, // .
+			final Uri uri) {
+		Log.d(TAG, "updateFailedNotification: " + uri);
+		final Cursor c = context.getContentResolver().query(uri,
+				Message.PROJECTION_SMS, null, null, null);
+		if (c != null && c.moveToFirst()) {
+			final int id = c.getInt(Message.INDEX_ID);
+			final int tid = c.getInt(Message.INDEX_THREADID);
+			final String body = c.getString(Message.INDEX_BODY);
+			final long date = c.getLong(Message.INDEX_DATE);
+
+			Conversation conv = Conversation
+					.getConversation(context, tid, true);
+
+			final NotificationManager mNotificationMgr = // .
+			(NotificationManager) context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			final SharedPreferences p = PreferenceManager
+					.getDefaultSharedPreferences(context);
+			final boolean privateNotification = p.getBoolean(
+					Preferences.PREFS_NOTIFICATION_PRIVACY, false);
+			final Intent intent = new Intent(Intent.ACTION_VIEW, conv.getUri(),
+					context, MessageList.class);
+			intent.putExtra(Intent.EXTRA_TEXT, body);
+
+			String title = context.getString(R.string.error_sending_failed);
+			String text = null;
+			final Notification n = new Notification(
+					android.R.drawable.stat_sys_warning, title, date);
+
+			if (privateNotification) {
+				title += "!";
+			} else {
+				title += ": " + conv.getContact().getDisplayName();
+				text = body;
+			}
+			n.setLatestEventInfo(context, title, text, PendingIntent
+					.getActivity(context, 0, intent,
+							PendingIntent.FLAG_CANCEL_CURRENT));
+			n.flags |= Notification.FLAG_AUTO_CANCEL;
+			n.flags |= Notification.FLAG_SHOW_LIGHTS;
+			n.ledARGB = RED;
+			int[] ledFlash = Preferences.getLEDflash(context);
+			n.ledOnMS = ledFlash[0];
+			n.ledOffMS = ledFlash[1];
+			final boolean vibrate = p.getBoolean(Preferences.PREFS_VIBRATE,
+					false);
+			final String s = p.getString(Preferences.PREFS_SOUND, null);
+			Uri sound;
+			if (s == null || s.length() <= 0) {
+				sound = null;
+			} else {
+				sound = Uri.parse(s);
+			}
+			if (vibrate) {
+				final long[] pattern = Preferences.getVibratorPattern(context);
+				if (pattern.length == 1 && pattern[0] == 0) {
+					n.defaults |= Notification.DEFAULT_VIBRATE;
+				} else {
+					n.vibrate = pattern;
+				}
+			}
+			n.sound = sound;
+			mNotificationMgr.notify(id, n);
+		}
+		if (c != null && !c.isClosed()) {
+			c.close();
+		}
+	}
+
+	/**
+	 * Handle sent message.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param intent
+	 *            {@link Intent}
+	 */
+	private void handleSent(final Context context, final Intent intent,
+			final int resultCode) {
+		final Uri uri = intent.getData();
+		Log.d(TAG, "sent message: " + uri + ", rc: " + resultCode);
+
+		if (resultCode == Activity.RESULT_OK) {
+			final ContentValues cv = new ContentValues(1);
+			cv.put(Sender.TYPE, Message.SMS_OUT);
+			context.getContentResolver().update(uri, cv, null, null);
+		} else {
+			this.updateFailedNotification(context, uri);
+		}
 	}
 }

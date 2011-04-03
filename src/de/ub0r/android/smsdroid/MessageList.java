@@ -328,6 +328,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		} else {
 			ivPresence.setVisibility(View.GONE);
 		}
+
+		final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
+		if (!TextUtils.isEmpty(body)) {
+			this.etText.setText(body);
+		}
+
 		this.setRead();
 	}
 
@@ -432,6 +438,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		case R.id.item_call:
 			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:"
 					+ this.conv.getContact().getNumber())));
+			return true;
+		case R.id.item_restore:
+			this.etText.setText(PreferenceManager.getDefaultSharedPreferences(
+					this).getString(Preferences.PREFS_BACKUPLASTTEXT, null));
 			return true;
 		default:
 			return false;
@@ -655,6 +665,9 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private void send(final boolean autosend, final boolean showChooser) {
 		final Intent i = this.buildIntent(autosend, showChooser);
 		this.startActivity(i);
+		PreferenceManager.getDefaultSharedPreferences(this).edit().putString(
+				Preferences.PREFS_BACKUPLASTTEXT,
+				this.etText.getText().toString()).commit();
 		this.etText.setText("");
 	}
 }
