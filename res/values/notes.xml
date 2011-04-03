@@ -22,5 +22,6 @@
 		<item>You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!</item>
 		<item></item>
 		<item>Jan. 2011: Try a long-click on answer/send/compose buttons to use an other than your standard app for sending.</item>
+		<item>Apr. 2011: SMSdroid is now able to send SMS on it\'s own. Just use the "SMS (SMSdroid)" entry in the app chooser</item>
 	</string-array>
 </resources>

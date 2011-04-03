@@ -328,6 +328,12 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		} else {
 			ivPresence.setVisibility(View.GONE);
 		}
+
+		final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
+		if (!TextUtils.isEmpty(body)) {
+			this.etText.setText(body);
+		}
+
 		this.setRead();
 	}
 
