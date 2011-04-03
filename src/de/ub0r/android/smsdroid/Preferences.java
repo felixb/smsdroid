@@ -100,6 +100,8 @@ public class Preferences extends PreferenceActivity {
 	public static final String PREFS_SHOWTEXTFIELD = "show_textfield";
 	/** Preference's name: show target app. */
 	public static final String PREFS_SHOWTARGETAPP = "show_target_app";
+	/** Preference's name: backup of last sms. */
+	public static final String PREFS_BACKUPLASTTEXT = "backup_last_sms";
 
 	/** Default color. */
 	private static final int BLACK = 0xff000000;

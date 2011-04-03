@@ -28,4 +28,7 @@
 	<item android:title="@string/delete_thread_" android:id="@+id/item_delete_thread"
 		android:icon="@android:drawable/ic_menu_delete"
 		android:orderInCategory="5" />
+	<item android:title="@string/restore_" android:id="@+id/item_restore"
+		android:icon="@android:drawable/ic_menu_revert"
+		android:orderInCategory="6" />
 </menu>
