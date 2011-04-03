@@ -72,4 +72,33 @@
   <string name="show_bubbles_" formatted="false" orig="Show bubbles">Montrer les bulles</string>
   <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Cacher le bouton "envoyer"</string>
   <string name="hide_send_hint" formatted="false" orig="Hide &quot;send&quot; button near text field.">Cache le bouton "envoyer" près de la zone de texte</string>
+  <string name="hide_paste_" formatted="false" orig="Hide &quot;paste&quot; button">Cacher le bouton "coller"</string>
+  <string name="hide_paste_hint" formatted="false" orig="Hide &quot;paste&quot; button on text field.">Cacher le bouton "coller" dans la zone de texte</string>
+  <string-array name="themes">
+    <item>Noir</item>
+    <item>Blanc</item>
+  </string-array>
+  <string-array name="textsize">
+    <item>Petit</item>
+    <item>Moyen</item>
+  </string-array>
+  <string-array name="led_color">
+    <item>Vert</item>
+    <item>Bleu</item>
+    <item>Rouge</item>
+    <item>Orange</item>
+    <item>Magenta</item>
+    <item>Cyan</item>
+  </string-array>
+  <string-array name="led_flash">
+    <item>Clignotant</item>
+    <item>Continue</item>
+  </string-array>
+  <string-array name="vibrate_mode">
+    <item>Défaut</item>
+    <item>Long</item>
+    <item>Plusieurs court</item>
+    <item>Plusieurs long</item>
+    <item>Court, long, court, long</item>
+  </string-array>
 </resources>
