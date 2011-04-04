@@ -316,7 +316,12 @@ public final class ConversationList extends ListActivity implements
 		final ContentResolver cr = context.getContentResolver();
 		final ContentValues cv = new ContentValues();
 		cv.put(Message.PROJECTION[Message.INDEX_READ], read);
-		cr.update(uri, cv, Message.SELECTION_READ_UNREAD, sel);
+		try {
+			cr.update(uri, cv, Message.SELECTION_READ_UNREAD, sel);
+		} catch (IllegalArgumentException e) {
+			Log.e(TAG, "failed update", e);
+			Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+		}
 		SmsReceiver.updateNewMessageNotification(context, null);
 	}
 
