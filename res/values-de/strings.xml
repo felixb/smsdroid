@@ -124,14 +124,19 @@
   <string name="clear_cache_hint" formatted="false">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
   <string name="not_implemented" formatted="false">Diese Funktion ist noch nicht implementiert.</string>
   <string name="error_conv_null" formatted="false">Fehler beim Laden des Threads!</string>
+  <string name="error_sending_failed" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Sending failed">Senden fehlgeschlagen</string>
+  <string name="error_missing_text" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Missing text!">Text fehlt!</string>
+  <string name="error_missing_reciepient" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Missing reciepient!">Empfänger fehlt!</string>
   <string name="text_hint" formatted="false">Text</string>
   <string name="paste_" formatted="false">[Aus Zwischenablage einfügen]</string>
+  <string name="restore_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Restore last message">Letzte Nachricht wiederherstellen</string>
   <string name="attachment_saved" formatted="false">Anhang auf SD Karte gespeichert als:</string>
   <string name="attachment_not_saved" formatted="false">Konnte Anhang nicht speichern.</string>
   <string name="chooser_" formatted="false">Auswahl</string>
   <string name="notification_icon_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Notification icon">Benachrichtigungs Icon</string>
   <string name="notification_default_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Default">Standard</string>
   <string name="notification_gingerbread_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Gingerbread">Gingerbread</string>
+  <string name="notification_gingerbread_mail_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Gingerbread mail">Gingerbread Mail</string>
   <string name="notification_black_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Black">Schwarz</string>
   <string name="notification_green_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Green">Grün</string>
   <string name="notification_yellow_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Yellow">Gelb</string>
