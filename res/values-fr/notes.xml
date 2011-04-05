@@ -21,4 +21,10 @@
                Visit http://ub0r.de/translate/smsdroid/edit.php?lang=fr&file=notes.xml to edit the file.
        -->
 <resources>
+  <string-array name="notes_from_dev">
+    <item>Vous souhaitez peut-être envoyer des sms gratuitement ou à petit prix avec WebSMS. Plusieurs fournisseurs sont supportés. Faites l\'essai !</item>
+    <item notranslation="true"></item>
+    <item>Jan. 2011 : Un appui long sur les boutons répondre/envoyer/nouveau permet d\'utiliser une autre application SMS que celle d\'origine.</item>
+    <item>Avr. 2011 : SMSdroid est maintenant capable d\'envoyer directement des sms. Choisissez l\'entrée "SMS (SMSdroid)" dans le selecteur d\'application.</item>
+  </string-array>
 </resources>
