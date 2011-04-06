@@ -22,7 +22,7 @@
 	<string name="app_version">0.6</string>
 	<string name="faq_">FAQ</string>
 	<string name="twitter_">twitter</string>
-	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)\ncore.equip http://corequip.de (icons)\nDaniel Kalinic &lt;kalinic3@gmail.com&gt; (bubbles)\nAlfonso Picón &lt;apictor@gmail.com&gt; (Spanish)\nMarek Wehmer &lt;marek.wehmer@gmail.com&gt; (Spamfilter)\nxim &lt;ximonline@gmail.com&gt; (Russian)</string>
+	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)\ncore.equip http://corequip.de (icons)\nDaniel Kalinic &lt;kalinic3@gmail.com&gt; (bubbles)\nAlfonso Picón &lt;apictor@gmail.com&gt; (Spanish)\nMarek Wehmer &lt;marek.wehmer@gmail.com&gt; (Spamfilter)\nxim &lt;ximonline@gmail.com&gt; (Russian)\nIsmael A. &lt;ismael.arab@gmail.com&gt; (French)</string>
 	<string name="source">http://github.com/felixb/smsdroid</string>
 	<string name="website">http://code.google.com/p/websmsdroid/</string>
 	<string-array name="themes_values">
@@ -81,14 +81,16 @@
 		<item></item>
 		<item>en</item>
 		<item>de</item>
-		<item>es</item>
+		<item>fr</item>
 		<item>ru</item>
+		<item>es</item>
 	</string-array>
 	<string-array name="lang_">
 		<item>Default language</item>
 		<item>English</item>
 		<item>German</item>
-		<item>Spanish</item>
+		<item>French</item>
 		<item>Russian</item>
+		<item>Spanish</item>
 	</string-array>
 </resources>
