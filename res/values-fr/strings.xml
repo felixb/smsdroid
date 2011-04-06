@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+       <!--
+               Copyright (C) 2009-2011 Felix Bechstein
+       -->
+       <!--
+               This file is part of SMSdroid. This program is free software; you can
+               redistribute it and/or modify it under the terms of the GNU General
+               Public License as published by the Free Software Foundation; either
+               version 3 of the License, or (at your option) any later version.
+       -->
+       <!--
+               This program is distributed in the hope that it will be useful, but
+               WITHOUT ANY WARRANTY; without even the implied warranty of
+               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+               General Public License for more details. You should have received a
+               copy of the GNU General Public License along with this program; If
+               not, see <http://www.gnu.org/licenses/>.
+       -->
+      <!--
+               This file is generated automatically by ub0rlib/php.
+               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=fr&file=strings.xml to edit the file.
+       -->
+<resources>
+  <string name="about_" formatted="false" orig="About">À propos</string>
+  <string name="about_hint" formatted="false" orig="About this app">À propos de cette application</string>
+  <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Quelques trucs et astuces, comment faire fonctionner cette application</string>
+  <string name="feedback_" formatted="false" orig="Feedback">Commentaires</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Signaler des bugs, demander de nouvelles fonctionnalités</string>
+  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc.">Suivre sur twitter\nNotifications de mise à jour, etc.</string>
+  <string name="about0" formatted="false" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid vous permet de lire vos sms, et de les écrire avec n\'importe quelle autre application</string>
+  <string name="more_apps_" formatted="false" orig="More Apps..">Plus d\'applications ...</string>
+  <string name="settings" formatted="false" orig="Preferences">Préférences</string>
+  <string name="new_message_" formatted="false" orig="New message">Nouveau message</string>
+  <string name="new_message_hint" formatted="false" orig="Compose a new message">Composez un nouveau message</string>
+  <string name="new_message" formatted="false" orig="1 unread message.">1 message non lu</string>
+  <string name="new_messages_" formatted="false" orig="New messages">Nouveaux messages</string>
+  <string name="new_messages" formatted="false" orig="%d unread messages.">%d messages non lus</string>
+  <string name="call" formatted="false" orig="Call">Appeler</string>
+  <string name="answer" formatted="false" orig="Answer">Répondre</string>
+  <string name="reply" formatted="false" orig="Reply">Réponse</string>
+  <string name="send_" formatted="false" orig="Send">Envoyer</string>
+  <string name="notification_" formatted="false" orig="Notifications">Notifications</string>
+  <string name="notification_enable_" formatted="false" orig="Enable notifications">Activer les notifications</string>
+  <string name="notification_enable_hint" formatted="false" orig="Enable notifications on receive">Activer la notification lors de la réception</string>
+  <string name="receive_vibrate_" formatted="false" orig="Vibrate">Vibreur</string>
+  <string name="receive_vibrate_hint" formatted="false" orig="Vibrate on receive">Vibre lors de la réception</string>
+  <string name="receive_vibrate_mode_" formatted="false" orig="Vibrator mode">Mode vibreur</string>
+  <string name="receive_sound_" formatted="false" orig="Sound">Son</string>
+  <string name="receive_sound_hint" formatted="false" orig="Sound on receive">Son lors de la réception</string>
+  <string name="receive_led_color_" formatted="false" orig="LED color">Couleur de la LED</string>
+  <string name="receive_led_flash_" formatted="false" orig="LED mode">Mode LED</string>
+  <string name="receive_led_flash_hint" formatted="false" orig="Set LED flashing behaviour">Choisir le type de clignotement LED</string>
+  <string name="receive_no_text_" formatted="false" orig="Hide sender/text">Cacher l\'expéditeur/le texte</string>
+  <string name="receive_no_text_hint" formatted="false" orig="Hide sender/text in notification.">Cacher l\'expéditeur/le texte lors de la notification</string>
+  <string name="behavior_" formatted="false" orig="Behavior">Comportement</string>
+  <string name="autosend_" formatted="false" orig="Autosend">Réponse automatique</string>
+  <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp;amp; behavior">Apparence et comportement</string>
+  <string name="autosend_hint" formatted="false" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Envoie des réponses automatiques. Actuellement, seule l\'application WebSMS supporte cette fonction. Les autres applications montreront simplement le texte.</string>
+  <string name="show_text_filed_" formatted="false" orig="Show text filed">Montrer le texte entré</string>
+  <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">Montrer le texte entré au lieu du bouton répondre</string>
+  <string name="show_target_app_" formatted="false" orig="Show target app">Montrer l\'application cible</string>
+  <string name="show_target_app_hint" formatted="false" orig="Show target App used for sending on \&quot;send\&quot; Button.">Montrer l\'application cible utilisé pour l\'envoi, sur le bouton "envoyer"</string>
+  <string name="appearance_" formatted="false" orig="Appearance">Apparence</string>
+  <string name="theme_" formatted="false" orig="Theme">Thème</string>
+  <string name="textsize_" formatted="false" orig="Text size">Taille du texte</string>
+  <string name="textsize_hint" formatted="false" orig="Text size in pixels; leave empty for default">Taille du texte en pixels ; laisser vide pour utiliser la taille par défaut</string>
+  <string name="textcolor_" formatted="false" orig="Text color">Couleur du texte</string>
+  <string name="textcolor_hint" formatted="false" orig="Message text\'s color.">Couleur du texte dans les messages</string>
+  <string name="textcolor_ignore_conv_" formatted="false" orig="Ignore text color for threads">Ignorer la couleur du texte pour les fils de discussions</string>
+  <string name="textcolor_ignore_conv_hint" formatted="false" orig="Ignore text color in list of threads.">Ignorer la couleur du texte pour la liste des fils de discussions</string>
+  <string name="show_titlebar_" formatted="false" orig="Show title bar">Montrer la barre de titre</string>
+  <string name="show_titlebar_hint" formatted="false" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Montre la barre de titre à l\'écran. Sans la barre de titre, il n\'y a aucun moyen de voir l\'activité en arrière plan</string>
+  <string name="show_contact_photo_" formatted="false" orig="Show photo">Montrer la photo</string>
+  <string name="show_contact_photo_hint" formatted="false" orig="Show contact\'s photo in conversation list">Montrer la photo du contact dans la liste de discussion</string>
+  <string name="show_emoticons_" formatted="false" orig="Show emoticons">Montrer les émoticônes</string>
+  <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list.">Montre les émoticônes dans la liste des messages</string>
+  <string name="show_bubbles_" formatted="false" orig="Show bubbles">Montrer les bulles</string>
+  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Cacher le bouton "envoyer"</string>
+  <string name="hide_send_hint" formatted="false" orig="Hide &quot;send&quot; button near text field.">Cache le bouton "envoyer" près de la zone de texte</string>
+  <string name="hide_paste_" formatted="false" orig="Hide &quot;paste&quot; button">Cacher le bouton "coller"</string>
+  <string name="hide_paste_hint" formatted="false" orig="Hide &quot;paste&quot; button on text field.">Cacher le bouton "coller" dans la zone de texte</string>
+  <string name="hide_widget_label_" formatted="false" orig="Hide widget\'s label">Cacher le libellé du widget</string>
+  <string name="hide_widget_label_hint" formatted="false" orig="Hide the label of the widget.">Cache le libellé du widget</string>
+  <string name="show_full_date_" formatted="false" orig="Show full date">Montrer la date complète</string>
+  <string name="show_full_date_hint" formatted="false" orig="Show full date and time on every message.">Montre la date et l\'heure pour chaque message</string>
+  <string name="me" formatted="false" orig="Me">Moi</string>
+  <string name="view_contact_" formatted="false" orig="View contact">Voir le contact</string>
+  <string name="add_contact_" formatted="false" orig="Add to contacts">Ajouter aux contacts</string>
+  <string name="view_thread_" formatted="false" orig="View thread">voir le fil</string>
+  <string name="filter_spam_" formatted="false" orig="Mark as Spam">Marquer comme Spam</string>
+  <string name="dont_filter_spam_" formatted="false" orig="Remove from Blacklist">Enlever de la liste noire</string>
+  <string name="delete_message_" formatted="false" orig="Delete message">Effacer le message</string>
+  <string name="delete_thread_" formatted="false" orig="Delete thread">Effacer le fil</string>
+  <string name="forward_" formatted="false" orig="Forward">Transférer</string>
+  <string name="send_draft_" formatted="false" orig="Send draft">Envoyer le brouillon</string>
+  <string name="copy_text_" formatted="false" orig="Copy message text">Copier le message</string>
+  <string name="view_details_" formatted="false" orig="View message details">Détails du message</string>
+  <string name="spek_" formatted="false" orig="Speak">Parler</string>
+  <string name="delete_threads_" formatted="false" orig="Delete all threads">Effacer tous les fils</string>
+  <string name="mark_all_read_" formatted="false" orig="Mark all as read">Tout marquer comme lu</string>
+  <string name="mark_read_" formatted="false" orig="Mark read">Marquer comme lu</string>
+  <string name="mark_unread_" formatted="false" orig="Mark unread">Marquer comme non lu</string>
+  <string name="all_threads_" formatted="false" orig="All threads">Tous les fils</string>
+  <string name="message_options_" formatted="false" orig="Message options">Options des messages</string>
+  <string name="compose_" formatted="false" orig="Compose">Nouveau</string>
+  <string name="delete_message_question" formatted="false" orig="Do you really want to delete this message?">Voulez-vous vraiment effacer ce message ?</string>
+  <string name="delete_messages_question" formatted="false" orig="Do you really want to delete these messages?">Voulez-vous vraiment effacer ces messages ?</string>
+  <string name="delete_thread_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Voulez-vous vraiment effacer &lt;b&gt;tous les messages de ce fil&lt;/b&gt; ?</string>
+  <string name="delete_threads_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Voulez-vous vraiment effacer &lt;b&gt;tous les messages&lt;/b&gt; ?</string>
+  <string name="from_" formatted="false" orig="From:">De:</string>
+  <string name="to_" formatted="false" orig="To:">À:</string>
+  <string name="type_" formatted="false" orig="Type:">Type:</string>
+  <string name="sent_" formatted="false" orig="Sent:">Envoyé:</string>
+  <string name="received_" formatted="false" orig="Received:">Reçu:</string>
+  <string name="view_mms" formatted="false" orig="View MMS">Voir le MMS</string>
+  <string name="mms_conversation" formatted="false" orig="&amp;lt;MMS body&amp;gt;">&lt;contenu MMS&gt;</string>
+  <string name="mms_not_supported" formatted="false" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Ce message semble être un MMS. Vous souhaitez peut-être le télécharger avec l\'application MMS d\'origine.\nCliquez ici pour ce faire.</string>
+  <string name="DATEFORMAT_details" formatted="false" orig="dd.MM.yyyy kk:mm">jj.MM.yyyy hh:mm</string>
+  <string name="import_contact_" formatted="false" orig="Import contact">Importer le contact</string>
+  <string name="download_" formatted="false" orig="Download">Télécharger</string>
+  <string name="downloading_" formatted="false" orig="Downloading..">Téléchargement...</string>
+  <string name="debug_" formatted="false" orig="Debug">Débogage</string>
+  <string name="clear_cache_" formatted="false" orig="Clear cache">Vider le cache</string>
+  <string name="clear_cache_hint" formatted="false" orig="Clear internal Database. Fetch all data again from external Database.">Vider la base de données interne. Recherche à nouveau toutes les données de la base de données externe.</string>
+  <string name="not_implemented" formatted="false" orig="Sorry, not yet implemented.">Désolé, par encore disponible</string>
+  <string name="error_conv_null" formatted="false" orig="Error getting conversation from DB!">Erreur de récupération de la base de données</string>
+  <string name="error_sending_failed" formatted="false" orig="Sending failed">Échec d\'envoi</string>
+  <string name="error_missing_text" formatted="false" orig="Missing text!">Texte manquant !</string>
+  <string name="error_missing_reciepient" formatted="false" orig="Missing reciepient!">Destinataire manquant !</string>
+  <string name="text_hint" formatted="false" orig="Text">Texte</string>
+  <string name="paste_" formatted="false" orig="[Paste from clipboard]">(Coller depuis le presse-papier)</string>
+  <string name="restore_" formatted="false" orig="Restore last message">Restorer le dernier message</string>
+  <string name="attachment_saved" formatted="false" orig="Saved attachment on SD card as:">Enregistrer la pièce jointe sur la carte SD :</string>
+  <string name="attachment_not_saved" formatted="false" orig="Could not save attachment.">Impossible d\'enregistrer la pièce jointe.</string>
+  <string name="chooser_" formatted="false" orig="Chooser">Sélecteur</string>
+  <string name="notification_icon_" formatted="false" orig="Notification icon">Icône de notification</string>
+  <string name="notification_default_" formatted="false" orig="Default">Défaut</string>
+  <string name="notification_gingerbread_" formatted="false" orig="Gingerbread">Pain d\'épices (Gingerbread)</string>
+  <string name="notification_gingerbread_mail_" formatted="false" orig="Gingerbread mail">Gingerbread courriel</string>
+  <string name="notification_black_" formatted="false" orig="Black">Noir</string>
+  <string name="notification_green_" formatted="false" orig="Green">Vert</string>
+  <string name="notification_yellow_" formatted="false" orig="Yellow">Jaune</string>
+  <string name="bubbles_in_" formatted="false" orig="Bubbles in">Bulles entrants</string>
+  <string name="bubbles_in_hint" formatted="false" orig="Bubbles for incoming messages">Bulles pour les messages entrants</string>
+  <string name="bubbles_out_" formatted="false" orig="Bubbles out">Bulles sortants</string>
+  <string name="bubbles_out_hint" formatted="false" orig="Bubbles for outgoing messages">Bulles pour les messages sortants</string>
+  <string name="bubbles_nothing" formatted="false" orig="Nothing">Aucune</string>
+  <string name="bubbles_plain_dark_gray" formatted="false" orig="Plain dark gray">Gris foncé uni</string>
+  <string name="bubbles_plain_light_gray" formatted="false" orig="Plain light gray">Gris clair uni</string>
+  <string name="bubbles_old_turquoise_left" formatted="false" orig="Old turquoise left">Vieux turquoise gauche</string>
+  <string name="bubbles_old_turquoise_right" formatted="false" orig="Old turquoise right">Vieux turquoise droite</string>
+  <string name="bubbles_old_green_left" formatted="false" orig="Old green left">Vieux vert gauche</string>
+  <string name="bubbles_old_green_right" formatted="false" orig="Old green right">Vieux vert droite</string>
+  <string name="bubbles_blue_left" formatted="false" orig="Blue left">Bleu gauche</string>
+  <string name="bubbles_blue_right" formatted="false" orig="Blue right">Bleu droite</string>
+  <string name="bubbles_brown_left" formatted="false" orig="Brown left">Marron gauche</string>
+  <string name="bubbles_brown_right" formatted="false" orig="Brown right">Marron droite</string>
+  <string name="bubbles_gray_left" formatted="false" orig="Gray left">Gris gauche</string>
+  <string name="bubbles_gray_right" formatted="false" orig="Gray right">Gris droite</string>
+  <string name="bubbles_green_left" formatted="false" orig="Green left">Vert gauche</string>
+  <string name="bubbles_green_right" formatted="false" orig="Green right">Vert droite</string>
+  <string name="bubbles_orange_left" formatted="false" orig="Orange left">Orange gauche</string>
+  <string name="bubbles_orange_right" formatted="false" orig="Orange right">Orange droite</string>
+  <string name="bubbles_pink_left" formatted="false" orig="Pink left">Rose gauche</string>
+  <string name="bubbles_pink_right" formatted="false" orig="Pink right">Rose droite</string>
+  <string name="bubbles_purple_left" formatted="false" orig="Purple left">Violet gauche</string>
+  <string name="bubbles_purple_right" formatted="false" orig="Purple right">Violet droite</string>
+  <string name="bubbles_white_left" formatted="false" orig="White left">Blanc gauche</string>
+  <string name="bubbles_white_right" formatted="false" orig="White right">Blanc droite</string>
+  <string name="bubbles_yellow_left" formatted="false" orig="Yellow left">Jaune gauche</string>
+  <string name="bubbles_yellow_right" formatted="false" orig="Yellow right">Jaune droite</string>
+  <string-array name="themes">
+    <item>Noir</item>
+    <item>Blanc</item>
+  </string-array>
+  <string-array name="textsize">
+    <item>Petit</item>
+    <item>Moyen</item>
+  </string-array>
+  <string-array name="led_color">
+    <item>Vert</item>
+    <item>Bleu</item>
+    <item>Rouge</item>
+    <item>Orange</item>
+    <item>Magenta</item>
+    <item>Cyan</item>
+  </string-array>
+  <string-array name="led_flash">
+    <item>Clignotant</item>
+    <item>Continue</item>
+  </string-array>
+  <string-array name="vibrate_mode">
+    <item>Défaut</item>
+    <item>Long</item>
+    <item>Plusieurs court</item>
+    <item>Plusieurs long</item>
+    <item>Court, long, court, long</item>
+  </string-array>
+</resources>

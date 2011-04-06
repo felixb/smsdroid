@@ -1,112 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
-	-->
-	<!--
-		This file is part of SMSdroid. This program is free software; you can
-		redistribute it and/or modify it under the terms of the GNU General
-		Public License as published by the Free Software Foundation; either
-		version 3 of the License, or (at your option) any later version.
-	-->
-	<!--
-		This program is distributed in the hope that it will be useful, but
-		WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-		General Public License for more details. You should have received a
-		copy of the GNU General Public License along with this program; If
-		not, see <http://www.gnu.org/licenses/>.
-	-->
+       <!--
+               Copyright (C) 2009-2011 Felix Bechstein
+       -->
+       <!--
+               This file is part of SMSdroid. This program is free software; you can
+               redistribute it and/or modify it under the terms of the GNU General
+               Public License as published by the Free Software Foundation; either
+               version 3 of the License, or (at your option) any later version.
+       -->
+       <!--
+               This program is distributed in the hope that it will be useful, but
+               WITHOUT ANY WARRANTY; without even the implied warranty of
+               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+               General Public License for more details. You should have received a
+               copy of the GNU General Public License along with this program; If
+               not, see <http://www.gnu.org/licenses/>.
+       -->
+      <!--
+               This file is generated automatically by ub0rlib/php.
+               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=es&file=strings.xml to edit the file.
+       -->
 <resources>
-  <string formatted="false" name="about_">Acerca de</string>
-  <string formatted="false" name="about_hint">Acerca de esta aplicación</string>
-  <string formatted="false" name="faq_hint">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
-  <string formatted="false" name="feedback_">Retroalimentación</string>
-  <string formatted="false" name="feedback_hint">Avise sobre errores, sugiera características...</string>
-  <string formatted="false" name="twitter_hint">Sígame en twitter.\nObtenga notificaciones sobre actualizaciones, etc.</string>
-  <string formatted="false" name="about0">SMSdroid le permite leer sus sms, así como escribirlos con cualquier aplicación.</string>
-  <string formatted="false" name="more_apps_">Más Aplicaciones..</string>
-  <string formatted="false" name="settings">Preferencias</string>
-  <string formatted="false" name="new_message_">Nuevo mensaje</string>
-  <string formatted="false" name="new_message_hint">Redactar un mensaje nuevo</string>
-  <string formatted="false" name="new_message">1 unread message.</string>
-  <string formatted="false" name="new_messages_">Mensajes nuevos</string>
-  <string formatted="false" name="new_messages">%d mensajes sin leer.</string>
-  <string formatted="false" name="call">Call</string>
-  <string formatted="false" name="answer">Responder</string>
-  <string formatted="false" name="send_">Enviar</string>
-  <string formatted="false" name="notification_">Notificaciones</string>
-  <string formatted="false" name="notification_enable_">Habilitar notificaciones</string>
-  <string formatted="false" name="notification_enable_hint">Habilita notificaciones al recibir</string>
-  <string formatted="false" name="receive_vibrate_">Vibrar</string>
-  <string formatted="false" name="receive_vibrate_hint">Vibra al recibir</string>
-  <string formatted="false" name="receive_vibrate_mode_">Modo de vibración</string>
-  <string formatted="false" name="receive_sound_">Sonar</string>
-  <string formatted="false" name="receive_sound_hint">Suena al recibir</string>
-  <string formatted="false" name="receive_led_color_">Color de LED</string>
-  <string formatted="false" name="receive_led_flash_">Modo de LED</string>
-  <string formatted="false" name="receive_led_flash_hint">Establece el comportamiento del parpadeo del LED</string>
-  <string formatted="false" name="receive_no_text_">Hide sender/text</string>
-  <string formatted="false" name="receive_no_text_hint">Hide sender/text in notification.</string>
-  <string formatted="false" name="appearance_">Apariencia</string>
-  <string formatted="false" name="theme_">Tema</string>
-  <string formatted="false" name="textsize_">Tamaño del texto</string>
-  <string formatted="false" name="textsize_hint">Text size in pixels; leave empty for default</string>
-  <string formatted="false" name="show_titlebar_">Show title bar</string>
-  <string formatted="false" name="show_titlebar_hint">Show title bar in main view. Without title bar, there is no way to see background activity.</string>
-  <string formatted="false" name="show_contact_photo_">Mostrar foto</string>
-  <string formatted="false" name="show_contact_photo_hint">Muestra la foto del contacto en la lista de conversaciones</string>
-  <string formatted="false" name="show_emoticons_">Mostrar emoticonos</string>
-  <string formatted="false" name="show_emoticons_hint">Muestra emoticonos en la lista de mensajes.</string>
-  <string formatted="false" name="show_bubbles_">Mostrar bocadillos</string>
-  <string formatted="false" name="hide_paste_">Hide "paste" button</string>
-  <string formatted="false" name="hide_paste_hint">Hide "paste" button on text field.</string>
-  <string formatted="false" name="show_full_date_">Show full date</string>
-  <string formatted="false" name="show_full_date_hint">Show full date and time on every message.</string>
-  <string formatted="false" name="me">Yo</string>
-  <string formatted="false" name="view_contact_">Ver contacto</string>
-  <string formatted="false" name="add_contact_">Añadir a contactos</string>
-  <string formatted="false" name="view_thread_">Ver conversación</string>
-  <string formatted="false" name="filter_spam_">Marcar como Spam</string>
-  <string formatted="false" name="dont_filter_spam_">Eliminar de la lista negra</string>
-  <string formatted="false" name="delete_message_">Eliminar mensaje</string>
-  <string formatted="false" name="delete_thread_">Eliminar conversación</string>
-  <string formatted="false" name="forward_">Reenviar</string>
-  <string formatted="false" name="send_draft_">Send draft</string>
-  <string formatted="false" name="copy_text_">Copiar texto del mensaje</string>
-  <string formatted="false" name="view_details_">Ver detalles del mensaje</string>
-  <string formatted="false" name="spek_">Speak</string>
-  <string formatted="false" name="delete_threads_">Eliminar todas las conversaciones</string>
-  <string formatted="false" name="mark_all_read_">Marcar todo como leído</string>
-  <string formatted="false" name="mark_read_">Marcar como leído</string>
-  <string formatted="false" name="mark_unread_">Marcar como no leído</string>
-  <string formatted="false" name="all_threads_">Todas las conversaciones</string>
-  <string formatted="false" name="message_options_">Opciones de mensaje</string>
-  <string formatted="false" name="compose_">Redactar</string>
-  <string formatted="false" name="delete_message_question">¿Realmente desea eliminar este mensaje?</string>
-  <string formatted="false" name="delete_messages_question">¿Realmente desea eliminar estos mensaje?</string>
-  <string formatted="false" name="delete_thread_question">¿Realmente desea eliminar ?</string>
-  <string formatted="false" name="delete_threads_question">¿Realmente desea eliminar ?</string>
-  <string formatted="false" name="from_">De:</string>
-  <string formatted="false" name="to_">A:</string>
-  <string formatted="false" name="type_">Tipo:</string>
-  <string formatted="false" name="sent_">Enviado:</string>
-  <string formatted="false" name="received_">Recibido:</string>
-  <string formatted="false" name="view_mms">Ver MMS</string>
-  <string formatted="false" name="mms_conversation">&lt;Cuerpo del MMS&gt;</string>
-  <string formatted="false" name="mms_not_supported">Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
-  <string formatted="false" name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
-  <string formatted="false" name="import_contact_">Import contact</string>
-  <string formatted="false" name="download_">Descargar</string>
-  <string formatted="false" name="downloading_">Descargando..</string>
-  <string formatted="false" name="debug_">Depurar</string>
-  <string formatted="false" name="clear_cache_">Borrar caché</string>
-  <string formatted="false" name="clear_cache_hint">Borra la base de datos interna. Obtiene todos los datos de nuevo de bases de datos externas.</string>
-  <string formatted="false" name="not_implemented">Lo siento, función todavía no implementada</string>
-  <string formatted="false" name="error_conv_null">Error getting conversation from DB!</string>
-  <string formatted="false" name="text_hint">Text</string>
-  <string formatted="false" name="paste_">[Paste from clipboard]</string>
-  <string formatted="false" name="attachment_saved">Saved attachment on SD card as:</string>
-  <string formatted="false" name="attachment_not_saved">Could not save attachment.</string>
+  <string name="about_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="About">Acerca de</string>
+  <string name="about_hint" formatted="false">Acerca de esta aplicación</string>
+  <string name="faq_hint" formatted="false">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
+  <string name="feedback_" formatted="false">Retroalimentación</string>
+  <string name="feedback_hint" formatted="false">Avise sobre errores, sugiera características...</string>
+  <string name="twitter_hint" formatted="false">Sígame en twitter.\nObtenga notificaciones sobre actualizaciones, etc.</string>
+  <string name="about0" formatted="false">SMSdroid le permite leer sus sms, así como escribirlos con cualquier aplicación.</string>
+  <string name="more_apps_" formatted="false">Más Aplicaciones..</string>
+  <string name="settings" formatted="false">Preferencias</string>
+  <string name="new_message_" formatted="false">Nuevo mensaje</string>
+  <string name="new_message_hint" formatted="false">Redactar un mensaje nuevo</string>
+  <string name="new_messages_" formatted="false">Mensajes nuevos</string>
+  <string name="new_messages" formatted="false">%d mensajes sin leer.</string>
+  <string name="answer" formatted="false">Responder</string>
+  <string name="send_" formatted="false">Enviar</string>
+  <string name="notification_" formatted="false">Notificaciones</string>
+  <string name="notification_enable_" formatted="false">Habilitar notificaciones</string>
+  <string name="notification_enable_hint" formatted="false">Habilita notificaciones al recibir</string>
+  <string name="receive_vibrate_" formatted="false">Vibrar</string>
+  <string name="receive_vibrate_hint" formatted="false">Vibra al recibir</string>
+  <string name="receive_vibrate_mode_" formatted="false">Modo de vibración</string>
+  <string name="receive_sound_" formatted="false">Sonar</string>
+  <string name="receive_sound_hint" formatted="false">Suena al recibir</string>
+  <string name="receive_led_color_" formatted="false">Color de LED</string>
+  <string name="receive_led_flash_" formatted="false">Modo de LED</string>
+  <string name="receive_led_flash_hint" formatted="false">Establece el comportamiento del parpadeo del LED</string>
+  <string name="receive_no_text_" formatted="false">Hide sender/text</string>
+  <string name="receive_no_text_hint" formatted="false">Hide sender/text in notification.</string>
+  <string name="appearance_" formatted="false">Apariencia</string>
+  <string name="theme_" formatted="false">Tema</string>
+  <string name="textsize_" formatted="false">Tamaño del texto</string>
+  <string name="textsize_hint" formatted="false">Text size in pixels; leave empty for default</string>
+  <string name="show_titlebar_" formatted="false">Show title bar</string>
+  <string name="show_titlebar_hint" formatted="false">Show title bar in main view. Without title bar, there is no way to see background activity.</string>
+  <string name="show_contact_photo_" formatted="false">Mostrar foto</string>
+  <string name="show_contact_photo_hint" formatted="false">Muestra la foto del contacto en la lista de conversaciones</string>
+  <string name="show_emoticons_" formatted="false">Mostrar emoticonos</string>
+  <string name="show_emoticons_hint" formatted="false">Muestra emoticonos en la lista de mensajes.</string>
+  <string name="show_bubbles_" formatted="false">Mostrar bocadillos</string>
+  <string name="me" formatted="false">Yo</string>
+  <string name="view_contact_" formatted="false">Ver contacto</string>
+  <string name="add_contact_" formatted="false">Añadir a contactos</string>
+  <string name="view_thread_" formatted="false">Ver conversación</string>
+  <string name="filter_spam_" formatted="false">Marcar como Spam</string>
+  <string name="dont_filter_spam_" formatted="false">Eliminar de la lista negra</string>
+  <string name="delete_message_" formatted="false">Eliminar mensaje</string>
+  <string name="delete_thread_" formatted="false">Eliminar conversación</string>
+  <string name="forward_" formatted="false">Reenviar</string>
+  <string name="copy_text_" formatted="false">Copiar texto del mensaje</string>
+  <string name="view_details_" formatted="false">Ver detalles del mensaje</string>
+  <string name="delete_threads_" formatted="false">Eliminar todas las conversaciones</string>
+  <string name="mark_all_read_" formatted="false">Marcar todo como leído</string>
+  <string name="mark_read_" formatted="false">Marcar como leído</string>
+  <string name="mark_unread_" formatted="false">Marcar como no leído</string>
+  <string name="all_threads_" formatted="false">Todas las conversaciones</string>
+  <string name="message_options_" formatted="false">Opciones de mensaje</string>
+  <string name="compose_" formatted="false">Redactar</string>
+  <string name="delete_message_question" formatted="false">¿Realmente desea eliminar este mensaje?</string>
+  <string name="delete_messages_question" formatted="false">¿Realmente desea eliminar estos mensaje?</string>
+  <string name="delete_thread_question" formatted="false">¿Realmente desea eliminar ?</string>
+  <string name="delete_threads_question" formatted="false">¿Realmente desea eliminar ?</string>
+  <string name="from_" formatted="false">De:</string>
+  <string name="to_" formatted="false">A:</string>
+  <string name="type_" formatted="false">Tipo:</string>
+  <string name="sent_" formatted="false">Enviado:</string>
+  <string name="received_" formatted="false">Recibido:</string>
+  <string name="view_mms" formatted="false">Ver MMS</string>
+  <string name="mms_conversation" formatted="false">&lt;Cuerpo del MMS&gt;</string>
+  <string name="mms_not_supported" formatted="false">Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
+  <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
+  <string name="download_" formatted="false">Descargar</string>
+  <string name="downloading_" formatted="false">Descargando..</string>
+  <string name="debug_" formatted="false">Depurar</string>
+  <string name="clear_cache_" formatted="false">Borrar caché</string>
+  <string name="clear_cache_hint" formatted="false">Borra la base de datos interna. Obtiene todos los datos de nuevo de bases de datos externas.</string>
+  <string name="not_implemented" formatted="false">Lo siento, función todavía no implementada</string>
   <string-array name="themes">
     <item>Oscuro</item>
     <item>Claro</item>
