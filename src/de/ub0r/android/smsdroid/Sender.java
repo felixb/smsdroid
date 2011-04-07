@@ -94,8 +94,12 @@ public class Sender extends Activity {
 		}
 		u = null;
 
-		final String text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT)
-				.toString();
+		CharSequence cstext = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
+		String text = null;
+		if (cstext != null) {
+			text = cstext.toString();
+			cstext = null;
+		}
 		if (TextUtils.isEmpty(text)) {
 			Log.e(TAG, "text missing");
 			Toast
@@ -179,11 +183,6 @@ public class Sender extends Activity {
 			this.finish();
 			return;
 		}
-
-		// values = new ContentValues();
-		// values.put(TYPE, MESSAGE_TYPE_SENT);
-		// final int ret = cr.update(draft, values, null, null);
-		// Log.d(TAG, "message saved: " + ret);
 
 		this.finish();
 	}
