@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
+		Copyright (C) 2009-2011 Felix Bechstein
 	-->
 	<!--
 		This file is part of SMSdroid. This program is free software; you can
@@ -17,7 +17,7 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
+	xmlns:ads="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
 	android:layout_height="fill_parent" android:layout_width="fill_parent"
 	android:background="?android:attr/colorBackground">
 	<RelativeLayout android:id="@+id/titlebar"
@@ -38,12 +38,11 @@
 			android:layout_centerInParent="true" android:layout_toLeftOf="@id/compose"
 			android:visibility="gone" />
 	</RelativeLayout>
-	<com.admob.android.ads.AdView android:id="@+id/ad"
+	<com.google.ads.AdView android:id="@+id/ad"
 		android:layout_alignParentBottom="true" android:visibility="gone"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:gravity="bottom" app:backgroundColor="?android:attr/colorBackground"
-		app:textColor="?android:attr/textColorPrimary"
-		app:keywords="android mobile handy cellphone google htc market app sms message game" />
+		android:gravity="bottom" android:cacheColorHint="?android:attr/colorBackground"
+		ads:adSize="BANNER" ads:adUnitId="a14b9f701ee348f" />
 	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:drawSelectorOnTop="false"
 		android:scrollingCache="true" android:fastScrollEnabled="true"

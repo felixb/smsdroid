@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
+		Copyright (C) 2009-2011 Felix Bechstein
 	-->
 	<!--
-		This file is part of SMSdroid. This program is free software; you
-		can redistribute it and/or modify it under the terms of the GNU
-		General Public License as published by the Free Software Foundation;
-		either version 3 of the License, or (at your option) any later
-		version.
+		This file is part of SMSdroid. This program is free software; you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation; either
+		version 3 of the License, or (at your option) any later version.
 	-->
 	<!--
 		This program is distributed in the hope that it will be useful, but
@@ -18,7 +17,15 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-	<declare-styleable name="com.admob.android.ads.AdView">
+	<declare-styleable name="com.google.ads.AdView">
+		<attr name="adSize">
+			<enum name="BANNER" value="1" />
+			<enum name="IAB_MRECT" value="2" />
+			<enum name="IAB_BANNER" value="3" />
+			<enum name="IAB_LEADERBOARD" value="4" />
+		</attr>
+		<attr name="adUnitId" format="string" />
+
 		<attr name="testing" format="boolean" />
 		<attr name="backgroundColor" format="color" />
 		<attr name="textColor" format="color" />

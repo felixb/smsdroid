@@ -19,6 +19,7 @@
 package de.ub0r.android.smsdroid;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 
 import android.app.Activity;
@@ -51,6 +52,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+
+import com.google.ads.Ad;
+import com.google.ads.AdListener;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+import com.google.ads.AdRequest.ErrorCode;
+
 import de.ub0r.android.lib.Changelog;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
@@ -69,6 +77,28 @@ public final class ConversationList extends ListActivity implements
 		OnLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
+
+	/** Ad's keywords. */
+	public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
+	static {
+		AD_KEYWORDS.add("android");
+		AD_KEYWORDS.add("mobile");
+		AD_KEYWORDS.add("handy");
+		AD_KEYWORDS.add("cellphone");
+		AD_KEYWORDS.add("google");
+		AD_KEYWORDS.add("htc");
+		AD_KEYWORDS.add("samsung");
+		AD_KEYWORDS.add("motorola");
+		AD_KEYWORDS.add("market");
+		AD_KEYWORDS.add("app");
+		AD_KEYWORDS.add("message");
+		AD_KEYWORDS.add("txt");
+		AD_KEYWORDS.add("sms");
+		AD_KEYWORDS.add("mms");
+		AD_KEYWORDS.add("game");
+		AD_KEYWORDS.add("websms");
+		AD_KEYWORDS.add("amazon");
+	}
 
 	/** ORIG_URI to resolve. */
 	static final Uri URI = Uri.parse("content://mms-sms/conversations/");
@@ -266,7 +296,7 @@ public final class ConversationList extends ListActivity implements
 		super.onResume();
 		prefsNoAds = DonationHelper.hideAds(this);
 		if (!prefsNoAds) {
-			this.findViewById(R.id.ad).setVisibility(View.VISIBLE);
+			this.loadAd();
 		}
 		CAL_TODAY.setTimeInMillis(System.currentTimeMillis());
 		CAL_TODAY.set(Calendar.HOUR_OF_DAY, 0);
@@ -599,5 +629,41 @@ public final class ConversationList extends ListActivity implements
 		default:
 			return false;
 		}
+	}
+
+	/** Load ads. */
+	private void loadAd() {
+		final AdView adv = (AdView) this.findViewById(R.id.ad);
+		final AdRequest ar = new AdRequest();
+		ar.setKeywords(AD_KEYWORDS);
+
+		adv.loadAd(ar);
+		adv.setAdListener(new AdListener() {
+			@Override
+			public void onReceiveAd(final Ad ad) {
+				Log.d(TAG, "got ad: " + ad.toString());
+				adv.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onPresentScreen(final Ad ad) {
+				// nothing todo
+			}
+
+			@Override
+			public void onLeaveApplication(final Ad ad) {
+				// nothing todo
+			}
+
+			@Override
+			public void onFailedToReceiveAd(final Ad ad, final ErrorCode err) {
+				Log.i(TAG, "failed to load ad: " + err);
+			}
+
+			@Override
+			public void onDismissScreen(final Ad arg0) {
+				// nothing todo
+			}
+		});
 	}
 }
