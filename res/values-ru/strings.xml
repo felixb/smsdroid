@@ -41,29 +41,29 @@
   <string name="send_" formatted="false">Отправить</string>
   <string name="notification_" formatted="false" orig="Notifications">Настройка уведомлений</string>
   <string name="notification_enable_" formatted="false" orig="Enable notifications">Уведомления</string>
-  <string name="notification_enable_hint" formatted="false">Разрешить уведомления при получении</string>
+  <string name="notification_enable_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Enable notifications on receive">Показывать уведомления при получении сообщения</string>
   <string name="receive_vibrate_" formatted="false">Вибрация</string>
-  <string name="receive_vibrate_hint" formatted="false">Вибрация при получении</string>
+  <string name="receive_vibrate_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Vibrate on receive">Вибрация при получении сообщения</string>
   <string name="receive_vibrate_mode_" formatted="false">Режим вибрации</string>
-  <string name="receive_sound_" formatted="false">Звук</string>
-  <string name="receive_sound_hint" formatted="false">Звук при получении</string>
+  <string name="receive_sound_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sound">Звук уведомления</string>
+  <string name="receive_sound_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sound on receive">Звук при получении сообщения</string>
   <string name="receive_led_color_" formatted="false">Цвет светодиода</string>
   <string name="receive_led_flash_" formatted="false">Режим светодиода</string>
   <string name="receive_led_flash_hint" formatted="false">Настройка поведения светодиода</string>
-  <string name="receive_no_text_" formatted="false" orig="Hide sender/text">Не показывать отправителя</string>
-  <string name="receive_no_text_hint" formatted="false" orig="Hide sender/text in notification.">Не показывать отправителя/текст в области уведомлений</string>
+  <string name="receive_no_text_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide sender/text">Уведомление без текста</string>
+  <string name="receive_no_text_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide sender/text in notification.">Не показывать отправителя и текст сообщения в уведомлении</string>
   <string name="behavior_" formatted="false" orig="Behavior">Поведение</string>
   <string name="autosend_" formatted="false" orig="Autosend">Автоотправка</string>
   <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp;amp; behavior">Внешний вид и поведение</string>
-  <string name="autosend_hint" formatted="false" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Отправлять ответы автоматически. В настоящий момент поддерживается  только WebSMS.</string>
+  <string name="autosend_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Отправлять ответы автоматически. В настоящий момент поддерживается только программой WebSMS</string>
   <string name="show_text_filed_" formatted="false" orig="Show text filed">Текстовое поле</string>
   <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">Показывать текстовое поле вместо кнопки "Ответить"</string>
-  <string name="show_target_app_" formatted="false" orig="Show target app">СМС приложение</string>
-  <string name="show_target_app_hint" formatted="false" orig="Show target App used for sending on \&quot;send\&quot; Button.">Показывать на кнопке название СМС приложения вместо "Отправить"</string>
+  <string name="show_target_app_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target app">Название СМС-приложения</string>
+  <string name="show_target_app_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Показывать на кнопке "Отправить" название используемого СМС-приложения</string>
   <string name="appearance_" formatted="false">Внешний вид</string>
   <string name="theme_" formatted="false">Тема</string>
   <string name="textsize_" formatted="false">Размер текста</string>
-  <string name="textsize_hint" formatted="false">Размер текста в пикселях; оставьте пустым для значения по умолчанию</string>
+  <string name="textsize_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Text size in pixels; leave empty for default">Размер текста в пикселях или оставьте пустым для значения по умолчанию</string>
   <string name="textcolor_" formatted="false" orig="Text color">Цвет текста</string>
   <string name="textcolor_hint" formatted="false" orig="Message text\'s color.">Цвет текста сообщений</string>
   <string name="textcolor_ignore_conv_" formatted="false" orig="Ignore text color for threads">Игнорировать цвет текста диалогов</string>
@@ -84,9 +84,9 @@
   <string name="show_full_date_" formatted="false" orig="Show full date">Полная дата</string>
   <string name="show_full_date_hint" formatted="false" orig="Show full date and time on every message.">Показывать дату и время каждого сообщения</string>
   <string name="me" formatted="false">Я</string>
-  <string name="view_contact_" formatted="false">Показать контакт</string>
-  <string name="add_contact_" formatted="false">Добавить контакт</string>
-  <string name="view_thread_" formatted="false">Смотреть диалог</string>
+  <string name="view_contact_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View contact">Просмотреть контакт</string>
+  <string name="add_contact_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Add to contacts">Добавить в контакты</string>
+  <string name="view_thread_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View thread">Просмотреть диалог</string>
   <string name="filter_spam_" formatted="false">Пометить как спам</string>
   <string name="dont_filter_spam_" formatted="false">Удалить из чёрного списка</string>
   <string name="delete_message_" formatted="false">Удалить сообщение</string>
@@ -94,7 +94,7 @@
   <string name="forward_" formatted="false">Переслать</string>
   <string name="send_draft_" formatted="false" orig="Send draft">Отправить черновик</string>
   <string name="copy_text_" formatted="false">Копировать текст сообщения</string>
-  <string name="view_details_" formatted="false">Показать детали сообщения</string>
+  <string name="view_details_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View message details">Сведения о сообщении</string>
   <string name="spek_" formatted="false">Говорить</string>
   <string name="delete_threads_" formatted="false">Удалить все диалоги</string>
   <string name="mark_all_read_" formatted="false" orig="Mark all as read">Пометить всё как прочитанные</string>
@@ -102,7 +102,7 @@
   <string name="mark_unread_" formatted="false">Пометить как непрочитанное</string>
   <string name="all_threads_" formatted="false">Все диалоги</string>
   <string name="message_options_" formatted="false">Опции сообщения</string>
-  <string name="compose_" formatted="false">Создать</string>
+  <string name="compose_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Compose">Новое сообщение</string>
   <string name="delete_message_question" formatted="false">Вы действительно хотите удалить это сообщение?</string>
   <string name="delete_messages_question" formatted="false" orig="Do you really want to delete these messages?">Вы действительно хотите удалить эти сообщения?</string>
   <string name="delete_thread_question" formatted="false">Вы действительно хотите удалить ?</string>
