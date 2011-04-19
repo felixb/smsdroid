@@ -21,4 +21,6 @@
                Visit http://ub0r.de/translate/smsdroid/edit.php?lang=ru&file=market.xml to edit the file.
        -->
 <resources>
+  <string name="market_about" formatted="false" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.">SMSdroid - это приложение специально разработанное для отправки СМС сообщений в связке с другим приложением (WebSMS).\n\nЕсли Вам нравиться WebSMS для отправки СМС, то вероятно понравиться и SMSdroid. </string>
+  <string name="market_keywords" formatted="false" orig="Keywords: txt sms mms text websms">Keywords: бесплатно смс ммс txt sms mms text websms smspilot</string>
 </resources>
