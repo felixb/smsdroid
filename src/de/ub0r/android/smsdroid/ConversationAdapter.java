@@ -197,10 +197,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			ivPhoto.setImageDrawable(contact.getAvatar(this.activity,
 					this.defaultContactAvatar));
 			ivPhoto.setVisibility(View.VISIBLE);
-			ivPhoto.setOnClickListener(WRAPPER
-					.getQuickContact(context, ivPhoto, contact
-							.getLookUpUri(context.getContentResolver()), 2,
-							null));
+			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context,
+					ivPhoto,
+					contact.getLookUpUri(context.getContentResolver()), 2, null));
 		} else {
 			ivPhoto.setVisibility(View.GONE);
 		}
@@ -230,7 +229,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		if (text == null) {
 			text = context.getString(R.string.mms_conversation);
 		}
-		tvBody.setText(text);
+		tvBody.setText(Preferences.decodeDecimalNCR(context) ? Converter
+				.convertDecNCR2Char(text) : text);
 
 		// date
 		long time = c.getDate();

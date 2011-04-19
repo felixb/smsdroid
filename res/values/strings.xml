@@ -165,6 +165,8 @@
 	<string name="bubbles_white_right">White right</string>
 	<string name="bubbles_yellow_left">Yellow left</string>
 	<string name="bubbles_yellow_right">Yellow right</string>
+	<string name="decode_decimal_ncr_">Decode Decimal NCR</string>
+	<string name="decode_decimal_ncr_hint">Some providers deliver unicode sms messages encoded as Decimal NCR (&amp;#0000;). Check to auto decode such entities.</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>

@@ -102,6 +102,8 @@ public class Preferences extends PreferenceActivity {
 	public static final String PREFS_SHOWTARGETAPP = "show_target_app";
 	/** Preference's name: backup of last sms. */
 	public static final String PREFS_BACKUPLASTTEXT = "backup_last_sms";
+	/** Preference's name: decode decimal ncr. */
+	public static final String PREFS_DECODE_DECIMAL_NCR = "decode_decimal_ncr";
 
 	/** Default color. */
 	private static final int BLACK = 0xff000000;
@@ -226,8 +228,9 @@ public class Preferences extends PreferenceActivity {
 						@Override
 						public void onClick(final DialogInterface dialog,
 								final int which) {
-							preference.getEditor().putInt(preference.getKey(),
-									which).commit();
+							preference.getEditor()
+									.putInt(preference.getKey(), which)
+									.commit();
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
@@ -280,8 +283,9 @@ public class Preferences extends PreferenceActivity {
 						@Override
 						public void onClick(final DialogInterface dialog,
 								final int which) {
-							preference.getEditor().putInt(preference.getKey(),
-									which).commit();
+							preference.getEditor()
+									.putInt(preference.getKey(), which)
+									.commit();
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
@@ -318,63 +322,58 @@ public class Preferences extends PreferenceActivity {
 		p = this.findPreference(PREFS_TEXTCOLOR);
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
-					new Preference.OnPreferenceClickListener() {
-						@Override
-						public boolean onPreferenceClick(
-								final Preference preference) {
-							final SharedPreferences prefs = PreferenceManager
-									.getDefaultSharedPreferences(// .
-									Preferences.this);
+			new Preference.OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(final Preference preference) {
+					final SharedPreferences prefs = PreferenceManager
+							.getDefaultSharedPreferences(// .
+							Preferences.this);
 
-							int c = prefs.getInt(PREFS_TEXTCOLOR, 0);
-							if (c == 0) {
-								c = BLACK;
-							}
+					int c = prefs.getInt(PREFS_TEXTCOLOR, 0);
+					if (c == 0) {
+						c = BLACK;
+					}
 
-							final AmbilWarnaDialog dialog = // .
-							new AmbilWarnaDialog(Preferences.this, c,
-									new OnAmbilWarnaListener() {
-										@Override
-										public void onOk(
-												final AmbilWarnaDialog dialog,
-												final int color) {
-											prefs.edit().putInt(
-													PREFS_TEXTCOLOR, color)
-													.commit();
-										}
+					final AmbilWarnaDialog dialog = // .
+					new AmbilWarnaDialog(Preferences.this, c,
+							new OnAmbilWarnaListener() {
+								@Override
+								public void onOk(final AmbilWarnaDialog dialog,
+										final int color) {
+									prefs.edit().putInt(PREFS_TEXTCOLOR, color)
+											.commit();
+								}
 
-										@Override
-										public void onCancel(
-												final AmbilWarnaDialog dialog) {
-											// nothing to do
-										}
+								@Override
+								public void onCancel(
+										final AmbilWarnaDialog dialog) {
+									// nothing to do
+								}
 
-										public void onReset(
-												final AmbilWarnaDialog dialog) {
-											prefs.edit().putInt(
-													PREFS_TEXTCOLOR, 0)
-													.commit();
-										}
-									});
+								public void onReset(
+										final AmbilWarnaDialog dialog) {
+									prefs.edit().putInt(PREFS_TEXTCOLOR, 0)
+											.commit();
+								}
+							});
 
-							dialog.show();
-							return true;
-						}
-					});
+					dialog.show();
+					return true;
+				}
+			});
 		}
-		Market.setOnPreferenceClickListener(this, this
-				.findPreference("more_apps"), null, "Felix+Bechstein",
+		Market.setOnPreferenceClickListener(this,
+				this.findPreference("more_apps"), null, "Felix+Bechstein",
 				"http://code.google.com/u/felix.bechstein/");
 		p = this.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
-					new Preference.OnPreferenceClickListener() {
-						public boolean onPreferenceClick(
-								final Preference preference) {
-							Log.collectAndSendLog(Preferences.this);
-							return true;
-						}
-					});
+			new Preference.OnPreferenceClickListener() {
+				public boolean onPreferenceClick(final Preference preference) {
+					Log.collectAndSendLog(Preferences.this);
+					return true;
+				}
+			});
 		}
 	}
 
@@ -533,5 +532,20 @@ public class Preferences extends PreferenceActivity {
 			return BUBBLES_IMG[i];
 		}
 		return R.drawable.bubble_old_green_right;
+	}
+
+	/**
+	 * Get text's size from Preferences.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @return theme
+	 */
+	static final boolean decodeDecimalNCR(final Context context) {
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		final boolean b = p.getBoolean(PREFS_DECODE_DECIMAL_NCR, Boolean.FALSE);
+		Log.d(TAG, "decode decimal ncr: " + b);
+		return b;
 	}
 }

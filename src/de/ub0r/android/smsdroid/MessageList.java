@@ -18,8 +18,8 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,14 +45,14 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
@@ -416,7 +416,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	}
 
 	/**
-	 *{@inheritDoc}
+	 * {@inheritDoc}
 	 */
 	@Override
 	public final boolean onOptionsItemSelected(final MenuItem item) {
@@ -462,8 +462,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onItemLongClick(final AdapterView<?> parent,
 			final View view, final int position, final long id) {
 		final Context context = this;
-		final Message m = Message.getMessage(this, (Cursor) parent
-				.getItemAtPosition(position));
+		final Message m = Message.getMessage(this,
+				(Cursor) parent.getItemAtPosition(position));
 		final Uri target = m.getUri();
 		final int read = m.getRead();
 		final int type = m.getType();
@@ -533,17 +533,20 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						i.setType("text/plain");
 						i.putExtra("forwarded_message", true);
 					}
-					final CharSequence text = m.getBody();
+					final CharSequence text = Preferences
+							.decodeDecimalNCR(context) ? Converter
+							.convertDecNCR2Char(m.getBody()) : m.getBody();
 					i.putExtra(Intent.EXTRA_TEXT, text);
 					i.putExtra("sms_body", text);
-					context.startActivity(Intent.createChooser(i, context
-							.getString(resId)));
+					context.startActivity(Intent.createChooser(i,
+							context.getString(resId)));
 					break;
 				case WHICH_COPY_TEXT:
 					final ClipboardManager cm = // .
 					(ClipboardManager) context.getSystemService(// .
 							Context.CLIPBOARD_SERVICE);
-					cm.setText(m.getBody());
+					cm.setText(Preferences.decodeDecimalNCR(context) ? Converter
+							.convertDecNCR2Char(m.getBody()) : m.getBody());
 					break;
 				case WHICH_VIEW_DETAILS:
 					final int t = m.getType();
@@ -555,7 +558,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					final long d = m.getDate();
 					final String ds = DateFormat.format(// .
 							context.getString(// .
-									R.string.DATEFORMAT_details), d).toString();
+							R.string.DATEFORMAT_details), d).toString();
 					String sentReceived;
 					String fromTo;
 					if (t == Calls.INCOMING_TYPE) {
@@ -665,9 +668,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private void send(final boolean autosend, final boolean showChooser) {
 		final Intent i = this.buildIntent(autosend, showChooser);
 		this.startActivity(i);
-		PreferenceManager.getDefaultSharedPreferences(this).edit().putString(
-				Preferences.PREFS_BACKUPLASTTEXT,
-				this.etText.getText().toString()).commit();
+		PreferenceManager
+				.getDefaultSharedPreferences(this)
+				.edit()
+				.putString(Preferences.PREFS_BACKUPLASTTEXT,
+						this.etText.getText().toString()).commit();
 		this.etText.setText("");
 	}
 }

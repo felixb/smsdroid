@@ -62,6 +62,9 @@
 			<CheckBoxPreference android:key="show_target_app"
 				android:defaultValue="true" android:title="@string/show_target_app_"
 				android:summary="@string/show_target_app_hint" />
+			<CheckBoxPreference android:key="decode_decimal_ncr"
+				android:defaultValue="false" android:title="@string/decode_decimal_ncr_"
+				android:summary="@string/decode_decimal_ncr_hint"/>
 		</PreferenceScreen>
 		<PreferenceScreen android:title="@string/notification_">
 			<CheckBoxPreference android:key="notification_enable"

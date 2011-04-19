@@ -275,8 +275,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 					final Uri target = Uri.parse(MessageList.URI
 							+ m.getThreadId());
 					Intent i = new Intent(Intent.ACTION_VIEW, target);
-					context.startActivity(Intent.createChooser(i, context
-							.getString(R.string.view_mms)));
+					context.startActivity(Intent.createChooser(i,
+							context.getString(R.string.view_mms)));
 				}
 			});
 
@@ -288,7 +288,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			tvBody.setVisibility(View.INVISIBLE);
 			view.findViewById(R.id.btn_import_contact).setVisibility(View.GONE);
 		} else {
-			tvBody.setText(text);
+			tvBody.setText(Preferences.decodeDecimalNCR(context) ? Converter
+					.convertDecNCR2Char(text) : text);
 			tvBody.setVisibility(View.VISIBLE);
 			String stext = text.toString();
 			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
