@@ -52,13 +52,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
-import com.google.ads.AdRequest.ErrorCode;
-
 import de.ub0r.android.lib.Changelog;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
@@ -77,6 +70,9 @@ public final class ConversationList extends ListActivity implements
 		OnLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
+
+	/** Ad's unit id. */
+	private static final String AD_UNITID = "a14b9f701ee348f";
 
 	/** Ad's keywords. */
 	public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
@@ -296,7 +292,7 @@ public final class ConversationList extends ListActivity implements
 		super.onResume();
 		prefsNoAds = DonationHelper.hideAds(this);
 		if (!prefsNoAds) {
-			this.loadAd();
+			Ads.loadAd(this, R.id.ad, AD_UNITID, AD_KEYWORDS);
 		}
 		CAL_TODAY.setTimeInMillis(System.currentTimeMillis());
 		CAL_TODAY.set(Calendar.HOUR_OF_DAY, 0);
@@ -629,41 +625,5 @@ public final class ConversationList extends ListActivity implements
 		default:
 			return false;
 		}
-	}
-
-	/** Load ads. */
-	private void loadAd() {
-		final AdView adv = (AdView) this.findViewById(R.id.ad);
-		final AdRequest ar = new AdRequest();
-		ar.setKeywords(AD_KEYWORDS);
-
-		adv.loadAd(ar);
-		adv.setAdListener(new AdListener() {
-			@Override
-			public void onReceiveAd(final Ad ad) {
-				Log.d(TAG, "got ad: " + ad.toString());
-				adv.setVisibility(View.VISIBLE);
-			}
-
-			@Override
-			public void onPresentScreen(final Ad ad) {
-				// nothing todo
-			}
-
-			@Override
-			public void onLeaveApplication(final Ad ad) {
-				// nothing todo
-			}
-
-			@Override
-			public void onFailedToReceiveAd(final Ad ad, final ErrorCode err) {
-				Log.i(TAG, "failed to load ad: " + err);
-			}
-
-			@Override
-			public void onDismissScreen(final Ad arg0) {
-				// nothing todo
-			}
-		});
 	}
 }
