@@ -89,8 +89,12 @@ public class Sender extends Activity {
 
 		String address = null;
 		String u = intent.getDataString();
-		if (!TextUtils.isEmpty(u) && u.contains(":")) {
-			address = u.split(":")[1];
+		try {
+			if (!TextUtils.isEmpty(u) && u.contains(":")) {
+				address = u.split(":")[1];
+			}
+		} catch (IndexOutOfBoundsException e) {
+			Log.w(TAG, "could not split at :", e);
 		}
 		u = null;
 

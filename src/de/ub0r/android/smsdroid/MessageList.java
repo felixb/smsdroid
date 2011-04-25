@@ -20,6 +20,7 @@ package de.ub0r.android.smsdroid;
 
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -276,7 +277,13 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			final long tid = intent.getLongExtra("thread_id", -1L);
 			this.uri = Uri.parse(URI + tid);
 			if (tid < 0L) {
-				this.startActivity(ConversationList.getComposeIntent(null));
+				try {
+					this.startActivity(ConversationList.getComposeIntent(null));
+				} catch (ActivityNotFoundException e) {
+					Log.e(TAG, "activity not found", e);
+					Toast.makeText(this, R.string.error_conv_null,
+							Toast.LENGTH_LONG).show();
+				}
 				this.finish();
 				return;
 			}
