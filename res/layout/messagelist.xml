@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
+		Copyright (C) 2009-2011 Felix Bechstein
 	-->
 	<!--
 		This file is part of SMSdroid. This program is free software; you can
@@ -52,7 +52,7 @@
 		android:orientation="horizontal" style="@android:style/ButtonBar"
 		android:layout_alignParentBottom="true">
 		<RelativeLayout android:id="@+id/text_layout"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_width="0dip" android:layout_height="wrap_content"
 			android:addStatesFromChildren="true" android:layout_weight="1">
 			<EditText android:id="@+id/text" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:hint="@string/text_hint"

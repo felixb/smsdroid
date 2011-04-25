@@ -70,6 +70,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	/** Default {@link Drawable} for {@link Contact}s. */
 	private Drawable defaultContactAvatar = null;
 
+	/** Convert NCR. */
+	private final boolean convertNCR;
+
 	/**
 	 * Handle queries in background.
 	 * 
@@ -126,6 +129,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		this.defaultContactAvatar = c.getResources().getDrawable(
 				R.drawable.ic_contact_picture);
 
+		this.convertNCR = Preferences.decodeDecimalNCR(c);
 		this.textSize = Preferences.getTextsize(c);
 		this.textColor = Preferences.getTextcolor(c);
 		this.origCursor = cr.query(Conversation.URI_SIMPLE,
@@ -197,9 +201,10 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			ivPhoto.setImageDrawable(contact.getAvatar(this.activity,
 					this.defaultContactAvatar));
 			ivPhoto.setVisibility(View.VISIBLE);
-			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context,
-					ivPhoto,
-					contact.getLookUpUri(context.getContentResolver()), 2, null));
+			ivPhoto.setOnClickListener(WRAPPER
+					.getQuickContact(context, ivPhoto, contact
+							.getLookUpUri(context.getContentResolver()), 2,
+							null));
 		} else {
 			ivPhoto.setVisibility(View.GONE);
 		}
@@ -229,8 +234,11 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		if (text == null) {
 			text = context.getString(R.string.mms_conversation);
 		}
-		tvBody.setText(Preferences.decodeDecimalNCR(context) ? Converter
-				.convertDecNCR2Char(text) : text);
+		if (this.convertNCR) {
+			tvBody.setText(Converter.convertDecNCR2Char(text));
+		} else {
+			tvBody.setText(text);
+		}
 
 		// date
 		long time = c.getDate();

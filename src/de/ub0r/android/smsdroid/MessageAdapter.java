@@ -73,6 +73,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 
 	/** Used text size/color. */
 	private final int textSize, textColor;
+	/** Convert NCR. */
+	private final boolean convertNCR;
 
 	/**
 	 * Default Constructor.
@@ -89,6 +91,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		this.backgroundDrawableOut = Preferences.getBubblesOut(c);
 		this.textSize = Preferences.getTextsize(c);
 		this.textColor = Preferences.getTextcolor(c);
+		this.convertNCR = Preferences.decodeDecimalNCR(c);
 		if (u == null || u.getLastPathSegment() == null) {
 			this.threadId = -1;
 		} else {
@@ -275,8 +278,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 					final Uri target = Uri.parse(MessageList.URI
 							+ m.getThreadId());
 					Intent i = new Intent(Intent.ACTION_VIEW, target);
-					context.startActivity(Intent.createChooser(i,
-							context.getString(R.string.view_mms)));
+					context.startActivity(Intent.createChooser(i, context
+							.getString(R.string.view_mms)));
 				}
 			});
 
@@ -288,8 +291,11 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			tvBody.setVisibility(View.INVISIBLE);
 			view.findViewById(R.id.btn_import_contact).setVisibility(View.GONE);
 		} else {
-			tvBody.setText(Preferences.decodeDecimalNCR(context) ? Converter
-					.convertDecNCR2Char(text) : text);
+			if (this.convertNCR) {
+				tvBody.setText(Converter.convertDecNCR2Char(text));
+			} else {
+				tvBody.setText(text);
+			}
 			tvBody.setVisibility(View.VISIBLE);
 			String stext = text.toString();
 			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
