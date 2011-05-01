@@ -43,6 +43,8 @@
 				android:title="@string/show_full_date_" android:summary="@string/show_full_date_hint" />
 			<CheckBoxPreference android:key="hide_send"
 				android:title="@string/hide_send_" android:summary="@string/hide_send_hint" />
+			<CheckBoxPreference android:key="hide_restore"
+				android:title="@string/hide_restore_" android:summary="@string/hide_restore_hint" />
 			<CheckBoxPreference android:key="hide_paste"
 				android:title="@string/hide_paste_" android:summary="@string/hide_paste_hint" />
 			<CheckBoxPreference android:key="hide_widget_label"

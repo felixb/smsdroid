@@ -77,6 +77,8 @@
   <string name="show_bubbles_" formatted="false">Zeige Sprechblasen</string>
   <string name="hide_send_" formatted="false">"Senden" Button ausblenden</string>
   <string name="hide_send_hint" formatted="false">"Senden" Button neben dem Textfeld ausblenden.</string>
+  <string name="hide_restore_">"Letzte Nachricht wiederherstellen" ausblenden</string>
+  <string name="hide_restore_hint">"Letzte Nachricht wiederherstellen" in Nachrichtenliste  ausblenden</string>
   <string name="hide_paste_" formatted="false">"Einfügen" Button ausblenden</string>
   <string name="hide_paste_hint" formatted="false">"Einfügen" Button auf dem Textfeld ausblenden.</string>
   <string name="hide_widget_label_" formatted="false">Widget-Titel ausblenden</string>

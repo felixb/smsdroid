@@ -75,6 +75,8 @@ public class Preferences extends PreferenceActivity {
 	static final String PREFS_FULL_DATE = "show_full_date";
 	/** Prefernece's name: hide send button. */
 	static final String PREFS_HIDE_SEND = "hide_send";
+	/** Preference's name: hide restore. */
+	static final String PREFS_HIDE_RESTORE = "hide_restore";
 	/** Prefernece's name: hide paste button. */
 	static final String PREFS_HIDE_PASTE = "hide_paste";
 	/** Prefernece's name: hide widget's label. */

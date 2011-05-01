@@ -419,6 +419,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	public final boolean onCreateOptionsMenu(final Menu menu) {
 		MenuInflater inflater = this.getMenuInflater();
 		inflater.inflate(R.menu.messagelist, menu);
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		if (p.getBoolean(Preferences.PREFS_HIDE_RESTORE, false)) {
+			menu.removeItem(R.id.item_restore);
+		}
 		return true;
 	}
 

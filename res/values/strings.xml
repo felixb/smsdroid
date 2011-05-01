@@ -73,6 +73,8 @@
 	<string name="show_bubbles_">Show bubbles</string>
 	<string name="hide_send_">Hide "send" button</string>
 	<string name="hide_send_hint">Hide "send" button near text field.</string>
+	<string name="hide_restore_">Hide "restore last message" button</string>
+	<string name="hide_restore_hint">Hide "restore last message" button in message list.</string>
 	<string name="hide_paste_">Hide "paste" button</string>
 	<string name="hide_paste_hint">Hide "paste" button on text field.</string>
 	<string name="hide_widget_label_">Hide widget\'s label</string>
