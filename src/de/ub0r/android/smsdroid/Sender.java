@@ -12,6 +12,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -146,8 +147,12 @@ public class Sender extends Activity {
 					.buildUpon().appendPath(cursor.getString(0)).build();
 			Log.d(TAG, "skip saving draft: " + draft);
 		} else {
-			draft = cr.insert(URI_SENT, values);
-			Log.d(TAG, "draft saved: " + draft);
+			try {
+				draft = cr.insert(URI_SENT, values);
+				Log.d(TAG, "draft saved: " + draft);
+			} catch (SQLiteException e) {
+				Log.e(TAG, "unable to save draft", e);
+			}
 		}
 		values = null;
 		if (cursor != null && !cursor.isClosed()) {
@@ -187,7 +192,6 @@ public class Sender extends Activity {
 			this.finish();
 			return;
 		}
-
 		this.finish();
 	}
 }

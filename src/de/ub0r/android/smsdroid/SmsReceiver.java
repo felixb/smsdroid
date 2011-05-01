@@ -534,11 +534,17 @@ public class SmsReceiver extends BroadcastReceiver {
 	 *            {@link Context}
 	 * @param intent
 	 *            {@link Intent}
+	 * @param resultCode
+	 *            message status
 	 */
 	private void handleSent(final Context context, final Intent intent,
 			final int resultCode) {
 		final Uri uri = intent.getData();
 		Log.d(TAG, "sent message: " + uri + ", rc: " + resultCode);
+		if (uri == null) {
+			Log.w(TAG, "handleSent(null)");
+			return;
+		}
 
 		if (resultCode == Activity.RESULT_OK) {
 			final ContentValues cv = new ContentValues(1);
