@@ -168,7 +168,9 @@
 	<string name="bubbles_yellow_left">Yellow left</string>
 	<string name="bubbles_yellow_right">Yellow right</string>
 	<string name="decode_decimal_ncr_">Decode Decimal NCR</string>
-	<string name="decode_decimal_ncr_hint">Some providers deliver unicode sms messages encoded as Decimal NCR (&amp;#0000;). Check to auto decode such entities.</string>
+	<string name="decode_decimal_ncr_hint">Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.</string>
+	<string name="activate_sender_">Activate sender</string>
+	<string name="activate_sender_hint">Activate SMSdroid\'s message sender.</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>

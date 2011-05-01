@@ -67,6 +67,9 @@
 			<CheckBoxPreference android:key="decode_decimal_ncr"
 				android:defaultValue="true" android:title="@string/decode_decimal_ncr_"
 				android:summary="@string/decode_decimal_ncr_hint" />
+			<CheckBoxPreference android:key="activate_sender"
+				android:defaultValue="true" android:title="@string/activate_sender_"
+				android:summary="@string/activate_sender_hint" />
 		</PreferenceScreen>
 		<PreferenceScreen android:title="@string/notification_">
 			<CheckBoxPreference android:key="notification_enable"

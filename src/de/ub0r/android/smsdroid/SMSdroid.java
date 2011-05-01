@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2011 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -18,11 +18,14 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -43,10 +46,25 @@ public final class SMSdroid extends Application {
 	public void onCreate() {
 		super.onCreate();
 		Log.init("SMSdroid");
+		Log.i(TAG, "init SMSdroid v" + this.getString(R.string.app_version));
+
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		int state;
+		if (p.getBoolean(Preferences.PREFS_ACTIVATE_SENDER, true)) {
+			state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+			Log.d(TAG, "enable .Sender");
+		} else {
+			state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+			Log.i(TAG, "disable .Sender");
+		}
+		this.getPackageManager().setComponentEnabledSetting(
+				new ComponentName(this, Sender.class), state,
+				PackageManager.DONT_KILL_APP);
 	}
 
 	/**
-	 * Get an {@link OnClickListener} for stating an {@link Activity} for given
+	 * Get an {@link OnClickListener} for stating an Activity for given
 	 * {@link Intent}.
 	 * 
 	 * @param context
@@ -76,8 +94,8 @@ public final class SMSdroid extends Application {
 	}
 
 	/**
-	 * Get an {@link OnLongClickListener} for stating an {@link Activity} for
-	 * given {@link Intent}.
+	 * Get an {@link OnLongClickListener} for stating an Activity for given
+	 * {@link Intent}.
 	 * 
 	 * @param context
 	 *            {@link Context}

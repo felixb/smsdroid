@@ -172,7 +172,9 @@
   <string name="bubbles_yellow_left" formatted="false">Gelb links</string>
   <string name="bubbles_yellow_right" formatted="false">Gelb rechts</string>
   <string name="decode_decimal_ncr_">Decimal NCR dekodieren</string>
-  <string name="decode_decimal_ncr_hint">Manche Websms anbieter, z.B. O2 und Arcor kodieren utf-8 texte als Decimal NCR (&amp;#0000;). Aktiviere es um solche Texte automatisch zu dekodieren.</string>
+  <string name="decode_decimal_ncr_hint">Manche Websms anbieter, z.B. o2 und Arcor kodieren utf-8 Texte als Decimal NCR (&amp;#0000;). Aktiviere es um solche Texte automatisch zu dekodieren.</string>
+  <string name="activate_sender_">Aktiviere Sender</string>
+  <string name="activate_sender_hint">Aktiviere SMSdroids SMS Sender.</string>
   <string-array name="themes">
     <item>Dunkel</item>
     <item>Hell</item>

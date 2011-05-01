@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>HEAD: decode NCR messages, hide "restore last message",minor fixes</item>
+		<item>HEAD: decode NCR messages, hide "restore last message", hide sender in chooser, minor fixes</item>
 		<item>v0.7.1: Fix NPE</item>
 		<item>v0.7: show dialer instead of calling directly (and reduce permissions), send SMS directly, restore last sent message, add gingerbreadish notification icon (by android and sebastian huth), add french translation (Ismael A.)</item>
 		<item>v0.6: new bubbles and notification icons by daniel kalinic, set text color, fix notification timestamp</item>

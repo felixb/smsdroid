@@ -106,6 +106,8 @@ public class Preferences extends PreferenceActivity {
 	public static final String PREFS_BACKUPLASTTEXT = "backup_last_sms";
 	/** Preference's name: decode decimal ncr. */
 	public static final String PREFS_DECODE_DECIMAL_NCR = "decode_decimal_ncr";
+	/** Preference's name: activate sender. */
+	public static final String PREFS_ACTIVATE_SENDER = "activate_sender";
 
 	/** Default color. */
 	private static final int BLACK = 0xff000000;
