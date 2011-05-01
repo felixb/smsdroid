@@ -21,7 +21,9 @@ package de.ub0r.android.smsdroid;
 import java.util.Set;
 
 import android.app.Activity;
+import android.os.Build;
 import android.view.View;
+import android.webkit.WebViewDatabase;
 import android.widget.LinearLayout;
 
 import com.google.ads.Ad;
@@ -67,11 +69,20 @@ public final class Ads {
 	public static void loadAd(final Activity activity, final int adBase,
 			final String unitId, final Set<String> keywords) {
 		Log.d(TAG, "loadAd(" + unitId + ")");
+
 		final LinearLayout adframe = (LinearLayout) activity
 				.findViewById(adBase);
 		if (adframe == null) {
 			Log.e(TAG, "adframe=null");
 			return;
+		} else if (Integer.parseInt(Build.VERSION.SDK) // .
+		<= Build.VERSION_CODES.FROYO) {
+			Log.d(TAG, "API " + Build.VERSION.SDK + " <= FROYO");
+			WebViewDatabase webViewDB = WebViewDatabase.getInstance(activity);
+			if (webViewDB == null) {
+				Log.e(TAG, "webViewDB == null");
+				return;
+			}
 		}
 
 		AdView adv;
