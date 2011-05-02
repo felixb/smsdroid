@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
@@ -85,13 +86,20 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static String lastUnreadBody = null;
 
 	/** Red lights. */
-	final static int RED = 0xFFFF0000;
+	static final int RED = 0xFFFF0000;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
+		Log.d(TAG, "onReceive()");
+		final PowerManager pm = (PowerManager) context
+				.getSystemService(Context.POWER_SERVICE);
+		final PowerManager.WakeLock wakelock = pm.newWakeLock(
+				PowerManager.PARTIAL_WAKE_LOCK, TAG);
+		wakelock.acquire();
+		Log.i(TAG, "got wakelock");
 		final String action = intent.getAction();
 		Log.d(TAG, "got intent: " + action);
 		try {
@@ -104,55 +112,58 @@ public class SmsReceiver extends BroadcastReceiver {
 		String t = null;
 		if (action.equals(Sender.MESSAGE_SENT_ACTION)) {
 			this.handleSent(context, intent, this.getResultCode());
-			return;
-		} else if (action.equals(ACTION_SMS)) {
-			Bundle b = intent.getExtras();
-			Object[] messages = (Object[]) b.get("pdus");
-			SmsMessage[] smsMessage = new SmsMessage[messages.length];
-			int l = messages.length;
-			for (int i = 0; i < l; i++) {
-				smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
-			}
-			t = null;
-			if (l > 0) {
-				t = smsMessage[0].getDisplayMessageBody();
-				// ! Check in blacklist db - filter spam
-				boolean q = false;
-				final String s = smsMessage[0].getOriginatingAddress();
-				final SpamDB db = new SpamDB(context);
-				db.open();
-				if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
-					Log.d(TAG, "Message from " + s + " filtered.");
-					q = true;
-				} else {
-					Log.d(TAG, "Message from " + s + " NOT filtered.");
+		} else {
+			boolean silent = false;
+			if (action.equals(ACTION_SMS)) {
+				Bundle b = intent.getExtras();
+				Object[] messages = (Object[]) b.get("pdus");
+				SmsMessage[] smsMessage = new SmsMessage[messages.length];
+				int l = messages.length;
+				for (int i = 0; i < l; i++) {
+					smsMessage[i] = SmsMessage
+							.createFromPdu((byte[]) messages[i]);
 				}
-				// db.getEntrieCount();
-				db.close();
-				if (q) {
-					return;
+				t = null;
+				if (l > 0) {
+					t = smsMessage[0].getDisplayMessageBody();
+					// ! Check in blacklist db - filter spam
+					final String s = smsMessage[0].getOriginatingAddress();
+					final SpamDB db = new SpamDB(context);
+					db.open();
+					if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
+						Log.d(TAG, "Message from " + s + " filtered.");
+						silent = true;
+					} else {
+						Log.d(TAG, "Message from " + s + " NOT filtered.");
+					}
+					db.close();
 				}
+			} else if (action.equals(ACTION_MMS)) {
+				t = MMS_BODY;
 			}
-		} else if (action.equals(ACTION_MMS)) {
-			t = MMS_BODY;
-		}
 
-		Log.d(TAG, "t: " + t);
-		int count = MAX_SPINS;
-		do {
-			Log.d(TAG, "spin: " + count);
-			try {
-				Log.d(TAG, "sleep(" + SLEEP + ")");
-				Thread.sleep(SLEEP);
-			} catch (InterruptedException e) {
-				Log.d(TAG, "interrupted in spinlock", e);
-				e.printStackTrace();
+			if (!silent) {
+				Log.d(TAG, "t: " + t);
+				int count = MAX_SPINS;
+				do {
+					Log.d(TAG, "spin: " + count);
+					try {
+						Log.d(TAG, "sleep(" + SLEEP + ")");
+						Thread.sleep(SLEEP);
+					} catch (InterruptedException e) {
+						Log.d(TAG, "interrupted in spinlock", e);
+						e.printStackTrace();
+					}
+					--count;
+				} while (updateNewMessageNotification(context, t) <= 0
+						&& count > 0);
+				if (count == 0) { // use messages as they are available
+					updateNewMessageNotification(context, null);
+				}
 			}
-			--count;
-		} while (updateNewMessageNotification(context, t) <= 0 && count > 0);
-		if (count == 0) { // use messages as they are available
-			updateNewMessageNotification(context, null);
 		}
+		wakelock.release();
+		Log.i(TAG, "wakelock released");
 	}
 
 	/**
