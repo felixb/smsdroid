@@ -448,17 +448,21 @@ public final class ConversationList extends ListActivity implements
 	/**
 	 * Get a {@link Intent} for sending a new message.
 	 * 
+	 * @param context
+	 *            {@link Context}
 	 * @param address
 	 *            address
 	 * @return {@link Intent}
 	 */
-	static Intent getComposeIntent(final String address) {
+	static Intent getComposeIntent(final Context context, // .
+			final String address) {
 		final Intent i = new Intent(Intent.ACTION_SENDTO);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		if (address == null) {
 			i.setData(Uri.parse("sms:"));
 		} else {
-			i.setData(Uri.parse("smsto:" + address));
+			i.setData(Uri.parse("smsto:"
+					+ Preferences.fixNumber(context, address)));
 		}
 		return i;
 	}
@@ -520,7 +524,8 @@ public final class ConversationList extends ListActivity implements
 				Intent i = null;
 				switch (which) {
 				case WHICH_ANSWER:
-					ConversationList.this.startActivity(getComposeIntent(a));
+					ConversationList.this.startActivity(getComposeIntent(
+							ConversationList.this, a));
 					break;
 				case WHICH_CALL:
 					i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));
@@ -593,7 +598,7 @@ public final class ConversationList extends ListActivity implements
 	public void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.compose:
-			final Intent i = getComposeIntent(null);
+			final Intent i = getComposeIntent(this, null);
 			try {
 				this.startActivity(i);
 			} catch (ActivityNotFoundException e) {
@@ -618,7 +623,7 @@ public final class ConversationList extends ListActivity implements
 	public boolean onLongClick(final View v) {
 		switch (v.getId()) {
 		case R.id.compose:
-			final Intent i = getComposeIntent(null);
+			final Intent i = getComposeIntent(this, null);
 			this.startActivity(Intent.createChooser(i, this
 					.getString(R.string.new_message_)));
 			return true;

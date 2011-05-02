@@ -175,6 +175,16 @@
   <string name="decode_decimal_ncr_hint">Manche Websms anbieter, z.B. o2 und Arcor kodieren utf-8 Texte als Decimal NCR (&amp;#0000;). Aktiviere es um solche Texte automatisch zu dekodieren.</string>
   <string name="activate_sender_">Aktiviere Sender</string>
   <string name="activate_sender_hint">Aktiviere SMSdroids SMS Sender.</string>
+  <string name="fix_numbers_">Nummern reparieren</string>
+  <string name="fix_numbers_hint">Ersetze Teile der Nummer vor dem Senden mit Hilfe Regulärer Ausdrücke. Die meisten Benutzer benötigen hier keine Änderung.</string>
+	<string name="fix_number1_regex_">Regex 1</string>
+	<string name="fix_number1_replace_">Ersatz 1</string>
+	<string name="fix_number2_regex_">Regex 2</string>
+	<string name="fix_number2_replace_">Ersatz 2</string>
+	<string name="fix_number3_regex_">Regex 3</string>
+	<string name="fix_number3_replace_">Ersatz 3</string>
+	<string name="fix_numbers_regex_hint">Regulärer Ausdruck zum suchen.</string>
+	<string name="fix_numbers_replace_hint">Ersatz für den gefundenen Text.</string>
   <string-array name="themes">
     <item>Dunkel</item>
     <item>Hell</item>

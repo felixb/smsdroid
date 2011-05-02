@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.widget.SimpleAdapter;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Market;
@@ -108,6 +109,12 @@ public class Preferences extends PreferenceActivity {
 	public static final String PREFS_DECODE_DECIMAL_NCR = "decode_decimal_ncr";
 	/** Preference's name: activate sender. */
 	public static final String PREFS_ACTIVATE_SENDER = "activate_sender";
+	/** Preference's name: prefix regular expression. */
+	private static final String PREFS_REGEX = "regex";
+	/** Preference's name: prefix replace. */
+	private static final String PREFS_REPLACE = "replace";
+	/** Number of regular expressions. */
+	private static final int PREFS_REGEX_COUNT = 3;
 
 	/** Default color. */
 	private static final int BLACK = 0xff000000;
@@ -554,5 +561,29 @@ public class Preferences extends PreferenceActivity {
 		final boolean b = p.getBoolean(PREFS_DECODE_DECIMAL_NCR, true);
 		Log.d(TAG, "decode decimal ncr: " + b);
 		return b;
+	}
+
+	/**
+	 * Fix a number with regex load from {@link SharedPreferences}.
+	 * 
+	 * @param context
+	 *            {@link Context}
+	 * @param number
+	 *            number
+	 * @return fixed number
+	 */
+	static final String fixNumber(final Context context, final String number) {
+		String ret = number;
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		for (int i = 1; i <= PREFS_REGEX_COUNT; i++) {
+			final String regex = p.getString(PREFS_REGEX + i, null);
+			if (!TextUtils.isEmpty(regex)) {
+				Log.d(TAG, "search for '" + regex + "' in " + ret);
+				ret = ret.replaceAll(regex, p.getString(PREFS_REPLACE + i, ""));
+				Log.d(TAG, "new number: " + ret);
+			}
+		}
+		return ret;
 	}
 }

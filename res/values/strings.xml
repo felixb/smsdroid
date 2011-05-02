@@ -171,6 +171,16 @@
 	<string name="decode_decimal_ncr_hint">Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.</string>
 	<string name="activate_sender_">Activate sender</string>
 	<string name="activate_sender_hint">Activate SMSdroid\'s message sender.</string>
+	<string name="fix_numbers_">Fix numbers</string>
+	<string name="fix_numbers_hint">Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.</string>
+	<string name="fix_number1_regex_">Regex 1</string>
+	<string name="fix_number1_replace_">Replace 1</string>
+	<string name="fix_number2_regex_">Regex 2</string>
+	<string name="fix_number2_replace_">Replace 2</string>
+	<string name="fix_number3_regex_">Regex 3</string>
+	<string name="fix_number3_replace_">Replace 3</string>
+	<string name="fix_numbers_regex_hint">Regular expression too search for.</string>
+	<string name="fix_numbers_replace_hint">Replace matched text with this text.</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>

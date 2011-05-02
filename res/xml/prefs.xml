@@ -70,6 +70,27 @@
 			<CheckBoxPreference android:key="activate_sender"
 				android:defaultValue="true" android:title="@string/activate_sender_"
 				android:summary="@string/activate_sender_hint" />
+			<PreferenceScreen android:title="@string/fix_numbers_"
+				android:summary="@string/fix_numbers_hint">
+				<PreferenceCategory android:title="@string/fix_number1_regex_">
+					<EditTextPreference android:key="regex1"
+						android:title="@string/fix_number1_regex_" android:summary="@string/fix_numbers_regex_hint" />
+					<EditTextPreference android:key="replace1"
+						android:title="@string/fix_number1_replace_" android:summary="@string/fix_numbers_replace_hint" />
+				</PreferenceCategory>
+				<PreferenceCategory android:title="@string/fix_number2_regex_">
+					<EditTextPreference android:key="regex2"
+						android:title="@string/fix_number2_regex_" android:summary="@string/fix_numbers_regex_hint" />
+					<EditTextPreference android:key="replace2"
+						android:title="@string/fix_number2_replace_" android:summary="@string/fix_numbers_replace_hint" />
+				</PreferenceCategory>
+				<PreferenceCategory android:title="@string/fix_number3_regex_">
+					<EditTextPreference android:key="regex3"
+						android:title="@string/fix_number3_regex_" android:summary="@string/fix_numbers_regex_hint" />
+					<EditTextPreference android:key="replace3"
+						android:title="@string/fix_number3_replace_" android:summary="@string/fix_numbers_replace_hint" />
+				</PreferenceCategory>
+			</PreferenceScreen>
 		</PreferenceScreen>
 		<PreferenceScreen android:title="@string/notification_">
 			<CheckBoxPreference android:key="notification_enable"

@@ -278,7 +278,8 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.uri = Uri.parse(URI + tid);
 			if (tid < 0L) {
 				try {
-					this.startActivity(ConversationList.getComposeIntent(null));
+					this.startActivity(ConversationList.getComposeIntent(this,
+							null));
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "activity not found", e);
 					Toast.makeText(this, R.string.error_conv_null,
@@ -442,7 +443,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.startActivity(new Intent(this, ConversationList.class));
 			return true;
 		case R.id.item_compose:
-			this.startActivity(ConversationList.getComposeIntent(null));
+			this.startActivity(ConversationList.getComposeIntent(this, null));
 			return true;
 		case R.id.item_answer:
 			this.send(true, false);
@@ -530,15 +531,14 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					break;
 				case WHICH_REPLY:
 					MessageList.this.startActivity(ConversationList
-							.getComposeIntent(a));
+							.getComposeIntent(MessageList.this, a));
 					break;
 				case WHICH_FORWARD:
 					int resId;
 					if (type == Message.SMS_DRAFT) {
 						resId = R.string.send_draft_;
-						i = ConversationList
-								.getComposeIntent(MessageList.this.conv
-										.getContact().getNumber());
+						i = ConversationList.getComposeIntent(MessageList.this,
+								MessageList.this.conv.getContact().getNumber());
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -661,7 +661,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private Intent buildIntent(final boolean autosend, // .
 			final boolean showChooser) {
 		final String text = this.etText.getText().toString().trim();
-		final Intent i = ConversationList.getComposeIntent(this.conv
+		final Intent i = ConversationList.getComposeIntent(this, this.conv
 				.getContact().getNumber());
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
