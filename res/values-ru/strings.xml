@@ -27,7 +27,7 @@
   <string name="feedback_" formatted="false">Отзывы</string>
   <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Сообщите о найденной ошибке, отправьте запрос на расширение функционала...</string>
   <string name="twitter_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Следите за SMSdroid в Twitter и узнавайте об обновлениях</string>
-  <string name="about0" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid позволяет читать и отправлять SMS сообщения. Работает с любым SMS-приложением.</string>
+  <string name="about0" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid позволяет читать и отправлять SMS сообщения. Работает с любыми SMS-приложениями.</string>
   <string name="more_apps_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="More Apps..">Другие приложения</string>
   <string name="settings" formatted="false">Настройки</string>
   <string name="new_message_" formatted="false">Новое сообщение</string>
@@ -170,8 +170,20 @@
   <string name="bubbles_white_right" formatted="false" orig="White right">Белый справа</string>
   <string name="bubbles_yellow_left" formatted="false" orig="Yellow left">Жёлтый слева</string>
   <string name="bubbles_yellow_right" formatted="false" orig="Yellow right">Жёлтый справа</string>
-  <string name="decode_decimal_ncr_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Decode Decimal NCR">Декодировать цифровые NCR</string>
-  <string name="decode_decimal_ncr_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;amp;#0000;). Check to auto decode such entities.">Некоторые SMS сервисы отправляют сообщения с цифровой кодировкой символов NCR(&amp;#0000;). Автодекодировка исправляет такой код автоматически</string>
+  <string name="decode_decimal_ncr_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Decode Decimal NCR">Автодекдорировка NCR</string>
+  <string name="decode_decimal_ncr_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;amp;#0000;). Check to auto decode such entities.">Некоторые SMS сервисы отправляют сообщения с цифровой кодировкой символов NCR(&amp;#0000;). Автодекодировка исправляет сообщения с таким кодом автоматически</string>
+  <string name="activate_sender_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Activate sender">Функция отправки</string>
+  <string name="activate_sender_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Activate SMSdroid\'s message sender.">Активировать функцию отправки сообщений SMSdroid</string>
+  <string name="fix_numbers_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Fix numbers">Автозамена номера</string>
+  <string name="fix_numbers_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Перед отправкой автоматически заменяет часть телефонного номера текстом. Большинству пользователей эта функция не нужна.</string>
+  <string name="fix_number1_regex_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regex 1">Текст 1</string>
+  <string name="fix_number1_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 1">Замена 1</string>
+  <string name="fix_number2_regex_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regex 2">Текст 2</string>
+  <string name="fix_number2_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 2">Замена 2</string>
+  <string name="fix_number3_regex_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regex 3">Текст 3</string>
+  <string name="fix_number3_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 3">Замена 3</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regular expression too search for.">Текст, который будет автоматически заменяться</string>
+  <string name="fix_numbers_replace_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace matched text with this text.">Текст, которым будет заменён найденный текст</string>
   <string-array name="themes">
     <item>Чёрная</item>
     <item>Светлая</item>
