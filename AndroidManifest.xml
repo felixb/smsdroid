@@ -103,13 +103,6 @@
 		<provider android:name=".SearchProvider"
 			android:authorities="de.ub0r.android.smsdroid.SearchProvider"
 			android:syncable="false" />
-		<!-- The application's publisher ID assigned by AdMob -->
-		<receiver android:name="com.admob.android.ads.analytics.InstallReceiver"
-			android:exported="true">
-			<intent-filter>
-				<action android:name="com.android.vending.INSTALL_REFERRER" />
-			</intent-filter>
-		</receiver>
 		<activity android:name="com.google.ads.AdActivity"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:configChanges="keyboard|keyboardHidden|orientation" />
