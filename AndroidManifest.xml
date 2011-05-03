@@ -17,8 +17,8 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="de.ub0r.android.smsdroid" android:versionCode="121"
-	android:versionName="0.7.2" android:installLocation="internalOnly">
+	package="de.ub0r.android.smsdroid" android:versionCode="122"
+	android:versionName="0.7.2.1" android:installLocation="internalOnly">
 	<application android:name=".SMSdroid" android:icon="@drawable/icon"
 		android:label="@string/app_name">
 		<activity android:name=".ConversationList" android:label="@string/app_name"
@@ -103,13 +103,6 @@
 		<provider android:name=".SearchProvider"
 			android:authorities="de.ub0r.android.smsdroid.SearchProvider"
 			android:syncable="false" />
-		<!-- The application's publisher ID assigned by AdMob -->
-		<receiver android:name="com.admob.android.ads.analytics.InstallReceiver"
-			android:exported="true">
-			<intent-filter>
-				<action android:name="com.android.vending.INSTALL_REFERRER" />
-			</intent-filter>
-		</receiver>
 		<activity android:name="com.google.ads.AdActivity"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:configChanges="keyboard|keyboardHidden|orientation" />
