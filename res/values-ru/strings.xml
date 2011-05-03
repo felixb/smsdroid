@@ -26,9 +26,9 @@
   <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Советы и подсказки по настройке программы</string>
   <string name="feedback_" formatted="false">Отзывы</string>
   <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Сообщите о найденной ошибке, отправьте запрос на расширение функционала...</string>
-  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc.">Следите за SMSdroid в Twitter и узнавайте об обновлениях</string>
-  <string name="about0" formatted="false" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid - программа для чтения и отправки СМС. Позволяет отправлять СМС через любое другое приложение.</string>
-  <string name="more_apps_" formatted="false">Больше приложений..</string>
+  <string name="twitter_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Следите за SMSdroid в Twitter и узнавайте об обновлениях</string>
+  <string name="about0" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid позволяет читать и отправлять SMS сообщения. Работает с любым SMS-приложением.</string>
+  <string name="more_apps_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="More Apps..">Другие приложения</string>
   <string name="settings" formatted="false">Настройки</string>
   <string name="new_message_" formatted="false">Новое сообщение</string>
   <string name="new_message_hint" formatted="false">Создать новое сообщение</string>
@@ -41,12 +41,12 @@
   <string name="send_" formatted="false">Отправить</string>
   <string name="notification_" formatted="false" orig="Notifications">Настройка уведомлений</string>
   <string name="notification_enable_" formatted="false" orig="Enable notifications">Уведомления</string>
-  <string name="notification_enable_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Enable notifications on receive">Показывать уведомления при получении сообщения</string>
+  <string name="notification_enable_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Enable notifications on receive">Показывать уведомления при получении сообщений</string>
   <string name="receive_vibrate_" formatted="false">Вибрация</string>
-  <string name="receive_vibrate_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Vibrate on receive">Вибрация при получении сообщения</string>
+  <string name="receive_vibrate_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Vibrate on receive">Вибрация при получении сообщений</string>
   <string name="receive_vibrate_mode_" formatted="false">Режим вибрации</string>
   <string name="receive_sound_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sound">Звук уведомления</string>
-  <string name="receive_sound_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sound on receive">Звук при получении сообщения</string>
+  <string name="receive_sound_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sound on receive">Звук при получении сообщений</string>
   <string name="receive_led_color_" formatted="false">Цвет светодиода</string>
   <string name="receive_led_flash_" formatted="false">Режим светодиода</string>
   <string name="receive_led_flash_hint" formatted="false">Настройка поведения светодиода</string>
@@ -57,9 +57,9 @@
   <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp;amp; behavior">Внешний вид и поведение</string>
   <string name="autosend_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Отправлять ответы автоматически. В настоящий момент поддерживается только программой WebSMS</string>
   <string name="show_text_filed_" formatted="false" orig="Show text filed">Текстовое поле</string>
-  <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">Показывать текстовое поле вместо кнопки "Ответить"</string>
-  <string name="show_target_app_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target app">Название СМС-приложения</string>
-  <string name="show_target_app_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Показывать на кнопке "Отправить" название используемого СМС-приложения</string>
+  <string name="show_text_filed_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show text filed instead of answer button.">Показывать текстовое поле вместо кнопки \'Ответить\'</string>
+  <string name="show_target_app_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target app">Название SMS-приложения</string>
+  <string name="show_target_app_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Показывать на кнопке \'Отправить\' название используемого SMS-приложения</string>
   <string name="appearance_" formatted="false">Внешний вид</string>
   <string name="theme_" formatted="false">Тема</string>
   <string name="textsize_" formatted="false">Размер текста</string>
@@ -75,10 +75,12 @@
   <string name="show_emoticons_" formatted="false" orig="Show emoticons">Смайлики</string>
   <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list.">Показывать смайлики в сообщениях</string>
   <string name="show_bubbles_" formatted="false">Сообщения в пузырях</string>
-  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Скрыть "Отправить"</string>
-  <string name="hide_send_hint" formatted="false" orig="Hide &quot;send&quot; button near text field.">Не показывать кнопку "Отправить"</string>
-  <string name="hide_paste_" formatted="false" orig="Hide &quot;paste&quot; button">Скрыть "Вставить"</string>
-  <string name="hide_paste_hint" formatted="false" orig="Hide &quot;paste&quot; button on text field.">Не показывать кнопку "Вставить"</string>
+  <string name="hide_send_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;send&quot; button">Скрыть \'Отправить\'</string>
+  <string name="hide_send_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Не показывать кнопку \'Отправить\'</string>
+  <string name="hide_restore_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Скрыть \'Восстановить последнее сообщение\'</string>
+  <string name="hide_restore_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Не показывать кнопку \'Восстановить последнее сообщение\'</string>
+  <string name="hide_paste_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;paste&quot; button">Скрыть \'Вставить из буфера\'</string>
+  <string name="hide_paste_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">Не показывать кнопку \'Вставить из буфера\'</string>
   <string name="hide_widget_label_" formatted="false" orig="Hide widget\'s label">Скрыть подпись виджета</string>
   <string name="hide_widget_label_hint" formatted="false" orig="Hide the label of the widget.">Не показывать название виджета "SMSdroid" на рабочем столе</string>
   <string name="show_full_date_" formatted="false" orig="Show full date">Полная дата</string>
@@ -97,7 +99,7 @@
   <string name="view_details_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View message details">Сведения о сообщении</string>
   <string name="spek_" formatted="false">Говорить</string>
   <string name="delete_threads_" formatted="false">Удалить все диалоги</string>
-  <string name="mark_all_read_" formatted="false" orig="Mark all as read">Пометить всё как прочитанные</string>
+  <string name="mark_all_read_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Mark all as read">Пометить всё как прочитанное</string>
   <string name="mark_read_" formatted="false">Пометить как прочитанное</string>
   <string name="mark_unread_" formatted="false">Пометить как непрочитанное</string>
   <string name="all_threads_" formatted="false">Все диалоги</string>
@@ -112,9 +114,9 @@
   <string name="type_" formatted="false">Тип:</string>
   <string name="sent_" formatted="false">Отправлено:</string>
   <string name="received_" formatted="false">Получено:</string>
-  <string name="view_mms" formatted="false">Показать ММС</string>
+  <string name="view_mms" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View MMS">Показать MMS</string>
   <string name="mms_conversation" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="&amp;lt;MMS body&amp;gt;">&lt;MMS body&gt;</string>
-  <string name="mms_not_supported" formatted="false">Это сообщение может являться ММС. Вы можете попробовать загрузить его, используя стандартное СМС/ММС приложение.\nНажмите для продолжения.</string>
+  <string name="mms_not_supported" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Это сообщение может являться MMS. Вы можете попробовать загрузить его, используя стандартное SMS/MMS приложение.\nНажмите для продолжения.</string>
   <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Импортировать контакт</string>
   <string name="download_" formatted="false">Загрузить</string>
@@ -122,14 +124,14 @@
   <string name="debug_" formatted="false">Отладка</string>
   <string name="clear_cache_" formatted="false">Очистить кеш</string>
   <string name="clear_cache_hint" formatted="false" orig="Clear internal Database. Fetch all data again from external Database.">Очистит внутреннюю базу данных и удалит все данные из внешней базы данных.</string>
-  <string name="not_implemented" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sorry, not yet implemented.">Извините, ещё не выполнено</string>
+  <string name="not_implemented" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sorry, not yet implemented.">Извините, ещё не реализовано</string>
   <string name="error_conv_null" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Error getting conversation from DB!">Ошибка получения сообщения из базы данных!</string>
   <string name="error_sending_failed" formatted="false" orig="Sending failed">Ошибка при отправке</string>
   <string name="error_missing_text" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Missing text!">Введите текст</string>
   <string name="error_missing_reciepient" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Missing reciepient!">Укажите получателя</string>
   <string name="text_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Text">Введите текст</string>
-  <string name="paste_" formatted="false" orig="[Paste from clipboard]">[Вставить из буфера обмена]</string>
-  <string name="restore_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Restore last message">Последнее сообщение</string>
+  <string name="paste_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="[Paste from clipboard]">[Вставить из буфера]</string>
+  <string name="restore_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Restore last message">Восстановить последнее сообщение</string>
   <string name="attachment_saved" formatted="false" orig="Saved attachment on SD card as:">Сохранить вложение как:</string>
   <string name="attachment_not_saved" formatted="false" orig="Could not save attachment.">Невозможно сохранить вложение</string>
   <string name="chooser_" formatted="false" orig="Chooser">выбор</string>
@@ -140,7 +142,7 @@
   <string name="notification_green_" formatted="false" orig="Green">Зелёная</string>
   <string name="notification_yellow_" formatted="false" orig="Yellow">Жёлтая</string>
   <string name="bubbles_in_" formatted="false" orig="Bubbles in">Входящие</string>
-  <string name="bubbles_in_hint" formatted="false" orig="Bubbles for incoming messages">оформление входящих сообщений</string>
+  <string name="bubbles_in_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Bubbles for incoming messages">Оформление входящих сообщений</string>
   <string name="bubbles_out_" formatted="false" orig="Bubbles out">Отправленные</string>
   <string name="bubbles_out_hint" formatted="false" orig="Bubbles for outgoing messages">Оформление исходящих сообщений</string>
   <string name="bubbles_nothing" formatted="false" orig="Nothing">Без цвета</string>
@@ -168,6 +170,8 @@
   <string name="bubbles_white_right" formatted="false" orig="White right">Белый справа</string>
   <string name="bubbles_yellow_left" formatted="false" orig="Yellow left">Жёлтый слева</string>
   <string name="bubbles_yellow_right" formatted="false" orig="Yellow right">Жёлтый справа</string>
+  <string name="decode_decimal_ncr_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Decode Decimal NCR">Декодировать цифровые NCR</string>
+  <string name="decode_decimal_ncr_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;amp;#0000;). Check to auto decode such entities.">Некоторые SMS сервисы отправляют сообщения с цифровой кодировкой символов NCR(&amp;#0000;). Автодекодировка исправляет такой код автоматически</string>
   <string-array name="themes">
     <item>Чёрная</item>
     <item>Светлая</item>
