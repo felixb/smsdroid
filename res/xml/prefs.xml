@@ -27,7 +27,8 @@
 			<PreferenceScreen android:key="bubbles_out"
 				android:title="@string/bubbles_out_" android:summary="@string/bubbles_out_hint" />
 			<EditTextPreference android:key="textsizen"
-				android:title="@string/textsize_" android:summary="@string/textsize_hint" />
+				android:title="@string/textsize_" android:summary="@string/textsize_hint"
+				android:inputType="number" />
 			<PreferenceScreen android:key="textcolor"
 				android:title="@string/textcolor_" android:summary="@string/textcolor_hint" />
 			<CheckBoxPreference android:key="text_color_ignore_conv"
