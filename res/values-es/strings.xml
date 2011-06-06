@@ -32,9 +32,12 @@
   <string name="settings" formatted="false">Preferencias</string>
   <string name="new_message_" formatted="false">Nuevo mensaje</string>
   <string name="new_message_hint" formatted="false">Redactar un mensaje nuevo</string>
+  <string name="new_message" formatted="false" orig="1 unread message.">Un mensaje no leído.</string>
   <string name="new_messages_" formatted="false">Mensajes nuevos</string>
   <string name="new_messages" formatted="false">%d mensajes sin leer.</string>
+  <string name="call" formatted="false" orig="Call">Llamar</string>
   <string name="answer" formatted="false">Responder</string>
+  <string name="reply" formatted="false" orig="Reply">Responder</string>
   <string name="send_" formatted="false">Enviar</string>
   <string name="notification_" formatted="false">Notificaciones</string>
   <string name="notification_enable_" formatted="false">Habilitar notificaciones</string>
@@ -49,10 +52,16 @@
   <string name="receive_led_flash_hint" formatted="false">Establece el comportamiento del parpadeo del LED</string>
   <string name="receive_no_text_" formatted="false">Hide sender/text</string>
   <string name="receive_no_text_hint" formatted="false">Hide sender/text in notification.</string>
+  <string name="behavior_" formatted="false" orig="Behavior">Comportamiento</string>
+  <string name="autosend_" formatted="false" orig="Autosend">Autoenviar</string>
+  <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp;amp; behavior">Apariencia y comportamiento</string>
+  <string name="autosend_hint" formatted="false" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Envía respuestas automáticamente. Actualmente sólo WebSMS soporta esta característica. Otras apps sólo mostrarán el texto.</string>
   <string name="appearance_" formatted="false">Apariencia</string>
   <string name="theme_" formatted="false">Tema</string>
   <string name="textsize_" formatted="false">Tamaño del texto</string>
   <string name="textsize_hint" formatted="false">Text size in pixels; leave empty for default</string>
+  <string name="textcolor_" formatted="false" orig="Text color">Color del texto</string>
+  <string name="textcolor_hint" formatted="false" orig="Message text\'s color.">Color de texto del mensaje.</string>
   <string name="show_titlebar_" formatted="false">Show title bar</string>
   <string name="show_titlebar_hint" formatted="false">Show title bar in main view. Without title bar, there is no way to see background activity.</string>
   <string name="show_contact_photo_" formatted="false">Mostrar foto</string>
@@ -60,6 +69,8 @@
   <string name="show_emoticons_" formatted="false">Mostrar emoticonos</string>
   <string name="show_emoticons_hint" formatted="false">Muestra emoticonos en la lista de mensajes.</string>
   <string name="show_bubbles_" formatted="false">Mostrar bocadillos</string>
+  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Esconder el botón "enviar"</string>
+  <string name="hide_restore_" formatted="false" orig="Hide &quot;restore last message&quot; button">Esconder el botón "restaurar el último mensaje"</string>
   <string name="me" formatted="false">Yo</string>
   <string name="view_contact_" formatted="false">Ver contacto</string>
   <string name="add_contact_" formatted="false">Añadir a contactos</string>
@@ -91,12 +102,27 @@
   <string name="mms_conversation" formatted="false">&lt;Cuerpo del MMS&gt;</string>
   <string name="mms_not_supported" formatted="false">Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
   <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
+  <string name="import_contact_" formatted="false" orig="Import contact">Importar contacto</string>
   <string name="download_" formatted="false">Descargar</string>
   <string name="downloading_" formatted="false">Descargando..</string>
   <string name="debug_" formatted="false">Depurar</string>
   <string name="clear_cache_" formatted="false">Borrar caché</string>
   <string name="clear_cache_hint" formatted="false">Borra la base de datos interna. Obtiene todos los datos de nuevo de bases de datos externas.</string>
   <string name="not_implemented" formatted="false">Lo siento, función todavía no implementada</string>
+  <string name="error_conv_null" formatted="false" orig="Error getting conversation from DB!">Error obteniendo conversación de la base de datos.</string>
+  <string name="error_sending_failed" formatted="false" orig="Sending failed">Envío fallido</string>
+  <string name="text_hint" formatted="false" orig="Text">Texto</string>
+  <string name="paste_" formatted="false" orig="[Paste from clipboard]">[Pegar desde el portapapeles]</string>
+  <string name="restore_" formatted="false" orig="Restore last message">Restaurar último mensaje</string>
+  <string name="attachment_saved" formatted="false" orig="Saved attachment on SD card as:">Guardar adjunto en tarjeta SD como:</string>
+  <string name="attachment_not_saved" formatted="false" orig="Could not save attachment.">No se puede guardar el adjunto.</string>
+  <string name="notification_icon_" formatted="false" orig="Notification icon">Icono de notificación</string>
+  <string name="notification_default_" formatted="false" orig="Default">Por defecto</string>
+  <string name="notification_gingerbread_" formatted="false" orig="Gingerbread">Gingerbread</string>
+  <string name="notification_gingerbread_mail_" formatted="false" orig="Gingerbread mail">Gingerbread mail</string>
+  <string name="notification_black_" formatted="false" orig="Black">Negro</string>
+  <string name="notification_green_" formatted="false" orig="Green">Verde</string>
+  <string name="notification_yellow_" formatted="false" orig="Yellow">Amarillo</string>
   <string-array name="themes">
     <item>Oscuro</item>
     <item>Claro</item>
