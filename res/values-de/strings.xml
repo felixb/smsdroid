@@ -25,9 +25,9 @@
   <string name="about_hint" formatted="false">Über diese App</string>
   <string name="faq_hint" formatted="false">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
   <string name="feedback_" formatted="false">Feedback</string>
-  <string name="feedback_hint" formatted="false">Bugreports, feature requests ...</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Fehler melden, neue Funktionen anfragen ...</string>
   <string name="twitter_hint" formatted="false">Follow auf twitter.\nUpdate Infos etc...</string>
-  <string name="about0" formatted="false">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebeigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
+  <string name="about0" formatted="false" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
   <string name="more_apps_" formatted="false">Mehr Apps..</string>
   <string name="settings" formatted="false">Einstellungen</string>
   <string name="new_message_" formatted="false">Neue Nachricht</string>
