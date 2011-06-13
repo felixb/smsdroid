@@ -77,8 +77,8 @@
   <string name="show_bubbles_" formatted="false">Zeige Sprechblasen</string>
   <string name="hide_send_" formatted="false">"Senden" Button ausblenden</string>
   <string name="hide_send_hint" formatted="false">"Senden" Button neben dem Textfeld ausblenden.</string>
-  <string name="hide_restore_">"Letzte Nachricht wiederherstellen" ausblenden</string>
-  <string name="hide_restore_hint">"Letzte Nachricht wiederherstellen" in Nachrichtenliste  ausblenden</string>
+  <string name="hide_restore_" formatted="false">"Letzte Nachricht wiederherstellen" ausblenden</string>
+  <string name="hide_restore_hint" formatted="false">"Letzte Nachricht wiederherstellen" in Nachrichtenliste  ausblenden</string>
   <string name="hide_paste_" formatted="false">"Einfügen" Button ausblenden</string>
   <string name="hide_paste_hint" formatted="false">"Einfügen" Button auf dem Textfeld ausblenden.</string>
   <string name="hide_widget_label_" formatted="false">Widget-Titel ausblenden</string>
@@ -111,6 +111,7 @@
   <string name="delete_threads_question" formatted="false">Willst du wirklich  löschen?</string>
   <string name="from_" formatted="false">Von:</string>
   <string name="to_" formatted="false">An:</string>
+  <string name="to_hint" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Name or Number">Name oder Nummer</string>
   <string name="type_" formatted="false">Typ:</string>
   <string name="sent_" formatted="false">Gesendet:</string>
   <string name="received_" formatted="false">Empfangen:</string>
@@ -127,8 +128,6 @@
   <string name="not_implemented" formatted="false">Diese Funktion ist noch nicht implementiert.</string>
   <string name="error_conv_null" formatted="false">Fehler beim Laden des Threads!</string>
   <string name="error_sending_failed" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Sending failed">Senden fehlgeschlagen</string>
-  <string name="error_missing_text" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Missing text!">Text fehlt!</string>
-  <string name="error_missing_reciepient" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Missing reciepient!">Empfänger fehlt!</string>
   <string name="text_hint" formatted="false">Text</string>
   <string name="paste_" formatted="false">[Aus Zwischenablage einfügen]</string>
   <string name="restore_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Restore last message">Letzte Nachricht wiederherstellen</string>
@@ -171,20 +170,20 @@
   <string name="bubbles_white_right" formatted="false">Weiß rechts</string>
   <string name="bubbles_yellow_left" formatted="false">Gelb links</string>
   <string name="bubbles_yellow_right" formatted="false">Gelb rechts</string>
-  <string name="decode_decimal_ncr_">Decimal NCR dekodieren</string>
-  <string name="decode_decimal_ncr_hint">Manche Websms anbieter, z.B. o2 und Arcor kodieren utf-8 Texte als Decimal NCR (&amp;#0000;). Aktiviere es um solche Texte automatisch zu dekodieren.</string>
-  <string name="activate_sender_">Aktiviere Sender</string>
-  <string name="activate_sender_hint">Aktiviere SMSdroids SMS Sender.</string>
-  <string name="fix_numbers_">Nummern reparieren</string>
-  <string name="fix_numbers_hint">Ersetze Teile der Nummer vor dem Senden mit Hilfe Regulärer Ausdrücke. Die meisten Benutzer benötigen hier keine Änderung.</string>
-	<string name="fix_number1_regex_">Regex 1</string>
-	<string name="fix_number1_replace_">Ersatz 1</string>
-	<string name="fix_number2_regex_">Regex 2</string>
-	<string name="fix_number2_replace_">Ersatz 2</string>
-	<string name="fix_number3_regex_">Regex 3</string>
-	<string name="fix_number3_replace_">Ersatz 3</string>
-	<string name="fix_numbers_regex_hint">Regulärer Ausdruck zum suchen.</string>
-	<string name="fix_numbers_replace_hint">Ersatz für den gefundenen Text.</string>
+  <string name="decode_decimal_ncr_" formatted="false">Decimal NCR dekodieren</string>
+  <string name="decode_decimal_ncr_hint" formatted="false">Manche Websms anbieter, z.B. o2 und Arcor kodieren utf-8 Texte als Decimal NCR (&amp;#0000;). Aktiviere es um solche Texte automatisch zu dekodieren.</string>
+  <string name="activate_sender_" formatted="false">Aktiviere Sender</string>
+  <string name="activate_sender_hint" formatted="false">Aktiviere SMSdroids SMS Sender.</string>
+  <string name="fix_numbers_" formatted="false">Nummern reparieren</string>
+  <string name="fix_numbers_hint" formatted="false">Ersetze Teile der Nummer vor dem Senden mit Hilfe Regulärer Ausdrücke. Die meisten Benutzer benötigen hier keine Änderung.</string>
+  <string name="fix_number1_regex_" formatted="false">Regex 1</string>
+  <string name="fix_number1_replace_" formatted="false">Ersatz 1</string>
+  <string name="fix_number2_regex_" formatted="false">Regex 2</string>
+  <string name="fix_number2_replace_" formatted="false">Ersatz 2</string>
+  <string name="fix_number3_regex_" formatted="false">Regex 3</string>
+  <string name="fix_number3_replace_" formatted="false">Ersatz 3</string>
+  <string name="fix_numbers_regex_hint" formatted="false">Regulärer Ausdruck zum suchen.</string>
+  <string name="fix_numbers_replace_hint" formatted="false">Ersatz für den gefundenen Text.</string>
   <string-array name="themes">
     <item>Dunkel</item>
     <item>Hell</item>
