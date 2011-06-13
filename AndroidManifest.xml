@@ -64,11 +64,13 @@
 		<activity android:name=".Sender" android:label="@string/sender_name"
 			android:configChanges="orientation|keyboardHidden"
 			android:windowSoftInputMode="stateHidden|adjustResize"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar">
+			android:theme="@android:style/Theme.Translucent"
+			android:launchMode="singleTop">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT" />
 				<action android:name="android.intent.action.SENDTO" />
 				<data android:scheme="smsto" />
+				<data android:scheme="sms" />
 			</intent-filter>
 		</activity>
 		<activity android:name="de.ub0r.android.lib.DonationHelper"

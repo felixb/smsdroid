@@ -107,6 +107,7 @@
 	<string name="delete_threads_question">Do you really want to delete <b>all messages</b>?</string>
 	<string name="from_">From:</string>
 	<string name="to_">To:</string>
+	<string name="to_hint">Name or Number</string>
 	<string name="type_">Type:</string>
 	<string name="sent_">Sent:</string>
 	<string name="received_">Received:</string>
@@ -123,8 +124,6 @@
 	<string name="not_implemented">Sorry, not yet implemented.</string>
 	<string name="error_conv_null">Error getting conversation from DB!</string>
 	<string name="error_sending_failed">Sending failed</string>
-	<string name="error_missing_text">Missing text!</string>
-	<string name="error_missing_reciepient">Missing reciepient!</string>
 	<string name="text_hint">Text</string>
 	<string name="paste_">[Paste from clipboard]</string>
 	<string name="restore_">Restore last message</string>
