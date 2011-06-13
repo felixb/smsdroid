@@ -34,9 +34,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.text.ClipboardManager;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,7 +56,6 @@ import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
-import de.ub0r.android.lib.apis.TelephonyWrapper;
 
 /**
  * {@link ListActivity} showing a single conversation.
@@ -69,9 +66,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		OnItemLongClickListener, OnClickListener, OnLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "ml";
-	/** {@link TelephonyWrapper}. */
-	public static final TelephonyWrapper TWRAPPER = TelephonyWrapper
-			.getInstance();
 
 	/** {@link ContactsWrapper}. */
 	private static final ContactsWrapper WRAPPER = ContactsWrapper
@@ -96,9 +90,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** Index in dialog: delete. */
 	private static final int WHICH_DELETE = 7;
 
-	/** Minimum length for showing sms length. */
-	private static final int TEXT_LABLE_MIN_LEN = 50;
-
 	/** Package name for System's chooser. */
 	private static String chooserPackage = null;
 
@@ -118,10 +109,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 
 	/** {@link EditText} holding text. */
 	private EditText etText;
-	/** {@link TextView} for pasting text. */
-	private TextView tvPaste;
-	/** Text's label. */
-	private TextView etTextLabel;
 	/** {@link ClipboardManager}. */
 	private ClipboardManager cbmgr;
 
@@ -136,44 +123,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private Drawable defaultContactAvatar = null;
 
 	/** TextWatcher updating char count on writing. */
-	private TextWatcher textWatcher = new TextWatcher() {
-		/**
-		 * {@inheritDoc}
-		 */
-		public void afterTextChanged(final Editable s) {
-			final int len = s.length();
-			if (len == 0) {
-				if (MessageList.this.cbmgr.hasText()
-						&& !PreferenceManager.getDefaultSharedPreferences(
-								MessageList.this).getBoolean(
-								Preferences.PREFS_HIDE_PASTE, false)) {
-					MessageList.this.tvPaste.setVisibility(View.VISIBLE);
-				} else {
-					MessageList.this.tvPaste.setVisibility(View.GONE);
-				}
-				MessageList.this.etTextLabel.setVisibility(View.GONE);
-			} else {
-				MessageList.this.tvPaste.setVisibility(View.GONE);
-				if (len > MessageList.TEXT_LABLE_MIN_LEN) {
-					MessageList.this.etTextLabel.setVisibility(View.VISIBLE);
-					int[] l = TWRAPPER.calculateLength(s.toString(), false);
-					MessageList.this.etTextLabel.setText(l[0] + "/" + l[2]);
-				} else {
-					MessageList.this.etTextLabel.setVisibility(View.GONE);
-				}
-			}
-		}
-
-		/** Needed dummy. */
-		public void beforeTextChanged(final CharSequence s, final int start,
-				final int count, final int after) {
-		}
-
-		/** Needed dummy. */
-		public void onTextChanged(final CharSequence s, final int start,
-				final int before, final int count) {
-		}
-	};
+	private MyTextWatcher textWatcher;
 
 	/**
 	 * {@inheritDoc}
@@ -211,8 +161,6 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		this.cbmgr = (ClipboardManager) this
 				.getSystemService(CLIPBOARD_SERVICE);
 		this.etText = (EditText) this.findViewById(R.id.text);
-		this.etTextLabel = (TextView) this.findViewById(R.id.text_);
-		this.tvPaste = (TextView) this.findViewById(R.id.text_paste);
 
 		if (!this.showTextField) {
 			this.findViewById(R.id.text_layout).setVisibility(View.GONE);
@@ -226,7 +174,10 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		View v = this.findViewById(R.id.send_);
 		v.setOnClickListener(this);
 		v.setOnLongClickListener(this);
-		this.tvPaste.setOnClickListener(this);
+		this.findViewById(R.id.text_paste).setOnClickListener(this);
+		this.textWatcher = new MyTextWatcher(this, (TextView) this
+				.findViewById(R.id.text_paste), (TextView) this
+				.findViewById(R.id.text_));
 		this.etText.addTextChangedListener(this.textWatcher);
 		this.textWatcher.afterTextChanged(this.etText.getEditableText());
 
