@@ -25,16 +25,16 @@
   <string name="about_hint" formatted="false" orig="About this app">À propos de cette application</string>
   <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Quelques trucs et astuces, comment faire fonctionner cette application</string>
   <string name="feedback_" formatted="false" orig="Feedback">Commentaires</string>
-  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Signaler des bugs, demander de nouvelles fonctionnalités</string>
-  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc.">Suivre sur twitter\nNotifications de mise à jour, etc.</string>
-  <string name="about0" formatted="false" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid vous permet de lire vos sms, et de les écrire avec n\'importe quelle autre application</string>
-  <string name="more_apps_" formatted="false" orig="More Apps..">Plus d\'applications ...</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Signaler des bugs, demander de nouvelles fonctionnalités...</string>
+  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc.">Suivre sur twitter.\nNotifications de mise à jour, etc.</string>
+  <string name="about0" formatted="false" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid vous permet de lire vos sms, et de les écrire avec n\'importe quelle autre application.</string>
+  <string name="more_apps_" formatted="false" orig="More Apps..">Plus d\'applications..</string>
   <string name="settings" formatted="false" orig="Preferences">Préférences</string>
   <string name="new_message_" formatted="false" orig="New message">Nouveau message</string>
   <string name="new_message_hint" formatted="false" orig="Compose a new message">Composez un nouveau message</string>
   <string name="new_message" formatted="false" orig="1 unread message.">1 message non lu</string>
   <string name="new_messages_" formatted="false" orig="New messages">Nouveaux messages</string>
-  <string name="new_messages" formatted="false" orig="%d unread messages.">%d messages non lus</string>
+  <string name="new_messages" formatted="false" orig="%d unread messages.">%d messages non lus.</string>
   <string name="call" formatted="false" orig="Call">Appeler</string>
   <string name="answer" formatted="false" orig="Answer">Répondre</string>
   <string name="reply" formatted="false" orig="Reply">Réponse</string>
@@ -42,7 +42,7 @@
   <string name="notification_" formatted="false" orig="Notifications">Notifications</string>
   <string name="notification_enable_" formatted="false" orig="Enable notifications">Activer les notifications</string>
   <string name="notification_enable_hint" formatted="false" orig="Enable notifications on receive">Activer la notification lors de la réception</string>
-  <string name="receive_vibrate_" formatted="false" orig="Vibrate">Vibreur</string>
+  <string name="receive_vibrate_" formatted="false" orig="Vibrate">Vibrer</string>
   <string name="receive_vibrate_hint" formatted="false" orig="Vibrate on receive">Vibre lors de la réception</string>
   <string name="receive_vibrate_mode_" formatted="false" orig="Vibrator mode">Mode vibreur</string>
   <string name="receive_sound_" formatted="false" orig="Sound">Son</string>
@@ -125,8 +125,6 @@
   <string name="not_implemented" formatted="false" orig="Sorry, not yet implemented.">Désolé, par encore disponible</string>
   <string name="error_conv_null" formatted="false" orig="Error getting conversation from DB!">Erreur de récupération de la base de données</string>
   <string name="error_sending_failed" formatted="false" orig="Sending failed">Échec d\'envoi</string>
-  <string name="error_missing_text" formatted="false" orig="Missing text!">Texte manquant !</string>
-  <string name="error_missing_reciepient" formatted="false" orig="Missing reciepient!">Destinataire manquant !</string>
   <string name="text_hint" formatted="false" orig="Text">Texte</string>
   <string name="paste_" formatted="false" orig="[Paste from clipboard]">(Coller depuis le presse-papier)</string>
   <string name="restore_" formatted="false" orig="Restore last message">Restorer le dernier message</string>
