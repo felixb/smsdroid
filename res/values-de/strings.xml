@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <!--
+<!--
                Copyright (C) 2009-2011 Felix Bechstein
        -->
-       <!--
+<!--
                This file is part of SMSdroid. This program is free software; you can
                redistribute it and/or modify it under the terms of the GNU General
                Public License as published by the Free Software Foundation; either
                version 3 of the License, or (at your option) any later version.
        -->
-       <!--
+<!--
                This program is distributed in the hope that it will be useful, but
                WITHOUT ANY WARRANTY; without even the implied warranty of
                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -16,14 +16,14 @@
                copy of the GNU General Public License along with this program; If
                not, see <http://www.gnu.org/licenses/>.
        -->
-      <!--
+<!--
                This file is generated automatically by ub0rlib/php.
                Visit http://ub0r.de/translate/smsdroid/edit.php?lang=de&file=strings.xml to edit the file.
        -->
 <resources>
   <string name="about_" formatted="false">Über</string>
   <string name="about_hint" formatted="false">Über diese App</string>
-  <string name="faq_hint" formatted="false">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
+  <string name="faq_hint" formatted="false" username="" orig="Some tips and tricks, how to set up this app.">Ein paar Tripps und Ticks, wie man diese App einstellt.</string>
   <string name="feedback_" formatted="false">Feedback</string>
   <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Fehler melden, neue Funktionen anfragen ...</string>
   <string name="twitter_hint" formatted="false">Follow auf twitter.\nUpdate Infos etc...</string>
