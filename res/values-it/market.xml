@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <!--
+<!--
                Copyright (C) 2009-2011 Felix Bechstein
        -->
-       <!--
+<!--
                This file is part of SMSdroid. This program is free software; you can
                redistribute it and/or modify it under the terms of the GNU General
                Public License as published by the Free Software Foundation; either
                version 3 of the License, or (at your option) any later version.
        -->
-       <!--
+<!--
                This program is distributed in the hope that it will be useful, but
                WITHOUT ANY WARRANTY; without even the implied warranty of
                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -16,9 +16,14 @@
                copy of the GNU General Public License along with this program; If
                not, see <http://www.gnu.org/licenses/>.
        -->
-      <!--
+<!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=es&file=market.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=it&file=market.xml to edit the file.
        -->
 <resources>
+  <string name="market_about" formatted="false" username="carloraudino@fedoraproject.org" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.">SMSdroid è un'applicazione per gli SMS speciale con supporto all'invio con altre applicazioni di messaggistica (es. WebSMS).</string>
+  <string name="market_oss" formatted="false" username="carloraudino@fedoraproject.org" orig="This app is open source software build in spare time. Adding bad comments in market won\'t help much to make it better.\nPlease add your issues with this app on the app\'s website.">Questa applicazione è software open source ed è scritta nel tempo libero. Aggiungere commenti cattivi sul market non ne aiuta il miglioramento.&#13;
+Si prega di segnalare i problemi con l'app sul sito ufficiale.</string>
+  <string name="market_translation" formatted="false" username="carloraudino@fedoraproject.org" orig="Feel free to help translating this app to your language here: http://ub0r.de/translate/smsdroid/">Sentiti libero di aiutare la traduzione dell'applicazione qui: http://ub0r.de/translate/websms/</string>
+  <string name="market_keywords" formatted="false" username="carloraudino@fedoraproject.org" orig="Keywords: txt sms mms text websms">Parole chiave: txt sms mms text websms messaggi</string>
 </resources>
