@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.lib.DbUtils;
-import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
@@ -96,9 +95,9 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 		final String number = cursor
 				.getString(ContactsWrapper.CONTENT_INDEX_NUMBER);
 		if (name == null || name.length() == 0) {
-			return Utils.cleanRecipient(number);
+			return cleanRecipient(number);
 		}
-		return name + " <" + Utils.cleanRecipient(number) + '>';
+		return name + " <" + cleanRecipient(number) + '>';
 	}
 
 	/**
@@ -126,5 +125,20 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 */
 	static final void setMoileNubersObly(final boolean b) {
 		prefsMobilesOnly = b;
+	}
+
+	/**
+	 * Clean recipient's phone number from [ -.()<>].
+	 * 
+	 * @param recipient
+	 *            recipient's mobile number
+	 * @return clean number
+	 */
+	public static String cleanRecipient(final String recipient) {
+		if (recipient == null) {
+			return "";
+		}
+		return recipient.replaceAll("[^*#+0-9]", "") // .
+				.replaceAll("^[*#][0-9]*#", "");
 	}
 }

@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
-import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.lib.apis.TelephonyWrapper;
 
@@ -269,7 +268,7 @@ public final class Sender extends Activity implements OnClickListener {
 			return;
 		}
 		for (String r : this.to.split(",")) {
-			r = Utils.cleanRecipient(r);
+			r = MobilePhoneAdapter.cleanRecipient(r);
 			if (TextUtils.isEmpty(r)) {
 				Log.w(TAG, "skip empty recipipient: " + r);
 				continue;
