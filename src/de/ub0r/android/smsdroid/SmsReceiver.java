@@ -489,8 +489,14 @@ public class SmsReceiver extends BroadcastReceiver {
 					.getDefaultSharedPreferences(context);
 			final boolean privateNotification = p.getBoolean(
 					Preferences.PREFS_NOTIFICATION_PRIVACY, false);
-			final Intent intent = new Intent(Intent.ACTION_VIEW, conv.getUri(),
-					context, MessageList.class);
+			Intent intent;
+			if (conv == null) {
+				intent = new Intent(Intent.ACTION_VIEW, null, context,
+						Sender.class);
+			} else {
+				intent = new Intent(Intent.ACTION_VIEW, conv.getUri(), context,
+						MessageList.class);
+			}
 			intent.putExtra(Intent.EXTRA_TEXT, body);
 
 			String title = context.getString(R.string.error_sending_failed);
@@ -500,6 +506,9 @@ public class SmsReceiver extends BroadcastReceiver {
 
 			if (privateNotification) {
 				title += "!";
+			} else if (conv == null) {
+				title += "!";
+				text = body;
 			} else {
 				title += ": " + conv.getContact().getDisplayName();
 				text = body;
