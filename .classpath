@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="src" path="ub0rlib_src"/>
-	<classpathentry kind="lib" path="libs/GoogleAdMobAdsSdk-4.1.0.jar"/>
+	<classpathentry kind="lib" path="libs/GoogleAdMobAdsSdk-4.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
