@@ -19,6 +19,7 @@
 package de.ub0r.android.smsdroid;
 
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -259,33 +260,34 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			ivPicture.setOnClickListener(null);
 		}
 
-		Button btn = (Button) view.findViewById(R.id.btn_download_msg);
 		CharSequence text = m.getBody();
 		if (text == null && pic == null) {
+			final Button btn = (Button) view
+					.findViewById(R.id.btn_download_msg);
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
-					// view.findViewById(R.id.label_downloading).setVisibility(
-					// View.VISIBLE);
-					// btn.setVisibility(View.GONE);
-					// Intent intent = new Intent();
-					// intent.setClassName("com.android.mms",
-					// ".transaction.TransactionService");
-					// intent.putExtra("uri", m.getUri().toString());
-					// intent.putExtra("type", 1);
-					// context.startService(intent);
-
-					final Uri target = Uri.parse(MessageList.URI
-							+ m.getThreadId());
-					Intent i = new Intent(Intent.ACTION_VIEW, target);
-					context.startActivity(Intent.createChooser(i, context
-							.getString(R.string.view_mms)));
+					Intent i = new Intent();
+					i.setClassName("com.android.mms",
+							"com.android.mms.transaction.TransactionService");
+					i.putExtra("uri", m.getUri().toString());
+					i.putExtra("type", 1);
+					ComponentName cn = context.startService(i);
+					if (cn != null) {
+						btn.setEnabled(false);
+						btn.setText(R.string.downloading_);
+					} else {
+						i = new Intent(Intent.ACTION_VIEW, Uri
+								.parse(MessageList.URI + m.getThreadId()));
+						context.startActivity(Intent.createChooser(i, context
+								.getString(R.string.view_mms)));
+					}
 				}
 			});
-
 			btn.setVisibility(View.VISIBLE);
+			btn.setEnabled(true);
 		} else {
-			btn.setVisibility(View.GONE);
+			view.findViewById(R.id.btn_download_msg).setVisibility(View.GONE);
 		}
 		if (text == null) {
 			tvBody.setVisibility(View.INVISIBLE);
@@ -301,7 +303,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
 				stext = stext.replaceAll(".*BEGIN:VCARD", "BEGIN:VCARD");
 				stext = stext.replaceAll("END:VCARD.*", "END:VCARD");
-				btn = (Button) view.findViewById(R.id.btn_import_contact);
+				final Button btn = (Button) view
+						.findViewById(R.id.btn_import_contact);
 				btn.setVisibility(View.VISIBLE);
 				btn.setOnClickListener(new OnClickListener() {
 					@Override
