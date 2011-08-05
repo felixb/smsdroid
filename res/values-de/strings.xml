@@ -40,7 +40,7 @@
   <string name="reply" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Reply">Antworten</string>
   <string name="send_" formatted="false">Senden</string>
   <string name="notification_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Notifications">Benachrichtigungen</string>
-  <string name="notification_enable_" formatted="false">Benachrichtigungen aktivieren</string>
+  <string name="notification_enable_" formatted="false" username="" orig="Enable notifications">Benachrichtigungen aktivieren</string>
   <string name="notification_enable_hint" formatted="false">Benachrichtigungen bei neuen Nachrichten aktivieren</string>
   <string name="receive_vibrate_" formatted="false">Vibrieren</string>
   <string name="receive_vibrate_hint" formatted="false">Vibrieren bei neuen Nachrichten</string>
