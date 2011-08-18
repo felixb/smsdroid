@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <!--
+<!--
                Copyright (C) 2009-2011 Felix Bechstein
        -->
-       <!--
+<!--
                This file is part of SMSdroid. This program is free software; you can
                redistribute it and/or modify it under the terms of the GNU General
                Public License as published by the Free Software Foundation; either
                version 3 of the License, or (at your option) any later version.
        -->
-       <!--
+<!--
                This program is distributed in the hope that it will be useful, but
                WITHOUT ANY WARRANTY; without even the implied warranty of
                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -16,14 +16,14 @@
                copy of the GNU General Public License along with this program; If
                not, see <http://www.gnu.org/licenses/>.
        -->
-      <!--
+<!--
                This file is generated automatically by ub0rlib/php.
                Visit http://ub0r.de/translate/smsdroid/edit.php?lang=es&file=strings.xml to edit the file.
        -->
 <resources>
   <string name="about_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="About">Acerca de</string>
   <string name="about_hint" formatted="false">Acerca de esta aplicación</string>
-  <string name="faq_hint" formatted="false">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
+  <string name="faq_hint" formatted="false" username="" orig="Some tips and tricks, how to set up this app.">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
   <string name="feedback_" formatted="false">Retroalimentación</string>
   <string name="feedback_hint" formatted="false">Avise sobre errores, sugiera características...</string>
   <string name="twitter_hint" formatted="false">Sígame en twitter.\nObtenga notificaciones sobre actualizaciones, etc.</string>
@@ -150,4 +150,6 @@
     <item>A intervalos largos</item>
     <item>Breve, larga, breve, larga</item>
   </string-array>
+  <string name="show_text_filed_hint" formatted="false" username="" orig="Show text filed instead of answer button.">
+  </string>
 </resources>
