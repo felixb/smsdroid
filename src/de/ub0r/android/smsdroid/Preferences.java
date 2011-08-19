@@ -376,8 +376,8 @@ public class Preferences extends PreferenceActivity {
 					});
 		}
 		Market.setOnPreferenceClickListener(this, this
-				.findPreference("more_apps"), null, "Felix+Bechstein",
-				"http://code.google.com/u/felix.bechstein/");
+				.findPreference("more_apps"), null, Market.SEARCH_APPS,
+				Market.ALT_APPS);
 		p = this.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
