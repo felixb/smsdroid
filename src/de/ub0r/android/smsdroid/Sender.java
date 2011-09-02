@@ -3,6 +3,7 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -130,7 +131,6 @@ public final class Sender extends Activity implements OnClickListener {
 			} else {
 				mtv.requestFocus();
 			}
-			// TODO: add drop down
 			this.cbmgr = (ClipboardManager) this
 					.getSystemService(CLIPBOARD_SERVICE);
 		}
@@ -154,7 +154,7 @@ public final class Sender extends Activity implements OnClickListener {
 		String u = intent.getDataString();
 		try {
 			if (!TextUtils.isEmpty(u) && u.contains(":")) {
-				this.to = u.split(":")[1];
+				this.to = URLDecoder.decode(u.split(":")[1]);
 			}
 		} catch (IndexOutOfBoundsException e) {
 			Log.w(TAG, "could not split at :", e);
