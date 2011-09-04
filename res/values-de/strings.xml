@@ -25,8 +25,8 @@
   <string name="about_hint" formatted="false">Über diese App</string>
   <string name="faq_hint" formatted="false">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
   <string name="feedback_" formatted="false">Feedback</string>
-  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Fehler melden, neue Funktionen anfragen ...</string>
-  <string name="twitter_hint" formatted="false">Follow auf twitter.\nUpdate Infos etc...</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ..." username="">Fehler melden, neue Funktionen wünschen...</string>
+  <string name="twitter_hint" formatted="false" username="Thilo H. &lt;thilohp@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Folge mir auf Twitter.\nErhalte Infos über Updates etc.</string>
   <string name="about0" formatted="false" orig="SMSdroid lets you read your sms and write sms with any other app." username="Felix Bechstein &lt;f+translator@ub0r.de&gt;">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
   <string name="more_apps_" formatted="false">Mehr Apps..</string>
   <string name="settings" formatted="false">Einstellungen</string>
@@ -59,7 +59,7 @@
   <string name="show_text_filed_" formatted="false">Textfeld zeigen</string>
   <string name="show_text_filed_hint" formatted="false">Zeige das Textfeld statt dem Antworten Button.</string>
   <string name="show_target_app_" formatted="false">Zeige Ziel App</string>
-  <string name="show_target_app_hint" formatted="false">Zeige Ziel App zum Senden auf \"senden\" Button.</string>
+  <string name="show_target_app_hint" formatted="false" username="Thilo H. &lt;thilohp@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Zeige Ziel-App zum Senden auf "Senden"-Button.</string>
   <string name="appearance_" formatted="false">Erscheinung</string>
   <string name="theme_" formatted="false">Theme</string>
   <string name="textsize_" formatted="false">Schriftgrad</string>
