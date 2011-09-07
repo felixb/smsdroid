@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <!--
+<!--
                Copyright (C) 2009-2011 Felix Bechstein
        -->
-       <!--
+<!--
                This file is part of SMSdroid. This program is free software; you can
                redistribute it and/or modify it under the terms of the GNU General
                Public License as published by the Free Software Foundation; either
                version 3 of the License, or (at your option) any later version.
        -->
-       <!--
+<!--
                This program is distributed in the hope that it will be useful, but
                WITHOUT ANY WARRANTY; without even the implied warranty of
                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -16,7 +16,7 @@
                copy of the GNU General Public License along with this program; If
                not, see <http://www.gnu.org/licenses/>.
        -->
-      <!--
+<!--
                This file is generated automatically by ub0rlib/php.
                Visit http://ub0r.de/translate/smsdroid/edit.php?lang=ru&file=strings.xml to edit the file.
        -->
@@ -115,7 +115,7 @@
   <string name="sent_" formatted="false">Отправлено:</string>
   <string name="received_" formatted="false">Получено:</string>
   <string name="view_mms" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View MMS">Показать MMS</string>
-  <string name="mms_conversation" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="&amp;lt;MMS body&amp;gt;">&lt;MMS body&gt;</string>
+  <string name="mms_conversation" formatted="false" orig="&lt;MMS body&gt;">&lt;MMS тест&gt;</string>
   <string name="mms_not_supported" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Это сообщение может являться MMS. Вы можете попробовать загрузить его, используя стандартное SMS/MMS приложение.\nНажмите для продолжения.</string>
   <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Импортировать контакт</string>
@@ -211,4 +211,5 @@
     <item>Повторно длинный</item>
     <item>Повторно короткий длинный</item>
   </string-array>
+  <string name="to_hint" formatted="false" orig="Name or Number">Имя или Номер</string>
 </resources>
