@@ -23,16 +23,23 @@ import java.util.HashMap;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.SimpleAdapter;
+import de.ub0r.android.lib.IPreferenceContainer;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Market;
 import de.ub0r.android.lib.Utils;
@@ -42,7 +49,8 @@ import de.ub0r.android.lib.Utils;
  * 
  * @author flx
  */
-public class Preferences extends PreferenceActivity {
+public class PreferencesActivity extends PreferenceActivity implements
+		IPreferenceContainer {
 	/** Tag for logging. */
 	static final String TAG = "prefs";
 
@@ -95,8 +103,6 @@ public class Preferences extends PreferenceActivity {
 	/** Preference's name: ignore text color for list ov threads. */
 	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = // .
 	"text_color_ignore_conv";
-	/** Preference's name: show title bar. */
-	public static final String PREFS_SHOWTITLEBAR = "show_titlebar";
 	/** Preference's name: enable autosend. */
 	public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
 	/** Preference's name: show text field. */
@@ -298,7 +304,9 @@ public class Preferences extends PreferenceActivity {
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
-			b.show();
+			AlertDialog d = b.create();
+			d.getListView().setBackgroundColor(Color.WHITE); // FIXME
+			d.show();
 			return true;
 		}
 	};
@@ -309,26 +317,44 @@ public class Preferences extends PreferenceActivity {
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// final int theme = Preferences.getTheme(this);
-		// this.setTheme(theme);
-		this.addPreferencesFromResource(R.xml.prefs);
+		this.addPreferencesFromResource(R.xml.prefs_appearance_behavior);
+		this.addPreferencesFromResource(R.xml.prefs_about);
+		this.addPreferencesFromResource(R.xml.prefs_debug);
 
-		Preference p = this.findPreference(PREFS_NOTIFICATION_ICON);
+		registerOnPreferenceClickListener(this);
+	}
+
+	/**
+	 * Register {@link OnPreferenceClickListener}.
+	 * 
+	 * @param pc
+	 *            {@link IPreferenceContainer}
+	 */
+	static final void registerOnPreferenceClickListener(
+			final IPreferenceContainer pc) {
+		Preference p = pc.findPreference(PREFS_NOTIFICATION_ICON);
 		if (p != null) {
 			p.setOnPreferenceClickListener(new OnNotificationIconClickListener(
-					this));
+					pc.getContext()));
 		}
 
-		final OnBubblesClickListener obcl = new OnBubblesClickListener(this);
-		p = this.findPreference(PREFS_BUBBLES_IN);
-		if (p != null) {
-			p.setOnPreferenceClickListener(obcl);
+		Preference pbi = pc.findPreference(PREFS_BUBBLES_IN);
+		Preference pbo = pc.findPreference(PREFS_BUBBLES_OUT);
+		if (pbi != null || pbo != null) {
+			final OnBubblesClickListener obcl = new OnBubblesClickListener(pc
+					.getContext());
+
+			if (pbi != null) {
+				pbi.setOnPreferenceClickListener(obcl);
+			}
+			if (pbo != null) {
+				pbo.setOnPreferenceClickListener(obcl);
+			}
 		}
-		p = this.findPreference(PREFS_BUBBLES_OUT);
-		if (p != null) {
-			p.setOnPreferenceClickListener(obcl);
-		}
-		p = this.findPreference(PREFS_TEXTCOLOR);
+		pbi = null;
+		pbo = null;
+
+		p = pc.findPreference(PREFS_TEXTCOLOR);
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
 					new Preference.OnPreferenceClickListener() {
@@ -336,8 +362,8 @@ public class Preferences extends PreferenceActivity {
 						public boolean onPreferenceClick(
 								final Preference preference) {
 							final SharedPreferences prefs = PreferenceManager
-									.getDefaultSharedPreferences(// .
-									Preferences.this);
+									.getDefaultSharedPreferences(pc
+											.getContext());
 
 							int c = prefs.getInt(PREFS_TEXTCOLOR, 0);
 							if (c == 0) {
@@ -345,7 +371,7 @@ public class Preferences extends PreferenceActivity {
 							}
 
 							final AmbilWarnaDialog dialog = // .
-							new AmbilWarnaDialog(Preferences.this, c,
+							new AmbilWarnaDialog(pc.getContext(), c,
 									new OnAmbilWarnaListener() {
 										@Override
 										public void onOk(
@@ -375,16 +401,18 @@ public class Preferences extends PreferenceActivity {
 						}
 					});
 		}
-		Market.setOnPreferenceClickListener(this, this
+
+		Market.setOnPreferenceClickListener(pc.getActivity(), pc
 				.findPreference("more_apps"), null, Market.SEARCH_APPS,
 				Market.ALT_APPS);
-		p = this.findPreference("send_logs");
+
+		p = pc.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
 					new Preference.OnPreferenceClickListener() {
 						public boolean onPreferenceClick(
 								final Preference preference) {
-							Log.collectAndSendLog(Preferences.this);
+							Log.collectAndSendLog(pc.getActivity());
 							return true;
 						}
 					});
@@ -403,9 +431,9 @@ public class Preferences extends PreferenceActivity {
 				.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_THEME, THEME_BLACK);
 		if (s != null && THEME_LIGHT.equals(s)) {
-			return android.R.style.Theme_Light;
+			return R.style.Theme_SherlockUb0r_Light;
 		}
-		return android.R.style.Theme_Black;
+		return R.style.Theme_SherlockUb0r;
 	}
 
 	/**
@@ -433,7 +461,7 @@ public class Preferences extends PreferenceActivity {
 	static final int getTextcolor(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		if (context instanceof ConversationList
+		if (context instanceof ConversationListActivity
 				&& p.getBoolean(PREFS_TEXTCOLOR_IGNORE_CONV, false)) {
 			return 0;
 		}
@@ -585,5 +613,38 @@ public class Preferences extends PreferenceActivity {
 			}
 		}
 		return ret;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// app icon in Action Bar clicked; go home
+			Intent intent = new Intent(this, ConversationListActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			this.startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Activity getActivity() {
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Context getContext() {
+		return this;
 	}
 }

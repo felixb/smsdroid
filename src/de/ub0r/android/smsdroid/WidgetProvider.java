@@ -68,7 +68,7 @@ public final class WidgetProvider extends AppWidgetProvider {
 		} else {
 			views.setViewVisibility(R.id.text1, View.VISIBLE);
 		}
-		if (p.getBoolean(Preferences.PREFS_HIDE_WIDGET_LABEL, false)) {
+		if (p.getBoolean(PreferencesActivity.PREFS_HIDE_WIDGET_LABEL, false)) {
 			views.setViewVisibility(R.id.label, View.GONE);
 		} else {
 			views.setViewVisibility(R.id.label, View.VISIBLE);

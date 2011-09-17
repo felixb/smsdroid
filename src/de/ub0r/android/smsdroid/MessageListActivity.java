@@ -18,7 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -33,12 +32,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -47,6 +46,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,12 +58,13 @@ import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
- * {@link ListActivity} showing a single conversation.
+ * {@link FragmentActivity} showing a single conversation.
  * 
  * @author flx
  */
-public class MessageList extends ListActivity implements OnItemClickListener,
-		OnItemLongClickListener, OnClickListener, OnLongClickListener {
+public class MessageListActivity extends FragmentActivity implements
+		OnItemClickListener, OnItemLongClickListener, OnClickListener,
+		OnLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "ml";
 
@@ -110,6 +111,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** {@link EditText} holding text. */
 	private EditText etText;
 	/** {@link ClipboardManager}. */
+	@SuppressWarnings("deprecation")
 	private ClipboardManager cbmgr;
 
 	/** Enable autosend. */
@@ -125,29 +127,47 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/** TextWatcher updating char count on writing. */
 	private MyTextWatcher textWatcher;
 
+	/** {@link MenuItem} holding contact's picture. */
+	private MenuItem contactItem = null;
+
+	/**
+	 * Get {@link ListView}.
+	 * 
+	 * @return {@link ListView}
+	 */
+	private ListView getListView() {
+		return (ListView) this.findViewById(android.R.id.list);
+	}
+
+	/**
+	 * Set {@link ListAdapter} to {@link ListView}.
+	 * 
+	 * @param la
+	 *            ListAdapter
+	 */
+	private void setListAdapter(final ListAdapter la) {
+		this.getListView().setAdapter(la);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		final boolean showTitlebar = p.getBoolean(
-				Preferences.PREFS_SHOWTITLEBAR, true);
-		this.enableAutosend = p.getBoolean(Preferences.PREFS_ENABLE_AUTOSEND,
+		this.enableAutosend = p.getBoolean(PreferencesActivity.PREFS_ENABLE_AUTOSEND,
 				true);
 		this.showTextField = this.enableAutosend
-				|| p.getBoolean(Preferences.PREFS_SHOWTEXTFIELD, true);
-		this.showPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO, false);
-		final boolean hideSend = p.getBoolean(Preferences.PREFS_HIDE_SEND,
+				|| p.getBoolean(PreferencesActivity.PREFS_SHOWTEXTFIELD, true);
+		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, false);
+		final boolean hideSend = p.getBoolean(PreferencesActivity.PREFS_HIDE_SEND,
 				false);
-		this.setTheme(Preferences.getTheme(this));
+		this.setTheme(PreferencesActivity.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
-		if (!showTitlebar) {
-			this.findViewById(R.id.titlebar).setVisibility(View.GONE);
-		}
 		Log.d(TAG, "onCreate()");
 
 		if (this.showPhoto) {
@@ -200,6 +220,15 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 * {@inheritDoc}
 	 */
 	@Override
+	protected final void onStart() {
+		super.onStart();
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	protected final void onNewIntent(final Intent intent) {
 		super.onNewIntent(intent);
 		this.parseIntent(intent);
@@ -229,7 +258,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			this.uri = Uri.parse(URI + tid);
 			if (tid < 0L) {
 				try {
-					this.startActivity(ConversationList.getComposeIntent(this,
+					this.startActivity(ConversationListActivity.getComposeIntent(this,
 							null));
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "activity not found", e);
@@ -266,26 +295,42 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		MessageAdapter adapter = new MessageAdapter(this, this.uri);
 		this.setListAdapter(adapter);
 
-		final String name = contact.getName();
-		if (this.showPhoto && name != null) {
-			final ImageView ivPhoto = (ImageView) this.findViewById(R.id.photo);
-			ivPhoto.setImageDrawable(contact.getAvatar(this,
-					this.defaultContactAvatar));
-			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this, ivPhoto,
-					contact.getLookUpUri(this.getContentResolver()), 2, null));
-			ivPhoto.setVisibility(View.VISIBLE);
-		}
-		((TextView) this.findViewById(R.id.contact)).setText(contact
-				.getNameAndNumber());
-
-		// presence
-		ImageView ivPresence = (ImageView) this.findViewById(R.id.presence);
-		if (contact.getPresenceState() > 0) {
-			ivPresence.setImageResource(Contact.getPresenceRes(contact
-					.getPresenceState()));
-			ivPresence.setVisibility(View.VISIBLE);
+		String displayName = contact.getDisplayName();
+		this.setTitle(displayName);
+		String number = contact.getNumber();
+		if (displayName.equals(number)) {
+			this.getSupportActionBar().setSubtitle(null);
 		} else {
-			ivPresence.setVisibility(View.GONE);
+			this.getSupportActionBar().setSubtitle(number);
+		}
+
+		if (this.contactItem != null) {
+			final String name = contact.getName();
+			if (this.showPhoto && name != null) {
+				// photo
+				final ImageView ivPhoto = (ImageView) this
+						.findViewById(R.id.photo);
+				ivPhoto.setImageDrawable(contact.getAvatar(this,
+						this.defaultContactAvatar));
+				ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this,
+						ivPhoto, contact
+								.getLookUpUri(this.getContentResolver()), 2,
+						null));
+
+				// presence
+				ImageView ivPresence = (ImageView) this
+						.findViewById(R.id.presence);
+				if (contact.getPresenceState() > 0) {
+					ivPresence.setImageResource(Contact.getPresenceRes(contact
+							.getPresenceState()));
+					ivPresence.setVisibility(View.VISIBLE);
+				} else {
+					ivPresence.setVisibility(View.INVISIBLE);
+				}
+				this.contactItem.setVisible(true);
+			} else {
+				this.contactItem.setVisible(false);
+			}
 		}
 
 		final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
@@ -313,7 +358,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			final PackageManager pm = this.getPackageManager();
 			ActivityInfo ai = null;
 			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-					Preferences.PREFS_SHOWTARGETAPP, true)) {
+					PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
 				ai = i.resolveActivityInfo(pm, 0);
 			}
 			if (ai == null) {
@@ -360,7 +405,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 */
 	private void setRead() {
 		if (this.conv != null) {
-			ConversationList.markRead(this, this.conv.getUri(), 1);
+			ConversationListActivity.markRead(this, this.conv.getUri(), 1);
 		}
 	}
 
@@ -369,11 +414,11 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	 */
 	@Override
 	public final boolean onCreateOptionsMenu(final Menu menu) {
-		MenuInflater inflater = this.getMenuInflater();
-		inflater.inflate(R.menu.messagelist, menu);
+		this.getMenuInflater().inflate(R.menu.messagelist, menu);
+		this.contactItem = menu.findItem(R.id.item_contact);
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		if (p.getBoolean(Preferences.PREFS_HIDE_RESTORE, false)) {
+		if (p.getBoolean(PreferencesActivity.PREFS_HIDE_RESTORE, false)) {
 			menu.removeItem(R.id.item_restore);
 		}
 		return true;
@@ -385,16 +430,22 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	@Override
 	public final boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			// app icon in Action Bar clicked; go home
+			Intent intent = new Intent(this, ConversationListActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			this.startActivity(intent);
+			return true;
 		case R.id.item_delete_thread:
-			ConversationList.deleteMessages(this, this.uri,
+			ConversationListActivity.deleteMessages(this, this.uri,
 					R.string.delete_thread_, R.string.delete_thread_question,
 					this);
 			return true;
 		case R.id.item_all_threads:
-			this.startActivity(new Intent(this, ConversationList.class));
+			this.startActivity(new Intent(this, ConversationListActivity.class));
 			return true;
 		case R.id.item_compose:
-			this.startActivity(ConversationList.getComposeIntent(this, null));
+			this.startActivity(ConversationListActivity.getComposeIntent(this, null));
 			return true;
 		case R.id.item_answer:
 			this.send(true, false);
@@ -405,10 +456,17 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			return true;
 		case R.id.item_restore:
 			this.etText.setText(PreferenceManager.getDefaultSharedPreferences(
-					this).getString(Preferences.PREFS_BACKUPLASTTEXT, null));
+					this).getString(PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
+			return true;
+		case R.id.item_contact:
+			if (this.conv != null && this.contactItem != null) {
+				WRAPPER.showQuickContactFallBack(this, this.contactItem
+						.getActionView(), this.conv.getContact().getLookUpUri(
+						this.getContentResolver()), 2, null);
+			}
 			return true;
 		default:
-			return false;
+			return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -456,6 +514,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 			items[WHICH_FORWARD] = context.getString(R.string.send_draft_);
 		}
 		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
 				Intent i = null;
@@ -466,30 +525,30 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 								.getInsertPickIntent(a);
 						Conversation.flushCache();
 					} else {
-						final Uri u = MessageList.this.conv.getContact()
+						final Uri u = MessageListActivity.this.conv.getContact()
 								.getUri();
 						i = new Intent(Intent.ACTION_VIEW, u);
 					}
-					MessageList.this.startActivity(i);
+					MessageListActivity.this.startActivity(i);
 					break;
 				case WHICH_CALL:
-					MessageList.this.startActivity(new Intent(
+					MessageListActivity.this.startActivity(new Intent(
 							Intent.ACTION_VIEW, Uri.parse("tel:" + a)));
 					break;
 				case WHICH_MARK_UNREAD:
-					ConversationList.markRead(context, target, 1 - read);
-					MessageList.this.markedUnread = true;
+					ConversationListActivity.markRead(context, target, 1 - read);
+					MessageListActivity.this.markedUnread = true;
 					break;
 				case WHICH_REPLY:
-					MessageList.this.startActivity(ConversationList
-							.getComposeIntent(MessageList.this, a));
+					MessageListActivity.this.startActivity(ConversationListActivity
+							.getComposeIntent(MessageListActivity.this, a));
 					break;
 				case WHICH_FORWARD:
 					int resId;
 					if (type == Message.SMS_DRAFT) {
 						resId = R.string.send_draft_;
-						i = ConversationList.getComposeIntent(MessageList.this,
-								MessageList.this.conv.getContact().getNumber());
+						i = ConversationListActivity.getComposeIntent(MessageListActivity.this,
+								MessageListActivity.this.conv.getContact().getNumber());
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -497,7 +556,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 						i.putExtra("forwarded_message", true);
 					}
 					CharSequence text = null;
-					if (Preferences.decodeDecimalNCR(context)) {
+					if (PreferencesActivity.decodeDecimalNCR(context)) {
 						text = Converter.convertDecNCR2Char(m.getBody());
 					} else {
 						text = m.getBody();
@@ -511,7 +570,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					final ClipboardManager cm = // .
 					(ClipboardManager) context.getSystemService(// .
 							Context.CLIPBOARD_SERVICE);
-					if (Preferences.decodeDecimalNCR(context)) {
+					if (PreferencesActivity.decodeDecimalNCR(context)) {
 						cm.setText(Converter.convertDecNCR2Char(m.getBody()));
 					} else {
 						cm.setText(m.getBody());
@@ -557,7 +616,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 					b.show();
 					break;
 				case WHICH_DELETE:
-					ConversationList.deleteMessages(context, target,
+					ConversationListActivity.deleteMessages(context, target,
 							R.string.delete_message_,
 							R.string.delete_message_question, null);
 					break;
@@ -573,6 +632,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("deprecation")
 	public final void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.send_:
@@ -612,7 +672,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 	private Intent buildIntent(final boolean autosend, // .
 			final boolean showChooser) {
 		final String text = this.etText.getText().toString().trim();
-		final Intent i = ConversationList.getComposeIntent(this, this.conv
+		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv
 				.getContact().getNumber());
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
@@ -638,7 +698,7 @@ public class MessageList extends ListActivity implements OnItemClickListener,
 		final Intent i = this.buildIntent(autosend, showChooser);
 		this.startActivity(i);
 		PreferenceManager.getDefaultSharedPreferences(this).edit().putString(
-				Preferences.PREFS_BACKUPLASTTEXT,
+				PreferencesActivity.PREFS_BACKUPLASTTEXT,
 				this.etText.getText().toString()).commit();
 		this.etText.setText("");
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2011 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -18,24 +18,43 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItem;
 
 /**
- * Display About {@link Activity}.
+ * Display About {@link FragmentActivity}.
  * 
  * @author flx
  */
-public class About extends Activity {
+public final class AboutActivity extends FragmentActivity {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void onCreate(final Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setTheme(Preferences.getTheme(this));
 		this.setContentView(R.layout.about);
-		this.setTitle(this.getString(R.string.about_) + " v"
+		this.setTitle(this.getString(R.string.about_) + " "
+				+ this.getString(R.string.app_name) + " v"
 				+ this.getString(R.string.app_version));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// app icon in Action Bar clicked; go home
+			Intent intent = new Intent(this, ConversationListActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			this.startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

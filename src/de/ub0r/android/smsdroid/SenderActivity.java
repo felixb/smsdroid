@@ -6,7 +6,6 @@ package de.ub0r.android.smsdroid;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.ContentResolver;
@@ -17,6 +16,9 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -33,7 +35,7 @@ import de.ub0r.android.lib.apis.TelephonyWrapper;
  * 
  * @author flx
  */
-public final class Sender extends Activity implements OnClickListener {
+public final class SenderActivity extends FragmentActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "send";
 
@@ -66,6 +68,7 @@ public final class Sender extends Activity implements OnClickListener {
 	/** Hold recipient and text. */
 	private String to, text;
 	/** {@link ClipboardManager}. */
+	@SuppressWarnings("deprecation")
 	private ClipboardManager cbmgr;
 
 	/**
@@ -92,16 +95,15 @@ public final class Sender extends Activity implements OnClickListener {
 	 * @param intent
 	 *            {@link Intent}
 	 */
+	@SuppressWarnings("deprecation")
 	private void handleIntent(final Intent intent) {
 		if (this.parseIntent(intent)) {
 			this.setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 			this.send();
 			this.finish();
 		} else {
-			this.setTheme(Preferences.getTheme(this));
+			this.setTheme(PreferencesActivity.getTheme(this));
 			this.setContentView(R.layout.sender);
-			this.findViewById(R.id.send_).setOnClickListener(this);
-			this.findViewById(R.id.cancel).setOnClickListener(this);
 			this.findViewById(R.id.text_paste).setOnClickListener(this);
 			final EditText et = (EditText) this.findViewById(R.id.text);
 			et.addTextChangedListener(new MyTextWatcher(this, (TextView) this
@@ -154,7 +156,12 @@ public final class Sender extends Activity implements OnClickListener {
 		String u = intent.getDataString();
 		try {
 			if (!TextUtils.isEmpty(u) && u.contains(":")) {
-				this.to = URLDecoder.decode(u.split(":")[1]);
+				String t = u.split(":")[1];
+				if (t.startsWith("+")) {
+					this.to = "+" + URLDecoder.decode(t.substring(1));
+				} else {
+					this.to = URLDecoder.decode(t);
+				}
 			}
 		} catch (IndexOutOfBoundsException e) {
 			Log.w(TAG, "could not split at :", e);
@@ -262,10 +269,12 @@ public final class Sender extends Activity implements OnClickListener {
 
 	/**
 	 * Send a message.
+	 * 
+	 * @return true, if message was sent
 	 */
-	private void send() {
+	private boolean send() {
 		if (TextUtils.isEmpty(this.to) || TextUtils.isEmpty(this.text)) {
-			return;
+			return false;
 		}
 		for (String r : this.to.split(",")) {
 			r = MobilePhoneAdapter.cleanRecipient(r);
@@ -275,31 +284,57 @@ public final class Sender extends Activity implements OnClickListener {
 			}
 			this.send(r, this.text);
 		}
+		return true;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(final View v) {
 		switch (v.getId()) {
-		case R.id.send_:
-			EditText et = (EditText) this.findViewById(R.id.text);
-			this.text = et.getText().toString();
-			et = (MultiAutoCompleteTextView) this.findViewById(R.id.to);
-			this.to = et.getText().toString();
-			this.send();
-			this.finish();
-			break;
-		case R.id.cancel:
-			this.finish();
-			break;
 		case R.id.text_paste:
 			final CharSequence s = this.cbmgr.getText();
 			((EditText) this.findViewById(R.id.text)).setText(s);
 			return;
 		default:
 			break;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(final Menu menu) {
+		this.getMenuInflater().inflate(R.menu.sender, menu);
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			// app icon in Action Bar clicked; go home
+			Intent intent = new Intent(this, ConversationListActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			this.startActivity(intent);
+			return true;
+		case R.id.item_send:
+			EditText et = (EditText) this.findViewById(R.id.text);
+			this.text = et.getText().toString();
+			et = (MultiAutoCompleteTextView) this.findViewById(R.id.to);
+			this.to = et.getText().toString();
+			if (this.send()) {
+				this.finish();
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
 }

@@ -50,7 +50,7 @@ public final class MyTextWatcher implements TextWatcher {
 			if (this.cbmgr.hasText()
 					&& !PreferenceManager.getDefaultSharedPreferences(
 							this.context).getBoolean(
-							Preferences.PREFS_HIDE_PASTE, false)) {
+							PreferencesActivity.PREFS_HIDE_PASTE, false)) {
 				this.tvPaste.setVisibility(View.VISIBLE);
 			} else {
 				this.tvPaste.setVisibility(View.GONE);

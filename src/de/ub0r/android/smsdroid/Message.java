@@ -224,13 +224,13 @@ public final class Message {
 		this.id = cursor.getLong(INDEX_ID);
 		this.threadId = cursor.getLong(INDEX_THREADID);
 		this.date = cursor.getLong(INDEX_DATE);
-		if (this.date < ConversationList.MIN_DATE) {
-			this.date *= ConversationList.MILLIS;
+		if (this.date < ConversationListActivity.MIN_DATE) {
+			this.date *= ConversationListActivity.MILLIS;
 		}
 		if (cursor.getColumnIndex(PROJECTION_JOIN[INDEX_TYPE]) >= 0) {
 			this.address = cursor.getString(INDEX_ADDRESS);
 			this.body = cursor.getString(INDEX_BODY);
-			if (ConversationList.showEmoticons && this.body != null) {
+			if (ConversationListActivity.showEmoticons && this.body != null) {
 				this.body = SmileyParser.getInstance(context).addSmileySpans(
 						this.body);
 			}

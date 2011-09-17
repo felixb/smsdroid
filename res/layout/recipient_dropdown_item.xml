@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
+		Copyright (C) 2009-2011 Felix Bechstein
 	-->
 	<!--
 		This file is part of WebSMS. This program is free software; you can
@@ -17,20 +17,20 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content">
-	<TextView android:id="@+id/text2" android:textAppearance="?android:attr/textAppearanceSmall"
-		android:textColor="#FF202020" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_alignParentTop="true"
-		android:layout_alignParentRight="true" android:singleLine="true"
-		android:paddingRight="10dip" />
-	<TextView android:id="@+id/text3" android:textAppearance="?android:attr/textAppearanceSmall"
-		android:textColor="#FF202020" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_below="@id/text2"
-		android:layout_alignParentRight="true" android:singleLine="true"
-		android:paddingRight="10dip" />
-	<TextView android:id="@+id/text1" android:textAppearance="?android:attr/textAppearanceMedium"
-		android:textColor="#FF202020" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_alignParentLeft="true"
-		android:layout_toLeftOf="@+id/text2" android:paddingLeft="5dip"
-		android:singleLine="true" />
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	style="?android:attr/dropDownItemStyle">
+	<TextView android:id="@+id/text2" style="?android:attr/dropDownItemStyle"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignParentTop="true" android:layout_alignParentRight="true"
+		android:singleLine="true" android:paddingRight="10dip" />
+	<TextView android:id="@+id/text3" style="?android:attr/dropDownItemStyle"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@id/text2" android:layout_alignParentRight="true"
+		android:singleLine="true" android:paddingRight="10dip" />
+	<TextView android:id="@+id/text1" style="?android:attr/dropDownItemStyle"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/text2"
+		android:paddingLeft="5dip" android:singleLine="true" />
 </RelativeLayout>

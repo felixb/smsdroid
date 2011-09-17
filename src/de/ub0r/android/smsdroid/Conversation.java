@@ -368,7 +368,7 @@ public final class Conversation {
 	 * @return {@link Uri} of this {@link Conversation}
 	 */
 	public Uri getUri() {
-		return Uri.withAppendedPath(ConversationList.URI, // .
+		return Uri.withAppendedPath(ConversationListActivity.URI, // .
 				String.valueOf(this.threadId));
 	}
 }

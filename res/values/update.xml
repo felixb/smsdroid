@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>HEAD: italian translation, fix FC, minor fixes</item>
+		<item>HEAD: prepare for honeycomp devices, italian translation, fix FC, minor fixes</item>
 		<item>v0.7.3: add sender activity</item>
 		<item>v0.7.2.2: update translations</item>
 		<item>v0.7.2.1: fix non critical FC</item>
