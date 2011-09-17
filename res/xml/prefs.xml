@@ -33,9 +33,6 @@
 				android:title="@string/textcolor_" android:summary="@string/textcolor_hint" />
 			<CheckBoxPreference android:key="text_color_ignore_conv"
 				android:title="@string/textcolor_ignore_conv_" android:summary="@string/textcolor_ignore_conv_hint" />
-			<CheckBoxPreference android:key="show_titlebar"
-				android:defaultValue="true" android:title="@string/show_titlebar_"
-				android:summary="@string/show_titlebar_hint" />
 			<CheckBoxPreference android:key="show_contact_photo"
 				android:title="@string/show_contact_photo_" android:summary="@string/show_contact_photo_hint" />
 			<CheckBoxPreference android:key="show_emoticons"

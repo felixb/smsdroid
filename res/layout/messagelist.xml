@@ -25,28 +25,6 @@
 		android:cacheColorHint="?android:attr/colorBackground"
 		android:layout_weight="1" android:layout_above="@+id/answerbar"
 		android:layout_below="@+id/titlebar" />
-	<RelativeLayout android:id="@+id/titlebar"
-		android:layout_width="wrap_content" android:layout_height="48dip"
-		style="@android:style/ButtonBar" android:layout_alignParentTop="True">
-		<TextView android:id="@+id/title" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:text="@string/app_name"
-			android:layout_alignParentTop="true" android:textStyle="bold"
-			android:textColor="#FFFFFFFF" />
-		<TextView android:id="@+id/contact" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:layout_below="@id/title"
-			android:text="@+id/contact" android:textStyle="bold"
-			android:textColor="#FFFFFFFF" />
-		<ImageView android:id="@+id/photo" android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:scaleType="fitCenter"
-			android:adjustViewBounds="true" android:layout_gravity="center_vertical"
-			android:layout_alignParentRight="true" android:visibility="gone"
-			style="?android:attr/quickContactBadgeStyleWindowSmall"
-			android:layout_marginBottom="2dip" android:layout_marginLeft="5dip" />
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/presence"
-			android:layout_toLeftOf="@+id/photo" 
-			android:visibility="gone" />
-	</RelativeLayout>
 	<LinearLayout android:id="@+id/answerbar"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:orientation="horizontal" style="@android:style/ButtonBar"

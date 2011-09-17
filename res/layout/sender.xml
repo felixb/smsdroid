@@ -29,7 +29,8 @@
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:nextFocusRight="@+id/text" android:nextFocusDown="@+id/text"
 				android:imeOptions="actionNext" android:singleLine="true"
-				android:layout_weight="0" android:textColor="#FF101010" />
+				android:layout_weight="0"
+				style="@android:style/TextAppearance.Widget.EditText" />
 
 			<RelativeLayout android:layout_width="fill_parent"
 				android:layout_height="fill_parent" android:layout_weight="1"
@@ -54,21 +55,6 @@
 					android:background="#88000000" android:textColor="#ffffffff"
 					android:clickable="true" android:focusable="true" />
 			</RelativeLayout>
-
-			<LinearLayout android:id="@+id/buttonbar"
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:layout_weight="0" android:orientation="vertical"
-				style="@android:style/ButtonBar">
-				<LinearLayout android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:layout_weight="0">
-					<Button android:text="@string/send_" android:id="@+id/send_"
-						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" />
-					<Button android:id="@+id/cancel" android:text="@android:string/cancel"
-						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" />
-				</LinearLayout>
-			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

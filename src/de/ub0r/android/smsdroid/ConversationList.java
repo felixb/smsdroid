@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -37,18 +36,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
+import android.support.v4.view.Window;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -61,13 +58,12 @@ import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
- * Main {@link ListActivity} showing conversations.
+ * Main {@link FragmentActivity} showing conversations.
  * 
  * @author flx
  */
-public final class ConversationList extends ListActivity implements
-		OnItemClickListener, OnItemLongClickListener, OnClickListener,
-		OnLongClickListener {
+public final class ConversationList extends FragmentActivity implements
+		OnItemClickListener, OnItemLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
 
@@ -133,9 +129,6 @@ public final class ConversationList extends ListActivity implements
 	/** Conversations. */
 	private ConversationAdapter adapter = null;
 
-	/** {@link ProgressBar} in title bar. */
-	ProgressBar pbProgress = null;
-
 	/** {@link Calendar} holding today 00:00. */
 	private static final Calendar CAL_TODAY = Calendar.getInstance();
 	static {
@@ -161,6 +154,25 @@ public final class ConversationList extends ListActivity implements
 	public void onStop() {
 		super.onStop();
 		AsyncHelper.setAdapter(null);
+	}
+
+	/**
+	 * Get {@link ListView}.
+	 * 
+	 * @return {@link ListView}
+	 */
+	private ListView getListView() {
+		return (ListView) this.findViewById(android.R.id.list);
+	}
+
+	/**
+	 * Set {@link ListAdapter} to {@link ListView}.
+	 * 
+	 * @param la
+	 *            ListAdapter
+	 */
+	private void setListAdapter(final ListAdapter la) {
+		this.getListView().setAdapter(la);
 	}
 
 	/**
@@ -232,25 +244,15 @@ public final class ConversationList extends ListActivity implements
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		final Intent i = this.getIntent();
 		Log.d(TAG, "got intent: " + i.getAction());
 		Log.d(TAG, "got uri: " + i.getData());
 		Log.d(TAG, "got extra: " + i.getExtras());
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		final boolean showTitlebar = p.getBoolean(
-				Preferences.PREFS_SHOWTITLEBAR, true);
 
 		this.setTheme(Preferences.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.conversationlist);
-		if (!showTitlebar) {
-			this.findViewById(R.id.titlebar).setVisibility(View.GONE);
-		}
-		this.pbProgress = (ProgressBar) this.findViewById(R.id.progess);
-		final ImageView iv = (ImageView) this.findViewById(R.id.compose);
-		iv.setOnClickListener(this);
-		iv.setOnLongClickListener(this);
 
 		Changelog.showChangelog(this);
 		final List<ResolveInfo> ri = this.getPackageManager()
@@ -312,8 +314,7 @@ public final class ConversationList extends ListActivity implements
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
-		MenuInflater inflater = this.getMenuInflater();
-		inflater.inflate(R.menu.conversationlist, menu);
+		this.getMenuInflater().inflate(R.menu.conversationlist, menu);
 		if (prefsNoAds) {
 			menu.removeItem(R.id.item_donate);
 		}
@@ -423,7 +424,18 @@ public final class ConversationList extends ListActivity implements
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_compose:
-			this.onClick(this.findViewById(R.id.compose));
+			final Intent i = getComposeIntent(this, null);
+			try {
+				this.startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
+						+ i.getData());
+				Toast.makeText(
+						this,
+						"error launching messaging app!\n"
+								+ "Please contact the developer.",
+						Toast.LENGTH_LONG).show();
+			}
 			return true;
 		case R.id.item_settings: // start settings activity
 			this.startActivity(new Intent(this, Preferences.class));
@@ -441,7 +453,7 @@ public final class ConversationList extends ListActivity implements
 			markRead(this, Uri.parse("content://mms/"), 1);
 			return true;
 		default:
-			return false;
+			return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -588,47 +600,6 @@ public final class ConversationList extends ListActivity implements
 			return DateFormat.getDateFormat(context).format(t);
 		} else {
 			return DateFormat.getTimeFormat(context).format(t);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onClick(final View v) {
-		switch (v.getId()) {
-		case R.id.compose:
-			final Intent i = getComposeIntent(this, null);
-			try {
-				this.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
-						+ i.getData());
-				Toast.makeText(
-						this,
-						"error launching messaging app!\n"
-								+ "Please contact the developer.",
-						Toast.LENGTH_LONG).show();
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onLongClick(final View v) {
-		switch (v.getId()) {
-		case R.id.compose:
-			final Intent i = getComposeIntent(this, null);
-			this.startActivity(Intent.createChooser(i, this
-					.getString(R.string.new_message_)));
-			return true;
-		default:
-			return false;
 		}
 	}
 }

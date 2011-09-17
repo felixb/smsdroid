@@ -17,18 +17,18 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/item_contact" android:showAsAction="always|never"
+		android:actionLayout="@layout/contact" />
 	<item android:title="@string/compose_" android:id="@+id/item_compose"
-		android:icon="@drawable/ic_menu_compose" android:orderInCategory="1" />
+		android:icon="@drawable/ic_menu_compose" />
 	<item android:title="@string/reply" android:id="@+id/item_answer"
-		android:icon="@drawable/android:ic_menu_send" android:orderInCategory="2" />
+		android:icon="@drawable/android:ic_menu_send" />
 	<item android:title="@string/call" android:id="@+id/item_call"
-		android:icon="@drawable/android:ic_menu_call" android:orderInCategory="3" />
+		android:icon="@drawable/android:ic_menu_call" />
 	<item android:title="@string/all_threads_" android:id="@+id/item_all_threads"
-		android:icon="@android:drawable/ic_menu_view" android:orderInCategory="4" />
+		android:icon="@android:drawable/ic_menu_view" />
 	<item android:title="@string/delete_thread_" android:id="@+id/item_delete_thread"
-		android:icon="@android:drawable/ic_menu_delete"
-		android:orderInCategory="5" />
+		android:icon="@android:drawable/ic_menu_delete" />
 	<item android:title="@string/restore_" android:id="@+id/item_restore"
-		android:icon="@android:drawable/ic_menu_revert"
-		android:orderInCategory="6" />
+		android:icon="@android:drawable/ic_menu_revert" />
 </menu>

@@ -1,4 +1,4 @@
-You will need ub0rlib [1] to compile this code.
+You will need ub0rlib [1] and ActionBarSherlock [2] to compile this code.
 
 [1] http://github.com/felixb/ub0rlib/
-
+[2] http://github.com/JakeWharton/ActionBarSherlock/

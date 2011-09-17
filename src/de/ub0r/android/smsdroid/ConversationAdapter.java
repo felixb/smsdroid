@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2009-2011 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -100,8 +100,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			switch (token) {
 			case MESSAGE_LIST_QUERY_TOKEN:
 				ConversationAdapter.this.changeCursor(cursor);
-				ConversationAdapter.this.activity.pbProgress
-						.setVisibility(View.GONE);
+				ConversationAdapter.this.activity
+						.setProgressBarIndeterminateVisibility(Boolean.FALSE);
 				return;
 			default:
 				return;
@@ -161,8 +161,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
 		try {
 			// Kick off the new query
-			ConversationAdapter.this.activity.pbProgress
-					.setVisibility(View.VISIBLE);
+			this.activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
 			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
 					Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE,
 					null, null, SORT);

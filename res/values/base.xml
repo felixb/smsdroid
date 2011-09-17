@@ -93,4 +93,22 @@
 		<item>Russian</item>
 		<item>Spanish</item>
 	</string-array>
+	
+	<color name="actionbar_text_color">#FFC0C0C0</color>
+	<color name="actionbar_background_color">#FF608516</color>
+
+	<style name="Theme.SherlockUb0r" parent="style/Theme.Sherlock">
+		<item name="abBackground">@color/actionbar_background_color</item>
+		<item name="actionMenuTextColor">@color/actionbar_text_color</item>
+	</style>
+	<style name="Theme.SherlockUb0r_Light" parent="style/Theme.Sherlock.Light">
+		<item name="abBackground">@color/actionbar_background_color</item>
+		<item name="actionMenuTextColor">@color/actionbar_text_color</item>
+	</style>
+	<style name="TextAppearance.Widget.Title" parent="@android:style/TextAppearance.Medium">
+		<item name="android:textColor">@color/actionbar_text_color</item>
+	</style>
+	<style name="TextAppearance.Widget.Subtitle" parent="@android:style/TextAppearance.Small">
+		<item name="android:textColor">@color/actionbar_text_color</item>
+	</style>
 </resources>

@@ -95,8 +95,6 @@ public class Preferences extends PreferenceActivity {
 	/** Preference's name: ignore text color for list ov threads. */
 	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = // .
 	"text_color_ignore_conv";
-	/** Preference's name: show title bar. */
-	public static final String PREFS_SHOWTITLEBAR = "show_titlebar";
 	/** Preference's name: enable autosend. */
 	public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
 	/** Preference's name: show text field. */
@@ -403,9 +401,9 @@ public class Preferences extends PreferenceActivity {
 				.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_THEME, THEME_BLACK);
 		if (s != null && THEME_LIGHT.equals(s)) {
-			return android.R.style.Theme_Light;
+			return R.style.Theme_SherlockUb0r_Light;
 		}
-		return android.R.style.Theme_Black;
+		return R.style.Theme_SherlockUb0r;
 	}
 
 	/**
