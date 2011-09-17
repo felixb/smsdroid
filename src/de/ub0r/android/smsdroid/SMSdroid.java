@@ -51,7 +51,7 @@ public final class SMSdroid extends Application {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		int state;
-		if (p.getBoolean(Preferences.PREFS_ACTIVATE_SENDER, true)) {
+		if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
 			state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 			Log.d(TAG, "enable .Sender");
 		} else {
@@ -59,7 +59,7 @@ public final class SMSdroid extends Application {
 			Log.i(TAG, "disable .Sender");
 		}
 		this.getPackageManager().setComponentEnabledSetting(
-				new ComponentName(this, Sender.class), state,
+				new ComponentName(this, SenderActivity.class), state,
 				PackageManager.DONT_KILL_APP);
 	}
 

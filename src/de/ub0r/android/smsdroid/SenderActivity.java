@@ -35,7 +35,7 @@ import de.ub0r.android.lib.apis.TelephonyWrapper;
  * 
  * @author flx
  */
-public final class Sender extends FragmentActivity implements OnClickListener {
+public final class SenderActivity extends FragmentActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "send";
 
@@ -102,7 +102,7 @@ public final class Sender extends FragmentActivity implements OnClickListener {
 			this.send();
 			this.finish();
 		} else {
-			this.setTheme(Preferences.getTheme(this));
+			this.setTheme(PreferencesActivity.getTheme(this));
 			this.setContentView(R.layout.sender);
 			this.findViewById(R.id.text_paste).setOnClickListener(this);
 			final EditText et = (EditText) this.findViewById(R.id.text);
@@ -320,7 +320,7 @@ public final class Sender extends FragmentActivity implements OnClickListener {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// app icon in Action Bar clicked; go home
-			Intent intent = new Intent(this, ConversationList.class);
+			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			this.startActivity(intent);
 			return true;

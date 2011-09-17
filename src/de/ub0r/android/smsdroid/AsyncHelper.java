@@ -94,7 +94,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 		}
 		Log.d(TAG, "doInBackground()");
 		this.changed = this.conv.getContact().update(this.context, true,
-				ConversationList.showContactPhoto);
+				ConversationListActivity.showContactPhoto);
 		return null;
 	}
 

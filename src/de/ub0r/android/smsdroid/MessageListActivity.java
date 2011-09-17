@@ -62,7 +62,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public class MessageList extends FragmentActivity implements
+public class MessageListActivity extends FragmentActivity implements
 		OnItemClickListener, OnItemLongClickListener, OnClickListener,
 		OnLongClickListener {
 	/** Tag for output. */
@@ -158,14 +158,14 @@ public class MessageList extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		this.enableAutosend = p.getBoolean(Preferences.PREFS_ENABLE_AUTOSEND,
+		this.enableAutosend = p.getBoolean(PreferencesActivity.PREFS_ENABLE_AUTOSEND,
 				true);
 		this.showTextField = this.enableAutosend
-				|| p.getBoolean(Preferences.PREFS_SHOWTEXTFIELD, true);
-		this.showPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO, false);
-		final boolean hideSend = p.getBoolean(Preferences.PREFS_HIDE_SEND,
+				|| p.getBoolean(PreferencesActivity.PREFS_SHOWTEXTFIELD, true);
+		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, false);
+		final boolean hideSend = p.getBoolean(PreferencesActivity.PREFS_HIDE_SEND,
 				false);
-		this.setTheme(Preferences.getTheme(this));
+		this.setTheme(PreferencesActivity.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
 		Log.d(TAG, "onCreate()");
@@ -258,7 +258,7 @@ public class MessageList extends FragmentActivity implements
 			this.uri = Uri.parse(URI + tid);
 			if (tid < 0L) {
 				try {
-					this.startActivity(ConversationList.getComposeIntent(this,
+					this.startActivity(ConversationListActivity.getComposeIntent(this,
 							null));
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "activity not found", e);
@@ -358,7 +358,7 @@ public class MessageList extends FragmentActivity implements
 			final PackageManager pm = this.getPackageManager();
 			ActivityInfo ai = null;
 			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-					Preferences.PREFS_SHOWTARGETAPP, true)) {
+					PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
 				ai = i.resolveActivityInfo(pm, 0);
 			}
 			if (ai == null) {
@@ -405,7 +405,7 @@ public class MessageList extends FragmentActivity implements
 	 */
 	private void setRead() {
 		if (this.conv != null) {
-			ConversationList.markRead(this, this.conv.getUri(), 1);
+			ConversationListActivity.markRead(this, this.conv.getUri(), 1);
 		}
 	}
 
@@ -418,7 +418,7 @@ public class MessageList extends FragmentActivity implements
 		this.contactItem = menu.findItem(R.id.item_contact);
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		if (p.getBoolean(Preferences.PREFS_HIDE_RESTORE, false)) {
+		if (p.getBoolean(PreferencesActivity.PREFS_HIDE_RESTORE, false)) {
 			menu.removeItem(R.id.item_restore);
 		}
 		return true;
@@ -432,20 +432,20 @@ public class MessageList extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// app icon in Action Bar clicked; go home
-			Intent intent = new Intent(this, ConversationList.class);
+			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			this.startActivity(intent);
 			return true;
 		case R.id.item_delete_thread:
-			ConversationList.deleteMessages(this, this.uri,
+			ConversationListActivity.deleteMessages(this, this.uri,
 					R.string.delete_thread_, R.string.delete_thread_question,
 					this);
 			return true;
 		case R.id.item_all_threads:
-			this.startActivity(new Intent(this, ConversationList.class));
+			this.startActivity(new Intent(this, ConversationListActivity.class));
 			return true;
 		case R.id.item_compose:
-			this.startActivity(ConversationList.getComposeIntent(this, null));
+			this.startActivity(ConversationListActivity.getComposeIntent(this, null));
 			return true;
 		case R.id.item_answer:
 			this.send(true, false);
@@ -456,7 +456,7 @@ public class MessageList extends FragmentActivity implements
 			return true;
 		case R.id.item_restore:
 			this.etText.setText(PreferenceManager.getDefaultSharedPreferences(
-					this).getString(Preferences.PREFS_BACKUPLASTTEXT, null));
+					this).getString(PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
 			return true;
 		case R.id.item_contact:
 			if (this.conv != null && this.contactItem != null) {
@@ -525,30 +525,30 @@ public class MessageList extends FragmentActivity implements
 								.getInsertPickIntent(a);
 						Conversation.flushCache();
 					} else {
-						final Uri u = MessageList.this.conv.getContact()
+						final Uri u = MessageListActivity.this.conv.getContact()
 								.getUri();
 						i = new Intent(Intent.ACTION_VIEW, u);
 					}
-					MessageList.this.startActivity(i);
+					MessageListActivity.this.startActivity(i);
 					break;
 				case WHICH_CALL:
-					MessageList.this.startActivity(new Intent(
+					MessageListActivity.this.startActivity(new Intent(
 							Intent.ACTION_VIEW, Uri.parse("tel:" + a)));
 					break;
 				case WHICH_MARK_UNREAD:
-					ConversationList.markRead(context, target, 1 - read);
-					MessageList.this.markedUnread = true;
+					ConversationListActivity.markRead(context, target, 1 - read);
+					MessageListActivity.this.markedUnread = true;
 					break;
 				case WHICH_REPLY:
-					MessageList.this.startActivity(ConversationList
-							.getComposeIntent(MessageList.this, a));
+					MessageListActivity.this.startActivity(ConversationListActivity
+							.getComposeIntent(MessageListActivity.this, a));
 					break;
 				case WHICH_FORWARD:
 					int resId;
 					if (type == Message.SMS_DRAFT) {
 						resId = R.string.send_draft_;
-						i = ConversationList.getComposeIntent(MessageList.this,
-								MessageList.this.conv.getContact().getNumber());
+						i = ConversationListActivity.getComposeIntent(MessageListActivity.this,
+								MessageListActivity.this.conv.getContact().getNumber());
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -556,7 +556,7 @@ public class MessageList extends FragmentActivity implements
 						i.putExtra("forwarded_message", true);
 					}
 					CharSequence text = null;
-					if (Preferences.decodeDecimalNCR(context)) {
+					if (PreferencesActivity.decodeDecimalNCR(context)) {
 						text = Converter.convertDecNCR2Char(m.getBody());
 					} else {
 						text = m.getBody();
@@ -570,7 +570,7 @@ public class MessageList extends FragmentActivity implements
 					final ClipboardManager cm = // .
 					(ClipboardManager) context.getSystemService(// .
 							Context.CLIPBOARD_SERVICE);
-					if (Preferences.decodeDecimalNCR(context)) {
+					if (PreferencesActivity.decodeDecimalNCR(context)) {
 						cm.setText(Converter.convertDecNCR2Char(m.getBody()));
 					} else {
 						cm.setText(m.getBody());
@@ -616,7 +616,7 @@ public class MessageList extends FragmentActivity implements
 					b.show();
 					break;
 				case WHICH_DELETE:
-					ConversationList.deleteMessages(context, target,
+					ConversationListActivity.deleteMessages(context, target,
 							R.string.delete_message_,
 							R.string.delete_message_question, null);
 					break;
@@ -672,7 +672,7 @@ public class MessageList extends FragmentActivity implements
 	private Intent buildIntent(final boolean autosend, // .
 			final boolean showChooser) {
 		final String text = this.etText.getText().toString().trim();
-		final Intent i = ConversationList.getComposeIntent(this, this.conv
+		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv
 				.getContact().getNumber());
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
@@ -698,7 +698,7 @@ public class MessageList extends FragmentActivity implements
 		final Intent i = this.buildIntent(autosend, showChooser);
 		this.startActivity(i);
 		PreferenceManager.getDefaultSharedPreferences(this).edit().putString(
-				Preferences.PREFS_BACKUPLASTTEXT,
+				PreferencesActivity.PREFS_BACKUPLASTTEXT,
 				this.etText.getText().toString()).commit();
 		this.etText.setText("");
 	}

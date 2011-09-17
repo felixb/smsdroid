@@ -28,7 +28,7 @@ import android.support.v4.view.MenuItem;
  * 
  * @author flx
  */
-public final class About extends FragmentActivity {
+public final class AboutActivity extends FragmentActivity {
 	/**
 	 * {@inheritDoc}
 	 */
@@ -49,7 +49,7 @@ public final class About extends FragmentActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// app icon in Action Bar clicked; go home
-			Intent intent = new Intent(this, ConversationList.class);
+			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			this.startActivity(intent);
 			return true;

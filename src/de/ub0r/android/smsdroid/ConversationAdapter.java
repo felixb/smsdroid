@@ -57,8 +57,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	private final BackgroundQueryHandler queryHandler;
 	/** Token for {@link BackgroundQueryHandler}: message list query. */
 	private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
-	/** Reference to {@link ConversationList}. */
-	private final ConversationList activity;
+	/** Reference to {@link ConversationListActivity}. */
+	private final ConversationListActivity activity;
 
 	/** List of blocked numbers. */
 	private final String[] blacklist;
@@ -113,9 +113,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	 * Default Constructor.
 	 * 
 	 * @param c
-	 *            {@link ConversationList}
+	 *            {@link ConversationListActivity}
 	 */
-	public ConversationAdapter(final ConversationList c) {
+	public ConversationAdapter(final ConversationListActivity c) {
 		super(c, R.layout.conversationlist_item, null, true);
 		this.activity = c;
 		final ContentResolver cr = c.getContentResolver();
@@ -129,9 +129,9 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		this.defaultContactAvatar = c.getResources().getDrawable(
 				R.drawable.ic_contact_picture);
 
-		this.convertNCR = Preferences.decodeDecimalNCR(c);
-		this.textSize = Preferences.getTextsize(c);
-		this.textColor = Preferences.getTextcolor(c);
+		this.convertNCR = PreferencesActivity.decodeDecimalNCR(c);
+		this.textSize = PreferencesActivity.getTextsize(c);
+		this.textColor = PreferencesActivity.getTextcolor(c);
 		this.origCursor = cr.query(Conversation.URI_SIMPLE,
 				Conversation.PROJECTION_SIMPLE, null, null, null);
 
@@ -196,7 +196,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		}
 		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
 
-		if (ConversationList.showContactPhoto) {
+		if (ConversationListActivity.showContactPhoto) {
 			ivPhoto.setImageDrawable(contact.getAvatar(this.activity,
 					this.defaultContactAvatar));
 			ivPhoto.setVisibility(View.VISIBLE);
@@ -241,7 +241,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 
 		// date
 		long time = c.getDate();
-		tvDate.setText(ConversationList.getDate(context, time));
+		tvDate.setText(ConversationListActivity.getDate(context, time));
 
 		// presence
 		ImageView ivPresence = (ImageView) view.findViewById(R.id.presence);

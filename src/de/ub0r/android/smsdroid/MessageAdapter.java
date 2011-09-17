@@ -81,18 +81,18 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 * Default Constructor.
 	 * 
 	 * @param c
-	 *            {@link MessageList}
+	 *            {@link MessageListActivity}
 	 * @param u
 	 *            {@link Uri}
 	 */
-	public MessageAdapter(final MessageList c, final Uri u) {
+	public MessageAdapter(final MessageListActivity c, final Uri u) {
 		super(c, R.layout.messagelist_item,
 				getCursor(c.getContentResolver(), u), true);
-		this.backgroundDrawableIn = Preferences.getBubblesIn(c);
-		this.backgroundDrawableOut = Preferences.getBubblesOut(c);
-		this.textSize = Preferences.getTextsize(c);
-		this.textColor = Preferences.getTextcolor(c);
-		this.convertNCR = Preferences.decodeDecimalNCR(c);
+		this.backgroundDrawableIn = PreferencesActivity.getBubblesIn(c);
+		this.backgroundDrawableOut = PreferencesActivity.getBubblesOut(c);
+		this.textSize = PreferencesActivity.getTextsize(c);
+		this.textColor = PreferencesActivity.getTextcolor(c);
+		this.convertNCR = PreferencesActivity.decodeDecimalNCR(c);
 		if (u == null || u.getLastPathSegment() == null) {
 			this.threadId = -1;
 		} else {
@@ -239,7 +239,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		}
 
 		final long time = m.getDate();
-		tvDate.setText(ConversationList.getDate(context, time));
+		tvDate.setText(ConversationListActivity.getDate(context, time));
 
 		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);
 		final Bitmap pic = m.getPicture();
@@ -278,7 +278,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 						btn.setText(R.string.downloading_);
 					} else {
 						i = new Intent(Intent.ACTION_VIEW, Uri
-								.parse(MessageList.URI + m.getThreadId()));
+								.parse(MessageListActivity.URI + m.getThreadId()));
 						context.startActivity(Intent.createChooser(i, context
 								.getString(R.string.view_mms)));
 					}

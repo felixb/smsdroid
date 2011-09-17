@@ -123,7 +123,7 @@
 			android:summary="@string/about_hint">
 			<intent android:action="android.intent.action.MAIN"
 				android:targetPackage="de.ub0r.android.smsdroid"
-				android:targetClass="de.ub0r.android.smsdroid.About" />
+				android:targetClass="de.ub0r.android.smsdroid.AboutActivity" />
 		</PreferenceScreen>
 		<PreferenceScreen android:title="@string/faq_"
 			android:summary="@string/faq_hint">

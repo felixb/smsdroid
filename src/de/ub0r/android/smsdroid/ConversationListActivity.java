@@ -62,7 +62,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public final class ConversationList extends FragmentActivity implements
+public final class ConversationListActivity extends FragmentActivity implements
 		OnItemClickListener, OnItemLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
@@ -120,7 +120,7 @@ public final class ConversationList extends FragmentActivity implements
 
 	/** Show contact's photo. */
 	public static boolean showContactPhoto = false;
-	/** Show emoticons in {@link MessageList}. */
+	/** Show emoticons in {@link MessageListActivity}. */
 	public static boolean showEmoticons = false;
 
 	/** Dialog items shown if an item was long clicked. */
@@ -250,7 +250,7 @@ public final class ConversationList extends FragmentActivity implements
 		Log.d(TAG, "got uri: " + i.getData());
 		Log.d(TAG, "got extra: " + i.getExtras());
 
-		this.setTheme(Preferences.getTheme(this));
+		this.setTheme(PreferencesActivity.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.conversationlist);
 
@@ -304,8 +304,8 @@ public final class ConversationList extends FragmentActivity implements
 
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		showContactPhoto = p.getBoolean(Preferences.PREFS_CONTACT_PHOTO, false);
-		showEmoticons = p.getBoolean(Preferences.PREFS_EMOTICONS, false);
+		showContactPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, false);
+		showEmoticons = p.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
 		this.adapter.startMsgListQuery();
 	}
 
@@ -438,7 +438,7 @@ public final class ConversationList extends FragmentActivity implements
 			}
 			return true;
 		case R.id.item_settings: // start settings activity
-			this.startActivity(new Intent(this, Preferences.class));
+			this.startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
 		case R.id.item_donate:
 			this.startActivity(new Intent(this, DonationHelper.class));
@@ -474,7 +474,7 @@ public final class ConversationList extends FragmentActivity implements
 			i.setData(Uri.parse("sms:"));
 		} else {
 			i.setData(Uri.parse("smsto:"
-					+ Preferences.fixNumber(context, address)));
+					+ PreferencesActivity.fixNumber(context, address)));
 		}
 		return i;
 	}
@@ -487,7 +487,7 @@ public final class ConversationList extends FragmentActivity implements
 		final Conversation c = Conversation.getConversation(this,
 				(Cursor) parent.getItemAtPosition(position), false);
 		final Uri target = c.getUri();
-		final Intent i = new Intent(this, MessageList.class);
+		final Intent i = new Intent(this, MessageListActivity.class);
 		i.setData(target);
 		try {
 			this.startActivity(i);
@@ -536,12 +536,12 @@ public final class ConversationList extends FragmentActivity implements
 				Intent i = null;
 				switch (which) {
 				case WHICH_ANSWER:
-					ConversationList.this.startActivity(getComposeIntent(
-							ConversationList.this, a));
+					ConversationListActivity.this.startActivity(getComposeIntent(
+							ConversationListActivity.this, a));
 					break;
 				case WHICH_CALL:
 					i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));
-					ConversationList.this.startActivity(i);
+					ConversationListActivity.this.startActivity(i);
 					break;
 				case WHICH_VIEW_CONTACT:
 					if (n == null) {
@@ -552,22 +552,22 @@ public final class ConversationList extends FragmentActivity implements
 						final Uri uri = c.getContact().getUri();
 						i = new Intent(Intent.ACTION_VIEW, uri);
 					}
-					ConversationList.this.startActivity(i);
+					ConversationListActivity.this.startActivity(i);
 					break;
 				case WHICH_VIEW:
-					i = new Intent(ConversationList.this, // .
-							MessageList.class);
+					i = new Intent(ConversationListActivity.this, // .
+							MessageListActivity.class);
 					i.setData(target);
-					ConversationList.this.startActivity(i);
+					ConversationListActivity.this.startActivity(i);
 					break;
 				case WHICH_DELETE:
-					ConversationList.deleteMessages(ConversationList.this,
+					ConversationListActivity.deleteMessages(ConversationListActivity.this,
 							target, R.string.delete_thread_,
 							R.string.delete_thread_question, null);
 					break;
 				case WHICH_MARK_SPAM:
-					ConversationList.addToOrRemoveFromSpamlist(
-							ConversationList.this, c.getContact().getNumber());
+					ConversationListActivity.addToOrRemoveFromSpamlist(
+							ConversationListActivity.this, c.getContact().getNumber());
 					break;
 				default:
 					break;
@@ -593,7 +593,7 @@ public final class ConversationList extends FragmentActivity implements
 			t *= MILLIS;
 		}
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-				Preferences.PREFS_FULL_DATE, false)) {
+				PreferencesActivity.PREFS_FULL_DATE, false)) {
 			return DateFormat.getTimeFormat(context).format(t) + " "
 					+ DateFormat.getDateFormat(context).format(t);
 		} else if (t < CAL_TODAY.getTimeInMillis()) {

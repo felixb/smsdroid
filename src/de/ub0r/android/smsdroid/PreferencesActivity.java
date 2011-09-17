@@ -42,7 +42,7 @@ import de.ub0r.android.lib.Utils;
  * 
  * @author flx
  */
-public class Preferences extends PreferenceActivity {
+public class PreferencesActivity extends PreferenceActivity {
 	/** Tag for logging. */
 	static final String TAG = "prefs";
 
@@ -335,7 +335,7 @@ public class Preferences extends PreferenceActivity {
 								final Preference preference) {
 							final SharedPreferences prefs = PreferenceManager
 									.getDefaultSharedPreferences(// .
-									Preferences.this);
+									PreferencesActivity.this);
 
 							int c = prefs.getInt(PREFS_TEXTCOLOR, 0);
 							if (c == 0) {
@@ -343,7 +343,7 @@ public class Preferences extends PreferenceActivity {
 							}
 
 							final AmbilWarnaDialog dialog = // .
-							new AmbilWarnaDialog(Preferences.this, c,
+							new AmbilWarnaDialog(PreferencesActivity.this, c,
 									new OnAmbilWarnaListener() {
 										@Override
 										public void onOk(
@@ -382,7 +382,7 @@ public class Preferences extends PreferenceActivity {
 					new Preference.OnPreferenceClickListener() {
 						public boolean onPreferenceClick(
 								final Preference preference) {
-							Log.collectAndSendLog(Preferences.this);
+							Log.collectAndSendLog(PreferencesActivity.this);
 							return true;
 						}
 					});
@@ -431,7 +431,7 @@ public class Preferences extends PreferenceActivity {
 	static final int getTextcolor(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		if (context instanceof ConversationList
+		if (context instanceof ConversationListActivity
 				&& p.getBoolean(PREFS_TEXTCOLOR_IGNORE_CONV, false)) {
 			return 0;
 		}

@@ -110,7 +110,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			e.printStackTrace();
 		}
 		String t = null;
-		if (action.equals(Sender.MESSAGE_SENT_ACTION)) {
+		if (action.equals(SenderActivity.MESSAGE_SENT_ACTION)) {
 			this.handleSent(context, intent, this.getResultCode());
 		} else {
 			boolean silent = false;
@@ -248,8 +248,8 @@ public class SmsReceiver extends BroadcastReceiver {
 		}
 		int tid = cursor.getInt(Message.INDEX_THREADID);
 		long d = cursor.getLong(Message.INDEX_DATE);
-		if (d < ConversationList.MIN_DATE) {
-			d *= ConversationList.MILLIS;
+		if (d < ConversationListActivity.MIN_DATE) {
+			d *= ConversationListActivity.MILLIS;
 		}
 		if (d > lastUnreadDate) {
 			lastUnreadDate = d;
@@ -323,9 +323,9 @@ public class SmsReceiver extends BroadcastReceiver {
 		final SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		final boolean enableNotifications = prefs.getBoolean(
-				Preferences.PREFS_NOTIFICATION_ENABLE, true);
+				PreferencesActivity.PREFS_NOTIFICATION_ENABLE, true);
 		final boolean privateNotification = prefs.getBoolean(
-				Preferences.PREFS_NOTIFICATION_PRIVACY, false);
+				PreferencesActivity.PREFS_NOTIFICATION_PRIVACY, false);
 		if (!enableNotifications) {
 			mNotificationMgr.cancelAll();
 			Log.d(TAG, "no notification needed!");
@@ -345,7 +345,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		Uri uri = null;
 		PendingIntent pIntent;
 		if (l == 0) {
-			final Intent i = new Intent(context, ConversationList.class);
+			final Intent i = new Intent(context, ConversationListActivity.class);
 			// add pending intent
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			pIntent = PendingIntent.getActivity(context, 0, i,
@@ -354,9 +354,9 @@ public class SmsReceiver extends BroadcastReceiver {
 			Notification n = null;
 			Intent i;
 			if (tid >= 0) {
-				uri = Uri.parse(MessageList.URI + tid);
+				uri = Uri.parse(MessageListActivity.URI + tid);
 				i = new Intent(Intent.ACTION_VIEW, uri, context,
-						MessageList.class);
+						MessageListActivity.class);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -374,7 +374,7 @@ public class SmsReceiver extends BroadcastReceiver {
 						} else {
 							a = conv.getContact().getDisplayName();
 						}
-						n = new Notification(Preferences
+						n = new Notification(PreferencesActivity
 								.getNotificationItem(context), a,
 								lastUnreadDate);
 						if (l == 1) {
@@ -398,9 +398,9 @@ public class SmsReceiver extends BroadcastReceiver {
 					}
 				}
 			} else {
-				uri = Uri.parse(MessageList.URI);
+				uri = Uri.parse(MessageListActivity.URI);
 				i = new Intent(Intent.ACTION_VIEW, uri, context, // .
-						ConversationList.class);
+						ConversationListActivity.class);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -419,16 +419,16 @@ public class SmsReceiver extends BroadcastReceiver {
 
 			if (enableNotifications && n != null) {
 				n.flags |= Notification.FLAG_SHOW_LIGHTS;
-				n.ledARGB = Preferences.getLEDcolor(context);
-				int[] ledFlash = Preferences.getLEDflash(context);
+				n.ledARGB = PreferencesActivity.getLEDcolor(context);
+				int[] ledFlash = PreferencesActivity.getLEDflash(context);
 				n.ledOnMS = ledFlash[0];
 				n.ledOffMS = ledFlash[1];
 				final SharedPreferences p = PreferenceManager
 						.getDefaultSharedPreferences(context);
 				if (text != null) {
 					final boolean vibrate = p.getBoolean(
-							Preferences.PREFS_VIBRATE, false);
-					final String s = p.getString(Preferences.PREFS_SOUND, null);
+							PreferencesActivity.PREFS_VIBRATE, false);
+					final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
 					Uri sound;
 					if (s == null || s.length() <= 0) {
 						sound = null;
@@ -436,7 +436,7 @@ public class SmsReceiver extends BroadcastReceiver {
 						sound = Uri.parse(s);
 					}
 					if (vibrate) {
-						final long[] pattern = Preferences
+						final long[] pattern = PreferencesActivity
 								.getVibratorPattern(context);
 						if (pattern.length == 1 && pattern[0] == 0) {
 							n.defaults |= Notification.DEFAULT_VIBRATE;
@@ -488,14 +488,14 @@ public class SmsReceiver extends BroadcastReceiver {
 			final SharedPreferences p = PreferenceManager
 					.getDefaultSharedPreferences(context);
 			final boolean privateNotification = p.getBoolean(
-					Preferences.PREFS_NOTIFICATION_PRIVACY, false);
+					PreferencesActivity.PREFS_NOTIFICATION_PRIVACY, false);
 			Intent intent;
 			if (conv == null) {
 				intent = new Intent(Intent.ACTION_VIEW, null, context,
-						Sender.class);
+						SenderActivity.class);
 			} else {
 				intent = new Intent(Intent.ACTION_VIEW, conv.getUri(), context,
-						MessageList.class);
+						MessageListActivity.class);
 			}
 			intent.putExtra(Intent.EXTRA_TEXT, body);
 
@@ -519,12 +519,12 @@ public class SmsReceiver extends BroadcastReceiver {
 			n.flags |= Notification.FLAG_AUTO_CANCEL;
 			n.flags |= Notification.FLAG_SHOW_LIGHTS;
 			n.ledARGB = RED;
-			int[] ledFlash = Preferences.getLEDflash(context);
+			int[] ledFlash = PreferencesActivity.getLEDflash(context);
 			n.ledOnMS = ledFlash[0];
 			n.ledOffMS = ledFlash[1];
-			final boolean vibrate = p.getBoolean(Preferences.PREFS_VIBRATE,
+			final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE,
 					false);
-			final String s = p.getString(Preferences.PREFS_SOUND, null);
+			final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
 			Uri sound;
 			if (s == null || s.length() <= 0) {
 				sound = null;
@@ -532,7 +532,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				sound = Uri.parse(s);
 			}
 			if (vibrate) {
-				final long[] pattern = Preferences.getVibratorPattern(context);
+				final long[] pattern = PreferencesActivity.getVibratorPattern(context);
 				if (pattern.length == 1 && pattern[0] == 0) {
 					n.defaults |= Notification.DEFAULT_VIBRATE;
 				} else {
@@ -568,7 +568,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
 		if (resultCode == Activity.RESULT_OK) {
 			final ContentValues cv = new ContentValues(1);
-			cv.put(Sender.TYPE, Message.SMS_OUT);
+			cv.put(SenderActivity.TYPE, Message.SMS_OUT);
 			context.getContentResolver().update(uri, cv, null, null);
 		} else {
 			this.updateFailedNotification(context, uri);
