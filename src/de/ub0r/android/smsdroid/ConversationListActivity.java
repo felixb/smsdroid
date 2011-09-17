@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -304,8 +305,10 @@ public final class ConversationListActivity extends FragmentActivity implements
 
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		showContactPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, false);
-		showEmoticons = p.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
+		showContactPhoto = p.getBoolean(
+				PreferencesActivity.PREFS_CONTACT_PHOTO, false);
+		showEmoticons = p
+				.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
 		this.adapter.startMsgListQuery();
 	}
 
@@ -438,7 +441,13 @@ public final class ConversationListActivity extends FragmentActivity implements
 			}
 			return true;
 		case R.id.item_settings: // start settings activity
-			this.startActivity(new Intent(this, PreferencesActivity.class));
+			if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
+				this
+						.startActivity(new Intent(this,
+								Preferences11Activity.class));
+			} else {
+				this.startActivity(new Intent(this, PreferencesActivity.class));
+			}
 			return true;
 		case R.id.item_donate:
 			this.startActivity(new Intent(this, DonationHelper.class));
@@ -536,8 +545,9 @@ public final class ConversationListActivity extends FragmentActivity implements
 				Intent i = null;
 				switch (which) {
 				case WHICH_ANSWER:
-					ConversationListActivity.this.startActivity(getComposeIntent(
-							ConversationListActivity.this, a));
+					ConversationListActivity.this
+							.startActivity(getComposeIntent(
+									ConversationListActivity.this, a));
 					break;
 				case WHICH_CALL:
 					i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));
@@ -561,13 +571,15 @@ public final class ConversationListActivity extends FragmentActivity implements
 					ConversationListActivity.this.startActivity(i);
 					break;
 				case WHICH_DELETE:
-					ConversationListActivity.deleteMessages(ConversationListActivity.this,
-							target, R.string.delete_thread_,
+					ConversationListActivity.deleteMessages(
+							ConversationListActivity.this, target,
+							R.string.delete_thread_,
 							R.string.delete_thread_question, null);
 					break;
 				case WHICH_MARK_SPAM:
 					ConversationListActivity.addToOrRemoveFromSpamlist(
-							ConversationListActivity.this, c.getContact().getNumber());
+							ConversationListActivity.this, c.getContact()
+									.getNumber());
 					break;
 				default:
 					break;
