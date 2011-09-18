@@ -154,12 +154,16 @@
   <string name="bubbles_old_green_right" formatted="false">Altes Grün rechts</string>
   <string name="bubbles_blue_left" formatted="false">Blau links</string>
   <string name="bubbles_blue_right" formatted="false">Blau rechts</string>
+  <string name="bubbles_blue2_left" formatted="false">Blau 2 links</string>
+  <string name="bubbles_blue2_right" formatted="false">Blau 2 rechts</string>
   <string name="bubbles_brown_left" formatted="false">Braun links</string>
   <string name="bubbles_brown_right" formatted="false">Braun rechts</string>
   <string name="bubbles_gray_left" formatted="false">Grau links</string>
   <string name="bubbles_gray_right" formatted="false">Grau rechts</string>
   <string name="bubbles_green_left" formatted="false">Grün links</string>
   <string name="bubbles_green_right" formatted="false">Grün rechts</string>
+  <string name="bubbles_green2_left" formatted="false">Grün 2 links</string>
+  <string name="bubbles_green2_right" formatted="false">Grün 2 rechts</string>
   <string name="bubbles_orange_left" formatted="false">Orange links</string>
   <string name="bubbles_orange_right" formatted="false">Orange rechts</string>
   <string name="bubbles_pink_left" formatted="false">Pink links</string>

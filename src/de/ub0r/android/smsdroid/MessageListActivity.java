@@ -127,8 +127,12 @@ public class MessageListActivity extends FragmentActivity implements
 	/** TextWatcher updating char count on writing. */
 	private MyTextWatcher textWatcher;
 
-	/** {@link MenuItem} holding contact's picture. */
+	/** {@link MenuItem} holding {@link Contact}'s picture. */
 	private MenuItem contactItem = null;
+	/** Show {@link MenuItem} holding {@link Contact}'s picture . */
+	private boolean showContactItem = false;
+	/** True, to update {@link Contact}'s photo. */
+	private boolean needContactUpdate = false;
 
 	/**
 	 * Get {@link ListView}.
@@ -158,13 +162,14 @@ public class MessageListActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		this.enableAutosend = p.getBoolean(PreferencesActivity.PREFS_ENABLE_AUTOSEND,
-				true);
+		this.enableAutosend = p.getBoolean(
+				PreferencesActivity.PREFS_ENABLE_AUTOSEND, true);
 		this.showTextField = this.enableAutosend
 				|| p.getBoolean(PreferencesActivity.PREFS_SHOWTEXTFIELD, true);
-		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, false);
-		final boolean hideSend = p.getBoolean(PreferencesActivity.PREFS_HIDE_SEND,
+		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO,
 				false);
+		final boolean hideSend = p.getBoolean(
+				PreferencesActivity.PREFS_HIDE_SEND, false);
 		this.setTheme(PreferencesActivity.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
@@ -248,6 +253,8 @@ public class MessageListActivity extends FragmentActivity implements
 		Log.d(TAG, "got action: " + intent.getAction());
 		Log.d(TAG, "got uri: " + intent.getData());
 
+		this.needContactUpdate = true;
+
 		this.uri = intent.getData();
 		if (this.uri != null) {
 			if (!this.uri.toString().startsWith(URI)) {
@@ -258,8 +265,9 @@ public class MessageListActivity extends FragmentActivity implements
 			this.uri = Uri.parse(URI + tid);
 			if (tid < 0L) {
 				try {
-					this.startActivity(ConversationListActivity.getComposeIntent(this,
-							null));
+					this.startActivity(// .
+							ConversationListActivity.getComposeIntent(this,
+									null));
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "activity not found", e);
 					Toast.makeText(this, R.string.error_conv_null,
@@ -304,34 +312,7 @@ public class MessageListActivity extends FragmentActivity implements
 			this.getSupportActionBar().setSubtitle(number);
 		}
 
-		if (this.contactItem != null) {
-			final String name = contact.getName();
-			if (this.showPhoto && name != null) {
-				// photo
-				final ImageView ivPhoto = (ImageView) this
-						.findViewById(R.id.photo);
-				ivPhoto.setImageDrawable(contact.getAvatar(this,
-						this.defaultContactAvatar));
-				ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this,
-						ivPhoto, contact
-								.getLookUpUri(this.getContentResolver()), 2,
-						null));
-
-				// presence
-				ImageView ivPresence = (ImageView) this
-						.findViewById(R.id.presence);
-				if (contact.getPresenceState() > 0) {
-					ivPresence.setImageResource(Contact.getPresenceRes(contact
-							.getPresenceState()));
-					ivPresence.setVisibility(View.VISIBLE);
-				} else {
-					ivPresence.setVisibility(View.INVISIBLE);
-				}
-				this.contactItem.setVisible(true);
-			} else {
-				this.contactItem.setVisible(false);
-			}
-		}
+		this.setContactIcon(contact);
 
 		final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
 		if (!TextUtils.isEmpty(body)) {
@@ -339,6 +320,73 @@ public class MessageListActivity extends FragmentActivity implements
 		}
 
 		this.setRead();
+	}
+
+	/**
+	 * Show {@link Contact}'s photo.
+	 * 
+	 * @param contact
+	 *            {@link Contact}
+	 */
+	private void setContactIcon(final Contact contact) {
+		if (contact == null) {
+			Log.w(TAG, "setContactIcon(null)");
+			this.showContactItem = false;
+			return;
+		}
+
+		final String name = contact.getName();
+		this.showContactItem = this.showPhoto && name != null;
+
+		if (this.contactItem == null) {
+			Log.w(TAG, "setContactIcon: contactItem == null");
+			return;
+		}
+
+		if (!this.needContactUpdate) {
+			Log.i(TAG, "skip setContactIcon()");
+			return;
+		}
+
+		if (this.showPhoto && name != null) {
+			// photo
+			ImageView ivPhoto = (ImageView) this.findViewById(R.id.photo);
+			if (ivPhoto == null) {
+				ivPhoto = (ImageView) this.contactItem.getActionView()
+						.findViewById(R.id.photo);
+			}
+			if (ivPhoto == null) {
+				Log.w(TAG, "ivPhoto == null");
+			} else {
+				ivPhoto.setImageDrawable(contact.getAvatar(this,
+						this.defaultContactAvatar));
+				ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this,
+						ivPhoto, contact
+								.getLookUpUri(this.getContentResolver()), 2,
+						null));
+			}
+
+			// presence
+			ImageView ivPresence = (ImageView) this.findViewById(R.id.presence);
+			if (ivPresence == null) {
+				ivPresence = (ImageView) this.contactItem.getActionView()
+						.findViewById(R.id.presence);
+			}
+			if (ivPresence == null) {
+				Log.w(TAG, "ivPresence == null");
+			} else {
+				if (contact.getPresenceState() > 0) {
+					ivPresence.setImageResource(Contact.getPresenceRes(contact
+							.getPresenceState()));
+					ivPresence.setVisibility(View.VISIBLE);
+				} else {
+					ivPresence.setVisibility(View.INVISIBLE);
+				}
+			}
+		}
+
+		this.contactItem.setVisible(this.showContactItem);
+		this.needContactUpdate = false;
 	}
 
 	/**
@@ -416,6 +464,9 @@ public class MessageListActivity extends FragmentActivity implements
 	public final boolean onCreateOptionsMenu(final Menu menu) {
 		this.getMenuInflater().inflate(R.menu.messagelist, menu);
 		this.contactItem = menu.findItem(R.id.item_contact);
+		if (this.conv != null) {
+			this.setContactIcon(this.conv.getContact());
+		}
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (p.getBoolean(PreferencesActivity.PREFS_HIDE_RESTORE, false)) {
@@ -442,10 +493,13 @@ public class MessageListActivity extends FragmentActivity implements
 					this);
 			return true;
 		case R.id.item_all_threads:
-			this.startActivity(new Intent(this, ConversationListActivity.class));
+			this
+					.startActivity(new Intent(this,
+							ConversationListActivity.class));
 			return true;
 		case R.id.item_compose:
-			this.startActivity(ConversationListActivity.getComposeIntent(this, null));
+			this.startActivity(ConversationListActivity.getComposeIntent(this,
+					null));
 			return true;
 		case R.id.item_answer:
 			this.send(true, false);
@@ -456,7 +510,8 @@ public class MessageListActivity extends FragmentActivity implements
 			return true;
 		case R.id.item_restore:
 			this.etText.setText(PreferenceManager.getDefaultSharedPreferences(
-					this).getString(PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
+					this).getString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
+					null));
 			return true;
 		case R.id.item_contact:
 			if (this.conv != null && this.contactItem != null) {
@@ -525,8 +580,8 @@ public class MessageListActivity extends FragmentActivity implements
 								.getInsertPickIntent(a);
 						Conversation.flushCache();
 					} else {
-						final Uri u = MessageListActivity.this.conv.getContact()
-								.getUri();
+						final Uri u = MessageListActivity.this.conv
+								.getContact().getUri();
 						i = new Intent(Intent.ACTION_VIEW, u);
 					}
 					MessageListActivity.this.startActivity(i);
@@ -536,19 +591,24 @@ public class MessageListActivity extends FragmentActivity implements
 							Intent.ACTION_VIEW, Uri.parse("tel:" + a)));
 					break;
 				case WHICH_MARK_UNREAD:
-					ConversationListActivity.markRead(context, target, 1 - read);
+					ConversationListActivity
+							.markRead(context, target, 1 - read);
 					MessageListActivity.this.markedUnread = true;
 					break;
 				case WHICH_REPLY:
-					MessageListActivity.this.startActivity(ConversationListActivity
-							.getComposeIntent(MessageListActivity.this, a));
+					MessageListActivity.this
+							.startActivity(ConversationListActivity
+									.getComposeIntent(MessageListActivity.this,
+											a));
 					break;
 				case WHICH_FORWARD:
 					int resId;
 					if (type == Message.SMS_DRAFT) {
 						resId = R.string.send_draft_;
-						i = ConversationListActivity.getComposeIntent(MessageListActivity.this,
-								MessageListActivity.this.conv.getContact().getNumber());
+						i = ConversationListActivity.getComposeIntent(
+								MessageListActivity.this,
+								MessageListActivity.this.conv.getContact()
+										.getNumber());
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -672,8 +732,8 @@ public class MessageListActivity extends FragmentActivity implements
 	private Intent buildIntent(final boolean autosend, // .
 			final boolean showChooser) {
 		final String text = this.etText.getText().toString().trim();
-		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv
-				.getContact().getNumber());
+		final Intent i = ConversationListActivity.getComposeIntent(this,
+				this.conv.getContact().getNumber());
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
 		if (autosend && this.enableAutosend && text.length() > 0) {

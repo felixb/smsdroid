@@ -150,12 +150,16 @@
 	<string name="bubbles_old_green_right">Old green right</string>
 	<string name="bubbles_blue_left">Blue left</string>
 	<string name="bubbles_blue_right">Blue right</string>
+	<string name="bubbles_blue2_left">Blue 2 left</string>
+	<string name="bubbles_blue2_right">Blue 2 right</string>
 	<string name="bubbles_brown_left">Brown left</string>
 	<string name="bubbles_brown_right">Brown right</string>
 	<string name="bubbles_gray_left">Gray left</string>
 	<string name="bubbles_gray_right">Gray right</string>
 	<string name="bubbles_green_left">Green left</string>
 	<string name="bubbles_green_right">Green right</string>
+	<string name="bubbles_green2_left">Green 2 left</string>
+	<string name="bubbles_green2_right">Green 2 right</string>
 	<string name="bubbles_orange_left">Orange left</string>
 	<string name="bubbles_orange_right">Orange right</string>
 	<string name="bubbles_pink_left">Pink left</string>
