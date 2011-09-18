@@ -155,12 +155,16 @@ public class PreferencesActivity extends PreferenceActivity implements
 			R.drawable.bubble_old_turquoise_right, // .
 			R.drawable.bubble_blue_left, // .
 			R.drawable.bubble_blue_right, // .
+			R.drawable.bubble_blue2_left, // .
+			R.drawable.bubble_blue2_right, // .
 			R.drawable.bubble_brown_left, // .
 			R.drawable.bubble_brown_right, // .
 			R.drawable.bubble_gray_left, // .
 			R.drawable.bubble_gray_right, // .
 			R.drawable.bubble_green_left, // .
 			R.drawable.bubble_green_right, // .
+			R.drawable.bubble_green2_left, // .
+			R.drawable.bubble_green2_right, // .
 			R.drawable.bubble_orange_left, // .
 			R.drawable.bubble_orange_right, // .
 			R.drawable.bubble_pink_left, // .
@@ -183,12 +187,16 @@ public class PreferencesActivity extends PreferenceActivity implements
 			R.string.bubbles_old_turquoise_right, // .
 			R.string.bubbles_blue_left, // .
 			R.string.bubbles_blue_right, // .
+			R.string.bubbles_blue2_left, // .
+			R.string.bubbles_blue2_right, // .
 			R.string.bubbles_brown_left, // .
 			R.string.bubbles_brown_right, // .
 			R.string.bubbles_gray_left, // .
 			R.string.bubbles_gray_right, // .
 			R.string.bubbles_green_left, // .
 			R.string.bubbles_green_right, // .
+			R.string.bubbles_green2_left, // .
+			R.string.bubbles_green2_right, // .
 			R.string.bubbles_orange_left, // .
 			R.string.bubbles_orange_right, // .
 			R.string.bubbles_pink_left, // .
