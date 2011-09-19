@@ -21,7 +21,7 @@
                Visit http://ub0r.de/translate/smsdroid/edit.php?lang=ru&file=strings.xml to edit the file.
        -->
 <resources>
-  <string name="about_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="About">О программе</string>
+  <string name="about_" formatted="false" orig="About">О программе</string>
   <string name="about_hint" formatted="false">Описание программы</string>
   <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Советы и подсказки по настройке программы</string>
   <string name="feedback_" formatted="false">Отзывы</string>
