@@ -17,8 +17,8 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="de.ub0r.android.smsdroid" android:versionCode="124"
-	android:versionName="0.7.3" android:installLocation="internalOnly">
+	package="de.ub0r.android.smsdroid" android:versionCode="126"
+	android:versionName="1.0" android:installLocation="internalOnly">
 	<application android:name=".SMSdroid" android:icon="@drawable/icon"
 		android:label="@string/app_name" android:hardwareAccelerated="true"
 		android:theme="@style/Theme.SherlockUb0r">
@@ -113,7 +113,7 @@
 		<meta-data android:name="android.app.default_searchable"
 			android:value=".ConversationList" />
 	</application>
-	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="13" />
+	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="13" />
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" />
