@@ -23,15 +23,15 @@
 <resources>
   <string name="about_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="About">Acerca de</string>
   <string name="about_hint" formatted="false">Acerca de esta aplicación</string>
-  <string name="faq_hint" formatted="false" username="" orig="Some tips and tricks, how to set up this app.">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
-  <string name="feedback_" formatted="false">Retroalimentación</string>
+  <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
+  <string name="feedback_" formatted="false" orig="Feedback">Retroalimentación</string>
   <string name="feedback_hint" formatted="false">Avise sobre errores, sugiera características...</string>
   <string name="twitter_hint" formatted="false">Sígame en twitter.\nObtenga notificaciones sobre actualizaciones, etc.</string>
   <string name="about0" formatted="false">SMSdroid le permite leer sus sms, así como escribirlos con cualquier aplicación.</string>
   <string name="more_apps_" formatted="false">Más Aplicaciones..</string>
   <string name="settings" formatted="false">Preferencias</string>
   <string name="new_message_" formatted="false">Nuevo mensaje</string>
-  <string name="new_message_hint" formatted="false">Redactar un mensaje nuevo</string>
+  <string name="new_message_hint" formatted="false" orig="Compose a new message">Redactar un mensaje nuevo</string>
   <string name="new_message" formatted="false" orig="1 unread message.">Un mensaje no leído.</string>
   <string name="new_messages_" formatted="false">Mensajes nuevos</string>
   <string name="new_messages" formatted="false">%d mensajes sin leer.</string>
@@ -40,7 +40,7 @@
   <string name="reply" formatted="false" orig="Reply">Responder</string>
   <string name="send_" formatted="false">Enviar</string>
   <string name="notification_" formatted="false">Notificaciones</string>
-  <string name="notification_enable_" formatted="false">Habilitar notificaciones</string>
+  <string name="notification_enable_" formatted="false" orig="Enable notifications">Habilitar notificaciones</string>
   <string name="notification_enable_hint" formatted="false">Habilita notificaciones al recibir</string>
   <string name="receive_vibrate_" formatted="false">Vibrar</string>
   <string name="receive_vibrate_hint" formatted="false">Vibra al recibir</string>
@@ -98,7 +98,7 @@
   <string name="type_" formatted="false">Tipo:</string>
   <string name="sent_" formatted="false">Enviado:</string>
   <string name="received_" formatted="false">Recibido:</string>
-  <string name="view_mms" formatted="false">Ver MMS</string>
+  <string name="view_mms" formatted="false" orig="View MMS">Ver MMS</string>
   <string name="mms_conversation" formatted="false">&lt;Cuerpo del MMS&gt;</string>
   <string name="mms_not_supported" formatted="false">Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
   <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
@@ -150,6 +150,6 @@
     <item>A intervalos largos</item>
     <item>Breve, larga, breve, larga</item>
   </string-array>
-  <string name="show_text_filed_hint" formatted="false" username="" orig="Show text filed instead of answer button.">
+  <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">
   </string>
 </resources>
