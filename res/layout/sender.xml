@@ -30,7 +30,7 @@
 				android:nextFocusRight="@+id/text" android:nextFocusDown="@+id/text"
 				android:imeOptions="actionNext" android:singleLine="true"
 				android:layout_weight="0"
-				style="@android:style/TextAppearance.Widget.EditText" />
+				style="@style/TextAppearance.Multicomplete" />
 
 			<RelativeLayout android:layout_width="fill_parent"
 				android:layout_height="fill_parent" android:layout_weight="1"

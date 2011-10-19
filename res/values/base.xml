@@ -111,4 +111,6 @@
 	<style name="TextAppearance.Widget.Subtitle" parent="@android:style/TextAppearance.Small">
 		<item name="android:textColor">@color/actionbar_text_color</item>
 	</style>
+	<style name="TextAppearance.Multicomplete" parent="@android:style/TextAppearance.Widget.EditText">
+	</style>
 </resources>
