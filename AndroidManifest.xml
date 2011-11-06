@@ -81,10 +81,10 @@
 		</activity>
 		<activity android:name="de.ub0r.android.lib.DonationHelper"
 			android:configChanges="orientation|keyboardHidden"
-			android:windowSoftInputMode="adjustResize" />
+			android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.SherlockUb0r_Light" />
 		<activity android:name="de.ub0r.android.lib.Changelog"
 			android:configChanges="orientation|keyboardHidden"
-			android:windowSoftInputMode="adjustResize" />
+			android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.SherlockUb0r_Light" />
 		<receiver android:name="SmsReceiver">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
@@ -107,16 +107,15 @@
 			android:authorities="de.ub0r.android.smsdroid.SearchProvider"
 			android:syncable="false" />
 		<activity android:name="com.google.ads.AdActivity"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-			android:configChanges="keyboard|keyboardHidden|orientation" />
+			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 
 		<meta-data android:name="android.app.default_searchable"
 			android:value=".ConversationList" />
 	</application>
 	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="13" />
-	<supports-screens android:smallScreens="true"
-		android:normalScreens="true" android:largeScreens="true"
-		android:anyDensity="true" />
+	<supports-screens android:anyDensity="true"
+			android:smallScreens="true" android:normalScreens="true"
+			android:largeScreens="true" android:xlargeScreens="true" />
 	<uses-feature android:name="android.hardware.touchscreen"
 		android:required="false" />
 	<uses-feature android:name="android.hardware.location.network"
