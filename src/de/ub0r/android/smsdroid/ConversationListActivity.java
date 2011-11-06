@@ -45,11 +45,11 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Changelog;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
@@ -131,12 +131,10 @@ public final class ConversationListActivity extends FragmentActivity implements
 	private ConversationAdapter adapter = null;
 
 	/** {@link Calendar} holding today 00:00. */
-	private static final Calendar CAL_TODAY = Calendar.getInstance();
+	private static final Calendar CAL_DAYAGO = Calendar.getInstance();
 	static {
-		CAL_TODAY.set(Calendar.HOUR_OF_DAY, 0);
-		CAL_TODAY.set(Calendar.MINUTE, 0);
-		CAL_TODAY.set(Calendar.SECOND, 0);
-		CAL_TODAY.set(Calendar.MILLISECOND, 0);
+		// Get time for now - 24 hours
+		CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
 	}
 
 	/**
@@ -297,11 +295,8 @@ public final class ConversationListActivity extends FragmentActivity implements
 		if (!prefsNoAds) {
 			Ads.loadAd(this, R.id.ad, AD_UNITID, AD_KEYWORDS);
 		}
-		CAL_TODAY.setTimeInMillis(System.currentTimeMillis());
-		CAL_TODAY.set(Calendar.HOUR_OF_DAY, 0);
-		CAL_TODAY.set(Calendar.MINUTE, 0);
-		CAL_TODAY.set(Calendar.SECOND, 0);
-		CAL_TODAY.set(Calendar.MILLISECOND, 0);
+		CAL_DAYAGO.setTimeInMillis(System.currentTimeMillis());
+		CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
 
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -421,7 +416,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 	}
 
 	/**
-	 *{@inheritDoc}
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
@@ -442,9 +437,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 			return true;
 		case R.id.item_settings: // start settings activity
 			if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
-				this
-						.startActivity(new Intent(this,
-								Preferences11Activity.class));
+				this.startActivity(new Intent(this, Preferences11Activity.class));
 			} else {
 				this.startActivity(new Intent(this, PreferencesActivity.class));
 			}
@@ -501,8 +494,9 @@ public final class ConversationListActivity extends FragmentActivity implements
 		try {
 			this.startActivity(i);
 		} catch (ActivityNotFoundException e) {
-			Log.e(TAG, "error launching intent: " + i.getAction() + ", "
-					+ i.getData());
+			Log.e(TAG,
+					"error launching intent: " + i.getAction() + ", "
+							+ i.getData());
 			Toast.makeText(
 					this,
 					"error launching messaging app!\n"
@@ -608,7 +602,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 				PreferencesActivity.PREFS_FULL_DATE, false)) {
 			return DateFormat.getTimeFormat(context).format(t) + " "
 					+ DateFormat.getDateFormat(context).format(t);
-		} else if (t < CAL_TODAY.getTimeInMillis()) {
+		} else if (t < CAL_DAYAGO.getTimeInMillis()) {
 			return DateFormat.getDateFormat(context).format(t);
 		} else {
 			return DateFormat.getTimeFormat(context).format(t);
