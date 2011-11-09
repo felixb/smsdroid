@@ -19,6 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
+		<item>v1.1.1: minor UI fix</item>
 		<item>v1.1: minor UI fix, show date for messages newer than 1d</item>
 		<item>v1.0: prepare for honeycomp devices, italian translation, fix FC, minor fixes, new bubbles</item>
 		<item>v0.7.3: add sender activity</item>
