@@ -17,5 +17,5 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-  <color name="actionbar_text_color">#FFC0C0C0</color>
+  <color name="actionbar_background_color">#FF608516</color>
 </resources>
