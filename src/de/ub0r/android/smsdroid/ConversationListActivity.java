@@ -50,7 +50,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import de.ub0r.android.lib.Changelog;
+import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Market;
@@ -253,16 +253,16 @@ public final class ConversationListActivity extends FragmentActivity implements
 		Utils.setLocale(this);
 		this.setContentView(R.layout.conversationlist);
 
-		Changelog.showChangelog(this);
+		ChangelogHelper.showChangelog(this, true);
 		final List<ResolveInfo> ri = this.getPackageManager()
 				.queryBroadcastReceivers(
 						new Intent("de.ub0r.android.websms.connector.INFO"), 0);
 		if (ri.size() == 0) {
 			final Intent intent = Market.getInstallAppIntent(this,
 					"de.ub0r.android.websms", Market.ALT_WEBSMS);
-			Changelog.showNotes(this, "get WebSMS", null, intent);
+			ChangelogHelper.showNotes(this, true, "get WebSMS", null, intent);
 		} else {
-			Changelog.showNotes(this, null, null, null);
+			ChangelogHelper.showNotes(this, true, null, null, null);
 		}
 
 		showRows(this);
@@ -437,13 +437,14 @@ public final class ConversationListActivity extends FragmentActivity implements
 			return true;
 		case R.id.item_settings: // start settings activity
 			if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
-				this.startActivity(new Intent(this, Preferences11Activity.class));
+				this.startActivity(new Intent(this, // .
+						Preferences11Activity.class));
 			} else {
 				this.startActivity(new Intent(this, PreferencesActivity.class));
 			}
 			return true;
 		case R.id.item_donate:
-			this.startActivity(new Intent(this, DonationHelper.class));
+			DonationHelper.startDonationActivity(this, true);
 			return true;
 		case R.id.item_delete_all_threads:
 			deleteMessages(this, Uri.parse("content://sms/"),

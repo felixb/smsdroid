@@ -79,12 +79,12 @@
 				<data android:scheme="sms" />
 			</intent-filter>
 		</activity>
-		<activity android:name="de.ub0r.android.lib.DonationHelper"
+		<activity android:name="de.ub0r.android.lib.DonationFragmentActivity"
 			android:configChanges="orientation|keyboardHidden"
-			android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.SherlockUb0r_Light" />
-		<activity android:name="de.ub0r.android.lib.Changelog"
+			android:windowSoftInputMode="adjustResize" />
+		<activity android:name="de.ub0r.android.lib.ChangelogFragmentActivity"
 			android:configChanges="orientation|keyboardHidden"
-			android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.SherlockUb0r_Light" />
+			android:windowSoftInputMode="adjustResize" />
 		<receiver android:name="SmsReceiver">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
