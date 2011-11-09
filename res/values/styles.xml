@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009-2011 Felix Bechstein
+		Copyright (C) 2009-2010 Felix Bechstein
 	-->
 	<!--
 		This file is part of SMSdroid. This program is free software; you can
@@ -17,6 +17,5 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-	<style name="TextAppearance.Multicomplete" parent="@android:style/TextAppearance">
-	</style>
+  <color name="actionbar_text_color">#FFC0C0C0</color>
 </resources>
