@@ -152,4 +152,5 @@
   </string-array>
   <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">
   </string>
+  <string name="show_full_date_hint" formatted="false" orig="Show full date and time on every message.">Mostar fecha completa y hora en cada mensaje</string>
 </resources>
