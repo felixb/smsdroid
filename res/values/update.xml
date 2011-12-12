@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>v1.1.2: minor UI fix</item>
+		<item>v1.1.2: minor UI fix, fix notification for ICS</item>
 		<item>v1.1.1: minor UI fix</item>
 		<item>v1.1: minor UI fix, show date for messages newer than 1d</item>
 		<item>v1.0: prepare for honeycomp devices, italian translation, fix FC, minor fixes, new bubbles</item>
