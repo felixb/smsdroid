@@ -22,6 +22,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
@@ -52,7 +53,7 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	private static final String SORT = WRAPPER.getContentSort();
 
 	/** List of number types. */
-	final String[] types;
+	private final String[] types;
 
 	/**
 	 * Constructor.
@@ -135,10 +136,17 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 * @return clean number
 	 */
 	public static String cleanRecipient(final String recipient) {
-		if (recipient == null) {
+		if (TextUtils.isEmpty(recipient)) {
 			return "";
 		}
-		return recipient.replaceAll("[^*#+0-9]", "") // .
+		String n;
+		if (recipient.indexOf("<") < recipient.indexOf(">")) {
+			n = recipient.substring(recipient.indexOf("<"),
+					recipient.indexOf(">"));
+		} else {
+			n = recipient;
+		}
+		return n.replaceAll("[^*#+0-9]", "") // .
 				.replaceAll("^[*#][0-9]*#", "");
 	}
 }
