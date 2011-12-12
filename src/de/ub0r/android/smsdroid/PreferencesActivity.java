@@ -31,6 +31,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -253,8 +254,9 @@ public class PreferencesActivity extends PreferenceActivity implements
 						@Override
 						public void onClick(final DialogInterface dialog,
 								final int which) {
-							preference.getEditor().putInt(preference.getKey(),
-									which).commit();
+							preference.getEditor()
+									.putInt(preference.getKey(), which)
+									.commit();
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
@@ -307,8 +309,9 @@ public class PreferencesActivity extends PreferenceActivity implements
 						@Override
 						public void onClick(final DialogInterface dialog,
 								final int which) {
-							preference.getEditor().putInt(preference.getKey(),
-									which).commit();
+							preference.getEditor()
+									.putInt(preference.getKey(), which)
+									.commit();
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
@@ -349,8 +352,8 @@ public class PreferencesActivity extends PreferenceActivity implements
 		Preference pbi = pc.findPreference(PREFS_BUBBLES_IN);
 		Preference pbo = pc.findPreference(PREFS_BUBBLES_OUT);
 		if (pbi != null || pbo != null) {
-			final OnBubblesClickListener obcl = new OnBubblesClickListener(pc
-					.getContext());
+			final OnBubblesClickListener obcl = new OnBubblesClickListener(
+					pc.getContext());
 
 			if (pbi != null) {
 				pbi.setOnPreferenceClickListener(obcl);
@@ -365,65 +368,59 @@ public class PreferencesActivity extends PreferenceActivity implements
 		p = pc.findPreference(PREFS_TEXTCOLOR);
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
-					new Preference.OnPreferenceClickListener() {
-						@Override
-						public boolean onPreferenceClick(
-								final Preference preference) {
-							final SharedPreferences prefs = PreferenceManager
-									.getDefaultSharedPreferences(pc
-											.getContext());
+			new Preference.OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(final Preference preference) {
+					final SharedPreferences prefs = PreferenceManager
+							.getDefaultSharedPreferences(pc.getContext());
 
-							int c = prefs.getInt(PREFS_TEXTCOLOR, 0);
-							if (c == 0) {
-								c = BLACK;
-							}
+					int c = prefs.getInt(PREFS_TEXTCOLOR, 0);
+					if (c == 0) {
+						c = BLACK;
+					}
 
-							final AmbilWarnaDialog dialog = // .
-							new AmbilWarnaDialog(pc.getContext(), c,
-									new OnAmbilWarnaListener() {
-										@Override
-										public void onOk(
-												final AmbilWarnaDialog dialog,
-												final int color) {
-											prefs.edit().putInt(
-													PREFS_TEXTCOLOR, color)
-													.commit();
-										}
+					final AmbilWarnaDialog dialog = // .
+					new AmbilWarnaDialog(pc.getContext(), c,
+							new OnAmbilWarnaListener() {
+								@Override
+								public void onOk(final AmbilWarnaDialog dialog,
+										final int color) {
+									prefs.edit().putInt(PREFS_TEXTCOLOR, color)
+											.commit();
+								}
 
-										@Override
-										public void onCancel(
-												final AmbilWarnaDialog dialog) {
-											// nothing to do
-										}
+								@Override
+								public void onCancel(
+										final AmbilWarnaDialog dialog) {
+									// nothing to do
+								}
 
-										public void onReset(
-												final AmbilWarnaDialog dialog) {
-											prefs.edit().putInt(
-													PREFS_TEXTCOLOR, 0)
-													.commit();
-										}
-									});
+								public void onReset(
+										final AmbilWarnaDialog dialog) {
+									prefs.edit().putInt(PREFS_TEXTCOLOR, 0)
+											.commit();
+								}
+							});
 
-							dialog.show();
-							return true;
-						}
-					});
+					dialog.show();
+					return true;
+				}
+			});
 		}
 
-		Market.setOnPreferenceClickListener(pc.getActivity(), pc
-				.findPreference("more_apps"), null, Market.SEARCH_APPS,
+		Market.setOnPreferenceClickListener(pc.getActivity(),
+				pc.findPreference("more_apps"), null, Market.SEARCH_APPS,
 				Market.ALT_APPS);
 
 		p = pc.findPreference("send_logs");
 		if (p != null) {
 			p.setOnPreferenceClickListener(// .
-					new Preference.OnPreferenceClickListener() {
-						public boolean onPreferenceClick(
-								final Preference preference) {
-							Log.collectAndSendLog(pc.getActivity());
-							return true;
-						}
-					});
+			new Preference.OnPreferenceClickListener() {
+				public boolean onPreferenceClick(final Preference preference) {
+					Log.collectAndSendLog(pc.getActivity());
+					return true;
+				}
+			});
 		}
 	}
 
@@ -537,7 +534,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 *            {@link Context}
 	 * @return resource id
 	 */
-	static final int getNotificationItem(final Context context) {
+	static final int getNotificationIcon(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		final int i = p.getInt(PREFS_NOTIFICATION_ICON,
@@ -545,7 +542,11 @@ public class PreferencesActivity extends PreferenceActivity implements
 		if (i >= 0 && i < NOTIFICAION_IMG.length) {
 			return NOTIFICAION_IMG[i];
 		}
-		return R.drawable.stat_notify_sms;
+		if (Utils.isApi(Build.VERSION_CODES.GINGERBREAD)) {
+			return R.drawable.stat_notify_sms_gingerbread;
+		} else {
+			return R.drawable.stat_notify_sms;
+		}
 	}
 
 	/**

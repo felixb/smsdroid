@@ -358,7 +358,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				i = new Intent(Intent.ACTION_VIEW, uri, context,
 						MessageListActivity.class);
 				pIntent = PendingIntent.getActivity(context, 0, i,
-						PendingIntent.FLAG_CANCEL_CURRENT);
+						PendingIntent.FLAG_UPDATE_CURRENT);
 
 				if (enableNotifications) {
 					final Conversation conv = Conversation.getConversation(
@@ -374,9 +374,10 @@ public class SmsReceiver extends BroadcastReceiver {
 						} else {
 							a = conv.getContact().getDisplayName();
 						}
-						n = new Notification(PreferencesActivity
-								.getNotificationItem(context), a,
-								lastUnreadDate);
+						n = new Notification(
+								PreferencesActivity
+										.getNotificationIcon(context),
+								a, lastUnreadDate);
 						if (l == 1) {
 							String body;
 							if (privateNotification) {
@@ -390,8 +391,8 @@ public class SmsReceiver extends BroadcastReceiver {
 							}
 							n.setLatestEventInfo(context, a, body, pIntent);
 						} else {
-							n.setLatestEventInfo(context, a, String
-									.format(context
+							n.setLatestEventInfo(context, a,
+									String.format(context
 											.getString(R.string.new_messages),
 											l), pIntent);
 						}
@@ -402,11 +403,13 @@ public class SmsReceiver extends BroadcastReceiver {
 				i = new Intent(Intent.ACTION_VIEW, uri, context, // .
 						ConversationListActivity.class);
 				pIntent = PendingIntent.getActivity(context, 0, i,
-						PendingIntent.FLAG_CANCEL_CURRENT);
+						PendingIntent.FLAG_UPDATE_CURRENT);
 
 				if (enableNotifications) {
-					n = new Notification(R.drawable.stat_notify_sms, context
-							.getString(R.string.new_messages_), lastUnreadDate);
+					n = new Notification(
+							PreferencesActivity.getNotificationIcon(context),
+							context.getString(R.string.new_messages_),
+							lastUnreadDate);
 					n.setLatestEventInfo(context, context
 							.getString(R.string.new_messages_), String.format(
 							context.getString(R.string.new_messages), l),
@@ -428,7 +431,8 @@ public class SmsReceiver extends BroadcastReceiver {
 				if (text != null) {
 					final boolean vibrate = p.getBoolean(
 							PreferencesActivity.PREFS_VIBRATE, false);
-					final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
+					final String s = p.getString(
+							PreferencesActivity.PREFS_SOUND, null);
 					Uri sound;
 					if (s == null || s.length() <= 0) {
 						sound = null;
@@ -522,8 +526,8 @@ public class SmsReceiver extends BroadcastReceiver {
 			int[] ledFlash = PreferencesActivity.getLEDflash(context);
 			n.ledOnMS = ledFlash[0];
 			n.ledOffMS = ledFlash[1];
-			final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE,
-					false);
+			final boolean vibrate = p.getBoolean(
+					PreferencesActivity.PREFS_VIBRATE, false);
 			final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
 			Uri sound;
 			if (s == null || s.length() <= 0) {
@@ -532,7 +536,8 @@ public class SmsReceiver extends BroadcastReceiver {
 				sound = Uri.parse(s);
 			}
 			if (vibrate) {
-				final long[] pattern = PreferencesActivity.getVibratorPattern(context);
+				final long[] pattern = PreferencesActivity
+						.getVibratorPattern(context);
 				if (pattern.length == 1 && pattern[0] == 0) {
 					n.defaults |= Notification.DEFAULT_VIBRATE;
 				} else {
