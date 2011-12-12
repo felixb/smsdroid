@@ -18,5 +18,5 @@
 	-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/item_send" android:title="@string/send_"
-		android:icon="@drawable/android:ic_menu_send" android:showAsAction="always|withText" />
+		android:icon="@drawable/ic_menu_send" android:showAsAction="always|withText" />
 </menu>
