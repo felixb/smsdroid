@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <!--
+<!--
                Copyright (C) 2009-2011 Felix Bechstein
        -->
-       <!--
+<!--
                This file is part of SMSdroid. This program is free software; you can
                redistribute it and/or modify it under the terms of the GNU General
                Public License as published by the Free Software Foundation; either
                version 3 of the License, or (at your option) any later version.
        -->
-       <!--
+<!--
                This program is distributed in the hope that it will be useful, but
                WITHOUT ANY WARRANTY; without even the implied warranty of
                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -16,9 +16,9 @@
                copy of the GNU General Public License along with this program; If
                not, see <http://www.gnu.org/licenses/>.
        -->
-      <!--
+<!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=fr&file=strings.xml to edit the file.
+               Visit http://www.4.ub0r.de/translate/smsdroid/edit.php?lang=fr&file=strings.xml to edit the file.
        -->
 <resources>
   <string name="about_" formatted="false" orig="About">À propos</string>
@@ -105,8 +105,8 @@
   <string name="compose_" formatted="false" orig="Compose">Nouveau</string>
   <string name="delete_message_question" formatted="false" orig="Do you really want to delete this message?">Voulez-vous vraiment effacer ce message ?</string>
   <string name="delete_messages_question" formatted="false" orig="Do you really want to delete these messages?">Voulez-vous vraiment effacer ces messages ?</string>
-  <string name="delete_thread_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Voulez-vous vraiment effacer &lt;b&gt;tous les messages de ce fil&lt;/b&gt; ?</string>
-  <string name="delete_threads_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Voulez-vous vraiment effacer &lt;b&gt;tous les messages&lt;/b&gt; ?</string>
+  <string name="delete_thread_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Voulez-vous vraiment effacer <b>tous les messages de ce fil</b> ?</string>
+  <string name="delete_threads_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Voulez-vous vraiment effacer <b>tous les messages</b> ?</string>
   <string name="from_" formatted="false" orig="From:">De:</string>
   <string name="to_" formatted="false" orig="To:">À:</string>
   <string name="type_" formatted="false" orig="Type:">Type:</string>
