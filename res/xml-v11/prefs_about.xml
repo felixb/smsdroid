@@ -32,6 +32,11 @@
 		<intent android:action="android.intent.action.VIEW"
 			android:data="http://code.google.com/p/websmsdroid/issues/list" />
 	</PreferenceScreen>
+	<PreferenceScreen android:title="@string/google_plus_"
+		android:summary="@string/google_plus_hint">
+		<intent android:action="android.intent.action.VIEW"
+			android:data="https://plus.google.com/111111876192965636971" />
+	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/twitter_"
 		android:summary="@string/twitter_hint">
 		<intent android:action="android.intent.action.VIEW"
