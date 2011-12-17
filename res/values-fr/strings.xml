@@ -103,10 +103,10 @@
   <string name="all_threads_" formatted="false" orig="All threads">Tous les fils</string>
   <string name="message_options_" formatted="false" orig="Message options">Options des messages</string>
   <string name="compose_" formatted="false" orig="Compose">Nouveau</string>
-  <string name="delete_message_question" formatted="false" orig="Do you really want to delete this message?">Voulez-vous vraiment effacer ce message ?</string>
-  <string name="delete_messages_question" formatted="false" orig="Do you really want to delete these messages?">Voulez-vous vraiment effacer ces messages ?</string>
-  <string name="delete_thread_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Voulez-vous vraiment effacer <b>tous les messages de ce fil</b> ?</string>
-  <string name="delete_threads_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Voulez-vous vraiment effacer <b>tous les messages</b> ?</string>
+  <string name="delete_message_question" formatted="false" orig="Do you really want to delete this message?">Voulez-vous vraiment effacer ce message?</string>
+  <string name="delete_messages_question" formatted="false" orig="Do you really want to delete these messages?">Voulez-vous vraiment effacer ces messages?</string>
+  <string name="delete_thread_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Voulez-vous vraiment effacer <b>tous les messages de ce fil</b>?</string>
+  <string name="delete_threads_question" formatted="false" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Voulez-vous vraiment effacer <b>tous les messages</b>?</string>
   <string name="from_" formatted="false" orig="From:">De:</string>
   <string name="to_" formatted="false" orig="To:">À:</string>
   <string name="type_" formatted="false" orig="Type:">Type:</string>
