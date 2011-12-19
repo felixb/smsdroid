@@ -19,8 +19,6 @@ import android.provider.BaseColumns;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
-import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,19 +28,25 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.lib.apis.TelephonyWrapper;
 
 /**
  * Class sending messages via standard Messaging interface.
  * 
  * @author flx
  */
-public final class SenderActivity extends FragmentActivity implements
-		OnClickListener {
+public final class SenderActivity extends FragmentActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "send";
 
+	/** {@link TelephonyWrapper}. */
+	private static final TelephonyWrapper TWRAPPER = TelephonyWrapper
+			.getInstance();
+
 	/** {@link Uri} for saving messages. */
 	private static final Uri URI_SMS = Uri.parse("content://sms");
+	/** {@link Uri} for saving sent messages. */
+	private static final Uri URI_SENT = Uri.parse("content://sms/sent");
 	/** Projection for getting the id. */
 	private static final String[] PROJECTION_ID = // .
 	new String[] { BaseColumns._ID };
@@ -192,12 +196,10 @@ public final class SenderActivity extends FragmentActivity implements
 	 */
 	private void send(final String recipient, final String message) {
 		Log.d(TAG, "text: " + recipient);
-		SmsManager smsmgr = SmsManager.getDefault();
-
-		int[] l = SmsMessage.calculateLength(message, false);
+		int[] l = TWRAPPER.calculateLength(message, false);
 		Log.i(TAG, "text7: " + message.length() + ", " + l[0] + " " + l[1]
 				+ " " + l[2] + " " + l[3]);
-		l = SmsMessage.calculateLength(message, true);
+		l = TWRAPPER.calculateLength(message, true);
 		Log.i(TAG, "text8: " + message.length() + ", " + l[0] + " " + l[1]
 				+ " " + l[2] + " " + l[3]);
 
@@ -216,12 +218,12 @@ public final class SenderActivity extends FragmentActivity implements
 						+ BODY + " like '" + message.replace("'", "_") + "'",
 						null, DATE + " DESC");
 		if (cursor != null && cursor.moveToFirst()) {
-			draft = URI_SMS // .
+			draft = URI_SENT // .
 					.buildUpon().appendPath(cursor.getString(0)).build();
 			Log.d(TAG, "skip saving draft: " + draft);
 		} else {
 			try {
-				draft = cr.insert(URI_SMS, values);
+				draft = cr.insert(URI_SENT, values);
 				Log.d(TAG, "draft saved: " + draft);
 			} catch (SQLiteException e) {
 				Log.e(TAG, "unable to save draft", e);
@@ -233,7 +235,7 @@ public final class SenderActivity extends FragmentActivity implements
 		}
 		cursor = null;
 
-		final ArrayList<String> messages = smsmgr.divideMessage(message);
+		final ArrayList<String> messages = TWRAPPER.divideMessage(message);
 		final int c = messages.size();
 		ArrayList<PendingIntent> sentIntents = new ArrayList<PendingIntent>(c);
 
@@ -248,7 +250,7 @@ public final class SenderActivity extends FragmentActivity implements
 						this, SmsReceiver.class);
 				sentIntents.add(PendingIntent.getBroadcast(this, 0, sent, 0));
 			}
-			smsmgr.sendMultipartTextMessage(recipient, null, messages,
+			TWRAPPER.sendMultipartTextMessage(recipient, null, messages,
 					sentIntents, null);
 			Log.i(TAG, "message sent");
 		} catch (Exception e) {
