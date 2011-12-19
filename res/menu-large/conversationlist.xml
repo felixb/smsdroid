@@ -19,12 +19,12 @@
     <item
         android:id="@+id/item_compose"
         android:icon="@drawable/ic_menu_compose"
-        android:showAsAction="always|never"
+        android:showAsAction="always|withText"
         android:title="@string/new_message_"/>
     <item
         android:id="@+id/item_mark_all_read"
         android:icon="@drawable/ic_menu_mark"
-        android:showAsAction="ifRoom|never"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/mark_all_read_"/>
     <item
         android:id="@+id/item_delete_all_threads"

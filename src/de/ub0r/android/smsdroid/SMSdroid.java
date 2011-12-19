@@ -25,7 +25,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -37,7 +39,10 @@ import de.ub0r.android.lib.Log;
  */
 public final class SMSdroid extends Application {
 	/** Tag for logging. */
-	static final String TAG = "app";
+	private static final String TAG = "app";
+
+	/** Projection for checking {@link Cursor}. */
+	private static final String[] PROJECTION = new String[] { "_id" };
 
 	/**
 	 * {@inheritDoc}
@@ -50,12 +55,27 @@ public final class SMSdroid extends Application {
 
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		int state;
+		int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 		if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
-			state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-			Log.d(TAG, "enable .Sender");
+			try {
+				Cursor c = this.getContentResolver().query(
+						SenderActivity.URI_SENT, PROJECTION, null, null,
+						"_id LIMIT 1");
+				if (c == null) {
+					Log.i(TAG, "disable .Sender: curor=null");
+				} else if (SmsManager.getDefault() == null) {
+					Log.i(TAG, "disable .Sender: SmsManager=null");
+				} else {
+					state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+					Log.d(TAG, "enable .Sender");
+				}
+				if (c != null && !c.isClosed()) {
+					c.close();
+				}
+			} catch (IllegalArgumentException e) {
+				Log.e(TAG, "disable .Sender: " + e.getMessage(), e);
+			}
 		} else {
-			state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 			Log.i(TAG, "disable .Sender");
 		}
 		this.getPackageManager().setComponentEnabledSetting(

@@ -43,6 +43,8 @@ public final class SenderActivity extends FragmentActivity implements
 
 	/** {@link Uri} for saving messages. */
 	private static final Uri URI_SMS = Uri.parse("content://sms");
+	/** {@link Uri} for saving sent messages. */
+	public static final Uri URI_SENT = Uri.parse("content://sms/sent");
 	/** Projection for getting the id. */
 	private static final String[] PROJECTION_ID = // .
 	new String[] { BaseColumns._ID };
@@ -192,8 +194,6 @@ public final class SenderActivity extends FragmentActivity implements
 	 */
 	private void send(final String recipient, final String message) {
 		Log.d(TAG, "text: " + recipient);
-		SmsManager smsmgr = SmsManager.getDefault();
-
 		int[] l = SmsMessage.calculateLength(message, false);
 		Log.i(TAG, "text7: " + message.length() + ", " + l[0] + " " + l[1]
 				+ " " + l[2] + " " + l[3]);
@@ -216,12 +216,12 @@ public final class SenderActivity extends FragmentActivity implements
 						+ BODY + " like '" + message.replace("'", "_") + "'",
 						null, DATE + " DESC");
 		if (cursor != null && cursor.moveToFirst()) {
-			draft = URI_SMS // .
+			draft = URI_SENT // .
 					.buildUpon().appendPath(cursor.getString(0)).build();
 			Log.d(TAG, "skip saving draft: " + draft);
 		} else {
 			try {
-				draft = cr.insert(URI_SMS, values);
+				draft = cr.insert(URI_SENT, values);
 				Log.d(TAG, "draft saved: " + draft);
 			} catch (SQLiteException e) {
 				Log.e(TAG, "unable to save draft", e);
@@ -232,7 +232,7 @@ public final class SenderActivity extends FragmentActivity implements
 			cursor.close();
 		}
 		cursor = null;
-
+		SmsManager smsmgr = SmsManager.getDefault();
 		final ArrayList<String> messages = smsmgr.divideMessage(message);
 		final int c = messages.size();
 		ArrayList<PendingIntent> sentIntents = new ArrayList<PendingIntent>(c);
