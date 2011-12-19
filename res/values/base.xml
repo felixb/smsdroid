@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
+		Copyright (C) 2009-2011 Felix Bechstein
 	-->
 	<!--
 		This file is part of SMSdroid. This program is free software; you can
@@ -23,7 +23,7 @@
 	<string name="faq_">FAQ</string>
 	<string name="google_plus_">Google+</string>
 	<string name="twitter_">twitter</string>
-	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)\ncore.equip http://corequip.de (icons)\nDaniel Kalinic &lt;kalinic3@gmail.com&gt; (bubbles)\nAlfonso Picón &lt;apictor@gmail.com&gt; (Spanish)\nMarek Wehmer &lt;marek.wehmer@gmail.com&gt; (Spamfilter)\nxim &lt;ximonline@gmail.com&gt; (Russian)\nIsmael A. &lt;ismael.arab@gmail.com&gt; (French)</string>
+	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nJake Wharton &lt;https://github.com/JakeWharton/ActionBarSherlock/&gt; (ActionBar)\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)\ncore.equip http://corequip.de (icons)\nDaniel Kalinic &lt;kalinic3@gmail.com&gt; (bubbles)\nAlfonso Picón &lt;apictor@gmail.com&gt; (Spanish)\nMarek Wehmer &lt;marek.wehmer@gmail.com&gt; (Spamfilter)\nxim &lt;ximonline@gmail.com&gt; (Russian)\nIsmael A. &lt;ismael.arab@gmail.com&gt; (French)\nand many more...</string>
 	<string name="source">http://github.com/felixb/smsdroid</string>
 	<string name="website">http://code.google.com/p/websmsdroid/</string>
 	<string-array name="themes_values">
