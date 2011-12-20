@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 		Copyright (C) 2009-2010 Felix Bechstein -->
+<!-- Copyright (C) 2009-2011 Felix Bechstein -->
 <!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
@@ -14,57 +14,51 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
+    android:id="@+id/widget"
+    android:layout_width="76dp"
+    android:layout_height="81dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/btn_application_selector"
+    android:clickable="true"
+    android:focusable="true" >
 
-    <RelativeLayout
-        xmlns:app="http://schemas.android.com/apk/res/de.ub0r.android.smsdroid"
-        android:id="@+id/widget"
-        android:layout_width="76dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/btn_application_selector"
-        android:clickable="true"
-        android:focusable="true" >
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="5dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon" />
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="5dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/icon" />
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/icon"
+        android:layout_alignRight="@+id/icon"
+        android:background="@drawable/widget_counter_bg"
+        android:gravity="center"
+        android:paddingLeft="1dp"
+        android:text="0"
+        android:textColor="#FF84B02C"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/text1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignBottom="@+id/icon"
-            android:layout_alignRight="@+id/icon"
-            android:background="@drawable/widget_counter_bg"
-            android:gravity="center"
-            android:paddingLeft="1dp"
-            android:text="0"
-            android:textColor="#FF84B02C"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            android:visibility="gone" />
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/widget_label_bg"
+        android:paddingBottom="1dp"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"
+        android:textSize="13dp" />
 
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/widget_label_bg"
-            android:paddingBottom="1dp"
-            android:text="@string/app_name"
-            android:textColor="@android:color/white"
-            android:textSize="13dp" />
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

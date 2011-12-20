@@ -127,8 +127,6 @@
   <string name="not_implemented" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sorry, not yet implemented.">Извините, ещё не реализовано</string>
   <string name="error_conv_null" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Error getting conversation from DB!">Ошибка получения сообщения из базы данных!</string>
   <string name="error_sending_failed" formatted="false" orig="Sending failed">Ошибка при отправке</string>
-  <string name="error_missing_text" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Missing text!">Введите текст</string>
-  <string name="error_missing_reciepient" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Missing reciepient!">Укажите получателя</string>
   <string name="text_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Text">Введите текст</string>
   <string name="paste_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="[Paste from clipboard]">[Вставить из буфера]</string>
   <string name="restore_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Restore last message">Восстановить последнее сообщение</string>
