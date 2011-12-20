@@ -39,7 +39,7 @@
   <string name="answer" formatted="false">Ответить</string>
   <string name="reply" formatted="false" orig="Reply">Ответить</string>
   <string name="send_" formatted="false">Отправить</string>
-  <string name="notification_" formatted="false" orig="Notifications">Настройка уведомлений</string>
+  <string name="notification_" formatted="false" orig="Notifications" username="ergodroid">Уведомления</string>
   <string name="notification_enable_" formatted="false" orig="Enable notifications">Уведомления</string>
   <string name="notification_enable_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Enable notifications on receive">Показывать уведомления при получении сообщений</string>
   <string name="receive_vibrate_" formatted="false">Вибрация</string>
@@ -117,7 +117,7 @@
   <string name="view_mms" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View MMS">Показать MMS</string>
   <string name="mms_conversation" formatted="false" orig="&lt;MMS body&gt;">&lt;MMS тест&gt;</string>
   <string name="mms_not_supported" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Это сообщение может являться MMS. Вы можете попробовать загрузить его, используя стандартное SMS/MMS приложение.\nНажмите для продолжения.</string>
-  <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
+  <string name="DATEFORMAT_details" formatted="false" username="ergodroid" orig="dd.MM.yyyy kk:mm">дд.мм.гггг чч:мм</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Импортировать контакт</string>
   <string name="download_" formatted="false">Загрузить</string>
   <string name="downloading_" formatted="false" orig="Downloading..">Загрузка...</string>
@@ -212,9 +212,10 @@
     <item>Повторно короткий длинный</item>
   </string-array>
   <string name="to_hint" formatted="false" orig="Name or Number">Имя или Номер</string>
-  <string name="google_plus_hint" formatted="false" username="ergodroid" orig="Follow me on Google+.\nGet update notifications etc.">Присоединятесь в Google+ и получайте сообщения об обновлениях и т.п.</string>
+  <string name="google_plus_hint" formatted="false" username="ergodroid" orig="Follow me on Google+.\nGet update notifications etc.">Присоединяйтесь к Google+ и получайте уведомления об обновлениях и т.п.</string>
   <string name="bubbles_blue2_left" formatted="false" username="ergodroid" orig="Blue 2 left">Голубой слева</string>
   <string name="bubbles_blue2_right" formatted="false" username="ergodroid" orig="Blue 2 right">Голубой справа</string>
   <string name="bubbles_green2_left" formatted="false" username="ergodroid" orig="Green 2 left">Зелёный слева</string>
   <string name="bubbles_green2_right" formatted="false" username="ergodroid" orig="Green 2 right">Зелёный справа</string>
+  <string name="notification_gingerbread_" formatted="false" username="ergodroid" orig="Gingerbread">Gingerbread</string>
 </resources>
