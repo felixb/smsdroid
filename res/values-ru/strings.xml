@@ -54,7 +54,7 @@
   <string name="receive_no_text_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide sender/text in notification.">Не показывать отправителя и текст сообщения в уведомлении</string>
   <string name="behavior_" formatted="false" orig="Behavior">Поведение</string>
   <string name="autosend_" formatted="false" orig="Autosend">Автоотправка</string>
-  <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp;amp; behavior">Внешний вид и поведение</string>
+  <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp; behavior" username="ergodroid">Внешний вид и поведение</string>
   <string name="autosend_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Отправлять ответы автоматически. В настоящий момент поддерживается только программой WebSMS</string>
   <string name="show_text_filed_" formatted="false" orig="Show text filed">Текстовое поле</string>
   <string name="show_text_filed_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show text filed instead of answer button.">Показывать текстовое поле вместо кнопки \'Ответить\'</string>
@@ -170,8 +170,8 @@
   <string name="bubbles_white_right" formatted="false" orig="White right">Белый справа</string>
   <string name="bubbles_yellow_left" formatted="false" orig="Yellow left">Жёлтый слева</string>
   <string name="bubbles_yellow_right" formatted="false" orig="Yellow right">Жёлтый справа</string>
-  <string name="decode_decimal_ncr_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Decode Decimal NCR">Автодекдорировка NCR</string>
-  <string name="decode_decimal_ncr_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;amp;#0000;). Check to auto decode such entities.">Некоторые SMS сервисы отправляют сообщения с цифровой кодировкой символов NCR(&amp;#0000;). Автодекодировка исправляет сообщения с таким кодом автоматически</string>
+  <string name="decode_decimal_ncr_" formatted="false" username="ergodroid" orig="Decode Decimal NCR">Автодекодировка NCR</string>
+  <string name="decode_decimal_ncr_hint" formatted="false" username="ergodroid" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.">Некоторые SMS сервисы отправляют сообщения с цифровой кодировкой NCR(�). Автодекодировка исправляет такие сообщения автоматически</string>
   <string name="activate_sender_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Activate sender">Функция отправки</string>
   <string name="activate_sender_hint" formatted="false" orig="Activate SMSdroid\'s message sender.">Активировать функцию отправки сообщений SMSdroid</string>
   <string name="fix_numbers_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Fix numbers">Автозамена номера</string>
@@ -212,4 +212,9 @@
     <item>Повторно короткий длинный</item>
   </string-array>
   <string name="to_hint" formatted="false" orig="Name or Number">Имя или Номер</string>
+  <string name="google_plus_hint" formatted="false" username="ergodroid" orig="Follow me on Google+.\nGet update notifications etc.">Присоединятесь в Google+ и получайте сообщения об обновлениях и т.п.</string>
+  <string name="bubbles_blue2_left" formatted="false" username="ergodroid" orig="Blue 2 left">Голубой слева</string>
+  <string name="bubbles_blue2_right" formatted="false" username="ergodroid" orig="Blue 2 right">Голубой справа</string>
+  <string name="bubbles_green2_left" formatted="false" username="ergodroid" orig="Green 2 left">Зелёный слева</string>
+  <string name="bubbles_green2_right" formatted="false" username="ergodroid" orig="Green 2 right">Зелёный справа</string>
 </resources>
