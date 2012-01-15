@@ -43,6 +43,8 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,8 +52,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
@@ -200,9 +200,9 @@ public class MessageListActivity extends FragmentActivity implements
 		v.setOnClickListener(this);
 		v.setOnLongClickListener(this);
 		this.findViewById(R.id.text_paste).setOnClickListener(this);
-		this.textWatcher = new MyTextWatcher(this, (TextView) this
-				.findViewById(R.id.text_paste), (TextView) this
-				.findViewById(R.id.text_));
+		this.textWatcher = new MyTextWatcher(this,
+				(TextView) this.findViewById(R.id.text_paste),
+				(TextView) this.findViewById(R.id.text_));
 		this.etText.addTextChangedListener(this.textWatcher);
 		this.textWatcher.afterTextChanged(this.etText.getEditableText());
 
@@ -266,8 +266,7 @@ public class MessageListActivity extends FragmentActivity implements
 			if (tid < 0L) {
 				try {
 					this.startActivity(// .
-							ConversationListActivity.getComposeIntent(this,
-									null));
+					ConversationListActivity.getComposeIntent(this, null));
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "activity not found", e);
 					Toast.makeText(this, R.string.error_conv_null,
@@ -361,8 +360,8 @@ public class MessageListActivity extends FragmentActivity implements
 				ivPhoto.setImageDrawable(contact.getAvatar(this,
 						this.defaultContactAvatar));
 				ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this,
-						ivPhoto, contact
-								.getLookUpUri(this.getContentResolver()), 2,
+						ivPhoto,
+						contact.getLookUpUri(this.getContentResolver()), 2,
 						null));
 			}
 
@@ -410,7 +409,7 @@ public class MessageListActivity extends FragmentActivity implements
 				ai = i.resolveActivityInfo(pm, 0);
 			}
 			if (ai == null) {
-				btn.setText(R.string.send_);
+				btn.setText(null);
 				this.etText.setMinLines(1);
 			} else {
 				if (chooserPackage == null) {
@@ -422,18 +421,15 @@ public class MessageListActivity extends FragmentActivity implements
 					}
 				}
 				if (ai.packageName.equals(chooserPackage)) {
-					btn.setText(this.getString(R.string.send_) + "\n("
-							+ this.getString(R.string.chooser_) + ")");
-					this.etText.setMinLines(2);
+					btn.setText(R.string.chooser_);
 				} else {
 					Log.d(TAG, "ai.pn: " + ai.packageName);
-					btn.setText(this.getString(R.string.send_) + "\n("
-							+ ai.loadLabel(pm) + ")");
-					this.etText.setMinLines(2);
+					btn.setText(ai.loadLabel(pm));
 				}
+				this.etText.setMinLines(3);
 			}
 		} else {
-			btn.setText(R.string.reply);
+			btn.setText(null);
 		}
 	}
 
@@ -493,13 +489,7 @@ public class MessageListActivity extends FragmentActivity implements
 					this);
 			return true;
 		case R.id.item_all_threads:
-			this
-					.startActivity(new Intent(this,
-							ConversationListActivity.class));
-			return true;
-		case R.id.item_compose:
-			this.startActivity(ConversationListActivity.getComposeIntent(this,
-					null));
+			this.startActivity(new Intent(this, ConversationListActivity.class));
 			return true;
 		case R.id.item_answer:
 			this.send(true, false);
@@ -515,9 +505,11 @@ public class MessageListActivity extends FragmentActivity implements
 			return true;
 		case R.id.item_contact:
 			if (this.conv != null && this.contactItem != null) {
-				WRAPPER.showQuickContactFallBack(this, this.contactItem
-						.getActionView(), this.conv.getContact().getLookUpUri(
-						this.getContentResolver()), 2, null);
+				WRAPPER.showQuickContactFallBack(
+						this,
+						this.contactItem.getActionView(),
+						this.conv.getContact().getLookUpUri(
+								this.getContentResolver()), 2, null);
 			}
 			return true;
 		default:
@@ -539,8 +531,8 @@ public class MessageListActivity extends FragmentActivity implements
 	public final boolean onItemLongClick(final AdapterView<?> parent,
 			final View view, final int position, final long id) {
 		final Context context = this;
-		final Message m = Message.getMessage(this, (Cursor) parent
-				.getItemAtPosition(position));
+		final Message m = Message.getMessage(this,
+				(Cursor) parent.getItemAtPosition(position));
 		final Uri target = m.getUri();
 		final int read = m.getRead();
 		final int type = m.getType();
@@ -623,8 +615,8 @@ public class MessageListActivity extends FragmentActivity implements
 					}
 					i.putExtra(Intent.EXTRA_TEXT, text);
 					i.putExtra("sms_body", text);
-					context.startActivity(Intent.createChooser(i, context
-							.getString(resId)));
+					context.startActivity(Intent.createChooser(i,
+							context.getString(resId)));
 					break;
 				case WHICH_COPY_TEXT:
 					final ClipboardManager cm = // .
@@ -646,7 +638,7 @@ public class MessageListActivity extends FragmentActivity implements
 					final long d = m.getDate();
 					final String ds = DateFormat.format(// .
 							context.getString(// .
-									R.string.DATEFORMAT_details), d).toString();
+							R.string.DATEFORMAT_details), d).toString();
 					String sentReceived;
 					String fromTo;
 					if (t == Calls.INCOMING_TYPE) {
@@ -757,9 +749,11 @@ public class MessageListActivity extends FragmentActivity implements
 	private void send(final boolean autosend, final boolean showChooser) {
 		final Intent i = this.buildIntent(autosend, showChooser);
 		this.startActivity(i);
-		PreferenceManager.getDefaultSharedPreferences(this).edit().putString(
-				PreferencesActivity.PREFS_BACKUPLASTTEXT,
-				this.etText.getText().toString()).commit();
+		PreferenceManager
+				.getDefaultSharedPreferences(this)
+				.edit()
+				.putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
+						this.etText.getText().toString()).commit();
 		this.etText.setText("");
 	}
 }

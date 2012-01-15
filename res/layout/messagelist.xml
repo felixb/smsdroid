@@ -1,57 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-		Copyright (C) 2009-2011 Felix Bechstein
-	-->
-	<!--
+<!-- Copyright (C) 2009-2011 Felix Bechstein -->
+<!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
 		Public License as published by the Free Software Foundation; either
 		version 3 of the License, or (at your option) any later version.
-	-->
-	<!--
+-->
+<!--
 		This program is distributed in the hope that it will be useful, but
 		WITHOUT ANY WARRANTY; without even the implied warranty of
 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 		General Public License for more details. You should have received a
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
-	-->
+-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:drawSelectorOnTop="false"
-		android:scrollingCache="true" android:fastScrollEnabled="true"
-		android:choiceMode="singleChoice" android:background="?android:attr/colorBackground"
-		android:cacheColorHint="?android:attr/colorBackground"
-		android:layout_weight="1" android:layout_above="@+id/answerbar"
-		android:layout_below="@+id/titlebar" />
-	<LinearLayout android:id="@+id/answerbar"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal" style="@android:style/ButtonBar"
-		android:layout_alignParentBottom="true">
-		<RelativeLayout android:id="@+id/text_layout"
-			android:layout_width="0dip" android:layout_height="wrap_content"
-			android:addStatesFromChildren="true" android:layout_weight="1">
-			<EditText android:id="@+id/text" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:hint="@string/text_hint"
-				android:imeOptions="actionDone|flagNoEnterAction" android:maxLines="4"
-				android:nextFocusRight="@+id/send_" android:gravity="top"
-				android:autoText="true" android:inputType="textShortMessage|textMultiLine|textAutoCorrect|textCapSentences" />
-			<TextView android:id="@+id/text_" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:paddingLeft="3dip"
-				android:paddingRight="3dip" android:paddingBottom="3dip"
-				android:layout_alignParentRight="true" android:layout_alignBottom="@id/text"
-				android:textStyle="bold" android:background="#88000000"
-				android:textColor="#ffffffff" />
-			<TextView android:id="@+id/text_paste" android:text="@string/paste_"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:paddingLeft="3dip" android:paddingRight="3dip"
-				android:paddingBottom="3dip" android:layout_alignParentLeft="true"
-				android:layout_alignBottom="@id/text" android:textStyle="bold"
-				android:background="#88000000" android:textColor="#ffffffff"
-				android:clickable="true" android:focusable="true" />
-		</RelativeLayout>
-		<Button android:id="@+id/send_" android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:text="@string/send_" />
-	</LinearLayout>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/answerbar"
+        android:layout_below="@+id/titlebar"
+        android:layout_weight="1"
+        android:background="?android:attr/colorBackground"
+        android:cacheColorHint="?android:attr/colorBackground"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="false"
+        android:fastScrollEnabled="true"
+        android:scrollingCache="true" />
+
+    <LinearLayout
+        android:id="@+id/answerbar"
+        style="@style/ButtonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/text_layout"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:addStatesFromChildren="true" >
+
+            <EditText
+                android:id="@+id/text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoText="true"
+                android:gravity="top"
+                android:hint="@string/text_hint"
+                android:imeOptions="actionDone|flagNoEnterAction"
+                android:inputType="textShortMessage|textMultiLine|textAutoCorrect|textCapSentences"
+                android:maxLines="4"
+                android:nextFocusRight="@+id/send_" />
+
+            <TextView
+                android:id="@+id/text_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/text"
+                android:layout_alignParentRight="true"
+                android:background="#88000000"
+                android:paddingBottom="3dip"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:textColor="#ffffffff"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_paste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/text"
+                android:layout_alignParentLeft="true"
+                android:background="#88000000"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="3dip"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:text="@string/paste_"
+                android:textColor="#ffffffff"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/send_"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:drawableTop="@android:drawable/ic_menu_send"
+            android:text="@string/send_" />
+    </LinearLayout>
+
 </RelativeLayout>

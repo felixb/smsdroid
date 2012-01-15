@@ -61,7 +61,7 @@
   <string name="show_text_filed_hint" formatted="false">Zeige das Textfeld statt dem Antworten Button.</string>
   <string name="show_target_app_" formatted="false">Zeige Ziel App</string>
   <string name="show_target_app_hint" formatted="false" username="Thilo H. &lt;thilohp@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Zeige Ziel-App zum Senden auf "Senden"-Button.</string>
-  <string name="appearance_" formatted="false">Erscheinung</string>
+  <string name="appearance_" formatted="false">Darstellung</string>
   <string name="theme_" formatted="false">Theme</string>
   <string name="textsize_" formatted="false">Schriftgrad</string>
   <string name="textsize_hint" formatted="false">Schriftgrad in Punkten; leer lassen für Standard</string>

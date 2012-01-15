@@ -34,9 +34,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
@@ -315,9 +315,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
-			AlertDialog d = b.create();
-			d.getListView().setBackgroundColor(Color.WHITE); // FIXME
-			d.show();
+			b.show();
 			return true;
 		}
 	};
@@ -437,8 +435,11 @@ public class PreferencesActivity extends PreferenceActivity implements
 		final String s = p.getString(PREFS_THEME, THEME_BLACK);
 		if (s != null && THEME_LIGHT.equals(s)) {
 			return R.style.Theme_SherlockUb0r_Light;
+		} else if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
+			return R.style.Theme_SherlockUb0r_Light;
+		} else {
+			return R.style.Theme_SherlockUb0r;
 		}
-		return R.style.Theme_SherlockUb0r;
 	}
 
 	/**
@@ -542,11 +543,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 		if (i >= 0 && i < NOTIFICAION_IMG.length) {
 			return NOTIFICAION_IMG[i];
 		}
-		if (Utils.isApi(Build.VERSION_CODES.GINGERBREAD)) {
-			return R.drawable.stat_notify_sms_gingerbread;
-		} else {
-			return R.drawable.stat_notify_sms;
-		}
+		return R.drawable.stat_notify_sms;
 	}
 
 	/**

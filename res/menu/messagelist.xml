@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-		Copyright (C) 2009-2010 Felix Bechstein
-	-->
-	<!--
+<!-- Copyright (C) 2009-2012 Felix Bechstein -->
+<!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
 		Public License as published by the Free Software Foundation; either
 		version 3 of the License, or (at your option) any later version.
-	-->
-	<!--
+-->
+<!--
 		This program is distributed in the hope that it will be useful, but
 		WITHOUT ANY WARRANTY; without even the implied warranty of
 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 		General Public License for more details. You should have received a
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
-	-->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/item_contact" android:showAsAction="always|never"
-		android:actionLayout="@layout/contact" />
-	<item android:title="@string/compose_" android:id="@+id/item_compose"
-		android:icon="@drawable/ic_menu_compose" />
-	<item android:title="@string/reply" android:id="@+id/item_answer"
-		android:icon="@drawable/android:ic_menu_send" />
-	<item android:title="@string/call" android:id="@+id/item_call"
-		android:icon="@drawable/android:ic_menu_call" />
-	<item android:title="@string/all_threads_" android:id="@+id/item_all_threads"
-		android:icon="@android:drawable/ic_menu_view" />
-	<item android:title="@string/delete_thread_" android:id="@+id/item_delete_thread"
-		android:icon="@android:drawable/ic_menu_delete" />
-	<item android:title="@string/restore_" android:id="@+id/item_restore"
-		android:icon="@android:drawable/ic_menu_revert" />
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/item_contact"
+        android:actionLayout="@layout/contact"
+        android:showAsAction="always|never"/>
+    <item
+        android:id="@+id/item_answer"
+        android:icon="@android:drawable/android:ic_menu_send"
+        android:title="@string/reply"/>
+    <item
+        android:id="@+id/item_call"
+        android:icon="@drawable/android:ic_menu_call"
+        android:title="@string/call"/>
+    <item
+        android:id="@+id/item_all_threads"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="@string/all_threads_"/>
+    <item
+        android:id="@+id/item_delete_thread"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/delete_thread_"/>
+    <item
+        android:id="@+id/item_restore"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:title="@string/restore_"/>
+
 </menu>
