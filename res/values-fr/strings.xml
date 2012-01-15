@@ -18,7 +18,7 @@
        -->
 <!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://www.4.ub0r.de/translate/smsdroid/edit.php?lang=fr&file=strings.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/fr/strings.xml to edit the file.
        -->
 <resources>
   <string name="about_" formatted="false" orig="About">À propos</string>
@@ -54,7 +54,7 @@
   <string name="receive_no_text_hint" formatted="false" orig="Hide sender/text in notification.">Cacher l\'expéditeur/le texte lors de la notification</string>
   <string name="behavior_" formatted="false" orig="Behavior">Comportement</string>
   <string name="autosend_" formatted="false" orig="Autosend">Réponse automatique</string>
-  <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp;amp; behavior">Apparence et comportement</string>
+  <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp; behavior">Apparence et comportement</string>
   <string name="autosend_hint" formatted="false" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Envoie des réponses automatiques. Actuellement, seule l\'application WebSMS supporte cette fonction. Les autres applications montreront simplement le texte.</string>
   <string name="show_text_filed_" formatted="false" orig="Show text filed">Montrer le texte entré</string>
   <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">Montrer le texte entré au lieu du bouton répondre</string>
