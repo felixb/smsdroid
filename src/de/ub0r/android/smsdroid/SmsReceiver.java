@@ -32,13 +32,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Utils;
+import de.ub0r.android.lib.apis.NotificationBuilderWrapper;
 
 /**
  * Listen for new sms.
@@ -330,6 +335,9 @@ public class SmsReceiver extends BroadcastReceiver {
 				PreferencesActivity.PREFS_NOTIFICATION_ENABLE, true);
 		final boolean privateNotification = prefs.getBoolean(
 				PreferencesActivity.PREFS_NOTIFICATION_PRIVACY, false);
+		final boolean showPhoto = !privateNotification
+				&& prefs.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO,
+						true);
 		if (!enableNotifications) {
 			mNotificationMgr.cancelAll();
 			Log.d(TAG, "no notification needed!");
@@ -349,13 +357,16 @@ public class SmsReceiver extends BroadcastReceiver {
 		Uri uri = null;
 		PendingIntent pIntent;
 		if (l == 0) {
-			final Intent i = new Intent(context, ConversationListActivity.class);
+			final Intent i = new Intent(context, // .
+					ConversationListActivity.class);
 			// add pending intent
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			pIntent = PendingIntent.getActivity(context, 0, i,
 					PendingIntent.FLAG_CANCEL_CURRENT);
 		} else {
-			Notification n = null;
+			NotificationBuilderWrapper.Builder nb = NotificationBuilderWrapper
+					.getNotificationBuilder(context);
+			boolean showNotification = true;
 			Intent i;
 			if (tid >= 0) {
 				uri = Uri.parse(MessageListActivity.URI + tid);
@@ -378,10 +389,11 @@ public class SmsReceiver extends BroadcastReceiver {
 						} else {
 							a = conv.getContact().getDisplayName();
 						}
-						n = new Notification(
-								PreferencesActivity
-										.getNotificationIcon(context),
-								a, lastUnreadDate);
+						showNotification = true;
+						nb.setSmallIcon(PreferencesActivity
+								.getNotificationIcon(context));
+						nb.setTicker(a);
+						nb.setWhen(lastUnreadDate);
 						if (l == 1) {
 							String body;
 							if (privateNotification) {
@@ -393,12 +405,22 @@ public class SmsReceiver extends BroadcastReceiver {
 								body = context
 										.getString(R.string.mms_conversation);
 							}
-							n.setLatestEventInfo(context, a, body, pIntent);
+							nb.setLatestEventInfo(context, a, body, pIntent);
 						} else {
-							n.setLatestEventInfo(context, a,
+							nb.setLatestEventInfo(context, a,
 									String.format(context
 											.getString(R.string.new_messages),
 											l), pIntent);
+						}
+						if (showPhoto // just for the speeeeed
+								&& Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
+							conv.getContact().update(context, false, true);
+							Drawable d = conv.getContact().getAvatar(context,
+									null);
+							if (d instanceof BitmapDrawable) { // FIXME
+								nb.setLargeIcon(((BitmapDrawable) d)
+										.getBitmap());
+							}
 						}
 					}
 				}
@@ -410,26 +432,25 @@ public class SmsReceiver extends BroadcastReceiver {
 						PendingIntent.FLAG_UPDATE_CURRENT);
 
 				if (enableNotifications) {
-					n = new Notification(
-							PreferencesActivity.getNotificationIcon(context),
-							context.getString(R.string.new_messages_),
-							lastUnreadDate);
-					n.setLatestEventInfo(context, context
+					showNotification = true;
+					nb.setSmallIcon(PreferencesActivity
+							.getNotificationIcon(context));
+					nb.setTicker(context.getString(R.string.new_messages_));
+					nb.setWhen(lastUnreadDate);
+					nb.setLatestEventInfo(context, context
 							.getString(R.string.new_messages_), String.format(
 							context.getString(R.string.new_messages), l),
 							pIntent);
-					n.number = l;
+					nb.setNumber(l);
 				}
 			}
 			// add pending intent
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-			if (enableNotifications && n != null) {
-				n.flags |= Notification.FLAG_SHOW_LIGHTS;
-				n.ledARGB = PreferencesActivity.getLEDcolor(context);
+			if (enableNotifications && showNotification) {
 				int[] ledFlash = PreferencesActivity.getLEDflash(context);
-				n.ledOnMS = ledFlash[0];
-				n.ledOffMS = ledFlash[1];
+				nb.setLights(PreferencesActivity.getLEDcolor(context),
+						ledFlash[0], ledFlash[1]);
 				final SharedPreferences p = PreferenceManager
 						.getDefaultSharedPreferences(context);
 				if (text != null) {
@@ -447,18 +468,19 @@ public class SmsReceiver extends BroadcastReceiver {
 						final long[] pattern = PreferencesActivity
 								.getVibratorPattern(context);
 						if (pattern.length == 1 && pattern[0] == 0) {
-							n.defaults |= Notification.DEFAULT_VIBRATE;
+							nb.setDefaults(Notification.DEFAULT_VIBRATE);
 						} else {
-							n.vibrate = pattern;
+							nb.setVibrate(pattern);
 						}
 					}
-					n.sound = sound;
+					nb.setSound(sound);
 				}
 			}
 			Log.d(TAG, "uri: " + uri);
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
-			if (enableNotifications && n != null) {
-				mNotificationMgr.notify(NOTIFICATION_ID_NEW, n);
+			if (enableNotifications && showNotification) {
+				mNotificationMgr.notify(NOTIFICATION_ID_NEW,
+						nb.getNotification());
 			}
 		}
 		Log.d(TAG, "return " + ret + " (2)");
