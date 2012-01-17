@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <!--
+<!--
                Copyright (C) 2009-2011 Felix Bechstein
        -->
-       <!--
+<!--
                This file is part of SMSdroid. This program is free software; you can
                redistribute it and/or modify it under the terms of the GNU General
                Public License as published by the Free Software Foundation; either
                version 3 of the License, or (at your option) any later version.
        -->
-       <!--
+<!--
                This program is distributed in the hope that it will be useful, but
                WITHOUT ANY WARRANTY; without even the implied warranty of
                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -16,9 +16,9 @@
                copy of the GNU General Public License along with this program; If
                not, see <http://www.gnu.org/licenses/>.
        -->
-      <!--
+<!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=fr&file=market.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/fr/market.xml to edit the file.
        -->
 <resources>
   <string name="market_about" formatted="false" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.">SMSdroid est une application de messagerie spéciale, qui vous permet d\'envoyer des SMS avec d\'autres applications (par ex. WebSMS)</string>
