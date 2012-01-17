@@ -167,7 +167,7 @@ public class MessageListActivity extends FragmentActivity implements
 		this.showTextField = this.enableAutosend
 				|| p.getBoolean(PreferencesActivity.PREFS_SHOWTEXTFIELD, true);
 		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO,
-				false);
+				true);
 		final boolean hideSend = p.getBoolean(
 				PreferencesActivity.PREFS_HIDE_SEND, false);
 		this.setTheme(PreferencesActivity.getTheme(this));

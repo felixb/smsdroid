@@ -301,7 +301,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		showContactPhoto = p.getBoolean(
-				PreferencesActivity.PREFS_CONTACT_PHOTO, false);
+				PreferencesActivity.PREFS_CONTACT_PHOTO, true);
 		showEmoticons = p
 				.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
 		this.adapter.startMsgListQuery();
