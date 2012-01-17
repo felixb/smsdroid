@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>HEAD: UI fixes for HC/ICS</item>
+		<item>v1.1.7: UI fixes for HC/ICS</item>
 		<item>v1.1.6: fix FC on android 1.6</item>
 		<item>v1.1.5: fix FC on android 1.6</item>
 		<item>v1.1.5: HC/ICS widget</item>
