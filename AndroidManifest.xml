@@ -17,7 +17,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="internalOnly"
     package="de.ub0r.android.smsdroid"
-    android:versionCode="136"
+    android:versionCode="137"
     android:versionName="1.1.7" >
 
     <application
