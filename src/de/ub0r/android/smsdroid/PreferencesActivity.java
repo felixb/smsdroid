@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -24,13 +24,11 @@ import java.util.HashMap;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -432,10 +430,12 @@ public class PreferencesActivity extends PreferenceActivity implements
 	static final int getTheme(final Context context) {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		final String s = p.getString(PREFS_THEME, THEME_BLACK);
+		final String s = p.getString(PREFS_THEME, null);
 		if (s != null && THEME_LIGHT.equals(s)) {
 			return R.style.Theme_SherlockUb0r_Light;
-		} else if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
+		} else if (s != null && THEME_BLACK.equals(s)) {
+			return R.style.Theme_SherlockUb0r;
+		} else if (Utils.isApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
 			return R.style.Theme_SherlockUb0r_Light;
 		} else {
 			return R.style.Theme_SherlockUb0r;
