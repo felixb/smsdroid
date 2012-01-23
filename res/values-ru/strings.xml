@@ -18,7 +18,7 @@
        -->
 <!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=ru&file=strings.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/ru/strings.xml to edit the file.
        -->
 <resources>
   <string name="about_" formatted="false" orig="About">О программе</string>
@@ -121,7 +121,7 @@
   <string name="import_contact_" formatted="false" orig="Import contact">Импортировать контакт</string>
   <string name="download_" formatted="false">Загрузить</string>
   <string name="downloading_" formatted="false" orig="Downloading..">Загрузка...</string>
-  <string name="debug_" formatted="false">Отладка</string>
+  <string name="debug_" formatted="false" username="ergodroid" orig="Debug">Отладка</string>
   <string name="clear_cache_" formatted="false">Очистить кеш</string>
   <string name="clear_cache_hint" formatted="false" orig="Clear internal Database. Fetch all data again from external Database.">Очистит внутреннюю базу данных и удалит все данные из внешней базы данных.</string>
   <string name="not_implemented" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Sorry, not yet implemented.">Извините, ещё не реализовано</string>
