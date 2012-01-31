@@ -119,7 +119,6 @@
   <string name="view_mms" formatted="false">MMS anzeigen</string>
   <string name="mms_conversation" formatted="false">&lt;MMS body&gt;</string>
   <string name="mms_not_supported" formatted="false">Die Nachricht scheint eine MMS zu sein. Vielleicht willst du sie dir mit der standard MMS/SMS app herrunter laden?\nKlicke hier..</string>
-  <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
   <string name="import_contact_" formatted="false">Kontakt importieren</string>
   <string name="download_" formatted="false">Herunterladen</string>
   <string name="downloading_" formatted="false">Lade herunter..</string>

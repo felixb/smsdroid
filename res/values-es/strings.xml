@@ -101,7 +101,6 @@
   <string name="view_mms" formatted="false" orig="View MMS">Ver MMS</string>
   <string name="mms_conversation" formatted="false">&lt;Cuerpo del MMS&gt;</string>
   <string name="mms_not_supported" formatted="false">Este mensaje parece ser un MMS. Es posible que desee descargarlo con la aplicación estándar de SMS/MMS.\nPulse aquí para hacerlo.</string>
-  <string name="DATEFORMAT_details" formatted="false">dd.MM.yyyy kk:mm</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Importar contacto</string>
   <string name="download_" formatted="false">Descargar</string>
   <string name="downloading_" formatted="false">Descargando..</string>

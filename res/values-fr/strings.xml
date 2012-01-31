@@ -115,7 +115,6 @@
   <string name="view_mms" formatted="false" orig="View MMS">Voir le MMS</string>
   <string name="mms_conversation" formatted="false" orig="&amp;lt;MMS body&amp;gt;">&lt;contenu MMS&gt;</string>
   <string name="mms_not_supported" formatted="false" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Ce message semble être un MMS. Vous souhaitez peut-être le télécharger avec l\'application MMS d\'origine.\nCliquez ici pour ce faire.</string>
-  <string name="DATEFORMAT_details" formatted="false" orig="dd.MM.yyyy kk:mm">jj.MM.yyyy hh:mm</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Importer le contact</string>
   <string name="download_" formatted="false" orig="Download">Télécharger</string>
   <string name="downloading_" formatted="false" orig="Downloading..">Téléchargement...</string>

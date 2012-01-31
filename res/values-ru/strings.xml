@@ -117,7 +117,6 @@
   <string name="view_mms" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View MMS">Показать MMS</string>
   <string name="mms_conversation" formatted="false" orig="&lt;MMS body&gt;">&lt;MMS тест&gt;</string>
   <string name="mms_not_supported" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Это сообщение может являться MMS. Вы можете попробовать загрузить его, используя стандартное SMS/MMS приложение.\nНажмите для продолжения.</string>
-  <string name="DATEFORMAT_details" formatted="false" username="ergodroid" orig="dd.MM.yyyy kk:mm">дд.мм.гггг чч:мм</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Импортировать контакт</string>
   <string name="download_" formatted="false">Загрузить</string>
   <string name="downloading_" formatted="false" orig="Downloading..">Загрузка...</string>

@@ -121,7 +121,6 @@ Ricevi notifiche su aggiornamenti ecc.</string>
   <string name="mms_conversation" formatted="false" username="carloraudino@fedoraproject.org" orig="&lt;MMS body&gt;">&lt;corpo MMS&gt;</string>
   <string name="mms_not_supported" formatted="false" username="carloraudino@fedoraproject.org" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Questo messaggio sembra essere un MMS. Per scaricarlo usare l\'applicazione standard per gli SMS/MMS.&#13;
 Cliccare per farlo adesso.</string>
-  <string name="DATEFORMAT_details" formatted="false" username="carloraudino@fedoraproject.org" orig="dd.MM.yyyy kk:mm">dd.MM.yyyy kk:mm</string>
   <string name="import_contact_" formatted="false" username="carloraudino@fedoraproject.org" orig="Import contact">Importa contatto</string>
   <string name="download_" formatted="false" username="carloraudino@fedoraproject.org" orig="Download">Scarica</string>
   <string name="downloading_" formatted="false" username="carloraudino@fedoraproject.org" orig="Downloading..">Scaricamento..</string>
