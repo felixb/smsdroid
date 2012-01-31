@@ -19,7 +19,7 @@
 <resources>
 	<string name="app_name">SMSdroid</string>
 	<string name="sender_name">SMS (SMSdroid)</string>
-	<string name="app_version">1.1.7</string>
+	<string name="app_version">1.1.8</string>
 	<string name="faq_">FAQ</string>
 	<string name="google_plus_">Google+</string>
 	<string name="twitter_">twitter</string>
