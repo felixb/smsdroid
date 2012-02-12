@@ -14,6 +14,9 @@ res/values-fr/strings.xml:167
 res/values-it/market.xml:4
 res/values-it/notes.xml:4
 res/values-it/strings.xml:184
+res/values-iw/market.xml:4
+res/values-iw/notes.xml:0
+res/values-iw/strings.xml:27
 res/values-ru/market.xml:2
 res/values-ru/notes.xml:2
 res/values-ru/strings.xml:189
@@ -22,4 +25,5 @@ res/values-de:197
 res/values-es:125
 res/values-fr:175
 res/values-it:192
+res/values-iw:31
 res/values-ru:193
