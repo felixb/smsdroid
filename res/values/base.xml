@@ -84,6 +84,7 @@
 		<item>en</item>
 		<item>de</item>
 		<item>fr</item>
+		<item>iw</item>
 		<item>ru</item>
 		<item>es</item>
 	</string-array>
@@ -92,6 +93,7 @@
 		<item>English</item>
 		<item>German</item>
 		<item>French</item>
+		<item>Hebrew</item>
 		<item>Russian</item>
 		<item>Spanish</item>
 	</string-array>
