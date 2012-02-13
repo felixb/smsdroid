@@ -18,7 +18,7 @@
        -->
 <!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://www.ub0r.de/translate/smsdroid/edit.php?lang=it&file=market.xml to edit the file.
+               Visit http://www.ub0r.de/translate/smsdroid/it/market.xml to edit the file.
        -->
 <resources>
   <string name="market_about" formatted="false" username="tonino.degregorio@gmail.com" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.">SMSdroid è un\'applicazione per gli SMS speciale con supporto all\'invio con altre applicazioni di messaggistica (es. WebSMS).</string>
