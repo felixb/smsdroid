@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Felix Bechstein
+ * Copyright (C) 2009-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -64,8 +64,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	private final String[] blacklist;
 
 	/** {@link ContactsWrapper}. */
-	private static final ContactsWrapper WRAPPER = ContactsWrapper
-			.getInstance();
+	private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
 
 	/** Default {@link Drawable} for {@link Contact}s. */
 	private Drawable defaultContactAvatar = null;
@@ -95,8 +94,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		 * {@inheritDoc}
 		 */
 		@Override
-		protected void onQueryComplete(final int token, final Object cookie,
-				final Cursor cursor) {
+		protected void onQueryComplete(final int token, final Object cookie, final Cursor cursor) {
 			switch (token) {
 			case MESSAGE_LIST_QUERY_TOKEN:
 				ConversationAdapter.this.changeCursor(cursor);
@@ -126,18 +124,16 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		spam.close();
 		spam = null;
 
-		this.defaultContactAvatar = c.getResources().getDrawable(
-				R.drawable.ic_contact_picture);
+		this.defaultContactAvatar = c.getResources().getDrawable(R.drawable.ic_contact_picture);
 
 		this.convertNCR = PreferencesActivity.decodeDecimalNCR(c);
 		this.textSize = PreferencesActivity.getTextsize(c);
 		this.textColor = PreferencesActivity.getTextcolor(c);
-		this.origCursor = cr.query(Conversation.URI_SIMPLE,
-				Conversation.PROJECTION_SIMPLE, null, null, null);
+		this.origCursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE, null,
+				null, null);
 
 		if (this.origCursor != null) {
-			this.origCursor.registerContentObserver(new ContentObserver(
-					new Handler()) {
+			this.origCursor.registerContentObserver(new ContentObserver(new Handler()) {
 				@Override
 				public void onChange(final boolean selfChange) {
 					super.onChange(selfChange);
@@ -162,9 +158,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		try {
 			// Kick off the new query
 			this.activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
-			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null,
-					Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE,
-					null, null, SORT);
+			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null, Conversation.URI_SIMPLE,
+					Conversation.PROJECTION_SIMPLE, null, null, SORT);
 		} catch (SQLiteException e) {
 			Log.e(TAG, "error starting query", e);
 		}
@@ -174,10 +169,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void bindView(final View view, final Context context,
-			final Cursor cursor) {
-		final Conversation c = Conversation.getConversation(context, cursor,
-				false);
+	public final void bindView(final View view, final Context context, final Cursor cursor) {
+		final Conversation c = Conversation.getConversation(context, cursor, false);
 		final Contact contact = c.getContact();
 
 		final TextView tvPerson = (TextView) view.findViewById(R.id.addr);
@@ -197,13 +190,10 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
 
 		if (ConversationListActivity.showContactPhoto) {
-			ivPhoto.setImageDrawable(contact.getAvatar(this.activity,
-					this.defaultContactAvatar));
+			ivPhoto.setImageDrawable(contact.getAvatar(this.activity, this.defaultContactAvatar));
 			ivPhoto.setVisibility(View.VISIBLE);
-			ivPhoto.setOnClickListener(WRAPPER
-					.getQuickContact(context, ivPhoto, contact
-							.getLookUpUri(context.getContentResolver()), 2,
-							null));
+			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context, ivPhoto,
+					contact.getLookUpUri(context.getContentResolver()), 2, null));
 		} else {
 			ivPhoto.setVisibility(View.GONE);
 		}
@@ -246,8 +236,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		// presence
 		ImageView ivPresence = (ImageView) view.findViewById(R.id.presence);
 		if (contact.getPresenceState() > 0) {
-			ivPresence.setImageResource(Contact.getPresenceRes(contact
-					.getPresenceState()));
+			ivPresence.setImageResource(Contact.getPresenceRes(contact.getPresenceState()));
 			ivPresence.setVisibility(View.VISIBLE);
 		} else {
 			ivPresence.setVisibility(View.GONE);

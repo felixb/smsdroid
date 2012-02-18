@@ -42,8 +42,7 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	private ContentResolver mContentResolver;
 
 	/** {@link ContactsWrapper} to use. */
-	private static final ContactsWrapper WRAPPER = ContactsWrapper
-			.getInstance();
+	private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
 
 	/** {@link Uri} to content. */
 	private static final Uri URI = WRAPPER.getContentUri();
@@ -64,16 +63,14 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	public MobilePhoneAdapter(final Context context) {
 		super(context, R.layout.recipient_dropdown_item, null);
 		this.mContentResolver = context.getContentResolver();
-		this.types = context.getResources().getStringArray(
-				android.R.array.phoneTypes);
+		this.types = context.getResources().getStringArray(android.R.array.phoneTypes);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void bindView(final View view, final Context context,
-			final Cursor cursor) {
+	public final void bindView(final View view, final Context context, final Cursor cursor) {
 		((TextView) view.findViewById(R.id.text1)).setText(cursor
 				.getString(ContactsWrapper.CONTENT_INDEX_NAME));
 		((TextView) view.findViewById(R.id.text2)).setText(cursor
@@ -91,10 +88,8 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 */
 	@Override
 	public final String convertToString(final Cursor cursor) {
-		final String name = cursor
-				.getString(ContactsWrapper.CONTENT_INDEX_NAME);
-		final String number = cursor
-				.getString(ContactsWrapper.CONTENT_INDEX_NUMBER);
+		final String name = cursor.getString(ContactsWrapper.CONTENT_INDEX_NAME);
+		final String number = cursor.getString(ContactsWrapper.CONTENT_INDEX_NUMBER);
 		if (name == null || name.length() == 0) {
 			return cleanRecipient(number);
 		}
@@ -105,8 +100,7 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Cursor runQueryOnBackgroundThread(// .
-			final CharSequence constraint) {
+	public final Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
 		String where = null;
 		if (constraint != null) {
 			where = WRAPPER.getContentWhere(constraint.toString());
@@ -115,8 +109,7 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 			}
 		}
 
-		final Cursor cursor = this.mContentResolver.query(URI, PROJECTION,
-				where, null, SORT);
+		final Cursor cursor = this.mContentResolver.query(URI, PROJECTION, where, null, SORT);
 		return cursor;
 	}
 
@@ -141,12 +134,10 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 		}
 		String n;
 		if (recipient.indexOf("<") < recipient.indexOf(">")) {
-			n = recipient.substring(recipient.indexOf("<"),
-					recipient.indexOf(">"));
+			n = recipient.substring(recipient.indexOf("<"), recipient.indexOf(">"));
 		} else {
 			n = recipient;
 		}
-		return n.replaceAll("[^*#+0-9]", "") // .
-				.replaceAll("^[*#][0-9]*#", "");
+		return n.replaceAll("[^*#+0-9]", "").replaceAll("^[*#][0-9]*#", "");
 	}
 }

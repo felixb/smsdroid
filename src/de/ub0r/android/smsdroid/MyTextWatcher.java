@@ -11,8 +11,7 @@ import de.ub0r.android.lib.apis.TelephonyWrapper;
 
 public final class MyTextWatcher implements TextWatcher {
 	/** {@link TelephonyWrapper}. */
-	public static final TelephonyWrapper TWRAPPER = TelephonyWrapper
-			.getInstance();
+	public static final TelephonyWrapper TWRAPPER = TelephonyWrapper.getInstance();
 
 	/** Minimum length for showing sms length. */
 	private static final int TEXT_LABLE_MIN_LEN = 50;
@@ -32,13 +31,11 @@ public final class MyTextWatcher implements TextWatcher {
 	 * @param label
 	 *            {@link TextView} holding message counter
 	 */
-	public MyTextWatcher(final Context ctx, final TextView paste,
-			final TextView label) {
+	public MyTextWatcher(final Context ctx, final TextView paste, final TextView label) {
 		this.context = ctx;
 		this.tvTextLabel = label;
 		this.tvPaste = paste;
-		this.cbmgr = (ClipboardManager) this.context
-				.getSystemService(Context.CLIPBOARD_SERVICE);
+		this.cbmgr = (ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
 	}
 
 	/**
@@ -48,8 +45,7 @@ public final class MyTextWatcher implements TextWatcher {
 		final int len = s.length();
 		if (len == 0) {
 			if (this.cbmgr.hasText()
-					&& !PreferenceManager.getDefaultSharedPreferences(
-							this.context).getBoolean(
+					&& !PreferenceManager.getDefaultSharedPreferences(this.context).getBoolean(
 							PreferencesActivity.PREFS_HIDE_PASTE, false)) {
 				this.tvPaste.setVisibility(View.VISIBLE);
 			} else {
@@ -71,14 +67,14 @@ public final class MyTextWatcher implements TextWatcher {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void beforeTextChanged(final CharSequence s, final int start,
-			final int count, final int after) {
+	public void beforeTextChanged(final CharSequence s, final int start, final int count,
+			final int after) {
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void onTextChanged(final CharSequence s, final int start,
-			final int before, final int count) {
+	public void onTextChanged(final CharSequence s, final int start, final int before,
+			final int count) {
 	}
 }

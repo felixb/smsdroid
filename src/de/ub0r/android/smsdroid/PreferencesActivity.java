@@ -48,8 +48,7 @@ import de.ub0r.android.lib.Utils;
  * 
  * @author flx
  */
-public class PreferencesActivity extends PreferenceActivity implements
-		IPreferenceContainer {
+public class PreferencesActivity extends PreferenceActivity implements IPreferenceContainer {
 	/** Tag for logging. */
 	static final String TAG = "prefs";
 
@@ -100,8 +99,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	/** Preference's name: text color. */
 	private static final String PREFS_TEXTCOLOR = "textcolor";
 	/** Preference's name: ignore text color for list ov threads. */
-	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = // .
-	"text_color_ignore_conv";
+	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = "text_color_ignore_conv";
 	/** Preference's name: enable autosend. */
 	public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
 	/** Preference's name: show text field. */
@@ -125,88 +123,48 @@ public class PreferencesActivity extends PreferenceActivity implements
 	private static final int BLACK = 0xff000000;
 
 	/** Drawable resources for notification icons. */
-	private static final int[] NOTIFICAION_IMG = new int[] {
-			R.drawable.stat_notify_sms, // .
-			R.drawable.stat_notify_sms_gingerbread, // .
-			R.drawable.stat_notify_email_generic, // .
-			R.drawable.stat_notify_sms_black, // .
-			R.drawable.stat_notify_sms_green, // .
-			R.drawable.stat_notify_sms_yellow, // .
-	};
+	private static final int[] NOTIFICAION_IMG = new int[] { R.drawable.stat_notify_sms,
+			R.drawable.stat_notify_sms_gingerbread, R.drawable.stat_notify_email_generic,
+			R.drawable.stat_notify_sms_black, R.drawable.stat_notify_sms_green,
+			R.drawable.stat_notify_sms_yellow, };
 
 	/** String resources for notification icons. */
-	private static final int[] NOTIFICAION_STR = new int[] {
-			R.string.notification_default_, // .
-			R.string.notification_gingerbread_, // .
-			R.string.notification_gingerbread_mail_, // .
-			R.string.notification_black_, // .
-			R.string.notification_green_, // .
-			R.string.notification_yellow_, // .
-	};
+	private static final int[] NOTIFICAION_STR = new int[] { R.string.notification_default_,
+			R.string.notification_gingerbread_, R.string.notification_gingerbread_mail_,
+			R.string.notification_black_, R.string.notification_green_,
+			R.string.notification_yellow_, };
 
 	/** Drawable resources for bubbles. */
-	private static final int[] BUBBLES_IMG = new int[] { 0, // .
-			R.drawable.gray_dark, // .
-			R.drawable.gray_light, // .
-			R.drawable.bubble_old_green_left, // .
-			R.drawable.bubble_old_green_right, // .
-			R.drawable.bubble_old_turquoise_left, // .
-			R.drawable.bubble_old_turquoise_right, // .
-			R.drawable.bubble_blue_left, // .
-			R.drawable.bubble_blue_right, // .
-			R.drawable.bubble_blue2_left, // .
-			R.drawable.bubble_blue2_right, // .
-			R.drawable.bubble_brown_left, // .
-			R.drawable.bubble_brown_right, // .
-			R.drawable.bubble_gray_left, // .
-			R.drawable.bubble_gray_right, // .
-			R.drawable.bubble_green_left, // .
-			R.drawable.bubble_green_right, // .
-			R.drawable.bubble_green2_left, // .
-			R.drawable.bubble_green2_right, // .
-			R.drawable.bubble_orange_left, // .
-			R.drawable.bubble_orange_right, // .
-			R.drawable.bubble_pink_left, // .
-			R.drawable.bubble_pink_right, // .
-			R.drawable.bubble_purple_left, // .
-			R.drawable.bubble_purple_right, // .
-			R.drawable.bubble_white_left, // .
-			R.drawable.bubble_white_right, // .
-			R.drawable.bubble_yellow_left, // .
-			R.drawable.bubble_yellow_right, // .
-	};
+	private static final int[] BUBBLES_IMG = new int[] { 0, R.drawable.gray_dark,
+			R.drawable.gray_light, R.drawable.bubble_old_green_left,
+			R.drawable.bubble_old_green_right, R.drawable.bubble_old_turquoise_left,
+			R.drawable.bubble_old_turquoise_right, R.drawable.bubble_blue_left,
+			R.drawable.bubble_blue_right, R.drawable.bubble_blue2_left,
+			R.drawable.bubble_blue2_right, R.drawable.bubble_brown_left,
+			R.drawable.bubble_brown_right, R.drawable.bubble_gray_left,
+			R.drawable.bubble_gray_right, R.drawable.bubble_green_left,
+			R.drawable.bubble_green_right, R.drawable.bubble_green2_left,
+			R.drawable.bubble_green2_right, R.drawable.bubble_orange_left,
+			R.drawable.bubble_orange_right, R.drawable.bubble_pink_left,
+			R.drawable.bubble_pink_right, R.drawable.bubble_purple_left,
+			R.drawable.bubble_purple_right, R.drawable.bubble_white_left,
+			R.drawable.bubble_white_right, R.drawable.bubble_yellow_left,
+			R.drawable.bubble_yellow_right, };
 	/** String resources for bubbles. */
-	private static final int[] BUBBLES_STR = new int[] {
-			R.string.bubbles_nothing, // .
-			R.string.bubbles_plain_dark_gray, // .
-			R.string.bubbles_plain_light_gray, // .
-			R.string.bubbles_old_green_left, // .
-			R.string.bubbles_old_green_right, // .
-			R.string.bubbles_old_turquoise_left, // .
-			R.string.bubbles_old_turquoise_right, // .
-			R.string.bubbles_blue_left, // .
-			R.string.bubbles_blue_right, // .
-			R.string.bubbles_blue2_left, // .
-			R.string.bubbles_blue2_right, // .
-			R.string.bubbles_brown_left, // .
-			R.string.bubbles_brown_right, // .
-			R.string.bubbles_gray_left, // .
-			R.string.bubbles_gray_right, // .
-			R.string.bubbles_green_left, // .
-			R.string.bubbles_green_right, // .
-			R.string.bubbles_green2_left, // .
-			R.string.bubbles_green2_right, // .
-			R.string.bubbles_orange_left, // .
-			R.string.bubbles_orange_right, // .
-			R.string.bubbles_pink_left, // .
-			R.string.bubbles_pink_right, // .
-			R.string.bubbles_purple_left, // .
-			R.string.bubbles_purple_right, // .
-			R.string.bubbles_white_left, // .
-			R.string.bubbles_white_right, // .
-			R.string.bubbles_yellow_left, // .
-			R.string.bubbles_yellow_right, // .
-	};
+	private static final int[] BUBBLES_STR = new int[] { R.string.bubbles_nothing,
+			R.string.bubbles_plain_dark_gray, R.string.bubbles_plain_light_gray,
+			R.string.bubbles_old_green_left, R.string.bubbles_old_green_right,
+			R.string.bubbles_old_turquoise_left, R.string.bubbles_old_turquoise_right,
+			R.string.bubbles_blue_left, R.string.bubbles_blue_right, R.string.bubbles_blue2_left,
+			R.string.bubbles_blue2_right, R.string.bubbles_brown_left,
+			R.string.bubbles_brown_right, R.string.bubbles_gray_left, R.string.bubbles_gray_right,
+			R.string.bubbles_green_left, R.string.bubbles_green_right,
+			R.string.bubbles_green2_left, R.string.bubbles_green2_right,
+			R.string.bubbles_orange_left, R.string.bubbles_orange_right,
+			R.string.bubbles_pink_left, R.string.bubbles_pink_right, R.string.bubbles_purple_left,
+			R.string.bubbles_purple_right, R.string.bubbles_white_left,
+			R.string.bubbles_white_right, R.string.bubbles_yellow_left,
+			R.string.bubbles_yellow_right, };
 
 	/**
 	 * Listen to clicks on "notification icon" preferences.
@@ -236,25 +194,19 @@ public class PreferencesActivity extends PreferenceActivity implements
 			final Builder b = new Builder(this.ctx);
 			final int l = NOTIFICAION_STR.length;
 			final String[] cols = new String[] { "icon", "text" };
-			final ArrayList<HashMap<String, Object>> rows // .
-			= new ArrayList<HashMap<String, Object>>();
+			final ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
 			for (int i = 0; i < l; i++) {
-				final HashMap<String, Object> m = // .
-				new HashMap<String, Object>(2);
+				final HashMap<String, Object> m = new HashMap<String, Object>(2);
 				m.put(cols[0], NOTIFICAION_IMG[i]);
 				m.put(cols[1], this.ctx.getString(NOTIFICAION_STR[i]));
 				rows.add(m);
 			}
-			b.setAdapter(new SimpleAdapter(this.ctx, rows,
-					R.layout.notification_icons_item, cols, new int[] {
-							android.R.id.icon, android.R.id.text1 }),
+			b.setAdapter(new SimpleAdapter(this.ctx, rows, R.layout.notification_icons_item, cols,
+					new int[] { android.R.id.icon, android.R.id.text1 }),
 					new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(final DialogInterface dialog,
-								final int which) {
-							preference.getEditor()
-									.putInt(preference.getKey(), which)
-									.commit();
+						public void onClick(final DialogInterface dialog, final int which) {
+							preference.getEditor().putInt(preference.getKey(), which).commit();
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
@@ -268,8 +220,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * 
 	 * @author flx
 	 */
-	private static class OnBubblesClickListener implements
-			Preference.OnPreferenceClickListener {
+	private static class OnBubblesClickListener implements Preference.OnPreferenceClickListener {
 		/** {@link Context}. */
 		private final Context ctx;
 
@@ -291,25 +242,19 @@ public class PreferencesActivity extends PreferenceActivity implements
 			final Builder b = new Builder(this.ctx);
 			final int l = BUBBLES_STR.length;
 			final String[] cols = new String[] { "icon", "text" };
-			final ArrayList<HashMap<String, Object>> rows // .
-			= new ArrayList<HashMap<String, Object>>();
+			final ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
 			for (int i = 0; i < l; i++) {
-				final HashMap<String, Object> m = // .
-				new HashMap<String, Object>(2);
+				final HashMap<String, Object> m = new HashMap<String, Object>(2);
 				m.put(cols[0], BUBBLES_IMG[i]);
 				m.put(cols[1], this.ctx.getString(BUBBLES_STR[i]));
 				rows.add(m);
 			}
-			b.setAdapter(new SimpleAdapter(this.ctx, rows,
-					R.layout.bubbles_item, cols, new int[] { android.R.id.icon,
-							android.R.id.text1 }),
+			b.setAdapter(new SimpleAdapter(this.ctx, rows, R.layout.bubbles_item, cols, new int[] {
+					android.R.id.icon, android.R.id.text1 }),
 					new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(final DialogInterface dialog,
-								final int which) {
-							preference.getEditor()
-									.putInt(preference.getKey(), which)
-									.commit();
+						public void onClick(final DialogInterface dialog, final int which) {
+							preference.getEditor().putInt(preference.getKey(), which).commit();
 						}
 					});
 			b.setNegativeButton(android.R.string.cancel, null);
@@ -337,19 +282,16 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @param pc
 	 *            {@link IPreferenceContainer}
 	 */
-	static final void registerOnPreferenceClickListener(
-			final IPreferenceContainer pc) {
+	static final void registerOnPreferenceClickListener(final IPreferenceContainer pc) {
 		Preference p = pc.findPreference(PREFS_NOTIFICATION_ICON);
 		if (p != null) {
-			p.setOnPreferenceClickListener(new OnNotificationIconClickListener(
-					pc.getContext()));
+			p.setOnPreferenceClickListener(new OnNotificationIconClickListener(pc.getContext()));
 		}
 
 		Preference pbi = pc.findPreference(PREFS_BUBBLES_IN);
 		Preference pbo = pc.findPreference(PREFS_BUBBLES_OUT);
 		if (pbi != null || pbo != null) {
-			final OnBubblesClickListener obcl = new OnBubblesClickListener(
-					pc.getContext());
+			final OnBubblesClickListener obcl = new OnBubblesClickListener(pc.getContext());
 
 			if (pbi != null) {
 				pbi.setOnPreferenceClickListener(obcl);
@@ -363,8 +305,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 
 		p = pc.findPreference(PREFS_TEXTCOLOR);
 		if (p != null) {
-			p.setOnPreferenceClickListener(// .
-			new Preference.OnPreferenceClickListener() {
+			p.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(final Preference preference) {
 					final SharedPreferences prefs = PreferenceManager
@@ -375,26 +316,20 @@ public class PreferencesActivity extends PreferenceActivity implements
 						c = BLACK;
 					}
 
-					final AmbilWarnaDialog dialog = // .
-					new AmbilWarnaDialog(pc.getContext(), c,
+					final AmbilWarnaDialog dialog = new AmbilWarnaDialog(pc.getContext(), c,
 							new OnAmbilWarnaListener() {
 								@Override
-								public void onOk(final AmbilWarnaDialog dialog,
-										final int color) {
-									prefs.edit().putInt(PREFS_TEXTCOLOR, color)
-											.commit();
+								public void onOk(final AmbilWarnaDialog dialog, final int color) {
+									prefs.edit().putInt(PREFS_TEXTCOLOR, color).commit();
 								}
 
 								@Override
-								public void onCancel(
-										final AmbilWarnaDialog dialog) {
+								public void onCancel(final AmbilWarnaDialog dialog) {
 									// nothing to do
 								}
 
-								public void onReset(
-										final AmbilWarnaDialog dialog) {
-									prefs.edit().putInt(PREFS_TEXTCOLOR, 0)
-											.commit();
+								public void onReset(final AmbilWarnaDialog dialog) {
+									prefs.edit().putInt(PREFS_TEXTCOLOR, 0).commit();
 								}
 							});
 
@@ -404,14 +339,12 @@ public class PreferencesActivity extends PreferenceActivity implements
 			});
 		}
 
-		Market.setOnPreferenceClickListener(pc.getActivity(),
-				pc.findPreference("more_apps"), null, Market.SEARCH_APPS,
-				Market.ALT_APPS);
+		Market.setOnPreferenceClickListener(pc.getActivity(), pc.findPreference("more_apps"), null,
+				Market.SEARCH_APPS, Market.ALT_APPS);
 
 		p = pc.findPreference("send_logs");
 		if (p != null) {
-			p.setOnPreferenceClickListener(// .
-			new Preference.OnPreferenceClickListener() {
+			p.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 				public boolean onPreferenceClick(final Preference preference) {
 					Log.collectAndSendLog(pc.getActivity());
 					return true;
@@ -428,8 +361,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return theme
 	 */
 	static final int getTheme(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_THEME, null);
 		if (s != null && THEME_LIGHT.equals(s)) {
 			return R.style.Theme_SherlockUb0r_Light;
@@ -450,8 +382,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return theme
 	 */
 	static final int getTextsize(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_TEXTSIZE, null);
 		Log.d(TAG, "text size: " + s);
 		return Utils.parseInt(s, 0);
@@ -465,8 +396,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return theme
 	 */
 	static final int getTextcolor(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		if (context instanceof ConversationListActivity
 				&& p.getBoolean(PREFS_TEXTCOLOR_IGNORE_CONV, false)) {
 			return 0;
@@ -484,8 +414,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return pattern
 	 */
 	static final int getLEDcolor(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_LED_COLOR, "65280");
 		return Integer.parseInt(s);
 	}
@@ -498,8 +427,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return pattern
 	 */
 	static final int[] getLEDflash(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_LED_FLASH, "500_2000");
 		final String[] ss = s.split("_");
 		final int[] ret = new int[2];
@@ -516,8 +444,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return pattern
 	 */
 	static final long[] getVibratorPattern(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_VIBRATOR_PATTERN, "0");
 		final String[] ss = s.split("_");
 		final int l = ss.length;
@@ -536,10 +463,8 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return resource id
 	 */
 	static final int getNotificationIcon(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		final int i = p.getInt(PREFS_NOTIFICATION_ICON,
-				R.drawable.stat_notify_sms);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
+		final int i = p.getInt(PREFS_NOTIFICATION_ICON, R.drawable.stat_notify_sms);
 		if (i >= 0 && i < NOTIFICAION_IMG.length) {
 			return NOTIFICAION_IMG[i];
 		}
@@ -554,10 +479,8 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return resource id
 	 */
 	static final int getBubblesIn(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		final int i = p.getInt(PREFS_BUBBLES_IN,
-				R.drawable.bubble_old_turquoise_left);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
+		final int i = p.getInt(PREFS_BUBBLES_IN, R.drawable.bubble_old_turquoise_left);
 		if (i >= 0 && i < BUBBLES_IMG.length) {
 			return BUBBLES_IMG[i];
 		}
@@ -572,10 +495,8 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return resource id
 	 */
 	static final int getBubblesOut(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		final int i = p.getInt(PREFS_BUBBLES_OUT,
-				R.drawable.bubble_old_green_right);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
+		final int i = p.getInt(PREFS_BUBBLES_OUT, R.drawable.bubble_old_green_right);
 		if (i >= 0 && i < BUBBLES_IMG.length) {
 			return BUBBLES_IMG[i];
 		}
@@ -590,8 +511,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 * @return theme
 	 */
 	static final boolean decodeDecimalNCR(final Context context) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		final boolean b = p.getBoolean(PREFS_DECODE_DECIMAL_NCR, true);
 		Log.d(TAG, "decode decimal ncr: " + b);
 		return b;
@@ -608,8 +528,7 @@ public class PreferencesActivity extends PreferenceActivity implements
 	 */
 	static final String fixNumber(final Context context, final String number) {
 		String ret = number;
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		for (int i = 1; i <= PREFS_REGEX_COUNT; i++) {
 			final String regex = p.getString(PREFS_REGEX + i, null);
 			if (!TextUtils.isEmpty(regex)) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -185,8 +185,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 	static void showRows(final Context context, final Uri u) {
 		Log.d(TAG, "-----GET HEADERS-----");
 		Log.d(TAG, "-- " + u.toString() + " --");
-		Cursor c = context.getContentResolver()
-				.query(u, null, null, null, null);
+		Cursor c = context.getContentResolver().query(u, null, null, null, null);
 		if (c != null) {
 			int l = c.getColumnCount();
 			StringBuilder buf = new StringBuilder();
@@ -254,12 +253,11 @@ public final class ConversationListActivity extends FragmentActivity implements
 		this.setContentView(R.layout.conversationlist);
 
 		ChangelogHelper.showChangelog(this, true);
-		final List<ResolveInfo> ri = this.getPackageManager()
-				.queryBroadcastReceivers(
-						new Intent("de.ub0r.android.websms.connector.INFO"), 0);
+		final List<ResolveInfo> ri = this.getPackageManager().queryBroadcastReceivers(
+				new Intent("de.ub0r.android.websms.connector.INFO"), 0);
 		if (ri.size() == 0) {
-			final Intent intent = Market.getInstallAppIntent(this,
-					"de.ub0r.android.websms", Market.ALT_WEBSMS);
+			final Intent intent = Market.getInstallAppIntent(this, "de.ub0r.android.websms",
+					Market.ALT_WEBSMS);
 			ChangelogHelper.showNotes(this, true, "get WebSMS", null, intent);
 		} else {
 			ChangelogHelper.showNotes(this, true, null, null, null);
@@ -275,14 +273,10 @@ public final class ConversationListActivity extends FragmentActivity implements
 		this.longItemClickDialog = new String[WHICH_N];
 		this.longItemClickDialog[WHICH_ANSWER] = this.getString(R.string.reply);
 		this.longItemClickDialog[WHICH_CALL] = this.getString(R.string.call);
-		this.longItemClickDialog[WHICH_VIEW_CONTACT] = this
-				.getString(R.string.view_contact_);
-		this.longItemClickDialog[WHICH_VIEW] = this
-				.getString(R.string.view_thread_);
-		this.longItemClickDialog[WHICH_DELETE] = this
-				.getString(R.string.delete_thread_);
-		this.longItemClickDialog[WHICH_MARK_SPAM] = this
-				.getString(R.string.filter_spam_);
+		this.longItemClickDialog[WHICH_VIEW_CONTACT] = this.getString(R.string.view_contact_);
+		this.longItemClickDialog[WHICH_VIEW] = this.getString(R.string.view_thread_);
+		this.longItemClickDialog[WHICH_DELETE] = this.getString(R.string.delete_thread_);
+		this.longItemClickDialog[WHICH_MARK_SPAM] = this.getString(R.string.filter_spam_);
 	}
 
 	/**
@@ -298,12 +292,9 @@ public final class ConversationListActivity extends FragmentActivity implements
 		CAL_DAYAGO.setTimeInMillis(System.currentTimeMillis());
 		CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
 
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		showContactPhoto = p.getBoolean(
-				PreferencesActivity.PREFS_CONTACT_PHOTO, true);
-		showEmoticons = p
-				.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+		showContactPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
+		showEmoticons = p.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
 		this.adapter.startMsgListQuery();
 	}
 
@@ -364,32 +355,28 @@ public final class ConversationListActivity extends FragmentActivity implements
 	 * @param activity
 	 *            {@link Activity} to finish when deleting.
 	 */
-	static void deleteMessages(final Context context, final Uri uri,
-			final int title, final int message, final Activity activity) {
+	static void deleteMessages(final Context context, final Uri uri, final int title,
+			final int message, final Activity activity) {
 		Log.i(TAG, "deleteMessages(..," + uri + " ,..)");
 		final Builder builder = new Builder(context);
 		builder.setTitle(title);
 		builder.setMessage(message);
 		builder.setNegativeButton(android.R.string.no, null);
-		builder.setPositiveButton(android.R.string.yes,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog,
-							final int which) {
-						final int ret = context.getContentResolver().delete(
-								uri, null, null);
-						Log.d(TAG, "deleted: " + ret);
-						if (activity != null && !activity.isFinishing()) {
-							activity.finish();
-						}
-						if (ret > 0) {
-							Conversation.flushCache();
-							Message.flushCache();
-							SmsReceiver.updateNewMessageNotification(context,
-									null);
-						}
-					}
-				});
+		builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				final int ret = context.getContentResolver().delete(uri, null, null);
+				Log.d(TAG, "deleted: " + ret);
+				if (activity != null && !activity.isFinishing()) {
+					activity.finish();
+				}
+				if (ret > 0) {
+					Conversation.flushCache();
+					Message.flushCache();
+					SmsReceiver.updateNewMessageNotification(context, null);
+				}
+			}
+		});
 		builder.show();
 	}
 
@@ -401,8 +388,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 	 * @param addr
 	 *            address
 	 */
-	private static void addToOrRemoveFromSpamlist(final Context context,
-			final String addr) {
+	private static void addToOrRemoveFromSpamlist(final Context context, final String addr) {
 		final SpamDB db = new SpamDB(context);
 		db.open();
 		if (!db.isInDB(addr)) {
@@ -426,19 +412,15 @@ public final class ConversationListActivity extends FragmentActivity implements
 			try {
 				this.startActivity(i);
 			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "error launching intent: " + i.getAction() + ", "
-						+ i.getData());
-				Toast.makeText(
-						this,
-						"error launching messaging app!\n"
-								+ "Please contact the developer.",
+				Log.e(TAG, "error launching intent: " + i.getAction() + ", " + i.getData());
+				Toast.makeText(this,
+						"error launching messaging app!\n" + "Please contact the developer.",
 						Toast.LENGTH_LONG).show();
 			}
 			return true;
 		case R.id.item_settings: // start settings activity
 			if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
-				this.startActivity(new Intent(this, // .
-						Preferences11Activity.class));
+				this.startActivity(new Intent(this, Preferences11Activity.class));
 			} else {
 				this.startActivity(new Intent(this, PreferencesActivity.class));
 			}
@@ -447,9 +429,8 @@ public final class ConversationListActivity extends FragmentActivity implements
 			DonationHelper.startDonationActivity(this, true);
 			return true;
 		case R.id.item_delete_all_threads:
-			deleteMessages(this, Uri.parse("content://sms/"),
-					R.string.delete_threads_, R.string.delete_threads_question,
-					null);
+			deleteMessages(this, Uri.parse("content://sms/"), R.string.delete_threads_,
+					R.string.delete_threads_question, null);
 			return true;
 		case R.id.item_mark_all_read:
 			markRead(this, Uri.parse("content://sms/"), 1);
@@ -469,15 +450,13 @@ public final class ConversationListActivity extends FragmentActivity implements
 	 *            address
 	 * @return {@link Intent}
 	 */
-	static Intent getComposeIntent(final Context context, // .
-			final String address) {
+	static Intent getComposeIntent(final Context context, final String address) {
 		final Intent i = new Intent(Intent.ACTION_SENDTO);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		if (address == null) {
 			i.setData(Uri.parse("sms:"));
 		} else {
-			i.setData(Uri.parse("smsto:"
-					+ PreferencesActivity.fixNumber(context, address)));
+			i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
 		}
 		return i;
 	}
@@ -485,8 +464,8 @@ public final class ConversationListActivity extends FragmentActivity implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public void onItemClick(final AdapterView<?> parent, final View view,
-			final int position, final long id) {
+	public void onItemClick(final AdapterView<?> parent, final View view, final int position,
+			final long id) {
 		final Conversation c = Conversation.getConversation(this,
 				(Cursor) parent.getItemAtPosition(position), false);
 		final Uri target = c.getUri();
@@ -495,13 +474,9 @@ public final class ConversationListActivity extends FragmentActivity implements
 		try {
 			this.startActivity(i);
 		} catch (ActivityNotFoundException e) {
-			Log.e(TAG,
-					"error launching intent: " + i.getAction() + ", "
-							+ i.getData());
-			Toast.makeText(
-					this,
-					"error launching messaging app!\n"
-							+ "Please contact the developer.",
+			Log.e(TAG, "error launching intent: " + i.getAction() + ", " + i.getData());
+			Toast.makeText(this,
+					"error launching messaging app!\n" + "Please contact the developer.",
 					Toast.LENGTH_LONG).show();
 		}
 	}
@@ -509,8 +484,8 @@ public final class ConversationListActivity extends FragmentActivity implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean onItemLongClick(final AdapterView<?> parent,
-			final View view, final int position, final long id) {
+	public boolean onItemLongClick(final AdapterView<?> parent, final View view,
+			final int position, final long id) {
 		final Conversation c = Conversation.getConversation(this,
 				(Cursor) parent.getItemAtPosition(position), true);
 		final Uri target = c.getUri();
@@ -540,9 +515,8 @@ public final class ConversationListActivity extends FragmentActivity implements
 				Intent i = null;
 				switch (which) {
 				case WHICH_ANSWER:
-					ConversationListActivity.this
-							.startActivity(getComposeIntent(
-									ConversationListActivity.this, a));
+					ConversationListActivity.this.startActivity(getComposeIntent(
+							ConversationListActivity.this, a));
 					break;
 				case WHICH_CALL:
 					i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));
@@ -550,8 +524,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 					break;
 				case WHICH_VIEW_CONTACT:
 					if (n == null) {
-						i = ContactsWrapper.getInstance()
-								.getInsertPickIntent(a);
+						i = ContactsWrapper.getInstance().getInsertPickIntent(a);
 						Conversation.flushCache();
 					} else {
 						final Uri uri = c.getContact().getUri();
@@ -560,21 +533,17 @@ public final class ConversationListActivity extends FragmentActivity implements
 					ConversationListActivity.this.startActivity(i);
 					break;
 				case WHICH_VIEW:
-					i = new Intent(ConversationListActivity.this, // .
-							MessageListActivity.class);
+					i = new Intent(ConversationListActivity.this, MessageListActivity.class);
 					i.setData(target);
 					ConversationListActivity.this.startActivity(i);
 					break;
 				case WHICH_DELETE:
-					ConversationListActivity.deleteMessages(
-							ConversationListActivity.this, target,
-							R.string.delete_thread_,
-							R.string.delete_thread_question, null);
+					ConversationListActivity.deleteMessages(ConversationListActivity.this, target,
+							R.string.delete_thread_, R.string.delete_thread_question, null);
 					break;
 				case WHICH_MARK_SPAM:
 					ConversationListActivity.addToOrRemoveFromSpamlist(
-							ConversationListActivity.this, c.getContact()
-									.getNumber());
+							ConversationListActivity.this, c.getContact().getNumber());
 					break;
 				default:
 					break;

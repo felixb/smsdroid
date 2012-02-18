@@ -34,8 +34,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.CallLog.Calls;
@@ -54,8 +54,7 @@ public final class Message {
 	static final String TAG = "msg";
 
 	/** Bitmap showing the play button. */
-	public static final Bitmap BITMAP_PLAY = Bitmap.createBitmap(1, 1,
-			Config.RGB_565);
+	public static final Bitmap BITMAP_PLAY = Bitmap.createBitmap(1, 1, Config.RGB_565);
 
 	/** Filename for saved attachments. */
 	public static final String ATTACHMENT_FILE = "mms.";
@@ -63,8 +62,8 @@ public final class Message {
 	/** Cache size. */
 	private static final int CAHCESIZE = 50;
 	/** Internal Cache. */
-	private static final LinkedHashMap<Integer, Message> CACHE = // .
-	new LinkedHashMap<Integer, Message>(26, 0.9f, true);
+	private static final LinkedHashMap<Integer, Message> CACHE = new LinkedHashMap<Integer, Message>(
+			26, 0.9f, true);
 
 	/** INDEX: id. */
 	public static final int INDEX_ID = 0;
@@ -231,8 +230,7 @@ public final class Message {
 			this.address = cursor.getString(INDEX_ADDRESS);
 			this.body = cursor.getString(INDEX_BODY);
 			if (ConversationListActivity.showEmoticons && this.body != null) {
-				this.body = SmileyParser.getInstance(context).addSmileySpans(
-						this.body);
+				this.body = SmileyParser.getInstance(context).addSmileySpans(this.body);
 			}
 		} else {
 			this.body = null;
@@ -247,8 +245,7 @@ public final class Message {
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "error loading parts", e);
 				try {
-					Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 				} catch (Exception e1) {
 					Log.e(TAG, "error creating Toast", e1);
 				}
@@ -343,8 +340,8 @@ public final class Message {
 	 */
 	private void fetchMmsParts(final Context context) {
 		final ContentResolver cr = context.getContentResolver();
-		Cursor cursor = cr.query(URI_PARTS, null, PROJECTION_PARTS[INDEX_MID]
-				+ " = ?", new String[] { String.valueOf(this.id) }, null);
+		Cursor cursor = cr.query(URI_PARTS, null, PROJECTION_PARTS[INDEX_MID] + " = ?",
+				new String[] { String.valueOf(this.id) }, null);
 		if (cursor == null || !cursor.moveToFirst()) {
 			return;
 		}
@@ -411,8 +408,7 @@ public final class Message {
 	 *            {@link Cursor}
 	 * @return {@link Message}
 	 */
-	public static Message getMessage(final Context context, // .
-			final Cursor cursor) {
+	public static Message getMessage(final Context context, final Cursor cursor) {
 		synchronized (CACHE) {
 			String body = cursor.getString(INDEX_BODY);
 			int id = cursor.getInt(INDEX_ID);
@@ -477,15 +473,12 @@ public final class Message {
 	 */
 	public String getAddress(final Context context) {
 		if (this.address == null && context != null) {
-			final String select = Message.PROJECTION[// .
-					Message.INDEX_THREADID]
-					+ " = '" + this.getThreadId()
-					+ "' and "
-					+ Message.PROJECTION[Message.INDEX_ADDRESS] + " != ''";
+			final String select = Message.PROJECTION[Message.INDEX_THREADID] + " = '"
+					+ this.getThreadId() + "' and " + Message.PROJECTION[Message.INDEX_ADDRESS]
+					+ " != ''";
 			Log.d(TAG, "select: " + select);
-			final Cursor cur = context.getContentResolver().query(
-					Uri.parse("content://sms/"), Message.PROJECTION, select,
-					null, null);
+			final Cursor cur = context.getContentResolver().query(Uri.parse("content://sms/"),
+					Message.PROJECTION, select, null, null);
 			if (cur != null && cur.moveToFirst()) {
 				this.address = cur.getString(Message.INDEX_ADDRESS);
 				Log.d(TAG, "found address: " + this.address);
@@ -551,8 +544,7 @@ public final class Message {
 	 *            {@link Context}
 	 * @return {@link OnLongClickListener}
 	 */
-	public OnLongClickListener getSaveAttachmentListener(// .
-			final Context context) {
+	public OnLongClickListener getSaveAttachmentListener(final Context context) {
 		if (this.contentIntent == null) {
 			return null;
 		}
@@ -593,26 +585,23 @@ public final class Message {
 					} else {
 						fn += "ukn";
 					}
-					final File file = Message.this.createUniqueFile(Environment
-							.getExternalStorageDirectory(), // .
-							fn);
-					InputStream in = context.getContentResolver()
-							.openInputStream(ci.getData());
+					final File file = Message.this.createUniqueFile(
+							Environment.getExternalStorageDirectory(), fn);
+					InputStream in = context.getContentResolver().openInputStream(ci.getData());
 					OutputStream out = new FileOutputStream(file);
 					IOUtils.copy(in, out);
 					out.flush();
 					out.close();
 					in.close();
 					Log.i(TAG, "attachment saved: " + file.getPath());
-					Toast.makeText(
-							context,
-							context.getString(R.string.attachment_saved) + " "
-									+ fn, Toast.LENGTH_LONG).show();
+					Toast.makeText(context,
+							context.getString(R.string.attachment_saved) + " " + fn,
+							Toast.LENGTH_LONG).show();
 					return true;
 				} catch (IOException e) {
 					Log.e(TAG, "IO ERROR", e);
-					Toast.makeText(context, R.string.attachment_not_saved,
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(context, R.string.attachment_not_saved, Toast.LENGTH_LONG)
+							.show();
 				}
 				return true;
 			}

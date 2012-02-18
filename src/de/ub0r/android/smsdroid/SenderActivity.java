@@ -36,8 +36,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public final class SenderActivity extends FragmentActivity implements
-		OnClickListener {
+public final class SenderActivity extends FragmentActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "send";
 
@@ -46,8 +45,7 @@ public final class SenderActivity extends FragmentActivity implements
 	/** {@link Uri} for saving sent messages. */
 	public static final Uri URI_SENT = Uri.parse("content://sms/sent");
 	/** Projection for getting the id. */
-	private static final String[] PROJECTION_ID = // .
-	new String[] { BaseColumns._ID };
+	private static final String[] PROJECTION_ID = new String[] { BaseColumns._ID };
 	/** SMS DB: address. */
 	private static final String ADDRESS = "address";
 	/** SMS DB: read. */
@@ -60,8 +58,7 @@ public final class SenderActivity extends FragmentActivity implements
 	private static final String DATE = "date";
 
 	/** Message set action. */
-	public static final String MESSAGE_SENT_ACTION = // .
-	"com.android.mms.transaction.MESSAGE_SENT";
+	public static final String MESSAGE_SENT_ACTION = "com.android.mms.transaction.MESSAGE_SENT";
 
 	/** Hold recipient and text. */
 	private String to, text;
@@ -105,11 +102,10 @@ public final class SenderActivity extends FragmentActivity implements
 			this.findViewById(R.id.text_paste).setOnClickListener(this);
 			final EditText et = (EditText) this.findViewById(R.id.text);
 			et.addTextChangedListener(new MyTextWatcher(this, (TextView) this
-					.findViewById(R.id.text_paste), (TextView) this
-					.findViewById(R.id.text_)));
+					.findViewById(R.id.text_paste), (TextView) this.findViewById(R.id.text_)));
 			et.setText(this.text);
-			final MultiAutoCompleteTextView mtv = // .
-			(MultiAutoCompleteTextView) this.findViewById(R.id.to);
+			final MultiAutoCompleteTextView mtv = (MultiAutoCompleteTextView) this
+					.findViewById(R.id.to);
 			mtv.setAdapter(new MobilePhoneAdapter(this));
 			mtv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 			mtv.setText(this.to);
@@ -131,8 +127,7 @@ public final class SenderActivity extends FragmentActivity implements
 			} else {
 				mtv.requestFocus();
 			}
-			this.cbmgr = (ClipboardManager) this
-					.getSystemService(CLIPBOARD_SERVICE);
+			this.cbmgr = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
 		}
 	}
 
@@ -195,11 +190,11 @@ public final class SenderActivity extends FragmentActivity implements
 	private void send(final String recipient, final String message) {
 		Log.d(TAG, "text: " + recipient);
 		int[] l = SmsMessage.calculateLength(message, false);
-		Log.i(TAG, "text7: " + message.length() + ", " + l[0] + " " + l[1]
-				+ " " + l[2] + " " + l[3]);
+		Log.i(TAG, "text7: " + message.length() + ", " + l[0] + " " + l[1] + " " + l[2] + " "
+				+ l[3]);
 		l = SmsMessage.calculateLength(message, true);
-		Log.i(TAG, "text8: " + message.length() + ", " + l[0] + " " + l[1]
-				+ " " + l[2] + " " + l[3]);
+		Log.i(TAG, "text8: " + message.length() + ", " + l[0] + " " + l[1] + " " + l[2] + " "
+				+ l[3]);
 
 		// save draft
 		final ContentResolver cr = this.getContentResolver();
@@ -210,14 +205,12 @@ public final class SenderActivity extends FragmentActivity implements
 		values.put(ADDRESS, recipient);
 		Uri draft = null;
 		// save sms to content://sms/sent
-		Cursor cursor = cr
-				.query(URI_SMS, PROJECTION_ID, TYPE + " = " + Message.SMS_DRAFT
-						+ " AND " + ADDRESS + " = '" + recipient + "' AND "
-						+ BODY + " like '" + message.replace("'", "_") + "'",
-						null, DATE + " DESC");
+		Cursor cursor = cr.query(URI_SMS, PROJECTION_ID,
+				TYPE + " = " + Message.SMS_DRAFT + " AND " + ADDRESS + " = '" + recipient
+						+ "' AND " + BODY + " like '" + message.replace("'", "_") + "'", null, DATE
+						+ " DESC");
 		if (cursor != null && cursor.moveToFirst()) {
-			draft = URI_SENT // .
-					.buildUpon().appendPath(cursor.getString(0)).build();
+			draft = URI_SENT.buildUpon().appendPath(cursor.getString(0)).build();
 			Log.d(TAG, "skip saving draft: " + draft);
 		} else {
 			try {
@@ -244,12 +237,10 @@ public final class SenderActivity extends FragmentActivity implements
 				final String m = messages.get(i);
 				Log.d(TAG, "devided messages: " + m);
 
-				final Intent sent = new Intent(MESSAGE_SENT_ACTION, draft,
-						this, SmsReceiver.class);
+				final Intent sent = new Intent(MESSAGE_SENT_ACTION, draft, this, SmsReceiver.class);
 				sentIntents.add(PendingIntent.getBroadcast(this, 0, sent, 0));
 			}
-			smsmgr.sendMultipartTextMessage(recipient, null, messages,
-					sentIntents, null);
+			smsmgr.sendMultipartTextMessage(recipient, null, messages, sentIntents, null);
 			Log.i(TAG, "message sent");
 		} catch (Exception e) {
 			Log.e(TAG, "unexpected error", e);

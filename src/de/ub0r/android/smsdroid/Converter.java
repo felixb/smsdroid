@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Lado Kumsiashvili, Felix Bechstein
+ * Copyright (C) 2011-2012-2012 Lado Kumsiashvili, Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 

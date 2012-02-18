@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -31,8 +31,8 @@ import de.ub0r.android.lib.IPreferenceContainer;
  * 
  * @author flx
  */
-public final class PreferencesBehaviorActivity extends PreferenceActivity
-		implements IPreferenceContainer {
+public final class PreferencesBehaviorActivity extends PreferenceActivity implements
+		IPreferenceContainer {
 	/**
 	 * {@inheritDoc}
 	 */

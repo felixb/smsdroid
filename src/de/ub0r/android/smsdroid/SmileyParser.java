@@ -67,8 +67,7 @@ public final class SmileyParser {
 	 */
 	private SmileyParser(final Context context) {
 		this.mContext = context;
-		this.mSmileyTexts = this.mContext.getResources().getStringArray(
-				R.array.emoticons);
+		this.mSmileyTexts = this.mContext.getResources().getStringArray(R.array.emoticons);
 		this.mSmileyToRes = this.buildSmileyToRes();
 		this.mPattern = this.buildPattern();
 	}
@@ -78,8 +77,7 @@ public final class SmileyParser {
 	// to the string arrays: default_smiley_texts and default_smiley_names in
 	// res/values/arrays.xml
 	/** Smiley resources keys. */
-	public static final int[] DEFAULT_SMILEY_RES_IDS = {
-			R.drawable.emo_im_angel, // 0
+	public static final int[] DEFAULT_SMILEY_RES_IDS = { R.drawable.emo_im_angel, // 0
 			R.drawable.emo_im_cool, // 1
 			R.drawable.emo_im_cool, // 2
 			R.drawable.emo_im_crying, // 3
@@ -139,8 +137,7 @@ public final class SmileyParser {
 	private Pattern buildPattern() {
 		// Set the StringBuilder capacity with the assumption that the average
 		// smiley is 3 characters long.
-		StringBuilder patternString = new StringBuilder(
-				this.mSmileyTexts.length * 3);
+		StringBuilder patternString = new StringBuilder(this.mSmileyTexts.length * 3);
 
 		// Build a regex that looks like (:-)|:-(|...), but escaping the smilies
 		// properly so they will be interpreted literally by the regex matcher.
@@ -150,8 +147,7 @@ public final class SmileyParser {
 			patternString.append('|');
 		}
 		// Replace the extra '|' with a ')'
-		patternString.replace(patternString.length() - 1, patternString
-				.length(), ")");
+		patternString.replace(patternString.length() - 1, patternString.length(), ")");
 
 		return Pattern.compile(patternString.toString());
 	}
@@ -171,8 +167,8 @@ public final class SmileyParser {
 		Matcher matcher = this.mPattern.matcher(text);
 		while (matcher.find()) {
 			int resId = this.mSmileyToRes.get(matcher.group());
-			builder.setSpan(new ImageSpan(this.mContext, resId), matcher
-					.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			builder.setSpan(new ImageSpan(this.mContext, resId), matcher.start(), matcher.end(),
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 
 		return builder;

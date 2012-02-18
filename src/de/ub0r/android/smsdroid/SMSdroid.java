@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -53,14 +53,12 @@ public final class SMSdroid extends Application {
 		Log.init("SMSdroid");
 		Log.i(TAG, "init SMSdroid v" + this.getString(R.string.app_version));
 
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
 		int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 		if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
 			try {
-				Cursor c = this.getContentResolver().query(
-						SenderActivity.URI_SENT, PROJECTION, null, null,
-						"_id LIMIT 1");
+				Cursor c = this.getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
+						null, null, "_id LIMIT 1");
 				if (c == null) {
 					Log.i(TAG, "disable .Sender: curor=null");
 				} else if (SmsManager.getDefault() == null) {
@@ -79,8 +77,7 @@ public final class SMSdroid extends Application {
 			Log.i(TAG, "disable .Sender");
 		}
 		this.getPackageManager().setComponentEnabledSetting(
-				new ComponentName(this, SenderActivity.class), state,
-				PackageManager.DONT_KILL_APP);
+				new ComponentName(this, SenderActivity.class), state, PackageManager.DONT_KILL_APP);
 	}
 
 	/**
@@ -93,8 +90,7 @@ public final class SMSdroid extends Application {
 	 *            {@link Intent}
 	 * @return {@link OnClickListener}
 	 */
-	static OnClickListener getOnClickStartActivity(final Context context,
-			final Intent intent) {
+	static OnClickListener getOnClickStartActivity(final Context context, final Intent intent) {
 		if (intent == null) {
 			return null;
 		}
@@ -105,8 +101,7 @@ public final class SMSdroid extends Application {
 					context.startActivity(intent);
 				} catch (ActivityNotFoundException e) {
 					Log.w(TAG, "activity not found", e);
-					Toast.makeText(context,
-							"no activity for data: " + intent.getType(),
+					Toast.makeText(context, "no activity for data: " + intent.getType(),
 							Toast.LENGTH_LONG).show();
 				}
 			}
@@ -123,8 +118,8 @@ public final class SMSdroid extends Application {
 	 *            {@link Intent}
 	 * @return {@link OnLongClickListener}
 	 */
-	static OnLongClickListener getOnLongClickStartActivity(
-			final Context context, final Intent intent) {
+	static OnLongClickListener getOnLongClickStartActivity(final Context context,
+			final Intent intent) {
 		if (intent == null) {
 			return null;
 		}
@@ -136,8 +131,7 @@ public final class SMSdroid extends Application {
 					return true;
 				} catch (ActivityNotFoundException e) {
 					Log.w(TAG, "activity not found", e);
-					Toast.makeText(context,
-							"no activity for data: " + intent.getType(),
+					Toast.makeText(context, "no activity for data: " + intent.getType(),
 							Toast.LENGTH_LONG).show();
 				}
 				return false;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -36,9 +36,8 @@ public final class AboutActivity extends FragmentActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.about);
-		this.setTitle(this.getString(R.string.about_) + " "
-				+ this.getString(R.string.app_name) + " v"
-				+ this.getString(R.string.app_version));
+		this.setTitle(this.getString(R.string.about_) + " " + this.getString(R.string.app_name)
+				+ " v" + this.getString(R.string.app_version));
 	}
 
 	/**

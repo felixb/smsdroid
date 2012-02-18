@@ -60,11 +60,9 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static final Uri URI_MMS = Uri.parse("content://mms/");
 
 	/** Intent.action for receiving SMS. */
-	private static final String ACTION_SMS = // .
-	"android.provider.Telephony.SMS_RECEIVED";
+	private static final String ACTION_SMS = "android.provider.Telephony.SMS_RECEIVED";
 	/** Intent.action for receiving MMS. */
-	private static final String ACTION_MMS = // .
-	"android.provider.Telephony.WAP_PUSH_RECEIVED";
+	private static final String ACTION_MMS = "android.provider.Telephony.WAP_PUSH_RECEIVED";
 
 	/** An unreadable MMS body. */
 	private static final String MMS_BODY = "<MMS>";
@@ -99,10 +97,8 @@ public class SmsReceiver extends BroadcastReceiver {
 	@Override
 	public final void onReceive(final Context context, final Intent intent) {
 		Log.d(TAG, "onReceive()");
-		final PowerManager pm = (PowerManager) context
-				.getSystemService(Context.POWER_SERVICE);
-		final PowerManager.WakeLock wakelock = pm.newWakeLock(
-				PowerManager.PARTIAL_WAKE_LOCK, TAG);
+		final PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+		final PowerManager.WakeLock wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
 		wakelock.acquire();
 		Log.i(TAG, "got wakelock");
 		final String action = intent.getAction();
@@ -125,8 +121,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				SmsMessage[] smsMessage = new SmsMessage[messages.length];
 				int l = messages.length;
 				for (int i = 0; i < l; i++) {
-					smsMessage[i] = SmsMessage
-							.createFromPdu((byte[]) messages[i]);
+					smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
 				}
 				t = null;
 				if (l > 0) {
@@ -160,8 +155,7 @@ public class SmsReceiver extends BroadcastReceiver {
 						e.printStackTrace();
 					}
 					--count;
-				} while (updateNewMessageNotification(context, t) <= 0
-						&& count > 0);
+				} while (updateNewMessageNotification(context, t) <= 0 && count > 0);
 				if (count == 0) { // use messages as they are available
 					updateNewMessageNotification(context, null);
 				}
@@ -181,13 +175,11 @@ public class SmsReceiver extends BroadcastReceiver {
 	 * @return [thread id (-1 if there are more), number of unread messages (-1
 	 *         if text does not match newest message)]
 	 */
-	private static int[] getUnreadSMS(final ContentResolver cr,
-			final String text) {
+	private static int[] getUnreadSMS(final ContentResolver cr, final String text) {
 		Log.d(TAG, "getUnreadSMS(cr, " + text + ")");
-		Cursor cursor = cr.query(URI_SMS, Message.PROJECTION,
-				Message.SELECTION_READ_UNREAD, Message.SELECTION_UNREAD, SORT);
-		if (cursor == null || cursor.isClosed() || cursor.getCount() == 0
-				|| !cursor.moveToFirst()) {
+		Cursor cursor = cr.query(URI_SMS, Message.PROJECTION, Message.SELECTION_READ_UNREAD,
+				Message.SELECTION_UNREAD, SORT);
+		if (cursor == null || cursor.isClosed() || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text != null) { // try again!
 				if (cursor != null && !cursor.isClosed()) {
 					cursor.close();
@@ -235,13 +227,11 @@ public class SmsReceiver extends BroadcastReceiver {
 	 *            text of the last assumed unread message
 	 * @return [thread id (-1 if there are more), number of unread messages]
 	 */
-	private static int[] getUnreadMMS(final ContentResolver cr,
-			final String text) {
+	private static int[] getUnreadMMS(final ContentResolver cr, final String text) {
 		Log.d(TAG, "getUnreadMMS(cr, " + text + ")");
-		Cursor cursor = cr.query(URI_MMS, Message.PROJECTION_READ,
-				Message.SELECTION_READ_UNREAD, Message.SELECTION_UNREAD, null);
-		if (cursor == null || cursor.isClosed() || cursor.getCount() == 0
-				|| !cursor.moveToFirst()) {
+		Cursor cursor = cr.query(URI_MMS, Message.PROJECTION_READ, Message.SELECTION_READ_UNREAD,
+				Message.SELECTION_UNREAD, null);
+		if (cursor == null || cursor.isClosed() || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text == MMS_BODY) {
 				if (cursor != null && !cursor.isClosed()) {
 					cursor.close();
@@ -286,8 +276,7 @@ public class SmsReceiver extends BroadcastReceiver {
 	 * @return [thread id (-1 if there are more), number of unread messages (-1
 	 *         if text does not match newest message)]
 	 */
-	private static int[] getUnread(final ContentResolver cr, // .
-			final String text) {
+	private static int[] getUnread(final ContentResolver cr, final String text) {
 		Log.d(TAG, "getUnread(cr, " + text + ")");
 		lastUnreadBody = null;
 		lastUnreadDate = 0L;
@@ -323,21 +312,17 @@ public class SmsReceiver extends BroadcastReceiver {
 	 *            text of the last assumed unread message
 	 * @return number of unread messages
 	 */
-	static final int updateNewMessageNotification(final Context context,
-			final String text) {
+	static final int updateNewMessageNotification(final Context context, final String text) {
 		Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ")");
-		final NotificationManager mNotificationMgr = // .
-		(NotificationManager) context
+		final NotificationManager mNotificationMgr = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		final SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		final boolean enableNotifications = prefs.getBoolean(
 				PreferencesActivity.PREFS_NOTIFICATION_ENABLE, true);
 		final boolean privateNotification = prefs.getBoolean(
 				PreferencesActivity.PREFS_NOTIFICATION_PRIVACY, false);
 		final boolean showPhoto = !privateNotification
-				&& prefs.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO,
-						true);
+				&& prefs.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
 		if (!enableNotifications) {
 			mNotificationMgr.cancelAll();
 			Log.d(TAG, "no notification needed!");
@@ -357,12 +342,10 @@ public class SmsReceiver extends BroadcastReceiver {
 		Uri uri = null;
 		PendingIntent pIntent;
 		if (l == 0) {
-			final Intent i = new Intent(context, // .
-					ConversationListActivity.class);
+			final Intent i = new Intent(context, ConversationListActivity.class);
 			// add pending intent
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			pIntent = PendingIntent.getActivity(context, 0, i,
-					PendingIntent.FLAG_CANCEL_CURRENT);
+			pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 		} else {
 			NotificationBuilderWrapper.Builder nb = NotificationBuilderWrapper
 					.getNotificationBuilder(context);
@@ -370,14 +353,12 @@ public class SmsReceiver extends BroadcastReceiver {
 			Intent i;
 			if (tid >= 0) {
 				uri = Uri.parse(MessageListActivity.URI + tid);
-				i = new Intent(Intent.ACTION_VIEW, uri, context,
-						MessageListActivity.class);
+				i = new Intent(Intent.ACTION_VIEW, uri, context, MessageListActivity.class);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_UPDATE_CURRENT);
 
 				if (enableNotifications) {
-					final Conversation conv = Conversation.getConversation(
-							context, tid, true);
+					final Conversation conv = Conversation.getConversation(context, tid, true);
 					if (conv != null) {
 						String a;
 						if (privateNotification) {
@@ -390,8 +371,7 @@ public class SmsReceiver extends BroadcastReceiver {
 							a = conv.getContact().getDisplayName();
 						}
 						showNotification = true;
-						nb.setSmallIcon(PreferencesActivity
-								.getNotificationIcon(context));
+						nb.setSmallIcon(PreferencesActivity.getNotificationIcon(context));
 						nb.setTicker(a);
 						nb.setWhen(lastUnreadDate);
 						if (l == 1) {
@@ -402,45 +382,37 @@ public class SmsReceiver extends BroadcastReceiver {
 								body = lastUnreadBody;
 							}
 							if (body == null) {
-								body = context
-										.getString(R.string.mms_conversation);
+								body = context.getString(R.string.mms_conversation);
 							}
 							nb.setLatestEventInfo(context, a, body, pIntent);
 						} else {
 							nb.setLatestEventInfo(context, a,
-									String.format(context
-											.getString(R.string.new_messages),
-											l), pIntent);
+									String.format(context.getString(R.string.new_messages), l),
+									pIntent);
 						}
 						if (showPhoto // just for the speeeeed
 								&& Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
 							conv.getContact().update(context, false, true);
-							Drawable d = conv.getContact().getAvatar(context,
-									null);
+							Drawable d = conv.getContact().getAvatar(context, null);
 							if (d instanceof BitmapDrawable) { // FIXME
-								nb.setLargeIcon(((BitmapDrawable) d)
-										.getBitmap());
+								nb.setLargeIcon(((BitmapDrawable) d).getBitmap());
 							}
 						}
 					}
 				}
 			} else {
 				uri = Uri.parse(MessageListActivity.URI);
-				i = new Intent(Intent.ACTION_VIEW, uri, context, // .
-						ConversationListActivity.class);
+				i = new Intent(Intent.ACTION_VIEW, uri, context, ConversationListActivity.class);
 				pIntent = PendingIntent.getActivity(context, 0, i,
 						PendingIntent.FLAG_UPDATE_CURRENT);
 
 				if (enableNotifications) {
 					showNotification = true;
-					nb.setSmallIcon(PreferencesActivity
-							.getNotificationIcon(context));
+					nb.setSmallIcon(PreferencesActivity.getNotificationIcon(context));
 					nb.setTicker(context.getString(R.string.new_messages_));
 					nb.setWhen(lastUnreadDate);
-					nb.setLatestEventInfo(context, context
-							.getString(R.string.new_messages_), String.format(
-							context.getString(R.string.new_messages), l),
-							pIntent);
+					nb.setLatestEventInfo(context, context.getString(R.string.new_messages_),
+							String.format(context.getString(R.string.new_messages), l), pIntent);
 					nb.setNumber(l);
 				}
 			}
@@ -449,15 +421,11 @@ public class SmsReceiver extends BroadcastReceiver {
 
 			if (enableNotifications && showNotification) {
 				int[] ledFlash = PreferencesActivity.getLEDflash(context);
-				nb.setLights(PreferencesActivity.getLEDcolor(context),
-						ledFlash[0], ledFlash[1]);
-				final SharedPreferences p = PreferenceManager
-						.getDefaultSharedPreferences(context);
+				nb.setLights(PreferencesActivity.getLEDcolor(context), ledFlash[0], ledFlash[1]);
+				final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 				if (text != null) {
-					final boolean vibrate = p.getBoolean(
-							PreferencesActivity.PREFS_VIBRATE, false);
-					final String s = p.getString(
-							PreferencesActivity.PREFS_SOUND, null);
+					final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
+					final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
 					Uri sound;
 					if (s == null || s.length() <= 0) {
 						sound = null;
@@ -465,8 +433,7 @@ public class SmsReceiver extends BroadcastReceiver {
 						sound = Uri.parse(s);
 					}
 					if (vibrate) {
-						final long[] pattern = PreferencesActivity
-								.getVibratorPattern(context);
+						final long[] pattern = PreferencesActivity.getVibratorPattern(context);
 						if (pattern.length == 1 && pattern[0] == 0) {
 							nb.setDefaults(Notification.DEFAULT_VIBRATE);
 						} else {
@@ -479,8 +446,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			Log.d(TAG, "uri: " + uri);
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
 			if (enableNotifications && showNotification) {
-				mNotificationMgr.notify(NOTIFICATION_ID_NEW,
-						nb.getNotification());
+				mNotificationMgr.notify(NOTIFICATION_ID_NEW, nb.getNotification());
 			}
 		}
 		Log.d(TAG, "return " + ret + " (2)");
@@ -498,31 +464,26 @@ public class SmsReceiver extends BroadcastReceiver {
 	 * @param uri
 	 *            {@link Uri} to message
 	 */
-	private void updateFailedNotification(final Context context, // .
-			final Uri uri) {
+	private void updateFailedNotification(final Context context, final Uri uri) {
 		Log.d(TAG, "updateFailedNotification: " + uri);
-		final Cursor c = context.getContentResolver().query(uri,
-				Message.PROJECTION_SMS, null, null, null);
+		final Cursor c = context.getContentResolver().query(uri, Message.PROJECTION_SMS, null,
+				null, null);
 		if (c != null && c.moveToFirst()) {
 			final int id = c.getInt(Message.INDEX_ID);
 			final int tid = c.getInt(Message.INDEX_THREADID);
 			final String body = c.getString(Message.INDEX_BODY);
 			final long date = c.getLong(Message.INDEX_DATE);
 
-			Conversation conv = Conversation
-					.getConversation(context, tid, true);
+			Conversation conv = Conversation.getConversation(context, tid, true);
 
-			final NotificationManager mNotificationMgr = // .
-			(NotificationManager) context
+			final NotificationManager mNotificationMgr = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
-			final SharedPreferences p = PreferenceManager
-					.getDefaultSharedPreferences(context);
+			final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 			final boolean privateNotification = p.getBoolean(
 					PreferencesActivity.PREFS_NOTIFICATION_PRIVACY, false);
 			Intent intent;
 			if (conv == null) {
-				intent = new Intent(Intent.ACTION_VIEW, null, context,
-						SenderActivity.class);
+				intent = new Intent(Intent.ACTION_VIEW, null, context, SenderActivity.class);
 			} else {
 				intent = new Intent(Intent.ACTION_VIEW, conv.getUri(), context,
 						MessageListActivity.class);
@@ -531,8 +492,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
 			String title = context.getString(R.string.error_sending_failed);
 			String text = null;
-			final Notification n = new Notification(
-					android.R.drawable.stat_sys_warning, title, date);
+			final Notification n = new Notification(android.R.drawable.stat_sys_warning, title,
+					date);
 
 			if (privateNotification) {
 				title += "!";
@@ -543,17 +504,15 @@ public class SmsReceiver extends BroadcastReceiver {
 				title += ": " + conv.getContact().getDisplayName();
 				text = body;
 			}
-			n.setLatestEventInfo(context, title, text, PendingIntent
-					.getActivity(context, 0, intent,
-							PendingIntent.FLAG_CANCEL_CURRENT));
+			n.setLatestEventInfo(context, title, text, PendingIntent.getActivity(context, 0,
+					intent, PendingIntent.FLAG_CANCEL_CURRENT));
 			n.flags |= Notification.FLAG_AUTO_CANCEL;
 			n.flags |= Notification.FLAG_SHOW_LIGHTS;
 			n.ledARGB = RED;
 			int[] ledFlash = PreferencesActivity.getLEDflash(context);
 			n.ledOnMS = ledFlash[0];
 			n.ledOffMS = ledFlash[1];
-			final boolean vibrate = p.getBoolean(
-					PreferencesActivity.PREFS_VIBRATE, false);
+			final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
 			final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
 			Uri sound;
 			if (s == null || s.length() <= 0) {
@@ -562,8 +521,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				sound = Uri.parse(s);
 			}
 			if (vibrate) {
-				final long[] pattern = PreferencesActivity
-						.getVibratorPattern(context);
+				final long[] pattern = PreferencesActivity.getVibratorPattern(context);
 				if (pattern.length == 1 && pattern[0] == 0) {
 					n.defaults |= Notification.DEFAULT_VIBRATE;
 				} else {
@@ -588,8 +546,7 @@ public class SmsReceiver extends BroadcastReceiver {
 	 * @param resultCode
 	 *            message status
 	 */
-	private void handleSent(final Context context, final Intent intent,
-			final int resultCode) {
+	private void handleSent(final Context context, final Intent intent, final int resultCode) {
 		final Uri uri = intent.getData();
 		Log.d(TAG, "sent message: " + uri + ", rc: " + resultCode);
 		if (uri == null) {

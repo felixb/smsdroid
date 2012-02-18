@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Felix Bechstein
+ * Copyright (C) 2011-2012-2012 Felix Bechstein
  * 
  * This file is part of ub0rlib.
  * 
@@ -29,11 +29,12 @@ import android.widget.LinearLayout;
 import com.google.ads.Ad;
 import com.google.ads.AdListener;
 import com.google.ads.AdRequest;
+import com.google.ads.AdRequest.ErrorCode;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
-import com.google.ads.AdRequest.ErrorCode;
 
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Utils;
 
 /**
  * Class managing ads.
@@ -66,17 +67,15 @@ public final class Ads {
 	 * @param keywords
 	 *            keywords for the ads
 	 */
-	public static void loadAd(final Activity activity, final int adBase,
-			final String unitId, final Set<String> keywords) {
+	public static void loadAd(final Activity activity, final int adBase, final String unitId,
+			final Set<String> keywords) {
 		Log.d(TAG, "loadAd(" + unitId + ")");
 
-		final LinearLayout adframe = (LinearLayout) activity
-				.findViewById(adBase);
+		final LinearLayout adframe = (LinearLayout) activity.findViewById(adBase);
 		if (adframe == null) {
 			Log.e(TAG, "adframe=null");
 			return;
-		} else if (Integer.parseInt(Build.VERSION.SDK) // .
-		<= Build.VERSION_CODES.FROYO) {
+		} else if (!Utils.isApi(Build.VERSION_CODES.GINGERBREAD)) {
 			Log.d(TAG, "API " + Build.VERSION.SDK + " <= FROYO");
 			WebViewDatabase webViewDB = WebViewDatabase.getInstance(activity);
 			if (webViewDB == null) {

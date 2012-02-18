@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -51,16 +51,14 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	private final int backgroundDrawableIn, backgroundDrawableOut;
 
 	/** General WHERE clause. */
-	private static final String WHERE = // .
-	"(" + Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " != "
-			+ Message.SMS_DRAFT + " OR "
-			+ Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " IS NULL)";
+	private static final String WHERE = "(" + Message.PROJECTION_JOIN[Message.INDEX_TYPE] + " != "
+			+ Message.SMS_DRAFT + " OR " + Message.PROJECTION_JOIN[Message.INDEX_TYPE]
+			+ " IS NULL)";
 
 	/** WHERE clause for drafts. */
-	private static final String WHERE_DRAFT = // .
-	"(" + Message.PROJECTION_SMS[Message.INDEX_THREADID] + " = ? AND "
-			+ Message.PROJECTION_SMS[Message.INDEX_TYPE] + " = "
-			+ Message.SMS_DRAFT + ")";
+	private static final String WHERE_DRAFT = "(" + Message.PROJECTION_SMS[Message.INDEX_THREADID]
+			+ " = ? AND " + Message.PROJECTION_SMS[Message.INDEX_TYPE] + " = " + Message.SMS_DRAFT
+			+ ")";
 	// + " OR " + type + " = " + Message.SMS_PENDING;
 
 	/** Thread id. */
@@ -86,8 +84,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 *            {@link Uri}
 	 */
 	public MessageAdapter(final MessageListActivity c, final Uri u) {
-		super(c, R.layout.messagelist_item,
-				getCursor(c.getContentResolver(), u), true);
+		super(c, R.layout.messagelist_item, getCursor(c.getContentResolver(), u), true);
 		this.backgroundDrawableIn = PreferencesActivity.getBubblesIn(c);
 		this.backgroundDrawableOut = PreferencesActivity.getBubblesOut(c);
 		this.textSize = PreferencesActivity.getTextsize(c);
@@ -98,8 +95,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		} else {
 			this.threadId = Integer.parseInt(u.getLastPathSegment());
 		}
-		final Conversation conv = Conversation.getConversation(c,
-				this.threadId, false);
+		final Conversation conv = Conversation.getConversation(c, this.threadId, false);
 		if (conv == null) {
 			this.address = null;
 			this.name = null;
@@ -146,11 +142,10 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		final String[] sel = new String[] { String.valueOf(tid) };
 		try {
 			Log.d(TAG, "where: " + WHERE_DRAFT + " / sel: " + sel);
-			c[1] = cr.query(Uri.parse("content://sms/"),
-					Message.PROJECTION_SMS, WHERE_DRAFT, sel, Message.SORT_USD);
+			c[1] = cr.query(Uri.parse("content://sms/"), Message.PROJECTION_SMS, WHERE_DRAFT, sel,
+					Message.SORT_USD);
 		} catch (NullPointerException e) {
-			Log.e(TAG, "error query: " + u + " / " + WHERE_DRAFT + " sel: "
-					+ sel, e);
+			Log.e(TAG, "error query: " + u + " / " + WHERE_DRAFT + " sel: " + sel, e);
 			c[1] = null;
 		}
 
@@ -168,8 +163,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void bindView(final View view, final Context context,
-			final Cursor cursor) {
+	public final void bindView(final View view, final Context context, final Cursor cursor) {
 		final Message m = Message.getMessage(context, cursor);
 
 		final TextView tvPerson = (TextView) view.findViewById(R.id.addr);
@@ -204,28 +198,24 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		case Message.MMS_OUT:
 			tvPerson.setText(context.getString(R.string.me) + subject);
 			try {
-				view.findViewById(R.id.layout).setBackgroundResource(
-						this.backgroundDrawableOut);
+				view.findViewById(R.id.layout).setBackgroundResource(this.backgroundDrawableOut);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
 			((ImageView) view.findViewById(R.id.inout))
-					.setImageResource(R.drawable.// .
-					ic_call_log_list_outgoing_call);
+					.setImageResource(R.drawable.ic_call_log_list_outgoing_call);
 			break;
 		case Message.SMS_IN:
 		case Message.MMS_IN:
 		default:
 			tvPerson.setText(this.displayName + subject);
 			try {
-				view.findViewById(R.id.layout).setBackgroundResource(
-						this.backgroundDrawableIn);
+				view.findViewById(R.id.layout).setBackgroundResource(this.backgroundDrawableIn);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
 			((ImageView) view.findViewById(R.id.inout))
-					.setImageResource(R.drawable.// .
-					ic_call_log_list_incoming_call);
+					.setImageResource(R.drawable.ic_call_log_list_incoming_call);
 			pending.setVisibility(View.GONE);
 			break;
 		}
@@ -251,10 +241,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			}
 			ivPicture.setVisibility(View.VISIBLE);
 			final Intent i = m.getContentIntent();
-			ivPicture.setOnClickListener(SMSdroid.getOnClickStartActivity(
-					context, i));
-			ivPicture.setOnLongClickListener(m
-					.getSaveAttachmentListener(context));
+			ivPicture.setOnClickListener(SMSdroid.getOnClickStartActivity(context, i));
+			ivPicture.setOnLongClickListener(m.getSaveAttachmentListener(context));
 		} else {
 			ivPicture.setVisibility(View.GONE);
 			ivPicture.setOnClickListener(null);
@@ -262,8 +250,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 
 		CharSequence text = m.getBody();
 		if (text == null && pic == null) {
-			final Button btn = (Button) view
-					.findViewById(R.id.btn_download_msg);
+			final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -277,10 +264,10 @@ public class MessageAdapter extends ResourceCursorAdapter {
 						btn.setEnabled(false);
 						btn.setText(R.string.downloading_);
 					} else {
-						i = new Intent(Intent.ACTION_VIEW, Uri
-								.parse(MessageListActivity.URI + m.getThreadId()));
-						context.startActivity(Intent.createChooser(i, context
-								.getString(R.string.view_mms)));
+						i = new Intent(Intent.ACTION_VIEW, Uri.parse(MessageListActivity.URI
+								+ m.getThreadId()));
+						context.startActivity(Intent.createChooser(i,
+								context.getString(R.string.view_mms)));
 					}
 				}
 			});
@@ -303,30 +290,25 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
 				stext = stext.replaceAll(".*BEGIN:VCARD", "BEGIN:VCARD");
 				stext = stext.replaceAll("END:VCARD.*", "END:VCARD");
-				final Button btn = (Button) view
-						.findViewById(R.id.btn_import_contact);
+				final Button btn = (Button) view.findViewById(R.id.btn_import_contact);
 				btn.setVisibility(View.VISIBLE);
 				btn.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(final View v) {
 						final Intent i = new Intent(Intent.ACTION_VIEW);
-						Uri uri = ContentUris.withAppendedId(
-								MessageProvider.CONTENT_URI, m.getId());
+						Uri uri = ContentUris.withAppendedId(MessageProvider.CONTENT_URI, m.getId());
 						i.setDataAndType(uri, "text/x-vcard");
 						try {
 							context.startActivity(i);
 						} catch (ActivityNotFoundException e) {
-							Log.e(TAG, "activity not found (text/x-vcard): "
-									+ i.getAction(), e);
-							Toast.makeText(context,
-									"Activity not found: text/x-vcard",
+							Log.e(TAG, "activity not found (text/x-vcard): " + i.getAction(), e);
+							Toast.makeText(context, "Activity not found: text/x-vcard",
 									Toast.LENGTH_LONG).show();
 						}
 					}
 				});
 			} else {
-				view.findViewById(R.id.btn_import_contact).setVisibility(
-						View.GONE);
+				view.findViewById(R.id.btn_import_contact).setVisibility(View.GONE);
 			}
 		}
 	}

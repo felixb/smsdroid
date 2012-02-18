@@ -39,8 +39,8 @@ public final class WidgetProvider extends AppWidgetProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onUpdate(final Context context,
-			final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
+	public void onUpdate(final Context context, final AppWidgetManager appWidgetManager,
+			final int[] appWidgetIds) {
 		Log.d(TAG, "onUpdate");
 		SmsReceiver.updateNewMessageNotification(context, null);
 	}
@@ -58,10 +58,8 @@ public final class WidgetProvider extends AppWidgetProvider {
 	 */
 	static RemoteViews getRemoteViews(final Context context, final int count,
 			final PendingIntent pIntent) {
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		RemoteViews views = new RemoteViews(context.getPackageName(),
-				R.layout.widget);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 		views.setTextViewText(R.id.text1, String.valueOf(count));
 		if (count == 0) {
 			views.setViewVisibility(R.id.text1, View.GONE);

@@ -42,15 +42,13 @@ public final class MessageProvider extends ContentProvider {
 	static final String TAG = "mp";
 
 	/** Content {@link Uri} for messages. */
-	public static final Uri CONTENT_URI = Uri
-			.parse("content://de.ub0r.android.smsdroid/msg");
+	public static final Uri CONTENT_URI = Uri.parse("content://de.ub0r.android.smsdroid/msg");
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int delete(final Uri uri, final String selection,
-			final String[] selectionArgs) {
+	public int delete(final Uri uri, final String selection, final String[] selectionArgs) {
 		throw new UnsupportedOperationException("not implemented");
 	}
 
@@ -82,9 +80,8 @@ public final class MessageProvider extends ContentProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Cursor query(final Uri uri, final String[] projection,
-			final String selection, final String[] selectionArgs,
-			final String sortOrder) {
+	public Cursor query(final Uri uri, final String[] projection, final String selection,
+			final String[] selectionArgs, final String sortOrder) {
 		throw new UnsupportedOperationException("not implemented");
 	}
 
@@ -92,8 +89,8 @@ public final class MessageProvider extends ContentProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int update(final Uri uri, final ContentValues values,
-			final String selection, final String[] selectionArgs) {
+	public int update(final Uri uri, final ContentValues values, final String selection,
+			final String[] selectionArgs) {
 		throw new UnsupportedOperationException("not implemented");
 	}
 
@@ -106,9 +103,8 @@ public final class MessageProvider extends ContentProvider {
 		Log.d(TAG, "openFile(" + uri + ")");
 		final long mid = ContentUris.parseId(uri);
 		String body = null;
-		final Cursor cursor = this.getContext().getContentResolver().query(
-				Uri.parse("content://sms/" + mid), Message.PROJECTION_SMS,
-				null, null, null);
+		final Cursor cursor = this.getContext().getContentResolver()
+				.query(Uri.parse("content://sms/" + mid), Message.PROJECTION_SMS, null, null, null);
 		if (cursor != null && cursor.moveToFirst()) {
 			body = cursor.getString(Message.INDEX_BODY);
 		}
@@ -122,13 +118,10 @@ public final class MessageProvider extends ContentProvider {
 				FileWriter fw = new FileWriter(f);
 				fw.append(body);
 				fw.close();
-				return ParcelFileDescriptor.open(f,
-						ParcelFileDescriptor.MODE_READ_ONLY);
+				return ParcelFileDescriptor.open(f, ParcelFileDescriptor.MODE_READ_ONLY);
 			} catch (IOException e) {
 				Log.e(TAG, "IO ERROR", e);
-				Toast
-						.makeText(this.getContext(), "IO ERROR",
-								Toast.LENGTH_LONG).show();
+				Toast.makeText(this.getContext(), "IO ERROR", Toast.LENGTH_LONG).show();
 			}
 		}
 		return null;

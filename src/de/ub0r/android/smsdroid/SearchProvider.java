@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Felix Bechstein
+ * Copyright (C) 2011-2012-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -38,8 +38,7 @@ public final class SearchProvider extends ContentProvider {
 	static final String TAG = "sp";
 
 	/** Authority. */
-	private static final String AUTHORITY = // .
-	"de.ub0r.android.smsdroid.SearchProvider";
+	private static final String AUTHORITY = "de.ub0r.android.smsdroid.SearchProvider";
 
 	/** {@link Uri} to messages. */
 	private static final Uri SMS_URI = Uri.parse("content://sms/");
@@ -57,17 +56,15 @@ public final class SearchProvider extends ContentProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Cursor query(final Uri uri, final String[] projection,
-			final String selection, final String[] selectionArgs,
-			final String sortOrder) {
+	public Cursor query(final Uri uri, final String[] projection, final String selection,
+			final String[] selectionArgs, final String sortOrder) {
 		Log.d(TAG, "query(" + uri + ",..)");
 		if (uri == null) {
 			return null;
 		}
 		final String query = uri.getLastPathSegment();
 		Log.d(TAG, "query: " + query);
-		if (TextUtils.isEmpty(query)
-				|| query.equals(SearchManager.SUGGEST_URI_PATH_QUERY)) {
+		if (TextUtils.isEmpty(query) || query.equals(SearchManager.SUGGEST_URI_PATH_QUERY)) {
 			return null;
 		}
 		final int limit = Utils.parseInt(uri.getQueryParameter("limit"), -1);
@@ -76,9 +73,8 @@ public final class SearchProvider extends ContentProvider {
 				"address as " + SearchManager.SUGGEST_COLUMN_TEXT_1,
 				"body as " + SearchManager.SUGGEST_COLUMN_TEXT_2 };
 		final String where = "body like '%" + query + "%'";
-		return new MergeCursor(new Cursor[] { this.getContext()
-				.getContentResolver().query(SMS_URI, // .
-						proj, where, null, null) });
+		return new MergeCursor(new Cursor[] { this.getContext().getContentResolver()
+				.query(SMS_URI, proj, where, null, null) });
 	}
 
 	/**
@@ -93,8 +89,7 @@ public final class SearchProvider extends ContentProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int delete(final Uri uri, final String selection,
-			final String[] selectionArgs) {
+	public int delete(final Uri uri, final String selection, final String[] selectionArgs) {
 		throw new UnsupportedOperationException("not implemented");
 	}
 
@@ -110,8 +105,8 @@ public final class SearchProvider extends ContentProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int update(final Uri uri, final ContentValues values,
-			final String selection, final String[] selectionArgs) {
+	public int update(final Uri uri, final ContentValues values, final String selection,
+			final String[] selectionArgs) {
 		throw new UnsupportedOperationException("not implemented");
 	}
 }

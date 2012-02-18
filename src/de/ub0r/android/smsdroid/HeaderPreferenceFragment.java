@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -29,8 +29,8 @@ import de.ub0r.android.lib.IPreferenceContainer;
  * 
  * @author flx
  */
-public final class HeaderPreferenceFragment extends PreferenceFragment
-		implements IPreferenceContainer {
+public final class HeaderPreferenceFragment extends PreferenceFragment implements
+		IPreferenceContainer {
 	/**
 	 * {@inheritDoc}
 	 */
@@ -39,8 +39,7 @@ public final class HeaderPreferenceFragment extends PreferenceFragment
 		super.onCreate(savedInstanceState);
 
 		final Activity a = this.getActivity();
-		int res = a.getResources().getIdentifier(
-				this.getArguments().getString("resource"), "xml",
+		int res = a.getResources().getIdentifier(this.getArguments().getString("resource"), "xml",
 				a.getPackageName());
 		this.addPreferencesFromResource(res);
 

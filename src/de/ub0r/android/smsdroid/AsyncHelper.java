@@ -66,8 +66,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 * @param sync
 	 *            fetch of information
 	 */
-	public static void fillConversation(final Context context,
-			final Conversation c, final boolean sync) {
+	public static void fillConversation(final Context context, final Conversation c,
+			final boolean sync) {
 		Log.d(TAG, "fillConversation(ctx, conv, " + sync + ")");
 		if (context == null || c == null || c.getThreadId() < 0) {
 			return;

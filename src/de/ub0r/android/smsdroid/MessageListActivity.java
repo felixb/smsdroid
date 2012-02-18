@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of SMSdroid.
  * 
@@ -62,15 +62,13 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public class MessageListActivity extends FragmentActivity implements
-		OnItemClickListener, OnItemLongClickListener, OnClickListener,
-		OnLongClickListener {
+public class MessageListActivity extends FragmentActivity implements OnItemClickListener,
+		OnItemLongClickListener, OnClickListener, OnLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "ml";
 
 	/** {@link ContactsWrapper}. */
-	private static final ContactsWrapper WRAPPER = ContactsWrapper
-			.getInstance();
+	private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
 
 	/** Number of items. */
 	private static final int WHICH_N = 8;
@@ -160,16 +158,12 @@ public class MessageListActivity extends FragmentActivity implements
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		this.enableAutosend = p.getBoolean(
-				PreferencesActivity.PREFS_ENABLE_AUTOSEND, true);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+		this.enableAutosend = p.getBoolean(PreferencesActivity.PREFS_ENABLE_AUTOSEND, true);
 		this.showTextField = this.enableAutosend
 				|| p.getBoolean(PreferencesActivity.PREFS_SHOWTEXTFIELD, true);
-		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO,
-				true);
-		final boolean hideSend = p.getBoolean(
-				PreferencesActivity.PREFS_HIDE_SEND, false);
+		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
+		final boolean hideSend = p.getBoolean(PreferencesActivity.PREFS_HIDE_SEND, false);
 		this.setTheme(PreferencesActivity.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
@@ -183,8 +177,7 @@ public class MessageListActivity extends FragmentActivity implements
 			this.findViewById(R.id.send_).setVisibility(View.GONE);
 		}
 
-		this.cbmgr = (ClipboardManager) this
-				.getSystemService(CLIPBOARD_SERVICE);
+		this.cbmgr = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
 		this.etText = (EditText) this.findViewById(R.id.text);
 
 		if (!this.showTextField) {
@@ -200,23 +193,17 @@ public class MessageListActivity extends FragmentActivity implements
 		v.setOnClickListener(this);
 		v.setOnLongClickListener(this);
 		this.findViewById(R.id.text_paste).setOnClickListener(this);
-		this.textWatcher = new MyTextWatcher(this,
-				(TextView) this.findViewById(R.id.text_paste),
+		this.textWatcher = new MyTextWatcher(this, (TextView) this.findViewById(R.id.text_paste),
 				(TextView) this.findViewById(R.id.text_));
 		this.etText.addTextChangedListener(this.textWatcher);
 		this.textWatcher.afterTextChanged(this.etText.getEditableText());
 
-		this.longItemClickDialog[WHICH_MARK_UNREAD] = this
-				.getString(R.string.mark_unread_);
+		this.longItemClickDialog[WHICH_MARK_UNREAD] = this.getString(R.string.mark_unread_);
 		this.longItemClickDialog[WHICH_REPLY] = this.getString(R.string.reply);
-		this.longItemClickDialog[WHICH_FORWARD] = this
-				.getString(R.string.forward_);
-		this.longItemClickDialog[WHICH_COPY_TEXT] = this
-				.getString(R.string.copy_text_);
-		this.longItemClickDialog[WHICH_VIEW_DETAILS] = this
-				.getString(R.string.view_details_);
-		this.longItemClickDialog[WHICH_DELETE] = this
-				.getString(R.string.delete_message_);
+		this.longItemClickDialog[WHICH_FORWARD] = this.getString(R.string.forward_);
+		this.longItemClickDialog[WHICH_COPY_TEXT] = this.getString(R.string.copy_text_);
+		this.longItemClickDialog[WHICH_VIEW_DETAILS] = this.getString(R.string.view_details_);
+		this.longItemClickDialog[WHICH_DELETE] = this.getString(R.string.delete_message_);
 		// this.longItemClickDialog[WHICH_SPEAK] =
 		// this.getString(R.string.speak_);
 	}
@@ -265,12 +252,10 @@ public class MessageListActivity extends FragmentActivity implements
 			this.uri = Uri.parse(URI + tid);
 			if (tid < 0L) {
 				try {
-					this.startActivity(// .
-					ConversationListActivity.getComposeIntent(this, null));
+					this.startActivity(ConversationListActivity.getComposeIntent(this, null));
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "activity not found", e);
-					Toast.makeText(this, R.string.error_conv_null,
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
 				}
 				this.finish();
 				return;
@@ -278,13 +263,11 @@ public class MessageListActivity extends FragmentActivity implements
 		}
 
 		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		final Conversation c = Conversation.getConversation(this, threadId,
-				true);
+		final Conversation c = Conversation.getConversation(this, threadId, true);
 		this.conv = c;
 
 		if (c == null) {
-			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
 			this.finish();
 			return;
 		}
@@ -351,32 +334,27 @@ public class MessageListActivity extends FragmentActivity implements
 			// photo
 			ImageView ivPhoto = (ImageView) this.findViewById(R.id.photo);
 			if (ivPhoto == null) {
-				ivPhoto = (ImageView) this.contactItem.getActionView()
-						.findViewById(R.id.photo);
+				ivPhoto = (ImageView) this.contactItem.getActionView().findViewById(R.id.photo);
 			}
 			if (ivPhoto == null) {
 				Log.w(TAG, "ivPhoto == null");
 			} else {
-				ivPhoto.setImageDrawable(contact.getAvatar(this,
-						this.defaultContactAvatar));
-				ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this,
-						ivPhoto,
-						contact.getLookUpUri(this.getContentResolver()), 2,
-						null));
+				ivPhoto.setImageDrawable(contact.getAvatar(this, this.defaultContactAvatar));
+				ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this, ivPhoto,
+						contact.getLookUpUri(this.getContentResolver()), 2, null));
 			}
 
 			// presence
 			ImageView ivPresence = (ImageView) this.findViewById(R.id.presence);
 			if (ivPresence == null) {
-				ivPresence = (ImageView) this.contactItem.getActionView()
-						.findViewById(R.id.presence);
+				ivPresence = (ImageView) this.contactItem.getActionView().findViewById(
+						R.id.presence);
 			}
 			if (ivPresence == null) {
 				Log.w(TAG, "ivPresence == null");
 			} else {
 				if (contact.getPresenceState() > 0) {
-					ivPresence.setImageResource(Contact.getPresenceRes(contact
-							.getPresenceState()));
+					ivPresence.setImageResource(Contact.getPresenceRes(contact.getPresenceState()));
 					ivPresence.setVisibility(View.VISIBLE);
 				} else {
 					ivPresence.setVisibility(View.INVISIBLE);
@@ -413,9 +391,8 @@ public class MessageListActivity extends FragmentActivity implements
 				this.etText.setMinLines(1);
 			} else {
 				if (chooserPackage == null) {
-					final ActivityInfo cai = this.buildIntent(
-							this.enableAutosend, true).resolveActivityInfo(pm,
-							0);
+					final ActivityInfo cai = this.buildIntent(this.enableAutosend, true)
+							.resolveActivityInfo(pm, 0);
 					if (cai != null) {
 						chooserPackage = cai.packageName;
 					}
@@ -463,8 +440,7 @@ public class MessageListActivity extends FragmentActivity implements
 		if (this.conv != null) {
 			this.setContactIcon(this.conv.getContact());
 		}
-		final SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
 		if (p.getBoolean(PreferencesActivity.PREFS_HIDE_RESTORE, false)) {
 			menu.removeItem(R.id.item_restore);
 		}
@@ -484,9 +460,8 @@ public class MessageListActivity extends FragmentActivity implements
 			this.startActivity(intent);
 			return true;
 		case R.id.item_delete_thread:
-			ConversationListActivity.deleteMessages(this, this.uri,
-					R.string.delete_thread_, R.string.delete_thread_question,
-					this);
+			ConversationListActivity.deleteMessages(this, this.uri, R.string.delete_thread_,
+					R.string.delete_thread_question, this);
 			return true;
 		case R.id.item_answer:
 			this.send(true, false);
@@ -496,17 +471,13 @@ public class MessageListActivity extends FragmentActivity implements
 					+ this.conv.getContact().getNumber())));
 			return true;
 		case R.id.item_restore:
-			this.etText.setText(PreferenceManager.getDefaultSharedPreferences(
-					this).getString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
-					null));
+			this.etText.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(
+					PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
 			return true;
 		case R.id.item_contact:
 			if (this.conv != null && this.contactItem != null) {
-				WRAPPER.showQuickContactFallBack(
-						this,
-						this.contactItem.getActionView(),
-						this.conv.getContact().getLookUpUri(
-								this.getContentResolver()), 2, null);
+				WRAPPER.showQuickContactFallBack(this, this.contactItem.getActionView(), this.conv
+						.getContact().getLookUpUri(this.getContentResolver()), 2, null);
 			}
 			return true;
 		default:
@@ -517,19 +488,18 @@ public class MessageListActivity extends FragmentActivity implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void onItemClick(final AdapterView<?> parent, final View view,
-			final int position, final long id) {
+	public final void onItemClick(final AdapterView<?> parent, final View view, final int position,
+			final long id) {
 		this.onItemLongClick(parent, view, position, id);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean onItemLongClick(final AdapterView<?> parent,
-			final View view, final int position, final long id) {
+	public final boolean onItemLongClick(final AdapterView<?> parent, final View view,
+			final int position, final long id) {
 		final Context context = this;
-		final Message m = Message.getMessage(this,
-				(Cursor) parent.getItemAtPosition(position));
+		final Message m = Message.getMessage(this, (Cursor) parent.getItemAtPosition(position));
 		final Uri target = m.getUri();
 		final int read = m.getRead();
 		final int type = m.getType();
@@ -547,8 +517,7 @@ public class MessageListActivity extends FragmentActivity implements
 		} else {
 			items[WHICH_VIEW_CONTACT] = this.getString(R.string.view_contact_);
 		}
-		items[WHICH_CALL] = this.getString(R.string.call) + " "
-				+ contact.getDisplayName();
+		items[WHICH_CALL] = this.getString(R.string.call) + " " + contact.getDisplayName();
 		if (read == 0) {
 			items = items.clone();
 			items[WHICH_MARK_UNREAD] = context.getString(R.string.mark_read_);
@@ -565,39 +534,32 @@ public class MessageListActivity extends FragmentActivity implements
 				switch (which) {
 				case WHICH_VIEW_CONTACT:
 					if (n == null) {
-						i = ContactsWrapper.getInstance()
-								.getInsertPickIntent(a);
+						i = ContactsWrapper.getInstance().getInsertPickIntent(a);
 						Conversation.flushCache();
 					} else {
-						final Uri u = MessageListActivity.this.conv
-								.getContact().getUri();
+						final Uri u = MessageListActivity.this.conv.getContact().getUri();
 						i = new Intent(Intent.ACTION_VIEW, u);
 					}
 					MessageListActivity.this.startActivity(i);
 					break;
 				case WHICH_CALL:
-					MessageListActivity.this.startActivity(new Intent(
-							Intent.ACTION_VIEW, Uri.parse("tel:" + a)));
+					MessageListActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
+							.parse("tel:" + a)));
 					break;
 				case WHICH_MARK_UNREAD:
-					ConversationListActivity
-							.markRead(context, target, 1 - read);
+					ConversationListActivity.markRead(context, target, 1 - read);
 					MessageListActivity.this.markedUnread = true;
 					break;
 				case WHICH_REPLY:
-					MessageListActivity.this
-							.startActivity(ConversationListActivity
-									.getComposeIntent(MessageListActivity.this,
-											a));
+					MessageListActivity.this.startActivity(ConversationListActivity
+							.getComposeIntent(MessageListActivity.this, a));
 					break;
 				case WHICH_FORWARD:
 					int resId;
 					if (type == Message.SMS_DRAFT) {
 						resId = R.string.send_draft_;
-						i = ConversationListActivity.getComposeIntent(
-								MessageListActivity.this,
-								MessageListActivity.this.conv.getContact()
-										.getNumber());
+						i = ConversationListActivity.getComposeIntent(MessageListActivity.this,
+								MessageListActivity.this.conv.getContact().getNumber());
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -612,13 +574,11 @@ public class MessageListActivity extends FragmentActivity implements
 					}
 					i.putExtra(Intent.EXTRA_TEXT, text);
 					i.putExtra("sms_body", text);
-					context.startActivity(Intent.createChooser(i,
-							context.getString(resId)));
+					context.startActivity(Intent.createChooser(i, context.getString(resId)));
 					break;
 				case WHICH_COPY_TEXT:
-					final ClipboardManager cm = // .
-					(ClipboardManager) context.getSystemService(// .
-							Context.CLIPBOARD_SERVICE);
+					final ClipboardManager cm = (ClipboardManager) context
+							.getSystemService(Context.CLIPBOARD_SERVICE);
 					if (PreferencesActivity.decodeDecimalNCR(context)) {
 						cm.setText(Converter.convertDecNCR2Char(m.getBody()));
 					} else {
@@ -633,9 +593,8 @@ public class MessageListActivity extends FragmentActivity implements
 					StringBuilder sb = new StringBuilder();
 					final String a = m.getAddress(context);
 					final long d = m.getDate();
-					final String ds = DateFormat.format(// .
-							context.getString(// .
-							R.string.DATEFORMAT_details), d).toString();
+					final String ds = DateFormat.format(
+							context.getString(R.string.DATEFORMAT_details), d).toString();
 					String sentReceived;
 					String fromTo;
 					if (t == Calls.INCOMING_TYPE) {
@@ -666,8 +625,7 @@ public class MessageListActivity extends FragmentActivity implements
 					break;
 				case WHICH_DELETE:
 					ConversationListActivity.deleteMessages(context, target,
-							R.string.delete_message_,
-							R.string.delete_message_question, null);
+							R.string.delete_message_, R.string.delete_message_question, null);
 					break;
 				default:
 					break;
@@ -718,11 +676,10 @@ public class MessageListActivity extends FragmentActivity implements
 	 *            show chooser
 	 * @return {@link Intent}
 	 */
-	private Intent buildIntent(final boolean autosend, // .
-			final boolean showChooser) {
+	private Intent buildIntent(final boolean autosend, final boolean showChooser) {
 		final String text = this.etText.getText().toString().trim();
-		final Intent i = ConversationListActivity.getComposeIntent(this,
-				this.conv.getContact().getNumber());
+		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv.getContact()
+				.getNumber());
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
 		if (autosend && this.enableAutosend && text.length() > 0) {
