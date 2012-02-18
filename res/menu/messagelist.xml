@@ -29,10 +29,6 @@
         android:icon="@drawable/android:ic_menu_call"
         android:title="@string/call"/>
     <item
-        android:id="@+id/item_all_threads"
-        android:icon="@android:drawable/ic_menu_view"
-        android:title="@string/all_threads_"/>
-    <item
         android:id="@+id/item_delete_thread"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/delete_thread_"/>

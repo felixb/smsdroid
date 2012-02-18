@@ -488,9 +488,6 @@ public class MessageListActivity extends FragmentActivity implements
 					R.string.delete_thread_, R.string.delete_thread_question,
 					this);
 			return true;
-		case R.id.item_all_threads:
-			this.startActivity(new Intent(this, ConversationListActivity.class));
-			return true;
 		case R.id.item_answer:
 			this.send(true, false);
 			return true;
