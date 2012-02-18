@@ -18,7 +18,7 @@
        -->
 <!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/smsdroid/edit.php?lang=it&file=strings.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/it/strings.xml to edit the file.
        -->
 <resources>
   <string name="about_" formatted="false" username="carloraudino@fedoraproject.org" orig="About">Info</string>
