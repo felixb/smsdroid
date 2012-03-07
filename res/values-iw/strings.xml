@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+               Copyright (C) 2009-2011 Felix Bechstein
+       -->
+<!--
+               This file is part of SMSdroid. This program is free software; you can
+               redistribute it and/or modify it under the terms of the GNU General
+               Public License as published by the Free Software Foundation; either
+               version 3 of the License, or (at your option) any later version.
+       -->
+<!--
+               This program is distributed in the hope that it will be useful, but
+               WITHOUT ANY WARRANTY; without even the implied warranty of
+               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+               General Public License for more details. You should have received a
+               copy of the GNU General Public License along with this program; If
+               not, see <http://www.gnu.org/licenses/>.
+       -->
+<!--
+               This file is generated automatically by ub0rlib/php.
+               Visit http://ub0r.de/translate/smsdroid/iw/strings.xml to edit the file.
+       -->
+<resources>
+  <string name="about_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="About">אודות</string>
+  <string name="about_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="About this app">אודות אפליקציה זו</string>
+  <string name="faq_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Some tips and tricks, how to set up this app.">טיפים ותריקים לשימוש באפליקציה זו</string>
+  <string name="feedback_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Feedback">פידבק</string>
+  <string name="feedback_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Report bugs, request features ...">דיווח על באגים, בקשות ...</string>
+  <string name="google_plus_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">עקבו אחרי בגוגל+, \nקבלת התראות וכו\'</string>
+  <string name="twitter_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">עקבו אחרי בטוויטר, \nקבלת התראות וכו\'</string>
+  <string name="about0" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">סמס-דרויד מאפשר לקרוא סמסים, ולכתוב סמסים באמצעות כל תוכנה</string>
+  <string name="more_apps_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="More Apps..">תוכנות נוספות</string>
+  <string name="settings" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Preferences">הגדרות</string>
+  <string name="new_message_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="New message">הודעה חדשה</string>
+  <string name="new_message_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Compose a new message">צור הודעה חדשה</string>
+  <string name="new_message" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="1 unread message.">הודעה חדשה</string>
+  <string name="new_messages_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="New messages">הודעות חדשות</string>
+  <string name="new_messages" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="%d unread messages.">%d הודעות חדשות.</string>
+  <string name="call" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Call">חייג</string>
+  <string name="answer" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Answer">ענה</string>
+  <string name="reply" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Reply">השב</string>
+  <string name="send_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Send">השב לכולם</string>
+  <string name="notification_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Notifications">התראות</string>
+  <string name="notification_enable_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Enable notifications">אשר התראות</string>
+  <string name="notification_enable_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Enable notifications on receive">אשר התראות קבלה</string>
+  <string name="receive_vibrate_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Vibrate">רטט</string>
+  <string name="receive_vibrate_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Vibrate on receive">רטט בקבלה</string>
+  <string name="receive_vibrate_mode_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Vibrator mode">מצב רטט</string>
+  <string name="receive_sound_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Sound">קול</string>
+  <string name="receive_sound_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Sound on receive">קול בקבלה</string>
+</resources>
