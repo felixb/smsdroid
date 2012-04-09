@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop" 
+        android:contentDescription="Contact Avatar"/>
 
     <ImageView
         android:id="@+id/presence"
@@ -76,7 +77,6 @@
             android:maxLines="1"
             android:text="body"
             android:textColor="@android:color/secondary_text_dark" />
- />
     </LinearLayout>
 
 </RelativeLayout>

@@ -86,7 +86,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		TextView tvDate;
 		ImageView ivPhoto;
 		View vRead;
-		LinearLayout panel;
 	}
 
 	/**
@@ -211,7 +210,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			holder.tvDate = (TextView) view.findViewById(R.id.date);
 			holder.ivPhoto = (ImageView) view.findViewById(R.id.photo);
 			holder.vRead = (View) view.findViewById(R.id.read);
-			holder.panel = (LinearLayout) view.findViewById(R.id.panel);
 			view.setTag(holder);
 		}
 
