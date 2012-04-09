@@ -78,7 +78,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	private final boolean convertNCR;
 
 	private boolean useGridLayout;
-	
+
 	static class ViewHolder {
 		TextView tvBody;
 		TextView tvPerson;
@@ -86,7 +86,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		TextView tvDate;
 		ImageView ivPhoto;
 		View vRead;
-	    LinearLayout panel;		
+		LinearLayout panel;
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	public final void bindView(final View view, final Context context, final Cursor cursor) {
 		final Conversation c = Conversation.getConversation(context, cursor, false);
 		final Contact contact = c.getContact();
-		
+
 		ViewHolder holder = (ViewHolder) view.getTag();
 		if (holder == null) {
 			holder = new ViewHolder();
@@ -216,7 +216,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		}
 
 		if (useGridLayout) {
-			holder.panel.setBackgroundColor(0xAA222222);
 			holder.tvCount.setVisibility(View.GONE);
 		} else {
 			final int count = c.getCount();
@@ -239,7 +238,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		}
 
 		if (useGridLayout || ConversationListActivity.showContactPhoto) {
-			holder.ivPhoto.setImageDrawable(contact.getAvatar(this.activity, this.defaultContactAvatar));
+			holder.ivPhoto.setImageDrawable(contact.getAvatar(this.activity,
+					this.defaultContactAvatar));
 			holder.ivPhoto.setVisibility(View.VISIBLE);
 			if (!useGridLayout) {
 				holder.ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context, holder.ivPhoto,
@@ -249,7 +249,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			holder.ivPhoto.setVisibility(View.GONE);
 		}
 
-		
 		if (this.isBlocked(contact.getNumber())) {
 			holder.tvPerson.setText("[" + contact.getDisplayName() + "]");
 		} else {
