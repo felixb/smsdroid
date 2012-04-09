@@ -18,18 +18,23 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.app.Activity;
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.support.v4.widget.ResourceCursorAdapter;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ResourceCursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.Contact;
@@ -58,7 +63,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	/** Token for {@link BackgroundQueryHandler}: message list query. */
 	private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
 	/** Reference to {@link ConversationListActivity}. */
-	private final ConversationListActivity activity;
+	private final Activity activity;
 
 	/** List of blocked numbers. */
 	private final String[] blacklist;
@@ -71,6 +76,18 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 
 	/** Convert NCR. */
 	private final boolean convertNCR;
+
+	private boolean useGridLayout;
+	
+	static class ViewHolder {
+		TextView tvBody;
+		TextView tvPerson;
+		TextView tvCount;
+		TextView tvDate;
+		ImageView ivPhoto;
+		View vRead;
+	    LinearLayout panel;		
+	}
 
 	/**
 	 * Handle queries in background.
@@ -113,9 +130,15 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	 * @param c
 	 *            {@link ConversationListActivity}
 	 */
-	public ConversationAdapter(final ConversationListActivity c) {
+	public ConversationAdapter(final Activity c) {
 		super(c, R.layout.conversationlist_item, null, true);
 		this.activity = c;
+
+		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
+		this.useGridLayout = p.getBoolean("use_gridlayout", false);
+		if (useGridLayout) {
+			super.setViewResource(R.layout.conversation_square);
+		}
 		final ContentResolver cr = c.getContentResolver();
 		this.queryHandler = new BackgroundQueryHandler(cr);
 		SpamDB spam = new SpamDB(c);
@@ -165,57 +188,79 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
+	@Override
+	public View getView(int pos, View convertView, ViewGroup parent) {
+		return super.getView(pos, convertView, parent);
+	}
+
+	/*
+	 * 
+	 * /** {@inheritDoc}
 	 */
 	@Override
 	public final void bindView(final View view, final Context context, final Cursor cursor) {
 		final Conversation c = Conversation.getConversation(context, cursor, false);
 		final Contact contact = c.getContact();
-
-		final TextView tvPerson = (TextView) view.findViewById(R.id.addr);
-		final TextView tvCount = (TextView) view.findViewById(R.id.count);
-		final TextView tvBody = (TextView) view.findViewById(R.id.body);
-		final TextView tvDate = (TextView) view.findViewById(R.id.date);
-		if (this.textSize > 0) {
-			tvBody.setTextSize(this.textSize);
+		
+		ViewHolder holder = (ViewHolder) view.getTag();
+		if (holder == null) {
+			holder = new ViewHolder();
+			holder.tvPerson = (TextView) view.findViewById(R.id.addr);
+			holder.tvCount = (TextView) view.findViewById(R.id.count);
+			holder.tvBody = (TextView) view.findViewById(R.id.body);
+			holder.tvDate = (TextView) view.findViewById(R.id.date);
+			holder.ivPhoto = (ImageView) view.findViewById(R.id.photo);
+			holder.vRead = (View) view.findViewById(R.id.read);
+			holder.panel = (LinearLayout) view.findViewById(R.id.panel);
+			view.setTag(holder);
 		}
+
+		if (useGridLayout) {
+			holder.panel.setBackgroundColor(0xAA222222);
+			holder.tvCount.setVisibility(View.GONE);
+		} else {
+			final int count = c.getCount();
+			if (count < 0) {
+				holder.tvCount.setText("");
+			} else {
+				holder.tvCount.setText("(" + c.getCount() + ")");
+			}
+		}
+		if (this.textSize > 0) {
+			holder.tvBody.setTextSize(this.textSize);
+		}
+
 		final int col = this.textColor;
 		if (col != 0) {
-			tvPerson.setTextColor(col);
-			tvBody.setTextColor(col);
-			tvCount.setTextColor(col);
-			tvDate.setTextColor(col);
-		}
-		final ImageView ivPhoto = (ImageView) view.findViewById(R.id.photo);
-
-		if (ConversationListActivity.showContactPhoto) {
-			ivPhoto.setImageDrawable(contact.getAvatar(this.activity, this.defaultContactAvatar));
-			ivPhoto.setVisibility(View.VISIBLE);
-			ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context, ivPhoto,
-					contact.getLookUpUri(context.getContentResolver()), 2, null));
-		} else {
-			ivPhoto.setVisibility(View.GONE);
+			holder.tvPerson.setTextColor(col);
+			holder.tvBody.setTextColor(col);
+			holder.tvCount.setTextColor(col);
+			holder.tvDate.setTextColor(col);
 		}
 
-		// count
-		final int count = c.getCount();
-		if (count < 0) {
-			tvCount.setText("");
+		if (useGridLayout || ConversationListActivity.showContactPhoto) {
+			holder.ivPhoto.setImageDrawable(contact.getAvatar(this.activity, this.defaultContactAvatar));
+			holder.ivPhoto.setVisibility(View.VISIBLE);
+			if (!useGridLayout) {
+				holder.ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context, holder.ivPhoto,
+						contact.getLookUpUri(context.getContentResolver()), 2, null));
+			}
 		} else {
-			tvCount.setText("(" + c.getCount() + ")");
+			holder.ivPhoto.setVisibility(View.GONE);
 		}
+
+		
 		if (this.isBlocked(contact.getNumber())) {
-			tvPerson.setText("[" + contact.getDisplayName() + "]");
+			holder.tvPerson.setText("[" + contact.getDisplayName() + "]");
 		} else {
-			tvPerson.setText(contact.getDisplayName());
+			holder.tvPerson.setText(contact.getDisplayName());
 		}
 
 		// read status
 		if (c.getRead() == 0) {
-			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
+			holder.vRead.setVisibility(View.VISIBLE);
 		} else {
-			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
+			holder.vRead.setVisibility(View.INVISIBLE);
 		}
 
 		// body
@@ -224,14 +269,14 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 			text = context.getString(R.string.mms_conversation);
 		}
 		if (this.convertNCR) {
-			tvBody.setText(Converter.convertDecNCR2Char(text));
+			holder.tvBody.setText(Converter.convertDecNCR2Char(text));
 		} else {
-			tvBody.setText(text);
+			holder.tvBody.setText(text);
 		}
 
 		// date
 		long time = c.getDate();
-		tvDate.setText(ConversationListActivity.getDate(context, time));
+		holder.tvDate.setText(ConversationListActivity.getDate(context, time));
 
 		// presence
 		ImageView ivPresence = (ImageView) view.findViewById(R.id.presence);

@@ -211,4 +211,6 @@
 		<item>Multiple long</item>
 		<item>Short, long, short, long</item>
 	</string-array>
+		<string name="use_new_layout_">Use new layout</string>
+		<string name="use_new_layout_hint">use the new user interface (on android >4.0)</string>
 </resources>
