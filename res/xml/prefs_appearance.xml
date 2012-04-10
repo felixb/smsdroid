@@ -22,6 +22,12 @@
         android:key="theme"
         android:title="@string/theme_" />
 
+    <CheckBoxPreference
+        android:defaultValue="@bool/default_icstheme"
+        android:key="use_gridlayout"
+        android:summary="@string/use_new_layout_hint"
+        android:title="@string/use_new_layout_" />
+
     <PreferenceScreen
         android:key="bubbles_in"
         android:summary="@string/bubbles_in_hint"
@@ -82,6 +88,5 @@
         android:key="morelocale"
         android:summary="@string/custom_language_hint"
         android:title="@string/custom_language_" />
-    <CheckBoxPreference android:key="use_gridlayout" android:title="@string/use_new_layout_" android:summary="@string/use_new_layout_hint"/>
 
 </PreferenceScreen>

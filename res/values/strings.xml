@@ -184,6 +184,8 @@
 	<string name="fix_number3_replace_">Replace 3</string>
 	<string name="fix_numbers_regex_hint">Regular expression too search for.</string>
 	<string name="fix_numbers_replace_hint">Replace matched text with this text.</string>
+	<string name="use_new_layout_">Use tiled layout</string>
+	<string name="use_new_layout_hint">Use a tiled user interface for conversations</string>
 	<string-array name="themes">
 		<item>Black</item>
 		<item>Light</item>
@@ -211,6 +213,4 @@
 		<item>Multiple long</item>
 		<item>Short, long, short, long</item>
 	</string-array>
-		<string name="use_new_layout_">Use tiled layout</string>
-		<string name="use_new_layout_hint">use the a tiled user interface for conversations</string>
 </resources>
