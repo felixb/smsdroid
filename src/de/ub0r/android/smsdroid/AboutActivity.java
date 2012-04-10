@@ -20,15 +20,16 @@ package de.ub0r.android.smsdroid;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItem;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
  * Display About {@link FragmentActivity}.
  * 
  * @author flx
  */
-public final class AboutActivity extends FragmentActivity {
+public final class AboutActivity extends SherlockActivity {
 	/**
 	 * {@inheritDoc}
 	 */

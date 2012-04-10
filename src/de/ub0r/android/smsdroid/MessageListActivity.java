@@ -32,9 +32,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -52,6 +49,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
@@ -62,7 +64,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public class MessageListActivity extends FragmentActivity implements OnItemClickListener,
+public class MessageListActivity extends SherlockActivity implements OnItemClickListener,
 		OnItemLongClickListener, OnClickListener, OnLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "ml";
@@ -435,7 +437,7 @@ public class MessageListActivity extends FragmentActivity implements OnItemClick
 	 */
 	@Override
 	public final boolean onCreateOptionsMenu(final Menu menu) {
-		this.getMenuInflater().inflate(R.menu.messagelist, menu);
+		this.getSupportMenuInflater().inflate(R.menu.messagelist, menu);
 		this.contactItem = menu.findItem(R.id.item_contact);
 		if (this.conv != null) {
 			this.setContactIcon(this.conv.getContact());

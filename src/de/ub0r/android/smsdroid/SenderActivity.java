@@ -16,9 +16,6 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.ClipboardManager;
@@ -28,6 +25,11 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
@@ -36,7 +38,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public final class SenderActivity extends FragmentActivity implements OnClickListener {
+public final class SenderActivity extends SherlockActivity implements OnClickListener {
 	/** Tag for output. */
 	private static final String TAG = "send";
 
@@ -297,7 +299,7 @@ public final class SenderActivity extends FragmentActivity implements OnClickLis
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
-		this.getMenuInflater().inflate(R.menu.sender, menu);
+		this.getSupportMenuInflater().inflate(R.menu.sender, menu);
 		return true;
 	}
 

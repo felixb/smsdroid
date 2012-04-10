@@ -38,8 +38,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -65,7 +63,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
  * 
  * @author flx
  */
-public final class ConversationListActivity extends FragmentActivity implements
+public final class ConversationListActivity extends SherlockActivity implements
 		OnItemClickListener, OnItemLongClickListener {
 	/** Tag for output. */
 	public static final String TAG = "main";
@@ -159,9 +157,9 @@ public final class ConversationListActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * Get {@link ListView}.
+	 * Get {@link AbsListView}.
 	 * 
-	 * @return {@link ListView}
+	 * @return {@link AbsListView}
 	 */
 	private AbsListView getListView() {
 		return (AbsListView) this.findViewById(android.R.id.list);
@@ -330,7 +328,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
-		this.getMenuInflater().inflate(R.menu.conversationlist, menu);
+		this.getSupportMenuInflater().inflate(R.menu.conversationlist, menu);
 		if (this.ads == null) {
 			menu.removeItem(R.id.item_donate);
 		}

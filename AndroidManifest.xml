@@ -151,7 +151,7 @@
     </application>
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="7"
         android:targetSdkVersion="15" />
 
     <supports-screens
