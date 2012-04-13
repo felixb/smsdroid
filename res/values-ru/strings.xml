@@ -71,7 +71,7 @@
   <string name="show_titlebar_" formatted="false" orig="Show title bar">Показывать уведомления</string>
   <string name="show_titlebar_hint" formatted="false" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Показывать уведомления в статусбаре. Без этого фоновые процессы не будут видны</string>
   <string name="show_contact_photo_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show photo">Фото</string>
-  <string name="show_contact_photo_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show contact\'s photo in conversation list">Показывать фото контакта в списке диалогов</string>
+  <string name="show_contact_photo_hint" formatted="false" username="shineaguevara@gmail.com" orig="Show contact\'s photo in conversation list">Показывать фото контакта в списке диалогов</string>
   <string name="show_emoticons_" formatted="false" orig="Show emoticons">Смайлики</string>
   <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list.">Показывать смайлики в сообщениях</string>
   <string name="show_bubbles_" formatted="false">Сообщения в пузырях</string>
