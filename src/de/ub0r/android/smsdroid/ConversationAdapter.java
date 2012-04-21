@@ -34,7 +34,6 @@ import android.support.v4.widget.ResourceCursorAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.Contact;
@@ -77,9 +76,11 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	/** Convert NCR. */
 	private final boolean convertNCR;
 
+	/** Use grid instead of list. */
 	private boolean useGridLayout;
 
-	static class ViewHolder {
+	/** View holder. */
+	private static class ViewHolder {
 		TextView tvBody;
 		TextView tvPerson;
 		TextView tvCount;
@@ -188,7 +189,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 	}
 
 	@Override
-	public View getView(int pos, View convertView, ViewGroup parent) {
+	public final View getView(final int pos, final View convertView, final ViewGroup parent) {
 		return super.getView(pos, convertView, parent);
 	}
 

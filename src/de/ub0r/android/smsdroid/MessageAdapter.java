@@ -75,6 +75,20 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	/** Convert NCR. */
 	private final boolean convertNCR;
 
+	/** View holder. */
+	private static class ViewHolder {
+		TextView tvBody;
+		TextView tvPerson;
+		TextView tvDate;
+		ImageView ivPhoto;
+		View vRead;
+		public View vPending;
+		public View vLayout;
+		public ImageView ivInOut;
+		public Button btnDownload;
+		public Button btnImport;
+	}
+
 	/**
 	 * Default Constructor.
 	 * 
@@ -166,17 +180,30 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	public final void bindView(final View view, final Context context, final Cursor cursor) {
 		final Message m = Message.getMessage(context, cursor);
 
-		final TextView tvPerson = (TextView) view.findViewById(R.id.addr);
-		final TextView tvBody = (TextView) view.findViewById(R.id.body);
-		final TextView tvDate = (TextView) view.findViewById(R.id.date);
+		ViewHolder holder = (ViewHolder) view.getTag();
+		if (holder == null) {
+			holder = new ViewHolder();
+			holder.tvPerson = (TextView) view.findViewById(R.id.addr);
+			holder.tvBody = (TextView) view.findViewById(R.id.body);
+			holder.tvDate = (TextView) view.findViewById(R.id.date);
+			holder.ivPhoto = (ImageView) view.findViewById(R.id.picture);
+			holder.vRead = view.findViewById(R.id.read);
+			holder.vPending = view.findViewById(R.id.pending);
+			holder.vLayout = view.findViewById(R.id.layout);
+			holder.ivInOut = (ImageView) view.findViewById(R.id.inout);
+			holder.btnDownload = (Button) view.findViewById(R.id.btn_download_msg);
+			holder.btnImport = (Button) view.findViewById(R.id.btn_import_contact);
+			view.setTag(holder);
+		}
+
 		if (this.textSize > 0) {
-			tvBody.setTextSize(this.textSize);
+			holder.tvBody.setTextSize(this.textSize);
 		}
 		final int col = this.textColor;
 		if (col != 0) {
-			tvPerson.setTextColor(col);
-			tvBody.setTextColor(col);
-			tvDate.setTextColor(col);
+			holder.tvPerson.setTextColor(col);
+			holder.tvBody.setTextColor(col);
+			holder.tvDate.setTextColor(col);
 		}
 		int t = m.getType();
 
@@ -187,7 +214,6 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			subject = ": " + subject;
 		}
 		// incoming / outgoing / pending
-		final View pending = view.findViewById(R.id.pending);
 		int pendingvisability = View.GONE;
 		switch (t) {
 		case Message.SMS_DRAFT:
@@ -196,61 +222,58 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			pendingvisability = View.VISIBLE;
 		case Message.SMS_OUT: // handle drafts/pending here too
 		case Message.MMS_OUT:
-			tvPerson.setText(context.getString(R.string.me) + subject);
+			holder.tvPerson.setText(context.getString(R.string.me) + subject);
 			try {
-				view.findViewById(R.id.layout).setBackgroundResource(this.backgroundDrawableOut);
+				holder.vLayout.setBackgroundResource(this.backgroundDrawableOut);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
-			((ImageView) view.findViewById(R.id.inout))
-					.setImageResource(R.drawable.ic_call_log_list_outgoing_call);
+			holder.ivInOut.setImageResource(R.drawable.ic_call_log_list_outgoing_call);
 			break;
 		case Message.SMS_IN:
 		case Message.MMS_IN:
 		default:
-			tvPerson.setText(this.displayName + subject);
+			holder.tvPerson.setText(this.displayName + subject);
 			try {
-				view.findViewById(R.id.layout).setBackgroundResource(this.backgroundDrawableIn);
+				holder.vLayout.setBackgroundResource(this.backgroundDrawableIn);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
-			((ImageView) view.findViewById(R.id.inout))
-					.setImageResource(R.drawable.ic_call_log_list_incoming_call);
-			pending.setVisibility(View.GONE);
+			holder.ivInOut.setImageResource(R.drawable.ic_call_log_list_incoming_call);
+			holder.vPending.setVisibility(View.GONE);
 			break;
 		}
-		pending.setVisibility(pendingvisability);
+		holder.vPending.setVisibility(pendingvisability);
 
 		// unread / read
 		if (m.getRead() == 0) {
-			view.findViewById(R.id.read).setVisibility(View.VISIBLE);
+			holder.vRead.setVisibility(View.VISIBLE);
 		} else {
-			view.findViewById(R.id.read).setVisibility(View.INVISIBLE);
+			holder.vRead.setVisibility(View.INVISIBLE);
 		}
 
 		final long time = m.getDate();
-		tvDate.setText(ConversationListActivity.getDate(context, time));
+		holder.tvDate.setText(ConversationListActivity.getDate(context, time));
 
-		ImageView ivPicture = (ImageView) view.findViewById(R.id.picture);
 		final Bitmap pic = m.getPicture();
 		if (pic != null) {
 			if (pic == Message.BITMAP_PLAY) {
-				ivPicture.setImageResource(R.drawable.mms_play_btn);
+				holder.ivPhoto.setImageResource(R.drawable.mms_play_btn);
 			} else {
-				ivPicture.setImageBitmap(pic);
+				holder.ivPhoto.setImageBitmap(pic);
 			}
-			ivPicture.setVisibility(View.VISIBLE);
+			holder.ivPhoto.setVisibility(View.VISIBLE);
 			final Intent i = m.getContentIntent();
-			ivPicture.setOnClickListener(SMSdroid.getOnClickStartActivity(context, i));
-			ivPicture.setOnLongClickListener(m.getSaveAttachmentListener(context));
+			holder.ivPhoto.setOnClickListener(SMSdroid.getOnClickStartActivity(context, i));
+			holder.ivPhoto.setOnLongClickListener(m.getSaveAttachmentListener(context));
 		} else {
-			ivPicture.setVisibility(View.GONE);
-			ivPicture.setOnClickListener(null);
+			holder.ivPhoto.setVisibility(View.GONE);
+			holder.ivPhoto.setOnClickListener(null);
 		}
 
 		CharSequence text = m.getBody();
 		if (text == null && pic == null) {
-			final Button btn = (Button) view.findViewById(R.id.btn_download_msg);
+			final Button btn = holder.btnDownload;
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -271,26 +294,26 @@ public class MessageAdapter extends ResourceCursorAdapter {
 					}
 				}
 			});
-			btn.setVisibility(View.VISIBLE);
-			btn.setEnabled(true);
+			holder.btnDownload.setVisibility(View.VISIBLE);
+			holder.btnDownload.setEnabled(true);
 		} else {
-			view.findViewById(R.id.btn_download_msg).setVisibility(View.GONE);
+			holder.btnDownload.setVisibility(View.GONE);
 		}
 		if (text == null) {
-			tvBody.setVisibility(View.INVISIBLE);
-			view.findViewById(R.id.btn_import_contact).setVisibility(View.GONE);
+			holder.tvBody.setVisibility(View.INVISIBLE);
+			holder.btnImport.setVisibility(View.GONE);
 		} else {
 			if (this.convertNCR) {
-				tvBody.setText(Converter.convertDecNCR2Char(text));
+				holder.tvBody.setText(Converter.convertDecNCR2Char(text));
 			} else {
-				tvBody.setText(text);
+				holder.tvBody.setText(text);
 			}
-			tvBody.setVisibility(View.VISIBLE);
+			holder.tvBody.setVisibility(View.VISIBLE);
 			String stext = text.toString();
 			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
 				stext = stext.replaceAll(".*BEGIN:VCARD", "BEGIN:VCARD");
 				stext = stext.replaceAll("END:VCARD.*", "END:VCARD");
-				final Button btn = (Button) view.findViewById(R.id.btn_import_contact);
+				final Button btn = holder.btnImport;
 				btn.setVisibility(View.VISIBLE);
 				btn.setOnClickListener(new OnClickListener() {
 					@Override
@@ -308,7 +331,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 					}
 				});
 			} else {
-				view.findViewById(R.id.btn_import_contact).setVisibility(View.GONE);
+				holder.btnImport.setVisibility(View.GONE);
 			}
 		}
 	}
