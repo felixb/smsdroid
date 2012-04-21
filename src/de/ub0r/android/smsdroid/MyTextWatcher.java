@@ -2,16 +2,14 @@ package de.ub0r.android.smsdroid;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.telephony.SmsMessage;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
-import de.ub0r.android.lib.apis.TelephonyWrapper;
 
 public final class MyTextWatcher implements TextWatcher {
-	/** {@link TelephonyWrapper}. */
-	public static final TelephonyWrapper TWRAPPER = TelephonyWrapper.getInstance();
 
 	/** Minimum length for showing sms length. */
 	private static final int TEXT_LABLE_MIN_LEN = 50;
@@ -56,7 +54,7 @@ public final class MyTextWatcher implements TextWatcher {
 			this.tvPaste.setVisibility(View.GONE);
 			if (len > TEXT_LABLE_MIN_LEN) {
 				this.tvTextLabel.setVisibility(View.VISIBLE);
-				int[] l = TWRAPPER.calculateLength(s.toString(), false);
+				int[] l = SmsMessage.calculateLength(s.toString(), false);
 				this.tvTextLabel.setText(l[0] + "/" + l[2]);
 			} else {
 				this.tvTextLabel.setVisibility(View.GONE);
