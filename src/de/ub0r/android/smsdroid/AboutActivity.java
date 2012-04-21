@@ -24,6 +24,8 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
+import de.ub0r.android.lib.Utils;
+
 /**
  * Display About {@link FragmentActivity}.
  * 
@@ -37,6 +39,8 @@ public final class AboutActivity extends SherlockActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.about);
+		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+				R.drawable.bg_striped, R.drawable.bg_striped_img);
 		this.setTitle(this.getString(R.string.about_) + " " + this.getString(R.string.app_name)
 				+ " v" + this.getString(R.string.app_version));
 	}

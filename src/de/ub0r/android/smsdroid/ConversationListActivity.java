@@ -259,6 +259,8 @@ public final class ConversationListActivity extends SherlockActivity implements
 		} else {
 			this.setContentView(R.layout.conversationlist);
 		}
+		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+				R.drawable.bg_striped, R.drawable.bg_striped_img);
 
 		ChangelogHelper.showChangelog(this, true);
 		final List<ResolveInfo> ri = this.getPackageManager().queryBroadcastReceivers(

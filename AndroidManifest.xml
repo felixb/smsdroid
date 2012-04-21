@@ -24,13 +24,13 @@
         android:name=".SMSdroid"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.SherlockUb0r" >
+        android:label="@string/app_name" >
         <activity
             android:name=".ConversationListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:launchMode="singleTop"
+            android:theme="@style/Theme.SherlockSMSdroid_Light"
             android:windowSoftInputMode="stateHidden|adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,11 +59,12 @@
         <activity android:name=".Preferences11Activity" />
         <activity
             android:name=".AboutActivity"
-            android:theme="@style/Theme.SherlockUb0r_Light" />
+            android:theme="@style/Theme.SherlockSMSdroid_Light" />
         <activity
             android:name=".MessageListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTop"
+            android:theme="@style/Theme.SherlockSMSdroid_Light"
             android:windowSoftInputMode="stateHidden|adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -106,10 +107,12 @@
         <activity
             android:name="de.ub0r.android.lib.DonationFragmentActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.SherlockSMSdroid_Light"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="de.ub0r.android.lib.ChangelogFragmentActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/Theme.SherlockSMSdroid_Light"
             android:windowSoftInputMode="adjustResize" />
 
         <receiver android:name="SmsReceiver" >

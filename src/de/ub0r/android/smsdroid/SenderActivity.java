@@ -31,6 +31,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import de.ub0r.android.lib.Log;
+import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
@@ -100,6 +101,8 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 			this.finish();
 		} else {
 			this.setTheme(PreferencesActivity.getTheme(this));
+			Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+					R.drawable.bg_striped, R.drawable.bg_striped_img);
 			this.setContentView(R.layout.sender);
 			this.findViewById(R.id.text_paste).setOnClickListener(this);
 			final EditText et = (EditText) this.findViewById(R.id.text);

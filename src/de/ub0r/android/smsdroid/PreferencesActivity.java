@@ -363,14 +363,10 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	static final int getTheme(final Context context) {
 		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
 		final String s = p.getString(PREFS_THEME, null);
-		if (s != null && THEME_LIGHT.equals(s)) {
-			return R.style.Theme_SherlockUb0r_Light;
-		} else if (s != null && THEME_BLACK.equals(s)) {
-			return R.style.Theme_SherlockUb0r;
-		} else if (Utils.isApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
-			return R.style.Theme_SherlockUb0r_Light;
+		if (s != null && THEME_BLACK.equals(s)) {
+			return R.style.Theme_SherlockSMSdroid;
 		} else {
-			return R.style.Theme_SherlockUb0r;
+			return R.style.Theme_SherlockSMSdroid_Light;
 		}
 	}
 
