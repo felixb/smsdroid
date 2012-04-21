@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2012 Felix Bechstein
  * 
  * This file is part of WebSMS.
  * 
@@ -21,16 +21,20 @@ package de.ub0r.android.smsdroid;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
+import android.database.DatabaseUtils;
+import android.provider.BaseColumns;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Data;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.ub0r.android.lib.DbUtils;
-import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
- * CursorAdapter getting Name, Phone from DB.
+ * CursorAdapter getting Name, Phone from DB. This class requires android API5+
+ * to work.
  * 
  * @author flx
  */
@@ -41,15 +45,25 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	/** Global ContentResolver. */
 	private ContentResolver mContentResolver;
 
-	/** {@link ContactsWrapper} to use. */
-	private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
-
-	/** {@link Uri} to content. */
-	private static final Uri URI = WRAPPER.getContentUri();
 	/** Projection for content. */
-	private static final String[] PROJECTION = WRAPPER.getContentProjection();
+	private static final String[] PROJECTION = new String[] { BaseColumns._ID, // 0
+			Data.DISPLAY_NAME, // 1
+			Phone.NUMBER, // 2
+			Phone.TYPE // 3
+	};
+
+	/** Index of id/lookup key. */
+	public static final int INDEX_ID = 0;
+	/** Index of name. */
+	public static final int INDEX_NAME = 1;
+	/** Index of number. */
+	public static final int INDEX_NUMBER = 2;
+	/** Index of type. */
+	public static final int INDEX_TYPE = 3;
+
 	/** Order for content. */
-	private static final String SORT = WRAPPER.getContentSort();
+	private static final String SORT = Phone.STARRED + " DESC, " + Phone.TIMES_CONTACTED
+			+ " DESC, " + Phone.DISPLAY_NAME + " ASC, " + Phone.TYPE;
 
 	/** List of number types. */
 	private final String[] types;
@@ -60,10 +74,17 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 * @param context
 	 *            context
 	 */
+	@SuppressWarnings("deprecation")
 	public MobilePhoneAdapter(final Context context) {
 		super(context, R.layout.recipient_dropdown_item, null);
 		this.mContentResolver = context.getContentResolver();
 		this.types = context.getResources().getStringArray(android.R.array.phoneTypes);
+	}
+
+	/** View holder. */
+	private static class ViewHolder {
+		/** {@link TextView}s. */
+		TextView tv1, tv2, tv3;
 	}
 
 	/**
@@ -71,15 +92,21 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 */
 	@Override
 	public final void bindView(final View view, final Context context, final Cursor cursor) {
-		((TextView) view.findViewById(R.id.text1)).setText(cursor
-				.getString(ContactsWrapper.CONTENT_INDEX_NAME));
-		((TextView) view.findViewById(R.id.text2)).setText(cursor
-				.getString(ContactsWrapper.CONTENT_INDEX_NUMBER));
-		final int i = cursor.getInt(ContactsWrapper.CONTENT_INDEX_TYPE) - 1;
+		ViewHolder holder = (ViewHolder) view.getTag();
+		if (holder == null) {
+			holder = new ViewHolder();
+			holder.tv1 = (TextView) view.findViewById(R.id.text1);
+			holder.tv2 = (TextView) view.findViewById(R.id.text2);
+			holder.tv3 = (TextView) view.findViewById(R.id.text3);
+			view.setTag(holder);
+		}
+		holder.tv1.setText(cursor.getString(INDEX_NAME));
+		holder.tv2.setText(cursor.getString(INDEX_NUMBER));
+		final int i = cursor.getInt(INDEX_TYPE) - 1;
 		if (i >= 0 && i < this.types.length) {
-			((TextView) view.findViewById(R.id.text3)).setText(this.types[i]);
+			holder.tv3.setText(this.types[i]);
 		} else {
-			((TextView) view.findViewById(R.id.text3)).setText("");
+			holder.tv3.setText("");
 		}
 	}
 
@@ -88,9 +115,9 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 */
 	@Override
 	public final String convertToString(final Cursor cursor) {
-		final String name = cursor.getString(ContactsWrapper.CONTENT_INDEX_NAME);
-		final String number = cursor.getString(ContactsWrapper.CONTENT_INDEX_NUMBER);
-		if (name == null || name.length() == 0) {
+		final String name = cursor.getString(INDEX_NAME);
+		final String number = cursor.getString(INDEX_NUMBER);
+		if (TextUtils.isEmpty(name)) {
 			return cleanRecipient(number);
 		}
 		return name + " <" + cleanRecipient(number) + '>';
@@ -102,14 +129,17 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	@Override
 	public final Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
 		String where = null;
-		if (constraint != null) {
-			where = WRAPPER.getContentWhere(constraint.toString());
+		if (!TextUtils.isEmpty(constraint)) {
+			String f = DatabaseUtils.sqlEscapeString('%' + constraint.toString() + '%');
+			where = "(" + ContactsContract.Data.DISPLAY_NAME + " LIKE " + f + ") OR ("
+					+ Phone.DATA1 + " LIKE " + f + ")";
 			if (prefsMobilesOnly) {
-				where = DbUtils.sqlAnd(where, WRAPPER.getMobilesOnlyString());
+				where = DbUtils.sqlAnd(where, Phone.TYPE + " = " + Phone.TYPE_MOBILE);
 			}
 		}
 
-		final Cursor cursor = this.mContentResolver.query(URI, PROJECTION, where, null, SORT);
+		final Cursor cursor = this.mContentResolver.query(Phone.CONTENT_URI, PROJECTION, where,
+				null, SORT);
 		return cursor;
 	}
 
