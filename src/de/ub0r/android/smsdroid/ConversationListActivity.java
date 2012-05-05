@@ -331,7 +331,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		this.getMenuInflater().inflate(R.menu.conversationlist, menu);
-		if (this.ads != null) {
+		if (this.ads == null) {
 			menu.removeItem(R.id.item_donate);
 		}
 		return true;
