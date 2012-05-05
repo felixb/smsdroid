@@ -77,6 +77,9 @@ public final class Ads implements AdListener, BannerListener {
 	/** Keywords for AdMob. */
 	private final Set<String> mKeywords;
 
+	/** Hide me. */
+	private boolean mHide = false;
+
 	/** the {@link Looper}. */
 	Looper refreshLooper;
 	/** The {@link Handler}. */
@@ -110,6 +113,7 @@ public final class Ads implements AdListener, BannerListener {
 	 */
 	public void onCreate() {
 		Log.d(TAG, "onCreate()");
+		this.mHide = false;
 		this.mAdMobView = new AdView(this.mActivity, AdSize.BANNER, this.mAdMobPubId);
 		this.mAdMobView.setAdListener(this);
 		this.mAdMobRequest = this.buildAdMobRequest();
@@ -183,6 +187,7 @@ public final class Ads implements AdListener, BannerListener {
 	 */
 	public void onDestroy() {
 		Log.d(TAG, "onDestroy()");
+		this.mHide = true;
 		if (this.refreshLooper != null) {
 			this.refreshLooper.quit();
 			this.refreshLooper = null;
@@ -234,7 +239,9 @@ public final class Ads implements AdListener, BannerListener {
 	public void bannerLoadSucceeded() {
 		this.mActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				Ads.this.mViewFlipper.setVisibility(View.VISIBLE);
+				if (!Ads.this.mHide) {
+					Ads.this.mViewFlipper.setVisibility(View.VISIBLE);
+				}
 				if (Ads.this.mViewFlipper.getCurrentView() != Ads.this.mMobFoxView) {
 					Ads.this.mViewFlipper.setDisplayedChild(0);
 				}
@@ -284,7 +291,9 @@ public final class Ads implements AdListener, BannerListener {
 	public void onReceiveAd(final Ad arg0) {
 		this.mActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				Ads.this.mViewFlipper.setVisibility(View.VISIBLE);
+				if (!Ads.this.mHide) {
+					Ads.this.mViewFlipper.setVisibility(View.VISIBLE);
+				}
 				if (Ads.this.mViewFlipper.getCurrentView() != Ads.this.mAdMobView) {
 					Ads.this.mViewFlipper.setDisplayedChild(1);
 				}

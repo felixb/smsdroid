@@ -321,6 +321,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 		if (noAds && this.ads != null) {
 			this.ads.onDestroy();
 			this.ads = null;
+			this.findViewById(R.id.ad).setVisibility(View.GONE);
 		} else if (!noAds && this.ads != null) {
 			this.ads.onResume();
 		}
