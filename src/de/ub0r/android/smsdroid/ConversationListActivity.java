@@ -316,6 +316,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 		if (noAds && this.ads != null) {
 			this.ads.onDestroy();
 			this.ads = null;
+			this.findViewById(R.id.ad).setVisibility(View.GONE);
 		} else if (!noAds && this.ads != null) {
 			this.ads.onResume();
 		}
