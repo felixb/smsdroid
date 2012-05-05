@@ -37,7 +37,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -50,6 +49,11 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
@@ -59,7 +63,7 @@ import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
- * Main {@link FragmentActivity} showing conversations.
+ * Main {@link SherlockActivity} showing conversations.
  * 
  * @author flx
  */
@@ -113,6 +117,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 	/** Index in dialog: mark as spam. */
 	private static final int WHICH_MARK_SPAM = 5;
 
+	/** {@link Ads}. */
 	private Ads ads = null;
 
 	/** Minimum date. */
@@ -446,7 +451,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 			}
 			return true;
 		case R.id.item_settings: // start settings activity
-			if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 				this.startActivity(new Intent(this, Preferences11Activity.class));
 			} else {
 				this.startActivity(new Intent(this, PreferencesActivity.class));
@@ -488,6 +493,9 @@ public final class ConversationListActivity extends SherlockActivity implements
 		return i;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void onItemClick(final AdapterView<?> parent, final View view, final int position,
 			final long id) {
 		final Conversation c = Conversation.getConversation(this,
@@ -505,6 +513,9 @@ public final class ConversationListActivity extends SherlockActivity implements
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean onItemLongClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
 		final Conversation c = Conversation.getConversation(this,
