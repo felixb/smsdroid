@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 		Copyright (C) 2009-2012 Felix Bechstein -->
+<!-- Copyright (C) 2009-2012 Felix Bechstein -->
 <!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
@@ -15,8 +15,8 @@
 		not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="internalOnly"
     package="de.ub0r.android.smsdroid"
+    android:installLocation="internalOnly"
     android:versionCode="138"
     android:versionName="1.1.8" >
 
@@ -143,6 +143,7 @@
         <activity
             android:name="com.google.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+        <activity android:name="com.mobfox.sdk.InAppWebView" />
 
         <meta-data
             android:name="android.app.default_searchable"
@@ -151,7 +152,7 @@
 
     <uses-sdk
         android:minSdkVersion="4"
-        android:targetSdkVersion="14" />
+        android:targetSdkVersion="15" />
 
     <supports-screens
         android:anyDensity="true"

@@ -71,7 +71,9 @@ public final class ConversationListActivity extends FragmentActivity implements
 	public static final String TAG = "main";
 
 	/** Ad's unit id. */
-	private static final String AD_UNITID = "a14b9f701ee348f";
+	private static final String ADMOB_PUBID = "a14b9f701ee348f";
+	/** Ad's unit id. */
+	private static final String MOBFOX_PUBID = "428d2dff49eb07b5a913fa4c12a6f56a";
 
 	/** Ad's keywords. */
 	public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
@@ -113,8 +115,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 	/** Index in dialog: mark as spam. */
 	private static final int WHICH_MARK_SPAM = 5;
 
-	/** Preferences: hide ads. */
-	private static boolean prefsNoAds = false;
+	private Ads ads = null;
 
 	/** Minimum date. */
 	public static final long MIN_DATE = 10000000000L;
@@ -244,9 +245,6 @@ public final class ConversationListActivity extends FragmentActivity implements
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -289,17 +287,37 @@ public final class ConversationListActivity extends FragmentActivity implements
 		this.longItemClickDialog[WHICH_VIEW] = this.getString(R.string.view_thread_);
 		this.longItemClickDialog[WHICH_DELETE] = this.getString(R.string.delete_thread_);
 		this.longItemClickDialog[WHICH_MARK_SPAM] = this.getString(R.string.filter_spam_);
+
+		this.ads = new Ads(ADMOB_PUBID, MOBFOX_PUBID, this, R.id.ad, AD_KEYWORDS);
+		Log.d(TAG, "container: " + this.findViewById(R.id.ad));
+		this.ads.onCreate();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (this.ads != null) {
+			this.ads.onPause();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (this.ads != null) {
+			this.ads.onDestroy();
+		}
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		prefsNoAds = DonationHelper.hideAds(this);
-		if (!prefsNoAds) {
-			Ads.loadAd(this, R.id.ad, AD_UNITID, AD_KEYWORDS);
+		boolean noAds = DonationHelper.hideAds(this);
+		if (noAds && this.ads != null) {
+			this.ads.onDestroy();
+			this.ads = null;
+		} else if (!noAds && this.ads != null) {
+			this.ads.onResume();
 		}
 		CAL_DAYAGO.setTimeInMillis(System.currentTimeMillis());
 		CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
@@ -310,13 +328,10 @@ public final class ConversationListActivity extends FragmentActivity implements
 		this.adapter.startMsgListQuery();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		this.getMenuInflater().inflate(R.menu.conversationlist, menu);
-		if (prefsNoAds) {
+		if (this.ads != null) {
 			menu.removeItem(R.id.item_donate);
 		}
 		return true;
@@ -473,9 +488,6 @@ public final class ConversationListActivity extends FragmentActivity implements
 		return i;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void onItemClick(final AdapterView<?> parent, final View view, final int position,
 			final long id) {
 		final Conversation c = Conversation.getConversation(this,
@@ -493,9 +505,6 @@ public final class ConversationListActivity extends FragmentActivity implements
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public boolean onItemLongClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
 		final Conversation c = Conversation.getConversation(this,

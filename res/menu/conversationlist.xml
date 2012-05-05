@@ -27,13 +27,13 @@
         android:showAsAction="ifRoom|never"
         android:title="@string/mark_all_read_"/>
     <item
-        android:id="@+id/item_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/settings"/>
-    <item
         android:id="@+id/item_delete_all_threads"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/delete_threads_"/>
+    <item
+        android:id="@+id/item_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/settings"/>
     <item
         android:id="@+id/item_donate"
         android:icon="@drawable/ic_menu_star"
