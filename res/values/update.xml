@@ -19,6 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
+		<item>v1.2.1: fix FC</item>
 		<item>v1.2: new (tiled) layout for conversations (thx to marek wehmer)</item>
 		<item>v1.1.8: fix notification for android 1.6-3.2</item>
 		<item>v1.1.7: UI fixes for HC/ICS</item>
