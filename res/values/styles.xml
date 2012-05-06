@@ -22,11 +22,18 @@
     </style>
 
     <style name="Theme.SherlockSMSdroid_Light" parent="style/Theme.SherlockUb0r_Light">
-        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/bg_striped</item>
+        <item name="android:background">@drawable/bg_striped</item>
+        <item name="backgroundSplit">@drawable/bg_striped_split</item>
+        <item name="android:backgroundSplit">@drawable/bg_striped_split</item>
+    </style>
+
+    <style name="Widget.Styled.ActionBar_Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/bg_striped</item>
         <item name="android:background">@drawable/bg_striped</item>
         <item name="backgroundSplit">@drawable/bg_striped_split</item>
