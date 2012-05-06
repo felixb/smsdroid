@@ -540,7 +540,13 @@ public class MessageListActivity extends FragmentActivity implements OnItemClick
 						final Uri u = MessageListActivity.this.conv.getContact().getUri();
 						i = new Intent(Intent.ACTION_VIEW, u);
 					}
-					MessageListActivity.this.startActivity(i);
+					try {
+						MessageListActivity.this.startActivity(i);
+					} catch (ActivityNotFoundException e) {
+						Log.e(TAG, "activity not found: " + i.getAction(), e);
+						Toast.makeText(MessageListActivity.this, "activity not found",
+								Toast.LENGTH_LONG).show();
+					}
 					break;
 				case WHICH_CALL:
 					MessageListActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
