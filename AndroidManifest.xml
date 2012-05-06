@@ -56,7 +56,6 @@
         <activity android:name=".PreferencesAppearanceActivity" />
         <activity android:name=".PreferencesBehaviorActivity" />
         <activity android:name=".PreferencesNotificationActivity" />
-        <activity android:name=".Preferences11Activity" />
         <activity
             android:name=".AboutActivity"
             android:theme="@style/Theme.SherlockUb0r_Light" />

@@ -34,12 +34,9 @@ import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -447,11 +444,7 @@ public final class ConversationListActivity extends FragmentActivity implements
 			}
 			return true;
 		case R.id.item_settings: // start settings activity
-			if (Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
-				this.startActivity(new Intent(this, Preferences11Activity.class));
-			} else {
-				this.startActivity(new Intent(this, PreferencesActivity.class));
-			}
+			this.startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
 		case R.id.item_donate:
 			DonationHelper.startDonationActivity(this, true);
