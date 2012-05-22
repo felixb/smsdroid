@@ -1,7 +1,7 @@
 res/values/market.xml:4
 res/values/notes.xml:5
 res/values/strings.xml:191
-res/values/update.xml:40
+res/values/update.xml:41
 res/values-de/market.xml:4
 res/values-de/notes.xml:4
 res/values-de/strings.xml:191
@@ -20,7 +20,7 @@ res/values-iw/strings.xml:27
 res/values-ru/market.xml:2
 res/values-ru/notes.xml:2
 res/values-ru/strings.xml:189
-res/values:240
+res/values:241
 res/values-de:199
 res/values-es:125
 res/values-fr:175
