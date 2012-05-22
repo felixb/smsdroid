@@ -172,6 +172,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		this.setContentView(R.layout.messagelist);
 		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
 				R.drawable.bg_striped, R.drawable.bg_striped_img);
+		this.getSupportActionBar().setHomeButtonEnabled(true);
 		Log.d(TAG, "onCreate()");
 
 		if (this.showPhoto) {

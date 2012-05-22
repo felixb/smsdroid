@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -71,6 +72,8 @@ public final class SMSdroid extends Application {
 					c.close();
 				}
 			} catch (IllegalArgumentException e) {
+				Log.e(TAG, "disable .Sender: " + e.getMessage(), e);
+			} catch (SQLiteException e) {
 				Log.e(TAG, "disable .Sender: " + e.getMessage(), e);
 			}
 		} else {

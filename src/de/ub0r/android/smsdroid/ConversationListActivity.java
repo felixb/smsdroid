@@ -266,6 +266,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 		}
 		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
 				R.drawable.bg_striped, R.drawable.bg_striped_img);
+		this.getSupportActionBar().setHomeButtonEnabled(true);
 
 		ChangelogHelper.showChangelog(this, true);
 		final List<ResolveInfo> ri = this.getPackageManager().queryBroadcastReceivers(
