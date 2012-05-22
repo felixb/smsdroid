@@ -163,7 +163,9 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 			return "";
 		}
 		String n;
-		if (recipient.indexOf("<") < recipient.indexOf(">")) {
+		int i = recipient.indexOf("<");
+		int j = recipient.indexOf(">");
+		if (i != -1 && i < j) {
 			n = recipient.substring(recipient.indexOf("<"), recipient.indexOf(">"));
 		} else {
 			n = recipient;

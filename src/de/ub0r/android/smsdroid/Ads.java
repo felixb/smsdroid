@@ -132,26 +132,33 @@ public final class Ads implements AdListener, BannerListener {
 			@Override
 			public void run() {
 
-				Log.i(TAG, "Refresh Thread started");
+				Log.d(TAG, "Refresh Thread started");
 				Looper.prepare();
 				Ads.this.refreshLooper = Looper.myLooper();
-				Ads.this.refreshHandler = new Handler(Ads.this.refreshLooper) {
+				if (Ads.this.refreshLooper != null) {
+					try {
+						Ads.this.refreshHandler = new Handler(Ads.this.refreshLooper) {
 
-					@Override
-					public void handleMessage(final Message msg) {
-						switch (msg.what) {
-						case REFRESH_AD:
-							Log.i(TAG, "Refresh Ad message received. Requesting ad from MobFox");
-							Ads.this.mMobFoxView.loadNextAd();
-							break;
-						default:
-							Log.w(TAG, "unknown msg.what: " + msg.what);
-							break;
-						}
+							@Override
+							public void handleMessage(final Message msg) {
+								switch (msg.what) {
+								case REFRESH_AD:
+									Log.d(TAG,
+											"Refresh Ad message received. Requesting ad from MobFox");
+									Ads.this.mMobFoxView.loadNextAd();
+									break;
+								default:
+									Log.w(TAG, "unknown msg.what: " + msg.what);
+									break;
+								}
+							}
+						};
+						Looper.loop();
+						Log.d(TAG, "Refresh Thread stopped");
+					} catch (NullPointerException e) {
+						Log.d(TAG, "NPE", e);
 					}
-				};
-				Looper.loop();
-				Log.i(TAG, "Refresh Thread stopped");
+				}
 			}
 		};
 		refreshThread.start();

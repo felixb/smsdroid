@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MergeCursor;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.View;
@@ -151,6 +152,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		} catch (NullPointerException e) {
 			Log.e(TAG, "error query: " + u + " / " + WHERE, e);
 			c[0] = null;
+		} catch (SQLiteException e) {
+			Log.e(TAG, "error getting messages", e);
 		}
 
 		final String[] sel = new String[] { String.valueOf(tid) };
@@ -161,6 +164,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		} catch (NullPointerException e) {
 			Log.e(TAG, "error query: " + u + " / " + WHERE_DRAFT + " sel: " + sel, e);
 			c[1] = null;
+		} catch (SQLiteException e) {
+			Log.e(TAG, "error getting drafts", e);
 		}
 
 		if (c[1] == null || c[1].getCount() == 0) {

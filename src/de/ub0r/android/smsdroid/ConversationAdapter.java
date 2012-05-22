@@ -152,8 +152,15 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 		this.convertNCR = PreferencesActivity.decodeDecimalNCR(c);
 		this.textSize = PreferencesActivity.getTextsize(c);
 		this.textColor = PreferencesActivity.getTextcolor(c);
-		this.origCursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE, null,
-				null, null);
+
+		Cursor cursor = null;
+		try {
+			cursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE, null, null,
+					null);
+		} catch (SQLiteException e) {
+			Log.e(TAG, "error getting conversations", e);
+		}
+		this.origCursor = cursor;
 
 		if (this.origCursor != null) {
 			this.origCursor.registerContentObserver(new ContentObserver(new Handler()) {
