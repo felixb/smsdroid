@@ -18,12 +18,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+    <LinearLayout
+        android:id="@+id/ad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <ListView
         android:id="@id/android:list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/answerbar"
-        android:layout_below="@+id/titlebar"
+        android:layout_below="@+id/ad"
         android:layout_weight="1"
         android:background="?android:attr/colorBackground"
         android:cacheColorHint="?android:attr/colorBackground"

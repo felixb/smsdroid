@@ -18,6 +18,8 @@
  */
 package de.ub0r.android.smsdroid;
 
+import java.util.HashSet;
+
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -55,6 +57,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
@@ -69,6 +72,33 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		OnItemLongClickListener, OnClickListener, OnLongClickListener {
 	/** Tag for output. */
 	private static final String TAG = "ml";
+
+	/** Ad's unit id. */
+	private static final String ADMOB_PUBID = "a14b9f701ee348f";
+	/** Ad's unit id. */
+	private static final String MOBFOX_PUBID = "428d2dff49eb07b5a913fa4c12a6f56a";
+
+	/** Ad's keywords. */
+	public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
+	static {
+		AD_KEYWORDS.add("android");
+		AD_KEYWORDS.add("mobile");
+		AD_KEYWORDS.add("handy");
+		AD_KEYWORDS.add("cellphone");
+		AD_KEYWORDS.add("google");
+		AD_KEYWORDS.add("htc");
+		AD_KEYWORDS.add("samsung");
+		AD_KEYWORDS.add("motorola");
+		AD_KEYWORDS.add("market");
+		AD_KEYWORDS.add("app");
+		AD_KEYWORDS.add("message");
+		AD_KEYWORDS.add("txt");
+		AD_KEYWORDS.add("sms");
+		AD_KEYWORDS.add("mms");
+		AD_KEYWORDS.add("game");
+		AD_KEYWORDS.add("websms");
+		AD_KEYWORDS.add("amazon");
+	}
 
 	/** {@link ContactsWrapper}. */
 	private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
@@ -172,7 +202,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		this.setContentView(R.layout.messagelist);
 		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
 				R.drawable.bg_striped, R.drawable.bg_striped_img);
-		this.getSupportActionBar().setHomeButtonEnabled(true);
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		Log.d(TAG, "onCreate()");
 
 		if (this.showPhoto) {
@@ -212,15 +242,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		this.longItemClickDialog[WHICH_DELETE] = this.getString(R.string.delete_message_);
 		// this.longItemClickDialog[WHICH_SPEAK] =
 		// this.getString(R.string.speak_);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final void onStart() {
-		super.onStart();
-		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**
@@ -378,6 +399,11 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 	@Override
 	protected final void onResume() {
 		super.onResume();
+		boolean noAds = DonationHelper.hideAds(this);
+		if (!noAds) {
+			Ads.loadAd(this, R.id.ad, ADMOB_PUBID, AD_KEYWORDS);
+		}
+
 		final ListView lv = this.getListView();
 		lv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		lv.setAdapter(new MessageAdapter(this, this.uri));

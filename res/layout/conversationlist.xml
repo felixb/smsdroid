@@ -14,29 +14,12 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/android:list"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="?android:attr/colorBackground" >
-
-    <ViewFlipper
-        android:id="@+id/ad"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:cacheColorHint="?android:attr/colorBackground"
-        android:gravity="center_horizontal"
-        android:visibility="gone" />
-
-    <ListView
-        android:id="@id/android:list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/ad"
-        android:cacheColorHint="?android:attr/colorBackground"
-        android:choiceMode="singleChoice"
-        android:drawSelectorOnTop="false"
-        android:fastScrollEnabled="true"
-        android:scrollingCache="true" />
-
-</RelativeLayout>
+    android:background="?android:attr/colorBackground"
+    android:choiceMode="singleChoice"
+    android:drawSelectorOnTop="false"
+    android:fastScrollEnabled="true"
+    android:scrollingCache="true" />
