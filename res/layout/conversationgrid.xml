@@ -14,31 +14,14 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/list"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="?android:attr/colorBackground" >
-
-    <ViewFlipper
-        android:id="@+id/ad"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:cacheColorHint="?android:attr/colorBackground"
-        android:visibility="gone" />
-
-    <GridView
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ad"
-        android:layout_alignParentTop="true"
-        android:columnWidth="120dp"
-        android:horizontalSpacing="1dp"
-        android:numColumns="auto_fit"
-        android:scrollingCache="true"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" >
-    </GridView>
-
-</RelativeLayout>
+    android:background="?android:attr/colorBackground"
+    android:columnWidth="120dp"
+    android:horizontalSpacing="1dp"
+    android:numColumns="auto_fit"
+    android:scrollingCache="true"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="1dp" />

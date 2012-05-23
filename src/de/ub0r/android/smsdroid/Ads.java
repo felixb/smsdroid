@@ -18,18 +18,13 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.List;
 import java.util.Set;
 
 import android.app.Activity;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.os.Build;
 import android.view.View;
-import android.widget.ViewFlipper;
+import android.webkit.WebViewDatabase;
+import android.widget.LinearLayout;
 
 import com.google.ads.Ad;
 import com.google.ads.AdListener;
@@ -37,10 +32,6 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdRequest.ErrorCode;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
-import com.mobfox.sdk.BannerListener;
-import com.mobfox.sdk.MobFoxView;
-import com.mobfox.sdk.Mode;
-import com.mobfox.sdk.RequestException;
 
 import de.ub0r.android.lib.Log;
 
@@ -49,265 +40,98 @@ import de.ub0r.android.lib.Log;
  * 
  * @author flx
  */
-public final class Ads implements AdListener, BannerListener {
+public final class Ads {
 	/** Tag for output. */
 	private static final String TAG = "ads";
 
-	/** Id for handler. */
-	private static final int REFRESH_AD = 101;
-	/** Refresh interval. */
-	private static final long REFRESH_INTERVAL = 30000;
-
-	/** AdMob's publisher id. */
-	private final String mAdMobPubId;
-	/** MobFox's publisher id. */
-	private final String mMobFoxPubId;
-
-	/** The {@link Activity}. */
-	private final Activity mActivity;
-	/** The {@link ViewFlipper}. */
-	private final ViewFlipper mViewFlipper;
-	/** AdMob's view. */
-	private AdView mAdMobView;
-	/** The {@link AdRequest}. */
-	private AdRequest mAdMobRequest;
-	/** MobFox's view. */
-	private MobFoxView mMobFoxView;
-
-	/** Keywords for AdMob. */
-	private final Set<String> mKeywords;
-
-	/** Hide me. */
-	private boolean mHide = false;
-
-	/** the {@link Looper}. */
-	Looper refreshLooper;
-	/** The {@link Handler}. */
-	Handler refreshHandler;
+	/**
+	 * Hidden constructor.
+	 */
+	private Ads() {
+		// nothing to do.
+	}
 
 	/**
-	 * Default constructor.
+	 * Load ads.
 	 * 
-	 * @param pubIdAdMob
-	 *            admob ad id
-	 * @param pubIdMobFox
-	 *            mobfox ad id
 	 * @param activity
-	 *            {@link Activity}
-	 * @param resIdFlipper
-	 *            resource id of the {@link ViewFlipper} holding the ads
+	 *            activity to show ad in
+	 * @param adBase
+	 *            {@link LinearLayout} to ad the adView
+	 * @param unitId
+	 *            google's unit id
 	 * @param keywords
-	 *            optional keywords for admob's ad requests
+	 *            keywords for the ads
 	 */
-	public Ads(final String pubIdAdMob, final String pubIdMobFox, final Activity activity,
-			final int resIdFlipper, final Set<String> keywords) {
-		this.mAdMobPubId = pubIdAdMob;
-		this.mMobFoxPubId = pubIdMobFox;
-		this.mActivity = activity;
-		this.mViewFlipper = (ViewFlipper) activity.findViewById(resIdFlipper);
-		this.mKeywords = keywords;
-	}
+	public static void loadAd(final Activity activity, final int adBase, final String unitId,
+			final Set<String> keywords) {
+		Log.d(TAG, "loadAd(" + unitId + ")");
 
-	/**
-	 * Call this on {@link Activity}.onCreate().
-	 */
-	public void onCreate() {
-		Log.d(TAG, "onCreate()");
-		this.mHide = false;
-		this.mAdMobView = new AdView(this.mActivity, AdSize.BANNER, this.mAdMobPubId);
-		this.mAdMobView.setAdListener(this);
-		this.mAdMobRequest = this.buildAdMobRequest();
+		final LinearLayout adframe = (LinearLayout) activity.findViewById(adBase);
+		if (adframe == null) {
+			Log.e(TAG, "adframe=null");
+			return;
+		} else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
+			Log.d(TAG, "API " + Build.VERSION.SDK_INT + " <= GINGERBREAD");
+			WebViewDatabase webViewDB = WebViewDatabase.getInstance(activity);
+			if (webViewDB == null) {
+				Log.e(TAG, "webViewDB == null");
+				return;
+			}
+		}
 
-		this.mMobFoxView = new MobFoxView(this.mActivity, this.mMobFoxPubId, Mode.LIVE, true, false);
-		this.mMobFoxView.setBannerListener(this);
+		AdView adv;
+		View v = adframe.getChildAt(0);
+		if (v != null && v instanceof AdView) {
+			adv = (AdView) v;
+		} else {
+			AdSize as = AdSize.BANNER;
+			// TODO
+			// final DisplayMetrics metrics = new DisplayMetrics();
+			// this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+			// if (metrics.heightPixels > AD_HSIZE && metrics.widthPixels >
+			// AD_HSIZE) {
+			// as = AdSize.IAB_LEADERBOARD;
+			// }
+			// metrics = null;
+			adv = new AdView(activity, as, unitId);
+			adframe.addView(adv);
+		}
 
-		this.mViewFlipper.addView(this.mMobFoxView);
-		this.mViewFlipper.addView(this.mAdMobView);
-		this.mViewFlipper.setAnimateFirstView(false);
+		final AdRequest ar = new AdRequest();
+		if (keywords != null) {
+			ar.setKeywords(keywords);
+		}
 
-		// Show MobFoxView
-		this.mViewFlipper.setDisplayedChild(0);
-
-		Thread refreshThread = new Thread() {
+		adv.setAdListener(new AdListener() {
 			@Override
-			public void run() {
-
-				Log.d(TAG, "Refresh Thread started");
-				Looper.prepare();
-				Ads.this.refreshLooper = Looper.myLooper();
-				if (Ads.this.refreshLooper != null) {
-					try {
-						Ads.this.refreshHandler = new Handler(Ads.this.refreshLooper) {
-
-							@Override
-							public void handleMessage(final Message msg) {
-								switch (msg.what) {
-								case REFRESH_AD:
-									Log.d(TAG,
-											"Refresh Ad message received. Requesting ad from MobFox");
-									Ads.this.mMobFoxView.loadNextAd();
-									break;
-								default:
-									Log.w(TAG, "unknown msg.what: " + msg.what);
-									break;
-								}
-							}
-						};
-						Looper.loop();
-						Log.d(TAG, "Refresh Thread stopped");
-					} catch (NullPointerException e) {
-						Log.d(TAG, "NPE", e);
-					}
-				}
+			public void onReceiveAd(final Ad ad) {
+				Log.d(TAG, "got ad: " + ad.toString());
+				adframe.setVisibility(View.VISIBLE);
 			}
-		};
-		refreshThread.start();
-	}
 
-	/**
-	 * Call this on {@link Activity}.onPause().
-	 */
-	public void onPause() {
-		Log.d(TAG, "onPause()");
-		if (this.refreshHandler != null) {
-			this.refreshHandler.removeMessages(REFRESH_AD);
-		}
-		if (this.mAdMobView != null) {
-			this.mAdMobView.stopLoading();
-		}
-		this.mMobFoxView.pause();
-	}
-
-	/**
-	 * Call this on {@link Activity}.onResume().
-	 */
-	public void onResume() {
-		Log.d(TAG, "onResume()");
-		if (this.refreshHandler != null) {
-			this.refreshHandler.removeMessages(REFRESH_AD);
-			this.refreshHandler.sendEmptyMessage(REFRESH_AD);
-		}
-	}
-
-	/**
-	 * Call this on {@link Activity}.onDestroy().
-	 */
-	public void onDestroy() {
-		Log.d(TAG, "onDestroy()");
-		this.mHide = true;
-		if (this.refreshLooper != null) {
-			this.refreshLooper.quit();
-			this.refreshLooper = null;
-			this.refreshHandler = null;
-		}
-	}
-
-	/**
-	 * @return {@link AdRequest}
-	 */
-	private AdRequest buildAdMobRequest() {
-		AdRequest adMobRequest = new AdRequest();
-		try {
-			LocationManager lm = (LocationManager) this.mActivity
-					.getSystemService(Context.LOCATION_SERVICE);
-			List<String> providers = lm.getProviders(true);
-			if (providers != null && !providers.isEmpty()) {
-				Location l = lm.getLastKnownLocation(providers.get(0));
-				adMobRequest.setLocation(l);
+			@Override
+			public void onPresentScreen(final Ad ad) {
+				// nothing todo
 			}
-		} catch (Exception e) {
-			Log.d(TAG, "error adding location: " + e.toString());
-		}
-		if (this.mKeywords != null) {
-			adMobRequest.setKeywords(this.mKeywords);
-		}
-		// adMobRequest.setTesting(true);
-		return adMobRequest;
-	}
 
-	@Override
-	public void adClicked() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void bannerLoadFailed(final RequestException arg0) {
-		try {
-			this.mAdMobView.loadAd(this.mAdMobRequest);
-		} catch (Exception ex) {
-			if (this.refreshHandler != null) {
-				this.refreshHandler.sendEmptyMessageDelayed(REFRESH_AD, REFRESH_INTERVAL);
+			@Override
+			public void onLeaveApplication(final Ad ad) {
+				// nothing todo
 			}
-		}
-	}
 
-	@Override
-	public void bannerLoadSucceeded() {
-		this.mActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				if (!Ads.this.mHide) {
-					Ads.this.mViewFlipper.setVisibility(View.VISIBLE);
-				}
-				if (Ads.this.mViewFlipper.getCurrentView() != Ads.this.mMobFoxView) {
-					Ads.this.mViewFlipper.setDisplayedChild(0);
-				}
+			@Override
+			public void onFailedToReceiveAd(final Ad ad, final ErrorCode err) {
+				Log.i(TAG, "failed to load ad: " + err);
+			}
+
+			@Override
+			public void onDismissScreen(final Ad arg0) {
+				// nothing todo
 			}
 		});
-	}
-
-	@Override
-	public void noAdFound() {
-		Log.d(TAG, "loading MobFox ad failed");
-		try {
-			this.mAdMobView.loadAd(this.mAdMobRequest);
-		} catch (Exception ex) {
-			if (this.refreshHandler != null) {
-				this.refreshHandler.sendEmptyMessageDelayed(REFRESH_AD, REFRESH_INTERVAL);
-			}
-		}
-	}
-
-	@Override
-	public void onDismissScreen(final Ad arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onFailedToReceiveAd(final Ad arg0, final ErrorCode arg1) {
-		Log.d(TAG, "loading AdMob ad failed");
-		if (this.refreshHandler != null) {
-			this.refreshHandler.sendEmptyMessageDelayed(REFRESH_AD, REFRESH_INTERVAL);
-		}
-	}
-
-	@Override
-	public void onLeaveApplication(final Ad arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onPresentScreen(final Ad arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onReceiveAd(final Ad arg0) {
-		this.mActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				if (!Ads.this.mHide) {
-					Ads.this.mViewFlipper.setVisibility(View.VISIBLE);
-				}
-				if (Ads.this.mViewFlipper.getCurrentView() != Ads.this.mAdMobView) {
-					Ads.this.mViewFlipper.setDisplayedChild(1);
-				}
-			}
-		});
-		if (this.refreshHandler != null) {
-			this.refreshHandler.sendEmptyMessageDelayed(REFRESH_AD, REFRESH_INTERVAL);
-		}
+		Log.d(TAG, "send request");
+		adv.loadAd(ar);
+		Log.d(TAG, "loadAd() end");
 	}
 }

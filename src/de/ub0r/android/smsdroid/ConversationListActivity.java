@@ -19,7 +19,6 @@
 package de.ub0r.android.smsdroid;
 
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 
 import android.app.Activity;
@@ -72,33 +71,6 @@ public final class ConversationListActivity extends SherlockActivity implements
 	/** Tag for output. */
 	public static final String TAG = "main";
 
-	/** Ad's unit id. */
-	private static final String ADMOB_PUBID = "a14b9f701ee348f";
-	/** Ad's unit id. */
-	private static final String MOBFOX_PUBID = "428d2dff49eb07b5a913fa4c12a6f56a";
-
-	/** Ad's keywords. */
-	public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
-	static {
-		AD_KEYWORDS.add("android");
-		AD_KEYWORDS.add("mobile");
-		AD_KEYWORDS.add("handy");
-		AD_KEYWORDS.add("cellphone");
-		AD_KEYWORDS.add("google");
-		AD_KEYWORDS.add("htc");
-		AD_KEYWORDS.add("samsung");
-		AD_KEYWORDS.add("motorola");
-		AD_KEYWORDS.add("market");
-		AD_KEYWORDS.add("app");
-		AD_KEYWORDS.add("message");
-		AD_KEYWORDS.add("txt");
-		AD_KEYWORDS.add("sms");
-		AD_KEYWORDS.add("mms");
-		AD_KEYWORDS.add("game");
-		AD_KEYWORDS.add("websms");
-		AD_KEYWORDS.add("amazon");
-	}
-
 	/** ORIG_URI to resolve. */
 	static final Uri URI = Uri.parse("content://mms-sms/conversations/");
 
@@ -116,9 +88,6 @@ public final class ConversationListActivity extends SherlockActivity implements
 	private static final int WHICH_DELETE = 4;
 	/** Index in dialog: mark as spam. */
 	private static final int WHICH_MARK_SPAM = 5;
-
-	/** {@link Ads}. */
-	private Ads ads = null;
 
 	/** Minimum date. */
 	public static final long MIN_DATE = 10000000000L;
@@ -266,7 +235,6 @@ public final class ConversationListActivity extends SherlockActivity implements
 		}
 		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
 				R.drawable.bg_striped, R.drawable.bg_striped_img);
-		this.getSupportActionBar().setHomeButtonEnabled(true);
 
 		ChangelogHelper.showChangelog(this, true);
 		final List<ResolveInfo> ri = this.getPackageManager().queryBroadcastReceivers(
@@ -293,39 +261,11 @@ public final class ConversationListActivity extends SherlockActivity implements
 		this.longItemClickDialog[WHICH_VIEW] = this.getString(R.string.view_thread_);
 		this.longItemClickDialog[WHICH_DELETE] = this.getString(R.string.delete_thread_);
 		this.longItemClickDialog[WHICH_MARK_SPAM] = this.getString(R.string.filter_spam_);
-
-		this.ads = new Ads(ADMOB_PUBID, MOBFOX_PUBID, this, R.id.ad, AD_KEYWORDS);
-		Log.d(TAG, "container: " + this.findViewById(R.id.ad));
-		this.ads.onCreate();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if (this.ads != null) {
-			this.ads.onPause();
-		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (this.ads != null) {
-			this.ads.onDestroy();
-		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		boolean noAds = DonationHelper.hideAds(this);
-		if (noAds && this.ads != null) {
-			this.ads.onDestroy();
-			this.ads = null;
-			this.findViewById(R.id.ad).setVisibility(View.GONE);
-		} else if (!noAds && this.ads != null) {
-			this.ads.onResume();
-		}
 		CAL_DAYAGO.setTimeInMillis(System.currentTimeMillis());
 		CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
 
@@ -338,7 +278,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		this.getSupportMenuInflater().inflate(R.menu.conversationlist, menu);
-		if (this.ads == null) {
+		if (DonationHelper.hideAds(this)) {
 			menu.removeItem(R.id.item_donate);
 		}
 		return true;

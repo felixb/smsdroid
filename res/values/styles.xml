@@ -26,7 +26,7 @@
         <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
     </style>
 
-    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">
         <item name="background">@drawable/bg_striped</item>
         <item name="android:background">@drawable/bg_striped</item>
         <item name="backgroundSplit">@drawable/bg_striped_split</item>
