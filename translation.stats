@@ -10,7 +10,7 @@ res/values-es/notes.xml:0
 res/values-es/strings.xml:125
 res/values-fr/market.xml:4
 res/values-fr/notes.xml:4
-res/values-fr/strings.xml:167
+res/values-fr/strings.xml:168
 res/values-it/market.xml:4
 res/values-it/notes.xml:4
 res/values-it/strings.xml:184
@@ -23,7 +23,7 @@ res/values-ru/strings.xml:189
 res/values:241
 res/values-de:199
 res/values-es:125
-res/values-fr:175
+res/values-fr:176
 res/values-it:192
 res/values-iw:31
 res/values-ru:193

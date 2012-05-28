@@ -193,4 +193,5 @@
     <item>Plusieurs long</item>
     <item>Court, long, court, long</item>
   </string-array>
+  <string name="google_plus_hint" formatted="false" username="ml1k236@yahoo.fr" orig="Follow me on Google+.\nGet update notifications etc.">Suivez moi sur Google+\nRecevez des notifications de mise à jour etc.</string>
 </resources>
