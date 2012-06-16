@@ -21,10 +21,5 @@
                Visit http://ub0r.de/translate/smsdroid/ru/notes.xml to edit the file.
        -->
 <resources>
-  <string-array name="notes_from_dev">
-    <item notranslation="true">You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!</item>
-    <item notranslation="true"/>
-    <item notranslation="true">Jan. 2011-2012: Try a long-click on answer/send/compose buttons to use an other than your standard app for sending.</item>
-    <item>Апр. 2011-2012: SMSdroid теперь может сам отправлять СМС через GSM. Просто используйте "SMS (SMSdroid)" при выборе СМС-приложения. </item>
-  </string-array>
+  <string name="notes_sender">Апр. 2011: SMSdroid теперь может сам отправлять СМС через GSM. Просто используйте "SMS (SMSdroid)" при выборе СМС-приложения.</string>
 </resources>

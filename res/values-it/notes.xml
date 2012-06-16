@@ -21,10 +21,7 @@
                Visit http://ub0r.de/translate/smsdroid/it/notes.xml to edit the file.
        -->
 <resources>
-  <string-array name="notes_from_dev" username="carloraudino@fedoraproject.org">
-    <item>Si potrebbe voler inviare sms con WebSMS gratis od un prezzo davvero basso. Molti provider sono supportati. Provalo!</item>
-    <item notranslation="true"></item>
-    <item>Gennaio 2011-2012: Prova a cliccare a lungo sui pulsanti rispondi/invia/componi per utilizzare un\'applicazione diversa da quella standard per l\'invio.</item>
-    <item>Aprile 2011-2012: SMSdroid adesso può inviare da sola SMS. Basta usare la voce "SMS (SMSdroid) nella scelta dell\'applicazione.</item>
-  </string-array>
+  <string name="notes_websms">Si potrebbe voler inviare sms con WebSMS gratis od un prezzo davvero basso. Molti provider sono supportati. Provalo!</string>
+  <string name="notes_longclick">Gennaio 2011: Prova a cliccare a lungo sui pulsanti rispondi/invia/componi per utilizzare un\'applicazione diversa da quella standard per l\'invio.</string>
+  <string name="notes_sender">Aprile 2011: SMSdroid adesso può inviare da sola SMS. Basta usare la voce "SMS (SMSdroid) nella scelta dell\'applicazione.</string>
 </resources>

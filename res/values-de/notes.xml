@@ -21,10 +21,7 @@
                Visit http://ub0r.de/translate/smsdroid/de/notes.xml to edit the file.
        -->
 <resources>
-  <string-array name="notes_from_dev" username="flx &lt;f+translator@ub0r.de&gt;">
-    <item>Vielleicht möchtest du mit WebSMS gratis oder sehr günstig SMS senden. Es werden viele verschiedene Anbieter unterstützt.</item>
-    <item notranslation="true"></item>
-    <item>Jan. 2011-2012: Versuche einen langen Klick auf Antworten / Senden / Neue Nachricht, um eine andere als deine Standard-App zum Senden zu benutzen.</item>
-    <item>Apr. 2011-2012: SMSdroid kann jetzt auch direkt SMS über deinen Provider senden. Einfach in der Auswahl "SMS (SMSdroid)" wählen.</item>
-  </string-array>
+  <string name="notes_websms">Vielleicht möchtest du mit WebSMS gratis oder sehr günstig SMS senden. Es werden viele verschiedene Anbieter unterstützt.</string>
+  <string name="notes_longclick">Jan. 2011: Versuche einen langen Klick auf Antworten / Senden / Neue Nachricht, um eine andere als deine Standard-App zum Senden zu benutzen.</string>
+  <string name="notes_sender">Apr. 2011: SMSdroid kann jetzt auch direkt SMS über deinen Provider senden. Einfach in der Auswahl "SMS (SMSdroid)" wählen.</string>
 </resources>
