@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>HEAD: fix some FCs, fix dark themed action bar, move ads to message list</item>
+		<item>v1.3.2: fix some FCs, fix dark themed action bar, move ads to message list</item>
 		<item>v1.3.1: fix dark themed action bar, fix FC</item>
 		<item>v1.3: new (tiled) layout for conversations (thx to marek wehmer), update to abs 4.0</item>
 		<item>v1.1.8: fix notification for android 1.6-3.2</item>
