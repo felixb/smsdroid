@@ -23,9 +23,9 @@
 <resources>
   <string name="about_" formatted="false">Über</string>
   <string name="about_hint" formatted="false">Über diese App</string>
-  <string name="faq_hint" formatted="false">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
+  <string name="faq_hint" formatted="false" username="Test " orig="Some tips and tricks, how to set up this app.">Ein paar Tipps und Tricks, wie man diese App einstellt.\n</string>
   <string name="feedback_" formatted="false">Feedback</string>
-  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ..." username="">Fehler melden, neue Funktionen wünschen...</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ..." username="Test ">Fehler melden, neue Funktionen wünschen...</string>
   <string name="google_plus_hint" formatted="false">Folge mir auf Google+.\nErhalte Infos über Updates etc.</string>
   <string name="twitter_hint" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Folge mir auf Twitter.\nErhalte Infos über Updates etc.</string>
   <string name="about0" formatted="false" orig="SMSdroid lets you read your sms and write sms with any other app." username="Felix Bechstein &lt;f+translator@ub0r.de&gt;">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
@@ -41,7 +41,7 @@
   <string name="reply" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Reply">Antworten</string>
   <string name="send_" formatted="false">Senden</string>
   <string name="notification_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Notifications">Benachrichtigungen</string>
-  <string name="notification_enable_" formatted="false" username="" orig="Enable notifications">Benachrichtigungen aktivieren</string>
+  <string name="notification_enable_" formatted="false" orig="Enable notifications">Benachrichtigungen aktivieren</string>
   <string name="notification_enable_hint" formatted="false">Benachrichtigungen bei neuen Nachrichten aktivieren</string>
   <string name="receive_vibrate_" formatted="false">Vibrieren</string>
   <string name="receive_vibrate_hint" formatted="false">Vibrieren bei neuen Nachrichten</string>
@@ -55,7 +55,7 @@
   <string name="receive_no_text_hint" formatted="false">Absender/Text in Benachrichtigung nicht anzeigen.</string>
   <string name="behavior_" formatted="false">Verhalten</string>
   <string name="autosend_" formatted="false">Autosend</string>
-  <string name="appearance_and_behavior_" formatted="false">Darstellung &amp; Verhalten</string>
+  <string name="appearance_and_behavior_" formatted="false" username="Test " orig="Appearance &amp; behavior">Darstellung &amp; Verhalten</string>
   <string name="autosend_hint" formatted="false">Antworten automatisch absenden. Zur Zeit unterstützt nur WebSMS dieses Feature. An sonsten wird der Text an die sendende App übergeben.</string>
   <string name="show_text_filed_" formatted="false">Textfeld zeigen</string>
   <string name="show_text_filed_hint" formatted="false">Zeige das Textfeld statt dem Antworten Button.</string>
