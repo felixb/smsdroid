@@ -41,9 +41,11 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.telephony.gsm.SmsMessage;
+
+import com.jakewharton.notificationcompat2.NotificationCompat2;
+
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
-import de.ub0r.android.lib.apis.NotificationBuilderWrapper;
 
 /**
  * Listen for new sms.
@@ -347,8 +349,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 		} else {
-			NotificationBuilderWrapper.Builder nb = NotificationBuilderWrapper
-					.getNotificationBuilder(context);
+			NotificationCompat2.Builder nb = new NotificationCompat2.Builder(context);
 			boolean showNotification = true;
 			Intent i;
 			if (tid >= 0) {
@@ -384,11 +385,13 @@ public class SmsReceiver extends BroadcastReceiver {
 							if (body == null) {
 								body = context.getString(R.string.mms_conversation);
 							}
-							nb.setLatestEventInfo(context, a, body, pIntent);
+							nb.setContentTitle(a);
+							nb.setContentText(body);
+							nb.setContentIntent(pIntent);
 						} else {
-							nb.setLatestEventInfo(context, a,
-									String.format(context.getString(R.string.new_messages), l),
-									pIntent);
+							nb.setContentTitle(a);
+							nb.setContentText(context.getString(R.string.new_messages, l));
+							nb.setContentIntent(pIntent);
 						}
 						if (showPhoto // just for the speeeeed
 								&& Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
@@ -411,8 +414,9 @@ public class SmsReceiver extends BroadcastReceiver {
 					nb.setSmallIcon(PreferencesActivity.getNotificationIcon(context));
 					nb.setTicker(context.getString(R.string.new_messages_));
 					nb.setWhen(lastUnreadDate);
-					nb.setLatestEventInfo(context, context.getString(R.string.new_messages_),
-							String.format(context.getString(R.string.new_messages), l), pIntent);
+					nb.setContentTitle(context.getString(R.string.new_messages_));
+					nb.setContentText(context.getString(R.string.new_messages, l));
+					nb.setContentIntent(pIntent);
 					nb.setNumber(l);
 				}
 			}

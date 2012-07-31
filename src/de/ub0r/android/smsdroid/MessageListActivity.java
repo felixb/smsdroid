@@ -75,8 +75,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
 	/** Ad's unit id. */
 	private static final String ADMOB_PUBID = "a14b9f701ee348f";
-	/** Ad's unit id. */
-	private static final String MOBFOX_PUBID = "428d2dff49eb07b5a913fa4c12a6f56a";
 
 	/** Ad's keywords. */
 	public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
@@ -200,7 +198,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		this.setTheme(PreferencesActivity.getTheme(this));
 		Utils.setLocale(this);
 		this.setContentView(R.layout.messagelist);
-		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+		SMSdroid.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
 				R.drawable.bg_striped, R.drawable.bg_striped_img);
 		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		Log.d(TAG, "onCreate()");

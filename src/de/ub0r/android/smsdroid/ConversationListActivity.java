@@ -19,7 +19,6 @@
 package de.ub0r.android.smsdroid;
 
 import java.util.Calendar;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
@@ -30,7 +29,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -56,7 +54,6 @@ import com.actionbarsherlock.view.MenuItem;
 import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
-import de.ub0r.android.lib.Market;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -233,19 +230,11 @@ public final class ConversationListActivity extends SherlockActivity implements
 		} else {
 			this.setContentView(R.layout.conversationlist);
 		}
-		Utils.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+		SMSdroid.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
 				R.drawable.bg_striped, R.drawable.bg_striped_img);
 
-		ChangelogHelper.showChangelog(this, true);
-		final List<ResolveInfo> ri = this.getPackageManager().queryBroadcastReceivers(
-				new Intent("de.ub0r.android.websms.connector.INFO"), 0);
-		if (ri.size() == 0) {
-			final Intent intent = Market.getInstallAppIntent(this, "de.ub0r.android.websms",
-					Market.ALT_WEBSMS);
-			ChangelogHelper.showNotes(this, true, "get WebSMS", null, intent);
-		} else {
-			ChangelogHelper.showNotes(this, true, null, null, null);
-		}
+		ChangelogHelper.showChangelog(this, this.getString(R.string.changelog_),
+				this.getString(R.string.app_name), R.array.updates, R.array.notes_from_dev);
 
 		showRows(this);
 
@@ -400,7 +389,12 @@ public final class ConversationListActivity extends SherlockActivity implements
 			}
 			return true;
 		case R.id.item_donate:
-			DonationHelper.startDonationActivity(this, true);
+			DonationHelper.showDonationDialog(this, this.getString(R.string.donate), this
+					.getString(R.string.donate_url), this.getString(R.string.donate_), this
+					.getString(R.string.did_paypal_donation), this.getString(R.string.remove_ads_),
+					this.getResources().getStringArray(R.array.donation_messages_market), this
+							.getResources().getStringArray(R.array.donation_messages_paypal), this
+							.getResources().getStringArray(R.array.donation_messages_load));
 			return true;
 		case R.id.item_delete_all_threads:
 			deleteMessages(this, Uri.parse("content://sms/"), R.string.delete_threads_,

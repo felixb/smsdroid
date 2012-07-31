@@ -16,14 +16,37 @@
 -->
 <resources>
 
-    <style name="Theme.SherlockSMSdroid" parent="style/Theme.SherlockUb0r">
-        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+    <color name="actionbar_text_color">#FFF0F0F0</color>
+    <color name="actionbar_background_color">#FF035EB3</color>
+    <color name="ubActionBarBackgroundDark">#FF000000</color>
+    <color name="ubActionBarBackgroundLight">#FFFFFFFF</color>
+
+    <declare-styleable name="Ub0rButtonBar">
+        <attr name="ubButtonBarBackground" format="reference" />
+    </declare-styleable>
+
+    <style name="ButtonBar" parent="@android:style/ButtonBar" />
+
+    <style name="TextAppearance.Widget.Subtitle" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/actionbar_text_color</item>
     </style>
 
-    <style name="Theme.SherlockSMSdroid_Light" parent="style/Theme.SherlockUb0r_Light">
+    <style name="TextAppearance.Multicomplete" parent="@android:style/TextAppearance.Widget.EditText" />
+
+    <style name="Devider">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="Theme.SherlockSMSdroid" parent="style/Theme.Sherlock">
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="ubButtonBarBackground">@color/ubActionBarBackgroundDark</item>
+    </style>
+
+    <style name="Theme.SherlockSMSdroid_Light" parent="style/Theme.Sherlock.Light.DarkActionBar">
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
         <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
+        <item name="ubButtonBarBackground">@color/ubActionBarBackgroundLight</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">

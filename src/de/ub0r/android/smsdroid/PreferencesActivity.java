@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -346,7 +345,11 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 		if (p != null) {
 			p.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 				public boolean onPreferenceClick(final Preference preference) {
-					Log.collectAndSendLog(pc.getActivity());
+					Log.collectAndSendLog(pc.getActivity(),
+							pc.getContext().getString(R.string.sendlog_install_), pc.getContext()
+									.getString(R.string.sendlog_install), pc.getContext()
+									.getString(R.string.sendlog_run_),
+							pc.getContext().getString(R.string.sendlog_run));
 					return true;
 				}
 			});
