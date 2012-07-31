@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+               Copyright (C) 2009-2012 Felix Bechstein
+       -->
+<!--
+               This file is part of ub0rlib. This program is free software; you can
+               redistribute it and/or modify it under the terms of the GNU General
+               Public License as published by the Free Software Foundation; either
+               version 3 of the License, or (at your option) any later version.
+       -->
+<!--
+               This program is distributed in the hope that it will be useful, but
+               WITHOUT ANY WARRANTY; without even the implied warranty of
+               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+               General Public License for more details. You should have received a
+               copy of the GNU General Public License along with this program; If
+               not, see <http://www.gnu.org/licenses/>.
+       -->
+<!--
+               This file is generated automatically by ub0rlib/php.
+               Visit http://ub0r.de/translate/ub0rlib/de/donation.xml to edit the file.
+       -->
+<resources>
+  <string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=9PLWNXWG2QK64</string>
+  <string name="donate_paypal_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Donate (Paypal)">Spenden (Paypal)</string>
+  <string name="donate_market_" formatted="false">Spenden (Market)</string>
+  <string name="donate_remove_ads_" formatted="false">Spenden/Werbung entfernen</string>
+  <string name="remove_ads_" formatted="false">Werbung entfernen</string>
+  <string name="predonate" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating. I\'ll remove the ads for you as soon as possible.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.">Dies ist eine Open Source-App. Sie ist und bleibt frei. Wenn du die App wirklich magst oder dich die Werbung nervt, kannst du gerne etwas spenden. Ich werde die Werbung so schnell wie möglich entfernen.\nVielen Dank!\n\nSolltest du mehrere Apps von mir einsetzen, reicht eine Spende um überall die Werbung zu entfernen.</string>
+  <string name="predonate_market" formatted="false">Dies ist eine Open Source-App. Sie ist und bleibt frei. Wenn du die App wirklich magst oder dich die Werbung nervt, kannst du gerne etwas spenden.\nVielen Dank!\n\nSolltest du mehrere Apps von mir einsetzen, reicht eine Spende um überall die Werbung zu entfernen.</string>
+  <string name="did_paypal_donation">Ich habe bereits via Paypal gespendet</string>
+  <string name="postdonate" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="To remove ads, you need to load the &lt;i&gt;noads&lt;/i&gt; code. It is available as soon the donation arrives. Please be patient and drop me a mail if it does not work after one day.">Um die Werbung zu entfernen musst du den <i>noads</i> Code laden. Er steht erst zur Verfügung, wenn die Spende bei mir eingegangen ist. Bitte sei geduldig und melde dich bei mir, wenn es nach einem Tag immer noch nicht funktioniert hat.</string>
+  <string name="google_id_" formatted="false" >Um die Spende zu überprüfen, wird deine Google-Adresse benötigt:</string>
+  <string name="donator_id_" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="To verify your donation your donation id (paypal mail address for paypal) is needed:">Um die Spende zu überprüfen, wird deine Paypal-Adresse benötigt:</string>
+  <string name="donator_id_hint" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Paypal address">Paypal Adresse</string>
+  <string name="load_hash_" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Load &lt;i&gt;noads&lt;/i&gt; code"><i>noads</i> Code laden</string>
+  <string name="sig_loaded" formatted="false">Werbung entfernt!</string>
+  <string name="sig_failed" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Failed to remove ads!">Fehler beim Entfernen der Werbung!</string>
+  <string name="accept_" formatted="false">Bedingungen akzeptieren</string>
+  <string name="accept_missing" formatted="false">Bitte akzeptiere die Bedingungen bevor du die Daten sendest.</string>
+  <string name="terms" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="The app will send your donation id along with the md5-hash of your IMEI to the server (http://ub0r.de/donation/). The data is needed to verify your donation.\nThe data is never given to third party and used only for verifying your donation.">Die App sendet deine Spender-ID und den MD5-Hash deiner IMEI an den Server (http://ub0r.de/donation/). Diese Daten werden ausschließlich dazu benutzt deine Spende zu verifizieren.\nDie Daten werden niemals an Dritte weitergegeben.</string>
+  <string name="notify_" formatted="false">Vergessen die Werbung zu deaktivieren?</string>
+  <string name="notify_text" formatted="false">Um die Werbung abzustellen, musst du den <b>noads</b> Code laden. Klicke hier um fortzufahren.</string>
+</resources>

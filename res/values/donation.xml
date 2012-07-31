@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+		Copyright (C) 2009-2012 Felix Bechstein
+	-->
+	<!--
+		This file is part of ub0rlib. This program is free software; you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation; either
+		version 3 of the License, or (at your option) any later version.
+	-->
+	<!--
+		This program is distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+		General Public License for more details. You should have received a
+		copy of the GNU General Public License along with this program; If
+		not, see <http://www.gnu.org/licenses/>.
+	-->
+<resources>
+	<string name="donate_url" translatable="false">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=WNHJLLJ6DGG8W</string>
+	<string name="donate">Donate</string>
+	<string name="donate_">Donate (%s)</string>
+	<string name="remove_ads_">Remove ads</string>
+
+	<string name="donate_paypal_">Donate (Paypal)</string>
+	<string name="donate_market_">Donate (Market)</string>
+	<string name="donate_remove_ads_">Donate/remove ads</string>
+	<string name="predonate">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating. I\'ll remove the ads for you as soon as possible.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.</string>
+	<string name="predonate_market">This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.</string>
+	<string name="did_paypal_donation">I already did a donation via Paypal</string>
+	<string name="postdonate">To remove ads, you need to load the <i>noads</i> code. It is available as soon the donation arrives. Please be patient and drop me a mail if it does not work within one day.</string>
+	<string name="google_id_">To verify your donation your google address is required:</string>
+	<string name="donator_id_">To verify your donation your paypal mail address is required.</string>
+	<string name="donator_id_hint">Paypal address</string>
+	<string name="donator_id_missing">Paypal address is missing</string>
+	<string name="load_hash_">Load <i>noads</i> code</string>
+	<string name="sig_loaded">Ads removed!</string>
+	<string name="sig_failed">Failed to remove ads!</string>
+	<string name="accept_">Accept Terms</string>
+	<string name="accept_missing">Please accept terms before sending the data.</string>
+	<string name="terms">The app will send your donation id along with the md5-hash of your IMEI to the server (http://ub0r.de/donation/). The data is needed to verify your donation.\nThe data is never given to third party and used only for verifying your donation.</string>
+	<string name="notify_">Forgot to remove the ads?</string>
+	<string name="notify_text">To finally remove the ads, you nead to load the <b>noads</b> Code. Click to proceed.</string>
+
+	<string-array name="donation_messages_market" translatable="false">
+		<item>@string/predonate_market</item>
+	</string-array>
+	<string-array name="donation_messages_paypal" translatable="false">
+		<item>@string/postdonate</item>
+		<item>@string/donator_id_</item>
+		<item>@string/terms</item>
+	</string-array>
+		<string-array name="donation_messages_load" translatable="false">
+		<item>@string/load_hash_</item>
+		<item>@string/sig_loaded</item>
+		<item>@string/sig_failed</item>
+	</string-array>
+</resources>

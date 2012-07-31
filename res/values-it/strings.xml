@@ -213,4 +213,18 @@ Cliccare per farlo adesso.</string>
     <item>Multipli lunghi</item>
     <item>Breve, lungo, breve, lungo</item>
   </string-array>
+  <string name="reset" formatted="false" username="carloraudino@fedoraproject.org" orig="Reset">Ripristina</string>
+  <string name="debug_" formatted="false" username="carloraudino@fedoraproject.org" orig="Debug">Debug</string>
+  <string name="send_logs_" formatted="false" username="carloraudino@fedoraproject.org" orig="Send logs">Invia log</string>
+  <string name="send_logs_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Invia i log del dispositivo allo sviluppatore.&#13;Da fare solo se richiesto.</string>
+  <string name="sendlog_run_" formatted="false" username="carloraudino@fedoraproject.org" orig="Run SendLog">Avvia SendLog</string>
+  <string name="sendlog_install_" formatted="false" username="carloraudino@fedoraproject.org" orig="Install SendLog">Installa SendLog</string>
+  <string name="sendlog_install" formatted="false" username="carloraudino@fedoraproject.org" orig="Install the free SendLog application to collect the device log and send it to the developer.">Installa l\'applicazione gratuita SendLog per raccogliere i log del dispositivo ed inviarli allo sviluppatore.</string>
+  <string name="license_" formatted="false" username="carloraudino@fedoraproject.org" orig="License:">Licenza:</string>
+  <string name="license" formatted="false" username="carloraudino@fedoraproject.org" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - vedere http://www.gnu.org/licenses/gpl-3.0.txt</string>
+  <string name="author_" formatted="false" username="carloraudino@fedoraproject.org" orig="Author:">Autore:</string>
+  <string name="website_" formatted="false" username="carloraudino@fedoraproject.org" orig="Website:">Sito web:</string>
+  <string name="source_" formatted="false" username="carloraudino@fedoraproject.org" orig="Sourcescode:">Codice sorgente:</string>
+  <string name="custom_language_" formatted="false" username="carloraudino@fedoraproject.org" orig="Custom language">Personalizza lingua</string>
+  <string name="custom_language_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Set a custom language.">Imposta una lingua personalizzata.</string>
 </resources>
