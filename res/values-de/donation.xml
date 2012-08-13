@@ -21,6 +21,8 @@
                Visit http://ub0r.de/translate/ub0rlib/de/donation.xml to edit the file.
        -->
 <resources>
+  <string name="donate">Spenden</string>
+  <string name="donate_">Spenden (%s)</string>
   <string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=9PLWNXWG2QK64</string>
   <string name="donate_paypal_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Donate (Paypal)">Spenden (Paypal)</string>
   <string name="donate_market_" formatted="false">Spenden (Market)</string>
