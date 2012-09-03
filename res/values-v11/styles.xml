@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Felix Bechstein -->
+<resources>
+
+    <style name="TextAppearance.Multicomplete" parent="@android:style/TextAppearance" />
+
+    <style name="ButtonBar" parent="@android:style/ButtonBar">
+        <item name="android:background">?attr/ubButtonBarBackground</item>
+    </style>
+
+    <style name="Devider">
+        <item name="android:background">?android:attr/dividerHorizontal</item>
+        <item name="android:visibility">visible</item>
+    </style>
+
+</resources>
