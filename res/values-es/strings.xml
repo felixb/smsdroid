@@ -152,4 +152,9 @@
   <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">
   </string>
   <string name="show_full_date_hint" formatted="false" orig="Show full date and time on every message.">Mostar fecha completa y hora en cada mensaje</string>
+  <string name="google_plus_hint" formatted="false" username="Ag" orig="Follow me on Google+.\nGet update notifications etc.">Sígueme en twitter.\nRecibe notificaciones sobre actualizaciones, etc.</string>
+  <string name="hide_send_hint" formatted="false" username="Ag" orig="Hide &quot;send&quot; button near text field.">Esconder el botón "enviar" al lado del campo de texto</string>
+  <string name="hide_paste_" formatted="false" username="Ag" orig="Hide &quot;paste&quot; button">Esconder el botón "pegar"</string>
+  <string name="website_" formatted="false" username="Ag" orig="Website:">Sitio web:</string>
+  <string name="author_" formatted="false" username="Ag" orig="Author:">Autor:</string>
 </resources>
