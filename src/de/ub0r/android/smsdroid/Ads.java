@@ -85,16 +85,7 @@ public final class Ads {
 		if (v != null && v instanceof AdView) {
 			adv = (AdView) v;
 		} else {
-			AdSize as = AdSize.BANNER;
-			// TODO
-			// final DisplayMetrics metrics = new DisplayMetrics();
-			// this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-			// if (metrics.heightPixels > AD_HSIZE && metrics.widthPixels >
-			// AD_HSIZE) {
-			// as = AdSize.IAB_LEADERBOARD;
-			// }
-			// metrics = null;
-			adv = new AdView(activity, as, unitId);
+			adv = new AdView(activity, AdSize.SMART_BANNER, unitId);
 			adframe.addView(adv);
 		}
 
