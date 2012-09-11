@@ -1,10 +1,10 @@
 res/values/dimen_ambil.xml:0
-res/values/donation.xml:6
+res/values/donation.xml:5
 res/values/market.xml:4
 res/values/notes.xml:3
 res/values/strings.xml:206
 res/values/update.xml:42
-res/values-de/donation.xml:6
+res/values-de/donation.xml:5
 res/values-de/market.xml:4
 res/values-de/notes.xml:3
 res/values-de/strings.xml:206
@@ -12,7 +12,7 @@ res/values-es/donation.xml:0
 res/values-es/market.xml:0
 res/values-es/notes.xml:0
 res/values-es/strings.xml:130
-res/values-fr/donation.xml:6
+res/values-fr/donation.xml:5
 res/values-fr/market.xml:4
 res/values-fr/notes.xml:3
 res/values-fr/strings.xml:201
@@ -28,10 +28,10 @@ res/values-ru/donation.xml:0
 res/values-ru/market.xml:2
 res/values-ru/notes.xml:1
 res/values-ru/strings.xml:189
-res/values:261
-res/values-de:219
+res/values:260
+res/values-de:218
 res/values-es:130
-res/values-fr:214
+res/values-fr:213
 res/values-it:205
 res/values-iw:31
 res/values-ru:192
