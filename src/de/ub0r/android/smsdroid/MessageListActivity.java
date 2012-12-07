@@ -716,6 +716,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		final String text = this.etText.getText().toString().trim();
 		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv.getContact()
 				.getNumber());
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
 		if (autosend && this.enableAutosend && text.length() > 0) {

@@ -40,10 +40,8 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.support.v4.app.NotificationCompat;
 import android.telephony.gsm.SmsMessage;
-
-import com.jakewharton.notificationcompat2.NotificationCompat2;
-
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 
@@ -346,10 +344,10 @@ public class SmsReceiver extends BroadcastReceiver {
 		if (l == 0) {
 			final Intent i = new Intent(context, ConversationListActivity.class);
 			// add pending intent
-			i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 		} else {
-			NotificationCompat2.Builder nb = new NotificationCompat2.Builder(context);
+			NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 			boolean showNotification = true;
 			Intent i;
 			if (tid >= 0) {
