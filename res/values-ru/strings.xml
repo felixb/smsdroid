@@ -215,4 +215,15 @@
   <string name="bubbles_green2_left" formatted="false" username="ergodroid" orig="Green 2 left">Зелёный слева</string>
   <string name="bubbles_green2_right" formatted="false" username="ergodroid" orig="Green 2 right">Зелёный справа</string>
   <string name="notification_gingerbread_" formatted="false" username="ergodroid" orig="Gingerbread">Gingerbread</string>
+  <string name="sendlog_install_" formatted="false" username="ACCount" orig="Install SendLog">Установить SendLog</string>
+  <string name="license_" formatted="false" username="ACCount" orig="License:">Лицензия:</string>
+  <string name="sendlog_run_" formatted="false" username="ACCount" orig="Run SendLog">Запустить SendLog</string>
+  <string name="author_" formatted="false" username="ACCount" orig="Author:">Автор:</string>
+  <string name="website_" formatted="false" username="ACCount" orig="Website:">Сайт:</string>
+  <string name="source_" formatted="false" username="ACCount" orig="Sourcescode:">Исходный код:</string>
+  <string name="license" formatted="false" username="ACCount" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - можно просмотреть на http://www.gnu.org/licenses/gpl-3.0.txt</string>
+  <string name="reset" formatted="false" username="ACCount" orig="Reset">Сброс</string>
+  <string name="send_logs_hint" formatted="false" username="ACCount" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Отправить лог-файлы с вашего устройства разработчику.\nДелайте это только если вас об этом попросили.</string>
+  <string name="sendlog_run" formatted="false" username="ACCount" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">Отправить лог-файлы с вашего устройства разработчику.\nДелайте это только если вас об этом попросили.</string>
+  <string name="send_logs_" formatted="false" username="ACCount" orig="Send logs">Отправить лог-файлы</string>
 </resources>

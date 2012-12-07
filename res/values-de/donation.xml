@@ -18,13 +18,12 @@
        -->
 <!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/ub0rlib/de/donation.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/de/donation.xml to edit the file.
        -->
 <resources>
   <string name="donate">Spenden</string>
   <string name="donate_">Spenden (%s)</string>
   <string name="donate_remove_ads_" formatted="false">Spenden/Werbung entfernen</string>
-  <string name="predonate_market" formatted="false">Dies ist eine Open Source-App. Sie ist und bleibt frei. Wenn du die App wirklich magst oder dich die Werbung nervt, kannst du gerne etwas spenden.\nVielen Dank!\n\nSolltest du mehrere Apps von mir einsetzen, reicht eine Spende um überall die Werbung zu entfernen.</string>
+  <string name="predonate_market" formatted="false" username="Felix Bechstein &lt;f+translation@ub0r.de&gt;" orig="This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.">Dies ist eine Open Source-App. Sie ist und bleibt frei und kostenlos. Wenn du die App wirklich magst oder dich die Werbung nervt, kannst du gerne etwas spenden.\nVielen Dank!\n\nSolltest du mehrere Apps von mir einsetzen, reicht eine Spende um überall die Werbung zu entfernen.</string>
   <string name="did_paypal_donation">Ich habe bereits via Paypal gespendet</string>
-  <string name="notify_" formatted="false">Vergessen die Werbung zu deaktivieren?</string>
 </resources>

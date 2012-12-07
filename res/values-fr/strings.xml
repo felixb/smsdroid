@@ -194,4 +194,37 @@
     <item>Court, long, court, long</item>
   </string-array>
   <string name="google_plus_hint" formatted="false" username="ml1k236@yahoo.fr" orig="Follow me on Google+.\nGet update notifications etc.">Suivez moi sur Google+\nRecevez des notifications de mise à jour etc.</string>
+  <string name="fix_numbers_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Fix numbers">Corriger les numéros</string>
+  <string name="fix_numbers_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Remplacer des parties du numéro à l\'aide d\'une expression régulière avant l\'envoi. La plupart des utilisateurs n\'ont pas besoin de modifier cela.</string>
+  <string name="use_new_layout_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Use tiled layout">Utiliser l\'affichage en grille</string>
+  <string name="use_new_layout_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Use a tiled user interface for conversations">Utiliser l\'affichage en grille pour les conversations</string>
+  <string name="reset" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Reset">Réinitialiser</string>
+  <string name="send_logs_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Send logs">Envoyer les journaux</string>
+  <string name="send_logs_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Envoyer les journaux de votre appareil au développeur.\nNe le faites que si il vous le demande.</string>
+  <string name="sendlog_run" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">SendLog va collecter les journaux de votre appareil et les envoyer au développeur. Vous aurez la possibilité de relire et de modifier les données envoyées.</string>
+  <string name="sendlog_install_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Install SendLog">Installer SendLog</string>
+  <string name="sendlog_install" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Installer l\'application gratuite SendLog pour collecter les journaux du terminal et les envoyer au développeur.</string>
+  <string name="license_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="License:">Licence:</string>
+  <string name="license" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - voir http://www.gnu.org/licenses/gpl-3.0.txt</string>
+  <string name="author_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Author:">Auteur:</string>
+  <string name="website_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Website:">Site Web:</string>
+  <string name="source_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Sourcescode:">Code source:</string>
+  <string name="custom_language_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Custom language">Langue</string>
+  <string name="custom_language_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Set a custom language.">Choisissez la langue</string>
+  <string name="hide_restore_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button">Cacher le bouton "restaurer le dernier message"</string>
+  <string name="hide_restore_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Cacher le bouton "restaurer le dernier message dans la liste des messages</string>
+  <string name="to_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Name or Number">Nom ou numéro</string>
+  <string name="fix_numbers_replace_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace matched text with this text.">Remplacer le texte trouvé avec ce texte</string>
+  <string name="bubbles_green2_left" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Green 2 left">Vert 2 gauche</string>
+  <string name="bubbles_green2_right" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Green 2 right">Vert 2 droite</string>
+  <string name="bubbles_blue2_left" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Blue 2 left">Bleu 2 gauche</string>
+  <string name="bubbles_blue2_right" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Blue 2 right">Bleu 2 droite</string>
+  <string name="fix_number2_regex_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regex 2">Expression régulière 2</string>
+  <string name="fix_number1_regex_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regex 1">Expression régulière 1</string>
+  <string name="fix_number3_regex_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regex 3">Expression régulière 3</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regular expression too search for.">Expression régulière à rechercher</string>
+  <string name="sendlog_run_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Run SendLog">Exécuter SendLog</string>
+  <string name="fix_number1_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 1">Remplacement 1</string>
+  <string name="fix_number2_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 2">Remplacement 2</string>
+  <string name="fix_number3_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 3">Remplacement 3</string>
 </resources>

@@ -21,6 +21,7 @@
                Visit http://ub0r.de/translate/smsdroid/ru/market.xml to edit the file.
        -->
 <resources>
-  <string name="market_about" formatted="false" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.">SMSdroid - это приложение специально разработано для отправки СМС сообщений с помощью WebSMS.\n\nЕсли Вам нравиться WebSMS для отправки СМС, то вероятно понравиться и SMSdroid.</string>
+  <string name="market_about" formatted="false" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too." username="ACCount">SMSdroid - это приложение специально разработано для отправки СМС сообщений с помощью WebSMS.\n\nЕсли Вам нравиться WebSMS для отправки СМС, то вам вероятно понравиться и SMSdroid.</string>
   <string name="market_keywords" formatted="false" orig="Keywords: txt sms mms text websms">Keywords: бесплатно смс ммс txt sms mms text websms smspilot</string>
+  <string name="market_translation" formatted="false" username="ACCount" orig="Feel free to help translating this app to your language here: http://ub0r.de/translate/smsdroid/">Вы можете помочь переводу этого приложения на ваш родной язык здесь: http://ub0r.de/translate/smsdroid/</string>
 </resources>
