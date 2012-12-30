@@ -18,7 +18,53 @@
        -->
 <!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/smsdroid/ru/strings.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/hu/strings.xml to edit the file.
        -->
 <resources>
+  <string name="about_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="About">A programról</string>
+  <string name="about_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="About this app">Erről a programról</string>
+  <string name="faq_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Some tips and tricks, how to set up this app.">Tippek és trükkök, a program használatához.</string>
+  <string name="feedback_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Feedback">Visszajelzés</string>
+  <string name="feedback_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Report bugs, request features ...">Hibajelentés küldése, funkciók kérése ...</string>
+  <string name="google_plus_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Kövess engem Google+-on.\nÉrtesülj frissítésekről stb.</string>
+  <string name="twitter_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Kövess engem Twitteren.\nÉrtesülj frissítésekről stb.</string>
+  <string name="about0" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">Az SMSdroiddal olvashatod az smseid és üzenhetsz más alkalmazásokkal.</string>
+  <string name="more_apps_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="More Apps..">Több Alkalmazás...</string>
+  <string name="settings" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Preferences">Beállítások</string>
+  <string name="new_message_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="New message">Új üzenet</string>
+  <string name="new_message_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Compose a new message">Új üzenet írása</string>
+  <string name="new_message" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="1 unread message.">1 olvasatlan üzenet.</string>
+  <string name="new_messages_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="New messages">Új üzenetek</string>
+  <string name="new_messages" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="%d unread messages.">%d olvasatlan üzenet.</string>
+  <string name="call" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Call">Hívás</string>
+  <string name="answer" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Answer">Válasz</string>
+  <string name="reply" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Reply">Válasz</string>
+  <string name="send_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Send">Küldés</string>
+  <string name="notification_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Notifications">Értesítések</string>
+  <string name="notification_enable_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Enable notifications">Értesítések engedélyezése</string>
+  <string name="notification_enable_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Enable notifications on receive">Fogadási értesítések engedélyezése</string>
+  <string name="receive_vibrate_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Vibrate">Vibrálás</string>
+  <string name="receive_vibrate_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Vibrate on receive">Vibrál üzenet érkezésekor</string>
+  <string name="receive_vibrate_mode_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Vibrator mode">Vibrálás mód</string>
+  <string name="receive_sound_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sound">Hang</string>
+  <string name="receive_sound_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sound on receive">Hangjelzés üzenet érkezésekor</string>
+  <string name="receive_led_color_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="LED color">LED szín</string>
+  <string name="receive_led_flash_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="LED mode">LED mód</string>
+  <string name="receive_led_flash_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Set LED flashing behaviour">LED villogásának beállítása</string>
+  <string name="receive_no_text_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide sender/text">Küldő elrejtése</string>
+  <string name="receive_no_text_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide sender/text in notification.">Küldő elrejtése az értesítésben.</string>
+  <string name="behavior_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Behavior">Működés</string>
+  <string name="autosend_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Autosend">Automatikus küldés</string>
+  <string name="appearance_and_behavior_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Appearance &amp; behavior">Megjelenés és működés</string>
+  <string name="autosend_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Üzenetküldés automatikusan. Jelenleg csak a WebSMS támogatja ezt a funkciót. A többi alkalmazás csak mutatja a szöveget.</string>
+  <string name="show_text_filed_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show text filed">Szövegmező mutatása</string>
+  <string name="show_text_filed_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show text filed instead of answer button.">Szövegmező mutatása a válasz gomb helyett.</string>
+  <string name="show_target_app_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show target app">Célalkalmazás mutatása</string>
+  <string name="show_target_app_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Célalkalmazás mutatása az üzenetküldéshez.</string>
+  <string name="appearance_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Appearance">Megjelenés</string>
+  <string name="theme_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Theme">Téma</string>
+  <string name="textsize_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Text size">Szövegméret</string>
+  <string name="textsize_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Text size in pixels; leave empty for default">Szöveg mérete pixelben; hagyja üresen az alapértelmezetthez</string>
+  <string name="textcolor_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Text color">Szövegszín</string>
+  <string name="textcolor_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Message text\'s color.">Üzenet szövegének színe.</string>
 </resources>

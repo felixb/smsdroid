@@ -18,7 +18,10 @@
        -->
 <!--
                This file is generated automatically by ub0rlib/php.
-               Visit http://ub0r.de/translate/smsdroid/ru/notes.xml to edit the file.
+               Visit http://ub0r.de/translate/smsdroid/hu/notes.xml to edit the file.
        -->
 <resources>
+  <string name="notes_longclick" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Jan. 2011: Try a long-click on answer/send/compose buttons to use an other than your standard app for sending.">2011. Jan.: Nyomj hosszan a válasz/küldés/írás gombokra, hogy egy másik alkalmazást használhass üzenetküldésre.</string>
+  <string name="notes_sender" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Apr. 2011: SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">2011. Ápr.: SMSdroid már elérhető, hogy SMS-t küldj vele. Csak használd az "SMS (SMSdroid)" programot az alkalmazás választóban.</string>
+  <string name="notes_websms" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!">Ingyen vagy a lehető legolcsóbban küldhetsz szöveges üzenetet/sms-t a WebSMS segítségével. Sok szolgáltató támogatott, Tegyél egy próbát!</string>
 </resources>
