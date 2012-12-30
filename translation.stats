@@ -18,7 +18,7 @@ res/values-fr/strings.xml:201
 res/values-hu/donation.xml:5
 res/values-hu/market.xml:4
 res/values-hu/notes.xml:3
-res/values-hu/strings.xml:46
+res/values-hu/strings.xml:205
 res/values-it/donation.xml:0
 res/values-it/market.xml:4
 res/values-it/notes.xml:3
@@ -35,7 +35,7 @@ res/values:261
 res/values-de:218
 res/values-es:130
 res/values-fr:213
-res/values-hu:58
+res/values-hu:217
 res/values-it:207
 res/values-iw:31
 res/values-ru:207

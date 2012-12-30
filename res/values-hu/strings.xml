@@ -67,4 +67,168 @@
   <string name="textsize_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Text size in pixels; leave empty for default">Szöveg mérete pixelben; hagyja üresen az alapértelmezetthez</string>
   <string name="textcolor_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Text color">Szövegszín</string>
   <string name="textcolor_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Message text\'s color.">Üzenet szövegének színe.</string>
+  <string name="textcolor_ignore_conv_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Ignore text color for threads">Szövegszín figyelmen kívül hagyása az üzenetfolyamoknál</string>
+  <string name="textcolor_ignore_conv_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Ignore text color in list of threads.">Szövegszín figyelmen kívül hagyása az üzenetfolyamok listázásánál.</string>
+  <string name="show_titlebar_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show title bar">Címsor mutatása</string>
+  <string name="show_titlebar_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Címsor mutatása a fő nézetben. Címsor nélkül nem láthatóak a háttérműveletek.</string>
+  <string name="show_contact_photo_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show photo">Fotó mutatása</string>
+  <string name="show_contact_photo_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show contact\'s photo in conversation list">Partner fotójának mutatása az üzenetváltási listában</string>
+  <string name="show_emoticons_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show emoticons">Hangulatjelek mutatása</string>
+  <string name="show_emoticons_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show emoticons in message list.">Hangulatjelek mutatása az üzenet listában.</string>
+  <string name="show_bubbles_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show bubbles">Szövegbuborékok mutatása</string>
+  <string name="hide_send_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;send&quot; button">"Küldés" gomb elrejtése</string>
+  <string name="hide_send_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">"Küldés" gomb elrejtése a szövegmezőnél.</string>
+  <string name="hide_restore_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">"Utolsó üzenet visszaállítása" gomb elrejtése</string>
+  <string name="hide_restore_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">"Utolsó üzenet visszaállítása" gomb elrejtése az üzenet listában.</string>
+  <string name="hide_paste_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;paste&quot; button">"Beillesztés" gomb elrejtése</string>
+  <string name="hide_paste_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">"Beillesztés" gomb elrejtése a szövegmezőnél.</string>
+  <string name="hide_widget_label_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide widget\'s label">Modul címkéjének elrejtése</string>
+  <string name="hide_widget_label_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide the label of the widget.">Modul címkéjének elrejtése.</string>
+  <string name="show_full_date_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show full date">Teljes dátum mutatása</string>
+  <string name="show_full_date_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show full date and time on every message.">Teljes dátum és idő mutatása minden üzenetnél.</string>
+  <string name="me" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Me">Én</string>
+  <string name="view_contact_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="View contact">Partner megtekintése</string>
+  <string name="add_contact_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Add to contacts">Hozzáadás a kapcsolatokhoz</string>
+  <string name="view_thread_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="View thread">Üzenetfolyam megtekintése</string>
+  <string name="filter_spam_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Mark as Spam">Megjelölés Levélszemétként</string>
+  <string name="dont_filter_spam_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Remove from Blacklist">Eltávolítás a Tiltólistáról</string>
+  <string name="delete_message_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Delete message">Üzenet törlése</string>
+  <string name="delete_thread_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Delete thread">Üzenetfolyam törlése</string>
+  <string name="forward_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Forward">Továbbítás</string>
+  <string name="send_draft_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Send draft">Vázlat küldése</string>
+  <string name="copy_text_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Copy message text">Üzenet szöveg másolása</string>
+  <string name="view_details_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="View message details">Üzenet részleteinek megtekintése</string>
+  <string name="spek_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Speak">Beszéd</string>
+  <string name="delete_threads_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Delete all threads">Az összes üzenetfolyam törlése</string>
+  <string name="mark_all_read_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Mark all as read">Minden megjelölése olvasottként</string>
+  <string name="mark_read_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Mark read">Megjelölés olvasottként</string>
+  <string name="mark_unread_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Mark unread">Megjelölés olvasatlanként</string>
+  <string name="all_threads_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="All threads">Minden üzenetfolyam</string>
+  <string name="message_options_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Message options">Üzenet beállítások</string>
+  <string name="compose_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Compose">Üzenetírás</string>
+  <string name="delete_message_question" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Do you really want to delete this message?">Biztos törölni akarja ezt az üzenetet?</string>
+  <string name="delete_messages_question" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Do you really want to delete these messages?">Biztos törölni akarja ezeket az üzeneteket?</string>
+  <string name="delete_thread_question" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Biztos törölni akarja az <b>üzenetfolyam összes üzenetét</b>?</string>
+  <string name="delete_threads_question" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Biztos törölni akarja az <b> összes üzenetet</b>?</string>
+  <string name="from_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="From:">Feladó:</string>
+  <string name="to_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="To:">Címzett:</string>
+  <string name="to_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Name or Number">Név vagy Telefonszám</string>
+  <string name="type_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Type:">Típus:</string>
+  <string name="sent_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sent:">Elküldve:</string>
+  <string name="received_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Received:">Érkezett:</string>
+  <string name="view_mms" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="View MMS">MMS megtekintése</string>
+  <string name="mms_conversation" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="&lt;MMS body&gt;">&lt;MMS tartalom&gt;</string>
+  <string name="mms_not_supported" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Ez az üzenet MMS-nek néz ki. Letölthető az Alapértelmezett SMS/MMS alkalmazással.\nNyomjon ide a letöltéshez.</string>
+  <string name="import_contact_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Import contact">Partner importálása</string>
+  <string name="download_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Download">Letöltés</string>
+  <string name="downloading_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Downloading..">Letöltés...</string>
+  <string name="debug_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Debug">Hibakeresés</string>
+  <string name="clear_cache_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Clear cache">Gyorsítótár ürítése</string>
+  <string name="clear_cache_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Clear internal Database. Fetch all data again from external Database.">Belső Adatbázis ürítése. Olvassa ki az összes adatot újra külső Adatbázisból.</string>
+  <string name="not_implemented" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sorry, not yet implemented.">Sajnálom, még nincs megvalósítva.</string>
+  <string name="error_conv_null" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Error getting conversation from DB!">Hiba a beszélgetés Adatbázisból betöltése közben!</string>
+  <string name="error_sending_failed" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sending failed">Küldés sikertelen</string>
+  <string name="text_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Text">Szöveg</string>
+  <string name="paste_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="[Paste from clipboard]">[Beszúrás vágólapról]</string>
+  <string name="restore_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Restore last message">Utolsó üzenet visszaállítása</string>
+  <string name="attachment_saved" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Saved attachment on SD card as:">Mentett mellékletek az SD kártyán:</string>
+  <string name="attachment_not_saved" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Could not save attachment.">A melléklet nem lett mentve.</string>
+  <string name="chooser_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Chooser">Választó</string>
+  <string name="notification_icon_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Notification icon">Értesítő ikon</string>
+  <string name="notification_default_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Default">Alapértelmezett</string>
+  <string name="notification_gingerbread_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Gingerbread">Gingerbread</string>
+  <string name="notification_gingerbread_mail_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Gingerbread mail">Gingerbread levél</string>
+  <string name="notification_black_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Black">Fekete</string>
+  <string name="notification_green_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Green">Zöld</string>
+  <string name="notification_yellow_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Yellow">Sárga</string>
+  <string name="bubbles_in_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Bubbles in">Bejövő szövegbuborék</string>
+  <string name="bubbles_in_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Bubbles for incoming messages">Szövegbuborék a bejövő üzenetekhez</string>
+  <string name="bubbles_out_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Bubbles out">Kimenő szövegbuborék</string>
+  <string name="bubbles_out_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Bubbles for outgoing messages">Szövegbuborék a kimenő üzenetekhez</string>
+  <string name="bubbles_nothing" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Nothing">Semmi</string>
+  <string name="bubbles_plain_dark_gray" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Plain dark gray">Sima sötétszürke</string>
+  <string name="bubbles_plain_light_gray" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Plain light gray">Sima világosszürke</string>
+  <string name="bubbles_old_turquoise_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Old turquoise left">Régi türkizkék balra</string>
+  <string name="bubbles_old_turquoise_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Old turquoise right">Régi türkizkék jobbra</string>
+  <string name="bubbles_old_green_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Old green left">Régi zöld balra</string>
+  <string name="bubbles_old_green_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Old green right">Régi zöld jobbra</string>
+  <string name="bubbles_blue_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Blue left">Kék balra</string>
+  <string name="bubbles_blue_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Blue right">Kék jobbra</string>
+  <string name="bubbles_blue2_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Blue 2 left">Kék 2 balra</string>
+  <string name="bubbles_blue2_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Blue 2 right">Kék 2 jobbra</string>
+  <string name="bubbles_brown_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Brown left">Barna balra</string>
+  <string name="bubbles_brown_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Brown right">Barna jobbra</string>
+  <string name="bubbles_gray_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Gray left">Szürke balra</string>
+  <string name="bubbles_gray_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Gray right">Szürke jobbra</string>
+  <string name="bubbles_green_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Green left">Zöld balra</string>
+  <string name="bubbles_green_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Green right">Zöld jobbra</string>
+  <string name="bubbles_green2_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Green 2 left">Zöld 2 balra</string>
+  <string name="bubbles_green2_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Green 2 right">Zöld 2 jobbra</string>
+  <string name="bubbles_orange_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Orange left">Narancssárga balra</string>
+  <string name="bubbles_orange_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Orange right">Narancssárga jobbra</string>
+  <string name="bubbles_pink_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Pink left">Rózsaszín balra</string>
+  <string name="bubbles_pink_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Pink right">Rózsaszín jobbra</string>
+  <string name="bubbles_purple_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Purple left">Lila balra</string>
+  <string name="bubbles_purple_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Purple right">Lila jobbra</string>
+  <string name="bubbles_white_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="White left">Fehér balra</string>
+  <string name="bubbles_white_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="White right">Fehér jobbra</string>
+  <string name="bubbles_yellow_left" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Yellow left">Sárga balra</string>
+  <string name="bubbles_yellow_right" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Yellow right">Sárga jobbra</string>
+  <string name="decode_decimal_ncr_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Decode Decimal NCR">Decimális NCR dekódolása</string>
+  <string name="decode_decimal_ncr_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.">Néhány szolgáltató az unikód üzeneteket decimális NCR (�) kódolással továbbítja. Jelölje meg az automata dekódoláshoz.</string>
+  <string name="activate_sender_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Activate sender">Küldő aktiválása</string>
+  <string name="activate_sender_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Activate SMSdroid\'s message sender.">Aktiválja az SMSdroid üzenet küldőjét.</string>
+  <string name="fix_numbers_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Fix numbers">Fix számok</string>
+  <string name="fix_numbers_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Váltsa ki a szám egy részét egy "szabályos kifejezéssel" küldés előtt. A legtöbb felhasználónak ezen nem szükséges változtatni.</string>
+  <string name="fix_number1_regex_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regex 1">Regex 1</string>
+  <string name="fix_number1_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 1">Csere 1</string>
+  <string name="fix_number2_regex_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regex 2">Regex 2</string>
+  <string name="fix_number2_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 2">Csere 2</string>
+  <string name="fix_number3_regex_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regex 3">Regex 3</string>
+  <string name="fix_number3_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 3">Csere 3</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regular expression too search for.">"Szabályos kifejezés" keresés.</string>
+  <string name="fix_numbers_replace_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace matched text with this text.">Cserélje az egyező szöveget ezzel a szöveggel.</string>
+  <string name="use_new_layout_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Use tiled layout">Mozaikszerű elrendezés</string>
+  <string name="use_new_layout_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Use a tiled user interface for conversations">Mozaikszerű elrendezés az üzenetváltásokhoz.</string>
+  <string name="reset" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Reset">Visszaállítás</string>
+  <string name="send_logs_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Send logs">Naplózás küldése</string>
+  <string name="send_logs_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Az eszköz naplózásának elküldése a fejlesztőnek.\nCsak akkor küldje, ha kérjük erre.</string>
+  <string name="sendlog_run_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Run SendLog">SendLog futtatása</string>
+  <string name="sendlog_run" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">SendLog összegyűjti az eszköz naplózását és elküldi a fejlesztőnek.\nAlkalma lesz elküldés előtt ellenőrizni és módosítani azt.</string>
+  <string name="sendlog_install_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Install SendLog">SendLog telepítése</string>
+  <string name="sendlog_install" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Az ingyenes SendLog alkalmazás telepítése, hogy összegyűjtse, majd elküldje a naplózást a fejlesztőnek.</string>
+  <string name="license_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="License:">Licenc:</string>
+  <string name="license" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - http://www.gnu.org/licenses/gpl-3.0.txt</string>
+  <string name="author_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Author:">Szerző:</string>
+  <string name="website_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Website:">Weboldal:</string>
+  <string name="source_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sourcescode:">Forráskód:</string>
+  <string name="custom_language_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Custom language">Nyelv megváltoztatása</string>
+  <string name="custom_language_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Set a custom language.">Nyelv beállítása.</string>
+  <string-array name="themes" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
+    <item>Fekete</item>
+    <item>Világos</item>
+  </string-array>
+  <string-array name="textsize" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
+    <item>Kicsi</item>
+    <item>Közepes</item>
+  </string-array>
+  <string-array name="led_color" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
+    <item>Zöld</item>
+    <item>Kék</item>
+    <item>Piros</item>
+    <item>Narancssárga</item>
+    <item>Bíborvörös</item>
+    <item>Kékeszöld</item>
+  </string-array>
+  <string-array name="led_flash" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
+    <item>Villogó</item>
+    <item>Folyamatos</item>
+  </string-array>
+  <string-array name="vibrate_mode" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
+    <item>Alapértelmezett</item>
+    <item>Hosszú</item>
+    <item>Sok rövid</item>
+    <item>Sok hosszú</item>
+    <item>Rövid, hosszú, rövid, hosszú</item>
+  </string-array>
 </resources>
