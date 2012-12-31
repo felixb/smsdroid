@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+		Copyright (C) 2009-2012 Felix Bechstein
+	-->
+<!--
+		This file is part of ub0rlib. This program is free software; you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation; either
+		version 3 of the License, or (at your option) any later version.
+	-->
+<!--
+		This program is distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+		General Public License for more details. You should have received a
+		copy of the GNU General Public License along with this program; If
+		not, see <http://www.gnu.org/licenses/>.
+	-->
+<resources>
+  <string name="donate" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Donate">Támogatás</string>
+  <string name="donate_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Donate (%s)">Támogatás (%s)</string>
+  <string name="donate_remove_ads_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Donate/remove ads">Támogatás/reklámok eltávolítása</string>
+  <string name="predonate_market" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.">Ez egy nyílt forráskódú, GPLv3 licenc alatt kibocsátott alkalmazás. Ingyenes és az is marad. Ha igazán kedveled vagy idegesítenek a reklámok, kérlek gondolj a támogatásra.\nKöszönöm!\n\nA támogatásnak köszönhetően minden általam készített alkalmazásból eltűnnek a reklámok.</string>
+  <string name="did_paypal_donation" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="I already did a donation via Paypal">Már támogattam Paypal-on keresztül</string>
+</resources>
