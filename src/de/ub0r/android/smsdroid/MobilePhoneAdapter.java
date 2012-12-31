@@ -21,16 +21,12 @@ package de.ub0r.android.smsdroid;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.provider.BaseColumns;
-import android.provider.ContactsContract;
+import android.net.Uri;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.Data;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
-import de.ub0r.android.lib.DbUtils;
 
 /**
  * CursorAdapter getting Name, Phone from DB. This class requires android API5+
@@ -46,8 +42,8 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	private ContentResolver mContentResolver;
 
 	/** Projection for content. */
-	private static final String[] PROJECTION = new String[] { BaseColumns._ID, // 0
-			Data.DISPLAY_NAME, // 1
+	private static final String[] PROJECTION = new String[] { Phone._ID, // 0
+			Phone.DISPLAY_NAME, // 1
 			Phone.NUMBER, // 2
 			Phone.TYPE // 3
 	};
@@ -61,10 +57,6 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	/** Index of type. */
 	public static final int INDEX_TYPE = 3;
 
-	/** Order for content. */
-	private static final String SORT = Phone.STARRED + " DESC, " + Phone.TIMES_CONTACTED
-			+ " DESC, " + Phone.DISPLAY_NAME + " ASC, " + Phone.TYPE;
-
 	/** List of number types. */
 	private final String[] types;
 
@@ -74,9 +66,8 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 * @param context
 	 *            context
 	 */
-	@SuppressWarnings("deprecation")
 	public MobilePhoneAdapter(final Context context) {
-		super(context, R.layout.recipient_dropdown_item, null);
+		super(context, R.layout.recipient_dropdown_item, null, true);
 		this.mContentResolver = context.getContentResolver();
 		this.types = context.getResources().getStringArray(android.R.array.phoneTypes);
 	}
@@ -128,18 +119,10 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 */
 	@Override
 	public final Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
-		String where = null;
-		if (!TextUtils.isEmpty(constraint)) {
-			String f = DatabaseUtils.sqlEscapeString('%' + constraint.toString() + '%');
-			where = "(" + ContactsContract.Data.DISPLAY_NAME + " LIKE " + f + ") OR ("
-					+ Phone.DATA1 + " LIKE " + f + ")";
-			if (prefsMobilesOnly) {
-				where = DbUtils.sqlAnd(where, Phone.TYPE + " = " + Phone.TYPE_MOBILE);
-			}
-		}
-
-		final Cursor cursor = this.mContentResolver.query(Phone.CONTENT_URI, PROJECTION, where,
-				null, SORT);
+		String s = constraint == null ? null : constraint.toString();
+		String where = prefsMobilesOnly ? Phone.TYPE + " = " + Phone.TYPE_MOBILE : null;
+		Uri u = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(s));
+		Cursor cursor = this.mContentResolver.query(u, PROJECTION, where, null, null);
 		return cursor;
 	}
 
