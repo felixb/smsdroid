@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>HEAD: ignore non latin characters in search, add hungarian translation</item>
+		<item>v1.4.2: ignore non latin characters in search, add hungarian translation</item>
 		<item>v1.4.1: minor fixes</item>
 		<item>v1.4: minor changes</item>
 		<item>v1.3.2: fix some FCs, fix dark themed action bar, move ads to message list</item>
