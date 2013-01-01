@@ -99,7 +99,7 @@
   <string name="copy_text_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Copy message text">Üzenet szöveg másolása</string>
   <string name="view_details_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="View message details">Üzenet részleteinek megtekintése</string>
   <string name="spek_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Speak">Beszéd</string>
-  <string name="delete_threads_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Delete all threads">Az összes üzenetfolyam törlése</string>
+  <string name="delete_threads_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Delete all threads">Összes törlése</string>
   <string name="mark_all_read_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Mark all as read">Minden megjelölése olvasottként</string>
   <string name="mark_read_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Mark read">Megjelölés olvasottként</string>
   <string name="mark_unread_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Mark unread">Megjelölés olvasatlanként</string>
