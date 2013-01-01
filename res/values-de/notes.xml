@@ -21,7 +21,8 @@
                Visit http://ub0r.de/translate/smsdroid/de/notes.xml to edit the file.
        -->
 <resources>
+  <string name="notes_notification">iDeaktiviere die Benachrichtigungen in der standard MMS App, aber deaktivere oder lösche die App nicht komplett.</string>
   <string name="notes_websms">Vielleicht möchtest du mit WebSMS gratis oder sehr günstig SMS senden. Es werden viele verschiedene Anbieter unterstützt.</string>
-  <string name="notes_longclick">Jan. 2011: Versuche einen langen Klick auf Antworten / Senden / Neue Nachricht, um eine andere als deine Standard-App zum Senden zu benutzen.</string>
-  <string name="notes_sender" username="John &lt;somedeepblue@gmail.com&gt;" orig="Apr. 2011: SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">Apr. 2011: SMSdroid kann SMS jetzt auch direkt über deinen Provider senden. Einfach in der Auswahl "SMS (SMSdroid)" wählen.</string>
+  <string name="notes_longclick">Versuche einen langen Klick auf Antworten / Senden, um eine andere als deine Standard-App zum Senden zu benutzen.</string>
+  <string name="notes_sender" username="John &lt;somedeepblue@gmail.com&gt;" orig="Apr. 2011: SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">SMSdroid kann SMS jetzt auch direkt über deinen Provider senden. Einfach in der Auswahl "SMS (SMSdroid)" wählen.</string>
 </resources>
