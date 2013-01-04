@@ -19,7 +19,7 @@
 <resources>
 	<string name="app_name">SMSdroid</string>
 	<string name="sender_name">SMS (SMSdroid)</string>
-	<string name="app_version">1.4.2</string>
+	<string name="app_version">1.4.3</string>
 	<string name="faq_">FAQ</string>
 	<string name="google_plus_">Google+</string>
 	<string name="twitter_">twitter</string>
@@ -85,6 +85,8 @@
 		<item>de</item>
 		<item>fr</item>
 		<item>iw</item>
+		<item>hu</item>
+		<item>pl</item>
 		<item>ru</item>
 		<item>es</item>
 	</string-array>
@@ -94,6 +96,8 @@
 		<item>German</item>
 		<item>French</item>
 		<item>Hebrew</item>
+		<item>Hungarian</item>
+		<item>Polish</item>
 		<item>Russian</item>
 		<item>Spanish</item>
 	</string-array>
