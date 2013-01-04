@@ -126,7 +126,7 @@
   <string name="attachment_not_saved" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Could not save attachment.">Nie udało się zapisać załącznika.</string>
   <string name="chooser_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Chooser">Wybór</string>
   <string name="notification_icon_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Notification icon">Ikona powiadomienia</string>
-  <string name="notification_default_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Default">Domyślna</string>
+  <string name="notification_default_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Default">Domyślnie</string>
   <string name="notification_gingerbread_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Gingerbread">Gingerbread</string>
   <string name="notification_gingerbread_mail_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Gingerbread mail">Gingerbread - email</string>
   <string name="notification_black_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Black">Czarna</string>
@@ -137,4 +137,94 @@
   <string name="bubbles_out_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Bubbles for outgoing messages">Dymki dla wysyłanych wiadomości</string>
   <string name="bubbles_out_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Bubbles out">Wysyłane w dymkach</string>
   <string name="bubbles_nothing" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Nothing">Nic</string>
+  <string-array name="led_flash" username="Karol &lt;ksz@mailmix.pl&gt;">
+    <item>Migająca</item>
+    <item>Ciągła</item>
+  </string-array>
+  <string-array name="vibrate_mode" username="Karol &lt;ksz@mailmix.pl&gt;">
+    <item>Domyślnie</item>
+    <item>Długo</item>
+    <item>Krótko wielokrotnie</item>
+    <item>Długo wielokrotnie</item>
+    <item>Krótko, długo, krótko, długo</item>
+  </string-array>
+  <string-array name="led_color" username="Karol &lt;ksz@mailmix.pl&gt;">
+    <item>Zielony</item>
+    <item>Niebieski</item>
+    <item>Czerwony</item>
+    <item>Pomarańczowy</item>
+    <item>Magenta</item>
+    <item>Cyjan</item>
+  </string-array>
+  <string-array name="textsize" username="Karol &lt;ksz@mailmix.pl&gt;">
+    <item>Mały</item>
+    <item>Średni</item>
+  </string-array>
+  <string-array name="themes" username="Karol &lt;ksz@mailmix.pl&gt;">
+    <item>Czarny</item>
+    <item>Jasny</item>
+  </string-array>
+  <string name="custom_language_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Custom language">Zmień język</string>
+  <string name="custom_language_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Set a custom language.">Ustaw język.</string>
+  <string name="source_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Sourcescode:">Kod źródłowy</string>
+  <string name="website_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Website:">Strona WWW:</string>
+  <string name="author_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Author:">Autor:</string>
+  <string name="license" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - patrz http://www.gnu.org/licenses/gpl-3.0.html</string>
+  <string name="license_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="License:">Licencja:</string>
+  <string name="send_logs_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Wyślij programiście logi tego urządzenia.\nZrób to tylko, jeśli zostałeś o to poproszony.</string>
+  <string name="sendlog_run_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Run SendLog">Uruchom SendLog</string>
+  <string name="sendlog_run" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">SendLog zbierze logi urządzenia i wyśle je programiście.\nBędzesz mógł przejrzeć i zmodyfikować dane przed wysłaniem.</string>
+  <string name="sendlog_install_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Install SendLog">Zainstaluj SendLog</string>
+  <string name="sendlog_install" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Zasinstaluj darmową aplikację SendLog by zebrać logi urządzenia i wysłać je programiście.</string>
+  <string name="reset" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Reset">Zresetuj</string>
+  <string name="use_new_layout_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Use tiled layout">Użyj układu kafelkowego</string>
+  <string name="use_new_layout_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Use a tiled user interface for conversations">Użyj układu kafelkowego dla konwersacji.</string>
+  <string name="send_logs_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Send logs">Wyślij logi</string>
+  <string name="receive_no_text_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide sender/text">Ukryj nadawcę/tekst</string>
+  <string name="show_full_date_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show full date and time on every message.">Pokaż pełną datę i czas przy każdej wiadomości.</string>
+  <string name="error_conv_null" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Error getting conversation from DB!">Błąd pobierania konwersacji z bazy!</string>
+  <string name="decode_decimal_ncr_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Decode Decimal NCR">Dekoduj dziesiętne NCR</string>
+  <string name="decode_decimal_ncr_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.">Niektórzy operatorzy dostarczają wiadomości w Unicode zakodowane jako dziesiętny NCR. Zaznacz, by dekodować je automatycznie.</string>
+  <string name="fix_numbers_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Fix numbers">Poprawiaj numery</string>
+  <string name="fix_numbers_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Przed wysłaniem zastąp części numeru używając wyrażeń regularnych. Większość użytkowników nie musi tego przestawiać.</string>
+  <string name="fix_number1_regex_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Regex 1">Wyrażenie 1</string>
+  <string name="fix_number1_replace_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace 1">Zamiana 1</string>
+  <string name="fix_number2_regex_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Regex 2">Wyrażenie 2</string>
+  <string name="fix_number2_replace_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace 2">Zamiana 2</string>
+  <string name="fix_number3_regex_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Regex 3">Wyrażenie 3</string>
+  <string name="fix_number3_replace_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace 3">Zamiana 3</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Regular expression too search for.">Wyrażenie regularne, które będzie wyszukiwane.</string>
+  <string name="fix_numbers_replace_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace matched text with this text.">Zamień znaleziony tekst na ten.</string>
+  <string name="bubbles_plain_dark_gray" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Plain dark gray">Gładki ciemny szary</string>
+  <string name="bubbles_plain_light_gray" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Plain light gray">Gładki jasny szary</string>
+  <string name="bubbles_old_turquoise_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Old turquoise left">Stary turkus lewy</string>
+  <string name="bubbles_old_turquoise_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Old turquoise right">Stary turkus prawy</string>
+  <string name="bubbles_old_green_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Old green left">Stary zielony lewy</string>
+  <string name="bubbles_old_green_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Old green right">Stary zielony prawy</string>
+  <string name="bubbles_blue_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Blue left">Niebieski lewy</string>
+  <string name="bubbles_blue_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Blue right">Niebieski prawy</string>
+  <string name="bubbles_blue2_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Blue 2 left">Niebieski 2 lewy</string>
+  <string name="bubbles_blue2_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Blue 2 right">Niebieski 2 prawy</string>
+  <string name="bubbles_brown_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Brown left">Brązowy lewy</string>
+  <string name="bubbles_brown_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Brown right">Brązowy prawy</string>
+  <string name="bubbles_gray_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Gray left">Szary lewy</string>
+  <string name="bubbles_gray_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Gray right">Szary prawy</string>
+  <string name="bubbles_green_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Green left">Zielony lewy</string>
+  <string name="bubbles_green_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Green right">Zielony prawy</string>
+  <string name="bubbles_green2_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Green 2 left">Zielony 2 lewy</string>
+  <string name="bubbles_green2_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Green 2 right">Zielony 2 prawy</string>
+  <string name="bubbles_orange_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Orange left">Pomarańczowy lewy</string>
+  <string name="bubbles_orange_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Orange right">Pomarańczowy prawy</string>
+  <string name="bubbles_pink_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Pink left">Różowy lewy</string>
+  <string name="bubbles_pink_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Pink right">Różowy prawy</string>
+  <string name="bubbles_purple_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Purple left">Liliowy lewy</string>
+  <string name="bubbles_purple_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Purple right">Liliowy prawy</string>
+  <string name="bubbles_white_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="White left">Biały lewy</string>
+  <string name="bubbles_white_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="White right">Biały prawy</string>
+  <string name="bubbles_yellow_left" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Yellow left">Żółty lewy</string>
+  <string name="bubbles_yellow_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Yellow right">Żółty prawy</string>
+  <string name="activate_sender_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Activate sender">Włącz wysyłanie</string>
+  <string name="activate_sender_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Activate SMSdroid\'s message sender.">Włącz moduł wysyłki SMSów bezpośrednio z SMSdroida.</string>
+  <string name="show_text_filed_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show text filed">Pokaż pole tekstowe</string>
+  <string name="show_text_filed_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show text filed instead of answer button.">Pokaż pole tekstowe zamiast przycisku odpowiedzi.</string>
 </resources>

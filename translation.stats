@@ -30,7 +30,7 @@ res/values-iw/strings.xml:27
 res/values-pl/donation.xml:5
 res/values-pl/market.xml:4
 res/values-pl/notes.xml:3
-res/values-pl/strings.xml:120
+res/values-pl/strings.xml:205
 res/values-ru/donation.xml:3
 res/values-ru/market.xml:3
 res/values-ru/notes.xml:1
@@ -42,5 +42,5 @@ res/values-fr:213
 res/values-hu:217
 res/values-it:207
 res/values-iw:31
-res/values-pl:132
+res/values-pl:217
 res/values-ru:207
