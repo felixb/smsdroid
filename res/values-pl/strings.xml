@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
+<!--
 		Copyright (C) 2009-2012 Felix Bechstein
 	-->
-	<!--
+<!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
 		Public License as published by the Free Software Foundation; either
 		version 3 of the License, or (at your option) any later version.
 	-->
-	<!--
+<!--
 		This program is distributed in the hope that it will be useful, but
 		WITHOUT ANY WARRANTY; without even the implied warranty of
 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -17,4 +17,124 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
+  <string name="about_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="About">O programie</string>
+  <string name="about_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="About this app">O tej aplikacji</string>
+  <string name="faq_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Some tips and tricks, how to set up this app.">Parę wskazówek, jak ustawić tę aplikację.</string>
+  <string name="feedback_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Feedback">Informacja zwrotna</string>
+  <string name="feedback_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Report bugs, request features ...">Zgłoś błędy, poproś o nowe funkcje...</string>
+  <string name="google_plus_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Śledź mnie na Google+\nInformacje o aktualizcjach itp.</string>
+  <string name="twitter_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Śledź mnie na Twitterze.\nInformacje o aktualizcjach itp.</string>
+  <string name="about0" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">SMSdroid pozwala czytać SMSy i pisać SMSy z dowolnej innej aplikacji.</string>
+  <string name="more_apps_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="More Apps..">Więcej aplikacji...</string>
+  <string name="settings" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Preferences">Preferencje</string>
+  <string name="new_message_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="New message">Nowa wiadomość</string>
+  <string name="new_message_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Compose a new message">Stwórz nową wiadomość</string>
+  <string name="new_message" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="1 unread message.">1 nieprzeczytana wiadomość</string>
+  <string name="new_messages_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="New messages">Nowe wiadomości</string>
+  <string name="new_messages" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="%d unread messages.">%d nieprzeczytanych wiadomości.</string>
+  <string name="call" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Call">Zadzwoń</string>
+  <string name="answer" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Answer">Odpowiedz</string>
+  <string name="reply" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Reply">Odpowiedz</string>
+  <string name="send_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Send">Wyślij</string>
+  <string name="notification_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Notifications">Powiadomienia</string>
+  <string name="notification_enable_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Enable notifications">Włącz powiadomienia</string>
+  <string name="notification_enable_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Enable notifications on receive">Włącz powiadomienia przy otrzymaniu</string>
+  <string name="receive_vibrate_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Vibrate">Wibruj</string>
+  <string name="receive_vibrate_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Vibrate on receive">Wibruj przy otrzymaniu</string>
+  <string name="receive_vibrate_mode_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Vibrator mode">Tryb wibracji</string>
+  <string name="receive_sound_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Sound">Dźwięk</string>
+  <string name="receive_sound_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Sound on receive">Dźwięk przy otrzymaniu</string>
+  <string name="receive_led_color_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="LED color">Kolor diody LED</string>
+  <string name="receive_led_flash_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="LED mode">Tryb diody LED</string>
+  <string name="receive_led_flash_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Set LED flashing behaviour">Sposób migania diody LED</string>
+  <string name="receive_no_text_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide sender/text in notification.">Ukryj nadawcę/tekst w powiadomieniu.</string>
+  <string name="behavior_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Behavior">Zachowanie</string>
+  <string name="autosend_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Autosend">Autowysyłanie</string>
+  <string name="appearance_and_behavior_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Appearance &amp; behavior">Wygląd i zachowanie</string>
+  <string name="autosend_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Wysyłaj odpowiedzi automatycznie. Aktualnie tylko WebSMS wspiera tę funkcję. Inne aplikacje po prostu pokażą tekst.</string>
+  <string name="show_target_app_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show target app">Pokaż aplikację docelową</string>
+  <string name="show_target_app_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Pokaż aplikację używaną do wysyłki na przycisku "wyślij".</string>
+  <string name="appearance_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Appearance">Wygląd</string>
+  <string name="theme_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Theme">Temat</string>
+  <string name="textsize_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Text size">Rozmiar tekstu</string>
+  <string name="textsize_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Text size in pixels; leave empty for default">Rozmiar tekstu w pikselach; zostaw pusty dla domyślnego</string>
+  <string name="textcolor_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Text color">Kolor tekstu</string>
+  <string name="textcolor_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Message text\'s color.">Kolor tekstu wiadomości.</string>
+  <string name="textcolor_ignore_conv_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Ignore text color for threads">Ignoruj kolor tekstu dla wątków</string>
+  <string name="textcolor_ignore_conv_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Ignore text color in list of threads.">Ignoruj kolor tekstu w liście wątków.</string>
+  <string name="show_titlebar_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show title bar">Pokaż pasek tytułu</string>
+  <string name="show_titlebar_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Pokaż pasek tytułu w głównym widoku. Bez paska tytułu nie widać aktywności w tle.</string>
+  <string name="show_contact_photo_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show photo">Pokaż zdjęcie</string>
+  <string name="show_contact_photo_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show contact\'s photo in conversation list">Pokaż zdjęcie kontaktu na liście konwersacji</string>
+  <string name="show_emoticons_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show emoticons">Pokaż emotikony</string>
+  <string name="show_emoticons_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show emoticons in message list.">Pokaż emotikony na liście wiadomości</string>
+  <string name="show_bubbles_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show bubbles">Pokaż dymki</string>
+  <string name="hide_send_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;send&quot; button">Ukryj przycisk "wyślij"</string>
+  <string name="hide_send_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;send&quot; button near text field.">Ukryj przycisk "wyślij" obok pola tekstowego.</string>
+  <string name="hide_restore_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;restore last message&quot; button">Ukryj przycisk "przywróć ostatnią wiadomość"</string>
+  <string name="hide_restore_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Ukryj przycisk "przywróć ostatnią wiadomość" na liście wiadomości.</string>
+  <string name="hide_paste_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;paste&quot; button">Ukryj przycisk "wklej"</string>
+  <string name="hide_paste_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;paste&quot; button on text field.">Ukryj przycisk "wklej" w polu tekstowym.</string>
+  <string name="hide_widget_label_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide widget\'s label">Ukryj etykietę widżetu</string>
+  <string name="hide_widget_label_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide the label of the widget.">Ukryj etykietę widżetu</string>
+  <string name="show_full_date_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show full date">Pokaż pełną datę</string>
+  <string name="me" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Me">Ja</string>
+  <string name="view_contact_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="View contact">Wyświetl kontakt</string>
+  <string name="add_contact_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Add to contacts">Dodaj do kontaktów</string>
+  <string name="view_thread_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="View thread">Wyświetl wątek</string>
+  <string name="filter_spam_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Mark as Spam">Oznacz jako spam</string>
+  <string name="dont_filter_spam_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Remove from Blacklist">Usuń z czarnej listy</string>
+  <string name="delete_message_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Delete message">Usuń wiadomość</string>
+  <string name="delete_thread_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Delete thread">Usuń wątek</string>
+  <string name="forward_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Forward">Prześlij dalej</string>
+  <string name="send_draft_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Send draft">Wyślij roboczą</string>
+  <string name="copy_text_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Copy message text">Kopiuj tekst wiadomości</string>
+  <string name="view_details_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="View message details">Szczegóły wiadomości</string>
+  <string name="spek_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Speak">Czytaj na głos</string>
+  <string name="delete_threads_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Delete all threads">Usuń wszystkie wątki</string>
+  <string name="mark_all_read_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Mark all as read">Oznacz wszystkie jako przeczytane</string>
+  <string name="mark_read_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Mark read">Oznacz jako przeczytany</string>
+  <string name="mark_unread_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Mark unread">Oznacz jako nieprzeczytany</string>
+  <string name="all_threads_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="All threads">Wszystkie wątki</string>
+  <string name="message_options_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Message options">Opcje wiadomości</string>
+  <string name="compose_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Compose">Utwórz</string>
+  <string name="delete_message_question" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Do you really want to delete this message?">Czy na pewno usunąć tę wiadomość?</string>
+  <string name="delete_messages_question" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Do you really want to delete these messages?">Czy na pewno usunąć te wiadomości?</string>
+  <string name="delete_thread_question" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Czy na pewno usunąć <b>wszystkie wiadomości z tego wątku</b>?</string>
+  <string name="delete_threads_question" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Czy na pewno usunąć <b>wszystkie wiadomości</b>?</string>
+  <string name="from_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="From:">Od:</string>
+  <string name="to_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="To:">Do:</string>
+  <string name="to_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Name or Number">Imię lub numer</string>
+  <string name="type_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Type:">Typ:</string>
+  <string name="sent_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Sent:">Wysłane:</string>
+  <string name="received_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Received:">Odebrane:</string>
+  <string name="view_mms" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="View MMS">Pokaż MMS</string>
+  <string name="mms_conversation" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="&lt;MMS body&gt;">&lt;MMS body&gt;</string>
+  <string name="mms_not_supported" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Ta wiadomość wygląda na MMS. Możesz pobrać ją używając standardowej aplikacji SMS/MMS.\nKliknij tutaj by to zrobić.</string>
+  <string name="import_contact_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Import contact">Importuj kontakt</string>
+  <string name="download_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Download">Pobierz</string>
+  <string name="downloading_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Downloading..">Pobieranie..</string>
+  <string name="debug_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Debug">Debugowanie</string>
+  <string name="clear_cache_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Clear cache">Wyczyść cache</string>
+  <string name="clear_cache_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Clear internal Database. Fetch all data again from external Database.">Wyczyść wewnętrzną bazę danych. Pobierz od nowa wszystkie dane z zewnętrznej bazy.</string>
+  <string name="not_implemented" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Sorry, not yet implemented.">Przykro mi, jeszcze nie zaimplementowane.</string>
+  <string name="error_sending_failed" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Sending failed">Wysyłanie nieudane</string>
+  <string name="text_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Text">Tekst</string>
+  <string name="paste_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="[Paste from clipboard]">[Wklej ze schowka]</string>
+  <string name="restore_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Restore last message">Przywróć ostatnią wiadomość</string>
+  <string name="attachment_saved" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Saved attachment on SD card as:">Zapisano załącznik na karcie SD jako:</string>
+  <string name="attachment_not_saved" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Could not save attachment.">Nie udało się zapisać załącznika.</string>
+  <string name="chooser_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Chooser">Wybór</string>
+  <string name="notification_icon_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Notification icon">Ikona powiadomienia</string>
+  <string name="notification_default_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Default">Domyślna</string>
+  <string name="notification_gingerbread_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Gingerbread">Gingerbread</string>
+  <string name="notification_gingerbread_mail_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Gingerbread mail">Gingerbread - email</string>
+  <string name="notification_black_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Black">Czarna</string>
+  <string name="notification_green_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Green">Zielona</string>
+  <string name="notification_yellow_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Yellow">Żółta</string>
+  <string name="bubbles_in_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Bubbles in">Przychodzące w dymkach</string>
+  <string name="bubbles_in_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Bubbles for incoming messages">Dymki dla przychodzących wiadomości</string>
+  <string name="bubbles_out_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Bubbles for outgoing messages">Dymki dla wysyłanych wiadomości</string>
+  <string name="bubbles_out_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Bubbles out">Wysyłane w dymkach</string>
+  <string name="bubbles_nothing" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Nothing">Nic</string>
 </resources>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
+<!--
 		Copyright (C) 2009-2012 Felix Bechstein
 	-->
-	<!--
+<!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
 		Public License as published by the Free Software Foundation; either
 		version 3 of the License, or (at your option) any later version.
 	-->
-	<!--
+<!--
 		This program is distributed in the hope that it will be useful, but
 		WITHOUT ANY WARRANTY; without even the implied warranty of
 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -17,4 +17,7 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
+  <string name="notes_websms" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!">Mozesz spróbować wysyłać wiadomości przez WebSMS za darmo albo bardzo tanio. Wielu operatorów jest obsługiwanych. Wypróbuj to!</string>
+  <string name="notes_longclick" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Jan. 2011: Try a long-click on answer/send/compose buttons to use an other than your standard app for sending.">Sty 2011: Wypróbuj przytrzymanie przycisków odpowiedz/wyślij/utwórz, by użyć innej niż standardowa aplikacji do wysłania.</string>
+  <string name="notes_sender" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Apr. 2011: SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">Kwi 2011: SMSdroid potrafi teraz samodzielnie wysyłać SMSy. Po prostu użyj opcji "SMS (SMSdroid)" wybierając aplikację.</string>
 </resources>
