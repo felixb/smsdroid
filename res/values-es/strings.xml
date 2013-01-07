@@ -36,7 +36,6 @@
   <string name="new_messages_" formatted="false">Mensajes nuevos</string>
   <string name="new_messages" formatted="false">%d mensajes sin leer.</string>
   <string name="call" formatted="false" orig="Call">Llamar</string>
-  <string name="answer" formatted="false">Responder</string>
   <string name="reply" formatted="false" orig="Reply">Responder</string>
   <string name="send_" formatted="false">Enviar</string>
   <string name="notification_" formatted="false">Notificaciones</string>
@@ -149,7 +148,7 @@
     <item>A intervalos largos</item>
     <item>Breve, larga, breve, larga</item>
   </string-array>
-  <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">
+  <string name="show_text_field_hint" formatted="false" orig="Show text field instead of answer button.">
   </string>
   <string name="show_full_date_hint" formatted="false" orig="Show full date and time on every message.">Mostar fecha completa y hora en cada mensaje</string>
   <string name="google_plus_hint" formatted="false" username="Ag" orig="Follow me on Google+.\nGet update notifications etc.">Sígueme en twitter.\nRecibe notificaciones sobre actualizaciones, etc.</string>

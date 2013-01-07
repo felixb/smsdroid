@@ -33,7 +33,6 @@
   <string name="new_messages_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="New messages">Nowe wiadomości</string>
   <string name="new_messages" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="%d unread messages.">%d nieprzeczytanych wiadomości.</string>
   <string name="call" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Call">Zadzwoń</string>
-  <string name="answer" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Answer">Odpowiedz</string>
   <string name="reply" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Reply">Odpowiedz</string>
   <string name="send_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Send">Wyślij</string>
   <string name="notification_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Notifications">Powiadomienia</string>
@@ -225,6 +224,6 @@
   <string name="bubbles_yellow_right" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Yellow right">Żółty prawy</string>
   <string name="activate_sender_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Activate sender">Włącz wysyłanie</string>
   <string name="activate_sender_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Activate SMSdroid\'s message sender.">Włącz moduł wysyłki SMSów bezpośrednio z SMSdroida.</string>
-  <string name="show_text_filed_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show text filed">Pokaż pole tekstowe</string>
-  <string name="show_text_filed_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show text filed instead of answer button.">Pokaż pole tekstowe zamiast przycisku odpowiedzi.</string>
+  <string name="show_text_field_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show text field">Pokaż pole tekstowe</string>
+  <string name="show_text_field_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show text field instead of answer button.">Pokaż pole tekstowe zamiast przycisku odpowiedzi.</string>
 </resources>

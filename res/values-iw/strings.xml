@@ -37,7 +37,6 @@
   <string name="new_messages_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="New messages">הודעות חדשות</string>
   <string name="new_messages" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="%d unread messages.">%d הודעות חדשות.</string>
   <string name="call" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Call">חייג</string>
-  <string name="answer" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Answer">ענה</string>
   <string name="reply" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Reply">השב</string>
   <string name="send_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Send">השב לכולם</string>
   <string name="notification_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Notifications">התראות</string>

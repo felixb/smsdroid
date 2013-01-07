@@ -36,7 +36,6 @@
   <string name="new_messages_" formatted="false">Новые сообщения</string>
   <string name="new_messages" formatted="false" orig="%d unread messages.">%d новых сообщений</string>
   <string name="call" formatted="false" orig="Call">Позвонить</string>
-  <string name="answer" formatted="false">Ответить</string>
   <string name="reply" formatted="false" orig="Reply">Ответить</string>
   <string name="send_" formatted="false">Отправить</string>
   <string name="notification_" formatted="false" orig="Notifications" username="ergodroid">Уведомления</string>
@@ -56,8 +55,8 @@
   <string name="autosend_" formatted="false" orig="Autosend">Автоотправка</string>
   <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp; behavior" username="ergodroid">Внешний вид и поведение</string>
   <string name="autosend_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Отправлять ответы автоматически. В настоящий момент поддерживается только программой WebSMS</string>
-  <string name="show_text_filed_" formatted="false" orig="Show text filed">Текстовое поле</string>
-  <string name="show_text_filed_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show text filed instead of answer button.">Показывать текстовое поле вместо кнопки \'Ответить\'</string>
+  <string name="show_text_field_" formatted="false" orig="Show text field">Текстовое поле</string>
+  <string name="show_text_field_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show text field instead of answer button.">Показывать текстовое поле вместо кнопки \'Ответить\'</string>
   <string name="show_target_app_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target app">Название SMS-приложения</string>
   <string name="show_target_app_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Показывать на кнопке \'Отправить\' название используемого SMS-приложения</string>
   <string name="appearance_" formatted="false">Внешний вид</string>

@@ -37,7 +37,6 @@
   <string name="new_messages_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="New messages">Új üzenetek</string>
   <string name="new_messages" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="%d unread messages.">%d olvasatlan üzenet.</string>
   <string name="call" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Call">Hívás</string>
-  <string name="answer" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Answer">Válasz</string>
   <string name="reply" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Reply">Válasz</string>
   <string name="send_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Send">Küldés</string>
   <string name="notification_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Notifications">Értesítések</string>
@@ -57,8 +56,8 @@
   <string name="autosend_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Autosend">Automatikus küldés</string>
   <string name="appearance_and_behavior_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Appearance &amp; behavior">Megjelenés és működés</string>
   <string name="autosend_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Üzenetküldés automatikusan. Jelenleg csak a WebSMS támogatja ezt a funkciót. A többi alkalmazás csak mutatja a szöveget.</string>
-  <string name="show_text_filed_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show text filed">Szövegmező mutatása</string>
-  <string name="show_text_filed_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show text filed instead of answer button.">Szövegmező mutatása a válasz gomb helyett.</string>
+  <string name="show_text_field_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show text field">Szövegmező mutatása</string>
+  <string name="show_text_field_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show text field instead of answer button.">Szövegmező mutatása a válasz gomb helyett.</string>
   <string name="show_target_app_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show target app">Célalkalmazás mutatása</string>
   <string name="show_target_app_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Célalkalmazás mutatása az üzenetküldéshez.</string>
   <string name="appearance_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Appearance">Megjelenés</string>

@@ -36,7 +36,6 @@
   <string name="new_messages_" formatted="false" orig="New messages">Nouveaux messages</string>
   <string name="new_messages" formatted="false" orig="%d unread messages.">%d messages non lus.</string>
   <string name="call" formatted="false" orig="Call">Appeler</string>
-  <string name="answer" formatted="false" orig="Answer">Répondre</string>
   <string name="reply" formatted="false" orig="Reply">Réponse</string>
   <string name="send_" formatted="false" orig="Send">Envoyer</string>
   <string name="notification_" formatted="false" orig="Notifications">Notifications</string>
@@ -56,8 +55,8 @@
   <string name="autosend_" formatted="false" orig="Autosend">Réponse automatique</string>
   <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp; behavior">Apparence et comportement</string>
   <string name="autosend_hint" formatted="false" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Envoie des réponses automatiques. Actuellement, seule l\'application WebSMS supporte cette fonction. Les autres applications montreront simplement le texte.</string>
-  <string name="show_text_filed_" formatted="false" orig="Show text filed">Montrer le texte entré</string>
-  <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">Montrer le texte entré au lieu du bouton répondre</string>
+  <string name="show_text_field_" formatted="false" orig="Show text field">Montrer le texte entré</string>
+  <string name="show_text_field_hint" formatted="false" orig="Show text field instead of answer button.">Montrer le texte entré au lieu du bouton répondre</string>
   <string name="show_target_app_" formatted="false" orig="Show target app">Montrer l\'application cible</string>
   <string name="show_target_app_hint" formatted="false" orig="Show target App used for sending on \&quot;send\&quot; Button.">Montrer l\'application cible utilisé pour l\'envoi, sur le bouton "envoyer"</string>
   <string name="appearance_" formatted="false" orig="Appearance">Apparence</string>

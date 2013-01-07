@@ -22,8 +22,8 @@
 		android:summary="@string/autosend_hint"
 		android:disableDependentsState="true" />
 	<CheckBoxPreference android:key="show_textfield"
-		android:defaultValue="true" android:title="@string/show_text_filed_"
-		android:summary="@string/show_text_filed_hint" android:dependency="enable_autosend" />
+		android:defaultValue="true" android:title="@string/show_text_field_"
+		android:summary="@string/show_text_field_hint" android:dependency="enable_autosend" />
 	<CheckBoxPreference android:key="show_target_app"
 		android:defaultValue="true" android:title="@string/show_target_app_"
 		android:summary="@string/show_target_app_hint" />
