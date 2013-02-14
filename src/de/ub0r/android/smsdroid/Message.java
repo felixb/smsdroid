@@ -383,6 +383,7 @@ public final class Message {
 				this.picture = BITMAP_PLAY;
 				final Intent i = new Intent(Intent.ACTION_VIEW);
 				i.setDataAndType(uri, ct);
+				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 				this.contentIntent = i;
 				continue; // skip the rest
 			} else if (ct.startsWith("text/")) {
