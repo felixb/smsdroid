@@ -248,6 +248,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 	@Override
 	protected final void onNewIntent(final Intent intent) {
 		super.onNewIntent(intent);
+		this.setIntent(intent);
 		this.parseIntent(intent);
 	}
 

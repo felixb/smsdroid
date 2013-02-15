@@ -19,6 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
+		<item>HEAD: minor fixes</item>
 		<item>v1.4.3: add polish translation</item>
 		<item>v1.4.2: ignore non latin characters in search, add hungarian translation</item>
 		<item>v1.4.1: minor fixes</item>
