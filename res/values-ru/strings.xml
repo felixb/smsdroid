@@ -21,25 +21,25 @@
                Visit http://ub0r.de/translate/smsdroid/ru/strings.xml to edit the file.
        -->
 <resources>
-  <string name="about_" formatted="false" orig="About">О программе</string>
-  <string name="about_hint" formatted="false">Описание программы</string>
-  <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Советы и подсказки по настройке программы</string>
+  <string name="about_" formatted="false" orig="About" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Информация</string>
+  <string name="about_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="About this app">О программе</string>
+  <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Некоторые советы и рекомендации по настройке приложения.</string>
   <string name="feedback_" formatted="false">Отзывы</string>
-  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Сообщите о найденной ошибке, отправьте запрос на расширение функционала...</string>
-  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc.">Следите за SMSdroid в Twitter и узнавайте об обновлениях</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ..." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Сообщить об ошибкаx, внести предложения ...</string>
+  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Читайте в twitter.\nУведомления об обновлениях и т.д.</string>
   <string name="about0" formatted="false" orig="SMSdroid lets you read your sms and write sms with any other app.">SMSdroid позволяет читать и отправлять SMS сообщения. Работает с любыми SMS-приложениями.</string>
-  <string name="more_apps_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="More Apps..">Другие приложения</string>
+  <string name="more_apps_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="More Apps..">Другие приложения..</string>
   <string name="settings" formatted="false" orig="Preferences">Настройки</string>
   <string name="new_message_" formatted="false">Новое сообщение</string>
   <string name="new_message_hint" formatted="false">Создать новое сообщение</string>
-  <string name="new_message" formatted="false" orig="1 unread message.">1 новое сообщение</string>
+  <string name="new_message" formatted="false" orig="1 unread message." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">1 непрочитанное сообщение.</string>
   <string name="new_messages_" formatted="false">Новые сообщения</string>
-  <string name="new_messages" formatted="false" orig="%d unread messages.">%d новых сообщений</string>
+  <string name="new_messages" formatted="false" orig="%d unread messages." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">%d непрочитанных сообщений</string>
   <string name="call" formatted="false" orig="Call">Позвонить</string>
   <string name="reply" formatted="false" orig="Reply">Ответить</string>
   <string name="send_" formatted="false">Отправить</string>
   <string name="notification_" formatted="false" orig="Notifications" username="ergodroid">Уведомления</string>
-  <string name="notification_enable_" formatted="false" orig="Enable notifications">Уведомления</string>
+  <string name="notification_enable_" formatted="false" orig="Enable notifications" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показывать уведомления</string>
   <string name="notification_enable_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Enable notifications on receive">Показывать уведомления при получении сообщений</string>
   <string name="receive_vibrate_" formatted="false">Вибрация</string>
   <string name="receive_vibrate_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Vibrate on receive">Вибрация при получении сообщений</string>
@@ -49,35 +49,35 @@
   <string name="receive_led_color_" formatted="false">Цвет светодиода</string>
   <string name="receive_led_flash_" formatted="false">Режим светодиода</string>
   <string name="receive_led_flash_hint" formatted="false">Настройка поведения светодиода</string>
-  <string name="receive_no_text_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide sender/text">Уведомление без текста</string>
-  <string name="receive_no_text_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide sender/text in notification.">Не показывать отправителя и текст сообщения в уведомлении</string>
+  <string name="receive_no_text_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide sender/text">Спрятать отправителя/текст</string>
+  <string name="receive_no_text_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide sender/text in notification.">Спрятать отправителя/текст в уведомлении.</string>
   <string name="behavior_" formatted="false" orig="Behavior">Поведение</string>
   <string name="autosend_" formatted="false" orig="Autosend">Автоотправка</string>
   <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp; behavior" username="ergodroid">Внешний вид и поведение</string>
-  <string name="autosend_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Отправлять ответы автоматически. В настоящий момент поддерживается только программой WebSMS</string>
+  <string name="autosend_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Отправлять ответы автоматически. В настоящее время только WebSMS поддерживает эту функцию. Другие приложения будут просто показывать текст.</string>
   <string name="show_text_field_" formatted="false" orig="Show text field">Текстовое поле</string>
   <string name="show_text_field_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show text field instead of answer button.">Показывать текстовое поле вместо кнопки \'Ответить\'</string>
   <string name="show_target_app_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target app">Название SMS-приложения</string>
   <string name="show_target_app_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Показывать на кнопке \'Отправить\' название используемого SMS-приложения</string>
   <string name="appearance_" formatted="false">Внешний вид</string>
   <string name="theme_" formatted="false">Тема</string>
-  <string name="textsize_" formatted="false">Размер текста</string>
-  <string name="textsize_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Text size in pixels; leave empty for default">Размер текста в пикселях или оставьте пустым для значения по умолчанию</string>
+  <string name="textsize_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Text size">Размер шрифта</string>
+  <string name="textsize_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Text size in pixels; leave empty for default">Размер шрифта в пикселях; оставьте пустым по умолчанию</string>
   <string name="textcolor_" formatted="false" orig="Text color">Цвет текста</string>
   <string name="textcolor_hint" formatted="false" orig="Message text\'s color.">Цвет текста сообщений</string>
   <string name="textcolor_ignore_conv_" formatted="false" orig="Ignore text color for threads">Игнорировать цвет текста диалогов</string>
   <string name="textcolor_ignore_conv_hint" formatted="false" orig="Ignore text color in list of threads.">Игнорировать цвет текста в списке диалогов</string>
-  <string name="show_titlebar_" formatted="false" orig="Show title bar">Показывать уведомления</string>
-  <string name="show_titlebar_hint" formatted="false" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Показывать уведомления в статусбаре. Без этого фоновые процессы не будут видны</string>
-  <string name="show_contact_photo_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Show photo">Фото</string>
+  <string name="show_titlebar_" formatted="false" orig="Show title bar" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показ строки заголовка</string>
+  <string name="show_titlebar_hint" formatted="false" orig="Show title bar in main view. Without title bar, there is no way to see background activity." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показ строки заголовка в главном окне. Без строки заголовка невозможно наблюдать за фоновой активностью.</string>
+  <string name="show_contact_photo_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Show photo">Показ фото</string>
   <string name="show_contact_photo_hint" formatted="false" username="shineaguevara@gmail.com" orig="Show contact\'s photo in conversation list">Показывать фото контакта в списке диалогов</string>
-  <string name="show_emoticons_" formatted="false" orig="Show emoticons">Смайлики</string>
+  <string name="show_emoticons_" formatted="false" orig="Show emoticons" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показ смайликов</string>
   <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list.">Показывать смайлики в сообщениях</string>
   <string name="show_bubbles_" formatted="false">Сообщения в пузырях</string>
   <string name="hide_send_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;send&quot; button">Скрыть \'Отправить\'</string>
-  <string name="hide_send_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Не показывать кнопку \'Отправить\'</string>
-  <string name="hide_restore_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Скрыть \'Восстановить последнее сообщение\'</string>
-  <string name="hide_restore_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Не показывать кнопку \'Восстановить последнее сообщение\'</string>
+  <string name="hide_send_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Скрыть кнопку \'Отправить\' у текстового поля.</string>
+  <string name="hide_restore_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Скрыть кнопку \'Восстановить последнее сообщение\'</string>
+  <string name="hide_restore_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Скрыть кнопку \'Восстановить последнее сообщение\' в списке сообщений.</string>
   <string name="hide_paste_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;paste&quot; button">Скрыть \'Вставить из буфера\'</string>
   <string name="hide_paste_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">Не показывать кнопку \'Вставить из буфера\'</string>
   <string name="hide_widget_label_" formatted="false" orig="Hide widget\'s label">Скрыть подпись виджета</string>
@@ -180,12 +180,12 @@
   <string name="fix_number3_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 3">Замена 3</string>
   <string name="fix_numbers_regex_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regular expression too search for.">Текст, который будет автоматически заменяться</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace matched text with this text.">Текст, которым будет заменён найденный текст</string>
-  <string-array name="themes">
-    <item>Чёрная</item>
+  <string-array name="themes" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">
+    <item>Тёмная</item>
     <item>Светлая</item>
   </string-array>
-  <string-array name="textsize">
-    <item>Маленький</item>
+  <string-array name="textsize" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">
+    <item>Мелкий</item>
     <item>Средний</item>
   </string-array>
   <string-array name="led_color">
@@ -200,15 +200,15 @@
     <item>Мигать</item>
     <item>Непрерывно</item>
   </string-array>
-  <string-array name="vibrate_mode">
+  <string-array name="vibrate_mode" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">
     <item>По умолчанию</item>
     <item>Длинный</item>
-    <item>Повторно короткий</item>
-    <item>Повторно длинный</item>
-    <item>Повторно короткий длинный</item>
+    <item>Повторяющийся короткий</item>
+    <item>Повторяющийся длинный</item>
+    <item>Повторяющиеся короткий, длинный, короткий, длинный</item>
   </string-array>
   <string name="to_hint" formatted="false" orig="Name or Number">Имя или Номер</string>
-  <string name="google_plus_hint" formatted="false" username="ergodroid" orig="Follow me on Google+.\nGet update notifications etc.">Присоединяйтесь к Google+ и получайте уведомления об обновлениях и т.п.</string>
+  <string name="google_plus_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Читайте на Google+.\nУведомления об обновлениях и т.д.</string>
   <string name="bubbles_blue2_left" formatted="false" username="ergodroid" orig="Blue 2 left">Голубой слева</string>
   <string name="bubbles_blue2_right" formatted="false" username="ergodroid" orig="Blue 2 right">Голубой справа</string>
   <string name="bubbles_green2_left" formatted="false" username="ergodroid" orig="Green 2 left">Зелёный слева</string>
@@ -218,11 +218,14 @@
   <string name="license_" formatted="false" username="ACCount" orig="License:">Лицензия:</string>
   <string name="sendlog_run_" formatted="false" username="ACCount" orig="Run SendLog">Запустить SendLog</string>
   <string name="author_" formatted="false" username="ACCount" orig="Author:">Автор:</string>
-  <string name="website_" formatted="false" username="ACCount" orig="Website:">Сайт:</string>
+  <string name="website_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Website:">Веб-сайт:</string>
   <string name="source_" formatted="false" username="ACCount" orig="Sourcescode:">Исходный код:</string>
-  <string name="license" formatted="false" username="ACCount" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - можно просмотреть на http://www.gnu.org/licenses/gpl-3.0.txt</string>
+  <string name="license" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - смотрите http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="reset" formatted="false" username="ACCount" orig="Reset">Сброс</string>
   <string name="send_logs_hint" formatted="false" username="ACCount" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Отправить лог-файлы с вашего устройства разработчику.\nДелайте это только если вас об этом попросили.</string>
-  <string name="sendlog_run" formatted="false" username="ACCount" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">Отправить лог-файлы с вашего устройства разработчику.\nДелайте это только если вас об этом попросили.</string>
+  <string name="sendlog_run" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">SendLog получит журнал устройства и отправит его разработчику.\nУ Вас будете возможность просмотреть и изменить отправляемые данные.</string>
   <string name="send_logs_" formatted="false" username="ACCount" orig="Send logs">Отправить лог-файлы</string>
+  <string name="sendlog_install" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Установить бесплатное приложение SendLog для получения журнала устройства и отправки его разработчику.</string>
+  <string name="custom_language_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Set a custom language.">Установить пользовательский язык.</string>
+  <string name="custom_language_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Custom language">Пользовательский язык</string>
 </resources>
