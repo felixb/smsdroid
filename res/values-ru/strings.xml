@@ -78,7 +78,7 @@
   <string name="hide_send_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Скрыть кнопку \'Отправить\' у текстового поля.</string>
   <string name="hide_restore_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Скрыть кнопку \'Восстановить последнее сообщение\'</string>
   <string name="hide_restore_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Скрыть кнопку \'Восстановить последнее сообщение\' в списке сообщений.</string>
-  <string name="hide_paste_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;paste&quot; button">Скрыть \'Вставить из буфера\'</string>
+  <string name="hide_paste_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;paste&quot; button">Скрыть кнопку \'Вставить из буфера\'</string>
   <string name="hide_paste_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">Не показывать кнопку \'Вставить из буфера\'</string>
   <string name="hide_widget_label_" formatted="false" orig="Hide widget\'s label">Скрыть подпись виджета</string>
   <string name="hide_widget_label_hint" formatted="false" orig="Hide the label of the widget.">Не показывать название виджета "SMSdroid" на рабочем столе</string>
