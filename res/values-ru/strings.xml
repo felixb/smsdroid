@@ -34,7 +34,7 @@
   <string name="new_message_hint" formatted="false">Создать новое сообщение</string>
   <string name="new_message" formatted="false" orig="1 unread message." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">1 непрочитанное сообщение.</string>
   <string name="new_messages_" formatted="false">Новые сообщения</string>
-  <string name="new_messages" formatted="false" orig="%d unread messages." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">%d непрочитанных сообщений</string>
+  <string name="new_messages" formatted="false" orig="%d unread messages." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">%d непрочитанных сообщений.</string>
   <string name="call" formatted="false" orig="Call">Позвонить</string>
   <string name="reply" formatted="false" orig="Reply">Ответить</string>
   <string name="send_" formatted="false">Отправить</string>
@@ -73,7 +73,7 @@
   <string name="show_contact_photo_hint" formatted="false" username="shineaguevara@gmail.com" orig="Show contact\'s photo in conversation list">Показывать фото контакта в списке диалогов</string>
   <string name="show_emoticons_" formatted="false" orig="Show emoticons" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показ смайликов</string>
   <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list.">Показывать смайлики в сообщениях</string>
-  <string name="show_bubbles_" formatted="false">Сообщения в пузырях</string>
+  <string name="show_bubbles_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Show bubbles">Показать пузырьки</string>
   <string name="hide_send_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;send&quot; button">Скрыть \'Отправить\'</string>
   <string name="hide_send_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Скрыть кнопку \'Отправить\' у текстового поля.</string>
   <string name="hide_restore_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Скрыть кнопку \'Восстановить последнее сообщение\'</string>
@@ -119,7 +119,7 @@
   <string name="import_contact_" formatted="false" orig="Import contact">Импортировать контакт</string>
   <string name="download_" formatted="false">Загрузить</string>
   <string name="downloading_" formatted="false" orig="Downloading..">Загрузка...</string>
-  <string name="debug_" formatted="false" username="ergodroid" orig="Debug">Отладка</string>
+  <string name="debug_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Debug">Отладить</string>
   <string name="clear_cache_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Clear cache">Очистить кэш</string>
   <string name="clear_cache_hint" formatted="false" orig="Clear internal Database. Fetch all data again from external Database." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Очистить внутреннюю базу данных. Снова получить все данные из внешних баз данных.</string>
   <string name="not_implemented" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Sorry, not yet implemented.">Извините, ещё не реализовано.</string>
@@ -137,10 +137,10 @@
   <string name="notification_black_" formatted="false" orig="Black">Чёрная</string>
   <string name="notification_green_" formatted="false" orig="Green">Зелёная</string>
   <string name="notification_yellow_" formatted="false" orig="Yellow">Жёлтая</string>
-  <string name="bubbles_in_" formatted="false" orig="Bubbles in">Входящие</string>
-  <string name="bubbles_in_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Bubbles for incoming messages">Оформление входящих сообщений</string>
-  <string name="bubbles_out_" formatted="false" orig="Bubbles out">Отправленные</string>
-  <string name="bubbles_out_hint" formatted="false" orig="Bubbles for outgoing messages">Оформление исходящих сообщений</string>
+  <string name="bubbles_in_" formatted="false" orig="Bubbles in" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Пузырьки входящие</string>
+  <string name="bubbles_in_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Bubbles for incoming messages">Пузырьки для входящих сообщений</string>
+  <string name="bubbles_out_" formatted="false" orig="Bubbles out" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Пузырьки отправленные</string>
+  <string name="bubbles_out_hint" formatted="false" orig="Bubbles for outgoing messages" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Пузырьки для исходящих сообщений</string>
   <string name="bubbles_nothing" formatted="false" orig="Nothing">Без цвета</string>
   <string name="bubbles_plain_dark_gray" formatted="false" orig="Plain dark gray">Тёмно-серый</string>
   <string name="bubbles_plain_light_gray" formatted="false" orig="Plain light gray">Светло-серый</string>
@@ -172,13 +172,13 @@
   <string name="activate_sender_hint" formatted="false" orig="Activate SMSdroid\'s message sender.">Активировать функцию отправки сообщений SMSdroid</string>
   <string name="fix_numbers_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Fix numbers">Автозамена номера</string>
   <string name="fix_numbers_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Перед отправкой автоматически заменяет часть телефонного номера текстом. Большинству пользователей эта функция не нужна.</string>
-  <string name="fix_number1_regex_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regex 1">Текст 1</string>
+  <string name="fix_number1_regex_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Regex 1">Рег.выраж. 1</string>
   <string name="fix_number1_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 1">Замена 1</string>
-  <string name="fix_number2_regex_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regex 2">Текст 2</string>
+  <string name="fix_number2_regex_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Regex 2">Рег.выраж. 2</string>
   <string name="fix_number2_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 2">Замена 2</string>
-  <string name="fix_number3_regex_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regex 3">Текст 3</string>
+  <string name="fix_number3_regex_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Regex 3">Рег.выраж. 3</string>
   <string name="fix_number3_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 3">Замена 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Regular expression too search for.">Текст, который будет автоматически заменяться</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Regular expression too search for.">Регулярное выражение для поиска.</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace matched text with this text.">Текст, которым будет заменён найденный текст</string>
   <string-array name="themes" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">
     <item>Тёмная</item>
@@ -209,11 +209,11 @@
   </string-array>
   <string name="to_hint" formatted="false" orig="Name or Number">Имя или Номер</string>
   <string name="google_plus_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Читайте на Google+.\nУведомления об обновлениях и т.д.</string>
-  <string name="bubbles_blue2_left" formatted="false" username="ergodroid" orig="Blue 2 left">Голубой слева</string>
-  <string name="bubbles_blue2_right" formatted="false" username="ergodroid" orig="Blue 2 right">Голубой справа</string>
-  <string name="bubbles_green2_left" formatted="false" username="ergodroid" orig="Green 2 left">Зелёный слева</string>
-  <string name="bubbles_green2_right" formatted="false" username="ergodroid" orig="Green 2 right">Зелёный справа</string>
-  <string name="notification_gingerbread_" formatted="false" username="ergodroid" orig="Gingerbread">Gingerbread</string>
+  <string name="bubbles_blue2_left" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Blue 2 left">Голубой 2 слева</string>
+  <string name="bubbles_blue2_right" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Blue 2 right">Голубой 2 справа</string>
+  <string name="bubbles_green2_left" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Green 2 left">Зелёный 2 слева</string>
+  <string name="bubbles_green2_right" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Green 2 right">Зелёный 2 справа</string>
+  <string name="notification_gingerbread_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Gingerbread">Gingerbread (Android 2.3)</string>
   <string name="sendlog_install_" formatted="false" username="ACCount" orig="Install SendLog">Установить SendLog</string>
   <string name="license_" formatted="false" username="ACCount" orig="License:">Лицензия:</string>
   <string name="sendlog_run_" formatted="false" username="ACCount" orig="Run SendLog">Запустить SendLog</string>
@@ -221,11 +221,13 @@
   <string name="website_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Website:">Веб-сайт:</string>
   <string name="source_" formatted="false" username="ACCount" orig="Sourcescode:">Исходный код:</string>
   <string name="license" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - смотрите http://www.gnu.org/licenses/gpl-3.0.txt</string>
-  <string name="reset" formatted="false" username="ACCount" orig="Reset">Сброс</string>
-  <string name="send_logs_hint" formatted="false" username="ACCount" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Отправить лог-файлы с вашего устройства разработчику.\nДелайте это только если вас об этом попросили.</string>
-  <string name="sendlog_run" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">SendLog получит журнал устройства и отправит его разработчику.\nУ Вас будете возможность просмотреть и изменить отправляемые данные.</string>
-  <string name="send_logs_" formatted="false" username="ACCount" orig="Send logs">Отправить лог-файлы</string>
+  <string name="reset" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Reset">Обнулить</string>
+  <string name="send_logs_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Отправить журналы устройства разработчику.\nОтправляйте только в том случае, если Вас об этом попросят.</string>
+  <string name="sendlog_run" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">SendLog получит журнал устройства и отправит его разработчику.\nУ Вас будет возможность просмотреть и изменить отправляемые данные.</string>
+  <string name="send_logs_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Send logs">Отправить журналы</string>
   <string name="sendlog_install" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Установить бесплатное приложение SendLog для получения журнала устройства и отправки его разработчику.</string>
   <string name="custom_language_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Set a custom language.">Установить пользовательский язык.</string>
   <string name="custom_language_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Custom language">Пользовательский язык</string>
+  <string name="use_new_layout_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Use tiled layout">Использовать плиточный интерфейс</string>
+  <string name="use_new_layout_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Use a tiled user interface for conversations">Для бесед использовать плиточный интерфейс</string>
 </resources>
