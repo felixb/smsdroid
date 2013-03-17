@@ -20,6 +20,7 @@ package de.ub0r.android.smsdroid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.PatternSyntaxException;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
@@ -37,6 +38,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import de.ub0r.android.lib.IPreferenceContainer;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Market;
@@ -531,9 +533,13 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 		for (int i = 1; i <= PREFS_REGEX_COUNT; i++) {
 			final String regex = p.getString(PREFS_REGEX + i, null);
 			if (!TextUtils.isEmpty(regex)) {
-				Log.d(TAG, "search for '" + regex + "' in " + ret);
-				ret = ret.replaceAll(regex, p.getString(PREFS_REPLACE + i, ""));
-				Log.d(TAG, "new number: " + ret);
+				try {
+					Log.d(TAG, "search for '" + regex + "' in " + ret);
+					ret = ret.replaceAll(regex, p.getString(PREFS_REPLACE + i, ""));
+					Log.d(TAG, "new number: " + ret);
+				} catch (PatternSyntaxException e) {
+					Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+				}
 			}
 		}
 		return ret;
