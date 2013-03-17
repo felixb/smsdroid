@@ -282,20 +282,26 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
-					Intent i = new Intent();
-					i.setClassName("com.android.mms",
-							"com.android.mms.transaction.TransactionService");
-					i.putExtra("uri", m.getUri().toString());
-					i.putExtra("type", 1);
-					ComponentName cn = context.startService(i);
-					if (cn != null) {
-						btn.setEnabled(false);
-						btn.setText(R.string.downloading_);
-					} else {
-						i = new Intent(Intent.ACTION_VIEW, Uri.parse(MessageListActivity.URI
-								+ m.getThreadId()));
-						context.startActivity(Intent.createChooser(i,
-								context.getString(R.string.view_mms)));
+					try {
+						Intent i = new Intent();
+						i.setClassName("com.android.mms",
+								"com.android.mms.transaction.TransactionService");
+						i.putExtra("uri", m.getUri().toString());
+						i.putExtra("type", 1);
+						ComponentName cn = context.startService(i);
+						if (cn != null) {
+							btn.setEnabled(false);
+							btn.setText(R.string.downloading_);
+						} else {
+							i = new Intent(Intent.ACTION_VIEW, Uri.parse(MessageListActivity.URI
+									+ m.getThreadId()));
+							context.startActivity(Intent.createChooser(i,
+									context.getString(R.string.view_mms)));
+						}
+					} catch (SecurityException e) {
+						Log.e(TAG, "unable to start mms download", e);
+						Toast.makeText(context, R.string.error_start_mms_download,
+								Toast.LENGTH_LONG).show();
 					}
 				}
 			});
