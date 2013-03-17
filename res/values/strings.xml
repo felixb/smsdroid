@@ -33,7 +33,6 @@
 	<string name="new_messages_">New messages</string>
 	<string name="new_messages">%d unread messages.</string>
 	<string name="call">Call</string>
-	<string name="answer">Answer</string>
 	<string name="reply">Reply</string>
 	<string name="send_">Send</string>
 	<string name="notification_">Notifications</string>
@@ -53,8 +52,8 @@
 	<string name="autosend_">Autosend</string>
 	<string name="appearance_and_behavior_">Appearance &amp; behavior</string>
 	<string name="autosend_hint">Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.</string>
-	<string name="show_text_filed_">Show text filed</string>
-	<string name="show_text_filed_hint">Show text filed instead of answer button.</string>
+	<string name="show_text_field_">Show text field</string>
+	<string name="show_text_field_hint">Show text field instead of answer button.</string>
 	<string name="show_target_app_">Show target app</string>
 	<string name="show_target_app_hint">Show target App used for sending on \"send\" Button.</string>
 	<string name="appearance_">Appearance</string>

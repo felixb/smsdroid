@@ -21,5 +21,8 @@
                Visit http://ub0r.de/translate/smsdroid/ru/notes.xml to edit the file.
        -->
 <resources>
-  <string name="notes_sender">Апр. 2011: SMSdroid теперь может сам отправлять СМС через GSM. Просто используйте "SMS (SMSdroid)" при выборе СМС-приложения.</string>
+  <string name="notes_sender" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">Теперь SMSdroid может сам отправлять СМС. Просто используйте \'SMS (SMSdroid)\' при выборе СМС-приложения.</string>
+  <string name="notes_notification" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Disable notifications in the default MMS app, but do not disable or remove the app completley.">Отключите уведомления в ММС приложении по умолчанию, но не отключайте и не удаляйте приложение полностью.</string>
+  <string name="notes_websms" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!">Вы можете бесплатно или, по крайней мере, как можно дешевле отправить TXT/СМС через WebSMS. Поддерживается большое количество провайдеров. Просто попробуйте!</string>
+  <string name="notes_longclick" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Try a long-click on reply/send buttons to use an other than your standard app for sending.">Используйте долгое нажатие на кнопках \'Ответить\'/\'Отправить\' для нестандартного приложения отправки.</string>
 </resources>

@@ -37,7 +37,6 @@
   <string name="new_messages_" formatted="false">Neue Nachrichten</string>
   <string name="new_messages" formatted="false">%d ungelesene Nachrichten.</string>
   <string name="call" formatted="false">Anrufen</string>
-  <string name="answer" formatted="false">Antworten</string>
   <string name="reply" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Reply">Antworten</string>
   <string name="send_" formatted="false">Senden</string>
   <string name="notification_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Notifications">Benachrichtigungen</string>
@@ -57,8 +56,8 @@
   <string name="autosend_" formatted="false">Autosend</string>
   <string name="appearance_and_behavior_" formatted="false">Darstellung &amp; Verhalten</string>
   <string name="autosend_hint" formatted="false">Antworten automatisch absenden. Zur Zeit unterstützt nur WebSMS dieses Feature. An sonsten wird der Text an die sendende App übergeben.</string>
-  <string name="show_text_filed_" formatted="false">Textfeld zeigen</string>
-  <string name="show_text_filed_hint" formatted="false">Zeige das Textfeld statt dem Antworten Button.</string>
+  <string name="show_text_field_" formatted="false">Textfeld zeigen</string>
+  <string name="show_text_field_hint" formatted="false">Zeige das Textfeld statt dem Antworten Button.</string>
   <string name="show_target_app_" formatted="false">Zeige Ziel App</string>
   <string name="show_target_app_hint" formatted="false" username="Thilo H. &lt;thilohp@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Zeige Ziel-App zum Senden auf "Senden"-Button.</string>
   <string name="appearance_" formatted="false">Darstellung</string>

@@ -27,7 +27,7 @@
   <string name="feedback_" formatted="false" orig="Feedback">Commentaires</string>
   <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Signaler des bugs, demander de nouvelles fonctionnalités...</string>
   <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc.">Suivre sur twitter.\nNotifications de mise à jour, etc.</string>
-  <string name="about0" formatted="false" orig="SMSdroid let\'s you read your sms and write sms with any other app.">SMSdroid vous permet de lire vos sms, et de les écrire avec n\'importe quelle autre application.</string>
+  <string name="about0" formatted="false" orig="SMSdroid lets you read your sms and write sms with any other app." username="Christian Knecht &lt;g.chrisk@gmail.com&gt;">SMSdroid vous permet de lire et d\'écrire vos sms avec n\'importe quelle autre application.</string>
   <string name="more_apps_" formatted="false" orig="More Apps..">Plus d\'applications..</string>
   <string name="settings" formatted="false" orig="Preferences">Préférences</string>
   <string name="new_message_" formatted="false" orig="New message">Nouveau message</string>
@@ -36,7 +36,6 @@
   <string name="new_messages_" formatted="false" orig="New messages">Nouveaux messages</string>
   <string name="new_messages" formatted="false" orig="%d unread messages.">%d messages non lus.</string>
   <string name="call" formatted="false" orig="Call">Appeler</string>
-  <string name="answer" formatted="false" orig="Answer">Répondre</string>
   <string name="reply" formatted="false" orig="Reply">Réponse</string>
   <string name="send_" formatted="false" orig="Send">Envoyer</string>
   <string name="notification_" formatted="false" orig="Notifications">Notifications</string>
@@ -56,8 +55,8 @@
   <string name="autosend_" formatted="false" orig="Autosend">Réponse automatique</string>
   <string name="appearance_and_behavior_" formatted="false" orig="Appearance &amp; behavior">Apparence et comportement</string>
   <string name="autosend_hint" formatted="false" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Envoie des réponses automatiques. Actuellement, seule l\'application WebSMS supporte cette fonction. Les autres applications montreront simplement le texte.</string>
-  <string name="show_text_filed_" formatted="false" orig="Show text filed">Montrer le texte entré</string>
-  <string name="show_text_filed_hint" formatted="false" orig="Show text filed instead of answer button.">Montrer le texte entré au lieu du bouton répondre</string>
+  <string name="show_text_field_" formatted="false" orig="Show text field">Montrer le texte entré</string>
+  <string name="show_text_field_hint" formatted="false" orig="Show text field instead of answer button.">Montrer le texte entré au lieu du bouton répondre</string>
   <string name="show_target_app_" formatted="false" orig="Show target app">Montrer l\'application cible</string>
   <string name="show_target_app_hint" formatted="false" orig="Show target App used for sending on \&quot;send\&quot; Button.">Montrer l\'application cible utilisé pour l\'envoi, sur le bouton "envoyer"</string>
   <string name="appearance_" formatted="false" orig="Appearance">Apparence</string>
@@ -113,7 +112,7 @@
   <string name="sent_" formatted="false" orig="Sent:">Envoyé:</string>
   <string name="received_" formatted="false" orig="Received:">Reçu:</string>
   <string name="view_mms" formatted="false" orig="View MMS">Voir le MMS</string>
-  <string name="mms_conversation" formatted="false" orig="&amp;lt;MMS body&amp;gt;">&lt;contenu MMS&gt;</string>
+  <string name="mms_conversation" formatted="false" orig="&lt;MMS body&gt;" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;">&lt;contenu MMS&gt;</string>
   <string name="mms_not_supported" formatted="false" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Ce message semble être un MMS. Vous souhaitez peut-être le télécharger avec l\'application MMS d\'origine.\nCliquez ici pour ce faire.</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Importer le contact</string>
   <string name="download_" formatted="false" orig="Download">Télécharger</string>
@@ -227,4 +226,8 @@
   <string name="fix_number1_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 1">Remplacement 1</string>
   <string name="fix_number2_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 2">Remplacement 2</string>
   <string name="fix_number3_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 3">Remplacement 3</string>
+  <string name="decode_decimal_ncr_" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Decode Decimal NCR">Code décimal NCR</string>
+  <string name="decode_decimal_ncr_hint" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.">Certains fournisseurs de services livrent des messages encodés en décimal NCR (). Sélectionnez pour automatiquement décoder ce type de messages.</string>
+  <string name="activate_sender_" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Activate sender">Activer l\'originateur</string>
+  <string name="activate_sender_hint" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Activate SMSdroid\'s message sender.">Activer l\'originateur de message SMSdroid</string>
 </resources>
