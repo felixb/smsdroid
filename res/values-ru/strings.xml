@@ -230,4 +230,5 @@
   <string name="custom_language_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Custom language">Пользовательский язык</string>
   <string name="use_new_layout_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Use tiled layout">Использовать плиточный интерфейс</string>
   <string name="use_new_layout_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Use a tiled user interface for conversations">Для бесед использовать плиточный интерфейс</string>
+  <string name="error_start_mms_download" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Error starting MMS download">Ошибка загрузки ММС</string>
 </resources>
