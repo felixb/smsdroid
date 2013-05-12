@@ -27,7 +27,6 @@
   <string name="feedback_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Feedback">פידבק</string>
   <string name="feedback_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Report bugs, request features ...">דיווח על באגים, בקשות ...</string>
   <string name="google_plus_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">עקבו אחרי בגוגל+, \nקבלת התראות וכו\'</string>
-  <string name="twitter_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">עקבו אחרי בטוויטר, \nקבלת התראות וכו\'</string>
   <string name="about0" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">סמס-דרויד מאפשר לקרוא סמסים, ולכתוב סמסים באמצעות כל תוכנה</string>
   <string name="more_apps_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="More Apps..">תוכנות נוספות</string>
   <string name="settings" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Preferences">הגדרות</string>

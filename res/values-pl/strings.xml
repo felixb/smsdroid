@@ -23,7 +23,6 @@
   <string name="feedback_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Feedback">Informacja zwrotna</string>
   <string name="feedback_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Report bugs, request features ...">Zgłoś błędy, poproś o nowe funkcje...</string>
   <string name="google_plus_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Śledź mnie na Google+\nInformacje o aktualizcjach itp.</string>
-  <string name="twitter_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Śledź mnie na Twitterze.\nInformacje o aktualizcjach itp.</string>
   <string name="about0" formatted="false" username="Karol Szafranski &lt;ksz@maimix.pl&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">SMSdroid pozwala czytać SMSy oraz pisać SMSy z dowolnej innej aplikacji.</string>
   <string name="more_apps_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="More Apps..">Więcej aplikacji...</string>
   <string name="settings" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Preferences">Preferencje</string>
