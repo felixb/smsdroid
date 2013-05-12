@@ -26,7 +26,6 @@
   <string name="faq_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Some tips and tricks, how to set up this app.">Alcuni trucchi e suggerimenti su come impostare l\'applicazione.</string>
   <string name="feedback_" formatted="false" username="carloraudino@fedoraproject.org" orig="Feedback">Feedback</string>
   <string name="feedback_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Report bugs, request features ...">Segnala bug, richiedi funzioni ...</string>
-  <string name="twitter_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Follow me on twitter.\nGet update notifications etc.">Seguimi su Twitter.&#13;
 &#13;
 Ricevi notifiche su aggiornamenti ecc.</string>
   <string name="about0" formatted="false" username="carloraudino@fedoraproject.org" orig="SMSdroid lets you read your sms and write sms with any other app.">SMSdroid permette la lettura di SMS e l\'invio attraverso altre applicazioni.</string>

@@ -26,7 +26,6 @@
   <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
   <string name="feedback_" formatted="false" orig="Feedback">Retroalimentación</string>
   <string name="feedback_hint" formatted="false">Avise sobre errores, sugiera características...</string>
-  <string name="twitter_hint" formatted="false">Sígame en twitter.\nObtenga notificaciones sobre actualizaciones, etc.</string>
   <string name="about0" formatted="false">SMSdroid le permite leer sus sms, así como escribirlos con cualquier aplicación.</string>
   <string name="more_apps_" formatted="false">Más Aplicaciones..</string>
   <string name="settings" formatted="false">Preferencias</string>
@@ -151,7 +150,6 @@
   <string name="show_text_field_hint" formatted="false" orig="Show text field instead of answer button.">
   </string>
   <string name="show_full_date_hint" formatted="false" orig="Show full date and time on every message.">Mostar fecha completa y hora en cada mensaje</string>
-  <string name="google_plus_hint" formatted="false" username="Ag" orig="Follow me on Google+.\nGet update notifications etc.">Sígueme en twitter.\nRecibe notificaciones sobre actualizaciones, etc.</string>
   <string name="hide_send_hint" formatted="false" username="Ag" orig="Hide &quot;send&quot; button near text field.">Esconder el botón "enviar" al lado del campo de texto</string>
   <string name="hide_paste_" formatted="false" username="Ag" orig="Hide &quot;paste&quot; button">Esconder el botón "pegar"</string>
   <string name="website_" formatted="false" username="Ag" orig="Website:">Sitio web:</string>

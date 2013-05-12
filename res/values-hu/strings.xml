@@ -27,7 +27,6 @@
   <string name="feedback_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Feedback">Visszajelzés</string>
   <string name="feedback_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Report bugs, request features ...">Hibajelentés küldése, funkciók kérése ...</string>
   <string name="google_plus_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Kövess engem Google+-on.\nÉrtesülj frissítésekről stb.</string>
-  <string name="twitter_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Follow me on twitter.\nGet update notifications etc.">Kövess engem Twitteren.\nÉrtesülj frissítésekről stb.</string>
   <string name="about0" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">Az SMSdroiddal olvashatod az smseid és üzenhetsz más alkalmazásokkal.</string>
   <string name="more_apps_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="More Apps..">Több Alkalmazás...</string>
   <string name="settings" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Preferences">Beállítások</string>

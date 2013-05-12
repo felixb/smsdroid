@@ -26,7 +26,6 @@
   <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Некоторые советы и рекомендации по настройке приложения.</string>
   <string name="feedback_" formatted="false">Отзывы</string>
   <string name="feedback_hint" formatted="false" orig="Report bugs, request features ..." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Сообщить об ошибкаx, внести предложения ...</string>
-  <string name="twitter_hint" formatted="false" orig="Follow me on twitter.\nGet update notifications etc." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Читайте в twitter.\nУведомления об обновлениях и т.д.</string>
   <string name="about0" formatted="false" orig="SMSdroid lets you read your sms and write sms with any other app.">SMSdroid позволяет читать и отправлять SMS сообщения. Работает с любыми SMS-приложениями.</string>
   <string name="more_apps_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="More Apps..">Другие приложения..</string>
   <string name="settings" formatted="false" orig="Preferences">Настройки</string>

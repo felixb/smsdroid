@@ -39,11 +39,6 @@
 			<intent android:action="android.intent.action.VIEW"
 				android:data="https://plus.google.com/101490294894990964252" />
 		</PreferenceScreen>
-		<PreferenceScreen android:title="@string/twitter_"
-			android:summary="@string/twitter_hint">
-			<intent android:action="android.intent.action.VIEW"
-				android:data="http://twitter.com/flx_b" />
-		</PreferenceScreen>
 		<PreferenceScreen android:key="more_apps"
 			android:title="@string/more_apps_" />
 	</PreferenceCategory>
