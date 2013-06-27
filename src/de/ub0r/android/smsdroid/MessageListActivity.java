@@ -120,6 +120,9 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 	/** Index in dialog: delete. */
 	private static final int WHICH_DELETE = 7;
 
+	/** maximum number of lines in EditText */
+	private static final int MAX_EDITTEXT_LINES = 10;
+
 	/** Package name for System's chooser. */
 	private static String chooserPackage = null;
 
@@ -230,6 +233,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		this.textWatcher = new MyTextWatcher(this, (TextView) this.findViewById(R.id.text_paste),
 				(TextView) this.findViewById(R.id.text_));
 		this.etText.addTextChangedListener(this.textWatcher);
+		this.etText.setMaxLines(MAX_EDITTEXT_LINES);
 		this.textWatcher.afterTextChanged(this.etText.getEditableText());
 
 		this.longItemClickDialog[WHICH_MARK_UNREAD] = this.getString(R.string.mark_unread_);
@@ -417,6 +421,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 					PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
 				ai = i.resolveActivityInfo(pm, 0);
 			}
+			this.etText.setMaxLines(MAX_EDITTEXT_LINES);
+
 			if (ai == null) {
 				btn.setText(null);
 				this.etText.setMinLines(1);
