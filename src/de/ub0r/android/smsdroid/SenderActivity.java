@@ -11,10 +11,12 @@ import android.app.PendingIntent.CanceledException;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -110,7 +112,11 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 			et.setText(this.text);
 			final MultiAutoCompleteTextView mtv = (MultiAutoCompleteTextView) this
 					.findViewById(R.id.to);
-			mtv.setAdapter(new MobilePhoneAdapter(this));
+			final MobilePhoneAdapter mpa = new MobilePhoneAdapter(this);
+			final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+			MobilePhoneAdapter.setMobileNumbersOnly(p.getBoolean(
+					PreferencesActivity.PREFS_MOBILE_ONLY, false));
+			mtv.setAdapter(mpa);
 			mtv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 			mtv.setText(this.to);
 			if (!TextUtils.isEmpty(this.to)) {

@@ -228,4 +228,6 @@
         <string name="changelog_" translatable="false">Changelog</string>
 	<string name="custom_language_">Custom language</string>
 	<string name="custom_language_hint">Set a custom language.</string>
+	<string name="mobile_only_">Only mobile numbers</string>
+	<string name="mobile_only_hint">Only suggest mobile numbers for recipient</string>
 </resources>

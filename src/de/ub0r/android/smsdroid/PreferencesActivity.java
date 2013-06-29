@@ -103,6 +103,8 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	private static final String PREFS_TEXTCOLOR_IGNORE_CONV = "text_color_ignore_conv";
 	/** Preference's name: enable autosend. */
 	public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
+	/** Preference's name: mobile_only. */
+	public static final String PREFS_MOBILE_ONLY = "mobile_only";
 	/** Preference's name: show text field. */
 	public static final String PREFS_SHOWTEXTFIELD = "show_textfield";
 	/** Preference's name: show target app. */

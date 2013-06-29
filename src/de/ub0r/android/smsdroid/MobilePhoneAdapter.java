@@ -36,7 +36,7 @@ import android.widget.TextView;
  */
 public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	/** Preferences: show mobile numbers only. */
-	private static boolean prefsMobilesOnly;
+	private static boolean prefsMobilesOnly = false;
 
 	/** Global ContentResolver. */
 	private ContentResolver mContentResolver;
@@ -130,7 +130,7 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 * @param b
 	 *            set to true, if only mobile numbers should be displayed.
 	 */
-	static final void setMoileNubersObly(final boolean b) {
+	static final void setMobileNumbersOnly(final boolean b) {
 		prefsMobilesOnly = b;
 	}
 
