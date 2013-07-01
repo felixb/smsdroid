@@ -33,6 +33,10 @@
 	<CheckBoxPreference android:key="activate_sender"
 		android:defaultValue="true" android:title="@string/activate_sender_"
 		android:summary="@string/activate_sender_hint" />
+	<CheckBoxPreference android:key="mobile_only"
+		android:title="@string/mobile_only_"
+		android:summary="@string/mobile_only_hint"
+		android:defaultValue="false" />
 	<PreferenceScreen android:title="@string/fix_numbers_"
 		android:summary="@string/fix_numbers_hint">
 		<PreferenceCategory android:title="@string/fix_number1_regex_">

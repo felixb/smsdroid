@@ -231,4 +231,6 @@
   <string name="source_" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Sourcescode:">Quelltext:</string>
   <string name="custom_language_" formatted="false">Andere Sprache</string>
   <string name="custom_language_hint" formatted="false">Eine andere Sprache einstellen.</string>
+  <string name="mobile_only_">Nur Mobilnummern</string>
+  <string name="mobile_only_hint">Für Empfänger nur Mobilnummern vorschlagen</string>
 </resources>
