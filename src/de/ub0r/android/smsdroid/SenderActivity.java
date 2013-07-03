@@ -101,43 +101,51 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 			this.send();
 			this.finish();
 		} else {
-			this.setTheme(PreferencesActivity.getTheme(this));
-			SMSdroid.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
-					R.drawable.bg_striped, R.drawable.bg_striped_img);
-			this.setContentView(R.layout.sender);
-			this.findViewById(R.id.text_paste).setOnClickListener(this);
-			final EditText et = (EditText) this.findViewById(R.id.text);
-			et.addTextChangedListener(new MyTextWatcher(this, (TextView) this
-					.findViewById(R.id.text_paste), (TextView) this.findViewById(R.id.text_)));
-			et.setText(this.text);
-			final MultiAutoCompleteTextView mtv = (MultiAutoCompleteTextView) this
-					.findViewById(R.id.to);
-			final MobilePhoneAdapter mpa = new MobilePhoneAdapter(this);
-			final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-			MobilePhoneAdapter.setMobileNumbersOnly(p.getBoolean(
-					PreferencesActivity.PREFS_MOBILE_ONLY, false));
-			mtv.setAdapter(mpa);
-			mtv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-			mtv.setText(this.to);
-			if (!TextUtils.isEmpty(this.to)) {
-				this.to = this.to.trim();
-				if (this.to.endsWith(",")) {
-					this.to = this.to.substring(0, this.to.length() - 1).trim();
-				}
-				if (this.to.indexOf('<') < 0) {
-					// try to fetch recipient's name from phone book
-					String n = ContactsWrapper.getInstance().getNameForNumber(
-							this.getContentResolver(), this.to);
-					if (n != null) {
-						this.to = n + " <" + this.to + ">, ";
-					}
-				}
-				mtv.setText(this.to);
-				et.requestFocus();
+			int tid = this.getThreadId();
+			if (tid >= 0) {
+				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(
+						ConversationListActivity.URI, String.valueOf(tid)), this,
+						MessageListActivity.class));
+				this.finish();
 			} else {
-				mtv.requestFocus();
+				this.setTheme(PreferencesActivity.getTheme(this));
+				SMSdroid.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+						R.drawable.bg_striped, R.drawable.bg_striped_img);
+				this.setContentView(R.layout.sender);
+				this.findViewById(R.id.text_paste).setOnClickListener(this);
+				final EditText et = (EditText) this.findViewById(R.id.text);
+				et.addTextChangedListener(new MyTextWatcher(this, (TextView) this
+						.findViewById(R.id.text_paste), (TextView) this.findViewById(R.id.text_)));
+				et.setText(this.text);
+				final MultiAutoCompleteTextView mtv = (MultiAutoCompleteTextView) this
+						.findViewById(R.id.to);
+				final MobilePhoneAdapter mpa = new MobilePhoneAdapter(this);
+				final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+				MobilePhoneAdapter.setMobileNumbersOnly(p.getBoolean(
+						PreferencesActivity.PREFS_MOBILE_ONLY, false));
+				mtv.setAdapter(mpa);
+				mtv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+				mtv.setText(this.to);
+				if (!TextUtils.isEmpty(this.to)) {
+					this.to = this.to.trim();
+					if (this.to.endsWith(",")) {
+						this.to = this.to.substring(0, this.to.length() - 1).trim();
+					}
+					if (this.to.indexOf('<') < 0) {
+						// try to fetch recipient's name from phone book
+						String n = ContactsWrapper.getInstance().getNameForNumber(
+								this.getContentResolver(), this.to);
+						if (n != null) {
+							this.to = n + " <" + this.to + ">, ";
+						}
+					}
+					mtv.setText(this.to);
+					et.requestFocus();
+				} else {
+					mtv.requestFocus();
+				}
+				this.cbmgr = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
 			}
-			this.cbmgr = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
 		}
 	}
 
@@ -187,6 +195,24 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 		}
 
 		return true;
+	}
+
+	private int getThreadId() {
+		if (TextUtils.isEmpty(this.to)) {
+			return -1;
+		}
+		String filter = this.to.replaceAll("[-()/ ]", "");
+		if (filter.length() > 6) {
+			filter = filter.substring(filter.length() - 6);
+		}
+		Cursor c = this.getContentResolver().query(Uri.parse("content://sms"),
+				new String[] { "thread_id" }, "address like '%" + filter + "'", null, null);
+		int threadId = -1;
+		if (c.moveToFirst()) {
+			threadId = c.getInt(0);
+		}
+		c.close();
+		return threadId;
 	}
 
 	/**
