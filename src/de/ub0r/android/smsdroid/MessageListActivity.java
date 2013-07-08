@@ -304,10 +304,12 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
 		final Contact contact = c.getContact();
 		contact.update(this, false, true);
+		boolean showKeyboard = intent.getBooleanExtra("showKeyboard", false);
 
 		Log.d(TAG, "address: " + contact.getNumber());
 		Log.d(TAG, "name: " + contact.getName());
 		Log.d(TAG, "displayName: " + contact.getDisplayName());
+		Log.d(TAG, "showKeyboard: " + showKeyboard);
 
 		final ListView lv = this.getListView();
 		lv.setStackFromBottom(true);
@@ -329,6 +331,11 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
 		if (!TextUtils.isEmpty(body)) {
 			this.etText.setText(body);
+			showKeyboard = true;
+		}
+
+		if (showKeyboard) {
+			this.etText.requestFocus();
 		}
 
 		this.setRead();

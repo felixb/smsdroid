@@ -103,9 +103,11 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 		} else {
 			int tid = this.getThreadId();
 			if (tid >= 0) {
-				this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(
+				Intent i = new Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(
 						ConversationListActivity.URI, String.valueOf(tid)), this,
-						MessageListActivity.class));
+						MessageListActivity.class);
+				i.putExtra("showKeyboard", true);
+				this.startActivity(i);
 				this.finish();
 			} else {
 				this.setTheme(PreferencesActivity.getTheme(this));
