@@ -103,7 +103,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTop"
             android:theme="@style/Theme.SherlockSMSdroid_Light"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -132,7 +132,7 @@
             android:label="@string/sender_name"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateUnchanged|adjustResize" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
 
