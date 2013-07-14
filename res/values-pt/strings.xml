@@ -159,4 +159,29 @@
     <item>Intermitente</item>
     <item>Permanente</item>
   </string-array>
+  <string name="show_full_date_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show full date">Mostrar data completa</string>
+  <string name="fix_number1_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 1">Regex 1</string>
+  <string name="fix_number2_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 2">Regex 2</string>
+  <string name="fix_number3_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 3">Regex 3</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regular expression too search for.">A expressão regular a procurar.</string>
+  <string name="fix_number1_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 1">Substituição 1</string>
+  <string name="fix_number2_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 2">Substituição 2</string>
+  <string name="fix_number3_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 3">Substituição 3</string>
+  <string name="reset" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Reset">Reiniciar</string>
+  <string name="send_logs_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send logs">Enviar registos</string>
+  <string name="send_logs_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Enviar registos do dispositivo ao programador.\nNão o efetue a menos que seja solicitado.</string>
+  <string name="sendlog_run_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Run SendLog">Executar SendLogs</string>
+  <string name="sendlog_run" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">O SendLog irá recolher e enviar o registo do dispositivo para o programador.\nPode rever e modificar os dados que serão enviados.</string>
+  <string name="sendlog_install_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Install SendLog">Instalar SendLog</string>
+  <string name="sendlog_install" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Instale a aplicação SendLog para recolher e enviar o registo do dispositivo para o programador.</string>
+  <string-array name="led_color" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
+    <item>Verde</item>
+    <item>Azul</item>
+    <item>Vermelho</item>
+    <item>Laranja</item>
+    <item>Magenta</item>
+    <item>Ciano</item>
+  </string-array>
+  <string name="custom_language_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Set a custom language.">Definir idioma personalizado</string>
+  <string name="error_start_mms_download" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Error starting MMS download">Erro ao transferir MMS</string>
 </resources>
