@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+		Copyright (C) 2009-2012 Felix Bechstein
+	-->
+<!--
+		This file is part of ub0rlib. This program is free software; you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation; either
+		version 3 of the License, or (at your option) any later version.
+	-->
+<!--
+		This program is distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+		General Public License for more details. You should have received a
+		copy of the GNU General Public License along with this program; If
+		not, see <http://www.gnu.org/licenses/>.
+	-->
+<resources>
+  <string name="donate" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Donate">Doação</string>
+  <string name="donate_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Donate (%s)">Doação (%s)</string>
+  <string name="donate_remove_ads_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Donate/remove ads">Doar e remover publicidade</string>
+  <string name="predonate_market" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.">Esta é uma aplicação de código livre disponibilizada nos termos da licença GPLv3. Se não quiser ser incomodado pela publicidade, considere fazer uma doação.\nObrigado!\n\nA doação remove a publicidade em todas as aplicações criadas por mim.</string>
+  <string name="did_paypal_donation" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="I already did a donation via Paypal">Já fiz uma doação via Paypal</string>
+</resources>

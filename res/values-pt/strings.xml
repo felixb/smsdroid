@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+		Copyright (C) 2009-2012 Felix Bechstein
+	-->
+<!--
+		This file is part of SMSdroid. This program is free software; you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation; either
+		version 3 of the License, or (at your option) any later version.
+	-->
+<!--
+		This program is distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+		General Public License for more details. You should have received a
+		copy of the GNU General Public License along with this program; If
+		not, see <http://www.gnu.org/licenses/>.
+	-->
+<resources>
+  <string name="about_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="About">Sobre</string>
+  <string name="about_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="About this app">Sobre esta aplicação</string>
+  <string name="faq_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Some tips and tricks, how to set up this app.">Dicas de utilização sobre esta aplicação.</string>
+  <string name="feedback_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Feedback">Comentários</string>
+  <string name="feedback_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Report bugs, request features ...">Reporte de erros e funcionalidades...</string>
+  <string name="google_plus_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Seguir no Google+.\nObter notificações e muito mais..</string>
+  <string name="about0" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">O SMSdroid permite o envio e escrita de SMS através de outras aplicações.</string>
+  <string name="more_apps_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="More Apps..">Mais aplicações...</string>
+  <string name="settings" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Preferences">Preferências</string>
+  <string name="new_message_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="New message">Nova mensagem</string>
+  <string name="new_message_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Compose a new message">Criar uma nova mensagem</string>
+  <string name="new_message" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="1 unread message.">1 mensagem não lida.</string>
+  <string name="new_messages_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="New messages">Novas mensagens</string>
+  <string name="new_messages" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="%d unread messages.">%d mensagens não lidas.</string>
+  <string name="call" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Call">Chamada</string>
+  <string name="reply" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Reply">Responder</string>
+  <string name="send_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send">Enviar</string>
+  <string name="notification_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Notifications">Notificações</string>
+  <string name="notification_enable_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Enable notifications">Ativar notificações</string>
+  <string name="notification_enable_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Enable notifications on receive">Ativar notificação de receção</string>
+  <string name="receive_vibrate_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Vibrate">Vibração</string>
+  <string name="receive_vibrate_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Vibrate on receive">Vibrar ao receber</string>
+  <string name="receive_vibrate_mode_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Vibrator mode">Modo de vibração</string>
+  <string name="receive_sound_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sound">Som</string>
+  <string name="receive_sound_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sound on receive">Som ao receber</string>
+  <string name="receive_led_color_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="LED color">Cor do LED</string>
+  <string name="receive_led_flash_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="LED mode">Modo LED</string>
+  <string name="receive_led_flash_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Set LED flashing behaviour">Definir comportamento do LED</string>
+  <string name="receive_no_text_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide sender/text">Ocultar remetente/texto</string>
+  <string name="receive_no_text_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide sender/text in notification.">Ocultar remetente/texto na notificação</string>
+  <string name="behavior_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Behavior">Comportamento</string>
+  <string name="autosend_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Autosend">Envio automático</string>
+  <string name="appearance_and_behavior_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Appearance &amp; behavior">Aparência e comportamento</string>
+  <string name="autosend_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Enviar respostas automaticamente. Neste momento, só é possível com o WebSMS. Outras aplicações só mostram o texto.</string>
+  <string name="show_text_field_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show text field">Mostrar campo de texto</string>
+  <string name="show_text_field_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show text field instead of answer button.">Mostrar campo de texto em vez do botão de resposta.</string>
+  <string name="show_target_app_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show target app">Mostrar aplicação de envio</string>
+  <string name="show_target_app_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Mostrar aplicação utilizada para envio ao clicar em "Enviar".</string>
+  <string name="appearance_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Appearance">Aparência</string>
+  <string name="theme_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Theme">Tema</string>
+  <string name="textsize_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Text size">Tamanho do texto</string>
+  <string name="textsize_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Text size in pixels; leave empty for default">Tamanho em pixeis. Deixe em branco para utilizar o formato padrão.</string>
+  <string name="textcolor_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Text color">Cor do texto</string>
+  <string name="textcolor_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Message text\'s color.">Cor do texto da mensagem.</string>
+  <string name="textcolor_ignore_conv_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Ignore text color for threads">Ignorar cor para tópicos</string>
+  <string name="textcolor_ignore_conv_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Ignore text color in list of threads.">Ignorar cor do texto na lista de tópicos.</string>
+  <string name="show_titlebar_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show title bar">Mostrar barra de título</string>
+  <string name="show_titlebar_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Mostrar barra de título na janela. Sem a barra de título, não existe forma de ver as atividades em segundo plano.</string>
+  <string name="show_contact_photo_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show photo">Mostrar fotografia</string>
+  <string name="show_contact_photo_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show contact\'s photo in conversation list">Mostrar fotografia do contacto na lista de conversa.</string>
+  <string name="show_emoticons_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show emoticons">Mostrar ícone emotivo</string>
+  <string name="show_emoticons_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show emoticons in message list.">Mostrar ícone emotivo na lista de mensagens.</string>
+  <string name="show_bubbles_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show bubbles">Mostrar bolhas</string>
+  <string name="hide_send_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button">Ocultar "Enviar"</string>
+  <string name="hide_send_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Ocultar botão "Enviar" no campo de texto.</string>
+  <string name="hide_restore_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Ocultar "Recuperar última mensagem"</string>
+  <string name="hide_restore_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Ocultar botão "Recuperar última mensagem" na lista de mensagens.</string>
+  <string name="hide_paste_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;paste&quot; button">Ocultar "Colar"</string>
+  <string name="hide_paste_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">Ocultar botão "Colar" no campo de texto.</string>
+  <string name="hide_widget_label_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide widget\'s label">Ocultar texto do widget</string>
+  <string name="hide_widget_label_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide the label of the widget.">Ocultar o texto do widget.</string>
+  <string name="show_full_date_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show full date and time on every message.">Mostrar data e hora da mensagem.</string>
+  <string name="me" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Me">Eu</string>
+  <string name="view_contact_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="View contact">Ver contacto</string>
+  <string name="add_contact_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Add to contacts">Adicionar aos contactos</string>
+  <string name="view_thread_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="View thread">Ver tópico</string>
+  <string name="filter_spam_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark as Spam">Marcar como lixo</string>
+  <string name="dont_filter_spam_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Remove from Blacklist">Remover da lista de exclusões</string>
+  <string name="delete_message_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Delete message">Eliminar mensagem</string>
+  <string name="delete_thread_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Delete thread">Eliminar tópico</string>
+  <string name="forward_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Forward">Avançar</string>
+  <string name="send_draft_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send draft">Enviar rascunho</string>
+  <string name="copy_text_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Copy message text">Copiar texto</string>
+  <string name="view_details_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="View message details">Ver detalhes</string>
+  <string name="spek_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Speak">Voz</string>
+  <string name="delete_threads_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Delete all threads">Eliminar todos os tópicos</string>
+  <string name="mark_all_read_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark all as read">Marcar tudo como lido</string>
+  <string name="mark_read_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark read">Marcar como lida</string>
+  <string name="mark_unread_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark unread">Marcar como não lida</string>
+  <string name="all_threads_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="All threads">Todos os tópicos</string>
+  <string name="message_options_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Message options">Opções de mensagem</string>
+  <string name="compose_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Compose">Criar nova</string>
+  <string name="delete_message_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete this message?">Quer mesmo eliminar esta mensagem?</string>
+  <string name="delete_messages_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete these messages?">Quer mesmo eliminar estas mensagens?</string>
+  <string name="delete_threads_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Quer mesmo eliminar <b>todas as mensagens</b>?</string>
+  <string name="delete_thread_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Quer mesmo eliminar <b>todas as mensagens deste tópico</b>?</string>
+  <string name="from_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="From:">De:</string>
+  <string name="to_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="To:">Para:</string>
+  <string name="to_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Name or Number">Nome ou número</string>
+  <string name="type_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Type:">Tipo:</string>
+  <string name="sent_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sent:">Enviadas:</string>
+  <string name="received_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Received:">Recebidas:</string>
+  <string name="view_mms" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="View MMS">Ver MMS</string>
+  <string name="mms_conversation" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="&lt;MMS body&gt;">&lt;Texto da MMS&gt;</string>
+  <string name="mms_not_supported" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Parece qu esta é uma MMS. Pode utilizar a aplicação do sistema para transferir a mensagem.\nClique aqui para o fazer.</string>
+  <string name="import_contact_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Import contact">Importar contacto</string>
+  <string name="download_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Download">Transferir</string>
+  <string name="downloading_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Downloading..">Transferência...</string>
+  <string name="debug_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Debug">Depuração</string>
+  <string name="clear_cache_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Clear cache">Limpar cache</string>
+  <string name="clear_cache_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Clear internal Database. Fetch all data again from external Database.">Limpar base de dados interna e obter dados da base de dados externa.</string>
+  <string name="not_implemented" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sorry, not yet implemented.">Ainda não implementada.</string>
+  <string name="error_conv_null" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Error getting conversation from DB!">Erro ao obter conversa na base de dados!</string>
+  <string name="error_sending_failed" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sending failed">Falha ao enviar</string>
+  <string name="text_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Text">Texto</string>
+  <string name="paste_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="[Paste from clipboard]">[Colar da área de transferência]</string>
+  <string name="restore_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Restore last message">Recuperar última mensagem</string>
+  <string name="attachment_saved" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Saved attachment on SD card as:">Guardar anexo no cartão SD como:</string>
+  <string name="attachment_not_saved" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Could not save attachment.">O anexo não foi guardado.</string>
+  <string name="chooser_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Chooser">Seletor</string>
+  <string name="notification_icon_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Notification icon">Ícone da notificação</string>
+  <string name="notification_default_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Default">Padrão</string>
+  <string name="notification_gingerbread_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Gingerbread">Gingerbread</string>
+  <string name="notification_gingerbread_mail_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Gingerbread mail">Correio Gingerbread</string>
+  <string name="notification_black_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Black">Escuro</string>
+  <string name="notification_green_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Green">Verde</string>
+  <string name="notification_yellow_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Yellow">Amarelo</string>
+  <string name="bubbles_in_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Bubbles for incoming messages">Bolhas para mensagens recebidas</string>
+  <string name="bubbles_in_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Bubbles in">Bolhas ao receber</string>
+  <string name="bubbles_out_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Bubbles out">Bolhas ao enviar</string>
+  <string name="bubbles_out_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Bubbles for outgoing messages">Bolhas para mensagens enviadas</string>
+  <string name="bubbles_nothing" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Nothing">Nenhuma</string>
+  <string name="bubbles_plain_dark_gray" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Plain dark gray">Cinzento escuro</string>
+  <string name="bubbles_plain_light_gray" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Plain light gray">Cinzento claro</string>
+  <string name="activate_sender_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Activate sender">Ativar remetente</string>
+  <string name="activate_sender_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Activate SMSdroid\'s message sender.">Ativar remetente do SMSdroid.</string>
+  <string name="fix_numbers_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Fix numbers">Corrigir números</string>
+  <string name="fix_numbers_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Substituir partes do número por uma expressão regular antes de enviar. Maioria dos utilizadores não precisa de alterar a opção.</string>
+  <string name="license_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="License:">Licença:</string>
+  <string name="license" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - consulte http://www.gnu.org/licenses/gpl-3.0.txt</string>
+  <string name="author_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Author:">Autor:</string>
+  <string name="website_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Website:">Sítio web:</string>
+  <string name="source_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sourcescode:">Código fonte:</string>
+  <string name="custom_language_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Custom language">Idioma personalizado</string>
+  <string-array name="themes" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
+    <item>Escuro</item>
+    <item>Claro</item>
+  </string-array>
+  <string-array name="led_flash" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
+    <item>Intermitente</item>
+    <item>Permanente</item>
+  </string-array>
+  <string name="show_full_date_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show full date">Mostrar data completa</string>
+  <string name="fix_number1_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 1">Regex 1</string>
+  <string name="fix_number2_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 2">Regex 2</string>
+  <string name="fix_number3_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 3">Regex 3</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regular expression too search for.">A expressão regular a procurar.</string>
+  <string name="fix_number1_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 1">Substituição 1</string>
+  <string name="fix_number2_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 2">Substituição 2</string>
+  <string name="fix_number3_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 3">Substituição 3</string>
+  <string name="reset" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Reset">Reiniciar</string>
+  <string name="send_logs_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send logs">Enviar registos</string>
+  <string name="send_logs_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Enviar registos do dispositivo ao programador.\nNão o efetue a menos que seja solicitado.</string>
+  <string name="sendlog_run_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Run SendLog">Executar SendLogs</string>
+  <string name="sendlog_run" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">O SendLog irá recolher e enviar o registo do dispositivo para o programador.\nPode rever e modificar os dados que serão enviados.</string>
+  <string name="sendlog_install_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Install SendLog">Instalar SendLog</string>
+  <string name="sendlog_install" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Instale a aplicação SendLog para recolher e enviar o registo do dispositivo para o programador.</string>
+  <string-array name="led_color" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
+    <item>Verde</item>
+    <item>Azul</item>
+    <item>Vermelho</item>
+    <item>Laranja</item>
+    <item>Magenta</item>
+    <item>Ciano</item>
+  </string-array>
+  <string name="custom_language_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Set a custom language.">Definir idioma personalizado</string>
+  <string name="error_start_mms_download" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Error starting MMS download">Erro ao transferir MMS</string>
+  <string name="bubbles_old_turquoise_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Old turquoise left">Turquesa antigo (à esquerda)</string>
+  <string name="bubbles_old_turquoise_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Old turquoise right">Turquesa antigo (à direita)</string>
+  <string name="bubbles_old_green_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Old green left">Verde antigo (à esquerda)</string>
+  <string name="bubbles_old_green_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Old green right">Verde antigo (à direita)</string>
+  <string name="bubbles_blue_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Blue left">Azul (à esquerda)</string>
+  <string name="bubbles_blue_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Blue right">Azul (à direita)</string>
+  <string name="bubbles_blue2_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Blue 2 left">Azul 2 (à esquerda)</string>
+  <string name="bubbles_blue2_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Blue 2 right">Azul 2 (à direita)</string>
+  <string name="bubbles_brown_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Brown left">Castanho (à esquerda)</string>
+  <string name="bubbles_brown_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Brown right">Castanho (à direita)</string>
+  <string name="bubbles_gray_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Gray left">Cinzento (à esquerda)</string>
+  <string name="bubbles_gray_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Gray right">Cinzento (à direita)</string>
+  <string name="bubbles_green_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Green left">Verde (à esquerda)</string>
+  <string name="bubbles_green_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Green right">Verde (à direita)</string>
+  <string name="bubbles_green2_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Green 2 left">Verde 2 (à esquerda)</string>
+  <string name="bubbles_green2_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Green 2 right">Verde 2 (à direita)</string>
+  <string name="bubbles_orange_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Orange left">Laranja (à esquerda)</string>
+  <string name="bubbles_orange_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Orange right">Laranja (à direita)</string>
+  <string name="bubbles_pink_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Pink left">Rosa (à esquerda)</string>
+  <string name="bubbles_pink_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Pink right">Rosa (à direita)</string>
+  <string name="bubbles_purple_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Purple left">Púrpura (à esquerda)</string>
+  <string name="bubbles_purple_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Purple right">Púrpura (à direita)</string>
+  <string name="bubbles_white_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="White left">Branco (à esquerda)</string>
+  <string name="bubbles_white_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="White right">Branco (à direita)</string>
+  <string name="bubbles_yellow_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Yellow left">Amarelo (à esquerda)</string>
+  <string name="bubbles_yellow_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Yellow right">Amarelo (à direita)</string>
+  <string name="decode_decimal_ncr_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Decode Decimal NCR">Descodificar NCR decimal</string>
+  <string name="decode_decimal_ncr_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.">Alguns serviços entregam mensagens unicode como NCR decimal (�). marque esta opção para descodificar essas entidades.</string>
+  <string name="fix_numbers_replace_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace matched text with this text.">Substituir texto encontrado por este texto.</string>
+  <string name="use_new_layout_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Use tiled layout">Esquema em mosaico</string>
+  <string name="use_new_layout_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Use a tiled user interface for conversations">Utilizar um esquema em mosaico para as conversas</string>
+</resources>
