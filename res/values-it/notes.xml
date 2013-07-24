@@ -23,5 +23,5 @@
 <resources>
   <string name="notes_websms">Si potrebbe voler inviare sms con WebSMS gratis od un prezzo davvero basso. Molti provider sono supportati. Provalo!</string>
   <string name="notes_longclick">Gennaio 2011: Prova a cliccare a lungo sui pulsanti rispondi/invia/componi per utilizzare un\'applicazione diversa da quella standard per l\'invio.</string>
-  <string name="notes_sender">Aprile 2011: SMSdroid adesso può inviare da sola SMS. Basta usare la voce "SMS (SMSdroid) nella scelta dell\'applicazione.</string>
+  <string name="notes_sender">Aprile 2011: SMSdroid adesso può inviare da sola SMS. Basta usare la voce \"SMS (SMSdroid) nella scelta dell\'applicazione.</string>
 </resources>

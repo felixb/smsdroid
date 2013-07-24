@@ -58,7 +58,7 @@
   <string name="show_text_field_" formatted="false">Textfeld zeigen</string>
   <string name="show_text_field_hint" formatted="false">Zeige das Textfeld statt dem Antworten Button.</string>
   <string name="show_target_app_" formatted="false">Zeige Ziel App</string>
-  <string name="show_target_app_hint" formatted="false" username="Thilo H. &lt;thilohp@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Zeige Ziel-App zum Senden auf "Senden"-Button.</string>
+  <string name="show_target_app_hint" formatted="false" username="Thilo H. &lt;thilohp@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Zeige Ziel-App zum Senden auf \"Senden\"-Button.</string>
   <string name="appearance_" formatted="false">Darstellung</string>
   <string name="theme_" formatted="false">Theme</string>
   <string name="textsize_" formatted="false">Schriftgrad</string>
@@ -74,12 +74,12 @@
   <string name="show_emoticons_" formatted="false">Zeige Smilies</string>
   <string name="show_emoticons_hint" formatted="false">Zeige Smilies in Nachrichtenliste.</string>
   <string name="show_bubbles_" formatted="false">Zeige Sprechblasen</string>
-  <string name="hide_send_" formatted="false">"Senden" Button ausblenden</string>
-  <string name="hide_send_hint" formatted="false">"Senden" Button neben dem Textfeld ausblenden.</string>
-  <string name="hide_restore_" formatted="false">"Letzte Nachricht wiederherstellen" ausblenden</string>
-  <string name="hide_restore_hint" formatted="false" username="John &lt;somedeepblue@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">"Letzte Nachricht wiederherstellen" in Nachrichtenliste ausblenden</string>
-  <string name="hide_paste_" formatted="false">"Einfügen" Button ausblenden</string>
-  <string name="hide_paste_hint" formatted="false">"Einfügen" Button auf dem Textfeld ausblenden.</string>
+  <string name="hide_send_" formatted="false">\"Senden\" Button ausblenden</string>
+  <string name="hide_send_hint" formatted="false">\"Senden\" Button neben dem Textfeld ausblenden.</string>
+  <string name="hide_restore_" formatted="false">\"Letzte Nachricht wiederherstellen\" ausblenden</string>
+  <string name="hide_restore_hint" formatted="false" username="John &lt;somedeepblue@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">\"Letzte Nachricht wiederherstellen\" in Nachrichtenliste ausblenden</string>
+  <string name="hide_paste_" formatted="false">\"Einfügen\" Button ausblenden</string>
+  <string name="hide_paste_hint" formatted="false">\"Einfügen\" Button auf dem Textfeld ausblenden.</string>
   <string name="hide_widget_label_" formatted="false">Widget-Titel ausblenden</string>
   <string name="hide_widget_label_hint" formatted="false">Blende den Titel des Widgets aus.</string>
   <string name="show_full_date_" formatted="false">Volles Datum zeigen</string>

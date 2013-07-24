@@ -73,10 +73,10 @@
   <string name="show_emoticons_" formatted="false" orig="Show emoticons">Montrer les émoticônes</string>
   <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list.">Montre les émoticônes dans la liste des messages</string>
   <string name="show_bubbles_" formatted="false" orig="Show bubbles">Montrer les bulles</string>
-  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Cacher le bouton "envoyer"</string>
-  <string name="hide_send_hint" formatted="false" orig="Hide &quot;send&quot; button near text field.">Cache le bouton "envoyer" près de la zone de texte</string>
-  <string name="hide_paste_" formatted="false" orig="Hide &quot;paste&quot; button">Cacher le bouton "coller"</string>
-  <string name="hide_paste_hint" formatted="false" orig="Hide &quot;paste&quot; button on text field.">Cacher le bouton "coller" dans la zone de texte</string>
+  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Cacher le bouton \"envoyer\"</string>
+  <string name="hide_send_hint" formatted="false" orig="Hide &quot;send&quot; button near text field.">Cache le bouton \"envoyer\" près de la zone de texte</string>
+  <string name="hide_paste_" formatted="false" orig="Hide &quot;paste&quot; button">Cacher le bouton \"coller\"</string>
+  <string name="hide_paste_hint" formatted="false" orig="Hide &quot;paste&quot; button on text field.">Cacher le bouton \"coller\" dans la zone de texte</string>
   <string name="hide_widget_label_" formatted="false" orig="Hide widget\'s label">Cacher le libellé du widget</string>
   <string name="hide_widget_label_hint" formatted="false" orig="Hide the label of the widget.">Cache le libellé du widget</string>
   <string name="show_full_date_" formatted="false" orig="Show full date">Montrer la date complète</string>
@@ -209,8 +209,8 @@
   <string name="source_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Sourcescode:">Code source:</string>
   <string name="custom_language_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Custom language">Langue</string>
   <string name="custom_language_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Set a custom language.">Choisissez la langue</string>
-  <string name="hide_restore_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button">Cacher le bouton "restaurer le dernier message"</string>
-  <string name="hide_restore_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Cacher le bouton "restaurer le dernier message dans la liste des messages</string>
+  <string name="hide_restore_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button">Cacher le bouton \"restaurer le dernier message\"</string>
+  <string name="hide_restore_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Cacher le bouton \"restaurer le dernier message dans la liste des messages</string>
   <string name="to_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Name or Number">Nom ou numéro</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace matched text with this text.">Remplacer le texte trouvé avec ce texte</string>
   <string name="bubbles_green2_left" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Green 2 left">Vert 2 gauche</string>

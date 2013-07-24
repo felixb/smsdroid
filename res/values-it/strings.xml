@@ -73,12 +73,12 @@
   <string name="show_emoticons_" formatted="false" username="carloraudino@fedoraproject.org" orig="Show emoticons">Mostra emoticon</string>
   <string name="show_emoticons_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Show emoticons in message list.">Mostra emoticon nella lista dei messaggi.</string>
   <string name="show_bubbles_" formatted="false" username="carloraudino@fedoraproject.org" orig="Show bubbles">Mostra bolle di dialogo</string>
-  <string name="hide_send_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;send&quot; button">Nascondi pulsante "Invia"</string>
-  <string name="hide_send_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;send&quot; button near text field.">Nasconde il pulsante "Invia" accanto al campo testo.</string>
-  <string name="hide_restore_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;restore last message&quot; button">Nascondi pulsante "ripristina ultimo messaggio"</string>
-  <string name="hide_restore_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;restore last message&quot; button in message list.">Nasconde il pulsante "Ripristina ultimo messaggio" nella lista messaggi</string>
-  <string name="hide_paste_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;paste&quot; button">Nascondi pulsante "Incolla"</string>
-  <string name="hide_paste_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;paste&quot; button on text field.">Nasconde il pulsante "Incolla" sul campo testo</string>
+  <string name="hide_send_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;send&quot; button">Nascondi pulsante \"Invia\"</string>
+  <string name="hide_send_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;send&quot; button near text field.">Nasconde il pulsante \"Invia\" accanto al campo testo.</string>
+  <string name="hide_restore_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;restore last message&quot; button">Nascondi pulsante \"ripristina ultimo messaggio\"</string>
+  <string name="hide_restore_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;restore last message&quot; button in message list.">Nasconde il pulsante \"Ripristina ultimo messaggio\" nella lista messaggi</string>
+  <string name="hide_paste_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;paste&quot; button">Nascondi pulsante \"Incolla\"</string>
+  <string name="hide_paste_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;paste&quot; button on text field.">Nasconde il pulsante \"Incolla\" sul campo testo</string>
   <string name="hide_widget_label_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide widget\'s label">Nascondi etichetta widget</string>
   <string name="hide_widget_label_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide the label of the widget.">Nasconde l\'etichetta del widget</string>
   <string name="show_full_date_" formatted="false" username="carloraudino@fedoraproject.org" orig="Show full date">Mostra data completa</string>

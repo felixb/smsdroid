@@ -67,8 +67,8 @@
   <string name="show_emoticons_" formatted="false">Mostrar emoticonos</string>
   <string name="show_emoticons_hint" formatted="false">Muestra emoticonos en la lista de mensajes.</string>
   <string name="show_bubbles_" formatted="false">Mostrar bocadillos</string>
-  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Esconder el botón "enviar"</string>
-  <string name="hide_restore_" formatted="false" orig="Hide &quot;restore last message&quot; button">Esconder el botón "restaurar el último mensaje"</string>
+  <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Esconder el botón \"enviar\"</string>
+  <string name="hide_restore_" formatted="false" orig="Hide &quot;restore last message&quot; button">Esconder el botón \"restaurar el último mensaje\"</string>
   <string name="me" formatted="false">Yo</string>
   <string name="view_contact_" formatted="false">Ver contacto</string>
   <string name="add_contact_" formatted="false">Añadir a contactos</string>
@@ -150,8 +150,8 @@
   <string name="show_text_field_hint" formatted="false" orig="Show text field instead of answer button.">
   </string>
   <string name="show_full_date_hint" formatted="false" orig="Show full date and time on every message.">Mostar fecha completa y hora en cada mensaje</string>
-  <string name="hide_send_hint" formatted="false" username="Ag" orig="Hide &quot;send&quot; button near text field.">Esconder el botón "enviar" al lado del campo de texto</string>
-  <string name="hide_paste_" formatted="false" username="Ag" orig="Hide &quot;paste&quot; button">Esconder el botón "pegar"</string>
+  <string name="hide_send_hint" formatted="false" username="Ag" orig="Hide &quot;send&quot; button near text field.">Esconder el botón \"enviar\" al lado del campo de texto</string>
+  <string name="hide_paste_" formatted="false" username="Ag" orig="Hide &quot;paste&quot; button">Esconder el botón \"pegar\"</string>
   <string name="website_" formatted="false" username="Ag" orig="Website:">Sitio web:</string>
   <string name="author_" formatted="false" username="Ag" orig="Author:">Autor:</string>
 </resources>
