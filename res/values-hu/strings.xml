@@ -200,8 +200,6 @@
   <string name="author_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Author:">Szerző:</string>
   <string name="website_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Website:">Weboldal:</string>
   <string name="source_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sourcescode:">Forráskód:</string>
-  <string name="custom_language_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Custom language">Nyelv megváltoztatása</string>
-  <string name="custom_language_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Set a custom language.">Nyelv beállítása.</string>
   <string-array name="themes" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
     <item>Fekete</item>
     <item>Világos</item>

@@ -162,8 +162,6 @@
     <item>Czarny</item>
     <item>Jasny</item>
   </string-array>
-  <string name="custom_language_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Custom language">Zmień język</string>
-  <string name="custom_language_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Set a custom language.">Ustaw język.</string>
   <string name="source_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Sourcescode:">Kod źródłowy</string>
   <string name="website_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Website:">Strona WWW:</string>
   <string name="author_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Author:">Autor:</string>

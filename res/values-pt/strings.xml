@@ -150,7 +150,6 @@
   <string name="author_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Author:">Autor:</string>
   <string name="website_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Website:">Sítio web:</string>
   <string name="source_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sourcescode:">Código fonte:</string>
-  <string name="custom_language_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Custom language">Idioma personalizado</string>
   <string-array name="themes" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
     <item>Escuro</item>
     <item>Claro</item>
@@ -182,7 +181,6 @@
     <item>Magenta</item>
     <item>Ciano</item>
   </string-array>
-  <string name="custom_language_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Set a custom language.">Definir idioma personalizado</string>
   <string name="error_start_mms_download" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Error starting MMS download">Erro ao transferir MMS</string>
   <string name="bubbles_old_turquoise_left" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Old turquoise left">Turquesa antigo (à esquerda)</string>
   <string name="bubbles_old_turquoise_right" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Old turquoise right">Turquesa antigo (à direita)</string>

@@ -78,27 +78,5 @@
 		<item>o.O</item>
 		<item>:O</item>
 	</string-array>
-	<string-array name="lang_values">
-		<item></item>
-		<item>en</item>
-		<item>de</item>
-		<item>fr</item>
-		<item>iw</item>
-		<item>hu</item>
-		<item>pl</item>
-		<item>ru</item>
-		<item>es</item>
-	</string-array>
-	<string-array name="lang_">
-		<item>Default language</item>
-		<item>English</item>
-		<item>German</item>
-		<item>French</item>
-		<item>Hebrew</item>
-		<item>Hungarian</item>
-		<item>Polish</item>
-		<item>Russian</item>
-		<item>Spanish</item>
-	</string-array>
 	<bool name="default_icstheme">false</bool>
 </resources>

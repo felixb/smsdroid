@@ -83,11 +83,4 @@
         android:summary="@string/hide_widget_label_hint"
         android:title="@string/hide_widget_label_" />
 
-    <ListPreference
-        android:entries="@array/lang_"
-        android:entryValues="@array/lang_values"
-        android:key="morelocale"
-        android:summary="@string/custom_language_hint"
-        android:title="@string/custom_language_" />
-
 </PreferenceScreen>
