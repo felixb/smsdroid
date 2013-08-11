@@ -23,13 +23,13 @@
 <resources>
   <string name="about_" formatted="false">Über</string>
   <string name="about_hint" formatted="false">Über diese App</string>
-  <string name="faq_hint" formatted="false">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
+  <string name="faq_hint" formatted="false" username="paulis.mum@googlemail.com" orig="Some tips and tricks, how to set up this app.">Ein paar Tipps und Tricks, wie man diese App einstellt.</string>
   <string name="feedback_" formatted="false">Feedback</string>
   <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Fehler melden, neue Funktionen wünschen...</string>
   <string name="google_plus_hint" formatted="false">Folge mir auf Google+.\nErhalte Infos über Updates etc.</string>
   <string name="about0" formatted="false" orig="SMSdroid lets you read your sms and write sms with any other app." username="Felix Bechstein &lt;f+translator@ub0r.de&gt;">SMSdroid erlaubt es dir sms zu lesen und mit jeder beliebigen SMS-App zu schreiben. Insbesondere wird WebSMS unterstützt.</string>
   <string name="more_apps_" formatted="false">Mehr Apps..</string>
-  <string name="settings" formatted="false">Einstellungen</string>
+  <string name="settings" formatted="false" username="paulis.mum@googlemail.com" orig="Preferences">Einstellungen</string>
   <string name="new_message_" formatted="false">Neue Nachricht</string>
   <string name="new_message_hint" formatted="false">Neue Nachricht schreiben</string>
   <string name="new_message" formatted="false">1 ungelesene Nachricht.</string>
@@ -125,7 +125,7 @@
   <string name="clear_cache_hint" formatted="false">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
   <string name="not_implemented" formatted="false">Diese Funktion ist noch nicht implementiert.</string>
   <string name="error_conv_null" formatted="false">Fehler beim Laden des Threads!</string>
-  <string name="error_sending_failed" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Sending failed">Senden fehlgeschlagen</string>
+  <string name="error_sending_failed" formatted="false" username="paulis.mum@googlemail.com" orig="Sending failed">Senden fehlgeschlagen</string>
   <string name="text_hint" formatted="false">Text</string>
   <string name="paste_" formatted="false">[Aus Zwischenablage einfügen]</string>
   <string name="restore_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Restore last message">Letzte Nachricht wiederherstellen</string>
@@ -229,6 +229,6 @@
   <string name="author_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Author:">Autor:</string>
   <string name="website_" formatted="false">Website:</string>
   <string name="source_" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Sourcescode:">Quelltext:</string>
-  <string name="custom_language_" formatted="false">Andere Sprache</string>
+  <string name="custom_language_" formatted="false" username="paulis.mum@googlemail.com" orig="Custom language">Andere Sprache</string>
   <string name="custom_language_hint" formatted="false">Eine andere Sprache einstellen.</string>
 </resources>
