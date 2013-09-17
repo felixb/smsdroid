@@ -222,4 +222,8 @@
     <item>Longo repetitivo</item>
     <item>Curto, longo, curto, longo</item>
   </string-array>
+  <string-array name="textsize" username="smarquespt@gmail.com">
+    <item>Pequeno</item>
+    <item>Grande</item>
+  </string-array>
 </resources>
