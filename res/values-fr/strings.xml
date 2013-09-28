@@ -21,11 +21,11 @@
                Visit http://ub0r.de/translate/smsdroid/fr/strings.xml to edit the file.
        -->
 <resources>
-  <string name="about_" formatted="false" orig="About">À propos</string>
-  <string name="about_hint" formatted="false" orig="About this app">À propos de cette application</string>
-  <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Quelques trucs et astuces, comment faire fonctionner cette application</string>
-  <string name="feedback_" formatted="false" orig="Feedback">Commentaires</string>
-  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ...">Signaler des bugs, demander de nouvelles fonctionnalités...</string>
+  <string name="about_" formatted="false" orig="About" username=" julierivard77@ gmail.com">À propos</string>
+  <string name="about_hint" formatted="false" orig="About this app" username=" julierivard77@ gmail.com">À propos de cette application</string>
+  <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app." username=" julierivard77@ gmail.com">Quelques trucs et astuces, comment faire fonctionner cette application</string>
+  <string name="feedback_" formatted="false" orig="Feedback" username=" julierivard77@ gmail.com">Commentaires</string>
+  <string name="feedback_hint" formatted="false" orig="Report bugs, request features ..." username=" julierivard77@ gmail.com">Signaler des bugs, demander de nouvelles fonctionnalités...</string>
   <string name="about0" formatted="false" orig="SMSdroid lets you read your sms and write sms with any other app." username="Christian Knecht &lt;g.chrisk@gmail.com&gt;">SMSdroid vous permet de lire et d\'écrire vos sms avec n\'importe quelle autre application.</string>
   <string name="more_apps_" formatted="false" orig="More Apps..">Plus d\'applications..</string>
   <string name="settings" formatted="false" orig="Preferences">Préférences</string>
@@ -191,7 +191,7 @@
     <item>Plusieurs long</item>
     <item>Court, long, court, long</item>
   </string-array>
-  <string name="google_plus_hint" formatted="false" username="ml1k236@yahoo.fr" orig="Follow me on Google+.\nGet update notifications etc.">Suivez moi sur Google+\nRecevez des notifications de mise à jour etc.</string>
+  <string name="google_plus_hint" formatted="false" username=" julierivard77@ gmail.com" orig="Follow me on Google+.\nGet update notifications etc.">Suivez moi sur Google+\nRecevez des notifications de mise à jour etc.</string>
   <string name="fix_numbers_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Fix numbers">Corriger les numéros</string>
   <string name="fix_numbers_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Remplacer des parties du numéro à l\'aide d\'une expression régulière avant l\'envoi. La plupart des utilisateurs n\'ont pas besoin de modifier cela.</string>
   <string name="use_new_layout_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Use tiled layout">Utiliser l\'affichage en grille</string>
