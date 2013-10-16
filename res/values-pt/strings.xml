@@ -54,7 +54,7 @@
   <string name="show_text_field_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show text field">Mostrar campo de texto</string>
   <string name="show_text_field_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show text field instead of answer button.">Mostrar campo de texto em vez do botão de resposta.</string>
   <string name="show_target_app_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show target app">Mostrar aplicação de envio</string>
-  <string name="show_target_app_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Mostrar aplicação utilizada para envio ao clicar em "Enviar".</string>
+  <string name="show_target_app_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Mostrar aplicação utilizada para envio ao clicar em \"Enviar\".</string>
   <string name="appearance_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Appearance">Aparência</string>
   <string name="theme_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Theme">Tema</string>
   <string name="textsize_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Text size">Tamanho do texto</string>
@@ -70,12 +70,12 @@
   <string name="show_emoticons_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show emoticons">Mostrar ícone emotivo</string>
   <string name="show_emoticons_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show emoticons in message list.">Mostrar ícone emotivo na lista de mensagens.</string>
   <string name="show_bubbles_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show bubbles">Mostrar bolhas</string>
-  <string name="hide_send_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button">Ocultar "Enviar"</string>
-  <string name="hide_send_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Ocultar botão "Enviar" no campo de texto.</string>
-  <string name="hide_restore_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Ocultar "Recuperar última mensagem"</string>
-  <string name="hide_restore_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Ocultar botão "Recuperar última mensagem" na lista de mensagens.</string>
-  <string name="hide_paste_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;paste&quot; button">Ocultar "Colar"</string>
-  <string name="hide_paste_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">Ocultar botão "Colar" no campo de texto.</string>
+  <string name="hide_send_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button">Ocultar \"Enviar\"</string>
+  <string name="hide_send_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Ocultar botão \"Enviar\" no campo de texto.</string>
+  <string name="hide_restore_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Ocultar \"Recuperar última mensagem\"</string>
+  <string name="hide_restore_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Ocultar botão \"Recuperar última mensagem\" na lista de mensagens.</string>
+  <string name="hide_paste_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;paste&quot; button">Ocultar \"Colar\"</string>
+  <string name="hide_paste_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">Ocultar botão \"Colar\" no campo de texto.</string>
   <string name="hide_widget_label_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide widget\'s label">Ocultar texto do widget</string>
   <string name="hide_widget_label_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide the label of the widget.">Ocultar o texto do widget.</string>
   <string name="show_full_date_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show full date and time on every message.">Mostrar data e hora da mensagem.</string>
@@ -219,5 +219,9 @@
     <item>Curto repetitivo</item>
     <item>Longo repetitivo</item>
     <item>Curto, longo, curto, longo</item>
+  </string-array>
+  <string-array name="textsize" username="smarquespt@gmail.com">
+    <item>Pequeno</item>
+    <item>Grande</item>
   </string-array>
 </resources>

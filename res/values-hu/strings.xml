@@ -74,12 +74,12 @@
   <string name="show_emoticons_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show emoticons">Hangulatjelek mutatása</string>
   <string name="show_emoticons_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show emoticons in message list.">Hangulatjelek mutatása az üzenet listában.</string>
   <string name="show_bubbles_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show bubbles">Szövegbuborékok mutatása</string>
-  <string name="hide_send_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;send&quot; button">"Küldés" gomb elrejtése</string>
-  <string name="hide_send_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">"Küldés" gomb elrejtése a szövegmezőnél.</string>
-  <string name="hide_restore_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">"Utolsó üzenet visszaállítása" gomb elrejtése</string>
-  <string name="hide_restore_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">"Utolsó üzenet visszaállítása" gomb elrejtése az üzenet listában.</string>
-  <string name="hide_paste_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;paste&quot; button">"Beillesztés" gomb elrejtése</string>
-  <string name="hide_paste_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">"Beillesztés" gomb elrejtése a szövegmezőnél.</string>
+  <string name="hide_send_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;send&quot; button">\"Küldés\" gomb elrejtése</string>
+  <string name="hide_send_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">\"Küldés\" gomb elrejtése a szövegmezőnél.</string>
+  <string name="hide_restore_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">\"Utolsó üzenet visszaállítása\" gomb elrejtése</string>
+  <string name="hide_restore_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button in message list.">\"Utolsó üzenet visszaállítása\" gomb elrejtése az üzenet listában.</string>
+  <string name="hide_paste_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;paste&quot; button">\"Beillesztés\" gomb elrejtése</string>
+  <string name="hide_paste_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide &quot;paste&quot; button on text field.">\"Beillesztés\" gomb elrejtése a szövegmezőnél.</string>
   <string name="hide_widget_label_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide widget\'s label">Modul címkéjének elrejtése</string>
   <string name="hide_widget_label_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Hide the label of the widget.">Modul címkéjének elrejtése.</string>
   <string name="show_full_date_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Show full date">Teljes dátum mutatása</string>
@@ -177,14 +177,14 @@
   <string name="activate_sender_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Activate sender">Küldő aktiválása</string>
   <string name="activate_sender_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Activate SMSdroid\'s message sender.">Aktiválja az SMSdroid üzenet küldőjét.</string>
   <string name="fix_numbers_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Fix numbers">Fix számok</string>
-  <string name="fix_numbers_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Váltsa ki a szám egy részét egy "szabályos kifejezéssel" küldés előtt. A legtöbb felhasználónak ezen nem szükséges változtatni.</string>
+  <string name="fix_numbers_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace parts of a number with a regular expression before sending. Most users don\'t need to change this.">Váltsa ki a szám egy részét egy \"szabályos kifejezéssel\" küldés előtt. A legtöbb felhasználónak ezen nem szükséges változtatni.</string>
   <string name="fix_number1_regex_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regex 1">Regex 1</string>
   <string name="fix_number1_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 1">Csere 1</string>
   <string name="fix_number2_regex_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regex 2">Regex 2</string>
   <string name="fix_number2_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 2">Csere 2</string>
   <string name="fix_number3_regex_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regex 3">Regex 3</string>
   <string name="fix_number3_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 3">Csere 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regular expression too search for.">"Szabályos kifejezés" keresés.</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regular expression too search for.">\"Szabályos kifejezés\" keresés.</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace matched text with this text.">Cserélje az egyező szöveget ezzel a szöveggel.</string>
   <string name="use_new_layout_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Use tiled layout">Mozaikszerű elrendezés</string>
   <string name="use_new_layout_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Use a tiled user interface for conversations">Mozaikszerű elrendezés az üzenetváltásokhoz.</string>

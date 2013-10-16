@@ -51,7 +51,7 @@
   <string name="appearance_and_behavior_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Appearance &amp; behavior">Wygląd i zachowanie</string>
   <string name="autosend_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Send answers automatically. Currently only WebSMS supports this feature. Other apps will just show the text.">Wysyłaj odpowiedzi automatycznie. Aktualnie tylko WebSMS wspiera tę funkcję. Inne aplikacje po prostu pokażą tekst.</string>
   <string name="show_target_app_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show target app">Pokaż aplikację docelową</string>
-  <string name="show_target_app_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Pokaż aplikację używaną do wysyłki na przycisku "wyślij".</string>
+  <string name="show_target_app_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show target App used for sending on \&quot;send\&quot; Button.">Pokaż aplikację używaną do wysyłki na przycisku \"wyślij\".</string>
   <string name="appearance_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Appearance">Wygląd</string>
   <string name="theme_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Theme">Temat</string>
   <string name="textsize_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Text size">Rozmiar tekstu</string>
@@ -67,12 +67,12 @@
   <string name="show_emoticons_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show emoticons">Pokaż emotikony</string>
   <string name="show_emoticons_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show emoticons in message list.">Pokaż emotikony na liście wiadomości</string>
   <string name="show_bubbles_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show bubbles">Pokaż dymki</string>
-  <string name="hide_send_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;send&quot; button">Ukryj przycisk "wyślij"</string>
-  <string name="hide_send_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;send&quot; button near text field.">Ukryj przycisk "wyślij" obok pola tekstowego.</string>
-  <string name="hide_restore_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;restore last message&quot; button">Ukryj przycisk "przywróć ostatnią wiadomość"</string>
-  <string name="hide_restore_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Ukryj przycisk "przywróć ostatnią wiadomość" na liście wiadomości.</string>
-  <string name="hide_paste_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;paste&quot; button">Ukryj przycisk "wklej"</string>
-  <string name="hide_paste_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;paste&quot; button on text field.">Ukryj przycisk "wklej" w polu tekstowym.</string>
+  <string name="hide_send_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;send&quot; button">Ukryj przycisk \"wyślij\"</string>
+  <string name="hide_send_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;send&quot; button near text field.">Ukryj przycisk \"wyślij\" obok pola tekstowego.</string>
+  <string name="hide_restore_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;restore last message&quot; button">Ukryj przycisk \"przywróć ostatnią wiadomość\"</string>
+  <string name="hide_restore_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Ukryj przycisk \"przywróć ostatnią wiadomość\" na liście wiadomości.</string>
+  <string name="hide_paste_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;paste&quot; button">Ukryj przycisk \"wklej\"</string>
+  <string name="hide_paste_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide &quot;paste&quot; button on text field.">Ukryj przycisk \"wklej\" w polu tekstowym.</string>
   <string name="hide_widget_label_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide widget\'s label">Ukryj etykietę widżetu</string>
   <string name="hide_widget_label_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Hide the label of the widget.">Ukryj etykietę widżetu</string>
   <string name="show_full_date_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Show full date">Pokaż pełną datę</string>
