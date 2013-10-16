@@ -22,7 +22,8 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18"
+        android:maxSdkVersion="18" />
 
     <supports-screens
         android:anyDensity="true"
