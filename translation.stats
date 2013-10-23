@@ -41,7 +41,7 @@ res/values-ru/notes.xml:4
 res/values-ru/strings.xml:204
 res/values-tr/donation.xml:0
 res/values-tr/market.xml:0
-res/values-tr/notes.xml:0
+res/values-tr/notes.xml:1
 res/values-tr/strings.xml:0
 res/values:264
 res/values-de:218
@@ -53,4 +53,4 @@ res/values-iw:29
 res/values-pl:215
 res/values-pt:217
 res/values-ru:217
-res/values-tr:0
+res/values-tr:1
