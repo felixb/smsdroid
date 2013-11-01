@@ -162,7 +162,7 @@
   <string name="fix_number1_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 1">Regex 1</string>
   <string name="fix_number2_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 2">Regex 2</string>
   <string name="fix_number3_regex_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regex 3">Regex 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regular expression too search for.">A expressão regular a procurar.</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Regular expression to search for.">A expressão regular a procurar.</string>
   <string name="fix_number1_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 1">Substituição 1</string>
   <string name="fix_number2_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 2">Substituição 2</string>
   <string name="fix_number3_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 3">Substituição 3</string>

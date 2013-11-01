@@ -184,7 +184,7 @@
   <string name="fix_number2_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 2">Csere 2</string>
   <string name="fix_number3_regex_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regex 3">Regex 3</string>
   <string name="fix_number3_replace_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace 3">Csere 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regular expression too search for.">\"Szabályos kifejezés\" keresés.</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Regular expression to search for.">\"Szabályos kifejezés\" keresés.</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Replace matched text with this text.">Cserélje az egyező szöveget ezzel a szöveggel.</string>
   <string name="use_new_layout_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Use tiled layout">Mozaikszerű elrendezés</string>
   <string name="use_new_layout_hint" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Use a tiled user interface for conversations">Mozaikszerű elrendezés az üzenetváltásokhoz.</string>
