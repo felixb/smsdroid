@@ -218,7 +218,7 @@
   <string name="fix_number2_regex_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regex 2">Expression régulière 2</string>
   <string name="fix_number1_regex_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regex 1">Expression régulière 1</string>
   <string name="fix_number3_regex_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regex 3">Expression régulière 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regular expression too search for.">Expression régulière à rechercher</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Regular expression to search for.">Expression régulière à rechercher</string>
   <string name="sendlog_run_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Run SendLog">Exécuter SendLog</string>
   <string name="fix_number1_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 1">Remplacement 1</string>
   <string name="fix_number2_replace_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Replace 2">Remplacement 2</string>

@@ -177,7 +177,7 @@
   <string name="fix_number2_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 2">Замена 2</string>
   <string name="fix_number3_regex_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Regex 3">Рег.выраж. 3</string>
   <string name="fix_number3_replace_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace 3">Замена 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Regular expression too search for.">Регулярное выражение для поиска.</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Regular expression to search for.">Регулярное выражение для поиска.</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Replace matched text with this text.">Текст, которым будет заменён найденный текст</string>
   <string-array name="themes" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">
     <item>Тёмная</item>

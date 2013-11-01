@@ -180,7 +180,7 @@ Cliccare per farlo adesso.</string>
   <string name="fix_number2_replace_" formatted="false" username="carloraudino@fedoraproject.org" orig="Replace 2">Sostituto 2</string>
   <string name="fix_number3_regex_" formatted="false" username="carloraudino@fedoraproject.org" orig="Regex 3">Espressione regolare 3</string>
   <string name="fix_number3_replace_" formatted="false" username="carloraudino@fedoraproject.org" orig="Replace 3">Sostituto 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Regular expression too search for.">Espressione regolare da cercare.</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Regular expression to search for.">Espressione regolare da cercare.</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Replace matched text with this text.">Sostituisce il testo abbinato con questo testo.</string>
   <string-array name="themes" username="carloraudino@fedoraproject.org">
     <item>Scuro</item>

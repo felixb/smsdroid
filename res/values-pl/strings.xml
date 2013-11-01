@@ -189,7 +189,7 @@
   <string name="fix_number2_replace_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace 2">Zamiana 2</string>
   <string name="fix_number3_regex_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Regex 3">Wyrażenie 3</string>
   <string name="fix_number3_replace_" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace 3">Zamiana 3</string>
-  <string name="fix_numbers_regex_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Regular expression too search for.">Wyrażenie regularne, które będzie wyszukiwane.</string>
+  <string name="fix_numbers_regex_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Regular expression to search for.">Wyrażenie regularne, które będzie wyszukiwane.</string>
   <string name="fix_numbers_replace_hint" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Replace matched text with this text.">Zamień znaleziony tekst na ten.</string>
   <string name="bubbles_plain_dark_gray" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Plain dark gray">Gładki ciemny szary</string>
   <string name="bubbles_plain_light_gray" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Plain light gray">Gładki jasny szary</string>
