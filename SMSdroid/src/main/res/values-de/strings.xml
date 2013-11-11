@@ -120,7 +120,6 @@
   <string name="import_contact_" formatted="false">Kontakt importieren</string>
   <string name="download_" formatted="false">Herunterladen</string>
   <string name="downloading_" formatted="false">Lade herunter..</string>
-  <string name="debug_" formatted="false">Debug</string>
   <string name="clear_cache_" formatted="false">Cache löschen</string>
   <string name="clear_cache_hint" formatted="false">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
   <string name="not_implemented" formatted="false">Diese Funktion ist noch nicht implementiert.</string>

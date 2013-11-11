@@ -210,7 +210,6 @@ Cliccare per farlo adesso.</string>
     <item>Breve, lungo, breve, lungo</item>
   </string-array>
   <string name="reset" formatted="false" username="carloraudino@fedoraproject.org" orig="Reset">Ripristina</string>
-  <string name="debug_" formatted="false" username="carloraudino@fedoraproject.org" orig="Debug">Debug</string>
   <string name="send_logs_" formatted="false" username="carloraudino@fedoraproject.org" orig="Send logs">Invia log</string>
   <string name="send_logs_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Invia i log del dispositivo allo sviluppatore.&#13;Da fare solo se richiesto.</string>
   <string name="sendlog_run_" formatted="false" username="carloraudino@fedoraproject.org" orig="Run SendLog">Avvia SendLog</string>
