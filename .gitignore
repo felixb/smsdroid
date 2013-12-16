@@ -5,7 +5,6 @@ local.properties
 build.properties
 doc
 *.zip
-*.jar
 *.swp
 .gradle
 /local.properties
