@@ -411,7 +411,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		super.onResume();
 		boolean noAds = DonationHelper.hideAds(this);
 		if (!noAds) {
-			Ads.loadAd(this, R.id.ad, ADMOB_PUBID, AD_KEYWORDS);
+			//Ads.loadAd(this, R.id.ad, ADMOB_PUBID, AD_KEYWORDS);
 		}
 
 		final ListView lv = this.getListView();

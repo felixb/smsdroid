@@ -44,6 +44,9 @@ import android.support.v4.app.NotificationCompat;
 import android.telephony.gsm.SmsMessage;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
+import android.telephony.SmsManager;
+import android.provider.Telephony.Sms;
+import android.provider.Telephony.Sms.Inbox;
 
 /**
  * Listen for new sms.
@@ -60,9 +63,11 @@ public class SmsReceiver extends BroadcastReceiver {
 	private static final Uri URI_MMS = Uri.parse("content://mms/");
 
 	/** Intent.action for receiving SMS. */
-	private static final String ACTION_SMS = "android.provider.Telephony.SMS_RECEIVED";
+	private static final String ACTION_SMS_OLD = "android.provider.Telephony.SMS_RECEIVED";
+    private static final String ACTION_SMS_NEW = "android.provider.Telephony.SMS_DELIVER";
 	/** Intent.action for receiving MMS. */
-	private static final String ACTION_MMS = "android.provider.Telephony.WAP_PUSH_RECEIVED";
+	private static final String ACTION_MMS_OLD = "android.provider.Telephony.WAP_PUSH_RECEIVED";
+    private static final String ACTION_MMS_MEW = "android.provider.Telephony.WAP_PUSH_DELIVER";
 
 	/** An unreadable MMS body. */
 	private static final String MMS_BODY = "<MMS>";
@@ -99,6 +104,7 @@ public class SmsReceiver extends BroadcastReceiver {
 		Log.d(TAG, "onReceive()");
 		final PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 		final PowerManager.WakeLock wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+        int error = intent.getIntExtra("errorCode", 0);
 		wakelock.acquire();
 		Log.i(TAG, "got wakelock");
 		final String action = intent.getAction();
@@ -115,7 +121,8 @@ public class SmsReceiver extends BroadcastReceiver {
 			this.handleSent(context, intent, this.getResultCode());
 		} else {
 			boolean silent = false;
-			if (action.equals(ACTION_SMS)) {
+
+			if (action.equals(ACTION_SMS_OLD) || action.equals(ACTION_SMS_NEW)) {
 				Bundle b = intent.getExtras();
 				Object[] messages = (Object[]) b.get("pdus");
 				SmsMessage[] smsMessage = new SmsMessage[messages.length];
@@ -129,6 +136,21 @@ public class SmsReceiver extends BroadcastReceiver {
 					// ! Check in blacklist db - filter spam
 					final String s = smsMessage[0].getOriginatingAddress();
 					final SpamDB db = new SpamDB(context);
+
+                    if(action.equals(ACTION_SMS_NEW)) {
+                        // Save it to the database
+
+                        ContentResolver resolver = context.getContentResolver();
+                        ContentValues values = new ContentValues();
+                        values.put("address", s);
+                        values.put("body", t);
+                        resolver.insert(Uri.parse("content://sms/inbox"), values);
+
+                        Log.d(TAG, "Insert SMS into database: " + s + ", " + t);
+
+                        return;
+                    }
+
 					db.open();
 					if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
 						Log.d(TAG, "Message from " + s + " filtered.");
@@ -138,7 +160,7 @@ public class SmsReceiver extends BroadcastReceiver {
 					}
 					db.close();
 				}
-			} else if (action.equals(ACTION_MMS)) {
+			} else if (action.equals(ACTION_MMS_OLD) || action.equals(ACTION_MMS_MEW)) {
 				t = MMS_BODY;
 			}
 
@@ -155,7 +177,7 @@ public class SmsReceiver extends BroadcastReceiver {
 						e.printStackTrace();
 					}
 					--count;
-				} while (updateNewMessageNotification(context, t) <= 0 && count > 0);
+            } while (updateNewMessageNotification(context, t) <= 0 && count > 0);
 				if (count == 0) { // use messages as they are available
 					updateNewMessageNotification(context, null);
 				}
@@ -164,6 +186,11 @@ public class SmsReceiver extends BroadcastReceiver {
 		wakelock.release();
 		Log.i(TAG, "wakelock released");
 	}
+
+    public static String replaceFormFeeds(String s) {
+        // Some providers send formfeeds in their messages. Convert those formfeeds to newlines.
+        return s == null ? "" : s.replace('\f', '\n');
+    }
 
 	/**
 	 * Get unread SMS.
@@ -177,8 +204,10 @@ public class SmsReceiver extends BroadcastReceiver {
 	 */
 	private static int[] getUnreadSMS(final ContentResolver cr, final String text) {
 		Log.d(TAG, "getUnreadSMS(cr, " + text + ")");
-		Cursor cursor = cr.query(URI_SMS, Message.PROJECTION, Message.SELECTION_READ_UNREAD,
-				Message.SELECTION_UNREAD, SORT);
+		Cursor cursor = cr.query(URI_SMS, Message.PROJECTION, Message.SELECTION_READ_UNREAD, Message.SELECTION_UNREAD, SORT);
+
+        //Cursor cursor = cr.query(URI_SMS, null, null, null, null);
+
 		if (cursor == null || cursor.isClosed() || cursor.getCount() == 0 || !cursor.moveToFirst()) {
 			if (text != null) { // try again!
 				if (cursor != null && !cursor.isClosed()) {
@@ -331,10 +360,12 @@ public class SmsReceiver extends BroadcastReceiver {
 		final int l = status[ID_COUNT];
 		final int tid = status[ID_TID];
 
+        // FIXME l is always -1..
 		Log.d(TAG, "l: " + l);
 		if (l < 0) {
 			return l;
 		}
+
 		int ret = l;
 		if (enableNotifications && (text != null || l == 0)) {
 			mNotificationMgr.cancel(NOTIFICATION_ID_NEW);

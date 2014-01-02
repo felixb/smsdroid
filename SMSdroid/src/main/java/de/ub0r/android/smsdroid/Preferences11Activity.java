@@ -51,7 +51,12 @@ public final class Preferences11Activity extends PreferenceActivity implements I
 		this.loadHeadersFromResource(R.xml.preference_headers, target);
 	}
 
-	/**
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return true;
+    }
+
+    /**
 	 * {@inheritDoc}
 	 */
 	@Override

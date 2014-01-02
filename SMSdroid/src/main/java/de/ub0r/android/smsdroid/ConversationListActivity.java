@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -101,6 +102,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/** Conversations. */
 	private ConversationAdapter adapter = null;
+    public static PackageManager packageManager = null;
 
 	/** {@link Calendar} holding today 00:00. */
 	private static final Calendar CAL_DAYAGO = Calendar.getInstance();
@@ -222,6 +224,9 @@ public final class ConversationListActivity extends SherlockActivity implements
 		Log.d(TAG, "got intent: " + i.getAction());
 		Log.d(TAG, "got uri: " + i.getData());
 		Log.d(TAG, "got extra: " + i.getExtras());
+
+        // Get a instance
+        packageManager = getPackageManager();
 
 		this.setTheme(PreferencesActivity.getTheme(this));
 		Utils.setLocale(this);
@@ -406,25 +411,53 @@ public final class ConversationListActivity extends SherlockActivity implements
 		}
 	}
 
-	/**
-	 * Get a {@link Intent} for sending a new message.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param address
-	 *            address
-	 * @return {@link Intent}
-	 */
-	static Intent getComposeIntent(final Context context, final String address) {
-		final Intent i = new Intent(Intent.ACTION_SENDTO);
-		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		if (address == null) {
-			i.setData(Uri.parse("sms:"));
-		} else {
-			i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
-		}
-		return i;
-	}
+    /**
+     * Get a {@link Intent} for sending a new message.
+     *
+     * @param context
+     *            {@link Context}
+     * @param address
+     *            address
+     * @return {@link Intent}
+     */
+    static Intent getComposeIntent(final Context context, final String address) {
+
+        Intent i;
+
+        try {
+            // Search for WebSMS
+            i = packageManager.getLaunchIntentForPackage("de.ub0r.android.websms");
+
+            if (i == null) {
+                throw new PackageManager.NameNotFoundException();
+            }
+
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            if (address == null) {
+                i.setData(Uri.parse("sms:"));
+            } else {
+                i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
+            }
+
+            return i;
+        } catch (PackageManager.NameNotFoundException e) {
+
+            Log.d(TAG, "WebSMS is not installed!");
+
+            i = new Intent(Intent.ACTION_SENDTO);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            if (address == null) {
+                i.setData(Uri.parse("sms:"));
+            } else {
+                i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
+            }
+
+            return i;
+        }
+    }
 
 	/**
 	 * {@inheritDoc}
