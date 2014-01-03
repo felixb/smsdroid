@@ -194,6 +194,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name="WebSMSBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="de.ub0r.android.websms.SEND_SUCCESSFULL" />
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".WidgetProvider" >
             <meta-data
                 android:name="android.appwidget.provider"
