@@ -18,9 +18,13 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.Calendar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -29,11 +33,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -47,9 +53,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import java.util.Calendar;
 
 import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
@@ -60,7 +64,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * Main {@link SherlockActivity} showing conversations.
- * 
+ *
  * @author flx
  */
 public final class ConversationListActivity extends SherlockActivity implements
@@ -129,7 +133,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Get {@link AbsListView}.
-	 * 
+	 *
 	 * @return {@link AbsListView}
 	 */
 	private AbsListView getListView() {
@@ -138,7 +142,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Set {@link ListAdapter} to {@link ListView}.
-	 * 
+	 *
 	 * @param la
 	 *            ListAdapter
 	 */
@@ -154,7 +158,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Show all rows of a particular {@link Uri}.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @param u
@@ -179,7 +183,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Show rows for debugging purposes.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 */
@@ -250,6 +254,28 @@ public final class ConversationListActivity extends SherlockActivity implements
 		this.longItemClickDialog[WHICH_VIEW] = this.getString(R.string.view_thread_);
 		this.longItemClickDialog[WHICH_DELETE] = this.getString(R.string.delete_thread_);
 		this.longItemClickDialog[WHICH_MARK_SPAM] = this.getString(R.string.filter_spam_);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // check if this is the default sms app
+            if (!Telephony.Sms.getDefaultSmsPackage(this).equals(BuildConfig.PACKAGE_NAME)) {
+                AlertDialog.Builder b = new AlertDialog.Builder(this);
+                b.setTitle(R.string.not_default_app);
+                b.setMessage(R.string.not_default_app_message);
+                b.setNegativeButton(android.R.string.cancel, null);
+                b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @TargetApi(Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, final int i) {
+                        Intent intent =
+                                new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                        intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+                                BuildConfig.PACKAGE_NAME);
+                        startActivity(intent);
+                    }
+                });
+                b.show();
+            }
+        }
 	}
 
 	@Override
@@ -275,7 +301,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Mark all messages with a given {@link Uri} as read.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @param uri
@@ -306,7 +332,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Delete messages with a given {@link Uri}.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @param uri
@@ -345,7 +371,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Add or remove an entry to/from blacklist.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @param addr
@@ -406,25 +432,39 @@ public final class ConversationListActivity extends SherlockActivity implements
 		}
 	}
 
-	/**
-	 * Get a {@link Intent} for sending a new message.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param address
-	 *            address
-	 * @return {@link Intent}
-	 */
-	static Intent getComposeIntent(final Context context, final String address) {
-		final Intent i = new Intent(Intent.ACTION_SENDTO);
-		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		if (address == null) {
-			i.setData(Uri.parse("sms:"));
-		} else {
-			i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
-		}
-		return i;
-	}
+    /**
+     * Get a {@link Intent} for sending a new message.
+     *
+     * @param context
+     *            {@link Context}
+     * @param address
+     *            address
+     * @return {@link Intent}
+     */
+    static Intent getComposeIntent(final Context context, final String address) {
+        Intent i = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Search for WebSMS
+            PackageManager pm = context.getPackageManager();
+            i = pm == null ? null : pm.getLaunchIntentForPackage("de.ub0r.android.websms");
+        }
+
+        if (i == null) {
+            Log.d(TAG, "WebSMS is not installed!");
+            i = new Intent(Intent.ACTION_SENDTO);
+        }
+
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (address == null) {
+            i.setData(Uri.parse("sms:"));
+        } else {
+            i.setData(Uri.parse("smsto:" + PreferencesActivity.fixNumber(context, address)));
+        }
+
+        return i;
+    }
 
 	/**
 	 * {@inheritDoc}
@@ -477,7 +517,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
-				Intent i = null;
+				Intent i;
 				switch (which) {
 				case WHICH_ANSWER:
 					ConversationListActivity.this.startActivity(getComposeIntent(
@@ -521,7 +561,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
 	/**
 	 * Convert time into formated date.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @param time
