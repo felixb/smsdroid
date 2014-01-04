@@ -18,52 +18,51 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.List;
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+
+import java.util.List;
+
 import de.ub0r.android.lib.IPreferenceContainer;
 import de.ub0r.android.lib.Utils;
 
 /**
  * {@link PreferenceActivity} for API>=11.
- * 
+ *
  * @author flx
  */
-public final class Preferences11Activity extends PreferenceActivity implements IPreferenceContainer {
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setTitle(R.string.settings);
-		Utils.setLocale(this);
-	}
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public final class Preferences11Activity extends PreferenceActivity
+        implements IPreferenceContainer {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onBuildHeaders(final List<Header> target) {
-		this.loadHeadersFromResource(R.xml.preference_headers, target);
-	}
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setTitle(R.string.settings);
+        Utils.setLocale(this);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Activity getActivity() {
-		return this;
-	}
+    @Override
+    public void onBuildHeaders(final List<Header> target) {
+        this.loadHeadersFromResource(R.xml.preference_headers, target);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Context getContext() {
-		return this;
-	}
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    protected boolean isValidFragment(final String fragmentName) {
+        return HeaderPreferenceFragment.class.getName().equals(fragmentName);
+    }
 }
