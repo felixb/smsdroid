@@ -21,7 +21,9 @@
 	<string name="notes_websms">You might want to send txt/sms with WebSMS for free or at least as cheap as possible. Many providers are supported Just give it a try!</string>
 	<string name="notes_longclick">Try a long-click on reply/send buttons to use an other than your standard app for sending.</string>
 	<string name="notes_sender">SMSdroid is now able to send SMS on it\'s own. Just use the "SMS (SMSdroid)" entry in the app chooser.</string>
+    <string name="notes_kitkat">Warning for Android 4.4+ users: SMSdroid is not able to receive MMS messages!</string>
 	<string-array name="notes_from_dev" translatable="false">
+        <item>@string/notes_kitkat</item>
 		<item>@string/notes_notification</item>
 		<item>@string/notes_websms</item>
 		<item></item>

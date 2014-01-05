@@ -224,7 +224,11 @@
 	<string name="author_">Author:</string>
 	<string name="website_">Website:</string>
 	<string name="source_">Sourcescode:</string>
-        <string name="changelog_" translatable="false">Changelog</string>
+	<string name="changelog_" translatable="false">Changelog</string>
 	<string name="mobile_only_">Only mobile numbers</string>
 	<string name="mobile_only_hint">Only suggest mobile numbers for recipient</string>
+	<string name="permission_save_to_db">Save messages to database</string>
+	<string name="permission_save_to_db_description">Save messages sent by other apps to android message database</string>
+	<string name="not_default_app">SMSdroid is not the default SMS app</string>
+    <string name="not_default_app_message">SMSdroid needs to be the default SMS app to work properly</string>
 </resources>

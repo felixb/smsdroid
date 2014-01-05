@@ -17,10 +17,24 @@
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * This package is holding all GUI stuff from main activity.
- * 
- * @author flx
- */
 package de.ub0r.android.smsdroid;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+
+/**
+ * Listen for new mms.
+ *
+ * @author flx
+ */
+public class MmsReceiver extends BroadcastReceiver {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void onReceive(final Context context, final Intent intent) {
+        SmsReceiver.handleOnReceive(this, context, intent);
+    }
+}

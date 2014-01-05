@@ -18,7 +18,9 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.HashSet;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
@@ -53,9 +55,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import java.util.HashSet;
 
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
@@ -156,14 +156,10 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 	/** Default {@link Drawable} for {@link Contact}s. */
 	private Drawable defaultContactAvatar = null;
 
-	/** TextWatcher updating char count on writing. */
-	private MyTextWatcher textWatcher;
-
-	/** {@link MenuItem} holding {@link Contact}'s picture. */
+    /** {@link MenuItem} holding {@link Contact}'s picture. */
 	private MenuItem contactItem = null;
-	/** Show {@link MenuItem} holding {@link Contact}'s picture . */
-	private boolean showContactItem = false;
-	/** True, to update {@link Contact}'s photo. */
+
+    /** True, to update {@link Contact}'s photo. */
 	private boolean needContactUpdate = false;
 
 	/**
@@ -230,11 +226,13 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 		v.setOnClickListener(this);
 		v.setOnLongClickListener(this);
 		this.findViewById(R.id.text_paste).setOnClickListener(this);
-		this.textWatcher = new MyTextWatcher(this, (TextView) this.findViewById(R.id.text_paste),
-				(TextView) this.findViewById(R.id.text_));
-		this.etText.addTextChangedListener(this.textWatcher);
+		/* TextWatcher updating char count on writing. */
+        MyTextWatcher textWatcher = new MyTextWatcher(this,
+                (TextView) this.findViewById(R.id.text_paste),
+                (TextView) this.findViewById(R.id.text_));
+		this.etText.addTextChangedListener(textWatcher);
 		this.etText.setMaxLines(MAX_EDITTEXT_LINES);
-		this.textWatcher.afterTextChanged(this.etText.getEditableText());
+		textWatcher.afterTextChanged(this.etText.getEditableText());
 
 		this.longItemClickDialog[WHICH_MARK_UNREAD] = this.getString(R.string.mark_unread_);
 		this.longItemClickDialog[WHICH_REPLY] = this.getString(R.string.reply);
@@ -348,14 +346,15 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 	 *            {@link Contact}
 	 */
 	private void setContactIcon(final Contact contact) {
-		if (contact == null) {
+		/* Show {@link MenuItem} holding {@link Contact}'s picture . */
+        boolean showContactItem;
+        if (contact == null) {
 			Log.w(TAG, "setContactIcon(null)");
-			this.showContactItem = false;
 			return;
 		}
 
 		final String name = contact.getName();
-		this.showContactItem = this.showPhoto && name != null;
+		showContactItem = this.showPhoto && name != null;
 
 		if (this.contactItem == null) {
 			Log.w(TAG, "setContactIcon: contactItem == null");
@@ -399,7 +398,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 			}
 		}
 
-		this.contactItem.setVisible(this.showContactItem);
+		this.contactItem.setVisible(showContactItem);
 		this.needContactUpdate = false;
 	}
 
@@ -424,7 +423,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 			final Intent i = this.buildIntent(this.enableAutosend, false);
 			final PackageManager pm = this.getPackageManager();
 			ActivityInfo ai = null;
-			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+			if (pm != null && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
 					PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
 				ai = i.resolveActivityInfo(pm, 0);
 			}
@@ -574,7 +573,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
-				Intent i = null;
+				Intent i;
 				switch (which) {
 				case WHICH_VIEW_CONTACT:
 					if (n == null) {
@@ -616,7 +615,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 						i.setType("text/plain");
 						i.putExtra("forwarded_message", true);
 					}
-					CharSequence text = null;
+					CharSequence text;
 					if (PreferencesActivity.decodeDecimalNCR(context)) {
 						text = Converter.convertDecNCR2Char(m.getBody());
 					} else {
@@ -657,10 +656,10 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 						sentReceived = "ukwn:";
 						fromTo = "ukwn:";
 					}
-					sb.append(sentReceived + " ");
+					sb.append(sentReceived).append(" ");
 					sb.append(ds);
 					sb.append("\n");
-					sb.append(fromTo + " ");
+					sb.append(fromTo).append(" ");
 					sb.append(a);
 					sb.append("\n");
 					sb.append(context.getString(R.string.type_));
@@ -700,8 +699,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 			this.etText.setText(s);
 			return;
 		default:
-			return;
-		}
+            // should never happen
+        }
 	}
 
 	/**
@@ -727,7 +726,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 	 * @return {@link Intent}
 	 */
 	private Intent buildIntent(final boolean autosend, final boolean showChooser) {
-		final String text = this.etText.getText().toString().trim();
+        //noinspection ConstantConditions
+        final String text = this.etText.getText().toString().trim();
 		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv.getContact()
 				.getNumber());
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -737,6 +737,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 			i.putExtra("AUTOSEND", "1");
 		}
 		if (showChooser) {
+            i.setComponent(null);
 			return Intent.createChooser(i, this.getString(R.string.reply));
 		} else {
 			return i;
@@ -754,7 +755,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 	private void send(final boolean autosend, final boolean showChooser) {
 		final Intent i = this.buildIntent(autosend, showChooser);
 		this.startActivity(i);
-		PreferenceManager
+        //noinspection ConstantConditions
+        PreferenceManager
 				.getDefaultSharedPreferences(this)
 				.edit()
 				.putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,

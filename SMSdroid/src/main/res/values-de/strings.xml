@@ -230,4 +230,9 @@
   <string name="source_" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Sourcescode:">Quelltext:</string>
   <string name="mobile_only_">Nur Mobilnummern</string>
   <string name="mobile_only_hint">Für Empfänger nur Mobilnummern vorschlagen</string>
+  <string name="permission_save_to_db">Nachrichten in Datenbank speichern</string>
+  <string name="permission_save_to_db_description">Nachrichten anderer Apps in Datenbank speichern</string>
+  <string name="not_default_app">SMSdroid ist nicht die Standard SMS App</string>
+  <string name="not_default_app_message">SMSdroid muss die Standard SMS App sein, um ordentlich zu funktionieren</string>
+
 </resources>

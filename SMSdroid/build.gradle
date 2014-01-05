@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
 apply plugin: 'android'
@@ -19,6 +19,27 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 19
+    }
+
+    signingConfigs {
+        if (project.hasProperty("releaseKeystorePassword")) {
+            release {
+                storeFile file("release.ks")
+                storePassword releaseKeystorePassword
+                keyAlias "jarsign"
+                keyPassword releaseKeyPassword
+            }
+        }
+
+        buildTypes {
+            debug {
+                versionNameSuffix " debug"
+            }
+
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
     }
 }
 
