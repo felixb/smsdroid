@@ -206,7 +206,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     Log.d(TAG, "spin: " + count);
                     try {
                         Log.d(TAG, "sleep(" + SLEEP + ")");
-                        Thread.sleep(SLEEP*5);
+                        Thread.sleep(SLEEP);
                     } catch (InterruptedException e) {
                         Log.d(TAG, "interrupted in spinlock", e);
                         e.printStackTrace();
