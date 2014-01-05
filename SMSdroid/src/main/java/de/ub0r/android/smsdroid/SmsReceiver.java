@@ -206,15 +206,15 @@ public class SmsReceiver extends BroadcastReceiver {
                     Log.d(TAG, "spin: " + count);
                     try {
                         Log.d(TAG, "sleep(" + SLEEP + ")");
-                        Thread.sleep(SLEEP);
+                        Thread.sleep(SLEEP*5);
                     } catch (InterruptedException e) {
                         Log.d(TAG, "interrupted in spinlock", e);
                         e.printStackTrace();
                     }
                     --count;
-                } while (updateNewMessageNotification(context, t) <= 0 && count > 0);
+                } while (updateNewMessageNotification(context, t, action.equals(ACTION_SMS_NEW)) <= 0 && count > 0);
                 if (count == 0) { // use messages as they are available
-                    updateNewMessageNotification(context, null);
+                    updateNewMessageNotification(context, null, action.equals(ACTION_SMS_NEW));
                 }
             }
         }
@@ -364,9 +364,10 @@ public class SmsReceiver extends BroadcastReceiver {
      *
      * @param context {@link Context}
      * @param text    text of the last assumed unread message
+     * @param new_sms whether sms sound should be played or not (only for new sms)
      * @return number of unread messages
      */
-    static int updateNewMessageNotification(final Context context, final String text) {
+    static int updateNewMessageNotification(final Context context, final String text, boolean newSms) {
         Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ")");
         final NotificationManager mNotificationMgr = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -481,7 +482,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 int[] ledFlash = PreferencesActivity.getLEDflash(context);
                 nb.setLights(PreferencesActivity.getLEDcolor(context), ledFlash[0], ledFlash[1]);
                 final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
-                if (text != null) {
+                if (text != null && newSms == true) {
                     final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
                     final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
                     Uri sound;

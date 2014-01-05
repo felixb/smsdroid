@@ -18,9 +18,7 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import java.util.Calendar;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -53,7 +51,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.Calendar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
@@ -327,7 +327,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 			Log.e(TAG, "failed update", e);
 			Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-		SmsReceiver.updateNewMessageNotification(context, null);
+		SmsReceiver.updateNewMessageNotification(context, null, false);
 	}
 
 	/**
@@ -362,7 +362,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 				if (ret > 0) {
 					Conversation.flushCache();
 					Message.flushCache();
-					SmsReceiver.updateNewMessageNotification(context, null);
+					SmsReceiver.updateNewMessageNotification(context, null, false);
 				}
 			}
 		});
