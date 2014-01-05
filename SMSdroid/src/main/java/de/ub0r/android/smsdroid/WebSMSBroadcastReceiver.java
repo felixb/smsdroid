@@ -1,12 +1,14 @@
 package de.ub0r.android.smsdroid;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.text.TextUtils;
 
 import de.ub0r.android.lib.Log;
@@ -18,9 +20,14 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = "WebSMSBroadcastReceiver";
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive(context, " + intent + ")");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            Log.e(TAG, TAG + " not available on API " + Build.VERSION.SDK_INT);
+            return;
+        }
 
         if ("de.ub0r.android.websms.SEND_SUCCESSFUL".equals(intent.getAction())) {
             try {
@@ -47,14 +54,12 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
 
                 ContentResolver cr = context.getContentResolver();
                 ContentValues values = new ContentValues();
+                values.put(Telephony.Sms.BODY, body);
 
                 // Insert all sms as sent
                 for (int i = 0; i < recipients.length; ++i) {
-                    values.clear();
-
-                    values.put("receiver", recipients[i]);
-                    values.put("body", body);
-                    cr.insert(Uri.parse("content://sms/sent"), values);
+                    values.put(Telephony.Sms.ADDRESS, recipients[i]);
+                    cr.insert(Telephony.Sms.Sent.CONTENT_URI, values);
 
                     Log.d(TAG, "Recipient " + i + " of " + recipients.length);
                     Log.d(TAG, "Insert sent SMS into database: " + recipients[i] + ", " + body);
