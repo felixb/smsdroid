@@ -212,9 +212,9 @@ public class SmsReceiver extends BroadcastReceiver {
                         e.printStackTrace();
                     }
                     --count;
-                } while (updateNewMessageNotification(context, t, action.equals(ACTION_SMS_NEW)) <= 0 && count > 0);
+                } while (updateNewMessageNotification(context, t, ACTION_SMS_NEW.equals(action)) <= 0 && count > 0);
                 if (count == 0) { // use messages as they are available
-                    updateNewMessageNotification(context, null, action.equals(ACTION_SMS_NEW));
+                    updateNewMessageNotification(context, null, ACTION_SMS_NEW.equals(action));
                 }
             }
         }
@@ -364,11 +364,11 @@ public class SmsReceiver extends BroadcastReceiver {
      *
      * @param context {@link Context}
      * @param text    text of the last assumed unread message
-     * @param new_sms whether sms sound should be played or not (only for new sms)
+     * @param newSms  whether sms sound should be played or not (only for new sms)
      * @return number of unread messages
      */
     static int updateNewMessageNotification(final Context context, final String text, boolean newSms) {
-        Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ")");
+        Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ", " + newSms + ")");
         final NotificationManager mNotificationMgr = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -482,7 +482,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 int[] ledFlash = PreferencesActivity.getLEDflash(context);
                 nb.setLights(PreferencesActivity.getLEDcolor(context), ledFlash[0], ledFlash[1]);
                 final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
-                if (text != null && newSms == true) {
+                if (text != null && newSms) {
                     final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
                     final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
                     Uri sound;

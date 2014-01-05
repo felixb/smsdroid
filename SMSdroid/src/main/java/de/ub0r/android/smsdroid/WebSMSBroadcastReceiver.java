@@ -1,8 +1,5 @@
 package de.ub0r.android.smsdroid;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -13,6 +10,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.text.TextUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import de.ub0r.android.lib.Log;
 
 /**
@@ -45,22 +46,22 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
                 }
 
                 for (int i = 0; i < recipients.length; ++i) {
-                	// check wheter we got a already known address with name
-                	//Log.w(TAG, "before recipients" + recipients[i]);
-                    if(recipients[i].contains("<")){
-                    	Pattern smsPattern = Pattern.compile("<(.*?)>");
-                    	Matcher m = smsPattern.matcher(recipients[i]);
-                    	if(m.find()){
-                    		recipients[i] = m.group(1);
-                    	}else{
-                    		  Log.w(TAG, "Pattern failed.");
-                    		  recipients[i] = recipients[i].split(" ")[0];
-                    	}
-                    }else{
-                    	//pure numeric
-                    	recipients[i] = recipients[i].split(" ")[0];
+                    // check whether we got a already known address with name
+                    //Log.w(TAG, "before recipients: " + recipients[i]);
+                    if (recipients[i].contains("<")) {
+                        Pattern smsPattern = Pattern.compile("<(.*?)>");
+                        Matcher m = smsPattern.matcher(recipients[i]);
+                        if (m.find()) {
+                            recipients[i] = m.group(1);
+                        } else {
+                            Log.w(TAG, "Pattern failed.");
+                            recipients[i] = recipients[i].split(" ")[0];
+                        }
+                    } else {
+                        //pure numeric
+                        recipients[i] = recipients[i].split(" ")[0];
                     }
-                	// Log.w(TAG, "after recipients" + recipients[i]);
+                    // Log.w(TAG, "after recipients: " + recipients[i]);
                 }
 
                 String body = extras.getString("body");
