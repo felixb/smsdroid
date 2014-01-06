@@ -45,12 +45,12 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
                     return;
                 }
 
+                Pattern numberPattern = Pattern.compile("<(.*?)>");
                 for (int i = 0; i < recipients.length; ++i) {
                     // check whether we got a already known address with name
                     //Log.w(TAG, "before recipients: " + recipients[i]);
                     if (recipients[i].contains("<")) {
-                        Pattern smsPattern = Pattern.compile("<(.*?)>");
-                        Matcher m = smsPattern.matcher(recipients[i]);
+                        Matcher m = numberPattern.matcher(recipients[i]);
                         if (m.find()) {
                             recipients[i] = m.group(1);
                         } else {
