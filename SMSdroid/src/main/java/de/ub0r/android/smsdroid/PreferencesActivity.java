@@ -115,6 +115,8 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	public static final String PREFS_DECODE_DECIMAL_NCR = "decode_decimal_ncr";
 	/** Preference's name: activate sender. */
 	public static final String PREFS_ACTIVATE_SENDER = "activate_sender";
+	/** Preference's name: activate sender. */
+	public static final String PREFS_FORWARD_SMS_CLEAN= "forwarded_sms_clean";
 	/** Preference's name: prefix regular expression. */
 	private static final String PREFS_REGEX = "regex";
 	/** Preference's name: prefix replace. */

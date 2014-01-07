@@ -19,6 +19,9 @@
 
 package de.ub0r.android.smsdroid;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -41,8 +44,6 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.support.v4.app.NotificationCompat;
-import android.telephony.gsm.SmsMessage;
-
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 
@@ -164,16 +165,38 @@ public class SmsReceiver extends BroadcastReceiver {
                 Bundle b = intent.getExtras();
                 assert b != null;
                 Object[] messages = (Object[]) b.get("pdus");
-                SmsMessage[] smsMessage = new SmsMessage[messages.length];
+                android.telephony.SmsMessage[] smsMessage = new android.telephony.SmsMessage[messages.length];
                 int l = messages.length;
                 for (int i = 0; i < l; i++) {
-                    smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
+                	smsMessage[i] =android.telephony.SmsMessage.createFromPdu((byte[]) messages[i]);
                 }
                 t = null;
                 if (l > 0) {
                     t = smsMessage[0].getDisplayMessageBody();
                     // ! Check in blacklist db - filter spam
-                    final String s = smsMessage[0].getOriginatingAddress();
+                    String s = smsMessage[0].getDisplayOriginatingAddress();
+                    
+                    // this code is used to strip a forwarding agent and display the orginated number as sender
+                    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    if( prefs.getBoolean(	PreferencesActivity.PREFS_FORWARD_SMS_CLEAN, false)
+                    		&& t.contains(":")){
+                    	Pattern smsPattern = Pattern.compile("([0-9a-zA-Z+]+):") ;
+                    	Matcher m = smsPattern.matcher(t);
+                    	if(m.find()){
+                    		s= m.group(1);
+                    		Log.d(TAG, "found forwarding sms number: ("+ s+")");
+                    		// now strip the sender fromt the message
+                    		Pattern textPattern = Pattern.compile("^[0-9a-zA-Z+]+: (.*)");
+                    		Matcher m2 = textPattern.matcher(t);
+                    		if(t.contains(":") && m2.find()){
+                    			t= m2.group(1);
+                    			Log.d(TAG, "stripped the message");
+                    		}
+                    	}
+                    	
+                    	
+                    }
+                    
                     final SpamDB db = new SpamDB(context);
                     db.open();
                     if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
@@ -222,7 +245,9 @@ public class SmsReceiver extends BroadcastReceiver {
         Log.i(TAG, "wakelock released");
     }
 
-    /**
+    
+
+	/**
      * Get unread SMS.
      *
      * @param cr   {@link ContentResolver} to query

@@ -234,5 +234,7 @@
   <string name="permission_save_to_db_description">Nachrichten anderer Apps in Datenbank speichern</string>
   <string name="not_default_app">SMSdroid ist nicht die Standard SMS App</string>
   <string name="not_default_app_message">SMSdroid muss die Standard SMS App sein, um ordentlich zu funktionieren</string>
-
+ <string name="forwarded_sms_clean_">Verändere empfangene SMS</string>
+    <string name="forwarded_sms_clean_hint">Solltest du von einem anderen Handy auf dieses Handy SMS weiterleiten, kannst du hier die Zuordnung anpassen. Das ist aber normalerweise nicht der Fall.
+        Aktuell wird nach diesem Pattern  "([0-9a-zA-Z]+):" gefiltert.</string>
 </resources>
