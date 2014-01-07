@@ -18,7 +18,9 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.Calendar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -51,9 +53,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import java.util.Calendar;
 
 import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
@@ -397,7 +397,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_compose:
-			final Intent i = getComposeIntent(this, null);
+			final Intent i = getComposeIntent(this, null, false);
 			try {
 				this.startActivity(i);
 			} catch (ActivityNotFoundException e) {
@@ -439,12 +439,15 @@ public final class ConversationListActivity extends SherlockActivity implements
      *            {@link Context}
      * @param address
      *            address
+     * @param showChooser
+     *            show chooser
      * @return {@link Intent}
      */
-    static Intent getComposeIntent(final Context context, final String address) {
+    static Intent getComposeIntent(final Context context, final String address,
+            final boolean showChooser) {
         Intent i = null;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (!showChooser && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // Search for WebSMS
             PackageManager pm = context.getPackageManager();
             i = pm == null ? null : pm.getLaunchIntentForPackage("de.ub0r.android.websms");
@@ -521,7 +524,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 				switch (which) {
 				case WHICH_ANSWER:
 					ConversationListActivity.this.startActivity(getComposeIntent(
-							ConversationListActivity.this, a));
+							ConversationListActivity.this, a, false));
 					break;
 				case WHICH_CALL:
 					i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));

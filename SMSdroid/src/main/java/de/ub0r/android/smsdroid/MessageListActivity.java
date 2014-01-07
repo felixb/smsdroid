@@ -280,7 +280,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 			this.uri = Uri.parse(URI + tid);
 			if (tid < 0L) {
 				try {
-					this.startActivity(ConversationListActivity.getComposeIntent(this, null));
+					this.startActivity(ConversationListActivity.getComposeIntent(this, null, false));
 				} catch (ActivityNotFoundException e) {
 					Log.e(TAG, "activity not found", e);
 					Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
@@ -601,14 +601,14 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 					break;
 				case WHICH_REPLY:
 					MessageListActivity.this.startActivity(ConversationListActivity
-							.getComposeIntent(MessageListActivity.this, a));
+							.getComposeIntent(MessageListActivity.this, a, false));
 					break;
 				case WHICH_FORWARD:
 					int resId;
 					if (type == Message.SMS_DRAFT) {
 						resId = R.string.send_draft_;
 						i = ConversationListActivity.getComposeIntent(MessageListActivity.this,
-								MessageListActivity.this.conv.getContact().getNumber());
+								MessageListActivity.this.conv.getContact().getNumber(), false);
 					} else {
 						resId = R.string.forward_;
 						i = new Intent(Intent.ACTION_SEND);
@@ -729,7 +729,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         //noinspection ConstantConditions
         final String text = this.etText.getText().toString().trim();
 		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv.getContact()
-				.getNumber());
+				.getNumber(), showChooser);
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		i.putExtra("sms_body", text);
@@ -737,7 +737,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 			i.putExtra("AUTOSEND", "1");
 		}
 		if (showChooser) {
-            i.setComponent(null);
 			return Intent.createChooser(i, this.getString(R.string.reply));
 		} else {
 			return i;
