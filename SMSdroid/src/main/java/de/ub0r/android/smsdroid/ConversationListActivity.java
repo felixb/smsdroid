@@ -257,7 +257,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // check if this is the default sms app
-            if (!Telephony.Sms.getDefaultSmsPackage(this).equals(BuildConfig.PACKAGE_NAME)) {
+            if (!Telephony.Sms.getDefaultSmsPackage(this).equals(Constants.PACKAGE_NAME)) {
                 AlertDialog.Builder b = new AlertDialog.Builder(this);
                 b.setTitle(R.string.not_default_app);
                 b.setMessage(R.string.not_default_app_message);
@@ -269,7 +269,7 @@ public final class ConversationListActivity extends SherlockActivity implements
                         Intent intent =
                                 new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
                         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
-                                BuildConfig.PACKAGE_NAME);
+                        		Constants.PACKAGE_NAME);
                         startActivity(intent);
                     }
                 });

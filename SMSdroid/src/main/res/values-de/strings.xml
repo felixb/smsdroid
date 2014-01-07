@@ -237,4 +237,6 @@
  <string name="forwarded_sms_clean_">Verändere empfangene SMS</string>
     <string name="forwarded_sms_clean_hint">Solltest du von einem anderen Handy auf dieses Handy SMS weiterleiten, kannst du hier die Zuordnung anpassen. Das ist aber normalerweise nicht der Fall.
         Aktuell wird nach diesem Pattern  "([0-9a-zA-Z]+):" gefiltert.</string>
+   <string name="show_sms_notification_buttons_">Buttons in Benachrichtigungen</string>
+	<string name="show_sms_notification_buttons_hint">Zeige Buttons für Quick Reply etc. in den Benachrichtigungen an.</string>
 </resources>

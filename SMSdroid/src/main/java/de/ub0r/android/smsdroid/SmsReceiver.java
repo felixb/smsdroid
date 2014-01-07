@@ -429,7 +429,8 @@ public class SmsReceiver extends BroadcastReceiver {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
-            NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+            //NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+        	final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
             boolean showNotification = true;
             Intent i;
             if (tid >= 0) {
@@ -468,6 +469,23 @@ public class SmsReceiver extends BroadcastReceiver {
                             nb.setContentTitle(a);
                             nb.setContentText(body);
                             nb.setContentIntent(pIntent);
+                            // add long text
+                            nb.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
+                            
+                            final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
+                            if(p.getBoolean(PreferencesActivity.PREFS_DISPLAY_NOTIFICATION_BUTTONS, false) && uri != null){
+                            	
+                            	Intent nextIntent = new Intent("de.ub0r.android.smsdroid.MARK_READ");
+                            	String uriString = uri.toString();
+                            	nextIntent.putExtra("de.ub0r.android.smsdroid.MURI_KEY", uriString);
+                            	String muri = nextIntent.getStringExtra("MURI_KEY");
+                                Log.w(TAG, "received uri(2): "+ muri);
+                            	PendingIntent nextPendingIntent = PendingIntent.getBroadcast(context, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            	
+                                nb.addAction(R.drawable.ic_menu_mark, "Read", nextPendingIntent);
+                                nb.addAction(R.drawable.ic_menu_compose, "Reply", pIntent);
+                            }
+                            
                         } else {
                             nb.setContentTitle(a);
                             nb.setContentText(context.getString(R.string.new_messages, l));
