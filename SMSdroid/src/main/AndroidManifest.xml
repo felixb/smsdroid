@@ -20,6 +20,8 @@
           android:versionCode="7151001"
           android:versionName="1.5.1">
 
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="19" />
+    
     <supports-screens
             android:anyDensity="true"
             android:largeScreens="true"
@@ -160,6 +162,7 @@
             </intent-filter>
         </service>
 
+
         <receiver android:name=".SmsReceiver" android:exported="true"
                   android:permission="android.permission.BROADCAST_SMS">
 
@@ -184,6 +187,7 @@
                   android:permission="de.ub0r.android.smsdroid.SAVE_TO_DB">
             <intent-filter>
                 <action android:name="de.ub0r.android.websms.SEND_SUCCESSFUL"/>
+                <action android:name="de.ub0r.android.smsdroid.MARK_READ"/>
             </intent-filter>
         </receiver>
 
