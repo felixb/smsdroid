@@ -37,6 +37,12 @@
 		android:title="@string/mobile_only_"
 		android:summary="@string/mobile_only_hint"
 		android:defaultValue="false" />
+	
+	<CheckBoxPreference android:key="forwarded_sms_clean"
+		android:title="@string/forwarded_sms_clean_"
+		android:summary="@string/forwarded_sms_clean_hint"
+		android:defaultValue="false" />
+	
 	<PreferenceScreen android:title="@string/fix_numbers_"
 		android:summary="@string/fix_numbers_hint">
 		<PreferenceCategory android:title="@string/fix_number1_regex_">
