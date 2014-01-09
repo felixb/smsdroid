@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -23,6 +24,12 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = "WebSMSBroadcastReceiver";
 
+    //public static final String ACTION_SAVE_SENT_MESSAGE = "de.ub0r.android.websms.SEND_SUCCESSFUL";
+
+    public static final String ACTION_MARK_READ = "de.ub0r.android.smsdroid.MARK_READ";
+
+    public static final String EXTRA_MURI = "de.ub0r.android.smsdroid.MURI_KEY";
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -30,6 +37,25 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             Log.e(TAG, TAG + " not available on API " + Build.VERSION.SDK_INT);
             return;
+        }
+
+        // maybe we should move this to a separate receiver?
+        if (ACTION_MARK_READ.equals(intent.getAction())) {
+            try {
+                Bundle extras = intent.getExtras();
+                if (extras == null) {
+                    Log.w(TAG, "empty extras");
+                    return;
+                }
+
+                // remember that we have to add the package here ..
+                String muri = extras.getString(EXTRA_MURI);
+                Log.d(TAG, "received uri: " + muri);
+                ConversationListActivity.markRead(context, Uri.parse(muri), 1);
+            } catch (Exception e) {
+                Log.e(TAG, "unable to open broadcast", e);
+            }
+
         }
 
         if ("de.ub0r.android.websms.SEND_SUCCESSFUL".equals(intent.getAction())) {
@@ -45,12 +71,12 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
                     return;
                 }
 
-                Pattern numberPattern = Pattern.compile("<(.*?)>");
                 for (int i = 0; i < recipients.length; ++i) {
                     // check whether we got a already known address with name
-                    //Log.w(TAG, "before recipients: " + recipients[i]);
+                    Log.d(TAG, "before recipients" + recipients[i]);
                     if (recipients[i].contains("<")) {
-                        Matcher m = numberPattern.matcher(recipients[i]);
+                        Pattern smsPattern = Pattern.compile("<(.*?)>");
+                        Matcher m = smsPattern.matcher(recipients[i]);
                         if (m.find()) {
                             recipients[i] = m.group(1);
                         } else {
@@ -58,10 +84,10 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
                             recipients[i] = recipients[i].split(" ")[0];
                         }
                     } else {
-                        //pure numeric
+                        // pure numeric
                         recipients[i] = recipients[i].split(" ")[0];
                     }
-                    // Log.w(TAG, "after recipients: " + recipients[i]);
+                    Log.d(TAG, "after recipients" + recipients[i]);
                 }
 
                 String body = extras.getString("body");

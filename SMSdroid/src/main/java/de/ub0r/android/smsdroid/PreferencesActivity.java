@@ -18,12 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.regex.PatternSyntaxException;
-
-import yuku.ambilwarna.AmbilWarnaDialog;
-import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -39,10 +33,17 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.regex.PatternSyntaxException;
+
 import de.ub0r.android.lib.IPreferenceContainer;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Market;
 import de.ub0r.android.lib.Utils;
+import yuku.ambilwarna.AmbilWarnaDialog;
+import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 
 /**
  * Preferences.
@@ -115,6 +116,8 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	public static final String PREFS_DECODE_DECIMAL_NCR = "decode_decimal_ncr";
 	/** Preference's name: activate sender. */
 	public static final String PREFS_ACTIVATE_SENDER = "activate_sender";
+	/** Preference's name: forward sms sender. */
+	public static final String PREFS_FORWARD_SMS_CLEAN= "forwarded_sms_clean";
 	/** Preference's name: prefix regular expression. */
 	private static final String PREFS_REGEX = "regex";
 	/** Preference's name: prefix replace. */
