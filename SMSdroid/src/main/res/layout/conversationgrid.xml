@@ -15,13 +15,13 @@
 		not, see <http://www.gnu.org/licenses/>.
 -->
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/list"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="?android:attr/colorBackground"
-    android:columnWidth="120dp"
-    android:horizontalSpacing="1dp"
-    android:numColumns="auto_fit"
-    android:scrollingCache="true"
-    android:stretchMode="columnWidth"
-    android:verticalSpacing="1dp" />
+          android:id="@android:id/list"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:background="?android:attr/colorBackground"
+          android:columnWidth="120dp"
+          android:horizontalSpacing="1dp"
+          android:numColumns="auto_fit"
+          android:scrollingCache="true"
+          android:stretchMode="columnWidth"
+          android:verticalSpacing="1dp"/>

@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-		Copyright (C) 2009-2012 Felix Bechstein
-	-->
-	<!--
-		This file is part of SMSdroid. This program is free software; you can
-		redistribute it and/or modify it under the terms of the GNU General
-		Public License as published by the Free Software Foundation; either
-		version 3 of the License, or (at your option) any later version.
-	-->
-	<!--
-		This program is distributed in the hope that it will be useful, but
-		WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-		General Public License for more details. You should have received a
-		copy of the GNU General Public License along with this program; If
-		not, see <http://www.gnu.org/licenses/>.
-	-->
+<!--
+    Copyright (C) 2009-2012 Felix Bechstein
+-->
+<!--
+    This file is part of SMSdroid. This program is free software; you can
+    redistribute it and/or modify it under the terms of the GNU General
+    Public License as published by the Free Software Foundation; either
+    version 3 of the License, or (at your option) any later version.
+-->
+<!--
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    General Public License for more details. You should have received a
+    copy of the GNU General Public License along with this program; If
+    not, see <http://www.gnu.org/licenses/>.
+-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<CheckBoxPreference android:key="notification_enable"
-		android:title="@string/notification_enable_" android:summary="@string/notification_enable_hint"
-		android:defaultValue="true" />
-	<PreferenceScreen android:key="notification_icon"
-		android:title="@string/notification_icon_" android:dependency="notification_enable" />
-	<RingtonePreference android:key="receive_sound"
-		android:title="@string/receive_sound_" android:summary="@string/receive_sound_hint"
-		android:ringtoneType="notification" android:defaultValue="content://settings/system/notification_sound"
-		android:dependency="notification_enable" />
-	<CheckBoxPreference android:key="receive_vibrate"
-		android:title="@string/receive_vibrate_" android:summary="@string/receive_vibrate_hint"
-		android:dependency="notification_enable" />
-	<ListPreference android:key="receive_vibrate_mode"
-		android:title="@string/receive_vibrate_mode_" android:entries="@array/vibrate_mode"
-		android:entryValues="@array/vibrate_mode_values" android:dependency="receive_vibrate" />
-	<ListPreference android:key="receive_led_color"
-		android:title="@string/receive_led_color_" android:entries="@array/led_color"
-		android:entryValues="@array/led_color_values" android:dependency="notification_enable" />
-	<ListPreference android:key="receive_led_flash"
-		android:title="@string/receive_led_flash_" android:summary="@string/receive_led_flash_hint"
-		android:entries="@array/led_flash" android:entryValues="@array/led_flash_values"
-		android:dependency="notification_enable" />
-	<CheckBoxPreference android:key="receive_privacy"
-		android:title="@string/receive_no_text_" android:summary="@string/receive_no_text_hint"
-		android:dependency="notification_enable" />
+    <CheckBoxPreference android:key="notification_enable"
+                        android:title="@string/notification_enable_"
+                        android:summary="@string/notification_enable_hint"
+                        android:defaultValue="true"/>
+    <PreferenceScreen android:key="notification_icon"
+                      android:title="@string/notification_icon_"
+                      android:dependency="notification_enable"/>
+    <RingtonePreference android:key="receive_sound"
+                        android:title="@string/receive_sound_"
+                        android:summary="@string/receive_sound_hint"
+                        android:ringtoneType="notification"
+                        android:defaultValue="content://settings/system/notification_sound"
+                        android:dependency="notification_enable"/>
+    <CheckBoxPreference android:key="receive_vibrate"
+                        android:title="@string/receive_vibrate_"
+                        android:summary="@string/receive_vibrate_hint"
+                        android:dependency="notification_enable"/>
+    <ListPreference android:key="receive_vibrate_mode"
+                    android:title="@string/receive_vibrate_mode_"
+                    android:entries="@array/vibrate_mode"
+                    android:entryValues="@array/vibrate_mode_values"
+                    android:dependency="receive_vibrate"/>
+    <ListPreference android:key="receive_led_color"
+                    android:title="@string/receive_led_color_" android:entries="@array/led_color"
+                    android:entryValues="@array/led_color_values"
+                    android:dependency="notification_enable"/>
+    <ListPreference android:key="receive_led_flash"
+                    android:title="@string/receive_led_flash_"
+                    android:summary="@string/receive_led_flash_hint"
+                    android:entries="@array/led_flash" android:entryValues="@array/led_flash_values"
+                    android:dependency="notification_enable"/>
+    <CheckBoxPreference android:key="receive_privacy"
+                        android:title="@string/receive_no_text_"
+                        android:summary="@string/receive_no_text_hint"
+                        android:dependency="notification_enable"/>
 </PreferenceScreen>

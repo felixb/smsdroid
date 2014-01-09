@@ -132,15 +132,15 @@ public final class Conversation {
 	 *            fetch of information
 	 */
 	private Conversation(final Context context, final Cursor cursor, final boolean sync) {
-		this.threadId = cursor.getInt(INDEX_SIMPLE_ID);
-		this.date = cursor.getLong(INDEX_SIMPLE_DATE);
-		this.body = cursor.getString(INDEX_SIMPLE_BODY);
-		this.read = cursor.getInt(INDEX_SIMPLE_READ);
-		this.count = cursor.getInt(INDEX_SIMPLE_COUNT);
-		this.contact = new Contact(cursor.getInt(INDEX_SIMPLE_NID));
+		threadId = cursor.getInt(INDEX_SIMPLE_ID);
+		date = cursor.getLong(INDEX_SIMPLE_DATE);
+		body = cursor.getString(INDEX_SIMPLE_BODY);
+		read = cursor.getInt(INDEX_SIMPLE_READ);
+		count = cursor.getInt(INDEX_SIMPLE_COUNT);
+		contact = new Contact(cursor.getInt(INDEX_SIMPLE_NID));
 
 		AsyncHelper.fillConversation(context, this, sync);
-		this.lastUpdate = System.currentTimeMillis();
+		lastUpdate = System.currentTimeMillis();
 	}
 
 	/**
@@ -154,22 +154,22 @@ public final class Conversation {
 	 *            fetch of information
 	 */
 	private void update(final Context context, final Cursor cursor, final boolean sync) {
-		Log.d(TAG, "update(" + this.threadId + "," + sync + ")");
+		Log.d(TAG, "update(" + threadId + "," + sync + ")");
 		long d = cursor.getLong(INDEX_SIMPLE_DATE);
-		if (d != this.date) {
-			this.id = cursor.getInt(INDEX_SIMPLE_ID);
-			this.date = d;
-			this.body = cursor.getString(INDEX_SIMPLE_BODY);
+		if (d != date) {
+			id = cursor.getInt(INDEX_SIMPLE_ID);
+			date = d;
+			body = cursor.getString(INDEX_SIMPLE_BODY);
 		}
-		this.count = cursor.getInt(INDEX_SIMPLE_COUNT);
-		this.read = cursor.getInt(INDEX_SIMPLE_READ);
+		count = cursor.getInt(INDEX_SIMPLE_COUNT);
+		read = cursor.getInt(INDEX_SIMPLE_READ);
 		final int nid = cursor.getInt(INDEX_SIMPLE_NID);
-		if (nid != this.contact.getRecipientId()) {
-			this.contact = new Contact(nid);
+		if (nid != contact.getRecipientId()) {
+			contact = new Contact(nid);
 		}
-		if (this.lastUpdate < validCache) {
+		if (lastUpdate < validCache) {
 			AsyncHelper.fillConversation(context, this, sync);
-			this.lastUpdate = System.currentTimeMillis();
+			lastUpdate = System.currentTimeMillis();
 		}
 	}
 
@@ -274,7 +274,7 @@ public final class Conversation {
 	 * @return the id
 	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	/**
@@ -284,21 +284,21 @@ public final class Conversation {
 	 *            the numberId
 	 */
 	public void setNumberId(final long nid) {
-		this.contact = new Contact(nid);
+		contact = new Contact(nid);
 	}
 
 	/**
 	 * @return the threadId
 	 */
 	public int getThreadId() {
-		return this.threadId;
+		return threadId;
 	}
 
 	/**
 	 * @return the date
 	 */
 	public long getDate() {
-		return this.date;
+		return date;
 	}
 
 	/**
@@ -307,14 +307,14 @@ public final class Conversation {
 	 * @return {@link Contact}
 	 */
 	public Contact getContact() {
-		return this.contact;
+		return contact;
 	}
 
 	/**
 	 * @return the body
 	 */
 	public String getBody() {
-		return this.body;
+		return body;
 	}
 
 	/**
@@ -324,14 +324,14 @@ public final class Conversation {
 	 *            body
 	 */
 	public void setBody(final String b) {
-		this.body = b;
+		body = b;
 	}
 
 	/**
 	 * @return the read status
 	 */
 	public int getRead() {
-		return this.read;
+		return read;
 	}
 
 	/**
@@ -341,14 +341,14 @@ public final class Conversation {
 	 *            read status
 	 */
 	public void setRead(final int status) {
-		this.read = status;
+		read = status;
 	}
 
 	/**
 	 * @return the count
 	 */
 	public int getCount() {
-		return this.count;
+		return count;
 	}
 
 	/**
@@ -356,13 +356,13 @@ public final class Conversation {
 	 *            the count to set
 	 */
 	public void setCount(final int c) {
-		this.count = c;
+		count = c;
 	}
 
 	/**
 	 * @return {@link Uri} of this {@link Conversation}
 	 */
 	public Uri getUri() {
-		return Uri.withAppendedPath(ConversationListActivity.URI, String.valueOf(this.threadId));
+		return Uri.withAppendedPath(ConversationListActivity.URI, String.valueOf(threadId));
 	}
 }

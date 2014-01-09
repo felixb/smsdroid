@@ -58,13 +58,13 @@ public final class SMSdroid extends Application {
 	public void onCreate() {
 		super.onCreate();
 		Log.init("SMSdroid");
-		Log.i(TAG, "init SMSdroid v" + this.getString(R.string.app_version));
+		Log.i(TAG, "init SMSdroid v" + getString(R.string.app_version));
 
 		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
 		int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 		if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
 			try {
-				Cursor c = this.getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
+				Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
 						null, null, "_id LIMIT 1");
 				if (c == null) {
 					Log.i(TAG, "disable .Sender: curor=null");
@@ -85,7 +85,7 @@ public final class SMSdroid extends Application {
 		} else {
 			Log.i(TAG, "disable .Sender");
 		}
-		this.getPackageManager().setComponentEnabledSetting(
+		getPackageManager().setComponentEnabledSetting(
 				new ComponentName(this, SenderActivity.class), state, PackageManager.DONT_KILL_APP);
 	}
 

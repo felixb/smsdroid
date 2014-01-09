@@ -73,7 +73,7 @@ public final class SearchProvider extends ContentProvider {
 				"address as " + SearchManager.SUGGEST_COLUMN_TEXT_1,
 				"body as " + SearchManager.SUGGEST_COLUMN_TEXT_2 };
 		final String where = "body like '%" + query + "%'";
-		return new MergeCursor(new Cursor[] { this.getContext().getContentResolver()
+		return new MergeCursor(new Cursor[] { getContext().getContentResolver()
 				.query(SMS_URI, proj, where, null, null) });
 	}
 

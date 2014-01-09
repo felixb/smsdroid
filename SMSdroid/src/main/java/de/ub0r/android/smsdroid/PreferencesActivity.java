@@ -189,7 +189,7 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 		 *            {@link Context}
 		 */
 		public OnNotificationIconClickListener(final Context context) {
-			this.ctx = context;
+			ctx = context;
 		}
 
 		/**
@@ -197,17 +197,17 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 		 */
 		@Override
 		public boolean onPreferenceClick(final Preference preference) {
-			final Builder b = new Builder(this.ctx);
+			final Builder b = new Builder(ctx);
 			final int l = NOTIFICAION_STR.length;
 			final String[] cols = new String[] { "icon", "text" };
 			final ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
 			for (int i = 0; i < l; i++) {
 				final HashMap<String, Object> m = new HashMap<String, Object>(2);
 				m.put(cols[0], NOTIFICAION_IMG[i]);
-				m.put(cols[1], this.ctx.getString(NOTIFICAION_STR[i]));
+				m.put(cols[1], ctx.getString(NOTIFICAION_STR[i]));
 				rows.add(m);
 			}
-			b.setAdapter(new SimpleAdapter(this.ctx, rows, R.layout.notification_icons_item, cols,
+			b.setAdapter(new SimpleAdapter(ctx, rows, R.layout.notification_icons_item, cols,
 					new int[] { android.R.id.icon, android.R.id.text1 }),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -237,7 +237,7 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 		 *            {@link Context}
 		 */
 		public OnBubblesClickListener(final Context context) {
-			this.ctx = context;
+			ctx = context;
 		}
 
 		/**
@@ -245,17 +245,17 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 		 */
 		@Override
 		public boolean onPreferenceClick(final Preference preference) {
-			final Builder b = new Builder(this.ctx);
+			final Builder b = new Builder(ctx);
 			final int l = BUBBLES_STR.length;
 			final String[] cols = new String[] { "icon", "text" };
 			final ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String, Object>>();
 			for (int i = 0; i < l; i++) {
 				final HashMap<String, Object> m = new HashMap<String, Object>(2);
 				m.put(cols[0], BUBBLES_IMG[i]);
-				m.put(cols[1], this.ctx.getString(BUBBLES_STR[i]));
+				m.put(cols[1], ctx.getString(BUBBLES_STR[i]));
 				rows.add(m);
 			}
-			b.setAdapter(new SimpleAdapter(this.ctx, rows, R.layout.bubbles_item, cols, new int[] {
+			b.setAdapter(new SimpleAdapter(ctx, rows, R.layout.bubbles_item, cols, new int[] {
 					android.R.id.icon, android.R.id.text1 }),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -275,9 +275,9 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	@Override
 	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.addPreferencesFromResource(R.xml.prefs_appearance_behavior);
-		this.addPreferencesFromResource(R.xml.prefs_about);
-		this.addPreferencesFromResource(R.xml.prefs_debug);
+		addPreferencesFromResource(R.xml.prefs_appearance_behavior);
+		addPreferencesFromResource(R.xml.prefs_about);
+		addPreferencesFromResource(R.xml.prefs_debug);
 
 		registerOnPreferenceClickListener(this);
 	}
@@ -560,7 +560,7 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 			// app icon in Action Bar clicked; go home
 			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			this.startActivity(intent);
+			startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

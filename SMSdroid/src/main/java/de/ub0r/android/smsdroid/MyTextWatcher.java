@@ -30,10 +30,10 @@ public final class MyTextWatcher implements TextWatcher {
 	 *            {@link TextView} holding message counter
 	 */
 	public MyTextWatcher(final Context ctx, final TextView paste, final TextView label) {
-		this.context = ctx;
-		this.tvTextLabel = label;
-		this.tvPaste = paste;
-		this.cbmgr = (ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
+		context = ctx;
+		tvTextLabel = label;
+		tvPaste = paste;
+		cbmgr = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 	}
 
 	/**
@@ -42,22 +42,22 @@ public final class MyTextWatcher implements TextWatcher {
 	public void afterTextChanged(final Editable s) {
 		final int len = s.length();
 		if (len == 0) {
-			if (this.cbmgr.hasText()
-					&& !PreferenceManager.getDefaultSharedPreferences(this.context).getBoolean(
+			if (cbmgr.hasText()
+					&& !PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
 							PreferencesActivity.PREFS_HIDE_PASTE, false)) {
-				this.tvPaste.setVisibility(View.VISIBLE);
+				tvPaste.setVisibility(View.VISIBLE);
 			} else {
-				this.tvPaste.setVisibility(View.GONE);
+				tvPaste.setVisibility(View.GONE);
 			}
-			this.tvTextLabel.setVisibility(View.GONE);
+			tvTextLabel.setVisibility(View.GONE);
 		} else {
-			this.tvPaste.setVisibility(View.GONE);
+			tvPaste.setVisibility(View.GONE);
 			if (len > TEXT_LABLE_MIN_LEN) {
-				this.tvTextLabel.setVisibility(View.VISIBLE);
+				tvTextLabel.setVisibility(View.VISIBLE);
 				int[] l = SmsMessage.calculateLength(s.toString(), false);
-				this.tvTextLabel.setText(l[0] + "/" + l[2]);
+				tvTextLabel.setText(l[0] + "/" + l[2]);
 			} else {
-				this.tvTextLabel.setVisibility(View.GONE);
+				tvTextLabel.setVisibility(View.GONE);
 			}
 		}
 	}

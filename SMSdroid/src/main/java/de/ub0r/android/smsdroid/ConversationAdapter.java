@@ -35,281 +35,307 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * Adapter for the list of {@link Conversation}s.
- * 
+ *
  * @author flx
  */
 public class ConversationAdapter extends ResourceCursorAdapter {
-	/** Tag for logging. */
-	static final String TAG = "coa";
 
-	/** Cursor's sort. */
-	public static final String SORT = Calls.DATE + " DESC";
+    /**
+     * Tag for logging.
+     */
+    static final String TAG = "coa";
 
-	/** Used text size, color. */
-	private final int textSize, textColor;
+    /**
+     * Cursor's sort.
+     */
+    public static final String SORT = Calls.DATE + " DESC";
 
-	/** {@link Cursor} to the original Content to listen for changes. */
-	private final Cursor origCursor;
+    /**
+     * Used text size, color.
+     */
+    private final int textSize, textColor;
 
-	/** {@link BackgroundQueryHandler}. */
-	private final BackgroundQueryHandler queryHandler;
-	/** Token for {@link BackgroundQueryHandler}: message list query. */
-	private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
-	/** Reference to {@link ConversationListActivity}. */
-	private final Activity activity;
+    /**
+     * {@link BackgroundQueryHandler}.
+     */
+    private final BackgroundQueryHandler queryHandler;
 
-	/** List of blocked numbers. */
-	private final String[] blacklist;
+    /**
+     * Token for {@link BackgroundQueryHandler}: message list query.
+     */
+    private static final int MESSAGE_LIST_QUERY_TOKEN = 0;
 
-	/** {@link ContactsWrapper}. */
-	private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
+    /**
+     * Reference to {@link ConversationListActivity}.
+     */
+    private final Activity activity;
 
-	/** Default {@link Drawable} for {@link Contact}s. */
-	private Drawable defaultContactAvatar = null;
+    /**
+     * List of blocked numbers.
+     */
+    private final String[] blacklist;
 
-	/** Convert NCR. */
-	private final boolean convertNCR;
+    /**
+     * {@link ContactsWrapper}.
+     */
+    private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
 
-	/** Use grid instead of list. */
-	private boolean useGridLayout;
+    /**
+     * Default {@link Drawable} for {@link Contact}s.
+     */
+    private Drawable defaultContactAvatar = null;
 
-	/** View holder. */
-	private static class ViewHolder {
-		TextView tvBody;
-		TextView tvPerson;
-		TextView tvCount;
-		TextView tvDate;
-		ImageView ivPhoto;
-		View vRead;
-	}
+    /**
+     * Convert NCR.
+     */
+    private final boolean convertNCR;
 
-	/**
-	 * Handle queries in background.
-	 * 
-	 * @author flx
-	 */
-	private final class BackgroundQueryHandler extends AsyncQueryHandler {
+    /**
+     * Use grid instead of list.
+     */
+    private boolean useGridLayout;
 
-		/**
-		 * A helper class to help make handling asynchronous
-		 * {@link ContentResolver} queries easier.
-		 * 
-		 * @param contentResolver
-		 *            {@link ContentResolver}
-		 */
-		public BackgroundQueryHandler(final ContentResolver contentResolver) {
-			super(contentResolver);
-		}
+    /**
+     * View holder.
+     */
+    private static class ViewHolder {
 
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		protected void onQueryComplete(final int token, final Object cookie, final Cursor cursor) {
-			switch (token) {
-			case MESSAGE_LIST_QUERY_TOKEN:
-				ConversationAdapter.this.changeCursor(cursor);
-				ConversationAdapter.this.activity
-						.setProgressBarIndeterminateVisibility(Boolean.FALSE);
-				return;
-			default:
-				return;
-			}
-		}
-	}
+        TextView tvBody;
 
-	/**
-	 * Default Constructor.
-	 * 
-	 * @param c
-	 *            {@link ConversationListActivity}
-	 */
-	public ConversationAdapter(final Activity c) {
-		super(c, R.layout.conversationlist_item, null, true);
-		this.activity = c;
+        TextView tvPerson;
 
-		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
-		this.useGridLayout = p.getBoolean("use_gridlayout", false);
-		if (useGridLayout) {
-			super.setViewResource(R.layout.conversation_square);
-		}
-		final ContentResolver cr = c.getContentResolver();
-		this.queryHandler = new BackgroundQueryHandler(cr);
-		SpamDB spam = new SpamDB(c);
-		spam.open();
-		this.blacklist = spam.getAllEntries();
-		spam.close();
-		spam = null;
+        TextView tvCount;
 
-		this.defaultContactAvatar = c.getResources().getDrawable(R.drawable.ic_contact_picture);
+        TextView tvDate;
 
-		this.convertNCR = PreferencesActivity.decodeDecimalNCR(c);
-		this.textSize = PreferencesActivity.getTextsize(c);
-		this.textColor = PreferencesActivity.getTextcolor(c);
+        ImageView ivPhoto;
 
-		Cursor cursor = null;
-		try {
-			cursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE, null, null,
-					null);
-		} catch (SQLiteException e) {
-			Log.e(TAG, "error getting conversations", e);
-		}
-		this.origCursor = cursor;
+        View vRead;
+    }
 
-		if (this.origCursor != null) {
-			this.origCursor.registerContentObserver(new ContentObserver(new Handler()) {
-				@Override
-				public void onChange(final boolean selfChange) {
-					super.onChange(selfChange);
-					if (!selfChange) {
-						Log.d(TAG, "call startMsgListQuery();");
-						ConversationAdapter.this.startMsgListQuery();
-						Log.d(TAG, "invalidate cache");
-						Conversation.invalidate();
-					}
-				}
-			});
-		}
-		// this.startMsgListQuery();
-	}
+    /**
+     * Handle queries in background.
+     *
+     * @author flx
+     */
+    private final class BackgroundQueryHandler extends AsyncQueryHandler {
 
-	/**
-	 * Start ConversationList query.
-	 */
-	public final void startMsgListQuery() {
-		// Cancel any pending queries
-		this.queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
-		try {
-			// Kick off the new query
-			this.activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
-			this.queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null, Conversation.URI_SIMPLE,
-					Conversation.PROJECTION_SIMPLE, null, null, SORT);
-		} catch (SQLiteException e) {
-			Log.e(TAG, "error starting query", e);
-		}
-	}
+        /**
+         * A helper class to help make handling asynchronous {@link ContentResolver} queries
+         * easier.
+         *
+         * @param contentResolver {@link ContentResolver}
+         */
+        public BackgroundQueryHandler(final ContentResolver contentResolver) {
+            super(contentResolver);
+        }
 
-	@Override
-	public final View getView(final int pos, final View convertView, final ViewGroup parent) {
-		return super.getView(pos, convertView, parent);
-	}
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void onQueryComplete(final int token, final Object cookie, final Cursor cursor) {
+            switch (token) {
+                case MESSAGE_LIST_QUERY_TOKEN:
+                    ConversationAdapter.this.changeCursor(cursor);
+                    ConversationAdapter.this.activity
+                            .setProgressBarIndeterminateVisibility(Boolean.FALSE);
+                    return;
+                default:
+            }
+        }
+    }
 
-	/*
-	 * 
-	 * /** {@inheritDoc}
-	 */
-	@Override
-	public final void bindView(final View view, final Context context, final Cursor cursor) {
-		final Conversation c = Conversation.getConversation(context, cursor, false);
-		final Contact contact = c.getContact();
+    /**
+     * Default Constructor.
+     *
+     * @param c {@link ConversationListActivity}
+     */
+    public ConversationAdapter(final Activity c) {
+        super(c, R.layout.conversationlist_item, null, true);
+        activity = c;
 
-		ViewHolder holder = (ViewHolder) view.getTag();
-		if (holder == null) {
-			holder = new ViewHolder();
-			holder.tvPerson = (TextView) view.findViewById(R.id.addr);
-			holder.tvCount = (TextView) view.findViewById(R.id.count);
-			holder.tvBody = (TextView) view.findViewById(R.id.body);
-			holder.tvDate = (TextView) view.findViewById(R.id.date);
-			holder.ivPhoto = (ImageView) view.findViewById(R.id.photo);
-			holder.vRead = (View) view.findViewById(R.id.read);
-			view.setTag(holder);
-		}
+        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
+        useGridLayout = p.getBoolean("use_gridlayout", false);
+        if (useGridLayout) {
+            super.setViewResource(R.layout.conversation_square);
+        }
+        final ContentResolver cr = c.getContentResolver();
+        queryHandler = new BackgroundQueryHandler(cr);
+        SpamDB spam = new SpamDB(c);
+        spam.open();
+        blacklist = spam.getAllEntries();
+        spam.close();
 
-		if (useGridLayout) {
-			holder.tvCount.setVisibility(View.GONE);
-		} else {
-			final int count = c.getCount();
-			if (count < 0) {
-				holder.tvCount.setText("");
-			} else {
-				holder.tvCount.setText("(" + c.getCount() + ")");
-			}
-		}
-		if (this.textSize > 0) {
-			holder.tvBody.setTextSize(this.textSize);
-		}
+        defaultContactAvatar = c.getResources().getDrawable(R.drawable.ic_contact_picture);
 
-		final int col = this.textColor;
-		if (col != 0) {
-			holder.tvPerson.setTextColor(col);
-			holder.tvBody.setTextColor(col);
-			holder.tvCount.setTextColor(col);
-			holder.tvDate.setTextColor(col);
-		}
+        convertNCR = PreferencesActivity.decodeDecimalNCR(c);
+        textSize = PreferencesActivity.getTextsize(c);
+        textColor = PreferencesActivity.getTextcolor(c);
 
-		if (useGridLayout || ConversationListActivity.showContactPhoto) {
-			holder.ivPhoto.setImageDrawable(contact.getAvatar(this.activity,
-					this.defaultContactAvatar));
-			holder.ivPhoto.setVisibility(View.VISIBLE);
-			if (!useGridLayout) {
-				holder.ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context, holder.ivPhoto,
-						contact.getLookUpUri(context.getContentResolver()), 2, null));
-			}
-		} else {
-			holder.ivPhoto.setVisibility(View.GONE);
-		}
+        Cursor cursor = null;
+        try {
+            cursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE, null, null,
+                    null);
+        } catch (SQLiteException e) {
+            Log.e(TAG, "error getting conversations", e);
+        }
+        /* {@link Cursor} to the original Content to listen for changes. */
+        Cursor origCursor = cursor;
 
-		if (this.isBlocked(contact.getNumber())) {
-			holder.tvPerson.setText("[" + contact.getDisplayName() + "]");
-		} else {
-			holder.tvPerson.setText(contact.getDisplayName());
-		}
+        if (origCursor != null) {
+            origCursor.registerContentObserver(new ContentObserver(new Handler()) {
+                @Override
+                public void onChange(final boolean selfChange) {
+                    super.onChange(selfChange);
+                    if (!selfChange) {
+                        Log.d(TAG, "call startMsgListQuery();");
+                        ConversationAdapter.this.startMsgListQuery();
+                        Log.d(TAG, "invalidate cache");
+                        Conversation.invalidate();
+                    }
+                }
+            });
+        }
+        // startMsgListQuery();
+    }
 
-		// read status
-		if (c.getRead() == 0) {
-			holder.vRead.setVisibility(View.VISIBLE);
-		} else {
-			holder.vRead.setVisibility(View.INVISIBLE);
-		}
+    /**
+     * Start ConversationList query.
+     */
+    public final void startMsgListQuery() {
+        // Cancel any pending queries
+        queryHandler.cancelOperation(MESSAGE_LIST_QUERY_TOKEN);
+        try {
+            // Kick off the new query
+            activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
+            queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null, Conversation.URI_SIMPLE,
+                    Conversation.PROJECTION_SIMPLE, null, null, SORT);
+        } catch (SQLiteException e) {
+            Log.e(TAG, "error starting query", e);
+        }
+    }
 
-		// body
-		String text = c.getBody();
-		if (text == null) {
-			text = context.getString(R.string.mms_conversation);
-		}
-		if (this.convertNCR) {
-			holder.tvBody.setText(Converter.convertDecNCR2Char(text));
-		} else {
-			holder.tvBody.setText(text);
-		}
+    @Override
+    public final View getView(final int pos, final View convertView, final ViewGroup parent) {
+        return super.getView(pos, convertView, parent);
+    }
 
-		// date
-		long time = c.getDate();
-		holder.tvDate.setText(ConversationListActivity.getDate(context, time));
+    /*
+     *
+     * /** {@inheritDoc}
+     */
+    @Override
+    public final void bindView(final View view, final Context context, final Cursor cursor) {
+        final Conversation c = Conversation.getConversation(context, cursor, false);
+        final Contact contact = c.getContact();
 
-		// presence
-		ImageView ivPresence = (ImageView) view.findViewById(R.id.presence);
-		if (contact.getPresenceState() > 0) {
-			ivPresence.setImageResource(Contact.getPresenceRes(contact.getPresenceState()));
-			ivPresence.setVisibility(View.VISIBLE);
-		} else {
-			ivPresence.setVisibility(View.GONE);
-		}
-	}
+        ViewHolder holder = (ViewHolder) view.getTag();
+        if (holder == null) {
+            holder = new ViewHolder();
+            holder.tvPerson = (TextView) view.findViewById(R.id.addr);
+            holder.tvCount = (TextView) view.findViewById(R.id.count);
+            holder.tvBody = (TextView) view.findViewById(R.id.body);
+            holder.tvDate = (TextView) view.findViewById(R.id.date);
+            holder.ivPhoto = (ImageView) view.findViewById(R.id.photo);
+            holder.vRead = view.findViewById(R.id.read);
+            view.setTag(holder);
+        }
 
-	/**
-	 * Check if address is blacklisted.
-	 * 
-	 * @param addr
-	 *            address
-	 * @return true if address is blocked
-	 */
-	private boolean isBlocked(final String addr) {
-		if (addr == null) {
-			return false;
-		}
-		final int l = this.blacklist.length;
-		for (int i = 0; i < l; i++) {
-			if (addr.equals(this.blacklist[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
+        if (useGridLayout) {
+            holder.tvCount.setVisibility(View.GONE);
+        } else {
+            final int count = c.getCount();
+            if (count < 0) {
+                holder.tvCount.setText("");
+            } else {
+                holder.tvCount.setText("(" + c.getCount() + ")");
+            }
+        }
+        if (textSize > 0) {
+            holder.tvBody.setTextSize(textSize);
+        }
+
+        final int col = textColor;
+        if (col != 0) {
+            holder.tvPerson.setTextColor(col);
+            holder.tvBody.setTextColor(col);
+            holder.tvCount.setTextColor(col);
+            holder.tvDate.setTextColor(col);
+        }
+
+        if (useGridLayout || ConversationListActivity.showContactPhoto) {
+            holder.ivPhoto.setImageDrawable(contact.getAvatar(activity,
+                    defaultContactAvatar));
+            holder.ivPhoto.setVisibility(View.VISIBLE);
+            if (!useGridLayout) {
+                holder.ivPhoto.setOnClickListener(WRAPPER.getQuickContact(context, holder.ivPhoto,
+                        contact.getLookUpUri(context.getContentResolver()), 2, null));
+            }
+        } else {
+            holder.ivPhoto.setVisibility(View.GONE);
+        }
+
+        if (isBlocked(contact.getNumber())) {
+            holder.tvPerson.setText("[" + contact.getDisplayName() + "]");
+        } else {
+            holder.tvPerson.setText(contact.getDisplayName());
+        }
+
+        // read status
+        if (c.getRead() == 0) {
+            holder.vRead.setVisibility(View.VISIBLE);
+        } else {
+            holder.vRead.setVisibility(View.INVISIBLE);
+        }
+
+        // body
+        String text = c.getBody();
+        if (text == null) {
+            text = context.getString(R.string.mms_conversation);
+        }
+        if (convertNCR) {
+            holder.tvBody.setText(Converter.convertDecNCR2Char(text));
+        } else {
+            holder.tvBody.setText(text);
+        }
+
+        // date
+        long time = c.getDate();
+        holder.tvDate.setText(ConversationListActivity.getDate(context, time));
+
+        // presence
+        ImageView ivPresence = (ImageView) view.findViewById(R.id.presence);
+        if (contact.getPresenceState() > 0) {
+            ivPresence.setImageResource(Contact.getPresenceRes(contact.getPresenceState()));
+            ivPresence.setVisibility(View.VISIBLE);
+        } else {
+            ivPresence.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Check if address is blacklisted.
+     *
+     * @param addr address
+     * @return true if address is blocked
+     */
+    private boolean isBlocked(final String addr) {
+        if (addr == null) {
+            return false;
+        }
+        for (String aBlacklist : blacklist) {
+            if (addr.equals(aBlacklist)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -100,30 +100,30 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	 */
 	public MessageAdapter(final MessageListActivity c, final Uri u) {
 		super(c, R.layout.messagelist_item, getCursor(c.getContentResolver(), u), true);
-		this.backgroundDrawableIn = PreferencesActivity.getBubblesIn(c);
-		this.backgroundDrawableOut = PreferencesActivity.getBubblesOut(c);
-		this.textSize = PreferencesActivity.getTextsize(c);
-		this.textColor = PreferencesActivity.getTextcolor(c);
-		this.convertNCR = PreferencesActivity.decodeDecimalNCR(c);
+		backgroundDrawableIn = PreferencesActivity.getBubblesIn(c);
+		backgroundDrawableOut = PreferencesActivity.getBubblesOut(c);
+		textSize = PreferencesActivity.getTextsize(c);
+		textColor = PreferencesActivity.getTextcolor(c);
+		convertNCR = PreferencesActivity.decodeDecimalNCR(c);
 		if (u == null || u.getLastPathSegment() == null) {
-			this.threadId = -1;
+			threadId = -1;
 		} else {
-			this.threadId = Integer.parseInt(u.getLastPathSegment());
+			threadId = Integer.parseInt(u.getLastPathSegment());
 		}
-		final Conversation conv = Conversation.getConversation(c, this.threadId, false);
+		final Conversation conv = Conversation.getConversation(c, threadId, false);
 		if (conv == null) {
-			this.address = null;
-			this.name = null;
-			this.displayName = null;
+			address = null;
+			name = null;
+			displayName = null;
 		} else {
 			final Contact contact = conv.getContact();
-			this.address = contact.getNumber();
-			this.name = contact.getName();
-			this.displayName = contact.getDisplayName();
+			address = contact.getNumber();
+			name = contact.getName();
+			displayName = contact.getDisplayName();
 		}
-		Log.d(TAG, "address: " + this.address);
-		Log.d(TAG, "name: " + this.name);
-		Log.d(TAG, "displayName: " + this.displayName);
+		Log.d(TAG, "address: " + address);
+		Log.d(TAG, "name: " + name);
+		Log.d(TAG, "displayName: " + displayName);
 	}
 
 	/**
@@ -201,10 +201,10 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			view.setTag(holder);
 		}
 
-		if (this.textSize > 0) {
-			holder.tvBody.setTextSize(this.textSize);
+		if (textSize > 0) {
+			holder.tvBody.setTextSize(textSize);
 		}
-		final int col = this.textColor;
+		final int col = textColor;
 		if (col != 0) {
 			holder.tvPerson.setTextColor(col);
 			holder.tvBody.setTextColor(col);
@@ -229,7 +229,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		case Message.MMS_OUT:
 			holder.tvPerson.setText(context.getString(R.string.me) + subject);
 			try {
-				holder.vLayout.setBackgroundResource(this.backgroundDrawableOut);
+				holder.vLayout.setBackgroundResource(backgroundDrawableOut);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
@@ -238,9 +238,9 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		case Message.SMS_IN:
 		case Message.MMS_IN:
 		default:
-			holder.tvPerson.setText(this.displayName + subject);
+			holder.tvPerson.setText(displayName + subject);
 			try {
-				holder.vLayout.setBackgroundResource(this.backgroundDrawableIn);
+				holder.vLayout.setBackgroundResource(backgroundDrawableIn);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "OOM while setting bg", e);
 			}
@@ -314,7 +314,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			holder.tvBody.setVisibility(View.INVISIBLE);
 			holder.btnImport.setVisibility(View.GONE);
 		} else {
-			if (this.convertNCR) {
+			if (convertNCR) {
 				holder.tvBody.setText(Converter.convertDecNCR2Char(text));
 			} else {
 				holder.tvBody.setText(text);

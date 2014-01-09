@@ -39,7 +39,7 @@ public final class PreferencesAppearanceActivity extends PreferenceActivity impl
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.addPreferencesFromResource(R.xml.prefs_appearance);
+		addPreferencesFromResource(R.xml.prefs_appearance);
 		PreferencesActivity.registerOnPreferenceClickListener(this);
 	}
 
@@ -53,7 +53,7 @@ public final class PreferencesAppearanceActivity extends PreferenceActivity impl
 			// app icon in Action Bar clicked; go home
 			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			this.startActivity(intent);
+			startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -14,27 +14,27 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_contact"
-        android:actionLayout="@layout/contact"
-        android:showAsAction="always|never"/>
+            android:id="@+id/item_contact"
+            android:actionLayout="@layout/contact"
+            android:showAsAction="always|never"/>
     <item
-        android:id="@+id/item_answer"
-        android:icon="@android:drawable/android:ic_menu_send"
-        android:title="@string/reply"/>
+            android:id="@+id/item_answer"
+            android:icon="@android:drawable/android:ic_menu_send"
+            android:title="@string/reply"/>
     <item
-        android:id="@+id/item_call"
-        android:icon="@drawable/android:ic_menu_call"
-        android:title="@string/call"/>
+            android:id="@+id/item_call"
+            android:icon="@drawable/android:ic_menu_call"
+            android:title="@string/call"/>
     <item
-        android:id="@+id/item_delete_thread"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/delete_thread_"/>
+            android:id="@+id/item_delete_thread"
+            android:icon="@android:drawable/ic_menu_delete"
+            android:title="@string/delete_thread_"/>
     <item
-        android:id="@+id/item_restore"
-        android:icon="@android:drawable/ic_menu_revert"
-        android:title="@string/restore_"/>
+            android:id="@+id/item_restore"
+            android:icon="@android:drawable/ic_menu_revert"
+            android:title="@string/restore_"/>
 
 </menu>

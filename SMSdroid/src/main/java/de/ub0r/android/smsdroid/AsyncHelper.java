@@ -52,8 +52,8 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 
 	private AsyncHelper(final Context c, final Conversation con) {
-		this.context = c;
-		this.conv = con;
+		context = c;
+		conv = con;
 	}
 
 	/**
@@ -89,11 +89,11 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected Void doInBackground(final Void... arg0) {
-		if (this.conv == null) {
+		if (conv == null) {
 			return null;
 		}
 		Log.d(TAG, "doInBackground()");
-		this.changed = this.conv.getContact().update(this.context, true,
+		changed = conv.getContact().update(context, true,
 				ConversationListActivity.showContactPhoto);
 		return null;
 	}
@@ -103,7 +103,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 	 */
 	@Override
 	protected void onPostExecute(final Void result) {
-		if (this.changed && adapter != null) {
+		if (changed && adapter != null) {
 			adapter.notifyDataSetChanged();
 		}
 	}

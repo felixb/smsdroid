@@ -38,10 +38,10 @@ public final class HeaderPreferenceFragment extends PreferenceFragment implement
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		final Activity a = this.getActivity();
-		int res = a.getResources().getIdentifier(this.getArguments().getString("resource"), "xml",
+		final Activity a = getActivity();
+		int res = a.getResources().getIdentifier(getArguments().getString("resource"), "xml",
 				a.getPackageName());
-		this.addPreferencesFromResource(res);
+		addPreferencesFromResource(res);
 
 		PreferencesActivity.registerOnPreferenceClickListener(this);
 	}
@@ -51,6 +51,6 @@ public final class HeaderPreferenceFragment extends PreferenceFragment implement
 	 */
 	@Override
 	public Context getContext() {
-		return this.getActivity();
+		return getActivity();
 	}
 }
