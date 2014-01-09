@@ -39,7 +39,7 @@ public final class PreferencesNotificationActivity extends PreferenceActivity im
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.addPreferencesFromResource(R.xml.prefs_notification);
+		addPreferencesFromResource(R.xml.prefs_notification);
 		PreferencesActivity.registerOnPreferenceClickListener(this);
 	}
 
@@ -53,7 +53,7 @@ public final class PreferencesNotificationActivity extends PreferenceActivity im
 			// app icon in Action Bar clicked; go home
 			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			this.startActivity(intent);
+			startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

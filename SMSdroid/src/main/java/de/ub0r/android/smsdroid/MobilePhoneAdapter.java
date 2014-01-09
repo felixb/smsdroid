@@ -68,8 +68,8 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 	 */
 	public MobilePhoneAdapter(final Context context) {
 		super(context, R.layout.recipient_dropdown_item, null, true);
-		this.mContentResolver = context.getContentResolver();
-		this.types = context.getResources().getStringArray(android.R.array.phoneTypes);
+		mContentResolver = context.getContentResolver();
+		types = context.getResources().getStringArray(android.R.array.phoneTypes);
 	}
 
 	/** View holder. */
@@ -94,8 +94,8 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 		holder.tv1.setText(cursor.getString(INDEX_NAME));
 		holder.tv2.setText(cursor.getString(INDEX_NUMBER));
 		final int i = cursor.getInt(INDEX_TYPE) - 1;
-		if (i >= 0 && i < this.types.length) {
-			holder.tv3.setText(this.types[i]);
+		if (i >= 0 && i < types.length) {
+			holder.tv3.setText(types[i]);
 		} else {
 			holder.tv3.setText("");
 		}
@@ -123,7 +123,7 @@ public class MobilePhoneAdapter extends ResourceCursorAdapter {
 		String where = prefsMobilesOnly ? Phone.TYPE + " = " + Phone.TYPE_MOBILE + " OR "
 				+ Phone.TYPE + " = " + Phone.TYPE_WORK_MOBILE : null;
 		Uri u = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(s));
-		Cursor cursor = this.mContentResolver.query(u, PROJECTION, where, null, Phone.DISPLAY_NAME);
+		Cursor cursor = mContentResolver.query(u, PROJECTION, where, null, Phone.DISPLAY_NAME);
 		return cursor;
 	}
 

@@ -65,702 +65,764 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * {@link FragmentActivity} showing a single conversation.
- * 
+ *
  * @author flx
  */
 public class MessageListActivity extends SherlockActivity implements OnItemClickListener,
-		OnItemLongClickListener, OnClickListener, OnLongClickListener {
-	/** Tag for output. */
-	private static final String TAG = "ml";
+        OnItemLongClickListener, OnClickListener, OnLongClickListener {
 
-	/** Ad's unit id. */
-	private static final String ADMOB_PUBID = "a14b9f701ee348f";
+    /**
+     * Tag for output.
+     */
+    private static final String TAG = "ml";
 
-	/** Ad's keywords. */
-	public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
-	static {
-		AD_KEYWORDS.add("android");
-		AD_KEYWORDS.add("mobile");
-		AD_KEYWORDS.add("handy");
-		AD_KEYWORDS.add("cellphone");
-		AD_KEYWORDS.add("google");
-		AD_KEYWORDS.add("htc");
-		AD_KEYWORDS.add("samsung");
-		AD_KEYWORDS.add("motorola");
-		AD_KEYWORDS.add("market");
-		AD_KEYWORDS.add("app");
-		AD_KEYWORDS.add("message");
-		AD_KEYWORDS.add("txt");
-		AD_KEYWORDS.add("sms");
-		AD_KEYWORDS.add("mms");
-		AD_KEYWORDS.add("game");
-		AD_KEYWORDS.add("websms");
-		AD_KEYWORDS.add("amazon");
-	}
+    /**
+     * Ad's unit id.
+     */
+    private static final String ADMOB_PUBID = "a14b9f701ee348f";
 
-	/** {@link ContactsWrapper}. */
-	private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
+    /**
+     * Ad's keywords.
+     */
+    public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
 
-	/** Number of items. */
-	private static final int WHICH_N = 8;
-	/** Index in dialog: mark view/add contact. */
-	private static final int WHICH_VIEW_CONTACT = 0;
-	/** Index in dialog: mark call contact. */
-	private static final int WHICH_CALL = 1;
-	/** Index in dialog: mark read/unread. */
-	private static final int WHICH_MARK_UNREAD = 2;
-	/** Index in dialog: reply. */
-	private static final int WHICH_REPLY = 3;
-	/** Index in dialog: forward. */
-	private static final int WHICH_FORWARD = 4;
-	/** Index in dialog: copy text. */
-	private static final int WHICH_COPY_TEXT = 5;
-	/** Index in dialog: view details. */
-	private static final int WHICH_VIEW_DETAILS = 6;
-	/** Index in dialog: delete. */
-	private static final int WHICH_DELETE = 7;
+    static {
+        AD_KEYWORDS.add("android");
+        AD_KEYWORDS.add("mobile");
+        AD_KEYWORDS.add("handy");
+        AD_KEYWORDS.add("cellphone");
+        AD_KEYWORDS.add("google");
+        AD_KEYWORDS.add("htc");
+        AD_KEYWORDS.add("samsung");
+        AD_KEYWORDS.add("motorola");
+        AD_KEYWORDS.add("market");
+        AD_KEYWORDS.add("app");
+        AD_KEYWORDS.add("message");
+        AD_KEYWORDS.add("txt");
+        AD_KEYWORDS.add("sms");
+        AD_KEYWORDS.add("mms");
+        AD_KEYWORDS.add("game");
+        AD_KEYWORDS.add("websms");
+        AD_KEYWORDS.add("amazon");
+    }
 
-	/** maximum number of lines in EditText */
-	private static final int MAX_EDITTEXT_LINES = 10;
+    /**
+     * {@link ContactsWrapper}.
+     */
+    private static final ContactsWrapper WRAPPER = ContactsWrapper.getInstance();
 
-	/** Package name for System's chooser. */
-	private static String chooserPackage = null;
+    /**
+     * Number of items.
+     */
+    private static final int WHICH_N = 8;
 
-	/** Used {@link Uri}. */
-	private Uri uri;
-	/** {@link Conversation} shown. */
-	private Conversation conv = null;
+    /**
+     * Index in dialog: mark view/add contact.
+     */
+    private static final int WHICH_VIEW_CONTACT = 0;
 
-	/** ORIG_URI to resolve. */
-	static final String URI = "content://mms-sms/conversations/";
+    /**
+     * Index in dialog: mark call contact.
+     */
+    private static final int WHICH_CALL = 1;
 
-	/** Dialog items shown if an item was long clicked. */
-	private final String[] longItemClickDialog = new String[WHICH_N];
+    /**
+     * Index in dialog: mark read/unread.
+     */
+    private static final int WHICH_MARK_UNREAD = 2;
 
-	/** Marked a message unread? */
-	private boolean markedUnread = false;
+    /**
+     * Index in dialog: reply.
+     */
+    private static final int WHICH_REPLY = 3;
 
-	/** {@link EditText} holding text. */
-	private EditText etText;
-	/** {@link ClipboardManager}. */
-	@SuppressWarnings("deprecation")
-	private ClipboardManager cbmgr;
+    /**
+     * Index in dialog: forward.
+     */
+    private static final int WHICH_FORWARD = 4;
 
-	/** Enable autosend. */
-	private boolean enableAutosend = true;
-	/** Show textfield. */
-	private boolean showTextField = true;
-	/** Show {@link Contact}'s photo. */
-	private boolean showPhoto = false;
+    /**
+     * Index in dialog: copy text.
+     */
+    private static final int WHICH_COPY_TEXT = 5;
 
-	/** Default {@link Drawable} for {@link Contact}s. */
-	private Drawable defaultContactAvatar = null;
+    /**
+     * Index in dialog: view details.
+     */
+    private static final int WHICH_VIEW_DETAILS = 6;
 
-    /** {@link MenuItem} holding {@link Contact}'s picture. */
-	private MenuItem contactItem = null;
+    /**
+     * Index in dialog: delete.
+     */
+    private static final int WHICH_DELETE = 7;
 
-    /** True, to update {@link Contact}'s photo. */
-	private boolean needContactUpdate = false;
+    /**
+     * maximum number of lines in EditText
+     */
+    private static final int MAX_EDITTEXT_LINES = 10;
 
-	/**
-	 * Get {@link ListView}.
-	 * 
-	 * @return {@link ListView}
-	 */
-	private ListView getListView() {
-		return (ListView) this.findViewById(android.R.id.list);
-	}
+    /**
+     * Package name for System's chooser.
+     */
+    private static String chooserPackage = null;
 
-	/**
-	 * Set {@link ListAdapter} to {@link ListView}.
-	 * 
-	 * @param la
-	 *            ListAdapter
-	 */
-	private void setListAdapter(final ListAdapter la) {
-		this.getListView().setAdapter(la);
-	}
+    /**
+     * Used {@link Uri}.
+     */
+    private Uri uri;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("deprecation")
-	@Override
-	public final void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-		this.enableAutosend = p.getBoolean(PreferencesActivity.PREFS_ENABLE_AUTOSEND, true);
-		this.showTextField = this.enableAutosend
-				|| p.getBoolean(PreferencesActivity.PREFS_SHOWTEXTFIELD, true);
-		this.showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
-		final boolean hideSend = p.getBoolean(PreferencesActivity.PREFS_HIDE_SEND, false);
-		this.setTheme(PreferencesActivity.getTheme(this));
-		Utils.setLocale(this);
-		this.setContentView(R.layout.messagelist);
-		SMSdroid.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
-				R.drawable.bg_striped, R.drawable.bg_striped_img);
-		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		Log.d(TAG, "onCreate()");
+    /**
+     * {@link Conversation} shown.
+     */
+    private Conversation conv = null;
 
-		if (this.showPhoto) {
-			this.defaultContactAvatar = this.getResources().getDrawable(
-					R.drawable.ic_contact_picture);
-		}
-		if (hideSend) {
-			this.findViewById(R.id.send_).setVisibility(View.GONE);
-		}
+    /**
+     * ORIG_URI to resolve.
+     */
+    static final String URI = "content://mms-sms/conversations/";
 
-		this.cbmgr = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
-		this.etText = (EditText) this.findViewById(R.id.text);
+    /**
+     * Dialog items shown if an item was long clicked.
+     */
+    private final String[] longItemClickDialog = new String[WHICH_N];
 
-		if (!this.showTextField) {
-			this.findViewById(R.id.text_layout).setVisibility(View.GONE);
-		}
+    /**
+     * Marked a message unread?
+     */
+    private boolean markedUnread = false;
 
-		this.parseIntent(this.getIntent());
+    /**
+     * {@link EditText} holding text.
+     */
+    private EditText etText;
 
-		final ListView list = this.getListView();
-		list.setOnItemLongClickListener(this);
-		list.setOnItemClickListener(this);
-		View v = this.findViewById(R.id.send_);
-		v.setOnClickListener(this);
-		v.setOnLongClickListener(this);
-		this.findViewById(R.id.text_paste).setOnClickListener(this);
-		/* TextWatcher updating char count on writing. */
+    /**
+     * {@link ClipboardManager}.
+     */
+    @SuppressWarnings("deprecation")
+    private ClipboardManager cbmgr;
+
+    /**
+     * Enable autosend.
+     */
+    private boolean enableAutosend = true;
+
+    /**
+     * Show textfield.
+     */
+    private boolean showTextField = true;
+
+    /**
+     * Show {@link Contact}'s photo.
+     */
+    private boolean showPhoto = false;
+
+    /**
+     * Default {@link Drawable} for {@link Contact}s.
+     */
+    private Drawable defaultContactAvatar = null;
+
+    /**
+     * {@link MenuItem} holding {@link Contact}'s picture.
+     */
+    private MenuItem contactItem = null;
+
+    /**
+     * True, to update {@link Contact}'s photo.
+     */
+    private boolean needContactUpdate = false;
+
+    /**
+     * Get {@link ListView}.
+     *
+     * @return {@link ListView}
+     */
+    private ListView getListView() {
+        return (ListView) findViewById(android.R.id.list);
+    }
+
+    /**
+     * Set {@link ListAdapter} to {@link ListView}.
+     *
+     * @param la ListAdapter
+     */
+    private void setListAdapter(final ListAdapter la) {
+        getListView().setAdapter(la);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public final void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        enableAutosend = p.getBoolean(PreferencesActivity.PREFS_ENABLE_AUTOSEND, true);
+        showTextField = enableAutosend
+                || p.getBoolean(PreferencesActivity.PREFS_SHOWTEXTFIELD, true);
+        showPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
+        final boolean hideSend = p.getBoolean(PreferencesActivity.PREFS_HIDE_SEND, false);
+        setTheme(PreferencesActivity.getTheme(this));
+        Utils.setLocale(this);
+        setContentView(R.layout.messagelist);
+        SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
+                R.drawable.bg_striped, R.drawable.bg_striped_img);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Log.d(TAG, "onCreate()");
+
+        if (showPhoto) {
+            defaultContactAvatar = getResources().getDrawable(
+                    R.drawable.ic_contact_picture);
+        }
+        if (hideSend) {
+            findViewById(R.id.send_).setVisibility(View.GONE);
+        }
+
+        cbmgr = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        etText = (EditText) findViewById(R.id.text);
+
+        if (!showTextField) {
+            findViewById(R.id.text_layout).setVisibility(View.GONE);
+        }
+
+        parseIntent(getIntent());
+
+        final ListView list = getListView();
+        list.setOnItemLongClickListener(this);
+        list.setOnItemClickListener(this);
+        View v = findViewById(R.id.send_);
+        v.setOnClickListener(this);
+        v.setOnLongClickListener(this);
+        findViewById(R.id.text_paste).setOnClickListener(this);
+        /* TextWatcher updating char count on writing. */
         MyTextWatcher textWatcher = new MyTextWatcher(this,
-                (TextView) this.findViewById(R.id.text_paste),
-                (TextView) this.findViewById(R.id.text_));
-		this.etText.addTextChangedListener(textWatcher);
-		this.etText.setMaxLines(MAX_EDITTEXT_LINES);
-		textWatcher.afterTextChanged(this.etText.getEditableText());
+                (TextView) findViewById(R.id.text_paste),
+                (TextView) findViewById(R.id.text_));
+        etText.addTextChangedListener(textWatcher);
+        etText.setMaxLines(MAX_EDITTEXT_LINES);
+        textWatcher.afterTextChanged(etText.getEditableText());
 
-		this.longItemClickDialog[WHICH_MARK_UNREAD] = this.getString(R.string.mark_unread_);
-		this.longItemClickDialog[WHICH_REPLY] = this.getString(R.string.reply);
-		this.longItemClickDialog[WHICH_FORWARD] = this.getString(R.string.forward_);
-		this.longItemClickDialog[WHICH_COPY_TEXT] = this.getString(R.string.copy_text_);
-		this.longItemClickDialog[WHICH_VIEW_DETAILS] = this.getString(R.string.view_details_);
-		this.longItemClickDialog[WHICH_DELETE] = this.getString(R.string.delete_message_);
-		// this.longItemClickDialog[WHICH_SPEAK] =
-		// this.getString(R.string.speak_);
-	}
+        longItemClickDialog[WHICH_MARK_UNREAD] = getString(R.string.mark_unread_);
+        longItemClickDialog[WHICH_REPLY] = getString(R.string.reply);
+        longItemClickDialog[WHICH_FORWARD] = getString(R.string.forward_);
+        longItemClickDialog[WHICH_COPY_TEXT] = getString(R.string.copy_text_);
+        longItemClickDialog[WHICH_VIEW_DETAILS] = getString(R.string.view_details_);
+        longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_message_);
+        // longItemClickDialog[WHICH_SPEAK] =
+        // getString(R.string.speak_);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final void onNewIntent(final Intent intent) {
-		super.onNewIntent(intent);
-		this.setIntent(intent);
-		this.parseIntent(intent);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected final void onNewIntent(final Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        parseIntent(intent);
+    }
 
-	/**
-	 * Parse data pushed by {@link Intent}.
-	 * 
-	 * @param intent
-	 *            {@link Intent}
-	 */
-	private void parseIntent(final Intent intent) {
-		Log.d(TAG, "parseIntent(" + intent + ")");
-		if (intent == null) {
-			return;
-		}
-		Log.d(TAG, "got action: " + intent.getAction());
-		Log.d(TAG, "got uri: " + intent.getData());
+    /**
+     * Parse data pushed by {@link Intent}.
+     *
+     * @param intent {@link Intent}
+     */
+    private void parseIntent(final Intent intent) {
+        Log.d(TAG, "parseIntent(" + intent + ")");
+        if (intent == null) {
+            return;
+        }
+        Log.d(TAG, "got action: " + intent.getAction());
+        Log.d(TAG, "got uri: " + intent.getData());
 
-		this.needContactUpdate = true;
+        needContactUpdate = true;
 
-		this.uri = intent.getData();
-		if (this.uri != null) {
-			if (!this.uri.toString().startsWith(URI)) {
-				this.uri = Uri.parse(URI + this.uri.getLastPathSegment());
-			}
-		} else {
-			final long tid = intent.getLongExtra("thread_id", -1L);
-			this.uri = Uri.parse(URI + tid);
-			if (tid < 0L) {
-				try {
-					this.startActivity(ConversationListActivity.getComposeIntent(this, null));
-				} catch (ActivityNotFoundException e) {
-					Log.e(TAG, "activity not found", e);
-					Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
-				}
-				this.finish();
-				return;
-			}
-		}
+        uri = intent.getData();
+        if (uri != null) {
+            if (!uri.toString().startsWith(URI)) {
+                uri = Uri.parse(URI + uri.getLastPathSegment());
+            }
+        } else {
+            final long tid = intent.getLongExtra("thread_id", -1L);
+            uri = Uri.parse(URI + tid);
+            if (tid < 0L) {
+                try {
+                    startActivity(ConversationListActivity.getComposeIntent(this, null, false));
+                } catch (ActivityNotFoundException e) {
+                    Log.e(TAG, "activity not found", e);
+                    Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
+                }
+                finish();
+                return;
+            }
+        }
 
-		final int threadId = Integer.parseInt(this.uri.getLastPathSegment());
-		final Conversation c = Conversation.getConversation(this, threadId, true);
-		this.conv = c;
+        final int threadId = Integer.parseInt(uri.getLastPathSegment());
+        final Conversation c = Conversation.getConversation(this, threadId, true);
+        conv = c;
 
-		if (c == null) {
-			Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
-			this.finish();
-			return;
-		}
+        if (c == null) {
+            Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
-		final Contact contact = c.getContact();
-		contact.update(this, false, true);
-		boolean showKeyboard = intent.getBooleanExtra("showKeyboard", false);
+        final Contact contact = c.getContact();
+        contact.update(this, false, true);
+        boolean showKeyboard = intent.getBooleanExtra("showKeyboard", false);
 
-		Log.d(TAG, "address: " + contact.getNumber());
-		Log.d(TAG, "name: " + contact.getName());
-		Log.d(TAG, "displayName: " + contact.getDisplayName());
-		Log.d(TAG, "showKeyboard: " + showKeyboard);
+        Log.d(TAG, "address: " + contact.getNumber());
+        Log.d(TAG, "name: " + contact.getName());
+        Log.d(TAG, "displayName: " + contact.getDisplayName());
+        Log.d(TAG, "showKeyboard: " + showKeyboard);
 
-		final ListView lv = this.getListView();
-		lv.setStackFromBottom(true);
+        final ListView lv = getListView();
+        lv.setStackFromBottom(true);
 
-		MessageAdapter adapter = new MessageAdapter(this, this.uri);
-		this.setListAdapter(adapter);
+        MessageAdapter adapter = new MessageAdapter(this, uri);
+        setListAdapter(adapter);
 
-		String displayName = contact.getDisplayName();
-		this.setTitle(displayName);
-		String number = contact.getNumber();
-		if (displayName.equals(number)) {
-			this.getSupportActionBar().setSubtitle(null);
-		} else {
-			this.getSupportActionBar().setSubtitle(number);
-		}
+        String displayName = contact.getDisplayName();
+        setTitle(displayName);
+        String number = contact.getNumber();
+        if (displayName.equals(number)) {
+            getSupportActionBar().setSubtitle(null);
+        } else {
+            getSupportActionBar().setSubtitle(number);
+        }
 
-		this.setContactIcon(contact);
+        setContactIcon(contact);
 
-		final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
-		if (!TextUtils.isEmpty(body)) {
-			this.etText.setText(body);
-			showKeyboard = true;
-		}
+        final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (!TextUtils.isEmpty(body)) {
+            etText.setText(body);
+            showKeyboard = true;
+        }
 
-		if (showKeyboard) {
-			this.etText.requestFocus();
-		}
+        if (showKeyboard) {
+            etText.requestFocus();
+        }
 
-		this.setRead();
-	}
+        setRead();
+    }
 
-	/**
-	 * Show {@link Contact}'s photo.
-	 * 
-	 * @param contact
-	 *            {@link Contact}
-	 */
-	private void setContactIcon(final Contact contact) {
+    /**
+     * Show {@link Contact}'s photo.
+     *
+     * @param contact {@link Contact}
+     */
+    private void setContactIcon(final Contact contact) {
 		/* Show {@link MenuItem} holding {@link Contact}'s picture . */
         boolean showContactItem;
         if (contact == null) {
-			Log.w(TAG, "setContactIcon(null)");
-			return;
-		}
-
-		final String name = contact.getName();
-		showContactItem = this.showPhoto && name != null;
-
-		if (this.contactItem == null) {
-			Log.w(TAG, "setContactIcon: contactItem == null");
-			return;
-		}
-
-		if (!this.needContactUpdate) {
-			Log.i(TAG, "skip setContactIcon()");
-			return;
-		}
-
-		if (this.showPhoto && name != null) {
-			// photo
-			ImageView ivPhoto = (ImageView) this.findViewById(R.id.photo);
-			if (ivPhoto == null) {
-				ivPhoto = (ImageView) this.contactItem.getActionView().findViewById(R.id.photo);
-			}
-			if (ivPhoto == null) {
-				Log.w(TAG, "ivPhoto == null");
-			} else {
-				ivPhoto.setImageDrawable(contact.getAvatar(this, this.defaultContactAvatar));
-				ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this, ivPhoto,
-						contact.getLookUpUri(this.getContentResolver()), 2, null));
-			}
-
-			// presence
-			ImageView ivPresence = (ImageView) this.findViewById(R.id.presence);
-			if (ivPresence == null) {
-				ivPresence = (ImageView) this.contactItem.getActionView().findViewById(
-						R.id.presence);
-			}
-			if (ivPresence == null) {
-				Log.w(TAG, "ivPresence == null");
-			} else {
-				if (contact.getPresenceState() > 0) {
-					ivPresence.setImageResource(Contact.getPresenceRes(contact.getPresenceState()));
-					ivPresence.setVisibility(View.VISIBLE);
-				} else {
-					ivPresence.setVisibility(View.INVISIBLE);
-				}
-			}
-		}
-
-		this.contactItem.setVisible(showContactItem);
-		this.needContactUpdate = false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final void onResume() {
-		super.onResume();
-		boolean noAds = DonationHelper.hideAds(this);
-		if (!noAds) {
-			Ads.loadAd(this, R.id.ad, ADMOB_PUBID, AD_KEYWORDS);
-		}
-
-		final ListView lv = this.getListView();
-		lv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-		lv.setAdapter(new MessageAdapter(this, this.uri));
-		this.markedUnread = false;
-
-		final Button btn = (Button) this.findViewById(R.id.send_);
-		if (this.showTextField) {
-			final Intent i = this.buildIntent(this.enableAutosend, false);
-			final PackageManager pm = this.getPackageManager();
-			ActivityInfo ai = null;
-			if (pm != null && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-					PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
-				ai = i.resolveActivityInfo(pm, 0);
-			}
-			this.etText.setMaxLines(MAX_EDITTEXT_LINES);
-
-			if (ai == null) {
-				btn.setText(null);
-				this.etText.setMinLines(1);
-			} else {
-				if (chooserPackage == null) {
-					final ActivityInfo cai = this.buildIntent(this.enableAutosend, true)
-							.resolveActivityInfo(pm, 0);
-					if (cai != null) {
-						chooserPackage = cai.packageName;
-					}
-				}
-				if (ai.packageName.equals(chooserPackage)) {
-					btn.setText(R.string.chooser_);
-				} else {
-					Log.d(TAG, "ai.pn: " + ai.packageName);
-					btn.setText(ai.loadLabel(pm));
-				}
-				this.etText.setMinLines(3);
-			}
-		} else {
-			btn.setText(null);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected final void onPause() {
-		super.onPause();
-		if (!this.markedUnread) {
-			this.setRead();
-		}
-	}
-
-	/**
-	 * Set all messages in a given thread as read.
-	 */
-	private void setRead() {
-		if (this.conv != null) {
-			ConversationListActivity.markRead(this, this.conv.getUri(), 1);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final boolean onCreateOptionsMenu(final Menu menu) {
-		this.getSupportMenuInflater().inflate(R.menu.messagelist, menu);
-		this.contactItem = menu.findItem(R.id.item_contact);
-		if (this.conv != null) {
-			this.setContactIcon(this.conv.getContact());
-		}
-		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-		if (p.getBoolean(PreferencesActivity.PREFS_HIDE_RESTORE, false)) {
-			menu.removeItem(R.id.item_restore);
-		}
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// app icon in Action Bar clicked; go home
-			Intent intent = new Intent(this, ConversationListActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			this.startActivity(intent);
-			return true;
-		case R.id.item_delete_thread:
-			ConversationListActivity.deleteMessages(this, this.uri, R.string.delete_thread_,
-					R.string.delete_thread_question, this);
-			return true;
-		case R.id.item_answer:
-			this.send(true, false);
-			return true;
-		case R.id.item_call:
-			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:"
-					+ this.conv.getContact().getNumber())));
-			return true;
-		case R.id.item_restore:
-			this.etText.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(
-					PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
-			return true;
-		case R.id.item_contact:
-			if (this.conv != null && this.contactItem != null) {
-				WRAPPER.showQuickContactFallBack(this, this.contactItem.getActionView(), this.conv
-						.getContact().getLookUpUri(this.getContentResolver()), 2, null);
-			}
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void onItemClick(final AdapterView<?> parent, final View view, final int position,
-			final long id) {
-		this.onItemLongClick(parent, view, position, id);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean onItemLongClick(final AdapterView<?> parent, final View view,
-			final int position, final long id) {
-		final Context context = this;
-		final Message m = Message.getMessage(this, (Cursor) parent.getItemAtPosition(position));
-		final Uri target = m.getUri();
-		final int read = m.getRead();
-		final int type = m.getType();
-		Builder builder = new Builder(context);
-		builder.setTitle(R.string.message_options_);
-
-		final Contact contact = this.conv.getContact();
-		final String a = contact.getNumber();
-		Log.d(TAG, "p: " + a);
-		final String n = contact.getName();
-
-		String[] items = this.longItemClickDialog;
-		if (TextUtils.isEmpty(n)) {
-			items[WHICH_VIEW_CONTACT] = this.getString(R.string.add_contact_);
-		} else {
-			items[WHICH_VIEW_CONTACT] = this.getString(R.string.view_contact_);
-		}
-		items[WHICH_CALL] = this.getString(R.string.call) + " " + contact.getDisplayName();
-		if (read == 0) {
-			items = items.clone();
-			items[WHICH_MARK_UNREAD] = context.getString(R.string.mark_read_);
-		}
-		if (type == Message.SMS_DRAFT) {
-			items = items.clone();
-			items[WHICH_FORWARD] = context.getString(R.string.send_draft_);
-		}
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
-				Intent i;
-				switch (which) {
-				case WHICH_VIEW_CONTACT:
-					if (n == null) {
-						i = ContactsWrapper.getInstance().getInsertPickIntent(a);
-						Conversation.flushCache();
-					} else {
-						final Uri u = MessageListActivity.this.conv.getContact().getUri();
-						i = new Intent(Intent.ACTION_VIEW, u);
-					}
-					try {
-						MessageListActivity.this.startActivity(i);
-					} catch (ActivityNotFoundException e) {
-						Log.e(TAG, "activity not found: " + i.getAction(), e);
-						Toast.makeText(MessageListActivity.this, "activity not found",
-								Toast.LENGTH_LONG).show();
-					}
-					break;
-				case WHICH_CALL:
-					MessageListActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-							.parse("tel:" + a)));
-					break;
-				case WHICH_MARK_UNREAD:
-					ConversationListActivity.markRead(context, target, 1 - read);
-					MessageListActivity.this.markedUnread = true;
-					break;
-				case WHICH_REPLY:
-					MessageListActivity.this.startActivity(ConversationListActivity
-							.getComposeIntent(MessageListActivity.this, a));
-					break;
-				case WHICH_FORWARD:
-					int resId;
-					if (type == Message.SMS_DRAFT) {
-						resId = R.string.send_draft_;
-						i = ConversationListActivity.getComposeIntent(MessageListActivity.this,
-								MessageListActivity.this.conv.getContact().getNumber());
-					} else {
-						resId = R.string.forward_;
-						i = new Intent(Intent.ACTION_SEND);
-						i.setType("text/plain");
-						i.putExtra("forwarded_message", true);
-					}
-					CharSequence text;
-					if (PreferencesActivity.decodeDecimalNCR(context)) {
-						text = Converter.convertDecNCR2Char(m.getBody());
-					} else {
-						text = m.getBody();
-					}
-					i.putExtra(Intent.EXTRA_TEXT, text);
-					i.putExtra("sms_body", text);
-					context.startActivity(Intent.createChooser(i, context.getString(resId)));
-					break;
-				case WHICH_COPY_TEXT:
-					final ClipboardManager cm = (ClipboardManager) context
-							.getSystemService(Context.CLIPBOARD_SERVICE);
-					if (PreferencesActivity.decodeDecimalNCR(context)) {
-						cm.setText(Converter.convertDecNCR2Char(m.getBody()));
-					} else {
-						cm.setText(m.getBody());
-					}
-					break;
-				case WHICH_VIEW_DETAILS:
-					final int t = m.getType();
-					Builder b = new Builder(context);
-					b.setTitle(R.string.view_details_);
-					b.setCancelable(true);
-					StringBuilder sb = new StringBuilder();
-					final String a = m.getAddress(context);
-					final long d = m.getDate();
-					final String ds = DateFormat.format(
-							context.getString(R.string.DATEFORMAT_details), d).toString();
-					String sentReceived;
-					String fromTo;
-					if (t == Calls.INCOMING_TYPE) {
-						sentReceived = context.getString(R.string.received_);
-						fromTo = context.getString(R.string.from_);
-					} else if (t == Calls.OUTGOING_TYPE) {
-						sentReceived = context.getString(R.string.sent_);
-						fromTo = context.getString(R.string.to_);
-					} else {
-						sentReceived = "ukwn:";
-						fromTo = "ukwn:";
-					}
-					sb.append(sentReceived).append(" ");
-					sb.append(ds);
-					sb.append("\n");
-					sb.append(fromTo).append(" ");
-					sb.append(a);
-					sb.append("\n");
-					sb.append(context.getString(R.string.type_));
-					if (m.isMMS()) {
-						sb.append(" MMS");
-					} else {
-						sb.append(" SMS");
-					}
-					b.setMessage(sb.toString());
-					b.setPositiveButton(android.R.string.ok, null);
-					b.show();
-					break;
-				case WHICH_DELETE:
-					ConversationListActivity.deleteMessages(context, target,
-							R.string.delete_message_, R.string.delete_message_question, null);
-					break;
-				default:
-					break;
-				}
-			}
-		});
-		builder.show();
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("deprecation")
-	public final void onClick(final View v) {
-		switch (v.getId()) {
-		case R.id.send_:
-			this.send(true, false);
-			return;
-		case R.id.text_paste:
-			final CharSequence s = this.cbmgr.getText();
-			this.etText.setText(s);
-			return;
-		default:
-            // should never happen
+            Log.w(TAG, "setContactIcon(null)");
+            return;
         }
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean onLongClick(final View v) {
-		switch (v.getId()) {
-		case R.id.send_:
-			this.send(false, true);
-			return true;
-		default:
-			return true;
-		}
-	}
+        final String name = contact.getName();
+        showContactItem = showPhoto && name != null;
 
-	/**
-	 * Build an {@link Intent} for sending it.
-	 * 
-	 * @param autosend
-	 *            autosend
-	 * @param showChooser
-	 *            show chooser
-	 * @return {@link Intent}
-	 */
-	private Intent buildIntent(final boolean autosend, final boolean showChooser) {
+        if (contactItem == null) {
+            Log.w(TAG, "setContactIcon: contactItem == null");
+            return;
+        }
+
+        if (!needContactUpdate) {
+            Log.i(TAG, "skip setContactIcon()");
+            return;
+        }
+
+        if (showPhoto && name != null) {
+            // photo
+            ImageView ivPhoto = (ImageView) findViewById(R.id.photo);
+            if (ivPhoto == null) {
+                ivPhoto = (ImageView) contactItem.getActionView().findViewById(R.id.photo);
+            }
+            if (ivPhoto == null) {
+                Log.w(TAG, "ivPhoto == null");
+            } else {
+                ivPhoto.setImageDrawable(contact.getAvatar(this, defaultContactAvatar));
+                ivPhoto.setOnClickListener(WRAPPER.getQuickContact(this, ivPhoto,
+                        contact.getLookUpUri(getContentResolver()), 2, null));
+            }
+
+            // presence
+            ImageView ivPresence = (ImageView) findViewById(R.id.presence);
+            if (ivPresence == null) {
+                ivPresence = (ImageView) contactItem.getActionView().findViewById(
+                        R.id.presence);
+            }
+            if (ivPresence == null) {
+                Log.w(TAG, "ivPresence == null");
+            } else {
+                if (contact.getPresenceState() > 0) {
+                    ivPresence.setImageResource(Contact.getPresenceRes(contact.getPresenceState()));
+                    ivPresence.setVisibility(View.VISIBLE);
+                } else {
+                    ivPresence.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+
+        contactItem.setVisible(showContactItem);
+        needContactUpdate = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected final void onResume() {
+        super.onResume();
+        boolean noAds = DonationHelper.hideAds(this);
+        if (!noAds) {
+            Ads.loadAd(this, R.id.ad, ADMOB_PUBID, AD_KEYWORDS);
+        }
+
+        final ListView lv = getListView();
+        lv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        lv.setAdapter(new MessageAdapter(this, uri));
+        markedUnread = false;
+
+        final Button btn = (Button) findViewById(R.id.send_);
+        if (showTextField) {
+            final Intent i = buildIntent(enableAutosend, false);
+            final PackageManager pm = getPackageManager();
+            ActivityInfo ai = null;
+            if (pm != null && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+                    PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
+                ai = i.resolveActivityInfo(pm, 0);
+            }
+            etText.setMaxLines(MAX_EDITTEXT_LINES);
+
+            if (ai == null) {
+                btn.setText(null);
+                etText.setMinLines(1);
+            } else {
+                if (chooserPackage == null) {
+                    final ActivityInfo cai = buildIntent(enableAutosend, true)
+                            .resolveActivityInfo(pm, 0);
+                    if (cai != null) {
+                        chooserPackage = cai.packageName;
+                    }
+                }
+                if (ai.packageName.equals(chooserPackage)) {
+                    btn.setText(R.string.chooser_);
+                } else {
+                    Log.d(TAG, "ai.pn: " + ai.packageName);
+                    btn.setText(ai.loadLabel(pm));
+                }
+                etText.setMinLines(3);
+            }
+        } else {
+            btn.setText(null);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected final void onPause() {
+        super.onPause();
+        if (!markedUnread) {
+            setRead();
+        }
+    }
+
+    /**
+     * Set all messages in a given thread as read.
+     */
+    private void setRead() {
+        if (conv != null) {
+            ConversationListActivity.markRead(this, conv.getUri(), 1);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final boolean onCreateOptionsMenu(final Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.messagelist, menu);
+        contactItem = menu.findItem(R.id.item_contact);
+        if (conv != null) {
+            setContactIcon(conv.getContact());
+        }
+        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        if (p.getBoolean(PreferencesActivity.PREFS_HIDE_RESTORE, false)) {
+            menu.removeItem(R.id.item_restore);
+        }
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in Action Bar clicked; go home
+                Intent intent = new Intent(this, ConversationListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            case R.id.item_delete_thread:
+                ConversationListActivity.deleteMessages(this, uri, R.string.delete_thread_,
+                        R.string.delete_thread_question, this);
+                return true;
+            case R.id.item_answer:
+                send(true, false);
+                return true;
+            case R.id.item_call:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:"
+                        + conv.getContact().getNumber())));
+                return true;
+            case R.id.item_restore:
+                etText.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(
+                        PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
+                return true;
+            case R.id.item_contact:
+                if (conv != null && contactItem != null) {
+                    WRAPPER.showQuickContactFallBack(this, contactItem.getActionView(), conv
+                            .getContact().getLookUpUri(getContentResolver()), 2, null);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final void onItemClick(final AdapterView<?> parent, final View view, final int position,
+            final long id) {
+        onItemLongClick(parent, view, position, id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final boolean onItemLongClick(final AdapterView<?> parent, final View view,
+            final int position, final long id) {
+        final Context context = this;
+        final Message m = Message.getMessage(this, (Cursor) parent.getItemAtPosition(position));
+        final Uri target = m.getUri();
+        final int read = m.getRead();
+        final int type = m.getType();
+        Builder builder = new Builder(context);
+        builder.setTitle(R.string.message_options_);
+
+        final Contact contact = conv.getContact();
+        final String a = contact.getNumber();
+        Log.d(TAG, "p: " + a);
+        final String n = contact.getName();
+
+        String[] items = longItemClickDialog;
+        if (TextUtils.isEmpty(n)) {
+            items[WHICH_VIEW_CONTACT] = getString(R.string.add_contact_);
+        } else {
+            items[WHICH_VIEW_CONTACT] = getString(R.string.view_contact_);
+        }
+        items[WHICH_CALL] = getString(R.string.call) + " " + contact.getDisplayName();
+        if (read == 0) {
+            items = items.clone();
+            items[WHICH_MARK_UNREAD] = context.getString(R.string.mark_read_);
+        }
+        if (type == Message.SMS_DRAFT) {
+            items = items.clone();
+            items[WHICH_FORWARD] = context.getString(R.string.send_draft_);
+        }
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onClick(final DialogInterface dialog, final int which) {
+                Intent i;
+                switch (which) {
+                    case WHICH_VIEW_CONTACT:
+                        if (n == null) {
+                            i = ContactsWrapper.getInstance().getInsertPickIntent(a);
+                            Conversation.flushCache();
+                        } else {
+                            final Uri u = MessageListActivity.this.conv.getContact().getUri();
+                            i = new Intent(Intent.ACTION_VIEW, u);
+                        }
+                        try {
+                            MessageListActivity.this.startActivity(i);
+                        } catch (ActivityNotFoundException e) {
+                            Log.e(TAG, "activity not found: " + i.getAction(), e);
+                            Toast.makeText(MessageListActivity.this, "activity not found",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    case WHICH_CALL:
+                        MessageListActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                                .parse("tel:" + a)));
+                        break;
+                    case WHICH_MARK_UNREAD:
+                        ConversationListActivity.markRead(context, target, 1 - read);
+                        MessageListActivity.this.markedUnread = true;
+                        break;
+                    case WHICH_REPLY:
+                        MessageListActivity.this.startActivity(ConversationListActivity
+                                .getComposeIntent(MessageListActivity.this, a, false));
+                        break;
+                    case WHICH_FORWARD:
+                        int resId;
+                        if (type == Message.SMS_DRAFT) {
+                            resId = R.string.send_draft_;
+                            i = ConversationListActivity.getComposeIntent(MessageListActivity.this,
+                                    MessageListActivity.this.conv.getContact().getNumber(), false);
+                        } else {
+                            resId = R.string.forward_;
+                            i = new Intent(Intent.ACTION_SEND);
+                            i.setType("text/plain");
+                            i.putExtra("forwarded_message", true);
+                        }
+                        CharSequence text;
+                        if (PreferencesActivity.decodeDecimalNCR(context)) {
+                            text = Converter.convertDecNCR2Char(m.getBody());
+                        } else {
+                            text = m.getBody();
+                        }
+                        i.putExtra(Intent.EXTRA_TEXT, text);
+                        i.putExtra("sms_body", text);
+                        context.startActivity(Intent.createChooser(i, context.getString(resId)));
+                        break;
+                    case WHICH_COPY_TEXT:
+                        final ClipboardManager cm = (ClipboardManager) context
+                                .getSystemService(Context.CLIPBOARD_SERVICE);
+                        if (PreferencesActivity.decodeDecimalNCR(context)) {
+                            cm.setText(Converter.convertDecNCR2Char(m.getBody()));
+                        } else {
+                            cm.setText(m.getBody());
+                        }
+                        break;
+                    case WHICH_VIEW_DETAILS:
+                        final int t = m.getType();
+                        Builder b = new Builder(context);
+                        b.setTitle(R.string.view_details_);
+                        b.setCancelable(true);
+                        StringBuilder sb = new StringBuilder();
+                        final String a = m.getAddress(context);
+                        final long d = m.getDate();
+                        final String ds = DateFormat.format(
+                                context.getString(R.string.DATEFORMAT_details), d).toString();
+                        String sentReceived;
+                        String fromTo;
+                        if (t == Calls.INCOMING_TYPE) {
+                            sentReceived = context.getString(R.string.received_);
+                            fromTo = context.getString(R.string.from_);
+                        } else if (t == Calls.OUTGOING_TYPE) {
+                            sentReceived = context.getString(R.string.sent_);
+                            fromTo = context.getString(R.string.to_);
+                        } else {
+                            sentReceived = "ukwn:";
+                            fromTo = "ukwn:";
+                        }
+                        sb.append(sentReceived).append(" ");
+                        sb.append(ds);
+                        sb.append("\n");
+                        sb.append(fromTo).append(" ");
+                        sb.append(a);
+                        sb.append("\n");
+                        sb.append(context.getString(R.string.type_));
+                        if (m.isMMS()) {
+                            sb.append(" MMS");
+                        } else {
+                            sb.append(" SMS");
+                        }
+                        b.setMessage(sb.toString());
+                        b.setPositiveButton(android.R.string.ok, null);
+                        b.show();
+                        break;
+                    case WHICH_DELETE:
+                        ConversationListActivity.deleteMessages(context, target,
+                                R.string.delete_message_, R.string.delete_message_question, null);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        builder.show();
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("deprecation")
+    public final void onClick(final View v) {
+        switch (v.getId()) {
+            case R.id.send_:
+                send(true, false);
+                return;
+            case R.id.text_paste:
+                final CharSequence s = cbmgr.getText();
+                etText.setText(s);
+                return;
+            default:
+                // should never happen
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final boolean onLongClick(final View v) {
+        switch (v.getId()) {
+            case R.id.send_:
+                send(false, true);
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    /**
+     * Build an {@link Intent} for sending it.
+     *
+     * @param autosend    autosend
+     * @param showChooser show chooser
+     * @return {@link Intent}
+     */
+    private Intent buildIntent(final boolean autosend, final boolean showChooser) {
         //noinspection ConstantConditions
-        final String text = this.etText.getText().toString().trim();
-		final Intent i = ConversationListActivity.getComposeIntent(this, this.conv.getContact()
-				.getNumber());
-		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		i.putExtra(Intent.EXTRA_TEXT, text);
-		i.putExtra("sms_body", text);
-		if (autosend && this.enableAutosend && text.length() > 0) {
-			i.putExtra("AUTOSEND", "1");
-		}
-		if (showChooser) {
-            i.setComponent(null);
-			return Intent.createChooser(i, this.getString(R.string.reply));
-		} else {
-			return i;
-		}
-	}
+        final String text = etText.getText().toString().trim();
+        final Intent i = ConversationListActivity.getComposeIntent(this, conv.getContact()
+                .getNumber(), showChooser);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(Intent.EXTRA_TEXT, text);
+        i.putExtra("sms_body", text);
+        if (autosend && enableAutosend && text.length() > 0) {
+            i.putExtra("AUTOSEND", "1");
+        }
+        if (showChooser) {
+            return Intent.createChooser(i, getString(R.string.reply));
+        } else {
+            return i;
+        }
+    }
 
-	/**
-	 * Answer/send message.
-	 * 
-	 * @param autosend
-	 *            enable autosend
-	 * @param showChooser
-	 *            show chooser
-	 */
-	private void send(final boolean autosend, final boolean showChooser) {
-		final Intent i = this.buildIntent(autosend, showChooser);
-		this.startActivity(i);
+    /**
+     * Answer/send message.
+     *
+     * @param autosend    enable autosend
+     * @param showChooser show chooser
+     */
+    private void send(final boolean autosend, final boolean showChooser) {
+        final Intent i = buildIntent(autosend, showChooser);
+        startActivity(i);
         //noinspection ConstantConditions
         PreferenceManager
-				.getDefaultSharedPreferences(this)
-				.edit()
-				.putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
-						this.etText.getText().toString()).commit();
-		this.etText.setText("");
-	}
+                .getDefaultSharedPreferences(this)
+                .edit()
+                .putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
+                        etText.getText().toString()).commit();
+        etText.setText("");
+    }
 }

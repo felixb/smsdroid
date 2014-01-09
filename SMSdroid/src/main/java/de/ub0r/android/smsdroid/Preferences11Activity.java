@@ -42,13 +42,13 @@ public final class Preferences11Activity extends PreferenceActivity
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTitle(R.string.settings);
+        setTitle(R.string.settings);
         Utils.setLocale(this);
     }
 
     @Override
     public void onBuildHeaders(final List<Header> target) {
-        this.loadHeadersFromResource(R.xml.preference_headers, target);
+        loadHeadersFromResource(R.xml.preference_headers, target);
     }
 
     @Override

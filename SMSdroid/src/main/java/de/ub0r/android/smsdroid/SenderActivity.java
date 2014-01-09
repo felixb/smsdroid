@@ -76,7 +76,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.handleIntent(this.getIntent());
+		handleIntent(getIntent());
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	@Override
 	protected void onNewIntent(final Intent intent) {
 		super.onNewIntent(intent);
-		this.handleIntent(intent);
+		handleIntent(intent);
 	}
 
 	/**
@@ -96,29 +96,29 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	 */
 	@SuppressWarnings("deprecation")
 	private void handleIntent(final Intent intent) {
-		if (this.parseIntent(intent)) {
-			this.setTheme(android.R.style.Theme_Translucent_NoTitleBar);
-			this.send();
-			this.finish();
+		if (parseIntent(intent)) {
+			setTheme(android.R.style.Theme_Translucent_NoTitleBar);
+			send();
+			finish();
 		} else {
-			int tid = this.getThreadId();
+			int tid = getThreadId();
 			if (tid >= 0) {
 				Intent i = new Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(
 						ConversationListActivity.URI, String.valueOf(tid)), this,
 						MessageListActivity.class);
 				i.putExtra("showKeyboard", true);
-				this.startActivity(i);
-				this.finish();
+				startActivity(i);
+				finish();
 			} else {
-				this.setTheme(PreferencesActivity.getTheme(this));
-				SMSdroid.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+				setTheme(PreferencesActivity.getTheme(this));
+				SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
 						R.drawable.bg_striped, R.drawable.bg_striped_img);
-				this.setContentView(R.layout.sender);
-				this.findViewById(R.id.text_paste).setOnClickListener(this);
-				final EditText et = (EditText) this.findViewById(R.id.text);
+				setContentView(R.layout.sender);
+				findViewById(R.id.text_paste).setOnClickListener(this);
+				final EditText et = (EditText) findViewById(R.id.text);
 				et.addTextChangedListener(new MyTextWatcher(this, (TextView) this
-						.findViewById(R.id.text_paste), (TextView) this.findViewById(R.id.text_)));
-				et.setText(this.text);
+						.findViewById(R.id.text_paste), (TextView) findViewById(R.id.text_)));
+				et.setText(text);
 				final MultiAutoCompleteTextView mtv = (MultiAutoCompleteTextView) this
 						.findViewById(R.id.to);
 				final MobilePhoneAdapter mpa = new MobilePhoneAdapter(this);
@@ -127,26 +127,26 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 						PreferencesActivity.PREFS_MOBILE_ONLY, false));
 				mtv.setAdapter(mpa);
 				mtv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-				mtv.setText(this.to);
-				if (!TextUtils.isEmpty(this.to)) {
-					this.to = this.to.trim();
-					if (this.to.endsWith(",")) {
-						this.to = this.to.substring(0, this.to.length() - 1).trim();
+				mtv.setText(to);
+				if (!TextUtils.isEmpty(to)) {
+					to = to.trim();
+					if (to.endsWith(",")) {
+						to = to.substring(0, to.length() - 1).trim();
 					}
-					if (this.to.indexOf('<') < 0) {
+					if (to.indexOf('<') < 0) {
 						// try to fetch recipient's name from phone book
 						String n = ContactsWrapper.getInstance().getNameForNumber(
-								this.getContentResolver(), this.to);
+								getContentResolver(), to);
 						if (n != null) {
-							this.to = n + " <" + this.to + ">, ";
+							to = n + " <" + to + ">, ";
 						}
 					}
-					mtv.setText(this.to);
+					mtv.setText(to);
 					et.requestFocus();
 				} else {
 					mtv.requestFocus();
 				}
-				this.cbmgr = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
+				cbmgr = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 			}
 		}
 	}
@@ -165,15 +165,15 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 		}
 		Log.d(TAG, "got action: " + intent.getAction());
 
-		this.to = null;
+		to = null;
 		String u = intent.getDataString();
 		try {
 			if (!TextUtils.isEmpty(u) && u.contains(":")) {
 				String t = u.split(":")[1];
 				if (t.startsWith("+")) {
-					this.to = "+" + URLDecoder.decode(t.substring(1));
+					to = "+" + URLDecoder.decode(t.substring(1));
 				} else {
-					this.to = URLDecoder.decode(t);
+					to = URLDecoder.decode(t);
 				}
 			}
 		} catch (IndexOutOfBoundsException e) {
@@ -182,16 +182,16 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 		u = null;
 
 		CharSequence cstext = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
-		this.text = null;
+		text = null;
 		if (cstext != null) {
-			this.text = cstext.toString();
+			text = cstext.toString();
 			cstext = null;
 		}
-		if (TextUtils.isEmpty(this.text)) {
+		if (TextUtils.isEmpty(text)) {
 			Log.i(TAG, "text missing");
 			return false;
 		}
-		if (TextUtils.isEmpty(this.to)) {
+		if (TextUtils.isEmpty(to)) {
 			Log.i(TAG, "recipient missing");
 			return false;
 		}
@@ -200,14 +200,14 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	}
 
 	private int getThreadId() {
-		if (TextUtils.isEmpty(this.to)) {
+		if (TextUtils.isEmpty(to)) {
 			return -1;
 		}
-		String filter = this.to.replaceAll("[-()/ ]", "");
+		String filter = to.replaceAll("[-()/ ]", "");
 		if (filter.length() > 6) {
 			filter = filter.substring(filter.length() - 6);
 		}
-		Cursor c = this.getContentResolver().query(Uri.parse("content://sms"),
+		Cursor c = getContentResolver().query(Uri.parse("content://sms"),
 				new String[] { "thread_id" }, "address like '%" + filter + "'", null, null);
 		int threadId = -1;
 		if (c.moveToFirst()) {
@@ -235,7 +235,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 				+ l[3]);
 
 		// save draft
-		final ContentResolver cr = this.getContentResolver();
+		final ContentResolver cr = getContentResolver();
 		ContentValues values = new ContentValues();
 		values.put(TYPE, Message.SMS_DRAFT);
 		values.put(BODY, message);
@@ -300,16 +300,16 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	 * @return true, if message was sent
 	 */
 	private boolean send() {
-		if (TextUtils.isEmpty(this.to) || TextUtils.isEmpty(this.text)) {
+		if (TextUtils.isEmpty(to) || TextUtils.isEmpty(text)) {
 			return false;
 		}
-		for (String r : this.to.split(",")) {
+		for (String r : to.split(",")) {
 			r = MobilePhoneAdapter.cleanRecipient(r);
 			if (TextUtils.isEmpty(r)) {
 				Log.w(TAG, "skip empty recipipient: " + r);
 				continue;
 			}
-			this.send(r, this.text);
+			send(r, text);
 		}
 		return true;
 	}
@@ -322,8 +322,8 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	public void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.text_paste:
-			final CharSequence s = this.cbmgr.getText();
-			((EditText) this.findViewById(R.id.text)).setText(s);
+			final CharSequence s = cbmgr.getText();
+			((EditText) findViewById(R.id.text)).setText(s);
 			return;
 		default:
 			break;
@@ -335,7 +335,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
-		this.getSupportMenuInflater().inflate(R.menu.sender, menu);
+		getSupportMenuInflater().inflate(R.menu.sender, menu);
 		return true;
 	}
 
@@ -349,15 +349,15 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 			// app icon in Action Bar clicked; go home
 			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			this.startActivity(intent);
+			startActivity(intent);
 			return true;
 		case R.id.item_send:
-			EditText et = (EditText) this.findViewById(R.id.text);
-			this.text = et.getText().toString();
-			et = (MultiAutoCompleteTextView) this.findViewById(R.id.to);
-			this.to = et.getText().toString();
-			if (this.send()) {
-				this.finish();
+			EditText et = (EditText) findViewById(R.id.text);
+			text = et.getText().toString();
+			et = (MultiAutoCompleteTextView) findViewById(R.id.to);
+			to = et.getText().toString();
+			if (send()) {
+				finish();
 			}
 			return true;
 		default:

@@ -1,76 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-		Copyright (C) 2009-2012 Felix Bechstein
-	-->
-	<!--
-		This file is part of SMSdroid. This program is free software; you can
-		redistribute it and/or modify it under the terms of the GNU General
-		Public License as published by the Free Software Foundation; either
-		version 3 of the License, or (at your option) any later version.
-	-->
-	<!--
-		This program is distributed in the hope that it will be useful, but
-		WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-		General Public License for more details. You should have received a
-		copy of the GNU General Public License along with this program; If
-		not, see <http://www.gnu.org/licenses/>.
-	-->
+<!--
+    Copyright (C) 2009-2012 Felix Bechstein
+-->
+<!--
+    This file is part of SMSdroid. This program is free software; you can
+    redistribute it and/or modify it under the terms of the GNU General
+    Public License as published by the Free Software Foundation; either
+    version 3 of the License, or (at your option) any later version.
+-->
+<!--
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    General Public License for more details. You should have received a
+    copy of the GNU General Public License along with this program; If
+    not, see <http://www.gnu.org/licenses/>.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:orientation="horizontal" android:paddingRight="7dip">
-	<View android:id="@+id/read" android:background="#FF00AA00"
-		android:layout_height="fill_parent" android:layout_width="5dip"
-		android:layout_marginRight="1dip" />
-	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:id="@+id/layout">
-		<TextView android:layout_width="wrap_content"
-			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
-			android:layout_height="wrap_content" android:id="@+id/date"
-			android:text="@+id/date" android:singleLine="true" />
-		<ImageView android:layout_width="12sp"
-			android:layout_height="18sp" android:id="@+id/inout"
-			android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/date"
-			android:src="@drawable/ic_call_log_list_incoming_call"
-			android:scaleType="fitStart" />
-		<ImageView android:id="@+id/pending" android:layout_height="fill_parent"
-			android:layout_width="wrap_content" android:layout_marginLeft="2dip"
-			android:src="@drawable/ic_sms_mms_pending" android:visibility="gone"
-			android:layout_alignParentRight="true" android:layout_below="@+id/date" />
-		<TextView android:text="@+id/addr" android:id="@+id/addr"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:singleLine="true" android:layout_alignParentTop="true"
-			android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/inout" />
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/body"
-			android:text="@+id/body" android:layout_below="@+id/addr"
-			android:layout_toLeftOf="@+id/pending" android:singleLine="false"
-			android:autoLink="all" android:layout_alignParentLeft="true" />
-		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/picture"
-			android:visibility="gone" android:layout_below="@id/body"
-			android:maxWidth="178dip" android:maxHeight="178dip"
-			android:adjustViewBounds="true" android:background="@android:drawable/picture_frame"
-			android:layout_centerHorizontal="true" />
+              android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:orientation="horizontal" android:paddingRight="7dip">
+    <View android:id="@+id/read" android:background="#FF00AA00"
+          android:layout_height="fill_parent" android:layout_width="5dip"
+          android:layout_marginRight="1dip"/>
+    <RelativeLayout android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" android:id="@+id/layout">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+                  android:layout_height="wrap_content" android:id="@+id/date"
+                  android:text="@+id/date" android:singleLine="true"/>
+        <ImageView android:layout_width="12sp"
+                   android:layout_height="18sp" android:id="@+id/inout"
+                   android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/date"
+                   android:src="@drawable/ic_call_log_list_incoming_call"
+                   android:scaleType="fitStart"/>
+        <ImageView android:id="@+id/pending" android:layout_height="fill_parent"
+                   android:layout_width="wrap_content" android:layout_marginLeft="2dip"
+                   android:src="@drawable/ic_sms_mms_pending" android:visibility="gone"
+                   android:layout_alignParentRight="true" android:layout_below="@+id/date"/>
+        <TextView android:text="@+id/addr" android:id="@+id/addr"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:singleLine="true" android:layout_alignParentTop="true"
+                  android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/inout"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" android:id="@+id/body"
+                  android:text="@+id/body" android:layout_below="@+id/addr"
+                  android:layout_toLeftOf="@+id/pending" android:singleLine="false"
+                  android:autoLink="all" android:layout_alignParentLeft="true"/>
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" android:id="@+id/picture"
+                   android:visibility="gone" android:layout_below="@id/body"
+                   android:maxWidth="178dip" android:maxHeight="178dip"
+                   android:adjustViewBounds="true"
+                   android:background="@android:drawable/picture_frame"
+                   android:layout_centerHorizontal="true"/>
 
-		<Button android:id="@+id/btn_download_msg"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical" android:text="@string/download_"
-			android:visibility="gone" android:layout_centerHorizontal="true"
-			android:layout_below="@id/body" />
-		<Button android:id="@+id/btn_import_contact"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical" android:text="@string/import_contact_"
-			android:visibility="gone" android:layout_centerHorizontal="true"
-			android:layout_below="@id/body" />
-		<!--
-			<TextView android:id="@+id/label_downloading"
-			android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:layout_marginLeft="5dp"
-			android:layout_marginRight="5dp" android:gravity="center"
-			android:text="@string/downloading_" android:visibility="gone"
-			android:layout_centerHorizontal="true"
-			android:layout_below="@id/btn_download_msg" />
-		-->
-	</RelativeLayout>
+        <Button android:id="@+id/btn_download_msg"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:text="@string/download_"
+                android:visibility="gone" android:layout_centerHorizontal="true"
+                android:layout_below="@id/body"/>
+        <Button android:id="@+id/btn_import_contact"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:text="@string/import_contact_"
+                android:visibility="gone" android:layout_centerHorizontal="true"
+                android:layout_below="@id/body"/>
+        <!--
+            <TextView android:id="@+id/label_downloading"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" android:gravity="center"
+            android:text="@string/downloading_" android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/btn_download_msg" />
+        -->
+    </RelativeLayout>
 </LinearLayout>

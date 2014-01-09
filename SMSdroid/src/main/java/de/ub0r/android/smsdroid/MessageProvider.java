@@ -103,7 +103,7 @@ public final class MessageProvider extends ContentProvider {
 		Log.d(TAG, "openFile(" + uri + ")");
 		final long mid = ContentUris.parseId(uri);
 		String body = null;
-		final Cursor cursor = this.getContext().getContentResolver()
+		final Cursor cursor = getContext().getContentResolver()
 				.query(Uri.parse("content://sms/" + mid), Message.PROJECTION_SMS, null, null, null);
 		if (cursor != null && cursor.moveToFirst()) {
 			body = cursor.getString(Message.INDEX_BODY);
@@ -121,7 +121,7 @@ public final class MessageProvider extends ContentProvider {
 				return ParcelFileDescriptor.open(f, ParcelFileDescriptor.MODE_READ_ONLY);
 			} catch (IOException e) {
 				Log.e(TAG, "IO ERROR", e);
-				Toast.makeText(this.getContext(), "IO ERROR", Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), "IO ERROR", Toast.LENGTH_LONG).show();
 			}
 		}
 		return null;

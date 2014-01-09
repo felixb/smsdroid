@@ -66,10 +66,10 @@ public final class SmileyParser {
 	 *            {@link Context} to get resources from.
 	 */
 	private SmileyParser(final Context context) {
-		this.mContext = context;
-		this.mSmileyTexts = this.mContext.getResources().getStringArray(R.array.emoticons);
-		this.mSmileyToRes = this.buildSmileyToRes();
-		this.mPattern = this.buildPattern();
+		mContext = context;
+		mSmileyTexts = mContext.getResources().getStringArray(R.array.emoticons);
+		mSmileyToRes = buildSmileyToRes();
+		mPattern = buildPattern();
 	}
 
 	// NOTE: if you change anything about this array, you must make the
@@ -113,16 +113,16 @@ public final class SmileyParser {
 	 * @return {@link HashMap}
 	 */
 	private HashMap<String, Integer> buildSmileyToRes() {
-		if (DEFAULT_SMILEY_RES_IDS.length != this.mSmileyTexts.length) {
+		if (DEFAULT_SMILEY_RES_IDS.length != mSmileyTexts.length) {
 			// Throw an exception if someone updated DEFAULT_SMILEY_RES_IDS
 			// and failed to update arrays.xml
 			throw new IllegalStateException("Smiley resource ID/text mismatch");
 		}
 
 		HashMap<String, Integer> smileyToRes = new HashMap<String, Integer>(
-				this.mSmileyTexts.length);
-		for (int i = 0; i < this.mSmileyTexts.length; i++) {
-			smileyToRes.put(this.mSmileyTexts[i], DEFAULT_SMILEY_RES_IDS[i]);
+				mSmileyTexts.length);
+		for (int i = 0; i < mSmileyTexts.length; i++) {
+			smileyToRes.put(mSmileyTexts[i], DEFAULT_SMILEY_RES_IDS[i]);
 		}
 
 		return smileyToRes;
@@ -137,12 +137,12 @@ public final class SmileyParser {
 	private Pattern buildPattern() {
 		// Set the StringBuilder capacity with the assumption that the average
 		// smiley is 3 characters long.
-		StringBuilder patternString = new StringBuilder(this.mSmileyTexts.length * 3);
+		StringBuilder patternString = new StringBuilder(mSmileyTexts.length * 3);
 
 		// Build a regex that looks like (:-)|:-(|...), but escaping the smilies
 		// properly so they will be interpreted literally by the regex matcher.
 		patternString.append('(');
-		for (String s : this.mSmileyTexts) {
+		for (String s : mSmileyTexts) {
 			patternString.append(Pattern.quote(s));
 			patternString.append('|');
 		}
@@ -164,10 +164,10 @@ public final class SmileyParser {
 	public CharSequence addSmileySpans(final CharSequence text) {
 		SpannableStringBuilder builder = new SpannableStringBuilder(text);
 
-		Matcher matcher = this.mPattern.matcher(text);
+		Matcher matcher = mPattern.matcher(text);
 		while (matcher.find()) {
-			int resId = this.mSmileyToRes.get(matcher.group());
-			builder.setSpan(new ImageSpan(this.mContext, resId), matcher.start(), matcher.end(),
+			int resId = mSmileyToRes.get(matcher.group());
+			builder.setSpan(new ImageSpan(mContext, resId), matcher.start(), matcher.end(),
 					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 

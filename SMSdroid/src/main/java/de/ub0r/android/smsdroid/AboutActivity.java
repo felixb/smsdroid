@@ -36,11 +36,11 @@ public final class AboutActivity extends SherlockActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.about);
-		SMSdroid.fixActionBarBackground(this.getSupportActionBar(), this.getResources(),
+		setContentView(R.layout.about);
+		SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
 				R.drawable.bg_striped, R.drawable.bg_striped_img);
-		this.setTitle(this.getString(R.string.about_) + " " + this.getString(R.string.app_name)
-				+ " v" + this.getString(R.string.app_version));
+		setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
+				+ " v" + getString(R.string.app_version));
 	}
 
 	/**
@@ -53,7 +53,7 @@ public final class AboutActivity extends SherlockActivity {
 			// app icon in Action Bar clicked; go home
 			Intent intent = new Intent(this, ConversationListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			this.startActivity(intent);
+			startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

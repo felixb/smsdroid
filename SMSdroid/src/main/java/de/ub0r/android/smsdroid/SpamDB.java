@@ -60,7 +60,7 @@ public final class SpamDB {
 	 *            {@link Context}
 	 */
 	public SpamDB(final Context context) {
-		this.dbHelper = new DatabaseHelper(context);
+		dbHelper = new DatabaseHelper(context);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public final class SpamDB {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
 					+ ", which will destroy all old data");
 			db.execSQL("DROP TABLE IF EXISTS numbers");
-			this.onCreate(db);
+			onCreate(db);
 		}
 	}
 
@@ -99,7 +99,7 @@ public final class SpamDB {
 	 * @return {@link SpamDB}
 	 */
 	public SpamDB open() {
-		this.db = this.dbHelper.getWritableDatabase();
+		db = dbHelper.getWritableDatabase();
 		return this;
 	}
 
@@ -107,7 +107,7 @@ public final class SpamDB {
 	 * Close database.
 	 */
 	public void close() {
-		this.dbHelper.close();
+		dbHelper.close();
 	}
 
 	/**
@@ -123,7 +123,7 @@ public final class SpamDB {
 		}
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_NR, nr);
-		return this.db.insert(DATABASE_TABLE, null, initialValues);
+		return db.insert(DATABASE_TABLE, null, initialValues);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public final class SpamDB {
 		if (nr == null) {
 			return false;
 		}
-		final Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, KEY_NR + " = ?",
+		final Cursor cursor = db.query(DATABASE_TABLE, PROJECTION, KEY_NR + " = ?",
 				new String[] { nr }, null, null, null);
 		final boolean ret = cursor.moveToFirst();
 		if (!cursor.isClosed()) {
@@ -153,7 +153,7 @@ public final class SpamDB {
 	 * @return blacklist
 	 */
 	public int getEntrieCount() {
-		final Cursor cursor = this.db.rawQuery("SELECT COUNT(nr) FROM " + DATABASE_TABLE, null);
+		final Cursor cursor = db.rawQuery("SELECT COUNT(nr) FROM " + DATABASE_TABLE, null);
 		Log.d(TAG, cursor.toString());
 		int ret = 0;
 		if (cursor.moveToFirst()) {
@@ -171,7 +171,7 @@ public final class SpamDB {
 	 * @return array of entries
 	 */
 	public String[] getAllEntries() {
-		final Cursor cursor = this.db.query(DATABASE_TABLE, PROJECTION, null, null, null, null,
+		final Cursor cursor = db.query(DATABASE_TABLE, PROJECTION, null, null, null, null,
 				null);
 		if (cursor == null) {
 			return null;
@@ -201,6 +201,6 @@ public final class SpamDB {
 		if (nr == null) {
 			return;
 		}
-		this.db.delete(DATABASE_TABLE, KEY_NR + " = ?", new String[] { nr });
+		db.delete(DATABASE_TABLE, KEY_NR + " = ?", new String[] { nr });
 	}
 }

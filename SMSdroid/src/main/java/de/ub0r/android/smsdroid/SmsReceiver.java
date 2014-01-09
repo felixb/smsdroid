@@ -41,7 +41,10 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.support.v4.app.NotificationCompat;
-import android.telephony.gsm.SmsMessage;
+import android.telephony.SmsMessage;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
@@ -173,7 +176,30 @@ public class SmsReceiver extends BroadcastReceiver {
                 if (l > 0) {
                     t = smsMessage[0].getDisplayMessageBody();
                     // ! Check in blacklist db - filter spam
-                    final String s = smsMessage[0].getOriginatingAddress();
+                    String s = smsMessage[0].getDisplayOriginatingAddress();
+
+                    // this code is used to strip a forwarding agent and display the orginated number as sender
+                    final SharedPreferences prefs = PreferenceManager
+                            .getDefaultSharedPreferences(context);
+                    if (prefs.getBoolean(PreferencesActivity.PREFS_FORWARD_SMS_CLEAN, false)
+                            && t.contains(":")) {
+                        Pattern smsPattern = Pattern.compile("([0-9a-zA-Z+]+):");
+                        Matcher m = smsPattern.matcher(t);
+                        if (m.find()) {
+                            s = m.group(1);
+                            Log.d(TAG, "found forwarding sms number: (" + s + ")");
+                            // now strip the sender fromt the message
+                            Pattern textPattern = Pattern.compile("^[0-9a-zA-Z+]+: (.*)");
+                            Matcher m2 = textPattern.matcher(t);
+                            if (t.contains(":") && m2.find()) {
+                                t = m2.group(1);
+                                Log.d(TAG, "stripped the message");
+                            }
+                        }
+
+
+                    }
+
                     final SpamDB db = new SpamDB(context);
                     db.open();
                     if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
@@ -212,7 +238,9 @@ public class SmsReceiver extends BroadcastReceiver {
                         e.printStackTrace();
                     }
                     --count;
-                } while (updateNewMessageNotification(context, t, ACTION_SMS_NEW.equals(action)) <= 0 && count > 0);
+                } while (
+                        updateNewMessageNotification(context, t, ACTION_SMS_NEW.equals(action)) <= 0
+                                && count > 0);
                 if (count == 0) { // use messages as they are available
                     updateNewMessageNotification(context, null, ACTION_SMS_NEW.equals(action));
                 }
@@ -221,6 +249,7 @@ public class SmsReceiver extends BroadcastReceiver {
         wakelock.release();
         Log.i(TAG, "wakelock released");
     }
+
 
     /**
      * Get unread SMS.
@@ -367,7 +396,8 @@ public class SmsReceiver extends BroadcastReceiver {
      * @param newSms  whether sms sound should be played or not (only for new sms)
      * @return number of unread messages
      */
-    static int updateNewMessageNotification(final Context context, final String text, boolean newSms) {
+    static int updateNewMessageNotification(final Context context, final String text,
+            boolean newSms) {
         Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ", " + newSms + ")");
         final NotificationManager mNotificationMgr = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -404,7 +434,7 @@ public class SmsReceiver extends BroadcastReceiver {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
-            NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+            final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
             boolean showNotification = true;
             Intent i;
             if (tid >= 0) {
@@ -443,6 +473,21 @@ public class SmsReceiver extends BroadcastReceiver {
                             nb.setContentTitle(a);
                             nb.setContentText(body);
                             nb.setContentIntent(pIntent);
+                            // add long text
+                            nb.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
+
+                            // add actions
+                            Intent nextIntent = new Intent(
+                                    WebSMSBroadcastReceiver.ACTION_MARK_READ);
+                            nextIntent.putExtra(WebSMSBroadcastReceiver.EXTRA_MURI, uri.toString());
+                            PendingIntent nextPendingIntent = PendingIntent
+                                    .getBroadcast(context, 0, nextIntent,
+                                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            nb.addAction(R.drawable.ic_menu_mark,
+                                    context.getString(R.string.mark_read_), nextPendingIntent);
+                            nb.addAction(R.drawable.ic_menu_compose,
+                                    context.getString(R.string.reply), pIntent);
                         } else {
                             nb.setContentTitle(a);
                             nb.setContentText(context.getString(R.string.new_messages, l));

@@ -18,14 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.LinkedHashMap;
-
 import org.apache.commons.io.IOUtils;
 
 import android.content.ContentResolver;
@@ -42,6 +34,15 @@ import android.provider.CallLog.Calls;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.LinkedHashMap;
+
 import de.ub0r.android.lib.Log;
 
 /**
@@ -220,28 +221,28 @@ public final class Message {
 	 *            {@link Cursor} to read the data
 	 */
 	private Message(final Context context, final Cursor cursor) {
-		this.id = cursor.getLong(INDEX_ID);
-		this.threadId = cursor.getLong(INDEX_THREADID);
-		this.date = cursor.getLong(INDEX_DATE);
-		if (this.date < ConversationListActivity.MIN_DATE) {
-			this.date *= ConversationListActivity.MILLIS;
+		id = cursor.getLong(INDEX_ID);
+		threadId = cursor.getLong(INDEX_THREADID);
+		date = cursor.getLong(INDEX_DATE);
+		if (date < ConversationListActivity.MIN_DATE) {
+			date *= ConversationListActivity.MILLIS;
 		}
 		if (cursor.getColumnIndex(PROJECTION_JOIN[INDEX_TYPE]) >= 0) {
-			this.address = cursor.getString(INDEX_ADDRESS);
-			this.body = cursor.getString(INDEX_BODY);
-			if (ConversationListActivity.showEmoticons && this.body != null) {
-				this.body = SmileyParser.getInstance(context).addSmileySpans(this.body);
+			address = cursor.getString(INDEX_ADDRESS);
+			body = cursor.getString(INDEX_BODY);
+			if (ConversationListActivity.showEmoticons && body != null) {
+				body = SmileyParser.getInstance(context).addSmileySpans(body);
 			}
 		} else {
-			this.body = null;
-			this.address = null;
+			body = null;
+			address = null;
 		}
-		this.type = cursor.getInt(INDEX_TYPE);
-		this.read = cursor.getInt(INDEX_READ);
-		if (this.body == null) {
-			this.isMms = true;
+		type = cursor.getInt(INDEX_TYPE);
+		read = cursor.getInt(INDEX_READ);
+		if (body == null) {
+			isMms = true;
 			try {
-				this.fetchMmsParts(context);
+				fetchMmsParts(context);
 			} catch (OutOfMemoryError e) {
 				Log.e(TAG, "error loading parts", e);
 				try {
@@ -251,29 +252,29 @@ public final class Message {
 				}
 			}
 		} else {
-			this.isMms = false;
+			isMms = false;
 		}
 		try {
-			this.subject = cursor.getString(INDEX_SUBJECT);
+			subject = cursor.getString(INDEX_SUBJECT);
 		} catch (IllegalStateException e) {
-			this.subject = null;
+			subject = null;
 		}
 		try {
 			if (cursor.getColumnCount() > INDEX_MTYPE) {
 				final int t = cursor.getInt(INDEX_MTYPE);
 				if (t != 0) {
-					this.type = t;
+					type = t;
 				}
 			}
 		} catch (IllegalStateException e) {
-			this.subject = null;
+			subject = null;
 		}
 
-		Log.d(TAG, "threadId: " + this.threadId);
-		Log.d(TAG, "address: " + this.address);
-		// Log.d(TAG, "subject: " + this.subject);
-		// Log.d(TAG, "body: " + this.body);
-		// Log.d(TAG, "type: " + this.type);
+		Log.d(TAG, "threadId: " + threadId);
+		Log.d(TAG, "address: " + address);
+		// Log.d(TAG, "subject: " + subject);
+		// Log.d(TAG, "body: " + body);
+		// Log.d(TAG, "type: " + type);
 	}
 
 	/**
@@ -283,13 +284,13 @@ public final class Message {
 	 *            {@link Cursor} to read from
 	 */
 	public void update(final Cursor cursor) {
-		this.read = cursor.getInt(INDEX_READ);
-		this.type = cursor.getInt(INDEX_TYPE);
+		read = cursor.getInt(INDEX_READ);
+		type = cursor.getInt(INDEX_TYPE);
 		try {
 			if (cursor.getColumnCount() > INDEX_MTYPE) {
 				final int t = cursor.getInt(INDEX_MTYPE);
 				if (t != 0) {
-					this.type = t;
+					type = t;
 				}
 			}
 		} catch (IllegalStateException e) {
@@ -341,7 +342,7 @@ public final class Message {
 	private void fetchMmsParts(final Context context) {
 		final ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(URI_PARTS, null, PROJECTION_PARTS[INDEX_MID] + " = ?",
-				new String[] { String.valueOf(this.id) }, null);
+				new String[] { String.valueOf(id) }, null);
 		if (cursor == null || !cursor.moveToFirst()) {
 			return;
 		}
@@ -365,7 +366,7 @@ public final class Message {
 			if (is == null) {
 				Log.i(TAG, "InputStream for part " + pid + " is null");
 				if (iText >= 0 && ct.startsWith("text/")) {
-					this.body = cursor.getString(iText);
+					body = cursor.getString(iText);
 				}
 				continue;
 			}
@@ -373,21 +374,21 @@ public final class Message {
 				continue;
 			}
 			if (ct.startsWith("image/")) {
-				this.picture = BitmapFactory.decodeStream(is);
+				picture = BitmapFactory.decodeStream(is);
 				final Intent i = new Intent(Intent.ACTION_VIEW);
 				i.setDataAndType(uri, ct);
 				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-				this.contentIntent = i;
+				contentIntent = i;
 				continue; // skip the rest
 			} else if (ct.startsWith("video/") || ct.startsWith("audio/")) {
-				this.picture = BITMAP_PLAY;
+				picture = BITMAP_PLAY;
 				final Intent i = new Intent(Intent.ACTION_VIEW);
 				i.setDataAndType(uri, ct);
 				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-				this.contentIntent = i;
+				contentIntent = i;
 				continue; // skip the rest
 			} else if (ct.startsWith("text/")) {
-				this.body = this.fetchPart(is);
+				body = fetchPart(is);
 			}
 
 			if (is != null) {
@@ -450,21 +451,21 @@ public final class Message {
 	 * @return the id
 	 */
 	public long getId() {
-		return this.id;
+		return id;
 	}
 
 	/**
 	 * @return the threadId
 	 */
 	public long getThreadId() {
-		return this.threadId;
+		return threadId;
 	}
 
 	/**
 	 * @return the date
 	 */
 	public long getDate() {
-		return this.date;
+		return date;
 	}
 
 	/**
@@ -473,69 +474,69 @@ public final class Message {
 	 * @return the address
 	 */
 	public String getAddress(final Context context) {
-		if (this.address == null && context != null) {
+		if (address == null && context != null) {
 			final String select = Message.PROJECTION[Message.INDEX_THREADID] + " = '"
-					+ this.getThreadId() + "' and " + Message.PROJECTION[Message.INDEX_ADDRESS]
+					+ getThreadId() + "' and " + Message.PROJECTION[Message.INDEX_ADDRESS]
 					+ " != ''";
 			Log.d(TAG, "select: " + select);
 			final Cursor cur = context.getContentResolver().query(Uri.parse("content://sms/"),
 					Message.PROJECTION, select, null, null);
 			if (cur != null && cur.moveToFirst()) {
-				this.address = cur.getString(Message.INDEX_ADDRESS);
-				Log.d(TAG, "found address: " + this.address);
+				address = cur.getString(Message.INDEX_ADDRESS);
+				Log.d(TAG, "found address: " + address);
 			}
 			cur.close();
 		}
-		return this.address;
+		return address;
 	}
 
 	/**
 	 * @return the body
 	 */
 	public CharSequence getBody() {
-		return this.body;
+		return body;
 	}
 
 	/**
 	 * @return the type
 	 */
 	public int getType() {
-		return this.type;
+		return type;
 	}
 
 	/**
 	 * @return the read
 	 */
 	public int getRead() {
-		return this.read;
+		return read;
 	}
 
 	/**
 	 * @return is this message a MMS?
 	 */
 	public boolean isMMS() {
-		return this.isMms;
+		return isMms;
 	}
 
 	/**
 	 * @return the subject
 	 */
 	public String getSubject() {
-		return this.subject;
+		return subject;
 	}
 
 	/**
 	 * @return the picture
 	 */
 	public Bitmap getPicture() {
-		return this.picture;
+		return picture;
 	}
 
 	/**
 	 * @return {@link Intent} to the content
 	 */
 	public Intent getContentIntent() {
-		return this.contentIntent;
+		return contentIntent;
 	}
 
 	/**
@@ -546,7 +547,7 @@ public final class Message {
 	 * @return {@link OnLongClickListener}
 	 */
 	public OnLongClickListener getSaveAttachmentListener(final Context context) {
-		if (this.contentIntent == null) {
+		if (contentIntent == null) {
 			return null;
 		}
 
@@ -613,10 +614,10 @@ public final class Message {
 	 * @return {@link Uri} of this {@link Message}
 	 */
 	public Uri getUri() {
-		if (this.isMms) {
-			return Uri.parse("content://mms/" + this.id);
+		if (isMms) {
+			return Uri.parse("content://mms/" + id);
 		} else {
-			return Uri.parse("content://sms/" + this.id);
+			return Uri.parse("content://sms/" + id);
 		}
 	}
 

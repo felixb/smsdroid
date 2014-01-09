@@ -15,25 +15,25 @@
 		not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
 
     <ImageView
-        android:id="@android:id/icon"
-        android:layout_width="50dip"
-        android:layout_height="50dip"
-        android:gravity="center_vertical"
-        android:padding="5dip"
-        android:scaleType="fitCenter"
-        android:src="@drawable/bubble_blue_left" />
+            android:id="@android:id/icon"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:gravity="center_vertical"
+            android:padding="5dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bubble_blue_left"/>
 
     <TextView
-        android:id="@android:id/text1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_vertical"
-        android:text="android:id/text1"
-        android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+            android:id="@android:id/text1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:text="android:id/text1"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"/>
 
 </LinearLayout>

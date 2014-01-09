@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="120dp" >
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
 
     <ImageView
-        android:id="@+id/photo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:scaleType="centerCrop" 
-        android:contentDescription="Contact Avatar"/>
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            android:contentDescription="Contact Avatar"/>
 
     <ImageView
-        android:id="@+id/presence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="2dp"
-        android:visibility="gone" />
+            android:id="@+id/presence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="2dp"
+            android:visibility="gone"/>
 
     <View
-        android:id="@+id/read"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:background="#8800AA00"
-        android:visibility="invisible" />
+            android:id="@+id/read"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="#8800AA00"
+            android:visibility="invisible"/>
 
     <TextView
-        android:id="@+id/date"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="#88FFFFFF"
-        android:padding="1dp"
-        android:text="@id/date" 
-        android:gravity="right"/>
+            android:id="@+id/date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#88FFFFFF"
+            android:padding="1dp"
+            android:text="@id/date"
+            android:gravity="right"/>
 
     <TextView
-        android:id="@+id/count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@id/date"
-        android:paddingRight="2dip"
-        android:text="(@id/count)"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/date"
+            android:paddingRight="2dip"
+            android:text="(@id/count)"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <LinearLayout
-        android:id="@+id/panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical"
-        android:padding="4dp" 
-        android:background="#55000000">
+            android:id="@+id/panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:background="#55000000">
 
         <TextView
-            android:id="@+id/addr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="@+id/addr"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/primary_text_dark" />
+                android:id="@+id/addr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@+id/addr"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/primary_text_dark"/>
 
         <TextView
-            android:id="@+id/body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="body"
-            android:textColor="@android:color/secondary_text_dark" />
+                android:id="@+id/body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="body"
+                android:textColor="@android:color/secondary_text_dark"/>
     </LinearLayout>
 
 </RelativeLayout>
