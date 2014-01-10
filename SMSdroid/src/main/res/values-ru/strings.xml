@@ -230,4 +230,9 @@
   <string name="error_start_mms_download" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Error starting MMS download">Ошибка загрузки ММС</string>
   <string name="mobile_only_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Only mobile numbers">Только мобильные номера</string>
   <string name="mobile_only_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Only suggest mobile numbers for recipient">Предлагать для получателей только мобильные номера</string>
+  <string name="permission_save_to_db_description" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Save messages sent by other apps to android message database">Сохранять сообщения, отправленные другими приложениями в базу сообщений Android</string>
+  <string name="permission_save_to_db" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Save messages to database">Сохранять сообщения в базу данных</string>
+  <string name="forwarded_sms_clean_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Modify received sms">Изменить полученное СМС</string>
+  <string name="not_default_app" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SMSdroid is not the default SMS app">SMSdroid не является SMS-приложением по умолчанию</string>
+  <string name="not_default_app_message" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SMSdroid needs to be the default SMS app to work properly">Для правильной работы SMSdroid должен быть SMS-приложением по умолчанию</string>
 </resources>
