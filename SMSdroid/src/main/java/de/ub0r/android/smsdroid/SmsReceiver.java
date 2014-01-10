@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -42,6 +43,7 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
+import android.util.TypedValue;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -497,8 +499,14 @@ public class SmsReceiver extends BroadcastReceiver {
                                 && Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
                             conv.getContact().update(context, false, true);
                             Drawable d = conv.getContact().getAvatar(context, null);
-                            if (d instanceof BitmapDrawable) { // FIXME
-                                nb.setLargeIcon(((BitmapDrawable) d).getBitmap());
+                            if (d instanceof BitmapDrawable) {
+                                Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+                                // 24x24 dp according to android iconography  ->
+                                // http://developer.android.com/design/style/iconography.html#notification
+                                int px = Math.round(TypedValue
+                                        .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64,
+                                                context.getResources().getDisplayMetrics()));
+                                nb.setLargeIcon(Bitmap.createScaledBitmap(bitmap, px, px, false));
                             }
                         }
                     }
