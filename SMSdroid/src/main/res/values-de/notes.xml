@@ -21,9 +21,9 @@
                Visit http://ub0r.de/translate/smsdroid/de/notes.xml to edit the file.
        -->
 <resources>
-  <string name="notes_notification" username="anoushiravan.kabir@gmail.com" orig="Disable notifications in the default MMS app, but do not disable or remove the app completley.">Deaktiviere die Benachrichtigungen in der standard MMS App, aber deaktivere oder lösche die App nicht komplett.</string>
+  <string name="notes_notification">Deaktiviere die Benachrichtigungen in der standard MMS App, aber deaktivere oder lösche die App nicht komplett.</string>
   <string name="notes_websms">Vielleicht möchtest du mit WebSMS gratis oder sehr günstig SMS senden. Es werden viele verschiedene Anbieter unterstützt.</string>
   <string name="notes_longclick">Versuche einen langen Klick auf Antworten / Senden, um eine andere als deine Standard-App zum Senden zu benutzen.</string>
-  <string name="notes_sender" username="anoushiravan.kabir@gmail.com" orig="SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">SMSdroid kann SMS jetzt auch direkt über deinen Provider senden. Einfach in der Auswahl \"SMS (SMSdroid)\" wählen.</string>
-  <string name="notes_kitkat" username="anoushiravan.kabir@gmail.com" orig="Warning for Android 4.4+ users: SMSdroid is not able to receive MMS messages!">Warnung an Android 4.4+ Nutzer: SMSdroid kann keiner MMS empfangen!</string>
+  <string name="notes_sender" username="John &lt;somedeepblue@gmail.com&gt;" orig="Apr. 2011: SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">SMSdroid kann SMS jetzt auch direkt über deinen Provider senden. Einfach in der Auswahl \"SMS (SMSdroid)\" wählen.</string>
+  <string name="notes_kitkat">Warnung an Android 4.4+ Nutzer: SMSdroid kann keiner MMS empfangen!</string>
 </resources>
