@@ -19,7 +19,7 @@
 	-->
 <resources>
 	<string-array name="updates">
-		<item>HEAD: basic SMS app handling on Android 4.4 (warning: no MMS capabilities yet), save messages sent via WebSMS</item>
+		<item>v1.6: basic SMS app handling on Android 4.4 (warning: no MMS capabilities yet), save messages sent via WebSMS</item>
 		<item>v1.5.1: prepare for Android 4.4</item>
 		<item>v1.5: jump to MessageListActivity when starting with a target number, add Portuguese translation (thanks to Sérgio Marques), update translations, minor fixes</item>
 		<item>v1.4.4: minor fixes, update translations</item>

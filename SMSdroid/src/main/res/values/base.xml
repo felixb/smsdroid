@@ -19,7 +19,7 @@
 <resources>
 	<string name="app_name">SMSdroid</string>
 	<string name="sender_name">SMS (SMSdroid)</string>
-	<string name="app_version">1.5.1</string>
+	<string name="app_version">1.6</string>
 	<string name="faq_">FAQ</string>
 	<string name="google_plus_">Google+</string>
 	<string name="author">Felix Bechstein &lt;f@ub0r.de&gt;\nJake Wharton &lt;https://github.com/JakeWharton/ActionBarSherlock/&gt; (ActionBar)\nRobert Priebs &lt;rpriebs@gmail.com&gt; (emoticons)\ncore.equip http://corequip.de (icons)\nDaniel Kalinic &lt;kalinic3@gmail.com&gt; (bubbles)\nAlfonso Picón &lt;apictor@gmail.com&gt; (Spanish)\nMarek Wehmer &lt;marek.wehmer@gmail.com&gt; (Spamfilter, Tiled Layout)\nxim &lt;ximonline@gmail.com&gt; (Russian)\nIsmael A. &lt;ismael.arab@gmail.com&gt; (French)\nand many more...</string>
