@@ -198,8 +198,6 @@ public class SmsReceiver extends BroadcastReceiver {
                                 Log.d(TAG, "stripped the message");
                             }
                         }
-
-
                     }
 
                     final SpamDB db = new SpamDB(context);
@@ -236,15 +234,15 @@ public class SmsReceiver extends BroadcastReceiver {
                         Log.d(TAG, "sleep(" + SLEEP + ")");
                         Thread.sleep(SLEEP);
                     } catch (InterruptedException e) {
-                        Log.d(TAG, "interrupted in spinlock", e);
+                        Log.d(TAG, "interrupted in spin lock", e);
                         e.printStackTrace();
                     }
                     --count;
                 } while (
-                        updateNewMessageNotification(context, t, ACTION_SMS_NEW.equals(action)) <= 0
+                        updateNewMessageNotification(context, t) <= 0
                                 && count > 0);
                 if (count == 0) { // use messages as they are available
-                    updateNewMessageNotification(context, null, ACTION_SMS_NEW.equals(action));
+                    updateNewMessageNotification(context, null);
                 }
             }
         }
@@ -395,12 +393,10 @@ public class SmsReceiver extends BroadcastReceiver {
      *
      * @param context {@link Context}
      * @param text    text of the last assumed unread message
-     * @param newSms  whether sms sound should be played or not (only for new sms)
      * @return number of unread messages
      */
-    static int updateNewMessageNotification(final Context context, final String text,
-            boolean newSms) {
-        Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ", " + newSms + ")");
+    static int updateNewMessageNotification(final Context context, final String text) {
+        Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ")");
         final NotificationManager mNotificationMgr = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -424,7 +420,6 @@ public class SmsReceiver extends BroadcastReceiver {
             return l;
         }
 
-        int ret = l;
         if (enableNotifications && (text != null || l == 0)) {
             mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
         }
@@ -535,7 +530,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 int[] ledFlash = PreferencesActivity.getLEDflash(context);
                 nb.setLights(PreferencesActivity.getLEDcolor(context), ledFlash[0], ledFlash[1]);
                 final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
-                if (text != null && newSms) {
+                if (text != null) {
                     final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
                     final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
                     Uri sound;
@@ -561,11 +556,12 @@ public class SmsReceiver extends BroadcastReceiver {
                 mNotificationMgr.notify(NOTIFICATION_ID_NEW, nb.getNotification());
             }
         }
-        Log.d(TAG, "return " + ret + " (2)");
+        Log.d(TAG, "return " + l + " (2)");
+        //noinspection ConstantConditions
         AppWidgetManager.getInstance(context).updateAppWidget(
                 new ComponentName(context, WidgetProvider.class),
                 WidgetProvider.getRemoteViews(context, l, pIntent));
-        return ret;
+        return l;
     }
 
     /**
