@@ -362,7 +362,7 @@ public final class ConversationListActivity extends SherlockActivity implements
             Log.e(TAG, "failed update", e);
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
-        SmsReceiver.updateNewMessageNotification(context, null, false);
+        SmsReceiver.updateNewMessageNotification(context, null);
     }
 
     /**
@@ -392,7 +392,7 @@ public final class ConversationListActivity extends SherlockActivity implements
                 if (ret > 0) {
                     Conversation.flushCache();
                     Message.flushCache();
-                    SmsReceiver.updateNewMessageNotification(context, null, false);
+                    SmsReceiver.updateNewMessageNotification(context, null);
                 }
             }
         });

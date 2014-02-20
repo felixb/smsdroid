@@ -42,7 +42,7 @@ public final class WidgetProvider extends AppWidgetProvider {
 	public void onUpdate(final Context context, final AppWidgetManager appWidgetManager,
 			final int[] appWidgetIds) {
 		Log.d(TAG, "onUpdate");
-		SmsReceiver.updateNewMessageNotification(context, null, false);
+		SmsReceiver.updateNewMessageNotification(context, null);
 	}
 
 	/**
