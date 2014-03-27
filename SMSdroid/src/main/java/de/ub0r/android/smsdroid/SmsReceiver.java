@@ -174,9 +174,12 @@ public class SmsReceiver extends BroadcastReceiver {
                 for (int i = 0; i < l; i++) {
                     smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
                 }
-                t = null;
+                t = "";
                 if (l > 0) {
-                    t = smsMessage[0].getDisplayMessageBody();
+                    // concatenate multipart SMS body
+                    for (int i = 0; i < l; i++) {
+                        t += smsMessage[i].getMessageBody();
+                    }
                     // ! Check in blacklist db - filter spam
                     String s = smsMessage[0].getDisplayOriginatingAddress();
 
@@ -190,7 +193,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         if (m.find()) {
                             s = m.group(1);
                             Log.d(TAG, "found forwarding sms number: (" + s + ")");
-                            // now strip the sender fromt the message
+                            // now strip the sender from the message
                             Pattern textPattern = Pattern.compile("^[0-9a-zA-Z+]+: (.*)");
                             Matcher m2 = textPattern.matcher(t);
                             if (t.contains(":") && m2.find()) {
