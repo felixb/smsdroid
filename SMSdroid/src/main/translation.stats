@@ -2,7 +2,7 @@ res/values/donation.xml:5
 res/values/market.xml:4
 res/values/notes.xml:5
 res/values/strings.xml:210
-res/values/update.xml:49
+res/values/update.xml:50
 res/values-de/donation.xml:5
 res/values-de/market.xml:4
 res/values-de/notes.xml:5
@@ -43,7 +43,7 @@ res/values-tr/donation.xml:0
 res/values-tr/market.xml:0
 res/values-tr/notes.xml:1
 res/values-tr/strings.xml:0
-res/values:273
+res/values:274
 res/values-de:224
 res/values-es:132
 res/values-fr:223
