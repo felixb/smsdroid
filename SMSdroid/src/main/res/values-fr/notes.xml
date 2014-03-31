@@ -25,4 +25,5 @@
   <string name="notes_longclick">Jan. 2011: Un appui long sur les boutons répondre/envoyer/nouveau permet d\'utiliser une autre application SMS que celle d\'origine.</string>
   <string name="notes_sender">Avr. 2011: SMSdroid est maintenant capable d\'envoyer directement des sms. Choisissez l\'entrée "SMS (SMSdroid)" dans le selecteur d\'application.</string>
   <string name="notes_notification" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Disable notifications in the default MMS app, but do not disable or remove the app completley.">Désactivez les notifications dans l\'application MMS par défaut, mais ne désacivez ou désinstallez pas l\'application elle-même.</string>
+  <string name="notes_kitkat" formatted="false" username="Knux14" orig="Warning for Android 4.4+ users: SMSdroid is not able to receive MMS messages!">Utilisateur Android 4.4+: SMSdroid ne sera pas capable de recevoir vos MMS!</string>
 </resources>

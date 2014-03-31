@@ -227,4 +227,12 @@
   <string name="decode_decimal_ncr_hint" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Some providers deliver unicode messages encoded as decimal NCR (&amp;#0000;). Check to auto decode such entities.">Certains fournisseurs de services livrent des messages encodés en décimal NCR (). Sélectionnez pour automatiquement décoder ce type de messages.</string>
   <string name="activate_sender_" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Activate sender">Activer l\'originateur</string>
   <string name="activate_sender_hint" formatted="false" username="Christian Knecht &lt;g.chrisk@gmail.com&gt;" orig="Activate SMSdroid\'s message sender.">Activer l\'originateur de message SMSdroid</string>
+  <string name="error_start_mms_download" formatted="false" username="Knux14" orig="Error starting MMS download">Erreur au démarrage du téléchargement du MMS</string>
+  <string name="mobile_only_" formatted="false" username="Knux14" orig="Only mobile numbers">Pour utilisateur mobile uniquement</string>
+  <string name="mobile_only_hint" formatted="false" username="Knux14" orig="Only suggest mobile numbers for recipient">Proposer des numéros de mobile comme destinataire uniquement</string>
+  <string name="permission_save_to_db" formatted="false" username="Knux14" orig="Save messages to database">Sauvegarder les message à la base de donnée</string>
+  <string name="permission_save_to_db_description" formatted="false" username="Knux14" orig="Save messages sent by other apps to android message database">Sauvegarder les messages envoyés avec une autre application à la base de donnée</string>
+  <string name="not_default_app" formatted="false" username="Knux14" orig="SMSdroid is not the default SMS app">SMSdroid n\'est pas votre application SMS par défaut</string>
+  <string name="not_default_app_message" formatted="false" username="Knux14" orig="SMSdroid needs to be the default SMS app to work properly">SMSdroid à besoin d\'être l\'application SMS par défaut pour fonctionner correctement</string>
+  <string name="forwarded_sms_clean_" formatted="false" username="Knux14" orig="Modify received sms">Modifier le sms reçu</string>
 </resources>
