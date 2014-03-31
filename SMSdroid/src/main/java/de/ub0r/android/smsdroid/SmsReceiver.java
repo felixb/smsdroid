@@ -174,12 +174,15 @@ public class SmsReceiver extends BroadcastReceiver {
                 for (int i = 0; i < l; i++) {
                     smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
                 }
-                t = "";
+                t = null;
                 if (l > 0) {
                     // concatenate multipart SMS body
+                    StringBuilder sbt = new StringBuilder();
                     for (int i = 0; i < l; i++) {
-                        t += smsMessage[i].getMessageBody();
+                        sbt.append(smsMessage[i].getMessageBody());
                     }
+                    t = sbt.toString();
+
                     // ! Check in blacklist db - filter spam
                     String s = smsMessage[0].getDisplayOriginatingAddress();
 
