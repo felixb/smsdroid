@@ -230,9 +230,6 @@ public final class Message {
 		if (cursor.getColumnIndex(PROJECTION_JOIN[INDEX_TYPE]) >= 0) {
 			address = cursor.getString(INDEX_ADDRESS);
 			body = cursor.getString(INDEX_BODY);
-			if (ConversationListActivity.showEmoticons && body != null) {
-				body = SmileyParser.getInstance(context).addSmileySpans(body);
-			}
 		} else {
 			body = null;
 			address = null;
