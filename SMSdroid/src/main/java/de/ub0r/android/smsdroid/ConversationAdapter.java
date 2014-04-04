@@ -98,6 +98,11 @@ public class ConversationAdapter extends ResourceCursorAdapter {
     private final boolean convertNCR;
 
     /**
+     * Show emoticons as images
+     */
+    private final boolean showEmoticons;
+
+    /**
      * Use grid instead of list.
      */
     private boolean useGridLayout;
@@ -177,6 +182,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
         defaultContactAvatar = c.getResources().getDrawable(R.drawable.ic_contact_picture);
 
         convertNCR = PreferencesActivity.decodeDecimalNCR(c);
+        showEmoticons = PreferencesActivity.showEmoticons(c);
         textSize = PreferencesActivity.getTextsize(c);
         textColor = PreferencesActivity.getTextcolor(c);
 
@@ -297,15 +303,17 @@ public class ConversationAdapter extends ResourceCursorAdapter {
         }
 
         // body
-        String text = c.getBody();
+        CharSequence text = c.getBody();
         if (text == null) {
             text = context.getString(R.string.mms_conversation);
         }
         if (convertNCR) {
-            holder.tvBody.setText(Converter.convertDecNCR2Char(text));
-        } else {
-            holder.tvBody.setText(text);
+            text = Converter.convertDecNCR2Char(text);
         }
+        if (showEmoticons) {
+            text = SmileyParser.getInstance(context).addSmileySpans(text);
+        }
+        holder.tvBody.setText(text);
 
         // date
         long time = c.getDate();

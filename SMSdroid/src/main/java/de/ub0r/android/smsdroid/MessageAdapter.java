@@ -75,6 +75,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
 	private final int textSize, textColor;
 	/** Convert NCR. */
 	private final boolean convertNCR;
+	/** Show emoticons as images */
+	private final boolean showEmoticons;
 
 	/** View holder. */
 	private static class ViewHolder {
@@ -105,6 +107,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
 		textSize = PreferencesActivity.getTextsize(c);
 		textColor = PreferencesActivity.getTextcolor(c);
 		convertNCR = PreferencesActivity.decodeDecimalNCR(c);
+		showEmoticons = PreferencesActivity.showEmoticons(c);
 		if (u == null || u.getLastPathSegment() == null) {
 			threadId = -1;
 		} else {
@@ -315,10 +318,12 @@ public class MessageAdapter extends ResourceCursorAdapter {
 			holder.btnImport.setVisibility(View.GONE);
 		} else {
 			if (convertNCR) {
-				holder.tvBody.setText(Converter.convertDecNCR2Char(text));
-			} else {
-				holder.tvBody.setText(text);
+				text = Converter.convertDecNCR2Char(text);
 			}
+			if (showEmoticons) {
+				text = SmileyParser.getInstance(context).addSmileySpans(text);
+			}
+			holder.tvBody.setText(text);
 			holder.tvBody.setVisibility(View.VISIBLE);
 			String stext = text.toString();
 			if (stext.contains("BEGIN:VCARD") && stext.contains("END:VCARD")) {
