@@ -524,6 +524,14 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	}
 
 	/**
+	 * Get the emoticons show state
+	 */
+	static final boolean showEmoticons(final Context context) {
+		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
+		return p.getBoolean(PREFS_EMOTICONS, true);
+	}
+
+	/**
 	 * Fix a number with regex load from {@link SharedPreferences}.
 	 * 
 	 * @param context
