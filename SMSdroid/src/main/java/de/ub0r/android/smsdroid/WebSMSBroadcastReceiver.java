@@ -30,6 +30,21 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
 
     public static final String EXTRA_MURI = "de.ub0r.android.smsdroid.MURI_KEY";
 
+    /**
+     * ACTION for publishing information about sent websms.
+     */
+    private static final String ACTION_CM_WEBSMS = "de.ub0r.android.callmeter.SAVE_WEBSMS";
+
+    /**
+     * Extra holding uri of sent sms.
+     */
+    private static final String EXTRA_WEBSMS_URI = "uri";
+
+    /**
+     * Extra holding name of connector.
+     */
+    private static final String EXTRA_WEBSMS_CONNECTOR = "connector";
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -96,6 +111,8 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
                     return;
                 }
 
+                String connectorName = extras.getString("connector_name");
+
                 ContentResolver cr = context.getContentResolver();
                 ContentValues values = new ContentValues();
                 values.put(Telephony.Sms.BODY, body);
@@ -103,14 +120,23 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
                 // Insert all sms as sent
                 for (int i = 0; i < recipients.length; ++i) {
                     values.put(Telephony.Sms.ADDRESS, recipients[i]);
-                    cr.insert(Telephony.Sms.Sent.CONTENT_URI, values);
-
+                    Uri u = cr.insert(Telephony.Sms.Sent.CONTENT_URI, values);
                     Log.d(TAG, "Recipient " + i + " of " + recipients.length);
                     Log.d(TAG, "Insert sent SMS into database: " + recipients[i] + ", " + body);
+                    sendSavedMessageToCallMeter(context, u, connectorName);
                 }
             } catch (Exception e) {
                 Log.e(TAG, "unable to write messages to database", e);
             }
         }
+    }
+
+    private void sendSavedMessageToCallMeter(final Context context, final Uri u,
+            final String connectorName) {
+        final Intent intent = new Intent(ACTION_CM_WEBSMS);
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        intent.putExtra(EXTRA_WEBSMS_URI, u.toString());
+        intent.putExtra(EXTRA_WEBSMS_CONNECTOR, connectorName.toLowerCase());
+        context.sendBroadcast(intent);
     }
 }
