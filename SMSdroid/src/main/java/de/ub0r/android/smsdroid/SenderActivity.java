@@ -21,6 +21,7 @@ import android.provider.BaseColumns;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.ClipboardManager;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -147,6 +148,14 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 					mtv.requestFocus();
 				}
 				cbmgr = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+				int flags = et.getInputType();
+				if (p.getBoolean(PreferencesActivity.PREFS_EDIT_SHORT_TEXT, true)) {
+					flags |= InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+				}
+				else {
+					flags &= ~InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+				}
+				et.setInputType(flags);
 			}
 		}
 	}
