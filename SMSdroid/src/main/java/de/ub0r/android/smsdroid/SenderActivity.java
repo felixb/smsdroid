@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package de.ub0r.android.smsdroid;
 
@@ -21,6 +21,7 @@ import android.provider.BaseColumns;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.ClipboardManager;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,7 +38,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
 
 /**
  * Class sending messages via standard Messaging interface.
- * 
+ *
  * @author flx
  */
 public final class SenderActivity extends SherlockActivity implements OnClickListener {
@@ -90,7 +91,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 
 	/**
 	 * Handle {@link Intent}.
-	 * 
+	 *
 	 * @param intent
 	 *            {@link Intent}
 	 */
@@ -147,13 +148,20 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 					mtv.requestFocus();
 				}
 				cbmgr = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+				int flags = et.getInputType();
+				if (p.getBoolean(PreferencesActivity.PREFS_EDIT_SHORT_TEXT, true)) {
+					flags |= InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+				} else {
+					flags &= ~InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+				}
+				et.setInputType(flags);
 			}
 		}
 	}
 
 	/**
 	 * Parse data pushed by {@link Intent}.
-	 * 
+	 *
 	 * @param intent
 	 *            {@link Intent}
 	 * @return true if message is ready to send
@@ -219,7 +227,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 
 	/**
 	 * Send a message to a single recipient.
-	 * 
+	 *
 	 * @param recipient
 	 *            recipient
 	 * @param message
@@ -296,7 +304,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 
 	/**
 	 * Send a message.
-	 * 
+	 *
 	 * @return true, if message was sent
 	 */
 	private boolean send() {

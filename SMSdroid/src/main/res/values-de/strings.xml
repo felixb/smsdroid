@@ -230,6 +230,8 @@
   <string name="source_" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Sourcescode:">Quelltext:</string>
   <string name="mobile_only_">Nur Mobilnummern</string>
   <string name="mobile_only_hint">Für Empfänger nur Mobilnummern vorschlagen</string>
+  <string name="edit_short_text_">Als kurze Nachricht editieren</string>
+  <string name="edit_short_text_hint">Eingabe als kurze Nachricht betrachten. Die Tastatur ersetzt dann normalerweise Enter durch Smileys.</string>
   <string name="permission_save_to_db">Nachrichten in Datenbank speichern</string>
   <string name="permission_save_to_db_description">Nachrichten anderer Apps in Datenbank speichern</string>
   <string name="not_default_app">SMSdroid ist nicht die Standard SMS App</string>

@@ -61,7 +61,7 @@
                     android:gravity="top"
                     android:hint="@string/text_hint"
                     android:imeOptions="actionDone|flagNoEnterAction"
-                    android:inputType="textShortMessage|textMultiLine|textAutoCorrect|textCapSentences"
+                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
                     android:maxLines="4"
                     android:nextFocusRight="@+id/send_"/>
 

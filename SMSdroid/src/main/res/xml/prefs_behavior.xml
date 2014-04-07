@@ -38,7 +38,10 @@
                         android:title="@string/mobile_only_"
                         android:summary="@string/mobile_only_hint"
                         android:defaultValue="false"/>
-
+    <CheckBoxPreference android:key="edit_short_text"
+                        android:defaultValue="true"
+                        android:title="@string/edit_short_text_"
+                        android:summary="@string/edit_short_text_hint"/>
     <CheckBoxPreference android:key="forwarded_sms_clean"
                         android:title="@string/forwarded_sms_clean_"
                         android:summary="@string/forwarded_sms_clean_hint"
