@@ -38,6 +38,7 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.support.v4.app.FragmentActivity;
 import android.text.ClipboardManager;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -281,6 +282,13 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
         cbmgr = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         etText = (EditText) findViewById(R.id.text);
+        int flags = etText.getInputType();
+        if (p.getBoolean(PreferencesActivity.PREFS_EDIT_SHORT_TEXT, true)) {
+            flags |= InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+        } else {
+            flags &= ~InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+        }
+        etText.setInputType(flags);
 
         if (!showTextField) {
             findViewById(R.id.text_layout).setVisibility(View.GONE);

@@ -106,6 +106,8 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	public static final String PREFS_ENABLE_AUTOSEND = "enable_autosend";
 	/** Preference's name: mobile_only. */
 	public static final String PREFS_MOBILE_ONLY = "mobile_only";
+	/** Preference's name: edit_short_text. */
+	public static final String PREFS_EDIT_SHORT_TEXT = "edit_short_text";
 	/** Preference's name: show text field. */
 	public static final String PREFS_SHOWTEXTFIELD = "show_textfield";
 	/** Preference's name: show target app. */
