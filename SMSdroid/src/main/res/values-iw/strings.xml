@@ -23,7 +23,7 @@
 <resources>
   <string name="about_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="About">אודות</string>
   <string name="about_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="About this app">אודות אפליקציה זו</string>
-  <string name="faq_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Some tips and tricks, how to set up this app.">טיפים ותריקים לשימוש באפליקציה זו</string>
+  <string name="faq_hint" formatted="false" username="rotem@sagi.co.il" orig="Some tips and tricks, how to set up this app.">טיפים וטריקים לשימוש באפליקציה זו</string>
   <string name="feedback_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Feedback">פידבק</string>
   <string name="feedback_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Report bugs, request features ...">דיווח על באגים, בקשות ...</string>
   <string name="google_plus_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">עקבו אחרי בגוגל+, \nקבלת התראות וכו\'</string>
