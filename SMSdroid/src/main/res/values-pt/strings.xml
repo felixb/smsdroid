@@ -28,10 +28,10 @@
   <string name="settings" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Preferences">Preferências</string>
   <string name="new_message_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="New message">Nova mensagem</string>
   <string name="new_message_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Compose a new message">Criar uma nova mensagem</string>
-  <string name="new_message" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="1 unread message.">1 mensagem não lida.</string>
+  <string name="new_message" formatted="false" username="mandyknapp3@gmail.com" orig="1 unread message.">1 mensagem não lida.</string>
   <string name="new_messages_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="New messages">Novas mensagens</string>
   <string name="new_messages" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="%d unread messages.">%d mensagens não lidas.</string>
-  <string name="call" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Call">Chamada</string>
+  <string name="call" formatted="false" username="mandyknapp3@gmail.com" orig="Call">Chamada</string>
   <string name="reply" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Reply">Responder</string>
   <string name="send_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send">Enviar</string>
   <string name="notification_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Notifications">Notificações</string>
@@ -97,7 +97,7 @@
   <string name="mark_read_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark read">Marcar como lida</string>
   <string name="mark_unread_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark unread">Marcar como não lida</string>
   <string name="all_threads_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="All threads">Todos os tópicos</string>
-  <string name="message_options_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Message options">Opções de mensagem</string>
+  <string name="message_options_" formatted="false" username="mandyknapp3@gmail.com" orig="Message options">Opções de mensagem</string>
   <string name="compose_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Compose">Criar nova</string>
   <string name="delete_message_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete this message?">Quer mesmo eliminar esta mensagem?</string>
   <string name="delete_messages_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete these messages?">Quer mesmo eliminar estas mensagens?</string>
@@ -111,9 +111,9 @@
   <string name="received_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Received:">Recebidas:</string>
   <string name="view_mms" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="View MMS">Ver MMS</string>
   <string name="mms_conversation" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="&lt;MMS body&gt;">&lt;Texto da MMS&gt;</string>
-  <string name="mms_not_supported" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Parece qu esta é uma MMS. Pode utilizar a aplicação do sistema para transferir a mensagem.\nClique aqui para o fazer.</string>
-  <string name="import_contact_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Import contact">Importar contacto</string>
-  <string name="download_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Download">Transferir</string>
+  <string name="mms_not_supported" formatted="false" username="mandyknapp3@gmail.com" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Parece qu esta é uma MMS. Pode utilizar a aplicação do sistema para transferir a mensagem.\nClique aqui para o fazer.</string>
+  <string name="import_contact_" formatted="false" username="mandyknapp3@gmail.com" orig="Import contact">Importar contacto</string>
+  <string name="download_" formatted="false" username="mandyknapp3@gmail.com" orig="Download">Transferir</string>
   <string name="downloading_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Downloading..">Transferência...</string>
   <string name="debug_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Debug">Depuração</string>
   <string name="clear_cache_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Clear cache">Limpar cache</string>
