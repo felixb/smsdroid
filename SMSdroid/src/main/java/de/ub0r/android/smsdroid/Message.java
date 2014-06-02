@@ -356,7 +356,7 @@ public final class Message {
 
 			final Uri uri = ContentUris.withAppendedId(URI_PARTS, pid);
             if (uri == null) {
-                Log.w(TAG, "parts URI=null for pid=", pid);
+                Log.w(TAG, "parts URI=null for pid=" + pid);
                 continue;
             }
 			try {
