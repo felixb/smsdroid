@@ -235,5 +235,6 @@
     <string name="not_default_app_message">SMSdroid needs to be the default SMS app to work properly</string>
     <string name="forwarded_sms_clean_">Modify received sms</string>
     <string name="forwarded_sms_clean_hint">Strips sender in received sms according to "([0-9a-zA-Z]+):" and use that this number as sender.</string>
+    <string name="error_unknown">Unknown error</string>
 
 </resources>

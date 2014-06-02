@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -190,8 +191,10 @@ public final class ConversationListActivity extends SherlockActivity implements
     private void setListAdapter(final ListAdapter la) {
         AbsListView v = getListView();
         if (v instanceof GridView) {
+            //noinspection RedundantCast
             ((GridView) v).setAdapter(la);
         } else if (v instanceof ListView) {
+            //noinspection RedundantCast
             ((ListView) v).setAdapter(la);
         }
 
@@ -203,6 +206,7 @@ public final class ConversationListActivity extends SherlockActivity implements
      * @param context {@link Context}
      * @param u       {@link Uri}
      */
+    @SuppressWarnings("UnusedDeclaration")
     static void showRows(final Context context, final Uri u) {
         Log.d(TAG, "-----GET HEADERS-----");
         Log.d(TAG, "-- " + u.toString() + " --");
@@ -225,7 +229,7 @@ public final class ConversationListActivity extends SherlockActivity implements
      *
      * @param context {@link Context}
      */
-    static void showRows(final Context context) {
+    static void showRows(@SuppressWarnings("UnusedParameters") final Context context) {
         // showRows(ContactsWrapper.getInstance().getUriFilter());
         // showRows(context, URI);
         // showRows(context, Uri.parse("content://sms/"));
@@ -295,7 +299,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // check if this is the default sms app
-            if (!Telephony.Sms.getDefaultSmsPackage(this).equals(BuildConfig.PACKAGE_NAME)) {
+            if (!BuildConfig.PACKAGE_NAME.equals(Telephony.Sms.getDefaultSmsPackage(this))) {
                 AlertDialog.Builder b = new AlertDialog.Builder(this);
                 b.setTitle(R.string.not_default_app);
                 b.setMessage(R.string.not_default_app_message);
@@ -384,16 +388,25 @@ public final class ConversationListActivity extends SherlockActivity implements
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, final int which) {
-                final int ret = context.getContentResolver().delete(uri, null, null);
-                Log.d(TAG, "deleted: " + ret);
-                if (activity != null && !activity.isFinishing()) {
-                    activity.finish();
+                try {
+                    final int ret = context.getContentResolver().delete(uri, null, null);
+                    Log.d(TAG, "deleted: " + ret);
+                    if (activity != null && !activity.isFinishing()) {
+                        activity.finish();
+                    }
+                    if (ret > 0) {
+                        Conversation.flushCache();
+                        Message.flushCache();
+                        SmsReceiver.updateNewMessageNotification(context, null);
+                    }
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "Argument Error", e);
+                    Toast.makeText(context, R.string.error_unknown, Toast.LENGTH_LONG).show();
+                } catch (SQLiteException e) {
+                    Log.e(TAG, "SQL Error", e);
+                    Toast.makeText(context, R.string.error_unknown, Toast.LENGTH_LONG).show();
                 }
-                if (ret > 0) {
-                    Conversation.flushCache();
-                    Message.flushCache();
-                    SmsReceiver.updateNewMessageNotification(context, null);
-                }
+
             }
         });
         builder.show();

@@ -47,7 +47,7 @@ import de.ub0r.android.lib.Log;
 
 /**
  * Class holding a single message.
- * 
+ *
  * @author flx
  */
 public final class Message {
@@ -214,7 +214,7 @@ public final class Message {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context} to spawn the {@link SmileyParser}.
 	 * @param cursor
@@ -276,7 +276,7 @@ public final class Message {
 
 	/**
 	 * Update {@link Message}.
-	 * 
+	 *
 	 * @param cursor
 	 *            {@link Cursor} to read from
 	 */
@@ -297,7 +297,7 @@ public final class Message {
 
 	/**
 	 * Fetch a part.
-	 * 
+	 *
 	 * @param is
 	 *            {@link InputStream}
 	 * @return part
@@ -332,7 +332,7 @@ public final class Message {
 
 	/**
 	 * Fetch MMS parts.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 */
@@ -355,6 +355,10 @@ public final class Message {
 			InputStream is = null;
 
 			final Uri uri = ContentUris.withAppendedId(URI_PARTS, pid);
+            if (uri == null) {
+                Log.w(TAG, "parts URI=null for pid=", pid);
+                continue;
+            }
 			try {
 				is = cr.openInputStream(uri);
 			} catch (IOException e) {
@@ -362,7 +366,7 @@ public final class Message {
 			}
 			if (is == null) {
 				Log.i(TAG, "InputStream for part " + pid + " is null");
-				if (iText >= 0 && ct.startsWith("text/")) {
+				if (iText >= 0 && ct != null && ct.startsWith("text/")) {
 					body = cursor.getString(iText);
 				}
 				continue;
@@ -388,19 +392,17 @@ public final class Message {
 				body = fetchPart(is);
 			}
 
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					Log.e(TAG, "Failed to close stream", e);
-				} // Ignore
-			}
+			try {
+				is.close();
+			} catch (IOException e) {
+				Log.e(TAG, "Failed to close stream", e);
+			} // Ignore
 		} while (cursor.moveToNext());
 	}
 
 	/**
 	 * Get a {@link Message} from cache or {@link Cursor}.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @param cursor
@@ -482,7 +484,9 @@ public final class Message {
 				address = cur.getString(Message.INDEX_ADDRESS);
 				Log.d(TAG, "found address: " + address);
 			}
-			cur.close();
+            if (cur != null) {
+                cur.close();
+            }
 		}
 		return address;
 	}
@@ -538,7 +542,7 @@ public final class Message {
 
 	/**
 	 * Get a {@link OnLongClickListener} to save the attachment.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @return {@link OnLongClickListener}
@@ -557,7 +561,9 @@ public final class Message {
 					final Intent ci = Message.this.contentIntent;
 					final String ct = ci.getType();
 					Log.d(TAG, "content type: " + ct);
-					if (ct.startsWith("image/")) {
+                    if (ct == null) {
+                        fn += "null";
+                    } else if (ct.startsWith("image/")) {
 						if (ct.equals("image/jpeg")) {
 							fn += "jpg";
 						} else if (ct.equals("image/gif")) {
@@ -586,12 +592,14 @@ public final class Message {
 					}
 					final File file = Message.this.createUniqueFile(
 							Environment.getExternalStorageDirectory(), fn);
-					InputStream in = context.getContentResolver().openInputStream(ci.getData());
+                    //noinspection ConstantConditions
+                    InputStream in = context.getContentResolver().openInputStream(ci.getData());
 					OutputStream out = new FileOutputStream(file);
 					IOUtils.copy(in, out);
 					out.flush();
 					out.close();
-					in.close();
+                    //noinspection ConstantConditions
+                    in.close();
 					Log.i(TAG, "attachment saved: " + file.getPath());
 					Toast.makeText(context,
 							context.getString(R.string.attachment_saved) + " " + fn,
@@ -601,7 +609,11 @@ public final class Message {
 					Log.e(TAG, "IO ERROR", e);
 					Toast.makeText(context, R.string.attachment_not_saved, Toast.LENGTH_LONG)
 							.show();
-				}
+				} catch (NullPointerException e) {
+                    Log.e(TAG, "NULL ERROR", e);
+                    Toast.makeText(context, R.string.attachment_not_saved, Toast.LENGTH_LONG)
+                            .show();
+                }
 				return true;
 			}
 		};
@@ -621,7 +633,7 @@ public final class Message {
 	/**
 	 * Creates a unique file in the given directory by appending a hyphen and a
 	 * number to the given filename.
-	 * 
+	 *
 	 * @author k9mail team
 	 * @param directory
 	 *            directory name
