@@ -224,4 +224,15 @@
     <item>Pequeno</item>
     <item>Grande</item>
   </string-array>
+  <string name="mobile_only_" formatted="false" username="smarquespt@gmail.com" orig="Only mobile numbers">Apenas números móveis</string>
+  <string name="mobile_only_hint" formatted="false" username="smarquespt@gmail.com" orig="Only suggest mobile numbers for recipient">Apenas sugerir números móveis para destinatários</string>
+  <string name="edit_short_text_" formatted="false" username="smarquespt@gmail.com" orig="Edit as short message">Editar como mensagem curta</string>
+  <string name="permission_save_to_db" formatted="false" username="smarquespt@gmail.com" orig="Save messages to database">Gravar mensagens na base de dados</string>
+  <string name="permission_save_to_db_description" formatted="false" username="smarquespt@gmail.com" orig="Save messages sent by other apps to android message database">Gravar mensagens enviadas pelas outras aplicações na base de dados do android.</string>
+  <string name="not_default_app" formatted="false" username="smarquespt@gmail.com" orig="SMSdroid is not the default SMS app">O SMSDroid não é a aplicação padrão</string>
+  <string name="not_default_app_message" formatted="false" username="smarquespt@gmail.com" orig="SMSdroid needs to be the default SMS app to work properly">O SMSDroid tem que ser a aplicação padrão para funcionar corretamente</string>
+  <string name="forwarded_sms_clean_" formatted="false" username="smarquespt@gmail.com" orig="Modify received sms">Modificar mensagens recebidas</string>
+  <string name="edit_short_text_hint" formatted="false" username="smarquespt@gmail.com" orig="Consider input a short message. The keyboard usually replaces enter with smiley button if enabled.">Considere escrever uma mensagem curta. O teclado substitui o botão Enter por um smiley.</string>
+  <string name="forwarded_sms_clean_hint" formatted="false" username="smarquespt@gmail.com" orig="Strips sender in received sms according to &quot;([0-9a-zA-Z]+):&quot; and use that this number as sender.">Remover remetente das mensagens recebidas de acordo com \"([0-9a-zA-Z]+):\" e utilizar este número como remetente.</string>
+  <string name="error_unknown" formatted="false" username="smarquespt@gmail.com" orig="Unknown error">Erro desconhecido</string>
 </resources>

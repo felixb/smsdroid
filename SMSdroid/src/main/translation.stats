@@ -33,8 +33,8 @@ res/values-pl/notes.xml:3
 res/values-pl/strings.xml:201
 res/values-pt/donation.xml:5
 res/values-pt/market.xml:4
-res/values-pt/notes.xml:4
-res/values-pt/strings.xml:202
+res/values-pt/notes.xml:5
+res/values-pt/strings.xml:213
 res/values-ru/donation.xml:5
 res/values-ru/market.xml:4
 res/values-ru/notes.xml:5
@@ -51,6 +51,6 @@ res/values-hu:213
 res/values-it:202
 res/values-iw:29
 res/values-pl:213
-res/values-pt:215
+res/values-pt:227
 res/values-ru:227
 res/values-tr:1
