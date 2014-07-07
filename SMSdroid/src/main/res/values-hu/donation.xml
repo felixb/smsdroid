@@ -17,9 +17,9 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
-  <string name="donate" formatted="false" username="donate" orig="Donate">donate</string>
+  <string name="donate" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Donate">Támogatás</string>
   <string name="donate_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Donate (%s)">Támogatás (%s)</string>
-  <string name="donate_remove_ads_" formatted="false" username="donate" orig="Donate/remove ads">donate</string>
+  <string name="donate_remove_ads_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Donate/remove ads">Támogatás/reklámok eltávolítása</string>
   <string name="predonate_market" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="This is an open-source application released under the GPLv3 license. It is free and will remain free. If you really like it or if you are annoyed by the ads, please consider donating.\nThank you!\n\nThe donation will remove the ads in all apps provided by me.">Ez egy nyílt forráskódú, GPLv3 licenc alatt kibocsátott alkalmazás. Ingyenes és az is marad. Ha igazán kedveled vagy idegesítenek a reklámok, kérlek gondolj a támogatásra.\nKöszönöm!\n\nA támogatásnak köszönhetően minden általam készített alkalmazásból eltűnnek a reklámok.</string>
   <string name="did_paypal_donation" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="I already did a donation via Paypal">Már támogattam Paypal-on keresztül</string>
 </resources>

@@ -21,7 +21,7 @@
                Visit http://ub0r.de/translate/smsdroid/es/strings.xml to edit the file.
        -->
 <resources>
-  <string name="about_" formatted="false" username="donate" orig="About">Acerca de</string>
+  <string name="about_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="About">Acerca de</string>
   <string name="about_hint" formatted="false">Acerca de esta aplicación</string>
   <string name="faq_hint" formatted="false" orig="Some tips and tricks, how to set up this app.">Algunos trucos y consejos acerca de cómo configurar esta aplicación.</string>
   <string name="feedback_" formatted="false" orig="Feedback">Retroalimentación</string>
@@ -29,7 +29,7 @@
   <string name="about0" formatted="false">SMSdroid le permite leer sus sms, así como escribirlos con cualquier aplicación.</string>
   <string name="more_apps_" formatted="false">Más Aplicaciones..</string>
   <string name="settings" formatted="false">Preferencias</string>
-  <string name="new_message_" formatted="false" username="donate" orig="New message">Nuevo mensaje</string>
+  <string name="new_message_" formatted="false">Nuevo mensaje</string>
   <string name="new_message_hint" formatted="false" orig="Compose a new message">Redactar un mensaje nuevo</string>
   <string name="new_message" formatted="false" orig="1 unread message.">Un mensaje no leído.</string>
   <string name="new_messages_" formatted="false">Mensajes nuevos</string>
@@ -38,7 +38,7 @@
   <string name="reply" formatted="false" orig="Reply">Responder</string>
   <string name="send_" formatted="false">Enviar</string>
   <string name="notification_" formatted="false">Notificaciones</string>
-  <string name="notification_enable_" formatted="false" orig="Enable notifications" username="donate">Habilitar notificaciones</string>
+  <string name="notification_enable_" formatted="false" orig="Enable notifications">Habilitar notificaciones</string>
   <string name="notification_enable_hint" formatted="false">Habilita notificaciones al recibir</string>
   <string name="receive_vibrate_" formatted="false">Vibrar</string>
   <string name="receive_vibrate_hint" formatted="false">Vibra al recibir</string>
@@ -154,6 +154,4 @@
   <string name="hide_paste_" formatted="false" username="Ag" orig="Hide &quot;paste&quot; button">Esconder el botón \"pegar\"</string>
   <string name="website_" formatted="false" username="Ag" orig="Website:">Sitio web:</string>
   <string name="author_" formatted="false" username="Ag" orig="Author:">Autor:</string>
-  <string name="show_text_field_" formatted="false" username="donate" orig="Show text field">show text filed</string>
-  <string name="forwarded_sms_clean_" formatted="false" username="donate" orig="Modify received sms">show sms</string>
 </resources>
