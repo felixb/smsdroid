@@ -19,7 +19,6 @@
 	-->
 <resources>
   <string name="market_translation" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Feel free to help translating this app to your language here: http://ub0r.de/translate/smsdroid/">Możesz pomóc w tłumaczeniu tej aplikacji na swój język tutaj: http://ub0r.de/translate/</string>
-  <string name="market_keywords" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="Keywords: txt sms mms text websms">Słowa kluczowe: txt sms mms text websms</string>
   <string name="market_oss" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="This app is open source software build in spare time. Adding bad comments in market won\'t help much to make it better.\nPlease add your issues with this app on the app\'s website.">Ta aplikacja jest programem open source tworzonym w wolnym czasie. Dodawanie złych komentarzy w markecie nie pomoże w ulepszaniu jej.\nProblemy z aplikacją proszę opisywać na jej stronie domowej.</string>
   <string name="market_about" formatted="false" username="Karol &lt;ksz@mailmix.pl&gt;" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.">SMSdroid to wyjątkowa aplikacja do obsługi wiadomości pozwalająca wysyłać je za pomocą dowolnej innej aplikacji (np. WebSMS).\n\nJeśli lubisz wysyłać darmowe wiadomości przez WebSMS, to SMSdroid pewnie też ci się spodoba.</string>
 </resources>

@@ -21,5 +21,4 @@
     <string name="market_about">SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.</string>
     <string name="market_oss">This app is open source software build in spare time. Adding bad comments in market won\'t help much to make it better.\nPlease add your issues with this app on the app\'s website.</string>
     <string name="market_translation">Feel free to help translating this app to your language here: http://ub0r.de/translate/smsdroid/</string>
-    <string name="market_keywords">Keywords: txt sms mms text websms</string>
 </resources>
