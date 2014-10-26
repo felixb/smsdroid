@@ -9,7 +9,7 @@ res/values-de/notes.xml:5
 res/values-de/strings.xml:213
 res/values-es/donation.xml:4
 res/values-es/market.xml:1
-res/values-es/notes.xml:0
+res/values-es/notes.xml:1
 res/values-es/strings.xml:127
 res/values-fr/donation.xml:5
 res/values-fr/market.xml:3
@@ -45,7 +45,7 @@ res/values-tr/notes.xml:1
 res/values-tr/strings.xml:0
 res/values:277
 res/values-de:226
-res/values-es:132
+res/values-es:133
 res/values-fr:222
 res/values-hu:212
 res/values-it:201
