@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
+       <!--
                Copyright (C) 2009-2012 Felix Bechstein
        -->
-<!--
+       <!--
                This file is part of SMSdroid. This program is free software; you can
                redistribute it and/or modify it under the terms of the GNU General
                Public License as published by the Free Software Foundation; either
                version 3 of the License, or (at your option) any later version.
        -->
-<!--
+       <!--
                This program is distributed in the hope that it will be useful, but
                WITHOUT ANY WARRANTY; without even the implied warranty of
                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -16,10 +16,9 @@
                copy of the GNU General Public License along with this program; If
                not, see <http://www.gnu.org/licenses/>.
        -->
-<!--
+      <!--
                This file is generated automatically by ub0rlib/php.
                Visit http://ub0r.de/translate/smsdroid/es/notes.xml to edit the file.
        -->
 <resources>
-  <string name="notes_sender" formatted="false" username="6461947934" orig="SMSdroid is now able to send SMS on it\'s own. Just use the &quot;SMS (SMSdroid)&quot; entry in the app chooser.">Recover</string>
 </resources>
