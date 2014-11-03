@@ -18,7 +18,7 @@
 	-->
 <resources>
   <string name="donate" formatted="false" username="Don shark &lt;uruenabike@gmail.com&gt;" orig="Donate">Donar</string>
-  <string name="donate_remove_ads_" formatted="false" username="Don shark &lt;uruenabike@gmail.com&gt;" orig="Donate/remove ads">Donar/remover publicidad</string>
-  <string name="did_paypal_donation" formatted="false" username="Don shark &lt;uruenabike@gmail.com&gt;" orig="I already did a donation via Paypal">Yo ya hice una donación por PayPal</string>
+  <string name="donate_remove_ads_" formatted="false" username="(132/277)**" orig="Donate/remove ads">Donar/remover publicidad</string>
+  <string name="did_paypal_donation" formatted="false" username="(132/277)**" orig="I already did a donation via Paypal">Yo ya hice una donación por PayPal</string>
   <string name="donate_" formatted="false" username="Don shark &lt;uruenabike@gmail.com&gt;" orig="Donate (%s)">Donar (%s)</string>
 </resources>
