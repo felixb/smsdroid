@@ -65,7 +65,7 @@
   <string name="show_contact_photo_" formatted="false">Mostrar foto</string>
   <string name="show_contact_photo_hint" formatted="false">Muestra la foto del contacto en la lista de conversaciones</string>
   <string name="show_emoticons_" formatted="false">Mostrar emoticonos</string>
-  <string name="show_emoticons_hint" formatted="false">Muestra emoticonos en la lista de mensajes.</string>
+  <string name="show_emoticons_hint" formatted="false" username="claudiaaraiza78@gmail.com" orig="Show emoticons in message list.">Muestra emoticonos en la lista de mensajes.</string>
   <string name="show_bubbles_" formatted="false">Mostrar bocadillos</string>
   <string name="hide_send_" formatted="false" orig="Hide &quot;send&quot; button">Esconder el botón \"enviar\"</string>
   <string name="hide_restore_" formatted="false" orig="Hide &quot;restore last message&quot; button">Esconder el botón \"restaurar el último mensaje\"</string>
@@ -84,7 +84,7 @@
   <string name="mark_all_read_" formatted="false">Marcar todo como leído</string>
   <string name="mark_read_" formatted="false">Marcar como leído</string>
   <string name="mark_unread_" formatted="false">Marcar como no leído</string>
-  <string name="all_threads_" formatted="false">Todas las conversaciones</string>
+  <string name="all_threads_" formatted="false" username="claudiaaraiza78@gmail.com" orig="All threads">Todas las conversaciones</string>
   <string name="message_options_" formatted="false">Opciones de mensaje</string>
   <string name="compose_" formatted="false">Redactar</string>
   <string name="delete_message_question" formatted="false">¿Realmente desea eliminar este mensaje?</string>
