@@ -255,7 +255,8 @@ public class ConversationAdapter extends ResourceCursorAdapter {
             view.setTag(holder);
         }
 
-        if (useGridLayout) {
+        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
+        if (useGridLayout || p.getBoolean(PreferencesActivity.PREFS_HIDE_MESSAGE_COUNT, false)) {
             holder.tvCount.setVisibility(View.GONE);
         } else {
             final int count = c.getCount();
