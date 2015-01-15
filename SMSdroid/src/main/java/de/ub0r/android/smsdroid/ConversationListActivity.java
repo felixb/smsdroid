@@ -299,7 +299,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // check if this is the default sms app
-            if (!BuildConfig.PACKAGE_NAME.equals(Telephony.Sms.getDefaultSmsPackage(this))) {
+            if (!BuildConfig.APPLICATION_ID.equals(Telephony.Sms.getDefaultSmsPackage(this))) {
                 AlertDialog.Builder b = new AlertDialog.Builder(this);
                 b.setTitle(R.string.not_default_app);
                 b.setMessage(R.string.not_default_app_message);
@@ -311,7 +311,7 @@ public final class ConversationListActivity extends SherlockActivity implements
                         Intent intent =
                                 new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
                         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
-                                BuildConfig.PACKAGE_NAME);
+                                BuildConfig.APPLICATION_ID);
                         startActivity(intent);
                     }
                 });
@@ -338,6 +338,14 @@ public final class ConversationListActivity extends SherlockActivity implements
         if (DonationHelper.hideAds(this)) {
             menu.removeItem(R.id.item_donate);
         }
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean hideDeleteAll = p.getBoolean(PreferencesActivity.PREFS_HIDE_DELETE_ALL_THREADS, false);
+        menu.findItem(R.id.item_delete_all_threads).setVisible(!hideDeleteAll);
         return true;
     }
 
