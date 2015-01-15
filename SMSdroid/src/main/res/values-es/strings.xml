@@ -140,7 +140,7 @@
     <item>Intermitente</item>
     <item>Fijo</item>
   </string-array>
-  <string-array name="vibrate_mode">
+  <string-array name="vibrate_mode" username="Geovannyamayamaya@gmail.com">
     <item>Por defecto</item>
     <item>Larga</item>
     <item>A intervalos breves</item>
