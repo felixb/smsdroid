@@ -24,12 +24,6 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = "WebSMSBroadcastReceiver";
 
-    //public static final String ACTION_SAVE_SENT_MESSAGE = "de.ub0r.android.websms.SEND_SUCCESSFUL";
-
-    public static final String ACTION_MARK_READ = "de.ub0r.android.smsdroid.MARK_READ";
-
-    public static final String EXTRA_MURI = "de.ub0r.android.smsdroid.MURI_KEY";
-
     /**
      * ACTION for publishing information about sent websms.
      */
@@ -52,25 +46,6 @@ public class WebSMSBroadcastReceiver extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             Log.e(TAG, TAG + " not available on API " + Build.VERSION.SDK_INT);
             return;
-        }
-
-        // maybe we should move this to a separate receiver?
-        if (ACTION_MARK_READ.equals(intent.getAction())) {
-            try {
-                Bundle extras = intent.getExtras();
-                if (extras == null) {
-                    Log.w(TAG, "empty extras");
-                    return;
-                }
-
-                // remember that we have to add the package here ..
-                String muri = extras.getString(EXTRA_MURI);
-                Log.d(TAG, "received uri: " + muri);
-                ConversationListActivity.markRead(context, Uri.parse(muri), 1);
-            } catch (Exception e) {
-                Log.e(TAG, "unable to open broadcast", e);
-            }
-
         }
 
         if ("de.ub0r.android.websms.SEND_SUCCESSFUL".equals(intent.getAction())) {

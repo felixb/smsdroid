@@ -181,10 +181,15 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="WebSMSBroadcastReceiver"
+        <receiver android:name=".WebSMSBroadcastReceiver"
                   android:permission="de.ub0r.android.smsdroid.SAVE_TO_DB">
             <intent-filter>
                 <action android:name="de.ub0r.android.websms.SEND_SUCCESSFUL"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".NotificationBroadcastReceiver">
+            <intent-filter>
                 <action android:name="de.ub0r.android.smsdroid.MARK_READ"/>
             </intent-filter>
         </receiver>
