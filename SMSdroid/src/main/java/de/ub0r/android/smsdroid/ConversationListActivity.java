@@ -298,8 +298,11 @@ public final class ConversationListActivity extends SherlockActivity implements
         longItemClickDialog[WHICH_MARK_SPAM] = getString(R.string.filter_spam_);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // check if this is the default sms app
-            if (!BuildConfig.APPLICATION_ID.equals(Telephony.Sms.getDefaultSmsPackage(this))) {
+            // check if this is the default sms app.
+            // If the device doesn't support Telephony.Sms (i.e. tablet) getDefaultSmsPackage() will
+            // be null. Don't show message in this case.
+            final String smsPackage = Telephony.Sms.getDefaultSmsPackage(this);
+            if (smsPackage != null && !smsPackage.equals(BuildConfig.APPLICATION_ID)) {
                 AlertDialog.Builder b = new AlertDialog.Builder(this);
                 b.setTitle(R.string.not_default_app);
                 b.setMessage(R.string.not_default_app_message);
