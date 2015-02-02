@@ -56,7 +56,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
@@ -279,9 +278,7 @@ public final class ConversationListActivity extends SherlockActivity implements
         SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
                 R.drawable.bg_striped, R.drawable.bg_striped_img);
 
-        ChangelogHelper.showChangelog(this, getString(R.string.changelog_),
-                getString(R.string.app_name), R.array.updates, R.array.notes_from_dev);
-
+        // debug info
         showRows(this);
 
         final AbsListView list = getListView();
