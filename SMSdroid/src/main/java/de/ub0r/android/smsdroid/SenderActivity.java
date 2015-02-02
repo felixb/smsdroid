@@ -3,8 +3,9 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.net.URLDecoder;
-import java.util.ArrayList;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
@@ -29,9 +30,8 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -235,12 +235,16 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 	 */
 	private void send(final String recipient, final String message) {
 		Log.d(TAG, "text: " + recipient);
-		int[] l = SmsMessage.calculateLength(message, false);
-		Log.i(TAG, "text7: " + message.length() + ", " + l[0] + " " + l[1] + " " + l[2] + " "
-				+ l[3]);
-		l = SmsMessage.calculateLength(message, true);
-		Log.i(TAG, "text8: " + message.length() + ", " + l[0] + " " + l[1] + " " + l[2] + " "
-				+ l[3]);
+        try {
+            int[] l = SmsMessage.calculateLength(message, false);
+            Log.i(TAG, "text7: " + message.length() + ", " + l[0] + " " + l[1] + " " + l[2] + " "
+                    + l[3]);
+            l = SmsMessage.calculateLength(message, true);
+            Log.i(TAG, "text8: " + message.length() + ", " + l[0] + " " + l[1] + " " + l[2] + " "
+                    + l[3]);
+        } catch (RuntimeException e) {
+            Log.e(TAG, "error calculating message length", e);
+        }
 
 		// save draft
 		final ContentResolver cr = getContentResolver();
