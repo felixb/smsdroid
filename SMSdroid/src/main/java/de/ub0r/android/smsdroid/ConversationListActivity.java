@@ -298,27 +298,32 @@ public final class ConversationListActivity extends SherlockActivity implements
         longItemClickDialog[WHICH_MARK_SPAM] = getString(R.string.filter_spam_);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // check if this is the default sms app.
-            // If the device doesn't support Telephony.Sms (i.e. tablet) getDefaultSmsPackage() will
-            // be null. Don't show message in this case.
-            final String smsPackage = Telephony.Sms.getDefaultSmsPackage(this);
-            if (smsPackage != null && !smsPackage.equals(BuildConfig.APPLICATION_ID)) {
-                AlertDialog.Builder b = new AlertDialog.Builder(this);
-                b.setTitle(R.string.not_default_app);
-                b.setMessage(R.string.not_default_app_message);
-                b.setNegativeButton(android.R.string.cancel, null);
-                b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @TargetApi(Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void onClick(final DialogInterface dialogInterface, final int i) {
-                        Intent intent =
-                                new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                        intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
-                                BuildConfig.APPLICATION_ID);
-                        startActivity(intent);
-                    }
-                });
-                b.show();
+            try {
+                // check if this is the default sms app.
+                // If the device doesn't support Telephony.Sms (i.e. tablet) getDefaultSmsPackage() will
+                // be null. Don't show message in this case.
+                final String smsPackage = Telephony.Sms.getDefaultSmsPackage(this);
+                if (smsPackage != null && !smsPackage.equals(BuildConfig.APPLICATION_ID)) {
+                    AlertDialog.Builder b = new AlertDialog.Builder(this);
+                    b.setTitle(R.string.not_default_app);
+                    b.setMessage(R.string.not_default_app_message);
+                    b.setNegativeButton(android.R.string.cancel, null);
+                    b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onClick(final DialogInterface dialogInterface, final int i) {
+                            Intent intent =
+                                    new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+                                    BuildConfig.APPLICATION_ID);
+                            startActivity(intent);
+                        }
+                    });
+                    b.show();
+                }
+            } catch (SecurityException e) {
+                // some samsung devices/tablets want permission GET_TASKS o.O
+                Log.e(TAG, "failed to query default SMS app", e);
             }
         }
     }
