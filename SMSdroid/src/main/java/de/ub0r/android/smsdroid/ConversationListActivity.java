@@ -349,7 +349,8 @@ public final class ConversationListActivity extends SherlockActivity implements
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
         final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean hideDeleteAll = p.getBoolean(PreferencesActivity.PREFS_HIDE_DELETE_ALL_THREADS, false);
+        boolean hideDeleteAll = p
+                .getBoolean(PreferencesActivity.PREFS_HIDE_DELETE_ALL_THREADS, false);
         menu.findItem(R.id.item_delete_all_threads).setVisible(!hideDeleteAll);
         return true;
     }
@@ -375,7 +376,7 @@ public final class ConversationListActivity extends SherlockActivity implements
         cv.put(Message.PROJECTION[Message.INDEX_READ], read);
         try {
             cr.update(uri, cv, Message.SELECTION_READ_UNREAD, sel);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLiteException e) {
             Log.e(TAG, "failed update", e);
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }

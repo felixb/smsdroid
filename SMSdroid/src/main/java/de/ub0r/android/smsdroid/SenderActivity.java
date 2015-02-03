@@ -187,14 +187,12 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 		} catch (IndexOutOfBoundsException e) {
 			Log.w(TAG, "could not split at :", e);
 		}
-		u = null;
 
-		CharSequence cstext = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
+        CharSequence cstext = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
 		text = null;
 		if (cstext != null) {
 			text = cstext.toString();
-			cstext = null;
-		}
+        }
 		if (TextUtils.isEmpty(text)) {
 			Log.i(TAG, "text missing");
 			return false;
@@ -266,26 +264,24 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 			try {
 				draft = cr.insert(URI_SENT, values);
 				Log.d(TAG, "draft saved: " + draft);
-			} catch (SQLiteException e) {
+			} catch (IllegalArgumentException | SQLiteException e) {
 				Log.e(TAG, "unable to save draft", e);
 			}
 		}
-		values = null;
-		if (cursor != null && !cursor.isClosed()) {
+        if (cursor != null && !cursor.isClosed()) {
 			cursor.close();
 		}
-		cursor = null;
-		SmsManager smsmgr = SmsManager.getDefault();
+        SmsManager smsmgr = SmsManager.getDefault();
 		final ArrayList<String> messages = smsmgr.divideMessage(message);
 		final int c = messages.size();
-		ArrayList<PendingIntent> sentIntents = new ArrayList<PendingIntent>(c);
+		ArrayList<PendingIntent> sentIntents = new ArrayList<>(c);
 
 		try {
 			Log.d(TAG, "send messages to: " + recipient);
 
 			for (int i = 0; i < c; i++) {
 				final String m = messages.get(i);
-				Log.d(TAG, "devided messages: " + m);
+				Log.d(TAG, "divided messages: " + m);
 
 				final Intent sent = new Intent(MESSAGE_SENT_ACTION, draft, this, SmsReceiver.class);
 				sentIntents.add(PendingIntent.getBroadcast(this, 0, sent, 0));
@@ -318,7 +314,7 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
 		for (String r : to.split(",")) {
 			r = MobilePhoneAdapter.cleanRecipient(r);
 			if (TextUtils.isEmpty(r)) {
-				Log.w(TAG, "skip empty recipipient: " + r);
+				Log.w(TAG, "skip empty recipient: " + r);
 				continue;
 			}
 			send(r, text);

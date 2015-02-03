@@ -812,13 +812,18 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      */
     private void send(final boolean autosend, final boolean showChooser) {
         final Intent i = buildIntent(autosend, showChooser);
-        startActivity(i);
-        //noinspection ConstantConditions
-        PreferenceManager
-                .getDefaultSharedPreferences(this)
-                .edit()
-                .putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
-                        etText.getText().toString()).commit();
-        etText.setText("");
+        try {
+            startActivity(i);
+            //noinspection ConstantConditions
+            PreferenceManager
+                    .getDefaultSharedPreferences(this)
+                    .edit()
+                    .putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
+                            etText.getText().toString()).commit();
+            etText.setText("");
+        } catch (ActivityNotFoundException e) {
+            Log.e(TAG, "unable to launch sender app", e);
+            Toast.makeText(this, R.string.error_sending_failed, Toast.LENGTH_LONG).show();
+        }
     }
 }

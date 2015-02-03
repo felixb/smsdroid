@@ -18,10 +18,11 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.concurrent.RejectedExecutionException;
-
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.util.concurrent.RejectedExecutionException;
+
 import de.ub0r.android.lib.Log;
 
 /**
@@ -44,7 +45,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 	/**
 	 * Fill {@link Conversation}.
-	 * 
+	 *
 	 * @param c
 	 *            {@link Context}
 	 * @param con
@@ -58,7 +59,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 	/**
 	 * Fill Conversations data. If needed: spawn threads.
-	 * 
+	 *
 	 * @param context
 	 *            {@link Context}
 	 * @param c
@@ -79,7 +80,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			try {
 				helper.execute((Void) null);
 			} catch (RejectedExecutionException e) {
-				Log.e(TAG, "rejected exceution", e);
+				Log.e(TAG, "rejected execution", e);
 			}
 		}
 	}
@@ -93,8 +94,12 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 			return null;
 		}
 		Log.d(TAG, "doInBackground()");
-		changed = conv.getContact().update(context, true,
-				ConversationListActivity.showContactPhoto);
+        try {
+            changed = conv.getContact().update(context, true,
+                    ConversationListActivity.showContactPhoto);
+        } catch (NullPointerException e) {
+            Log.e(TAG, "error updating contact", e);
+        }
 		return null;
 	}
 
@@ -110,7 +115,7 @@ public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
 
 	/**
 	 * Set {@link ConversationAdapter} to invalidate data after refreshing.
-	 * 
+	 *
 	 * @param a
 	 *            {@link ConversationAdapter}
 	 */
