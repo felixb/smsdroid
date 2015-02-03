@@ -17,4 +17,31 @@
 		not, see <http://www.gnu.org/licenses/>.
 	-->
 <resources>
+  <string name="about_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="About">Hakkımızda</string>
+  <string name="about_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="About this app">Uygulama hakkında</string>
+  <string name="faq_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Some tips and tricks, how to set up this app.">Uygulamayı nasıl ayarlayacağınız hakkında bazı ip uçları</string>
+  <string name="google_plus_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Follow me on Google+.\nGet update notifications etc.">Beni Google+ da takip edin.\nGüncellemeler ve vs. gibi konularda bilgi edinin</string>
+  <string name="about0" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="SMSdroid lets you read your sms and write sms with any other app.">SMSdroid smslerinizi okumanıza ve diğer aplikasyonlar vasıtası ile de sms göndermenize yardımcı olur.</string>
+  <string name="more_apps_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="More Apps..">Daha fazla uygulama...</string>
+  <string name="new_message_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="New message">Yeni mesaj</string>
+  <string name="new_message" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="1 unread message.">1 okunmamış mesaj</string>
+  <string name="new_messages_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="New messages">Yeni mesajlar</string>
+  <string name="new_messages" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="%d unread messages.">%d okunmamış mesaj.</string>
+  <string name="call" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Call">Arama</string>
+  <string name="reply" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Reply">Yanıtla</string>
+  <string name="send_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Send">Gönder</string>
+  <string name="notification_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Notifications">Bildirimler</string>
+  <string name="notification_enable_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Enable notifications">Bildirimleri aktif et</string>
+  <string name="notification_enable_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Enable notifications on receive">SMS gelince bildirimleri aktif et</string>
+  <string name="receive_vibrate_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Vibrate">Titreşim</string>
+  <string name="receive_vibrate_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Vibrate on receive">SMS gelince titreş</string>
+  <string name="receive_vibrate_mode_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Vibrator mode">Titreşim modu</string>
+  <string name="receive_sound_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Sound">Ses</string>
+  <string name="receive_sound_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Sound on receive">SMS gelince ses açık</string>
+  <string name="receive_led_color_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="LED color">LED ışığı</string>
+  <string name="receive_led_flash_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="LED mode">LED modu</string>
+  <string name="receive_led_flash_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Set LED flashing behaviour">LED\'i fals moduna ayarla</string>
+  <string name="receive_no_text_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Hide sender/text">Göndericiyi/mesajı gizle</string>
+  <string name="receive_no_text_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Hide sender/text in notification.">Bildirimlerde göndericiyi/mesajı gizle.</string>
+  <string name="autosend_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Autosend">Otomatik gönder</string>
 </resources>

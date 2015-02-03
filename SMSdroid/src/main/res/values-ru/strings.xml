@@ -236,4 +236,7 @@
   <string name="not_default_app" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SMSdroid is not the default SMS app">SMSdroid не является SMS-приложением по умолчанию</string>
   <string name="not_default_app_message" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SMSdroid needs to be the default SMS app to work properly">Для правильной работы SMSdroid должен быть SMS-приложением по умолчанию</string>
   <string name="forwarded_sms_clean_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Strips sender in received sms according to &quot;([0-9a-zA-Z]+):&quot; and use that this number as sender.">Удалить отправителя в полученном СМС в соответствии с \"([0-9a-zA-Z]+):\" и использовать этот номер в качестве отправителя.</string>
+  <string name="error_unknown" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Unknown error">Неизвестная ошибка</string>
+  <string name="edit_short_text_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Edit as short message">Редактировать как короткое сообщение</string>
+  <string name="edit_short_text_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Consider input a short message. The keyboard usually replaces enter with smiley button if enabled.">Рассмотрим ввод коротких сообщений. Клавиатура, как правило, заменяет введенное  смайликом, если разрешено.</string>
 </resources>
