@@ -509,9 +509,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected final void onPause() {
         mAdView.pause();
