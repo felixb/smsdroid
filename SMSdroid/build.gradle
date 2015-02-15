@@ -9,6 +9,9 @@ buildscript {
 apply plugin: 'com.android.application'
 
 repositories {
+    maven {
+        url 'https://github.com/felixb/ub0rlib/raw/mvn-repo/'
+    }
     mavenCentral()
 }
 
@@ -48,7 +51,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'de.ub0r.android.lib:lib:1.0.1'
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.+@aar'
     compile 'com.google.android.gms:play-services-ads:6.5.87'

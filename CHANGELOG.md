@@ -1,5 +1,8 @@
 # Changes
 
+## 1.6.4
+* fix FCs on Android 5.0
+
 ## 1.6.3
 * fix lot`s of FCs
 
