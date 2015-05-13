@@ -56,7 +56,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import de.ub0r.android.lib.ChangelogHelper;
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
@@ -279,9 +278,7 @@ public final class ConversationListActivity extends SherlockActivity implements
         SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
                 R.drawable.bg_striped, R.drawable.bg_striped_img);
 
-        ChangelogHelper.showChangelog(this, getString(R.string.changelog_),
-                getString(R.string.app_name), R.array.updates, R.array.notes_from_dev);
-
+        // debug info
         showRows(this);
 
         final AbsListView list = getListView();
@@ -298,24 +295,32 @@ public final class ConversationListActivity extends SherlockActivity implements
         longItemClickDialog[WHICH_MARK_SPAM] = getString(R.string.filter_spam_);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // check if this is the default sms app
-            if (!BuildConfig.PACKAGE_NAME.equals(Telephony.Sms.getDefaultSmsPackage(this))) {
-                AlertDialog.Builder b = new AlertDialog.Builder(this);
-                b.setTitle(R.string.not_default_app);
-                b.setMessage(R.string.not_default_app_message);
-                b.setNegativeButton(android.R.string.cancel, null);
-                b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @TargetApi(Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void onClick(final DialogInterface dialogInterface, final int i) {
-                        Intent intent =
-                                new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                        intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
-                                BuildConfig.PACKAGE_NAME);
-                        startActivity(intent);
-                    }
-                });
-                b.show();
+            try {
+                // check if this is the default sms app.
+                // If the device doesn't support Telephony.Sms (i.e. tablet) getDefaultSmsPackage() will
+                // be null. Don't show message in this case.
+                final String smsPackage = Telephony.Sms.getDefaultSmsPackage(this);
+                if (smsPackage != null && !smsPackage.equals(BuildConfig.APPLICATION_ID)) {
+                    AlertDialog.Builder b = new AlertDialog.Builder(this);
+                    b.setTitle(R.string.not_default_app);
+                    b.setMessage(R.string.not_default_app_message);
+                    b.setNegativeButton(android.R.string.cancel, null);
+                    b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onClick(final DialogInterface dialogInterface, final int i) {
+                            Intent intent =
+                                    new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+                                    BuildConfig.APPLICATION_ID);
+                            startActivity(intent);
+                        }
+                    });
+                    b.show();
+                }
+            } catch (SecurityException e) {
+                // some samsung devices/tablets want permission GET_TASKS o.O
+                Log.e(TAG, "failed to query default SMS app", e);
             }
         }
     }
@@ -341,6 +346,15 @@ public final class ConversationListActivity extends SherlockActivity implements
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean hideDeleteAll = p
+                .getBoolean(PreferencesActivity.PREFS_HIDE_DELETE_ALL_THREADS, false);
+        menu.findItem(R.id.item_delete_all_threads).setVisible(!hideDeleteAll);
+        return true;
+    }
+
     /**
      * Mark all messages with a given {@link Uri} as read.
      *
@@ -362,7 +376,7 @@ public final class ConversationListActivity extends SherlockActivity implements
         cv.put(Message.PROJECTION[Message.INDEX_READ], read);
         try {
             cr.update(uri, cv, Message.SELECTION_READ_UNREAD, sel);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLiteException e) {
             Log.e(TAG, "failed update", e);
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }

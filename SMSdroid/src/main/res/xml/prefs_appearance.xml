@@ -82,5 +82,13 @@
             android:key="hide_widget_label"
             android:summary="@string/hide_widget_label_hint"
             android:title="@string/hide_widget_label_"/>
+    <CheckBoxPreference
+            android:key="hide_delete_all_threads"
+            android:summary="@string/hide_delete_all_threads_hint"
+            android:title="@string/hide_delete_all_threads_"/>
+    <CheckBoxPreference
+            android:key="hide_message_count"
+            android:summary="@string/hide_message_count_hint"
+            android:title="@string/hide_message_count_"/>
 
 </PreferenceScreen>

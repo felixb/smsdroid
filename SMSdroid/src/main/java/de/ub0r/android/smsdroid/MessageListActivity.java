@@ -18,6 +18,10 @@
  */
 package de.ub0r.android.smsdroid;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -56,8 +60,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashSet;
-
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
@@ -72,40 +74,7 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
 public class MessageListActivity extends SherlockActivity implements OnItemClickListener,
         OnItemLongClickListener, OnClickListener, OnLongClickListener {
 
-    /**
-     * Tag for output.
-     */
     private static final String TAG = "ml";
-
-    /**
-     * Ad's unit id.
-     */
-    private static final String ADMOB_PUBID = "a14b9f701ee348f";
-
-    /**
-     * Ad's keywords.
-     */
-    public static final HashSet<String> AD_KEYWORDS = new HashSet<String>();
-
-    static {
-        AD_KEYWORDS.add("android");
-        AD_KEYWORDS.add("mobile");
-        AD_KEYWORDS.add("handy");
-        AD_KEYWORDS.add("cellphone");
-        AD_KEYWORDS.add("google");
-        AD_KEYWORDS.add("htc");
-        AD_KEYWORDS.add("samsung");
-        AD_KEYWORDS.add("motorola");
-        AD_KEYWORDS.add("market");
-        AD_KEYWORDS.add("app");
-        AD_KEYWORDS.add("message");
-        AD_KEYWORDS.add("txt");
-        AD_KEYWORDS.add("sms");
-        AD_KEYWORDS.add("mms");
-        AD_KEYWORDS.add("game");
-        AD_KEYWORDS.add("websms");
-        AD_KEYWORDS.add("amazon");
-    }
 
     /**
      * {@link ContactsWrapper}.
@@ -251,6 +220,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         getListView().setAdapter(la);
     }
 
+    private AdView mAdView;
+
     /**
      * {@inheritDoc}
      */
@@ -319,6 +290,19 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_message_);
         // longItemClickDialog[WHICH_SPEAK] =
         // getString(R.string.speak_);
+
+        mAdView = (AdView) findViewById(R.id.ads);
+        mAdView.setVisibility(View.GONE);
+        if (!DonationHelper.hideAds(this)) {
+            mAdView.loadAd(new AdRequest.Builder().build());
+            mAdView.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    mAdView.setVisibility(View.VISIBLE);
+                    super.onAdLoaded();
+                }
+            });
+        }
     }
 
     /**
@@ -421,7 +405,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      * @param contact {@link Contact}
      */
     private void setContactIcon(final Contact contact) {
-		/* Show {@link MenuItem} holding {@link Contact}'s picture . */
+        /* Show {@link MenuItem} holding {@link Contact}'s picture . */
         boolean showContactItem;
         if (contact == null) {
             Log.w(TAG, "setContactIcon(null)");
@@ -483,11 +467,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
     @Override
     protected final void onResume() {
         super.onResume();
-        boolean noAds = DonationHelper.hideAds(this);
-        if (!noAds) {
-            Ads.loadAd(this, R.id.ad, ADMOB_PUBID, AD_KEYWORDS);
-        }
 
+        mAdView.resume();
         final ListView lv = getListView();
         lv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         lv.setAdapter(new MessageAdapter(this, uri));
@@ -528,15 +509,19 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected final void onPause() {
-        super.onPause();
+        mAdView.pause();
         if (!markedUnread) {
             setRead();
         }
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 
     /**
@@ -824,13 +809,18 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      */
     private void send(final boolean autosend, final boolean showChooser) {
         final Intent i = buildIntent(autosend, showChooser);
-        startActivity(i);
-        //noinspection ConstantConditions
-        PreferenceManager
-                .getDefaultSharedPreferences(this)
-                .edit()
-                .putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
-                        etText.getText().toString()).commit();
-        etText.setText("");
+        try {
+            startActivity(i);
+            //noinspection ConstantConditions
+            PreferenceManager
+                    .getDefaultSharedPreferences(this)
+                    .edit()
+                    .putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
+                            etText.getText().toString()).commit();
+            etText.setText("");
+        } catch (ActivityNotFoundException e) {
+            Log.e(TAG, "unable to launch sender app", e);
+            Toast.makeText(this, R.string.error_sending_failed, Toast.LENGTH_LONG).show();
+        }
     }
 }

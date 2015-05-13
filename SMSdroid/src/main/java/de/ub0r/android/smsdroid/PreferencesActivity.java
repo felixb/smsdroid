@@ -90,6 +90,10 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
 	static final String PREFS_HIDE_PASTE = "hide_paste";
 	/** Prefernece's name: hide widget's label. */
 	static final String PREFS_HIDE_WIDGET_LABEL = "hide_widget_label";
+    /** Prefernece's name: hide delete all threads. */
+    static final String PREFS_HIDE_DELETE_ALL_THREADS = "hide_delete_all_threads";
+    /** Prefernece's name: hide message count. */
+    static final String PREFS_HIDE_MESSAGE_COUNT = "hide_message_count";
 	/** Preference's name: theme. */
 	private static final String PREFS_THEME = "theme";
 	/** Theme: black. */

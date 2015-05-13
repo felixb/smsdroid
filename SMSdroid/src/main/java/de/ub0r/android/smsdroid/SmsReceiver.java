@@ -481,8 +481,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
                             // add actions
                             Intent nextIntent = new Intent(
-                                    WebSMSBroadcastReceiver.ACTION_MARK_READ);
-                            nextIntent.putExtra(WebSMSBroadcastReceiver.EXTRA_MURI, uri.toString());
+                                    NotificationBroadcastReceiver.ACTION_MARK_READ);
+                            nextIntent.putExtra(NotificationBroadcastReceiver.EXTRA_MURI, uri.toString());
                             PendingIntent nextPendingIntent = PendingIntent
                                     .getBroadcast(context, 0, nextIntent,
                                             PendingIntent.FLAG_UPDATE_CURRENT);

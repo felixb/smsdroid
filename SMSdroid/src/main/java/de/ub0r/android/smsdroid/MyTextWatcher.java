@@ -9,7 +9,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 
+import de.ub0r.android.lib.Log;
+
 public final class MyTextWatcher implements TextWatcher {
+
+    private static final String TAG = "TextWatcher";
 
 	/** Minimum length for showing sms length. */
 	private static final int TEXT_LABLE_MIN_LEN = 50;
@@ -53,9 +57,13 @@ public final class MyTextWatcher implements TextWatcher {
 		} else {
 			tvPaste.setVisibility(View.GONE);
 			if (len > TEXT_LABLE_MIN_LEN) {
-				tvTextLabel.setVisibility(View.VISIBLE);
-				int[] l = SmsMessage.calculateLength(s.toString(), false);
-				tvTextLabel.setText(l[0] + "/" + l[2]);
+                try {
+                    int[] l = SmsMessage.calculateLength(s.toString(), false);
+                    tvTextLabel.setText(l[0] + "/" + l[2]);
+                    tvTextLabel.setVisibility(View.VISIBLE);
+                } catch (RuntimeException e) {
+                    Log.e(TAG, "error calculating message length", e);
+                }
 			} else {
 				tvTextLabel.setVisibility(View.GONE);
 			}

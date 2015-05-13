@@ -81,7 +81,11 @@
   <string name="hide_paste_" formatted="false">\"Einfügen\" Button ausblenden</string>
   <string name="hide_paste_hint" formatted="false">\"Einfügen\" Button auf dem Textfeld ausblenden.</string>
   <string name="hide_widget_label_" formatted="false">Widget-Titel ausblenden</string>
-  <string name="hide_widget_label_hint" formatted="false">Blende den Titel des Widgets aus.</string>
+  <string name="hide_widget_label_hint" formatted="false">Titel des Widgets ausblenden.</string>
+  <string name="hide_delete_all_threads_" formatted="false">"Alle Threads löschen" ausblenden</string>
+  <string name="hide_delete_all_threads_hint" formatted="false">"Alle Threads löschen" im Menü ausblenden.</string>
+  <string name="hide_message_count_" formatted="false">Nachrichtenzähler ausblenden</string>
+  <string name="hide_message_count_hint" formatted="false">Nachrichtenzähler in der Konversationsübersicht ausblenden.</string>
   <string name="show_full_date_" formatted="false">Volles Datum zeigen</string>
   <string name="show_full_date_hint" formatted="false">Volles Datum und Uhrzeit bei allen Nachrichten anzeigen.</string>
   <string name="me" formatted="false">Ich</string>

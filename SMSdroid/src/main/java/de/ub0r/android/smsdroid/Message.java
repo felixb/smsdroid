@@ -363,7 +363,9 @@ public final class Message {
 				is = cr.openInputStream(uri);
 			} catch (IOException e) {
 				Log.e(TAG, "Failed to load part data", e);
-			}
+			} catch (NullPointerException e) {
+                Log.e(TAG, "Failed to load part data", e);
+            }
 			if (is == null) {
 				Log.i(TAG, "InputStream for part " + pid + " is null");
 				if (iText >= 0 && ct != null && ct.startsWith("text/")) {
