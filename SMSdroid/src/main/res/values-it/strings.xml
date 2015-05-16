@@ -21,7 +21,7 @@
                Visit http://ub0r.de/translate/smsdroid/it/strings.xml to edit the file.
        -->
 <resources>
-  <string name="about_" formatted="false" username="carloraudino@fedoraproject.org" orig="About">Info</string>
+  <string name="about_" formatted="false" username="Edit ltalian" orig="About">Info</string>
   <string name="about_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="About this app">Info sull\'app</string>
   <string name="faq_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Some tips and tricks, how to set up this app.">Alcuni trucchi e suggerimenti su come impostare l\'applicazione.</string>
   <string name="feedback_" formatted="false" username="carloraudino@fedoraproject.org" orig="Feedback">Feedback</string>
