@@ -31,7 +31,6 @@
   <string name="more_apps_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="More Apps..">תוכנות נוספות</string>
   <string name="settings" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Preferences">הגדרות</string>
   <string name="new_message_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="New message">הודעה חדשה</string>
-  <string name="new_message_hint" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Compose a new message">צור הודעה חדשה</string>
   <string name="new_message" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="1 unread message.">הודעה חדשה</string>
   <string name="new_messages_" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="New messages">הודעות חדשות</string>
   <string name="new_messages" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="%d unread messages.">%d הודעות חדשות.</string>

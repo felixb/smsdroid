@@ -18,351 +18,396 @@
  */
 package de.ub0r.android.smsdroid;
 
-import java.util.LinkedHashMap;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.CallLog.Calls;
-import de.ub0r.android.lib.Log;
+
+import java.util.LinkedHashMap;
+
 import de.ub0r.android.lib.apis.Contact;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * Class holding a single conversation.
- * 
+ *
  * @author flx
  */
 public final class Conversation {
-	/** Tag for logging. */
-	static final String TAG = "con";
 
-	/** Cache size. */
-	private static final int CAHCESIZE = 50;
-	/** Internal Cache. */
-	private static final LinkedHashMap<Integer, Conversation> CACHE = new LinkedHashMap<Integer, Conversation>(
-			26, 0.9f, true);
+    /**
+     * Tag for logging.
+     */
+    static final String TAG = "con";
 
-	/** No photo available. */
-	public static final Bitmap NO_PHOTO = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+    /**
+     * Cache size.
+     */
+    private static final int CACHESIZE = 50;
 
-	/** {@link Uri} to all threads. */
-	static final Uri URI_SIMPLE = Uri.parse("content://mms-sms/conversations").buildUpon()
-			.appendQueryParameter("simple", "true").build();
+    /**
+     * Internal Cache.
+     */
+    private static final LinkedHashMap<Integer, Conversation> CACHE
+            = new LinkedHashMap<>(26, 0.9f, true);
 
-	/** Id. */
-	public static final String ID = BaseColumns._ID;
-	/** Date. */
-	public static final String DATE = Calls.DATE;
-	/** count. */
-	public static final String COUNT = "message_count";
-	/** number id. */
-	public static final String NID = "recipient_ids";
-	/** body. */
-	public static final String BODY = "snippet";
-	/** read. */
-	public static final String READ = "read";
+    /**
+     * No photo available.
+     */
+    public static final Bitmap NO_PHOTO = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
 
-	/** INDEX: id. */
-	public static final int INDEX_SIMPLE_ID = 0;
-	/** INDEX: date. */
-	public static final int INDEX_SIMPLE_DATE = 1;
-	/** INDEX: count. */
-	public static final int INDEX_SIMPLE_COUNT = 2;
-	/** INDEX: person id. */
-	public static final int INDEX_SIMPLE_NID = 3;
-	/** INDEX: body. */
-	public static final int INDEX_SIMPLE_BODY = 4;
-	/** INDEX: read. */
-	public static final int INDEX_SIMPLE_READ = 5;
+    /**
+     * {@link Uri} to all threads.
+     */
+    static final Uri URI_SIMPLE = Uri.parse("content://mms-sms/conversations").buildUpon()
+            .appendQueryParameter("simple", "true").build();
 
-	/** Cursor's projection. */
-	public static final String[] PROJECTION_SIMPLE = { //
-	ID, // 0
-			DATE, // 1
-			COUNT, // 2
-			NID, // 3
-			BODY, // 4
-			READ, // 5
-	};
+    /**
+     * Id.
+     */
+    public static final String ID = BaseColumns._ID;
 
-	/** Date format. //TODO: move me to xml */
-	static final String DATE_FORMAT = "dd.MM. kk:mm";
+    /**
+     * Date.
+     */
+    public static final String DATE = Calls.DATE;
 
-	/** Time of valid cache. */
-	private static long validCache = 0;
+    /**
+     * count.
+     */
+    public static final String COUNT = "message_count";
 
-	/** Id. */
-	private int id;
-	/** ThreadId. */
-	private int threadId;
-	/** Contact. */
-	private Contact contact;
-	/** NumerId. */
-	// private long numberId;
-	/** Contact's id. */
-	// private String contactId;
-	/** Date. */
-	private long date;
-	/** Address. */
-	// private String address;
-	/** Body. */
-	private String body;
-	/** Read status. */
-	private int read;
-	/** Message count. */
-	private int count = -1;
-	/** Last update. */
-	private long lastUpdate = 0L;
+    /**
+     * number id.
+     */
+    public static final String NID = "recipient_ids";
 
-	/** Name. */
-	// private String name = null;
-	/** Photo. */
-	// private Bitmap photo = null;
+    /**
+     * body.
+     */
+    public static final String BODY = "snippet";
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param cursor
-	 *            {@link Cursor} to read the data
-	 * @param sync
-	 *            fetch of information
-	 */
-	private Conversation(final Context context, final Cursor cursor, final boolean sync) {
-		threadId = cursor.getInt(INDEX_SIMPLE_ID);
-		date = cursor.getLong(INDEX_SIMPLE_DATE);
-		body = cursor.getString(INDEX_SIMPLE_BODY);
-		read = cursor.getInt(INDEX_SIMPLE_READ);
-		count = cursor.getInt(INDEX_SIMPLE_COUNT);
-		contact = new Contact(cursor.getInt(INDEX_SIMPLE_NID));
+    /**
+     * read.
+     */
+    public static final String READ = "read";
 
-		AsyncHelper.fillConversation(context, this, sync);
-		lastUpdate = System.currentTimeMillis();
-	}
+    /**
+     * INDEX: id.
+     */
+    public static final int INDEX_SIMPLE_ID = 0;
 
-	/**
-	 * Update data.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param cursor
-	 *            {@link Cursor} to read from.
-	 * @param sync
-	 *            fetch of information
-	 */
-	private void update(final Context context, final Cursor cursor, final boolean sync) {
-		Log.d(TAG, "update(" + threadId + "," + sync + ")");
-		long d = cursor.getLong(INDEX_SIMPLE_DATE);
-		if (d != date) {
-			id = cursor.getInt(INDEX_SIMPLE_ID);
-			date = d;
-			body = cursor.getString(INDEX_SIMPLE_BODY);
-		}
-		count = cursor.getInt(INDEX_SIMPLE_COUNT);
-		read = cursor.getInt(INDEX_SIMPLE_READ);
-		final int nid = cursor.getInt(INDEX_SIMPLE_NID);
-		if (nid != contact.getRecipientId()) {
-			contact = new Contact(nid);
-		}
-		if (lastUpdate < validCache) {
-			AsyncHelper.fillConversation(context, this, sync);
-			lastUpdate = System.currentTimeMillis();
-		}
-	}
+    /**
+     * INDEX: date.
+     */
+    public static final int INDEX_SIMPLE_DATE = 1;
 
-	/**
-	 * Get a {@link Conversation}.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param cursor
-	 *            {@link Cursor} to read the data from
-	 * @param sync
-	 *            fetch of information
-	 * @return {@link Conversation}
-	 */
-	public static Conversation getConversation(final Context context, final Cursor cursor,
-			final boolean sync) {
-		Log.d(TAG, "getConversation(" + sync + ")");
-		synchronized (CACHE) {
-			Conversation ret = CACHE.get(cursor.getInt(INDEX_SIMPLE_ID));
-			if (ret == null) {
-				ret = new Conversation(context, cursor, sync);
-				CACHE.put(ret.getThreadId(), ret);
-				Log.d(TAG, "cachesize: " + CACHE.size());
-				while (CACHE.size() > CAHCESIZE) {
-					Integer i = CACHE.keySet().iterator().next();
-					Log.d(TAG, "rm con. from cache: " + i);
-					Conversation cc = CACHE.remove(i);
-					if (cc == null) {
-						Log.w(TAG, "CACHE might be inconsistent!");
-						break;
-					}
-				}
-			} else {
-				ret.update(context, cursor, sync);
-			}
-			return ret;
-		}
-	}
+    /**
+     * INDEX: count.
+     */
+    public static final int INDEX_SIMPLE_COUNT = 2;
 
-	/**
-	 * Get a {@link Conversation}.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param threadId
-	 *            threadId
-	 * @param forceUpdate
-	 *            force an update of that {@link Conversation}
-	 * @return {@link Conversation}
-	 */
-	public static Conversation getConversation(final Context context, final int threadId,
-			final boolean forceUpdate) {
-		Log.d(TAG, "getConversation(" + threadId + ")");
-		synchronized (CACHE) {
-			Conversation ret = CACHE.get(threadId);
-			if (ret == null || ret.getContact().getNumber() == null || forceUpdate) {
-				Cursor cursor = context.getContentResolver().query(URI_SIMPLE, PROJECTION_SIMPLE,
-						ID + " = ?", new String[] { String.valueOf(threadId) }, null);
-				if (cursor.moveToFirst()) {
-					ret = getConversation(context, cursor, true);
-				} else {
-					Log.e(TAG, "did not found conversation: " + threadId);
-				}
-				cursor.close();
-			}
-			return ret;
-		}
-	}
+    /**
+     * INDEX: person id.
+     */
+    public static final int INDEX_SIMPLE_NID = 3;
 
-	/**
-	 * Flush all cached conversations.
-	 */
-	public static void flushCache() {
-		synchronized (CACHE) {
-			CACHE.clear();
-		}
-	}
+    /**
+     * INDEX: body.
+     */
+    public static final int INDEX_SIMPLE_BODY = 4;
 
-	/**
-	 * Remove a {@link Conversation} from cache.
-	 * 
-	 * @param threadId
-	 *            threadId
-	 */
-	public static void removeConversation(final int threadId) {
-		synchronized (CACHE) {
-			final Conversation c = CACHE.get(threadId);
-			if (c == null) {
-				CACHE.remove(c);
-			}
-		}
-	}
+    /**
+     * INDEX: read.
+     */
+    public static final int INDEX_SIMPLE_READ = 5;
 
-	/**
-	 * Invalidate Cache.
-	 */
-	public static void invalidate() {
-		validCache = System.currentTimeMillis();
-	}
+    /**
+     * Cursor's projection.
+     */
+    public static final String[] PROJECTION_SIMPLE = { //
+            ID, // 0
+            DATE, // 1
+            COUNT, // 2
+            NID, // 3
+            BODY, // 4
+            READ, // 5
+    };
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+    /**
+     * Date format. //TODO: move me to xml
+     */
+    static final String DATE_FORMAT = "dd.MM. kk:mm";
 
-	/**
-	 * Set the numberId.
-	 * 
-	 * @param nid
-	 *            the numberId
-	 */
-	public void setNumberId(final long nid) {
-		contact = new Contact(nid);
-	}
+    /**
+     * Time of valid cache.
+     */
+    private static long validCache = 0;
 
-	/**
-	 * @return the threadId
-	 */
-	public int getThreadId() {
-		return threadId;
-	}
+    /**
+     * Id.
+     */
+    private int id;
 
-	/**
-	 * @return the date
-	 */
-	public long getDate() {
-		return date;
-	}
+    /**
+     * ThreadId.
+     */
+    private final int threadId;
 
-	/**
-	 * Get {@link Contact}.
-	 * 
-	 * @return {@link Contact}
-	 */
-	public Contact getContact() {
-		return contact;
-	}
+    /**
+     * Contact.
+     */
+    private Contact contact;
+    /** NumerId. */
+    // private long numberId;
+    /** Contact's id. */
+    // private String contactId;
 
-	/**
-	 * @return the body
-	 */
-	public String getBody() {
-		return body;
-	}
+    /**
+     * Date.
+     */
+    private long date;
+    /** Address. */
+    // private String address;
 
-	/**
-	 * Set the body.
-	 * 
-	 * @param b
-	 *            body
-	 */
-	public void setBody(final String b) {
-		body = b;
-	}
+    /**
+     * Body.
+     */
+    private String body;
 
-	/**
-	 * @return the read status
-	 */
-	public int getRead() {
-		return read;
-	}
+    /**
+     * Read status.
+     */
+    private int read;
 
-	/**
-	 * Set {@link Conversation}'s read status.
-	 * 
-	 * @param status
-	 *            read status
-	 */
-	public void setRead(final int status) {
-		read = status;
-	}
+    /**
+     * Message count.
+     */
+    private int count = -1;
 
-	/**
-	 * @return the count
-	 */
-	public int getCount() {
-		return count;
-	}
+    /**
+     * Last update.
+     */
+    private long lastUpdate = 0L;
 
-	/**
-	 * @param c
-	 *            the count to set
-	 */
-	public void setCount(final int c) {
-		count = c;
-	}
+    /** Name. */
+    // private String name = null;
+    /** Photo. */
+    // private Bitmap photo = null;
 
-	/**
-	 * @return {@link Uri} of this {@link Conversation}
-	 */
-	public Uri getUri() {
-		return Uri.withAppendedPath(ConversationListActivity.URI, String.valueOf(threadId));
-	}
+    /**
+     * Default constructor.
+     *
+     * @param context {@link Context}
+     * @param cursor  {@link Cursor} to read the data
+     * @param sync    fetch of information
+     */
+    private Conversation(final Context context, final Cursor cursor, final boolean sync) {
+        threadId = cursor.getInt(INDEX_SIMPLE_ID);
+        date = cursor.getLong(INDEX_SIMPLE_DATE);
+        body = cursor.getString(INDEX_SIMPLE_BODY);
+        read = cursor.getInt(INDEX_SIMPLE_READ);
+        count = cursor.getInt(INDEX_SIMPLE_COUNT);
+        contact = new Contact(cursor.getInt(INDEX_SIMPLE_NID));
+
+        AsyncHelper.fillConversation(context, this, sync);
+        lastUpdate = System.currentTimeMillis();
+    }
+
+    /**
+     * Update data.
+     *
+     * @param context {@link Context}
+     * @param cursor  {@link Cursor} to read from.
+     * @param sync    fetch of information
+     */
+    private void update(final Context context, final Cursor cursor, final boolean sync) {
+        Log.d(TAG, "update(", threadId, ",", sync, ")");
+        long d = cursor.getLong(INDEX_SIMPLE_DATE);
+        if (d != date) {
+            id = cursor.getInt(INDEX_SIMPLE_ID);
+            date = d;
+            body = cursor.getString(INDEX_SIMPLE_BODY);
+        }
+        count = cursor.getInt(INDEX_SIMPLE_COUNT);
+        read = cursor.getInt(INDEX_SIMPLE_READ);
+        final int nid = cursor.getInt(INDEX_SIMPLE_NID);
+        if (nid != contact.getRecipientId()) {
+            contact = new Contact(nid);
+        }
+        if (lastUpdate < validCache) {
+            AsyncHelper.fillConversation(context, this, sync);
+            lastUpdate = System.currentTimeMillis();
+        }
+    }
+
+    /**
+     * Get a {@link Conversation}.
+     *
+     * @param context {@link Context}
+     * @param cursor  {@link Cursor} to read the data from
+     * @param sync    fetch of information
+     * @return {@link Conversation}
+     */
+    public static Conversation getConversation(final Context context, final Cursor cursor,
+            final boolean sync) {
+        Log.d(TAG, "getConversation(", sync, ")");
+        synchronized (CACHE) {
+            Conversation ret = CACHE.get(cursor.getInt(INDEX_SIMPLE_ID));
+            if (ret == null) {
+                ret = new Conversation(context, cursor, sync);
+                CACHE.put(ret.getThreadId(), ret);
+                Log.d(TAG, "cachesize: ", CACHE.size());
+                while (CACHE.size() > CACHESIZE) {
+                    Integer i = CACHE.keySet().iterator().next();
+                    Log.d(TAG, "rm con. from cache: ", i);
+                    Conversation cc = CACHE.remove(i);
+                    if (cc == null) {
+                        Log.w(TAG, "CACHE might be inconsistent!");
+                        break;
+                    }
+                }
+            } else {
+                ret.update(context, cursor, sync);
+            }
+            return ret;
+        }
+    }
+
+    /**
+     * Get a {@link Conversation}.
+     *
+     * @param context     {@link Context}
+     * @param threadId    threadId
+     * @param forceUpdate force an update of that {@link Conversation}
+     * @return {@link Conversation}
+     */
+    public static Conversation getConversation(final Context context, final int threadId,
+            final boolean forceUpdate) {
+        Log.d(TAG, "getConversation(", threadId, ")");
+        synchronized (CACHE) {
+            Conversation ret = CACHE.get(threadId);
+            if (ret == null || ret.getContact().getNumber() == null || forceUpdate) {
+                Cursor cursor = context.getContentResolver().query(URI_SIMPLE, PROJECTION_SIMPLE,
+                        ID + " = ?", new String[]{String.valueOf(threadId)}, null);
+                if (cursor.moveToFirst()) {
+                    ret = getConversation(context, cursor, true);
+                } else {
+                    Log.e(TAG, "did not found conversation: ", threadId);
+                }
+                cursor.close();
+            }
+            return ret;
+        }
+    }
+
+    /**
+     * Flush all cached conversations.
+     */
+    public static void flushCache() {
+        synchronized (CACHE) {
+            CACHE.clear();
+        }
+    }
+
+    /**
+     * Invalidate Cache.
+     */
+    public static void invalidate() {
+        validCache = System.currentTimeMillis();
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Set the numberId.
+     *
+     * @param nid the numberId
+     */
+    public void setNumberId(final long nid) {
+        contact = new Contact(nid);
+    }
+
+    /**
+     * @return the threadId
+     */
+    public int getThreadId() {
+        return threadId;
+    }
+
+    /**
+     * @return the date
+     */
+    public long getDate() {
+        return date;
+    }
+
+    /**
+     * Get {@link Contact}.
+     *
+     * @return {@link Contact}
+     */
+    public Contact getContact() {
+        return contact;
+    }
+
+    /**
+     * @return the body
+     */
+    public String getBody() {
+        return body;
+    }
+
+    /**
+     * Set the body.
+     *
+     * @param b body
+     */
+    public void setBody(final String b) {
+        body = b;
+    }
+
+    /**
+     * @return the read status
+     */
+    public int getRead() {
+        return read;
+    }
+
+    /**
+     * Set {@link Conversation}'s read status.
+     *
+     * @param status read status
+     */
+    public void setRead(final int status) {
+        read = status;
+    }
+
+    /**
+     * @return the count
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
+     * @param c the count to set
+     */
+    public void setCount(final int c) {
+        count = c;
+    }
+
+    /**
+     * @return {@link Uri} of this {@link Conversation}
+     */
+    public Uri getUri() {
+        return Uri.withAppendedPath(ConversationListActivity.URI, String.valueOf(threadId));
+    }
 }

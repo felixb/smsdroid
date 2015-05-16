@@ -3,25 +3,25 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.1'
+        classpath 'com.android.tools.build:gradle:1.2.3'
     }
 }
 apply plugin: 'com.android.application'
 
 repositories {
     maven {
-        url 'https://github.com/felixb/ub0rlib/raw/mvn-repo/'
+        url 'https://raw.githubusercontent.com/felixb/mvn-repo/master'
     }
     mavenCentral()
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 22
     }
 
     signingConfigs {
@@ -39,8 +39,16 @@ android {
                 versionNameSuffix " debug"
             }
 
+            logRelease {
+                versionNameSuffix "-logRelease"
+                signingConfig signingConfigs.release
+                minifyEnabled false
+            }
+
             release {
                 signingConfig signingConfigs.release
+                minifyEnabled true
+                proguardFile 'proguard.cfg'
             }
         }
     }
@@ -51,8 +59,9 @@ android {
 }
 
 dependencies {
-    compile 'de.ub0r.android.lib:lib:1.0.1'
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.+@aar'
-    compile 'com.google.android.gms:play-services-ads:6.5.87'
+    compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.google.android.gms:play-services-ads:7.3.0'
+    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    compile 'de.ub0r.android.lib:lib:1.1.0'
+    compile 'de.ub0r.android.logg0r:logg0r:2.0.0'
 }

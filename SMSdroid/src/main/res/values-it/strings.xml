@@ -30,7 +30,6 @@
   <string name="more_apps_" formatted="false" username="carloraudino@fedoraproject.org" orig="More Apps..">Altre app..</string>
   <string name="settings" formatted="false" username="carloraudino@fedoraproject.org" orig="Preferences">Impostazioni</string>
   <string name="new_message_" formatted="false" username="carloraudino@fedoraproject.org" orig="New message">Nuovo messaggio</string>
-  <string name="new_message_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Compose a new message">Componi nuovo messaggio</string>
   <string name="new_message" formatted="false" username="carloraudino@fedoraproject.org" orig="1 unread message.">1 messaggio non letto.</string>
   <string name="new_messages_" formatted="false" username="carloraudino@fedoraproject.org" orig="New messages">Nuovi messaggi</string>
   <string name="new_messages" formatted="false" username="carloraudino@fedoraproject.org" orig="%d unread messages.">%d messaggi non letti.</string>
@@ -66,13 +65,10 @@
   <string name="textcolor_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Message text\'s color.">Il colore del testo del messaggio</string>
   <string name="textcolor_ignore_conv_" formatted="false" username="carloraudino@fedoraproject.org" orig="Ignore text color for threads">Ignora il colore del testo per le discussioni</string>
   <string name="textcolor_ignore_conv_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Ignore text color in list of threads.">Ignora il colore del testo nella lista delle discussioni.</string>
-  <string name="show_titlebar_" formatted="false" username="carloraudino@fedoraproject.org" orig="Show title bar">Mostra barra del titolo</string>
-  <string name="show_titlebar_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Mostra la barra del titolo nella schermata principale. Senza la barra del titolo non si possono vedere le attività in background.</string>
   <string name="show_contact_photo_" formatted="false" username="carloraudino@fedoraproject.org" orig="Show photo">Mostra foto</string>
   <string name="show_contact_photo_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Show contact\'s photo in conversation list">Mostra la foto dei contatti nella lista delle conversazioni</string>
   <string name="show_emoticons_" formatted="false" username="carloraudino@fedoraproject.org" orig="Show emoticons">Mostra emoticon</string>
   <string name="show_emoticons_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Show emoticons in message list.">Mostra emoticon nella lista dei messaggi.</string>
-  <string name="show_bubbles_" formatted="false" username="carloraudino@fedoraproject.org" orig="Show bubbles">Mostra bolle di dialogo</string>
   <string name="hide_send_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;send&quot; button">Nascondi pulsante \"Invia\"</string>
   <string name="hide_send_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;send&quot; button near text field.">Nasconde il pulsante \"Invia\" accanto al campo testo.</string>
   <string name="hide_restore_" formatted="false" username="carloraudino@fedoraproject.org" orig="Hide &quot;restore last message&quot; button">Nascondi pulsante \"ripristina ultimo messaggio\"</string>
@@ -95,16 +91,12 @@
   <string name="send_draft_" formatted="false" username="carloraudino@fedoraproject.org" orig="Send draft">Invia bozza</string>
   <string name="copy_text_" formatted="false" username="carloraudino@fedoraproject.org" orig="Copy message text">Copia testo messaggio</string>
   <string name="view_details_" formatted="false" username="carloraudino@fedoraproject.org" orig="View message details">Mostra dettagli messaggio</string>
-  <string name="spek_" formatted="false" username="carloraudino@fedoraproject.org" orig="Speak">Pronuncia</string>
   <string name="delete_threads_" formatted="false" username="carloraudino@fedoraproject.org" orig="Delete all threads">Cancella tutte le discussioni</string>
   <string name="mark_all_read_" formatted="false" username="carloraudino@fedoraproject.org" orig="Mark all as read">Segna tutti come già letti</string>
   <string name="mark_read_" formatted="false" username="carloraudino@fedoraproject.org" orig="Mark read">Segna come già letto</string>
   <string name="mark_unread_" formatted="false" username="carloraudino@fedoraproject.org" orig="Mark unread">Segna come da leggere</string>
-  <string name="all_threads_" formatted="false" username="carloraudino@fedoraproject.org" orig="All threads">Tutte le discussioni</string>
   <string name="message_options_" formatted="false" username="carloraudino@fedoraproject.org" orig="Message options">Opzioni messaggio</string>
-  <string name="compose_" formatted="false" username="carloraudino@fedoraproject.org" orig="Compose">Componi</string>
   <string name="delete_message_question" formatted="false" username="carloraudino@fedoraproject.org" orig="Do you really want to delete this message?">Cancellare questo messaggio?</string>
-  <string name="delete_messages_question" formatted="false" username="carloraudino@fedoraproject.org" orig="Do you really want to delete these messages?">Cancellare questi messaggi?</string>
   <string name="delete_thread_question" formatted="false" username="carloraudino@fedoraproject.org" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Cancellare <b>tutti i messaggi di questa discussione</b>?</string>
   <string name="delete_threads_question" formatted="false" username="carloraudino@fedoraproject.org" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Cancellare <b>tutti i messaggi</b>?</string>
   <string name="from_" formatted="false" username="carloraudino@fedoraproject.org" orig="From:">Da:</string>
@@ -115,15 +107,9 @@
   <string name="received_" formatted="false" username="carloraudino@fedoraproject.org" orig="Received:">Ricevuto</string>
   <string name="view_mms" formatted="false" username="carloraudino@fedoraproject.org" orig="View MMS">Mostra MMS</string>
   <string name="mms_conversation" formatted="false" username="carloraudino@fedoraproject.org" orig="&lt;MMS body&gt;">&lt;corpo MMS&gt;</string>
-  <string name="mms_not_supported" formatted="false" username="carloraudino@fedoraproject.org" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Questo messaggio sembra essere un MMS. Per scaricarlo usare l\'applicazione standard per gli SMS/MMS.&#13;
-Cliccare per farlo adesso.</string>
   <string name="import_contact_" formatted="false" username="carloraudino@fedoraproject.org" orig="Import contact">Importa contatto</string>
   <string name="download_" formatted="false" username="carloraudino@fedoraproject.org" orig="Download">Scarica</string>
   <string name="downloading_" formatted="false" username="carloraudino@fedoraproject.org" orig="Downloading..">Scaricamento..</string>
-  <string name="debug_" formatted="false" username="carloraudino@fedoraproject.org" orig="Debug">Debug</string>
-  <string name="clear_cache_" formatted="false" username="carloraudino@fedoraproject.org" orig="Clear cache">Pulisci cache</string>
-  <string name="clear_cache_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Clear internal Database. Fetch all data again from external Database.">Pulisce il dabase interno. Ricarica tutti i dati dal database esterno.</string>
-  <string name="not_implemented" formatted="false" username="carloraudino@fedoraproject.org" orig="Sorry, not yet implemented.">Mi dispiace, non ancora implementato.</string>
   <string name="error_conv_null" formatted="false" username="carloraudino@fedoraproject.org" orig="Error getting conversation from DB!">Errore nel caricamento della conversazione dal DB!</string>
   <string name="error_sending_failed" formatted="false" username="carloraudino@fedoraproject.org" orig="Sending failed">Invio fallito</string>
   <string name="text_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Text">Testo</string>
@@ -210,11 +196,6 @@ Cliccare per farlo adesso.</string>
     <item>Breve, lungo, breve, lungo</item>
   </string-array>
   <string name="reset" formatted="false" username="carloraudino@fedoraproject.org" orig="Reset">Ripristina</string>
-  <string name="send_logs_" formatted="false" username="carloraudino@fedoraproject.org" orig="Send logs">Invia log</string>
-  <string name="send_logs_hint" formatted="false" username="carloraudino@fedoraproject.org" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Invia i log del dispositivo allo sviluppatore.&#13;Da fare solo se richiesto.</string>
-  <string name="sendlog_run_" formatted="false" username="carloraudino@fedoraproject.org" orig="Run SendLog">Avvia SendLog</string>
-  <string name="sendlog_install_" formatted="false" username="carloraudino@fedoraproject.org" orig="Install SendLog">Installa SendLog</string>
-  <string name="sendlog_install" formatted="false" username="carloraudino@fedoraproject.org" orig="Install the free SendLog application to collect the device log and send it to the developer.">Installa l\'applicazione gratuita SendLog per raccogliere i log del dispositivo ed inviarli allo sviluppatore.</string>
   <string name="license_" formatted="false" username="carloraudino@fedoraproject.org" orig="License:">Licenza:</string>
   <string name="license" formatted="false" username="carloraudino@fedoraproject.org" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - vedere http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="author_" formatted="false" username="carloraudino@fedoraproject.org" orig="Author:">Autore:</string>

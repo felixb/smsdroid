@@ -18,6 +18,8 @@
  */
 package de.ub0r.android.smsdroid;
 
+import com.actionbarsherlock.app.ActionBar;
+
 import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -37,140 +39,130 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-
-import de.ub0r.android.lib.Log;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * @author flx
  */
 public final class SMSdroid extends Application {
-	/** Tag for logging. */
-	private static final String TAG = "app";
 
-	/** Projection for checking {@link Cursor}. */
-	private static final String[] PROJECTION = new String[] { "_id" };
+    /**
+     * Tag for logging.
+     */
+    private static final String TAG = "app";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		Log.init("SMSdroid");
-		Log.i(TAG, "init SMSdroid v" + getString(R.string.app_version));
+    /**
+     * Projection for checking {@link Cursor}.
+     */
+    private static final String[] PROJECTION = new String[]{"_id"};
 
-		final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-		int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-		if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
-			try {
-				Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
-						null, null, "_id LIMIT 1");
-				if (c == null) {
-					Log.i(TAG, "disable .Sender: curor=null");
-				} else if (SmsManager.getDefault() == null) {
-					Log.i(TAG, "disable .Sender: SmsManager=null");
-				} else {
-					state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-					Log.d(TAG, "enable .Sender");
-				}
-				if (c != null && !c.isClosed()) {
-					c.close();
-				}
-			} catch (IllegalArgumentException e) {
-				Log.e(TAG, "disable .Sender: " + e.getMessage(), e);
-			} catch (SQLiteException e) {
-				Log.e(TAG, "disable .Sender: " + e.getMessage(), e);
-			}
-		} else {
-			Log.i(TAG, "disable .Sender");
-		}
-		getPackageManager().setComponentEnabledSetting(
-				new ComponentName(this, SenderActivity.class), state, PackageManager.DONT_KILL_APP);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i(TAG, "init SMSdroid v", BuildConfig.VERSION_NAME);
 
-	/**
-	 * Get an {@link OnClickListener} for stating an Activity for given
-	 * {@link Intent}.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param intent
-	 *            {@link Intent}
-	 * @return {@link OnClickListener}
-	 */
-	static OnClickListener getOnClickStartActivity(final Context context, final Intent intent) {
-		if (intent == null) {
-			return null;
-		}
-		return new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				try {
-					context.startActivity(intent);
-				} catch (ActivityNotFoundException e) {
-					Log.w(TAG, "activity not found", e);
-					Toast.makeText(context, "no activity for data: " + intent.getType(),
-							Toast.LENGTH_LONG).show();
-				}
-			}
-		};
-	}
+        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
+            try {
+                Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
+                        null, null, "_id LIMIT 1");
+                if (c == null) {
+                    Log.i(TAG, "disable .Sender: curor=null");
+                } else if (SmsManager.getDefault() == null) {
+                    Log.i(TAG, "disable .Sender: SmsManager=null");
+                } else {
+                    state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+                    Log.d(TAG, "enable .Sender");
+                }
+                if (c != null && !c.isClosed()) {
+                    c.close();
+                }
+            } catch (IllegalArgumentException | SQLiteException e) {
+                Log.e(TAG, "disable .Sender: ", e.getMessage(), e);
+            }
+        } else {
+            Log.i(TAG, "disable .Sender");
+        }
+        getPackageManager().setComponentEnabledSetting(
+                new ComponentName(this, SenderActivity.class), state, PackageManager.DONT_KILL_APP);
+    }
 
-	/**
-	 * Get an {@link OnLongClickListener} for stating an Activity for given
-	 * {@link Intent}.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param intent
-	 *            {@link Intent}
-	 * @return {@link OnLongClickListener}
-	 */
-	static OnLongClickListener getOnLongClickStartActivity(final Context context,
-			final Intent intent) {
-		if (intent == null) {
-			return null;
-		}
-		return new OnLongClickListener() {
-			@Override
-			public boolean onLongClick(final View v) {
-				try {
-					context.startActivity(intent);
-					return true;
-				} catch (ActivityNotFoundException e) {
-					Log.w(TAG, "activity not found", e);
-					Toast.makeText(context, "no activity for data: " + intent.getType(),
-							Toast.LENGTH_LONG).show();
-				}
-				return false;
-			}
-		};
-	}
+    /**
+     * Get an {@link OnClickListener} for stating an Activity for given {@link Intent}.
+     *
+     * @param context {@link Context}
+     * @param intent  {@link Intent}
+     * @return {@link OnClickListener}
+     */
+    static OnClickListener getOnClickStartActivity(final Context context, final Intent intent) {
+        if (intent == null) {
+            return null;
+        }
+        return new OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                try {
+                    context.startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Log.w(TAG, "activity not found", e);
+                    Toast.makeText(context, "no activity for data: " + intent.getType(),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+    }
 
-	/**
-	 * Fix ActionBar background. See http://b.android.com/15340.
-	 * 
-	 * @param ab
-	 *            {@link ActionBar}
-	 * @param r
-	 *            {@link Resources}
-	 * @param bg
-	 *            res id of background {@link BitmapDrawable}
-	 * @param bgSplit
-	 *            res id of background {@link BitmapDrawable} in split mode
-	 */
-	public static void fixActionBarBackground(final ActionBar ab, final Resources r, final int bg,
-			final int bgSplit) {
-		// This is a workaround for http://b.android.com/15340 from
-		// http://stackoverflow.com/a/5852198/132047
-		BitmapDrawable d = (BitmapDrawable) r.getDrawable(bg);
-		d.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
-		ab.setBackgroundDrawable(d);
-		if (bgSplit >= 0) {
-			d = (BitmapDrawable) r.getDrawable(bgSplit);
-			d.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
-			ab.setSplitBackgroundDrawable(d);
-		}
-	}
+    /**
+     * Get an {@link OnLongClickListener} for stating an Activity for given {@link Intent}.
+     *
+     * @param context {@link Context}
+     * @param intent  {@link Intent}
+     * @return {@link OnLongClickListener}
+     */
+    static OnLongClickListener getOnLongClickStartActivity(final Context context,
+            final Intent intent) {
+        if (intent == null) {
+            return null;
+        }
+        return new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View v) {
+                try {
+                    context.startActivity(intent);
+                    return true;
+                } catch (ActivityNotFoundException e) {
+                    Log.w(TAG, "activity not found", e);
+                    Toast.makeText(context, "no activity for data: " + intent.getType(),
+                            Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        };
+    }
+
+    /**
+     * Fix ActionBar background. See http://b.android.com/15340.
+     *
+     * @param ab      {@link ActionBar}
+     * @param r       {@link Resources}
+     * @param bg      res id of background {@link BitmapDrawable}
+     * @param bgSplit res id of background {@link BitmapDrawable} in split mode
+     */
+    public static void fixActionBarBackground(final ActionBar ab, final Resources r, final int bg,
+            final int bgSplit) {
+        // This is a workaround for http://b.android.com/15340 from
+        // http://stackoverflow.com/a/5852198/132047
+        BitmapDrawable d = (BitmapDrawable) r.getDrawable(bg);
+        d.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
+        ab.setBackgroundDrawable(d);
+        if (bgSplit >= 0) {
+            d = (BitmapDrawable) r.getDrawable(bgSplit);
+            d.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT);
+            ab.setSplitBackgroundDrawable(d);
+        }
+    }
 }

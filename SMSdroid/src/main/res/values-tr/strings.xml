@@ -44,4 +44,5 @@
   <string name="receive_no_text_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Hide sender/text">Göndericiyi/mesajı gizle</string>
   <string name="receive_no_text_hint" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Hide sender/text in notification.">Bildirimlerde göndericiyi/mesajı gizle.</string>
   <string name="autosend_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Autosend">Otomatik gönder</string>
+  <string name="donate_remove_ads_" formatted="false" username="omurtlak &lt;ozturkhasan11@gmail.com&gt;" orig="Donate/remove ads">Bağış yap/reklamları kaldır</string>
 </resources>

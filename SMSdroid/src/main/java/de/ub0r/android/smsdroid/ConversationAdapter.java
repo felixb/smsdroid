@@ -31,14 +31,13 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
-import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * Adapter for the list of {@link Conversation}s.
@@ -105,7 +104,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
     /**
      * Use grid instead of list.
      */
-    private boolean useGridLayout;
+    private final boolean useGridLayout;
 
     /**
      * View holder.
@@ -227,11 +226,6 @@ public class ConversationAdapter extends ResourceCursorAdapter {
         } catch (SQLiteException e) {
             Log.e(TAG, "error starting query", e);
         }
-    }
-
-    @Override
-    public final View getView(final int pos, final View convertView, final ViewGroup parent) {
-        return super.getView(pos, convertView, parent);
     }
 
     /*

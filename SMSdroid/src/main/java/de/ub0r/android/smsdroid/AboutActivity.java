@@ -18,45 +18,46 @@
  */
 package de.ub0r.android.smsdroid;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 /**
  * Display About {@link SherlockActivity}.
- * 
+ *
  * @author flx
  */
 public final class AboutActivity extends SherlockActivity {
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.about);
-		SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
-				R.drawable.bg_striped, R.drawable.bg_striped_img);
-		setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
-				+ " v" + getString(R.string.app_version));
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// app icon in Action Bar clicked; go home
-			Intent intent = new Intent(this, ConversationListActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.about);
+        SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
+                R.drawable.bg_striped, R.drawable.bg_striped_img);
+        setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
+                + " v" + BuildConfig.VERSION_NAME);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in Action Bar clicked; go home
+                Intent intent = new Intent(this, ConversationListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

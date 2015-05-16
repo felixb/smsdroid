@@ -57,10 +57,10 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import de.ub0r.android.lib.DonationHelper;
-import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * Main {@link SherlockActivity} showing conversations.
@@ -208,7 +208,7 @@ public final class ConversationListActivity extends SherlockActivity implements
     @SuppressWarnings("UnusedDeclaration")
     static void showRows(final Context context, final Uri u) {
         Log.d(TAG, "-----GET HEADERS-----");
-        Log.d(TAG, "-- " + u.toString() + " --");
+        Log.d(TAG, "-- ", u.toString(), " --");
         Cursor c = context.getContentResolver().query(u, null, null, null, null);
         if (c != null) {
             int l = c.getColumnCount();
@@ -245,15 +245,15 @@ public final class ConversationListActivity extends SherlockActivity implements
     @Override
     public void onNewIntent(final Intent intent) {
         if (intent != null) {
-            Log.d(TAG, "got intent: " + intent.getAction());
-            Log.d(TAG, "got uri: " + intent.getData());
+            Log.d(TAG, "got intent: ", intent.getAction());
+            Log.d(TAG, "got uri: ", intent.getData());
             final Bundle b = intent.getExtras();
             if (b != null) {
-                Log.d(TAG, "user_query: " + b.get("user_query"));
-                Log.d(TAG, "got extra: " + b);
+                Log.d(TAG, "user_query: ", b.get("user_query"));
+                Log.d(TAG, "got extra: ", b);
             }
             final String query = intent.getStringExtra("user_query");
-            Log.d(TAG, "user query: " + query);
+            Log.d(TAG, "user query: ", query);
             // TODO: do something with search query
         }
     }
@@ -263,9 +263,9 @@ public final class ConversationListActivity extends SherlockActivity implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         final Intent i = getIntent();
-        Log.d(TAG, "got intent: " + i.getAction());
-        Log.d(TAG, "got uri: " + i.getData());
-        Log.d(TAG, "got extra: " + i.getExtras());
+        Log.d(TAG, "got intent: ", i.getAction());
+        Log.d(TAG, "got uri: ", i.getData());
+        Log.d(TAG, "got extra: ", i.getExtras());
 
         setTheme(PreferencesActivity.getTheme(this));
         Utils.setLocale(this);
@@ -363,7 +363,7 @@ public final class ConversationListActivity extends SherlockActivity implements
      * @param read    read status
      */
     static void markRead(final Context context, final Uri uri, final int read) {
-        Log.d(TAG, "markRead(" + uri + "," + read + ")");
+        Log.d(TAG, "markRead(", uri, ",", read, ")");
         if (uri == null) {
             return;
         }
@@ -394,7 +394,7 @@ public final class ConversationListActivity extends SherlockActivity implements
      */
     static void deleteMessages(final Context context, final Uri uri, final int title,
             final int message, final Activity activity) {
-        Log.i(TAG, "deleteMessages(..," + uri + " ,..)");
+        Log.i(TAG, "deleteMessages(..,", uri, " ,..)");
         final Builder builder = new Builder(context);
         builder.setTitle(title);
         builder.setMessage(message);
@@ -404,7 +404,7 @@ public final class ConversationListActivity extends SherlockActivity implements
             public void onClick(final DialogInterface dialog, final int which) {
                 try {
                     final int ret = context.getContentResolver().delete(uri, null, null);
-                    Log.d(TAG, "deleted: " + ret);
+                    Log.d(TAG, "deleted: ", ret);
                     if (activity != null && !activity.isFinishing()) {
                         activity.finish();
                     }
@@ -437,10 +437,10 @@ public final class ConversationListActivity extends SherlockActivity implements
         db.open();
         if (!db.isInDB(addr)) {
             db.insertNr(addr);
-            Log.d(TAG, "Added " + addr + " to spam list");
+            Log.d(TAG, "Added ", addr, " to spam list");
         } else {
             db.removeNr(addr);
-            Log.d(TAG, "Removed " + addr + " from spam list");
+            Log.d(TAG, "Removed ", addr, " from spam list");
         }
         db.close();
     }
@@ -456,9 +456,9 @@ public final class ConversationListActivity extends SherlockActivity implements
                 try {
                     startActivity(i);
                 } catch (ActivityNotFoundException e) {
-                    Log.e(TAG, "error launching intent: " + i.getAction() + ", " + i.getData());
+                    Log.e(TAG, "error launching intent: ", i.getAction(), ", ", i.getData());
                     Toast.makeText(this,
-                            "error launching messaging app!\n" + "Please contact the developer.",
+                            "error launching messaging app!\nPlease contact the developer.",
                             Toast.LENGTH_LONG).show();
                 }
                 return true;
@@ -470,9 +470,11 @@ public final class ConversationListActivity extends SherlockActivity implements
                 }
                 return true;
             case R.id.item_donate:
-                DonationHelper.showDonationDialog(this, getString(R.string.donate),
-                        getString(R.string.donate_), getString(R.string.did_paypal_donation),
-                        getResources().getStringArray(R.array.donation_messages_market));
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, DonationHelper.DONATOR_URI));
+                } catch (ActivityNotFoundException e) {
+                    Log.e(TAG, "error opening play store with donation app", e);
+                }
                 return true;
             case R.id.item_delete_all_threads:
                 deleteMessages(this, Uri.parse("content://sms/"), R.string.delete_threads_,
@@ -534,7 +536,7 @@ public final class ConversationListActivity extends SherlockActivity implements
         try {
             startActivity(i);
         } catch (ActivityNotFoundException e) {
-            Log.e(TAG, "error launching intent: " + i.getAction() + ", " + i.getData());
+            Log.e(TAG, "error launching intent: ", i.getAction(), ", ", i.getData());
             Toast.makeText(this,
                     "error launching messaging app!\n" + "Please contact the developer.",
                     Toast.LENGTH_LONG).show();
@@ -553,7 +555,7 @@ public final class ConversationListActivity extends SherlockActivity implements
         String[] items = longItemClickDialog;
         final Contact contact = c.getContact();
         final String a = contact.getNumber();
-        Log.d(TAG, "p: " + a);
+        Log.d(TAG, "p: ", a);
         final String n = contact.getName();
         if (TextUtils.isEmpty(n)) {
             builder.setTitle(a);

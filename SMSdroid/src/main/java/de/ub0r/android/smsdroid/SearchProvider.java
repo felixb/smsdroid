@@ -25,88 +25,96 @@ import android.database.Cursor;
 import android.database.MergeCursor;
 import android.net.Uri;
 import android.text.TextUtils;
-import de.ub0r.android.lib.Log;
+
 import de.ub0r.android.lib.Utils;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * Provide search results.
- * 
+ *
  * @author flx
  */
 public final class SearchProvider extends ContentProvider {
-	/** Tag for logging. */
-	static final String TAG = "sp";
 
-	/** Authority. */
-	private static final String AUTHORITY = "de.ub0r.android.smsdroid.SearchProvider";
+    /**
+     * Tag for logging.
+     */
+    static final String TAG = "sp";
 
-	/** {@link Uri} to messages. */
-	private static final Uri SMS_URI = Uri.parse("content://sms/");
+    /**
+     * Authority.
+     */
+    private static final String AUTHORITY = "de.ub0r.android.smsdroid.SearchProvider";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getType(final Uri uri) {
-		Log.d(TAG, "getType(" + uri + ")");
-		throw new UnsupportedOperationException("not implemented");
-	}
+    /**
+     * {@link Uri} to messages.
+     */
+    private static final Uri SMS_URI = Uri.parse("content://sms/");
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Cursor query(final Uri uri, final String[] projection, final String selection,
-			final String[] selectionArgs, final String sortOrder) {
-		Log.d(TAG, "query(" + uri + ",..)");
-		if (uri == null) {
-			return null;
-		}
-		final String query = uri.getLastPathSegment();
-		Log.d(TAG, "query: " + query);
-		if (TextUtils.isEmpty(query) || query.equals(SearchManager.SUGGEST_URI_PATH_QUERY)) {
-			return null;
-		}
-		final int limit = Utils.parseInt(uri.getQueryParameter("limit"), -1);
-		Log.d(TAG, "limit: " + limit);
-		final String[] proj = new String[] { "_id",
-				"address as " + SearchManager.SUGGEST_COLUMN_TEXT_1,
-				"body as " + SearchManager.SUGGEST_COLUMN_TEXT_2 };
-		final String where = "body like '%" + query + "%'";
-		return new MergeCursor(new Cursor[] { getContext().getContentResolver()
-				.query(SMS_URI, proj, where, null, null) });
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getType(final Uri uri) {
+        Log.d(TAG, "getType(", uri, ")");
+        throw new UnsupportedOperationException("not implemented");
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onCreate() {
-		return true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cursor query(final Uri uri, final String[] projection, final String selection,
+            final String[] selectionArgs, final String sortOrder) {
+        Log.d(TAG, "query(", uri, ",..)");
+        if (uri == null) {
+            return null;
+        }
+        final String query = uri.getLastPathSegment();
+        Log.d(TAG, "query: ", query);
+        if (TextUtils.isEmpty(query) || query.equals(SearchManager.SUGGEST_URI_PATH_QUERY)) {
+            return null;
+        }
+        final int limit = Utils.parseInt(uri.getQueryParameter("limit"), -1);
+        Log.d(TAG, "limit: ", limit);
+        final String[] proj = new String[]{"_id",
+                "address as " + SearchManager.SUGGEST_COLUMN_TEXT_1,
+                "body as " + SearchManager.SUGGEST_COLUMN_TEXT_2};
+        final String where = "body like '%" + query + "%'";
+        return new MergeCursor(new Cursor[]{getContext().getContentResolver()
+                .query(SMS_URI, proj, where, null, null)});
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int delete(final Uri uri, final String selection, final String[] selectionArgs) {
-		throw new UnsupportedOperationException("not implemented");
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onCreate() {
+        return true;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Uri insert(final Uri uri, final ContentValues values) {
-		throw new UnsupportedOperationException("not implemented");
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int delete(final Uri uri, final String selection, final String[] selectionArgs) {
+        throw new UnsupportedOperationException("not implemented");
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int update(final Uri uri, final ContentValues values, final String selection,
-			final String[] selectionArgs) {
-		throw new UnsupportedOperationException("not implemented");
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Uri insert(final Uri uri, final ContentValues values) {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int update(final Uri uri, final ContentValues values, final String selection,
+            final String[] selectionArgs) {
+        throw new UnsupportedOperationException("not implemented");
+    }
 }

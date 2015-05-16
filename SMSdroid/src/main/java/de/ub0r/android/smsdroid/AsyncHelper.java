@@ -23,103 +23,109 @@ import android.os.AsyncTask;
 
 import java.util.concurrent.RejectedExecutionException;
 
-import de.ub0r.android.lib.Log;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * @author flx
  */
 public final class AsyncHelper extends AsyncTask<Void, Void, Void> {
-	/** Tag for logging. */
-	static final String TAG = "ash";
 
-	/** {@link ConversationAdapter} to invalidate on new data. */
-	private static ConversationAdapter adapter = null;
+    /**
+     * Tag for logging.
+     */
+    static final String TAG = "ash";
 
-	/** {@link Context}. */
-	private final Context context;
-	/** {@link Conversation}. */
-	private final Conversation conv;
+    /**
+     * {@link ConversationAdapter} to invalidate on new data.
+     */
+    private static ConversationAdapter adapter = null;
 
-	/** Changed anything? */
-	private boolean changed = false;
+    /**
+     * {@link Context}.
+     */
+    private final Context context;
 
-	/**
-	 * Fill {@link Conversation}.
-	 *
-	 * @param c
-	 *            {@link Context}
-	 * @param con
-	 *            {@link Conversation}
-	 */
+    /**
+     * {@link Conversation}.
+     */
+    private final Conversation conv;
 
-	private AsyncHelper(final Context c, final Conversation con) {
-		context = c;
-		conv = con;
-	}
+    /**
+     * Changed anything?
+     */
+    private boolean changed = false;
 
-	/**
-	 * Fill Conversations data. If needed: spawn threads.
-	 *
-	 * @param context
-	 *            {@link Context}
-	 * @param c
-	 *            {@link Conversation}
-	 * @param sync
-	 *            fetch of information
-	 */
-	public static void fillConversation(final Context context, final Conversation c,
-			final boolean sync) {
-		Log.d(TAG, "fillConversation(ctx, conv, " + sync + ")");
-		if (context == null || c == null || c.getThreadId() < 0) {
-			return;
-		}
-		AsyncHelper helper = new AsyncHelper(context, c);
-		if (sync) {
-			helper.doInBackground((Void) null);
-		} else {
-			try {
-				helper.execute((Void) null);
-			} catch (RejectedExecutionException e) {
-				Log.e(TAG, "rejected execution", e);
-			}
-		}
-	}
+    /**
+     * Fill {@link Conversation}.
+     *
+     * @param c   {@link Context}
+     * @param con {@link Conversation}
+     */
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Void doInBackground(final Void... arg0) {
-		if (conv == null) {
-			return null;
-		}
-		Log.d(TAG, "doInBackground()");
+    private AsyncHelper(final Context c, final Conversation con) {
+        context = c;
+        conv = con;
+    }
+
+    /**
+     * Fill Conversations data. If needed: spawn threads.
+     *
+     * @param context {@link Context}
+     * @param c       {@link Conversation}
+     * @param sync    fetch of information
+     */
+    public static void fillConversation(final Context context, final Conversation c,
+            final boolean sync) {
+        Log.d(TAG, "fillConversation(ctx, conv, ", sync, ")");
+        if (context == null || c == null || c.getThreadId() < 0) {
+            return;
+        }
+        AsyncHelper helper = new AsyncHelper(context, c);
+        if (sync) {
+            helper.doInBackground((Void) null);
+        } else {
+            try {
+                helper.execute((Void) null);
+            } catch (RejectedExecutionException e) {
+                Log.e(TAG, "rejected execution", e);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Void doInBackground(final Void... arg0) {
+        if (conv == null) {
+            return null;
+        }
+        Log.d(TAG, "doInBackground()");
         try {
             changed = conv.getContact().update(context, true,
                     ConversationListActivity.showContactPhoto);
         } catch (NullPointerException e) {
             Log.e(TAG, "error updating contact", e);
         }
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void onPostExecute(final Void result) {
-		if (changed && adapter != null) {
-			adapter.notifyDataSetChanged();
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onPostExecute(final Void result) {
+        if (changed && adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 
-	/**
-	 * Set {@link ConversationAdapter} to invalidate data after refreshing.
-	 *
-	 * @param a
-	 *            {@link ConversationAdapter}
-	 */
-	public static void setAdapter(final ConversationAdapter a) {
-		adapter = a;
-	}
+    /**
+     * Set {@link ConversationAdapter} to invalidate data after refreshing.
+     *
+     * @param a {@link ConversationAdapter}
+     */
+    public static void setAdapter(final ConversationAdapter a) {
+        adapter = a;
+    }
 }

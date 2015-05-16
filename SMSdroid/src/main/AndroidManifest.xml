@@ -211,10 +211,6 @@
                 android:name=".SearchProvider"
                 android:authorities="de.ub0r.android.smsdroid.SearchProvider"
                 android:syncable="false"/>
-        <provider
-                android:name="de.ub0r.android.lib.LogProvider"
-                android:authorities="de.ub0r.android.smsdroid.DEBUGLOG"
-                android:exported="true"/>
 
         <activity
                 android:name="com.google.android.gms.ads.AdActivity"

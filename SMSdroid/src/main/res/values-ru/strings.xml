@@ -30,7 +30,6 @@
   <string name="more_apps_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="More Apps..">Другие приложения..</string>
   <string name="settings" formatted="false" orig="Preferences">Настройки</string>
   <string name="new_message_" formatted="false">Новое сообщение</string>
-  <string name="new_message_hint" formatted="false">Создать новое сообщение</string>
   <string name="new_message" formatted="false" orig="1 unread message." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">1 непрочитанное сообщение.</string>
   <string name="new_messages_" formatted="false">Новые сообщения</string>
   <string name="new_messages" formatted="false" orig="%d unread messages." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">%d непрочитанных сообщений.</string>
@@ -66,13 +65,10 @@
   <string name="textcolor_hint" formatted="false" orig="Message text\'s color.">Цвет текста сообщений</string>
   <string name="textcolor_ignore_conv_" formatted="false" orig="Ignore text color for threads">Игнорировать цвет текста диалогов</string>
   <string name="textcolor_ignore_conv_hint" formatted="false" orig="Ignore text color in list of threads.">Игнорировать цвет текста в списке диалогов</string>
-  <string name="show_titlebar_" formatted="false" orig="Show title bar" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показ строки заголовка</string>
-  <string name="show_titlebar_hint" formatted="false" orig="Show title bar in main view. Without title bar, there is no way to see background activity." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показ строки заголовка в главном окне. Без строки заголовка невозможно наблюдать за фоновой активностью.</string>
   <string name="show_contact_photo_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Show photo">Показ фото</string>
   <string name="show_contact_photo_hint" formatted="false" username="shineaguevara@gmail.com" orig="Show contact\'s photo in conversation list">Показывать фото контакта в списке диалогов</string>
   <string name="show_emoticons_" formatted="false" orig="Show emoticons" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показ смайликов</string>
   <string name="show_emoticons_hint" formatted="false" orig="Show emoticons in message list." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Показывать смайлики в списке сообщений.</string>
-  <string name="show_bubbles_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Show bubbles">Показать пузырьки</string>
   <string name="hide_send_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Hide &quot;send&quot; button">Скрыть \'Отправить\'</string>
   <string name="hide_send_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Скрыть кнопку \'Отправить\' у текстового поля.</string>
   <string name="hide_restore_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Скрыть кнопку \'Восстановить последнее сообщение\'</string>
@@ -95,16 +91,12 @@
   <string name="send_draft_" formatted="false" orig="Send draft">Отправить черновик</string>
   <string name="copy_text_" formatted="false">Копировать текст сообщения</string>
   <string name="view_details_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View message details">Сведения о сообщении</string>
-  <string name="spek_" formatted="false">Говорить</string>
   <string name="delete_threads_" formatted="false">Удалить все диалоги</string>
   <string name="mark_all_read_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Mark all as read">Пометить всё как прочитанное</string>
   <string name="mark_read_" formatted="false">Пометить как прочитанное</string>
   <string name="mark_unread_" formatted="false">Пометить как непрочитанное</string>
-  <string name="all_threads_" formatted="false">Все диалоги</string>
   <string name="message_options_" formatted="false">Опции сообщения</string>
-  <string name="compose_" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Compose">Новое сообщение</string>
   <string name="delete_message_question" formatted="false">Вы действительно хотите удалить это сообщение?</string>
-  <string name="delete_messages_question" formatted="false" orig="Do you really want to delete these messages?">Вы действительно хотите удалить эти сообщения?</string>
   <string name="delete_thread_question" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Вы действительно хотите удалить <b>все сообщения из этого диалога</b>?</string>
   <string name="delete_threads_question" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Вы действительно хотите удалить <b>все сообщения</b>?</string>
   <string name="from_" formatted="false">От:</string>
@@ -114,14 +106,9 @@
   <string name="received_" formatted="false">Получено:</string>
   <string name="view_mms" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="View MMS">Показать MMS</string>
   <string name="mms_conversation" formatted="false" orig="&lt;MMS body&gt;">&lt;MMS тест&gt;</string>
-  <string name="mms_not_supported" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Это сообщение похоже на ММС. Вы можете попробовать загрузить его, используя стандартное СМС/ММС приложение.\nНажмите здесь для продолжения.</string>
   <string name="import_contact_" formatted="false" orig="Import contact">Импортировать контакт</string>
   <string name="download_" formatted="false">Загрузить</string>
   <string name="downloading_" formatted="false" orig="Downloading..">Загрузка...</string>
-  <string name="debug_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Debug">Отладить</string>
-  <string name="clear_cache_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Clear cache">Очистить кэш</string>
-  <string name="clear_cache_hint" formatted="false" orig="Clear internal Database. Fetch all data again from external Database." username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Очистить внутреннюю базу данных. Снова получить все данные из внешних баз данных.</string>
-  <string name="not_implemented" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Sorry, not yet implemented.">Извините, ещё не реализовано.</string>
   <string name="error_conv_null" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Error getting conversation from DB!">Ошибка получения сообщения из базы данных!</string>
   <string name="error_sending_failed" formatted="false" orig="Sending failed" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">Сбой отправки</string>
   <string name="text_hint" formatted="false" username="ergodroid &lt;ergodroid@gmail.com&gt;" orig="Text">Введите текст</string>
@@ -183,10 +170,6 @@
     <item>Тёмная</item>
     <item>Светлая</item>
   </string-array>
-  <string-array name="textsize" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">
-    <item>Мелкий</item>
-    <item>Средний</item>
-  </string-array>
   <string-array name="led_color">
     <item>Зелёный</item>
     <item>Синий</item>
@@ -213,18 +196,12 @@
   <string name="bubbles_green2_left" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Green 2 left">Зелёный 2 слева</string>
   <string name="bubbles_green2_right" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Green 2 right">Зелёный 2 справа</string>
   <string name="notification_gingerbread_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Gingerbread">Gingerbread (Android 2.3)</string>
-  <string name="sendlog_install_" formatted="false" username="ACCount" orig="Install SendLog">Установить SendLog</string>
   <string name="license_" formatted="false" username="ACCount" orig="License:">Лицензия:</string>
-  <string name="sendlog_run_" formatted="false" username="ACCount" orig="Run SendLog">Запустить SendLog</string>
   <string name="author_" formatted="false" username="ACCount" orig="Author:">Автор:</string>
   <string name="website_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Website:">Веб-сайт:</string>
   <string name="source_" formatted="false" username="ACCount" orig="Sourcescode:">Исходный код:</string>
   <string name="license" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - смотрите http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="reset" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Reset">Обнулить</string>
-  <string name="send_logs_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Отправить журналы устройства разработчику.\nОтправляйте только в том случае, если Вас об этом попросят.</string>
-  <string name="sendlog_run" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">SendLog получит журнал устройства и отправит его разработчику.\nУ Вас будет возможность просмотреть и изменить отправляемые данные.</string>
-  <string name="send_logs_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Send logs">Отправить журналы</string>
-  <string name="sendlog_install" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Установить бесплатное приложение SendLog для получения журнала устройства и отправки его разработчику.</string>
   <string name="use_new_layout_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Use tiled layout">Использовать плиточный интерфейс</string>
   <string name="use_new_layout_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Use a tiled user interface for conversations">Для бесед использовать плиточный интерфейс</string>
   <string name="error_start_mms_download" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Error starting MMS download">Ошибка загрузки ММС</string>
@@ -239,4 +216,5 @@
   <string name="error_unknown" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Unknown error">Неизвестная ошибка</string>
   <string name="edit_short_text_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Edit as short message">Редактировать как короткое сообщение</string>
   <string name="edit_short_text_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Consider input a short message. The keyboard usually replaces enter with smiley button if enabled.">Рассмотрим ввод коротких сообщений. Клавиатура, как правило, заменяет введенное  смайликом, если разрешено.</string>
+  <string name="donate_remove_ads_" formatted="false" username="ACCount" orig="Donate/remove ads">Пожертвовать/убрать рекламу</string>
 </resources>

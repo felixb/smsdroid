@@ -17,7 +17,6 @@
 <resources>
 
     <color name="actionbar_text_color">#FFF0F0F0</color>
-    <color name="actionbar_background_color">#FF035EB3</color>
     <color name="ubActionBarBackgroundDark">#FF000000</color>
     <color name="ubActionBarBackgroundLight">#FFFFFFFF</color>
 

@@ -48,8 +48,7 @@ import android.util.TypedValue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.ub0r.android.lib.Log;
-import de.ub0r.android.lib.Utils;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * Listen for new sms.
@@ -146,14 +145,14 @@ public class SmsReceiver extends BroadcastReceiver {
     static void handleOnReceive(final BroadcastReceiver receiver, final Context context,
             final Intent intent) {
         final String action = intent.getAction();
-        Log.d(TAG, "onReceive(context, " + action + ")");
+        Log.d(TAG, "onReceive(context, ", action, ")");
         final PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         final PowerManager.WakeLock wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         wakelock.acquire();
         Log.i(TAG, "got wakelock");
-        Log.d(TAG, "got intent: " + action);
+        Log.d(TAG, "got intent: ", action);
         try {
-            Log.d(TAG, "sleep(" + SLEEP + ")");
+            Log.d(TAG, "sleep(", SLEEP, ")");
             Thread.sleep(SLEEP);
         } catch (InterruptedException e) {
             Log.d(TAG, "interrupted in spinlock", e);
@@ -195,7 +194,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         Matcher m = smsPattern.matcher(t);
                         if (m.find()) {
                             s = m.group(1);
-                            Log.d(TAG, "found forwarding sms number: (" + s + ")");
+                            Log.d(TAG, "found forwarding sms number: (", s, ")");
                             // now strip the sender from the message
                             Pattern textPattern = Pattern.compile("^[0-9a-zA-Z+]+: (.*)");
                             Matcher m2 = textPattern.matcher(t);
@@ -209,10 +208,10 @@ public class SmsReceiver extends BroadcastReceiver {
                     final SpamDB db = new SpamDB(context);
                     db.open();
                     if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
-                        Log.d(TAG, "Message from " + s + " filtered.");
+                        Log.d(TAG, "Message from ", s, " filtered.");
                         silent = true;
                     } else {
-                        Log.d(TAG, "Message from " + s + " NOT filtered.");
+                        Log.d(TAG, "Message from ", s, " NOT filtered.");
                     }
                     db.close();
 
@@ -223,7 +222,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         values.put("body", t);
                         context.getContentResolver().insert(Uri.parse("content://sms/inbox"),
                                 values);
-                        Log.d(TAG, "Insert SMS into database: " + s + ", " + t);
+                        Log.d(TAG, "Insert SMS into database: ", s, ", ", t);
                     }
                 }
             } else if (ACTION_MMS_OLD.equals(action) || ACTION_MMS_MEW.equals(action)) {
@@ -232,12 +231,12 @@ public class SmsReceiver extends BroadcastReceiver {
             }
 
             if (!silent) {
-                Log.d(TAG, "t: " + t);
+                Log.d(TAG, "t: ", t);
                 int count = MAX_SPINS;
                 do {
-                    Log.d(TAG, "spin: " + count);
+                    Log.d(TAG, "spin: ", count);
                     try {
-                        Log.d(TAG, "sleep(" + SLEEP + ")");
+                        Log.d(TAG, "sleep(", SLEEP, ")");
                         Thread.sleep(SLEEP);
                     } catch (InterruptedException e) {
                         Log.d(TAG, "interrupted in spin lock", e);
@@ -266,7 +265,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * match newest message)]
      */
     private static int[] getUnreadSMS(final ContentResolver cr, final String text) {
-        Log.d(TAG, "getUnreadSMS(cr, " + text + ")");
+        Log.d(TAG, "getUnreadSMS(cr, ", text, ")");
         Cursor cursor = cr.query(URI_SMS, Message.PROJECTION, Message.SELECTION_READ_UNREAD,
                 Message.SELECTION_UNREAD, SORT);
 
@@ -320,7 +319,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * @return [thread id (-1 if there are more), number of unread messages]
      */
     private static int[] getUnreadMMS(final ContentResolver cr, final String text) {
-        Log.d(TAG, "getUnreadMMS(cr, " + text + ")");
+        Log.d(TAG, "getUnreadMMS(cr, ", text, ")");
         Cursor cursor = cr.query(URI_MMS, Message.PROJECTION_READ, Message.SELECTION_READ_UNREAD,
                 Message.SELECTION_UNREAD, null);
         if (cursor == null || cursor.isClosed() || cursor.getCount() == 0 || !cursor
@@ -368,7 +367,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * match newest message)]
      */
     private static int[] getUnread(final ContentResolver cr, final String text) {
-        Log.d(TAG, "getUnread(cr, " + text + ")");
+        Log.d(TAG, "getUnread(cr, ", text, ")");
         lastUnreadBody = null;
         lastUnreadDate = 0L;
         String t = text;
@@ -402,7 +401,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * @return number of unread messages
      */
     static int updateNewMessageNotification(final Context context, final String text) {
-        Log.d(TAG, "updNewMsgNoti(" + context + "," + text + ")");
+        Log.d(TAG, "updNewMsgNoti(", context, ",", text, ")");
         final NotificationManager mNotificationMgr = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -421,7 +420,7 @@ public class SmsReceiver extends BroadcastReceiver {
         final int tid = status[ID_TID];
 
         // FIXME l is always -1..
-        Log.d(TAG, "l: " + l);
+        Log.d(TAG, "l: ", l);
         if (l < 0) {
             return l;
         }
@@ -482,7 +481,8 @@ public class SmsReceiver extends BroadcastReceiver {
                             // add actions
                             Intent nextIntent = new Intent(
                                     NotificationBroadcastReceiver.ACTION_MARK_READ);
-                            nextIntent.putExtra(NotificationBroadcastReceiver.EXTRA_MURI, uri.toString());
+                            nextIntent.putExtra(NotificationBroadcastReceiver.EXTRA_MURI,
+                                    uri.toString());
                             PendingIntent nextPendingIntent = PendingIntent
                                     .getBroadcast(context, 0, nextIntent,
                                             PendingIntent.FLAG_UPDATE_CURRENT);
@@ -497,7 +497,7 @@ public class SmsReceiver extends BroadcastReceiver {
                             nb.setContentIntent(pIntent);
                         }
                         if (showPhoto // just for the speeeeed
-                                && Utils.isApi(Build.VERSION_CODES.HONEYCOMB)) {
+                                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                             conv.getContact().update(context, false, true);
                             Drawable d = conv.getContact().getAvatar(context, null);
                             if (d instanceof BitmapDrawable) {
@@ -556,13 +556,13 @@ public class SmsReceiver extends BroadcastReceiver {
                     nb.setSound(sound);
                 }
             }
-            Log.d(TAG, "uri: " + uri);
+            Log.d(TAG, "uri: ", uri);
             mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
             if (enableNotifications && showNotification) {
                 mNotificationMgr.notify(NOTIFICATION_ID_NEW, nb.getNotification());
             }
         }
-        Log.d(TAG, "return " + l + " (2)");
+        Log.d(TAG, "return ", l, " (2)");
         //noinspection ConstantConditions
         AppWidgetManager.getInstance(context).updateAppWidget(
                 new ComponentName(context, WidgetProvider.class),
@@ -577,7 +577,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * @param uri     {@link Uri} to message
      */
     private static void updateFailedNotification(final Context context, final Uri uri) {
-        Log.d(TAG, "updateFailedNotification: " + uri);
+        Log.d(TAG, "updateFailedNotification: ", uri);
         final Cursor c = context.getContentResolver().query(uri, Message.PROJECTION_SMS, null,
                 null, null);
         if (c != null && c.moveToFirst()) {
@@ -658,7 +658,7 @@ public class SmsReceiver extends BroadcastReceiver {
     private static void handleSent(final Context context, final Intent intent,
             final int resultCode) {
         final Uri uri = intent.getData();
-        Log.d(TAG, "sent message: " + uri + ", rc: " + resultCode);
+        Log.d(TAG, "sent message: ", uri, ", rc: ", resultCode);
         if (uri == null) {
             Log.w(TAG, "handleSent(null)");
             return;

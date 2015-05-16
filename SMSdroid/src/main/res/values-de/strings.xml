@@ -31,7 +31,6 @@
   <string name="more_apps_" formatted="false">Mehr Apps..</string>
   <string name="settings" formatted="false" username="paulis.mum@googlemail.com" orig="Preferences">Einstellungen</string>
   <string name="new_message_" formatted="false">Neue Nachricht</string>
-  <string name="new_message_hint" formatted="false">Neue Nachricht schreiben</string>
   <string name="new_message" formatted="false">1 ungelesene Nachricht.</string>
   <string name="new_messages_" formatted="false">Neue Nachrichten</string>
   <string name="new_messages" formatted="false">%d ungelesene Nachrichten.</string>
@@ -67,13 +66,10 @@
   <string name="textcolor_hint" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Message text\'s color.">Textfarbe der Nachrichten</string>
   <string name="textcolor_ignore_conv_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Ignore text color for threads">Ignoriere Textfarbe für Threads</string>
   <string name="textcolor_ignore_conv_hint" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Ignore text color in list of threads.">Ignoriere Textfarbe in der Ansicht für Threads</string>
-  <string name="show_titlebar_" formatted="false">Zeige Titelleiste</string>
-  <string name="show_titlebar_hint" formatted="false">Zeige Titelleiste im Hauptbildschirm. Ohne Titelleiste wirst du nicht mehr auf Hintergrundaktivitäten hingewiesen.</string>
   <string name="show_contact_photo_" formatted="false">Zeige Foto</string>
   <string name="show_contact_photo_hint" formatted="false">Zeige Kontaktfoto in Threadliste</string>
   <string name="show_emoticons_" formatted="false">Zeige Smilies</string>
   <string name="show_emoticons_hint" formatted="false">Zeige Smilies in Nachrichtenliste.</string>
-  <string name="show_bubbles_" formatted="false">Zeige Sprechblasen</string>
   <string name="hide_send_" formatted="false">\"Senden\" Button ausblenden</string>
   <string name="hide_send_hint" formatted="false">\"Senden\" Button neben dem Textfeld ausblenden.</string>
   <string name="hide_restore_" formatted="false">\"Letzte Nachricht wiederherstellen\" ausblenden</string>
@@ -100,16 +96,12 @@
   <string name="send_draft_" formatted="false">Entwurf senden</string>
   <string name="copy_text_" formatted="false">Nachrichtentext kopieren</string>
   <string name="view_details_" formatted="false">Nachrichtendetails anzeigen</string>
-  <string name="spek_" formatted="false">Vorlesen</string>
   <string name="delete_threads_" formatted="false">Alle Threads löschen</string>
   <string name="mark_all_read_" formatted="false">Alles als gelesen markieren</string>
   <string name="mark_read_" formatted="false">Als gelesen markieren</string>
   <string name="mark_unread_" formatted="false">Als ungelesen markieren</string>
-  <string name="all_threads_" formatted="false">Alle Threads</string>
   <string name="message_options_" formatted="false">Nachrichtenoptionen</string>
-  <string name="compose_" formatted="false">Schreiben</string>
   <string name="delete_message_question" formatted="false">Willst du wirklich diese Nachricht löschen?</string>
-  <string name="delete_messages_question" formatted="false">Willst du wirklich diese Nachrichten löschen?</string>
   <string name="delete_thread_question" formatted="false">Willst du wirklich  löschen?</string>
   <string name="delete_threads_question" formatted="false">Willst du wirklich  löschen?</string>
   <string name="from_" formatted="false">Von:</string>
@@ -120,13 +112,9 @@
   <string name="received_" formatted="false">Empfangen:</string>
   <string name="view_mms" formatted="false">MMS anzeigen</string>
   <string name="mms_conversation" formatted="false">&lt;MMS body&gt;</string>
-  <string name="mms_not_supported" formatted="false">Die Nachricht scheint eine MMS zu sein. Vielleicht willst du sie dir mit der standard MMS/SMS app herrunter laden?\nKlicke hier..</string>
   <string name="import_contact_" formatted="false">Kontakt importieren</string>
   <string name="download_" formatted="false">Herunterladen</string>
   <string name="downloading_" formatted="false">Lade herunter..</string>
-  <string name="clear_cache_" formatted="false">Cache löschen</string>
-  <string name="clear_cache_hint" formatted="false">Lösche interne Datenbank. Es werden alle Daten neu von aus der externen Datenbank gezogen.</string>
-  <string name="not_implemented" formatted="false">Diese Funktion ist noch nicht implementiert.</string>
   <string name="error_conv_null" formatted="false">Fehler beim Laden des Threads!</string>
   <string name="error_sending_failed" formatted="false" username="paulis.mum@googlemail.com" orig="Sending failed">Senden fehlgeschlagen</string>
   <string name="text_hint" formatted="false">Text</string>
@@ -196,10 +184,6 @@
     <item>Dunkel</item>
     <item>Hell</item>
   </string-array>
-  <string-array name="textsize">
-    <item>Klein</item>
-    <item>Mittel</item>
-  </string-array>
   <string-array name="led_color">
     <item>Grün</item>
     <item>Blau</item>
@@ -220,13 +204,6 @@
     <item>Kurz, lang, kurz, lang</item>
   </string-array>
   <string name="reset" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Reset">Zurücksetzen</string>
-  <string name="debug_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Debug">Debug</string>
-  <string name="send_logs_" formatted="false">Logs senden</string>
-  <string name="send_logs_hint" formatted="false">Logs von deinem Handy an den Entwickler senden.\nBitte nur nach Aufforderung senden.</string>
-  <string name="sendlog_run_" formatted="false">SendLog starten</string>
-  <string name="sendlog_run" formatted="false">SendLog wird die Logs aus deinem Gerät auslesen und zum Entwickler schicken.\nDu hast vor dem Senden die Möglichkeit die Daten zu begutachten und zu verändern.</string>
-  <string name="sendlog_install_" formatted="false">SendLog installieren</string>
-  <string name="sendlog_install" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Installiere die freie SendLog-App um Daten von deinem Gerät an den Entwickler zu senden.</string>
   <string name="license_" formatted="false">Lizenz:</string>
   <string name="license" formatted="false">GPLv3 - siehe http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="author_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Author:">Autor:</string>
@@ -243,4 +220,5 @@
   <string name="forwarded_sms_clean_">Verändere empfangene SMS</string>
   <string name="forwarded_sms_clean_hint">Solltest du von einem anderen Handy auf dieses Handy SMS weiterleiten, kannst du hier die Zuordnung anpassen. Das ist aber normalerweise nicht der Fall. Aktuell wird nach diesem Pattern  \"([0-9a-zA-Z]+):\" gefiltert.</string>
   <string name="error_unknown">Unbekannter Fehler</string>
+  <string name="donate_remove_ads_" formatted="false">Spenden/Werbung entfernen</string>
 </resources>

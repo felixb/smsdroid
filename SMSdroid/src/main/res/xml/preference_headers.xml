@@ -32,8 +32,4 @@
             android:title="@string/about_">
         <extra android:name="resource" android:value="prefs_about"/>
     </header>
-    <header android:fragment="de.ub0r.android.smsdroid.HeaderPreferenceFragment"
-            android:title="@string/debug_">
-        <extra android:name="resource" android:value="prefs_debug"/>
-    </header>
 </preference-headers>

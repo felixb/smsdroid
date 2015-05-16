@@ -61,10 +61,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import de.ub0r.android.lib.DonationHelper;
-import de.ub0r.android.lib.Log;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * {@link FragmentActivity} showing a single conversation.
@@ -288,8 +288,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         longItemClickDialog[WHICH_COPY_TEXT] = getString(R.string.copy_text_);
         longItemClickDialog[WHICH_VIEW_DETAILS] = getString(R.string.view_details_);
         longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_message_);
-        // longItemClickDialog[WHICH_SPEAK] =
-        // getString(R.string.speak_);
 
         mAdView = (AdView) findViewById(R.id.ads);
         mAdView.setVisibility(View.GONE);
@@ -321,12 +319,12 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      * @param intent {@link Intent}
      */
     private void parseIntent(final Intent intent) {
-        Log.d(TAG, "parseIntent(" + intent + ")");
+        Log.d(TAG, "parseIntent(", intent, ")");
         if (intent == null) {
             return;
         }
-        Log.d(TAG, "got action: " + intent.getAction());
-        Log.d(TAG, "got uri: " + intent.getData());
+        Log.d(TAG, "got action: ", intent.getAction());
+        Log.d(TAG, "got uri: ", intent.getData());
 
         needContactUpdate = true;
 
@@ -364,10 +362,10 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         contact.update(this, false, true);
         boolean showKeyboard = intent.getBooleanExtra("showKeyboard", false);
 
-        Log.d(TAG, "address: " + contact.getNumber());
-        Log.d(TAG, "name: " + contact.getName());
-        Log.d(TAG, "displayName: " + contact.getDisplayName());
-        Log.d(TAG, "showKeyboard: " + showKeyboard);
+        Log.d(TAG, "address: ", contact.getNumber());
+        Log.d(TAG, "name: ", contact.getName());
+        Log.d(TAG, "displayName: ", contact.getDisplayName());
+        Log.d(TAG, "showKeyboard: ", showKeyboard);
 
         final ListView lv = getListView();
         lv.setStackFromBottom(true);
@@ -499,7 +497,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
                 if (ai.packageName.equals(chooserPackage)) {
                     btn.setText(R.string.chooser_);
                 } else {
-                    Log.d(TAG, "ai.pn: " + ai.packageName);
+                    Log.d(TAG, "ai.pn: ", ai.packageName);
                     btn.setText(ai.loadLabel(pm));
                 }
                 etText.setMinLines(3);
@@ -611,7 +609,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
         final Contact contact = conv.getContact();
         final String a = contact.getNumber();
-        Log.d(TAG, "p: " + a);
+        Log.d(TAG, "p: ", a);
         final String n = contact.getName();
 
         String[] items = longItemClickDialog;
@@ -646,7 +644,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
                         try {
                             MessageListActivity.this.startActivity(i);
                         } catch (ActivityNotFoundException e) {
-                            Log.e(TAG, "activity not found: " + i.getAction(), e);
+                            Log.e(TAG, "activity not found: ", i.getAction(), e);
                             Toast.makeText(MessageListActivity.this, "activity not found",
                                     Toast.LENGTH_LONG).show();
                         }

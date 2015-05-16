@@ -27,7 +27,6 @@
   <string name="more_apps_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="More Apps..">Mais aplicações...</string>
   <string name="settings" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Preferences">Preferências</string>
   <string name="new_message_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="New message">Nova mensagem</string>
-  <string name="new_message_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Compose a new message">Criar uma nova mensagem</string>
   <string name="new_message" formatted="false" username="mandyknapp3@gmail.com" orig="1 unread message.">1 mensagem não lida.</string>
   <string name="new_messages_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="New messages">Novas mensagens</string>
   <string name="new_messages" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="%d unread messages.">%d mensagens não lidas.</string>
@@ -63,13 +62,10 @@
   <string name="textcolor_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Message text\'s color.">Cor do texto da mensagem.</string>
   <string name="textcolor_ignore_conv_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Ignore text color for threads">Ignorar cor para tópicos</string>
   <string name="textcolor_ignore_conv_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Ignore text color in list of threads.">Ignorar cor do texto na lista de tópicos.</string>
-  <string name="show_titlebar_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show title bar">Mostrar barra de título</string>
-  <string name="show_titlebar_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show title bar in main view. Without title bar, there is no way to see background activity.">Mostrar barra de título na janela. Sem a barra de título, não existe forma de ver as atividades em segundo plano.</string>
   <string name="show_contact_photo_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show photo">Mostrar fotografia</string>
   <string name="show_contact_photo_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show contact\'s photo in conversation list">Mostrar fotografia do contacto na lista de conversa.</string>
   <string name="show_emoticons_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show emoticons">Mostrar ícone emotivo</string>
   <string name="show_emoticons_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show emoticons in message list.">Mostrar ícone emotivo na lista de mensagens.</string>
-  <string name="show_bubbles_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Show bubbles">Mostrar bolhas</string>
   <string name="hide_send_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button">Ocultar \"Enviar\"</string>
   <string name="hide_send_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;send&quot; button near text field.">Ocultar botão \"Enviar\" no campo de texto.</string>
   <string name="hide_restore_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Hide &quot;restore last message&quot; button">Ocultar \"Recuperar última mensagem\"</string>
@@ -91,16 +87,12 @@
   <string name="send_draft_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send draft">Enviar rascunho</string>
   <string name="copy_text_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Copy message text">Copiar texto</string>
   <string name="view_details_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="View message details">Ver detalhes</string>
-  <string name="spek_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Speak">Voz</string>
   <string name="delete_threads_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Delete all threads">Eliminar todos os tópicos</string>
   <string name="mark_all_read_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark all as read">Marcar tudo como lido</string>
   <string name="mark_read_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark read">Marcar como lida</string>
   <string name="mark_unread_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Mark unread">Marcar como não lida</string>
-  <string name="all_threads_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="All threads">Todos os tópicos</string>
   <string name="message_options_" formatted="false" username="mandyknapp3@gmail.com" orig="Message options">Opções de mensagem</string>
-  <string name="compose_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Compose">Criar nova</string>
   <string name="delete_message_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete this message?">Quer mesmo eliminar esta mensagem?</string>
-  <string name="delete_messages_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete these messages?">Quer mesmo eliminar estas mensagens?</string>
   <string name="delete_threads_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages&lt;/b&gt;?">Quer mesmo eliminar <b>todas as mensagens</b>?</string>
   <string name="delete_thread_question" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Do you really want to delete &lt;b&gt;all messages of this thread&lt;/b&gt;?">Quer mesmo eliminar <b>todas as mensagens deste tópico</b>?</string>
   <string name="from_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="From:">De:</string>
@@ -111,14 +103,9 @@
   <string name="received_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Received:">Recebidas:</string>
   <string name="view_mms" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="View MMS">Ver MMS</string>
   <string name="mms_conversation" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="&lt;MMS body&gt;">&lt;Texto da MMS&gt;</string>
-  <string name="mms_not_supported" formatted="false" username="mandyknapp3@gmail.com" orig="This message seems to be a MMS. You may want to download it with the Standard SMS/MMS app.\nClick here to do so.">Parece qu esta é uma MMS. Pode utilizar a aplicação do sistema para transferir a mensagem.\nClique aqui para o fazer.</string>
   <string name="import_contact_" formatted="false" username="mandyknapp3@gmail.com" orig="Import contact">Importar contacto</string>
   <string name="download_" formatted="false" username="mandyknapp3@gmail.com" orig="Download">Transferir</string>
   <string name="downloading_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Downloading..">Transferência...</string>
-  <string name="debug_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Debug">Depuração</string>
-  <string name="clear_cache_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Clear cache">Limpar cache</string>
-  <string name="clear_cache_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Clear internal Database. Fetch all data again from external Database.">Limpar base de dados interna e obter dados da base de dados externa.</string>
-  <string name="not_implemented" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sorry, not yet implemented.">Ainda não implementada.</string>
   <string name="error_conv_null" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Error getting conversation from DB!">Erro ao obter conversa na base de dados!</string>
   <string name="error_sending_failed" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sending failed">Falha ao enviar</string>
   <string name="text_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Text">Texto</string>
@@ -167,12 +154,6 @@
   <string name="fix_number2_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 2">Substituição 2</string>
   <string name="fix_number3_replace_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Replace 3">Substituição 3</string>
   <string name="reset" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Reset">Reiniciar</string>
-  <string name="send_logs_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send logs">Enviar registos</string>
-  <string name="send_logs_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Send your device\'s logs to the developer.\nDo this only if you were asked to do so.">Enviar registos do dispositivo ao programador.\nNão o efetue a menos que seja solicitado.</string>
-  <string name="sendlog_run_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Run SendLog">Executar SendLogs</string>
-  <string name="sendlog_run" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="SendLog will collect the device log and send it to the developer.\nYou will have an opportunity to review and modify the data being sent.">O SendLog irá recolher e enviar o registo do dispositivo para o programador.\nPode rever e modificar os dados que serão enviados.</string>
-  <string name="sendlog_install_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Install SendLog">Instalar SendLog</string>
-  <string name="sendlog_install" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Install the free SendLog application to collect the device log and send it to the developer.">Instale a aplicação SendLog para recolher e enviar o registo do dispositivo para o programador.</string>
   <string-array name="led_color" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
     <item>Verde</item>
     <item>Azul</item>
@@ -220,10 +201,6 @@
     <item>Longo repetitivo</item>
     <item>Curto, longo, curto, longo</item>
   </string-array>
-  <string-array name="textsize" username="smarquespt@gmail.com">
-    <item>Pequeno</item>
-    <item>Grande</item>
-  </string-array>
   <string name="mobile_only_" formatted="false" username="smarquespt@gmail.com" orig="Only mobile numbers">Apenas números móveis</string>
   <string name="mobile_only_hint" formatted="false" username="smarquespt@gmail.com" orig="Only suggest mobile numbers for recipient">Apenas sugerir números móveis para destinatários</string>
   <string name="edit_short_text_" formatted="false" username="smarquespt@gmail.com" orig="Edit as short message">Editar como mensagem curta</string>
@@ -235,4 +212,5 @@
   <string name="edit_short_text_hint" formatted="false" username="smarquespt@gmail.com" orig="Consider input a short message. The keyboard usually replaces enter with smiley button if enabled.">Considere escrever uma mensagem curta. O teclado substitui o botão Enter por um smiley.</string>
   <string name="forwarded_sms_clean_hint" formatted="false" username="smarquespt@gmail.com" orig="Strips sender in received sms according to &quot;([0-9a-zA-Z]+):&quot; and use that this number as sender.">Remover remetente das mensagens recebidas de acordo com \"([0-9a-zA-Z]+):\" e utilizar este número como remetente.</string>
   <string name="error_unknown" formatted="false" username="smarquespt@gmail.com" orig="Unknown error">Erro desconhecido</string>
+  <string name="donate_remove_ads_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Donate/remove ads">Doar e remover publicidade</string>
 </resources>

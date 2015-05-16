@@ -39,5 +39,8 @@
                 android:data="https://plus.google.com/101490294894990964252"/>
     </PreferenceScreen>
     <PreferenceScreen android:key="more_apps"
-                      android:title="@string/more_apps_"/>
+                      android:title="@string/more_apps_">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://play.google.com/store/apps/developer?id=Felix+Bechstein"/>
+    </PreferenceScreen>
 </PreferenceScreen>

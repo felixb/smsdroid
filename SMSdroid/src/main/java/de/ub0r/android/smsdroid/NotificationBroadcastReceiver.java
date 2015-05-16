@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import de.ub0r.android.lib.Log;
+import de.ub0r.android.logg0r.Log;
 
 /**
  * Receives intents from notifications.
@@ -21,7 +21,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "onReceive(context, " + intent + ")");
+        Log.d(TAG, "onReceive(context, ", intent, ")");
 
         if (ACTION_MARK_READ.equals(intent.getAction())) {
             try {
@@ -33,7 +33,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
                 // remember that we have to add the package here ..
                 String muri = extras.getString(EXTRA_MURI);
-                Log.d(TAG, "received uri: " + muri);
+                Log.d(TAG, "received uri: ", muri);
                 ConversationListActivity.markRead(context, Uri.parse(muri), 1);
 
             } catch (Exception e) {
