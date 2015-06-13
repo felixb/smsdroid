@@ -187,16 +187,14 @@ public class ConversationAdapter extends ResourceCursorAdapter {
 
         Cursor cursor = null;
         try {
-            cursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE, null, null,
-                    null);
+            cursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE,
+                    Conversation.COUNT + ">0", null, null);
         } catch (SQLiteException e) {
             Log.e(TAG, "error getting conversations", e);
         }
-        /* {@link Cursor} to the original Content to listen for changes. */
-        Cursor origCursor = cursor;
 
-        if (origCursor != null) {
-            origCursor.registerContentObserver(new ContentObserver(new Handler()) {
+        if (cursor != null) {
+            cursor.registerContentObserver(new ContentObserver(new Handler()) {
                 @Override
                 public void onChange(final boolean selfChange) {
                     super.onChange(selfChange);
@@ -222,7 +220,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
             // Kick off the new query
             activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
             queryHandler.startQuery(MESSAGE_LIST_QUERY_TOKEN, null, Conversation.URI_SIMPLE,
-                    Conversation.PROJECTION_SIMPLE, null, null, SORT);
+                    Conversation.PROJECTION_SIMPLE, Conversation.COUNT + ">0", null, SORT);
         } catch (SQLiteException e) {
             Log.e(TAG, "error starting query", e);
         }
