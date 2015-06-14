@@ -143,8 +143,6 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
                 finish();
             } else {
                 setTheme(PreferencesActivity.getTheme(this));
-                SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
-                        R.drawable.bg_striped, R.drawable.bg_striped_img);
                 setContentView(R.layout.sender);
                 findViewById(R.id.text_paste).setOnClickListener(this);
                 final EditText et = (EditText) findViewById(R.id.text);

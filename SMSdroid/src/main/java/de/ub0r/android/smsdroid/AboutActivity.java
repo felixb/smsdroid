@@ -38,8 +38,6 @@ public final class AboutActivity extends SherlockActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
-        SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
-                R.drawable.bg_striped, R.drawable.bg_striped_img);
         setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
                 + " v" + BuildConfig.VERSION_NAME);
     }

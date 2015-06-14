@@ -275,8 +275,6 @@ public final class ConversationListActivity extends SherlockActivity implements
         } else {
             setContentView(R.layout.conversationlist);
         }
-        SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
-                R.drawable.bg_striped, R.drawable.bg_striped_img);
 
         // debug info
         showRows(this);

@@ -238,8 +238,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         setTheme(PreferencesActivity.getTheme(this));
         Utils.setLocale(this);
         setContentView(R.layout.messagelist);
-        SMSdroid.fixActionBarBackground(getSupportActionBar(), getResources(),
-                R.drawable.bg_striped, R.drawable.bg_striped_img);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Log.d(TAG, "onCreate()");
 
