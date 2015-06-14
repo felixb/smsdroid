@@ -573,42 +573,50 @@ public final class ConversationListActivity extends SherlockActivity implements
             @Override
             public void onClick(final DialogInterface dialog, final int which) {
                 Intent i;
-                switch (which) {
-                    case WHICH_ANSWER:
-                        ConversationListActivity.this.startActivity(getComposeIntent(
-                                ConversationListActivity.this, a, false));
-                        break;
-                    case WHICH_CALL:
-                        i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));
-                        ConversationListActivity.this.startActivity(i);
-                        break;
-                    case WHICH_VIEW_CONTACT:
-                        if (n == null) {
-                            i = ContactsWrapper.getInstance().getInsertPickIntent(a);
-                            Conversation.flushCache();
-                        } else {
-                            final Uri uri = c.getContact().getUri();
-                            i = new Intent(Intent.ACTION_VIEW, uri);
-                        }
-                        ConversationListActivity.this.startActivity(i);
-                        break;
-                    case WHICH_VIEW:
-                        i = new Intent(ConversationListActivity.this, MessageListActivity.class);
-                        i.setData(target);
-                        ConversationListActivity.this.startActivity(i);
-                        break;
-                    case WHICH_DELETE:
-                        ConversationListActivity
-                                .deleteMessages(ConversationListActivity.this, target,
-                                        R.string.delete_thread_, R.string.delete_thread_question,
-                                        null);
-                        break;
-                    case WHICH_MARK_SPAM:
-                        ConversationListActivity.addToOrRemoveFromSpamlist(
-                                ConversationListActivity.this, c.getContact().getNumber());
-                        break;
-                    default:
-                        break;
+                try {
+                    switch (which) {
+                        case WHICH_ANSWER:
+                            ConversationListActivity.this.startActivity(getComposeIntent(
+                                    ConversationListActivity.this, a, false));
+                            break;
+                        case WHICH_CALL:
+                            i = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + a));
+                            ConversationListActivity.this.startActivity(i);
+                            break;
+                        case WHICH_VIEW_CONTACT:
+                            if (n == null) {
+                                i = ContactsWrapper.getInstance().getInsertPickIntent(a);
+                                Conversation.flushCache();
+                            } else {
+                                final Uri uri = c.getContact().getUri();
+                                i = new Intent(Intent.ACTION_VIEW, uri);
+                            }
+                            ConversationListActivity.this.startActivity(i);
+                            break;
+                        case WHICH_VIEW:
+                            i = new Intent(ConversationListActivity.this,
+                                    MessageListActivity.class);
+                            i.setData(target);
+                            ConversationListActivity.this.startActivity(i);
+                            break;
+                        case WHICH_DELETE:
+                            ConversationListActivity
+                                    .deleteMessages(ConversationListActivity.this, target,
+                                            R.string.delete_thread_,
+                                            R.string.delete_thread_question,
+                                            null);
+                            break;
+                        case WHICH_MARK_SPAM:
+                            ConversationListActivity.addToOrRemoveFromSpamlist(
+                                    ConversationListActivity.this, c.getContact().getNumber());
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (ActivityNotFoundException e) {
+                    Log.e(TAG, "unable to launch activity:", e);
+                    Toast.makeText(ConversationListActivity.this, R.string.error_unknown,
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

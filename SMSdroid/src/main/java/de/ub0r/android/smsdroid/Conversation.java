@@ -225,6 +225,10 @@ public final class Conversation {
      */
     private void update(final Context context, final Cursor cursor, final boolean sync) {
         Log.d(TAG, "update(", threadId, ",", sync, ")");
+        if (cursor == null || cursor.isClosed()) {
+            Log.e(TAG, "Conversation.update() on null/closed cursor");
+            return;
+        }
         long d = cursor.getLong(INDEX_SIMPLE_DATE);
         if (d != date) {
             id = cursor.getInt(INDEX_SIMPLE_ID);

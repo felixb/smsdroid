@@ -346,7 +346,15 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
             }
         }
 
-        final int threadId = Integer.parseInt(uri.getLastPathSegment());
+        int threadId;
+        try {
+            threadId = Integer.parseInt(uri.getLastPathSegment());
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "unable to parse thread id: ", e);
+            Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
         final Conversation c = Conversation.getConversation(this, threadId, true);
         conv = c;
 
@@ -472,12 +480,17 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
         final Button btn = (Button) findViewById(R.id.send_);
         if (showTextField) {
-            final Intent i = buildIntent(enableAutosend, false);
-            final PackageManager pm = getPackageManager();
+            Intent i = null;
             ActivityInfo ai = null;
-            if (pm != null && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-                    PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
-                ai = i.resolveActivityInfo(pm, 0);
+            final PackageManager pm = getPackageManager();
+            try {
+                i = buildIntent(enableAutosend, false);
+                if (pm != null && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+                        PreferencesActivity.PREFS_SHOWTARGETAPP, true)) {
+                    ai = i.resolveActivityInfo(pm, 0);
+                }
+            } catch (NullPointerException e) {
+                Log.e(TAG, "unable to build Intent", e);
             }
             etText.setMaxLines(MAX_EDITTEXT_LINES);
 
@@ -486,10 +499,14 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
                 etText.setMinLines(1);
             } else {
                 if (chooserPackage == null) {
-                    final ActivityInfo cai = buildIntent(enableAutosend, true)
-                            .resolveActivityInfo(pm, 0);
-                    if (cai != null) {
-                        chooserPackage = cai.packageName;
+                    try {
+                        final ActivityInfo cai = buildIntent(enableAutosend, true)
+                                .resolveActivityInfo(pm, 0);
+                        if (cai != null) {
+                            chooserPackage = cai.packageName;
+                        }
+                    } catch (NullPointerException e) {
+                        Log.e(TAG, "unable to build Intent", e);
                     }
                 }
                 if (ai.packageName.equals(chooserPackage)) {
@@ -781,6 +798,10 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      */
     private Intent buildIntent(final boolean autosend, final boolean showChooser) {
         //noinspection ConstantConditions
+        if (conv == null || conv.getContact() == null) {
+            Log.e(TAG, "buildIntent() without contact: ", conv);
+            throw new NullPointerException("conv and conv.getContact() must be not null");
+        }
         final String text = etText.getText().toString().trim();
         final Intent i = ConversationListActivity.getComposeIntent(this, conv.getContact()
                 .getNumber(), showChooser);
@@ -804,8 +825,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
      * @param showChooser show chooser
      */
     private void send(final boolean autosend, final boolean showChooser) {
-        final Intent i = buildIntent(autosend, showChooser);
         try {
+            final Intent i = buildIntent(autosend, showChooser);
             startActivity(i);
             //noinspection ConstantConditions
             PreferenceManager
@@ -814,7 +835,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
                     .putString(PreferencesActivity.PREFS_BACKUPLASTTEXT,
                             etText.getText().toString()).commit();
             etText.setText("");
-        } catch (ActivityNotFoundException e) {
+        } catch (ActivityNotFoundException | NullPointerException e) {
             Log.e(TAG, "unable to launch sender app", e);
             Toast.makeText(this, R.string.error_sending_failed, Toast.LENGTH_LONG).show();
         }
