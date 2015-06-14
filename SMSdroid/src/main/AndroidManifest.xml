@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2009-2012 Felix Bechstein -->
+<!-- Copyright (C) 2009-2015 Felix Bechstein -->
 <!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
@@ -17,8 +17,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="de.ub0r.android.smsdroid"
           android:installLocation="internalOnly"
-          android:versionCode="7161004"
-          android:versionName="1.6.4">
+          android:versionCode="9165000"
+          android:versionName="1.6.5">
 
     <supports-screens
             android:anyDensity="true"

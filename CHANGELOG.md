@@ -1,5 +1,10 @@
 # Changes
 
+## 1.6.5
+* fix conversations on Android 5.1 (issue #20)
+* fix lot`s of FCs
+* update translations
+
 ## 1.6.4
 * fix FCs on Android 5.0
 
