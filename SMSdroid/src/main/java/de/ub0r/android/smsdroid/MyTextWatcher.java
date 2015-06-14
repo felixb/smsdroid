@@ -63,7 +63,7 @@ public final class MyTextWatcher implements TextWatcher {
                     int[] l = SmsMessage.calculateLength(s.toString(), false);
                     tvTextLabel.setText(l[0] + "/" + l[2]);
                     tvTextLabel.setVisibility(View.VISIBLE);
-                } catch (RuntimeException e) {
+                } catch (Exception e) {
                     Log.e(TAG, "error calculating message length", e);
                 }
             } else {

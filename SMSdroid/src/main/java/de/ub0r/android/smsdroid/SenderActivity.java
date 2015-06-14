@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.text.ClipboardManager;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -262,16 +261,6 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
      */
     private void send(final String recipient, final String message) {
         Log.d(TAG, "text: ", recipient);
-        try {
-            int[] l = SmsMessage.calculateLength(message, false);
-            Log.i(TAG, "text7: ", message.length(), ", ", l[0], " ", l[1], " ", l[2], " "
-                    + l[3]);
-            l = SmsMessage.calculateLength(message, true);
-            Log.i(TAG, "text8: ", message.length(), ", ", l[0], " ", l[1], " ", l[2], " "
-                    + l[3]);
-        } catch (RuntimeException e) {
-            Log.e(TAG, "error calculating message length", e);
-        }
 
         // save draft
         final ContentResolver cr = getContentResolver();
