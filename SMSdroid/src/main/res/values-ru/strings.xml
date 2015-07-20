@@ -217,4 +217,8 @@
   <string name="edit_short_text_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Edit as short message">Редактировать как короткое сообщение</string>
   <string name="edit_short_text_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Consider input a short message. The keyboard usually replaces enter with smiley button if enabled.">Рассмотрим ввод коротких сообщений. Клавиатура, как правило, заменяет введенное  смайликом, если разрешено.</string>
   <string name="donate_remove_ads_" formatted="false" username="ACCount" orig="Donate/remove ads">Пожертвовать/убрать рекламу</string>
+  <string name="hide_delete_all_threads_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide delete all threads">Скрыть \'Удалить все диалоги\'</string>
+  <string name="hide_delete_all_threads_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide delete all threads menu option.">Скрыть параметр меню \'Удалить все диалоги\'</string>
+  <string name="hide_message_count_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide message counts">Скрыть подсчет сообщений</string>
+  <string name="hide_message_count_hint" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Hide message counts on conversation list.">Скрыть подсчет сообщений в списке диалогов.</string>
 </resources>

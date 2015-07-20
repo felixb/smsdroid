@@ -17,7 +17,7 @@ res/values-pl/strings.xml:180
 res/values-pt/market.xml:3
 res/values-pt/strings.xml:192
 res/values-ru/market.xml:3
-res/values-ru/strings.xml:192
+res/values-ru/strings.xml:196
 res/values-tr/market.xml:0
 res/values-tr/strings.xml:28
 res/values:199
@@ -29,5 +29,5 @@ res/values-it:180
 res/values-iw:27
 res/values-pl:183
 res/values-pt:195
-res/values-ru:195
+res/values-ru:199
 res/values-tr:28
