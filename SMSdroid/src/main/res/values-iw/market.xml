@@ -22,6 +22,6 @@
        -->
 <resources>
   <string name="market_translation" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="Feel free to help translating this app to your language here: http://ub0r.de/translate/smsdroid/">הוסף תרגום לאפליקציה בשפה שלך כאן:\nhttp://ub0r.de/translate/smsdroid/</string>
-  <string name="market_about" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app (eg. WebSMS).\n\nIf you love WebSMS to send free messages, you\'ll probably love SMSdroid too.">סמס-דרויד היא תוכנה מיוחדת לסמסים, הנותנת לכם לשלוח סמסים באמצעות תוכנות אחרות (לדוגמא: \"סמס בחינם\").\n\nאם אתה אוהב את "סמס בחינם" עבור שליחת הודעות בחינם, כנראה שתאהב גם את סמס-דרויד.</string>
+  <string name="market_about" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="SMSdroid is a special messaging app letting you send messages with any other messaging app.">סמס-דרויד היא תוכנה מיוחדת לסמסים, הנותנת לכם לשלוח סמסים באמצעות תוכנות אחרות.</string>
   <string name="market_oss" formatted="false" username="eliazu &lt;eliazu@gmail.com&gt;" orig="This app is open source software build in spare time. Adding bad comments in market won\'t help much to make it better.\nPlease add your issues with this app on the app\'s website.">אפליקציה זה היא תוכנת קוד פתוח שנבנתה בזמן פנוי.\nהוספת תגובות רעות בחנות האפליקציות (מרקט) לא תעזור להפוך אותה לטובה יותר.\nבבקשה הוסיפו בעיות שנתקלתם בהם באתר המפתח.</string>
 </resources>
