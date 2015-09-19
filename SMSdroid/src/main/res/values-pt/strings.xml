@@ -195,7 +195,6 @@
   <string name="use_new_layout_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Use tiled layout">Esquema em mosaico</string>
   <string name="use_new_layout_hint" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Use a tiled user interface for conversations">Utilizar um esquema em mosaico para as conversas</string>
   <string-array name="vibrate_mode" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
-    <item>Padrão</item>
     <item>Longo</item>
     <item>Curto repetitivo</item>
     <item>Longo repetitivo</item>

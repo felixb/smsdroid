@@ -125,7 +125,6 @@
     <item>Fijo</item>
   </string-array>
   <string-array name="vibrate_mode" username="Geovannyamayamaya@gmail.com">
-    <item>Por defecto</item>
     <item>Larga</item>
     <item>A intervalos breves</item>
     <item>A intervalos largos</item>

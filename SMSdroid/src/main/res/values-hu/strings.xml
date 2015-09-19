@@ -199,7 +199,6 @@
     <item>Folyamatos</item>
   </string-array>
   <string-array name="vibrate_mode" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
-    <item>Alapértelmezett</item>
     <item>Hosszú</item>
     <item>Sok rövid</item>
     <item>Sok hosszú</item>

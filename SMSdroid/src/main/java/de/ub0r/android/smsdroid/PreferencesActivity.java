@@ -102,14 +102,9 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
     static final String PREFS_CONTACT_PHOTO = "show_contact_photo";
 
     /**
-     * Prefernece's name: show emoticons in messagelist.
+     * Preference's name: show emoticons in messagelist.
      */
     static final String PREFS_EMOTICONS = "show_emoticons";
-
-    /**
-     * Prefernece's name: show bubbles in messagelist.
-     */
-    static final String PREFS_BUBBLES = "show_bubbles";
 
     /**
      * Preference's name: bubbles for incoming messages.
@@ -122,12 +117,12 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
     private static final String PREFS_BUBBLES_OUT = "bubbles_out";
 
     /**
-     * Prefernece's name: show full date and time.
+     * Preference's name: show full date and time.
      */
     static final String PREFS_FULL_DATE = "show_full_date";
 
     /**
-     * Prefernece's name: hide send button.
+     * Preference's name: hide send button.
      */
     static final String PREFS_HIDE_SEND = "hide_send";
 
@@ -137,22 +132,22 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
     static final String PREFS_HIDE_RESTORE = "hide_restore";
 
     /**
-     * Prefernece's name: hide paste button.
+     * Preference's name: hide paste button.
      */
     static final String PREFS_HIDE_PASTE = "hide_paste";
 
     /**
-     * Prefernece's name: hide widget's label.
+     * Preference's name: hide widget's label.
      */
     static final String PREFS_HIDE_WIDGET_LABEL = "hide_widget_label";
 
     /**
-     * Prefernece's name: hide delete all threads.
+     * Preference's name: hide delete all threads.
      */
     static final String PREFS_HIDE_DELETE_ALL_THREADS = "hide_delete_all_threads";
 
     /**
-     * Prefernece's name: hide message count.
+     * Preference's name: hide message count.
      */
     static final String PREFS_HIDE_MESSAGE_COUNT = "hide_message_count";
 
@@ -165,11 +160,6 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      * Theme: black.
      */
     private static final String THEME_BLACK = "black";
-
-    /**
-     * Theme: light.
-     */
-    private static final String THEME_LIGHT = "light";
 
     /**
      * Preference's name: text size.
@@ -460,7 +450,7 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
                             new OnAmbilWarnaListener() {
                                 @Override
                                 public void onOk(final AmbilWarnaDialog dialog, final int color) {
-                                    prefs.edit().putInt(PREFS_TEXTCOLOR, color).commit();
+                                    prefs.edit().putInt(PREFS_TEXTCOLOR, color).apply();
                                 }
 
                                 @Override
@@ -469,7 +459,7 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
                                 }
 
                                 public void onReset(final AmbilWarnaDialog dialog) {
-                                    prefs.edit().putInt(PREFS_TEXTCOLOR, 0).commit();
+                                    prefs.edit().putInt(PREFS_TEXTCOLOR, 0).apply();
                                 }
                             });
 

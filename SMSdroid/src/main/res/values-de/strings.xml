@@ -197,7 +197,6 @@
     <item>Durchgehend</item>
   </string-array>
   <string-array name="vibrate_mode">
-    <item>Default</item>
     <item>Lang</item>
     <item>Mehrmals kurz</item>
     <item>Mehrmals lang</item>

@@ -43,6 +43,7 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
+import android.text.TextUtils;
 import android.util.TypedValue;
 
 import java.util.regex.Matcher;
@@ -603,12 +604,20 @@ public class SmsReceiver extends BroadcastReceiver {
             intent.putExtra(Intent.EXTRA_TEXT, body);
 
             String title = context.getString(R.string.error_sending_failed);
-            String text = null;
-            final Notification n = new Notification(android.R.drawable.stat_sys_warning, title,
-                    date);
 
+            final int[] ledFlash = PreferencesActivity.getLEDflash(context);
+            final NotificationCompat.Builder b = new NotificationCompat.Builder(context)
+                    .setSmallIcon(android.R.drawable.stat_sys_warning)
+                    .setTicker(title)
+                    .setWhen(date)
+                    .setAutoCancel(true)
+                    .setLights(RED, ledFlash[0], ledFlash[1])
+                    .setContentIntent(PendingIntent.getActivity(context, 0,
+                            intent, PendingIntent.FLAG_CANCEL_CURRENT));
+            String text;
             if (privateNotification) {
                 title += "!";
+                text = "";
             } else if (conv == null) {
                 title += "!";
                 text = body;
@@ -616,32 +625,21 @@ public class SmsReceiver extends BroadcastReceiver {
                 title += ": " + conv.getContact().getDisplayName();
                 text = body;
             }
-            n.setLatestEventInfo(context, title, text, PendingIntent.getActivity(context, 0,
-                    intent, PendingIntent.FLAG_CANCEL_CURRENT));
-            n.flags |= Notification.FLAG_AUTO_CANCEL;
-            n.flags |= Notification.FLAG_SHOW_LIGHTS;
-            n.ledARGB = RED;
-            int[] ledFlash = PreferencesActivity.getLEDflash(context);
-            n.ledOnMS = ledFlash[0];
-            n.ledOffMS = ledFlash[1];
-            final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
+            b.setContentTitle(title);
+            b.setContentText(text);
             final String s = p.getString(PreferencesActivity.PREFS_SOUND, null);
-            Uri sound;
-            if (s == null || s.length() <= 0) {
-                sound = null;
-            } else {
-                sound = Uri.parse(s);
+            if (!TextUtils.isEmpty(s)) {
+                b.setSound(Uri.parse(s));
             }
+            final boolean vibrate = p.getBoolean(PreferencesActivity.PREFS_VIBRATE, false);
             if (vibrate) {
                 final long[] pattern = PreferencesActivity.getVibratorPattern(context);
-                if (pattern.length == 1 && pattern[0] == 0) {
-                    n.defaults |= Notification.DEFAULT_VIBRATE;
-                } else {
-                    n.vibrate = pattern;
+                if (pattern.length > 1) {
+                    b.setVibrate(pattern);
                 }
             }
-            n.sound = sound;
-            mNotificationMgr.notify(id, n);
+
+            mNotificationMgr.notify(id, b.build());
         }
         if (c != null && !c.isClosed()) {
             c.close();

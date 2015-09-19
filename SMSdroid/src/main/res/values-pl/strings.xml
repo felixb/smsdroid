@@ -127,7 +127,6 @@
     <item>Ciągła</item>
   </string-array>
   <string-array name="vibrate_mode" username="Karol &lt;ksz@mailmix.pl&gt;">
-    <item>Domyślnie</item>
     <item>Długo</item>
     <item>Krótko wielokrotnie</item>
     <item>Długo wielokrotnie</item>

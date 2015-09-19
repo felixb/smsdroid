@@ -189,7 +189,6 @@
     <item>Persistente</item>
   </string-array>
   <string-array name="vibrate_mode" username="carloraudino@fedoraproject.org">
-    <item>Predefinito</item>
     <item>Lungo</item>
     <item>Multipli brevi</item>
     <item>Multipli lunghi</item>

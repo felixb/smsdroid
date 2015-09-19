@@ -183,7 +183,6 @@
     <item>Непрерывно</item>
   </string-array>
   <string-array name="vibrate_mode" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;">
-    <item>По умолчанию</item>
     <item>Длинный</item>
     <item>Повторяющийся короткий</item>
     <item>Повторяющийся длинный</item>

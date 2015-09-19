@@ -193,7 +193,6 @@
         <item>Consistently</item>
     </string-array>
     <string-array name="vibrate_mode">
-        <item>Default</item>
         <item>Long</item>
         <item>Multiple short</item>
         <item>Multiple long</item>
