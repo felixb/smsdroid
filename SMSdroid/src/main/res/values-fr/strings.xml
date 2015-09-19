@@ -183,7 +183,6 @@
   <string name="license" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - voir http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="author_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Author:">Auteur:</string>
   <string name="website_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Website:">Site Web:</string>
-  <string name="source_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Sourcescode:">Code source:</string>
   <string name="hide_restore_" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button">Cacher le bouton \"restaurer le dernier message\"</string>
   <string name="hide_restore_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Hide &quot;restore last message&quot; button in message list.">Cacher le bouton \"restaurer le dernier message dans la liste des messages</string>
   <string name="to_hint" formatted="false" username="Ludovic WALLE&lt;ludovic.walle@laposte.net&gt;" orig="Name or Number">Nom ou numéro</string>

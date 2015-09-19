@@ -180,7 +180,6 @@
   <string name="license" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="author_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Author:">Szerző:</string>
   <string name="website_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Website:">Weboldal:</string>
-  <string name="source_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Sourcescode:">Forráskód:</string>
   <string name="donate_remove_ads_" formatted="false" username="Ferenc Takács &lt;orkester85@gmail.com&gt;" orig="Donate/remove ads">Támogatás/reklámok eltávolítása</string>
   <string-array name="themes" username="Ferenc Takács &lt;orkester85@gmail.com&gt;">
     <item>Fekete</item>

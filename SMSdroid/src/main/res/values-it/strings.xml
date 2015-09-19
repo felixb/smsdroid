@@ -199,7 +199,6 @@
   <string name="license" formatted="false" username="carloraudino@fedoraproject.org" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - vedere http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="author_" formatted="false" username="carloraudino@fedoraproject.org" orig="Author:">Autore:</string>
   <string name="website_" formatted="false" username="carloraudino@fedoraproject.org" orig="Website:">Sito web:</string>
-  <string name="source_" formatted="false" username="carloraudino@fedoraproject.org" orig="Sourcescode:">Codice sorgente:</string>
   <string name="bubbles_blue2_left" formatted="false" username="Nicolo Balzarotti &lt;anothersms@gmail.com&gt;" orig="Blue 2 left">Blu 2 sinistra</string>
   <string name="bubbles_blue2_right" formatted="false" username="Nicolo Balzarotti &lt;anothersms@gmail.com&gt;" orig="Blue 2 right">Blu 2 destra</string>
 </resources>

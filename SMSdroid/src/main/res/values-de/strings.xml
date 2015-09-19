@@ -207,7 +207,6 @@
   <string name="license" formatted="false">GPLv3 - siehe http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="author_" formatted="false" username="flx &lt;f+translator@ub0r.de&gt;" orig="Author:">Autor:</string>
   <string name="website_" formatted="false">Website:</string>
-  <string name="source_" formatted="false" username="Schiri &lt;schirinowski@gmail.com&gt;" orig="Sourcescode:">Quelltext:</string>
   <string name="mobile_only_">Nur Mobilnummern</string>
   <string name="mobile_only_hint">Für Empfänger nur Mobilnummern vorschlagen</string>
   <string name="edit_short_text_">Als kurze Nachricht editieren</string>

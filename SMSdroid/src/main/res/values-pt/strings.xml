@@ -136,7 +136,6 @@
   <string name="license" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - consulte http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="author_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Author:">Autor:</string>
   <string name="website_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Website:">Sítio web:</string>
-  <string name="source_" formatted="false" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;" orig="Sourcescode:">Código fonte:</string>
   <string-array name="themes" username="Sérgio Marques &lt;smarquespt@gmail.com&gt;">
     <item>Escuro</item>
     <item>Claro</item>

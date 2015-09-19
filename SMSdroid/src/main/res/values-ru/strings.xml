@@ -198,7 +198,6 @@
   <string name="license_" formatted="false" username="ACCount" orig="License:">Лицензия:</string>
   <string name="author_" formatted="false" username="ACCount" orig="Author:">Автор:</string>
   <string name="website_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Website:">Веб-сайт:</string>
-  <string name="source_" formatted="false" username="ACCount" orig="Sourcescode:">Исходный код:</string>
   <string name="license" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3 - смотрите http://www.gnu.org/licenses/gpl-3.0.txt</string>
   <string name="reset" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Reset">Обнулить</string>
   <string name="use_new_layout_" formatted="false" username="Dmitriy Rublev &lt;kaktebyavirubit@gmail.com&gt;" orig="Use tiled layout">Использовать плиточный интерфейс</string>

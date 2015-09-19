@@ -203,7 +203,6 @@
     <string name="license">GPLv3 - see http://www.gnu.org/licenses/gpl-3.0.txt</string>
     <string name="author_">Author:</string>
     <string name="website_">Website:</string>
-    <string name="source_">Sourcescode:</string>
     <string name="mobile_only_">Only mobile numbers</string>
     <string name="mobile_only_hint">Only suggest mobile numbers for recipient</string>
     <string name="edit_short_text_">Edit as short message</string>
