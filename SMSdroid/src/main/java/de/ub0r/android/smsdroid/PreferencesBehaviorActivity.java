@@ -35,9 +35,6 @@ import de.ub0r.android.lib.IPreferenceContainer;
 public final class PreferencesBehaviorActivity extends PreferenceActivity implements
         IPreferenceContainer {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +42,6 @@ public final class PreferencesBehaviorActivity extends PreferenceActivity implem
         PreferencesActivity.registerOnPreferenceClickListener(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
@@ -62,17 +56,11 @@ public final class PreferencesBehaviorActivity extends PreferenceActivity implem
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Activity getActivity() {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Context getContext() {
         return this;

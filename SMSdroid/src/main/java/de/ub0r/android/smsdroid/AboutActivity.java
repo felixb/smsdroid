@@ -18,33 +18,26 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 /**
- * Display About {@link SherlockActivity}.
+ * Display About Activity.
  *
  * @author flx
  */
-public final class AboutActivity extends SherlockActivity {
+public final class AboutActivity extends AppCompatActivity {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
-        setTitle(getString(R.string.about_) + " " + getString(R.string.app_name)
-                + " v" + BuildConfig.VERSION_NAME);
+        setTitle(getString(R.string.about_) + " " + getString(R.string.app_name));
+        getSupportActionBar().setSubtitle("v" + BuildConfig.VERSION_NAME);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {

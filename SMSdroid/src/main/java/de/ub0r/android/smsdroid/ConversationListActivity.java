@@ -18,10 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,8 +37,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
@@ -63,11 +62,11 @@ import de.ub0r.android.lib.apis.ContactsWrapper;
 import de.ub0r.android.logg0r.Log;
 
 /**
- * Main {@link SherlockActivity} showing conversations.
+ * Main Activity showing conversations.
  *
  * @author flx
  */
-public final class ConversationListActivity extends SherlockActivity implements
+public final class ConversationListActivity extends AppCompatActivity implements
         OnItemClickListener, OnItemLongClickListener {
 
     /**
@@ -260,8 +259,8 @@ public final class ConversationListActivity extends SherlockActivity implements
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        super.onCreate(savedInstanceState);
         final Intent i = getIntent();
         Log.d(TAG, "got intent: ", i.getAction());
         Log.d(TAG, "got uri: ", i.getData());
@@ -337,7 +336,7 @@ public final class ConversationListActivity extends SherlockActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.conversationlist, menu);
+        getMenuInflater().inflate(R.menu.conversationlist, menu);
         if (DonationHelper.hideAds(this)) {
             menu.removeItem(R.id.item_donate);
         }

@@ -316,9 +316,6 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
             ctx = context;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean onPreferenceClick(final Preference preference) {
             final Builder b = new Builder(ctx);
@@ -367,9 +364,6 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
             ctx = context;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean onPreferenceClick(final Preference preference) {
             final Builder b = new Builder(ctx);
@@ -397,9 +391,7 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @SuppressWarnings("deprecation")
     @Override
     public final void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -480,9 +472,9 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
         final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
         final String s = p.getString(PREFS_THEME, null);
         if (s != null && THEME_BLACK.equals(s)) {
-            return R.style.Theme_SherlockSMSdroid;
+            return R.style.Theme_SMSdroid;
         } else {
-            return R.style.Theme_SherlockSMSdroid_Light;
+            return R.style.Theme_SMSdroid_Light;
         }
     }
 
@@ -653,9 +645,6 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
         return ret;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
@@ -670,17 +659,11 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Activity getActivity() {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Context getContext() {
         return this;

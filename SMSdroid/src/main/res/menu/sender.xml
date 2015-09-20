@@ -16,7 +16,11 @@
     copy of the GNU General Public License along with this program; If
     not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/item_send" android:title="@string/send_"
-          android:icon="@drawable/ic_menu_send" android:showAsAction="always|withText"/>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/item_send"
+          android:title="@string/send_"
+          android:icon="@drawable/ic_menu_send"
+          app:showAsAction="always|withText"/>
 </menu>

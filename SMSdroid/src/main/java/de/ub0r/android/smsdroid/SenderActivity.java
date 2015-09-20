@@ -3,10 +3,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.ContentResolver;
@@ -19,10 +15,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.text.ClipboardManager;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -40,7 +39,7 @@ import de.ub0r.android.logg0r.Log;
  *
  * @author flx
  */
-public final class SenderActivity extends SherlockActivity implements OnClickListener {
+public final class SenderActivity extends AppCompatActivity implements OnClickListener {
 
     /**
      * Tag for output.
@@ -103,18 +102,12 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
     @SuppressWarnings("deprecation")
     private ClipboardManager cbmgr;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handleIntent(getIntent());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
@@ -338,9 +331,6 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("deprecation")
     @Override
     public void onClick(final View v) {
@@ -354,18 +344,12 @@ public final class SenderActivity extends SherlockActivity implements OnClickLis
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.sender, menu);
+        getMenuInflater().inflate(R.menu.sender, menu);
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {

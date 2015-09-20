@@ -67,7 +67,7 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:label="@string/app_name"
                 android:launchMode="singleTop"
-                android:theme="@style/Theme.SherlockSMSdroid_Light"
+                android:theme="@style/Theme.SMSdroid_Light"
                 android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -96,12 +96,12 @@
         <activity android:name=".Preferences11Activity"/>
         <activity
                 android:name=".AboutActivity"
-                android:theme="@style/Theme.SherlockSMSdroid_Light"/>
+                android:theme="@style/Theme.SMSdroid_Light"/>
         <activity
                 android:name=".MessageListActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:launchMode="singleTop"
-                android:theme="@style/Theme.SherlockSMSdroid_Light"
+                android:theme="@style/Theme.SMSdroid_Light"
                 android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

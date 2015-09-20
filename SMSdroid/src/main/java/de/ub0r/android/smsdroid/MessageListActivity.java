@@ -22,10 +22,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
+import android.annotation.TargetApi;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -37,14 +34,18 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -71,7 +72,7 @@ import de.ub0r.android.logg0r.Log;
  *
  * @author flx
  */
-public class MessageListActivity extends SherlockActivity implements OnItemClickListener,
+public class MessageListActivity extends AppCompatActivity implements OnItemClickListener,
         OnItemLongClickListener, OnClickListener, OnLongClickListener {
 
     private static final String TAG = "ml";
@@ -222,10 +223,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
     private AdView mAdView;
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public final void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -301,9 +298,6 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected final void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
@@ -403,6 +397,21 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         setRead();
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private ImageView findMenuItemView(final int viewId) {
+        ImageView view = (ImageView) findViewById(viewId);
+        if (view != null) {
+            return view;
+        }
+
+        if (BuildConfig.VERSION_CODE >= Build.VERSION_CODES.HONEYCOMB) {
+            return (ImageView) contactItem.getActionView().findViewById(viewId);
+        } else {
+            contactItem.setVisible(false);
+        }
+        return null;
+    }
+
     /**
      * Show {@link Contact}'s photo.
      *
@@ -431,10 +440,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
         if (showPhoto && name != null) {
             // photo
-            ImageView ivPhoto = (ImageView) findViewById(R.id.photo);
-            if (ivPhoto == null) {
-                ivPhoto = (ImageView) contactItem.getActionView().findViewById(R.id.photo);
-            }
+            ImageView ivPhoto = findMenuItemView(R.id.photo);
             if (ivPhoto == null) {
                 Log.w(TAG, "ivPhoto == null");
             } else {
@@ -444,11 +450,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
             }
 
             // presence
-            ImageView ivPresence = (ImageView) findViewById(R.id.presence);
-            if (ivPresence == null) {
-                ivPresence = (ImageView) contactItem.getActionView().findViewById(
-                        R.id.presence);
-            }
+            ImageView ivPresence = findMenuItemView(R.id.presence);
             if (ivPresence == null) {
                 Log.w(TAG, "ivPresence == null");
             } else {
@@ -480,7 +482,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
 
         final Button btn = (Button) findViewById(R.id.send_);
         if (showTextField) {
-            Intent i = null;
+            Intent i;
             ActivityInfo ai = null;
             final PackageManager pm = getPackageManager();
             try {
@@ -546,12 +548,9 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final boolean onCreateOptionsMenu(final Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.messagelist, menu);
+        getMenuInflater().inflate(R.menu.messagelist, menu);
         contactItem = menu.findItem(R.id.item_contact);
         if (conv != null) {
             setContactIcon(conv.getContact());
@@ -563,9 +562,7 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public final boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
@@ -591,7 +588,8 @@ public class MessageListActivity extends SherlockActivity implements OnItemClick
                         PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
                 return true;
             case R.id.item_contact:
-                if (conv != null && contactItem != null) {
+                if (conv != null && contactItem != null
+                        && BuildConfig.VERSION_CODE >= Build.VERSION_CODES.HONEYCOMB) {
                     WRAPPER.showQuickContactFallBack(this, contactItem.getActionView(), conv
                             .getContact().getLookUpUri(getContentResolver()), 2, null);
                 }

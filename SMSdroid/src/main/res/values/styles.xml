@@ -14,7 +14,7 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <color name="actionbar_text_color">#FFF0F0F0</color>
     <color name="ubActionBarBackgroundDark">#FF000000</color>
@@ -36,30 +36,30 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <style name="Theme.SherlockSMSdroid" parent="style/Theme.Sherlock">
+    <style name="Theme.SMSdroid" parent="style/Theme.AppCompat">
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar</item>
         <item name="ubButtonBarBackground">@color/ubActionBarBackgroundDark</item>
     </style>
 
-    <style name="Theme.SherlockSMSdroid_Light" parent="style/Theme.Sherlock.Light.DarkActionBar">
+    <style name="Theme.SMSdroid_Light" parent="style/Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
+        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar_Light</item>
         <item name="ubButtonBarBackground">@color/ubActionBarBackgroundLight</item>
     </style>
 
-    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">
+    <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
         <item name="background">@drawable/bg_striped</item>
         <item name="android:background">@drawable/bg_striped</item>
         <item name="backgroundSplit">@drawable/bg_striped_split</item>
-        <item name="android:backgroundSplit">@drawable/bg_striped_split</item>
+        <item name="android:backgroundSplit" tools:ignore="NewApi">@drawable/bg_striped_split</item>
     </style>
 
-    <style name="Widget.Styled.ActionBar_Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+    <style name="Widget.Styled.ActionBar_Light" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/bg_striped</item>
         <item name="android:background">@drawable/bg_striped</item>
         <item name="backgroundSplit">@drawable/bg_striped_split</item>
-        <item name="android:backgroundSplit">@drawable/bg_striped_split</item>
+        <item name="android:backgroundSplit" tools:ignore="NewApi">@drawable/bg_striped_split</item>
     </style>
 
 </resources>
