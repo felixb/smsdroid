@@ -27,6 +27,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -273,7 +274,7 @@ public final class SenderActivity extends AppCompatActivity implements OnClickLi
             try {
                 draft = cr.insert(URI_SENT, values);
                 Log.d(TAG, "draft saved: ", draft);
-            } catch (IllegalArgumentException | SQLiteException e) {
+            } catch (IllegalArgumentException | SQLiteException | NullPointerException e) {
                 Log.e(TAG, "unable to save draft", e);
             }
         }
@@ -326,7 +327,12 @@ public final class SenderActivity extends AppCompatActivity implements OnClickLi
                 Log.w(TAG, "skip empty recipient: ", r);
                 continue;
             }
-            send(r, text);
+            try {
+                send(r, text);
+            } catch (Exception e) {
+                Log.e(TAG, "unable to send message: ", to, e);
+                Toast.makeText(this, R.string.error_sending_failed,Toast.LENGTH_LONG).show();
+            }
         }
         return true;
     }

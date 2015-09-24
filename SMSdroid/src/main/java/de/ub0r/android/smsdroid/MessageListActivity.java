@@ -359,7 +359,11 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
         }
 
         final Contact contact = c.getContact();
-        contact.update(this, false, true);
+        try {
+            contact.update(this, false, true);
+        } catch (NullPointerException e) {
+            Log.e(TAG, "updating contact failed", e);
+        }
         boolean showKeyboard = intent.getBooleanExtra("showKeyboard", false);
 
         Log.d(TAG, "address: ", contact.getNumber());
@@ -411,20 +415,15 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
     }
 
     /**
-     * Show {@link Contact}'s photo.
+     * Show {@link MenuItem} holding {@link Contact}'s picture.
      *
      * @param contact {@link Contact}
      */
     private void setContactIcon(final Contact contact) {
-        /* Show {@link MenuItem} holding {@link Contact}'s picture . */
-        boolean showContactItem;
         if (contact == null) {
             Log.w(TAG, "setContactIcon(null)");
             return;
         }
-
-        final String name = contact.getName();
-        showContactItem = showPhoto && name != null;
 
         if (contactItem == null) {
             Log.w(TAG, "setContactIcon: contactItem == null");
@@ -436,7 +435,10 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
             return;
         }
 
-        if (showPhoto && name != null) {
+        final String name = contact.getName();
+        final boolean showContactItem = showPhoto && name != null;
+
+        if (showContactItem) {
             // photo
             ImageView ivPhoto = findMenuItemView(R.id.photo);
             if (ivPhoto == null) {

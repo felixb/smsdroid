@@ -1,6 +1,7 @@
 # Changes
 
 ## 1.6.6
+* fix lot`s of FCs
 * add EU cookie consent banner
 * migrate from ActionBarSherlock to AppCompat
 * update translations

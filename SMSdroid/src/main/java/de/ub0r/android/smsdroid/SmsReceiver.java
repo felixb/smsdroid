@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -368,30 +369,35 @@ public class SmsReceiver extends BroadcastReceiver {
      * match newest message)]
      */
     private static int[] getUnread(final ContentResolver cr, final String text) {
-        Log.d(TAG, "getUnread(cr, ", text, ")");
-        lastUnreadBody = null;
-        lastUnreadDate = 0L;
-        String t = text;
-        if (MMS_BODY.equals(t)) {
-            t = null;
+        try {
+            Log.d(TAG, "getUnread(cr, ", text, ")");
+            lastUnreadBody = null;
+            lastUnreadDate = 0L;
+            String t = text;
+            if (MMS_BODY.equals(t)) {
+                t = null;
+            }
+            final int[] retSMS = getUnreadSMS(cr, t);
+            if (retSMS[ID_COUNT] == -1) {
+                // return to retry
+                return new int[]{-1, -1};
+            }
+            final int[] retMMS = getUnreadMMS(cr, text);
+            if (retMMS[ID_COUNT] == -1) {
+                // return to retry
+                return new int[]{-1, -1};
+            }
+            final int[] ret = new int[]{-1, retSMS[ID_COUNT] + retMMS[ID_COUNT]};
+            if (retMMS[ID_TID] <= 0 || retSMS[ID_TID] == retMMS[ID_TID]) {
+                ret[ID_TID] = retSMS[ID_TID];
+            } else if (retSMS[ID_TID] <= 0) {
+                ret[ID_TID] = retMMS[ID_TID];
+            }
+            return ret;
+        } catch (SQLiteException e) {
+            Log.e(TAG, "unable to get unread messages",e);
+            return new int[]{-1, 0};
         }
-        final int[] retSMS = getUnreadSMS(cr, t);
-        if (retSMS[ID_COUNT] == -1) {
-            // return to retry
-            return new int[]{-1, -1};
-        }
-        final int[] retMMS = getUnreadMMS(cr, text);
-        if (retMMS[ID_COUNT] == -1) {
-            // return to retry
-            return new int[]{-1, -1};
-        }
-        final int[] ret = new int[]{-1, retSMS[ID_COUNT] + retMMS[ID_COUNT]};
-        if (retMMS[ID_TID] <= 0 || retSMS[ID_TID] == retMMS[ID_TID]) {
-            ret[ID_TID] = retSMS[ID_TID];
-        } else if (retSMS[ID_TID] <= 0) {
-            ret[ID_TID] = retMMS[ID_TID];
-        }
-        return ret;
     }
 
     /**
@@ -499,7 +505,11 @@ public class SmsReceiver extends BroadcastReceiver {
                         }
                         if (showPhoto // just for the speeeeed
                                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            conv.getContact().update(context, false, true);
+                            try {
+                                conv.getContact().update(context, false, true);
+                            } catch (NullPointerException e) {
+                                Log.e(TAG, "updating contact failed", e);
+                            }
                             Drawable d = conv.getContact().getAvatar(context, null);
                             if (d instanceof BitmapDrawable) {
                                 Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
