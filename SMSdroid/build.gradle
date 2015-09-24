@@ -22,8 +22,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 9165000
-        versionName "1.6.5"
+        versionCode 9166000
+        versionName "1.6.6"
     }
 
     signingConfigs {
