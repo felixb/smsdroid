@@ -31,7 +31,6 @@ import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.Toast;
 
 import de.ub0r.android.logg0r.Log;
@@ -51,9 +50,6 @@ public final class SMSdroid extends Application {
      */
     private static final String[] PROJECTION = new String[]{"_id"};
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onCreate() {
         try {
@@ -62,7 +58,8 @@ public final class SMSdroid extends Application {
         }
 
         super.onCreate();
-        Log.i(TAG, "init SMSdroid v", BuildConfig.VERSION_NAME);
+        Log.i(TAG, "init SMSdroid v" + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE
+                + ")");
 
         final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
         int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
@@ -71,7 +68,7 @@ public final class SMSdroid extends Application {
                 Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
                         null, null, "_id LIMIT 1");
                 if (c == null) {
-                    Log.i(TAG, "disable .Sender: curor=null");
+                    Log.i(TAG, "disable .Sender: cursor=null");
                 } else if (SmsManager.getDefault() == null) {
                     Log.i(TAG, "disable .Sender: SmsManager=null");
                 } else {
@@ -112,34 +109,6 @@ public final class SMSdroid extends Application {
                     Toast.makeText(context, "no activity for data: " + intent.getType(),
                             Toast.LENGTH_LONG).show();
                 }
-            }
-        };
-    }
-
-    /**
-     * Get an {@link OnLongClickListener} for stating an Activity for given {@link Intent}.
-     *
-     * @param context {@link Context}
-     * @param intent  {@link Intent}
-     * @return {@link OnLongClickListener}
-     */
-    static OnLongClickListener getOnLongClickStartActivity(final Context context,
-            final Intent intent) {
-        if (intent == null) {
-            return null;
-        }
-        return new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(final View v) {
-                try {
-                    context.startActivity(intent);
-                    return true;
-                } catch (ActivityNotFoundException e) {
-                    Log.w(TAG, "activity not found", e);
-                    Toast.makeText(context, "no activity for data: " + intent.getType(),
-                            Toast.LENGTH_LONG).show();
-                }
-                return false;
             }
         };
     }
