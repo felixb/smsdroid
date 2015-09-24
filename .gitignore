@@ -18,3 +18,4 @@ gradlew
 wiki
 gradle.properties
 release.ks
+crowdin.yaml

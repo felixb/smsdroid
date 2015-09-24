@@ -4,11 +4,10 @@
         Copyright (C) 2009-2015 Felix Bechstein
     -->
 <!--
-        This file is part of WebSMS. This program is free software; you
-        can redistribute it and/or modify it under the terms of the GNU
-        General Public License as published by the Free Software Foundation;
-        either version 3 of the License, or (at your option) any later
-        version.
+        This file is part of SMSdroid. This program is free software; you can
+        redistribute it and/or modify it under the terms of the GNU General
+        Public License as published by the Free Software Foundation; either
+        version 3 of the License, or (at your option) any later version.
     -->
 <!--
         This program is distributed in the hope that it will be useful, but
@@ -18,6 +17,4 @@
         copy of the GNU General Public License along with this program; If
         not, see <http://www.gnu.org/licenses/>.
     -->
-<resources>
-  <string formatted="false" name="market_translation">Ayúdenos a traducir está aplicación en su idioma acá: https://crowdin.com/project/smsdroid/invite</string>
-</resources>
+<resources/>
