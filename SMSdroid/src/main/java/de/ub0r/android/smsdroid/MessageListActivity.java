@@ -404,10 +404,8 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
             return view;
         }
 
-        if (BuildConfig.VERSION_CODE >= Build.VERSION_CODES.HONEYCOMB) {
+        if (contactItem != null) {
             return (ImageView) contactItem.getActionView().findViewById(viewId);
-        } else {
-            contactItem.setVisible(false);
         }
         return null;
     }
@@ -588,8 +586,7 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
                         PreferencesActivity.PREFS_BACKUPLASTTEXT, null));
                 return true;
             case R.id.item_contact:
-                if (conv != null && contactItem != null
-                        && BuildConfig.VERSION_CODE >= Build.VERSION_CODES.HONEYCOMB) {
+                if (conv != null && contactItem != null) {
                     WRAPPER.showQuickContactFallBack(this, contactItem.getActionView(), conv
                             .getContact().getLookUpUri(getContentResolver()), 2, null);
                 }

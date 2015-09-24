@@ -17,6 +17,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <color name="actionbar_text_color">#FFF0F0F0</color>
+    <color name="actionbar_background_color">#FF33470C</color>
     <color name="ubActionBarBackgroundDark">#FF000000</color>
     <color name="ubActionBarBackgroundLight">#FFFFFFFF</color>
 
@@ -30,36 +31,32 @@
         <item name="android:textColor">@color/actionbar_text_color</item>
     </style>
 
-    <style name="TextAppearance.Multicomplete" parent="@android:style/TextAppearance.Widget.EditText" />
+    <style name="TextAppearance.MultiComplete" parent="@android:style/TextAppearance.Widget.EditText" />
 
-    <style name="Devider">
+    <style name="Divider">
         <item name="android:visibility">gone</item>
     </style>
 
     <style name="Theme.SMSdroid" parent="style/Theme.AppCompat">
-        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar</item>
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="ubButtonBarBackground">@color/ubActionBarBackgroundDark</item>
     </style>
 
     <style name="Theme.SMSdroid_Light" parent="style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
         <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar_Light</item>
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
         <item name="ubButtonBarBackground">@color/ubActionBarBackgroundLight</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
-        <item name="background">@drawable/bg_striped</item>
-        <item name="android:background">@drawable/bg_striped</item>
-        <item name="backgroundSplit">@drawable/bg_striped_split</item>
-        <item name="android:backgroundSplit" tools:ignore="NewApi">@drawable/bg_striped_split</item>
+        <item name="android:background">@color/actionbar_background_color</item>
+        <item name="background">@color/actionbar_background_color</item>
     </style>
 
     <style name="Widget.Styled.ActionBar_Light" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/bg_striped</item>
-        <item name="android:background">@drawable/bg_striped</item>
-        <item name="backgroundSplit">@drawable/bg_striped_split</item>
-        <item name="android:backgroundSplit" tools:ignore="NewApi">@drawable/bg_striped_split</item>
+        <item name="android:background">@color/actionbar_background_color</item>
+        <item name="background">@color/actionbar_background_color</item>
     </style>
 
 </resources>

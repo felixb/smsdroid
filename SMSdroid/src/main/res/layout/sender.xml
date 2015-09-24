@@ -32,7 +32,7 @@
                                        android:nextFocusDown="@+id/text"
                                        android:imeOptions="actionNext" android:singleLine="true"
                                        android:layout_weight="0"
-                                       style="@style/TextAppearance.Multicomplete"/>
+                                       style="@style/TextAppearance.MultiComplete"/>
 
             <RelativeLayout android:layout_width="fill_parent"
                             android:layout_height="fill_parent" android:layout_weight="1"
