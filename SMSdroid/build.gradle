@@ -22,8 +22,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 9166000
-        versionName "1.6.6"
+        versionCode 9166100
+        versionName "1.6.6.1"
     }
 
     signingConfigs {
@@ -63,7 +63,7 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.google.android.gms:play-services-ads:7.8.0'
+    compile 'com.google.android.gms:play-services-ads:8.1.0'
     compile 'de.ub0r.android.lib:lib:1.1.0'
     compile 'de.ub0r.android.logg0r:logg0r:2.0.0'
     compile 'de.ub0r.android.eucookieconsent:library:0.1.1@aar'
