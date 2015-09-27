@@ -14,14 +14,29 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@android:id/list"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:background="?android:attr/colorBackground"
-          android:columnWidth="120dp"
-          android:horizontalSpacing="1dp"
-          android:numColumns="auto_fit"
-          android:scrollingCache="true"
-          android:stretchMode="columnWidth"
-          android:verticalSpacing="1dp"/>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <GridView
+            android:id="@id/android:list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/colorBackground"
+            android:columnWidth="120dp"
+            android:horizontalSpacing="1dp"
+            android:numColumns="auto_fit"
+            android:scrollingCache="true"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="1dp"/>
+    <de.ub0r.android.eucookieconsent.EuCookieConsentView
+            android:id="@+id/cookie_consent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            app:urlLeanMore="@string/privacy_policy_url"/>
+</LinearLayout>
