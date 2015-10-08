@@ -18,13 +18,6 @@
           package="de.ub0r.android.smsdroid"
           android:installLocation="internalOnly">
 
-    <supports-screens
-            android:anyDensity="true"
-            android:largeScreens="true"
-            android:normalScreens="true"
-            android:smallScreens="true"
-            android:xlargeScreens="true"/>
-
     <uses-feature
             android:name="android.hardware.touchscreen"
             android:required="false"/>
