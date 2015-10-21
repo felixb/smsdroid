@@ -21,9 +21,12 @@
   <string formatted="false" name="about_">Hakkımızda</string>
   <string formatted="false" name="about_hint">Uygulama hakkında</string>
   <string formatted="false" name="faq_hint">Uygulamayı nasıl ayarlayacağınız hakkında bazı ip uçları</string>
+  <string formatted="false" name="feedback_">Geribildirim</string>
+  <string formatted="false" name="feedback_hint">Hata bildirin, özellik eklenmesini talep edin ...</string>
   <string formatted="false" name="google_plus_hint">Beni Google+ da takip edin.\nGüncellemeler ve vs. gibi konularda bilgi edinin</string>
   <string formatted="false" name="about0">SMSdroid smslerinizi okumanıza ve diğer aplikasyonlar vasıtası ile de sms göndermenize yardımcı olur.</string>
   <string formatted="false" name="more_apps_">Daha fazla uygulama...</string>
+  <string formatted="false" name="settings">Tercihler</string>
   <string formatted="false" name="new_message_">Yeni mesaj</string>
   <string formatted="false" name="new_message">1 okunmamış mesaj</string>
   <string formatted="false" name="new_messages_">Yeni mesajlar</string>
@@ -44,6 +47,53 @@
   <string formatted="false" name="receive_led_flash_hint">LED\'i fals moduna ayarla</string>
   <string formatted="false" name="receive_no_text_">Göndericiyi/mesajı gizle</string>
   <string formatted="false" name="receive_no_text_hint">Bildirimlerde göndericiyi/mesajı gizle.</string>
+  <string formatted="false" name="behavior_">Davranış</string>
   <string formatted="false" name="autosend_">Otomatik gönder</string>
+  <string formatted="false" name="appearance_and_behavior_">Görünüm &amp; davranış</string>
+  <string formatted="false" name="show_text_field_">Metin alanı göster</string>
+  <string formatted="false" name="show_text_field_hint">Cevapla dügmesine yerine metin alanını gösterin.</string>
+  <string formatted="false" name="show_target_app_">Hedef uygulamayı göster</string>
+  <string formatted="false" name="appearance_">Görünüm</string>
+  <string formatted="false" name="theme_">Tema</string>
+  <string formatted="false" name="textsize_">Metin boyutu</string>
+  <string formatted="false" name="textcolor_">Metin rengi</string>
+  <string formatted="false" name="textcolor_hint">Mesaj metin rengi.</string>
+  <string formatted="false" name="textcolor_ignore_conv_">Konu metin rengini yoksay</string>
+  <string formatted="false" name="show_contact_photo_">Fotoğrafı göster</string>
+  <string formatted="false" name="show_emoticons_">İfadeleri göster</string>
+  <string formatted="false" name="hide_send_">\"Gönder\" düğmesini gizle</string>
+  <string formatted="false" name="add_contact_">Kişilere ekle</string>
+  <string formatted="false" name="view_thread_">İleti dizisini görüntüle</string>
+  <string formatted="false" name="filter_spam_">Spam olarak İşaretle</string>
+  <string formatted="false" name="dont_filter_spam_">Kara listeden kaldır</string>
+  <string formatted="false" name="delete_message_">İletileri sil</string>
+  <string formatted="false" name="delete_thread_">İleti dizisini sil</string>
+  <string formatted="false" name="forward_">İlet</string>
+  <string formatted="false" name="send_draft_">Taslak gönderin</string>
+  <string formatted="false" name="copy_text_">İleti metnini Kopyala</string>
+  <string formatted="false" name="view_details_">İleti ayrıntılarını görüntüle</string>
+  <string formatted="false" name="mark_all_read_">Tümünü okundu işaretle</string>
+  <string formatted="false" name="delete_message_question">Bu resmi silmek istiyor musunuz?</string>
+  <string formatted="false" name="delete_thread_question"><b>Bu konuyu tüm iletileri</b> silmek istiyor musunuz?</string>
+  <string formatted="false" name="delete_threads_question"><b>Tüm mesajları</b> silmek istiyor musunuz?</string>
+  <string formatted="false" name="from_">Gönderen:</string>
+  <string formatted="false" name="to_">Alıcı:</string>
+  <string formatted="false" name="to_hint">Adı veya numarası</string>
+  <string formatted="false" name="type_">Tip:</string>
+  <string formatted="false" name="sent_">Gönder:</string>
+  <string formatted="false" name="received_">Alınan:</string>
+  <string formatted="false" name="import_contact_">Kişileri içe aktar</string>
+  <string formatted="false" name="download_">İndir</string>
+  <string formatted="false" name="downloading_">İndiriliyor..</string>
+  <string formatted="false" name="bubbles_blue_left">Mavi sol</string>
+  <string formatted="false" name="reset">Sıfırlama</string>
+  <string formatted="false" name="license_">Lisans:</string>
+  <string formatted="false" name="license">GPLv3 - Bakınız http://www.gnu.org/licenses/gpl-3.0.txt</string>
+  <string formatted="false" name="author_">Yazar:</string>
+  <string formatted="false" name="website_">Web sitesi:</string>
+  <string formatted="false" name="mobile_only_">Sadece telefon numaraları</string>
+  <string formatted="false" name="edit_short_text_">Kısa mesaj olarak Düzenle</string>
+  <string formatted="false" name="permission_save_to_db">Mesajları veritabanına Kaydet</string>
+  <string formatted="false" name="error_unknown">Bilinemeyen hata</string>
   <string formatted="false" name="donate_remove_ads_">Bağış yap/reklamları kaldır</string>
 </resources>

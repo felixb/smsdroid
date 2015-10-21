@@ -19,7 +19,7 @@
         not, see <http://www.gnu.org/licenses/>.
     -->
 <resources>
-  <string formatted="false" name="market_about">SMSdroid is eine spezielle Nachrichten-App mit der du mit einer beliebigen anderen App antworten kannst.</string>
+  <string formatted="false" name="market_about">SMSdroid ist eine spezielle messaging app, lassen Sie das Senden von Nachrichten mit anderen messaging-app.</string>
   <string formatted="false" name="market_oss">Diese App ist Open Source Software und wird in der Freizeit entwickelt. Schlechte Kommentare werden nicht helfen diese App zu verbessern.\nBitte beschreibe deine Probleme und Wünsche auf der Webseite der App.</string>
   <string formatted="false" name="market_translation">Hilf mit, die Übersetzung in deiner Sprache zu vervollständigen: https://crowdin.com/project/smsdroid/invite</string>
 </resources>

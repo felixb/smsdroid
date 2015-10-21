@@ -75,6 +75,10 @@
   <string formatted="false" name="hide_paste_hint">Ocultar botão \"Colar\" no campo de texto.</string>
   <string formatted="false" name="hide_widget_label_">Ocultar texto do widget</string>
   <string formatted="false" name="hide_widget_label_hint">Ocultar o texto do widget.</string>
+  <string formatted="false" name="hide_delete_all_threads_">Ocultar \'Apagar todos os tópicos\'</string>
+  <string formatted="false" name="hide_delete_all_threads_hint">Oculta a opção de menu \'Apagar todos os tópicos\'.</string>
+  <string formatted="false" name="hide_message_count_">Ocultar número de mensagens</string>
+  <string formatted="false" name="hide_message_count_hint">Oculta o número de mensagens na lista de conversas.</string>
   <string formatted="false" name="show_full_date_">Mostrar data completa</string>
   <string formatted="false" name="show_full_date_hint">Mostrar data e hora da mensagem.</string>
   <string formatted="false" name="me">Eu</string>
@@ -83,20 +87,20 @@
   <string formatted="false" name="view_thread_">Ver tópico</string>
   <string formatted="false" name="filter_spam_">Marcar como lixo</string>
   <string formatted="false" name="dont_filter_spam_">Remover da lista de exclusões</string>
-  <string formatted="false" name="delete_message_">Eliminar mensagem</string>
-  <string formatted="false" name="delete_thread_">Eliminar tópico</string>
+  <string formatted="false" name="delete_message_">Apagar mensagem</string>
+  <string formatted="false" name="delete_thread_">Apagar tópico</string>
   <string formatted="false" name="forward_">Avançar</string>
   <string formatted="false" name="send_draft_">Enviar rascunho</string>
   <string formatted="false" name="copy_text_">Copiar texto</string>
   <string formatted="false" name="view_details_">Ver detalhes</string>
-  <string formatted="false" name="delete_threads_">Eliminar todos os tópicos</string>
+  <string formatted="false" name="delete_threads_">Apagar todos os tópicos</string>
   <string formatted="false" name="mark_all_read_">Marcar tudo como lido</string>
   <string formatted="false" name="mark_read_">Marcar como lida</string>
   <string formatted="false" name="mark_unread_">Marcar como não lida</string>
   <string formatted="false" name="message_options_">Opções de mensagem</string>
-  <string formatted="false" name="delete_message_question">Quer mesmo eliminar esta mensagem?</string>
-  <string formatted="false" name="delete_thread_question">Quer mesmo eliminar <b>todas as mensagens deste tópico</b>?</string>
-  <string formatted="false" name="delete_threads_question">Quer mesmo eliminar <b>todas as mensagens</b>?</string>
+  <string formatted="false" name="delete_message_question">Quer mesmo apagar esta mensagem?</string>
+  <string formatted="false" name="delete_thread_question">Quer mesmo apagar <b>todas as mensagens deste tópico</b>?</string>
+  <string formatted="false" name="delete_threads_question">Quer mesmo apagar <b>todas as mensagens</b>?</string>
   <string formatted="false" name="from_">De:</string>
   <string formatted="false" name="to_">Para:</string>
   <string formatted="false" name="to_hint">Nome ou número</string>
@@ -118,6 +122,7 @@
   <string formatted="false" name="chooser_">Seletor</string>
   <string formatted="false" name="notification_icon_">Ícone da notificação</string>
   <string formatted="false" name="notification_default_">Padrão</string>
+  <string formatted="false" name="notification_gingerbread_">Gingerbread</string>
   <string formatted="false" name="notification_gingerbread_mail_">Correio Gingerbread</string>
   <string formatted="false" name="notification_black_">Escuro</string>
   <string formatted="false" name="notification_green_">Verde</string>
@@ -161,8 +166,11 @@
   <string formatted="false" name="activate_sender_hint">Ativar remetente do SMSdroid.</string>
   <string formatted="false" name="fix_numbers_">Corrigir números</string>
   <string formatted="false" name="fix_numbers_hint">Substituir partes do número por uma expressão regular antes de enviar. Maioria dos utilizadores não precisa de alterar a opção.</string>
+  <string formatted="false" name="fix_number1_regex_">Regex 1</string>
   <string formatted="false" name="fix_number1_replace_">Substituição 1</string>
+  <string formatted="false" name="fix_number2_regex_">Regex 2</string>
   <string formatted="false" name="fix_number2_replace_">Substituição 2</string>
+  <string formatted="false" name="fix_number3_regex_">Regex 3</string>
   <string formatted="false" name="fix_number3_replace_">Substituição 3</string>
   <string formatted="false" name="fix_numbers_regex_hint">A expressão regular a procurar.</string>
   <string formatted="false" name="fix_numbers_replace_hint">Substituir texto encontrado por este texto.</string>
