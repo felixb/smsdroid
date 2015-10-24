@@ -20,6 +20,7 @@
     <color name="actionbar_background_color">#FF33470C</color>
     <color name="ubActionBarBackgroundDark">#FF000000</color>
     <color name="ubActionBarBackgroundLight">#FFFFFFFF</color>
+    <dimen name="edit_text_height">80dp</dimen>
 
     <declare-styleable name="Ub0rButtonBar">
         <attr name="ubButtonBarBackground" format="reference" />

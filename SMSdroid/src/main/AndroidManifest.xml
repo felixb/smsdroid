@@ -121,7 +121,7 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:label="@string/sender_name"
                 android:launchMode="singleTop"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                android:theme="@style/Theme.SMSdroid_Light"
                 android:windowSoftInputMode="stateUnchanged|adjustResize">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>

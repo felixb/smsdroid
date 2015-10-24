@@ -1,5 +1,9 @@
 # Changes
 
+## 1.6.7
+* fixes for Android 6.0 (#22)
+* update translations
+
 ## 1.6.6
 * fix lot`s of FCs
 * add EU cookie consent banner

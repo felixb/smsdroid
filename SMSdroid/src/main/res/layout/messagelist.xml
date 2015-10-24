@@ -14,10 +14,11 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
     <com.google.android.gms.ads.AdView
             android:id="@+id/ads"
@@ -29,9 +30,8 @@
     <ListView
             android:id="@id/android:list"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_above="@+id/answerbar"
-            android:layout_below="@+id/ads"
+            android:layout_height="0dip"
+            android:layout_weight="1"
             android:background="?android:attr/colorBackground"
             android:cacheColorHint="?android:attr/colorBackground"
             android:choiceMode="singleChoice"
@@ -39,70 +39,66 @@
             android:fastScrollEnabled="true"
             android:scrollingCache="true"/>
 
-    <LinearLayout
-            android:id="@+id/answerbar"
-            style="@style/ButtonBar"
+    <RelativeLayout
+            android:id="@+id/text_layout"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-        <RelativeLayout
-                android:id="@+id/text_layout"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:addStatesFromChildren="true">
-
-            <EditText
-                    android:id="@+id/text"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:autoText="true"
-                    android:gravity="top"
-                    android:hint="@string/text_hint"
-                    android:imeOptions="actionDone|flagNoEnterAction"
-                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-                    android:maxLines="4"
-                    android:nextFocusRight="@+id/send_"/>
-
-            <TextView
-                    android:id="@+id/text_"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/text"
-                    android:layout_alignParentRight="true"
-                    android:background="#88000000"
-                    android:paddingBottom="3dip"
-                    android:paddingLeft="3dip"
-                    android:paddingRight="3dip"
-                    android:textColor="#ffffffff"
-                    android:textStyle="bold"/>
-
-            <TextView
-                    android:id="@+id/text_paste"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/text"
-                    android:layout_alignParentLeft="true"
-                    android:background="#88000000"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:paddingBottom="3dip"
-                    android:paddingLeft="3dip"
-                    android:paddingRight="3dip"
-                    android:text="@string/paste_"
-                    android:textColor="#ffffffff"
-                    android:textStyle="bold"/>
-        </RelativeLayout>
+            android:layout_height="@dimen/edit_text_height"
+            android:addStatesFromChildren="true"
+            style="@style/ButtonBar">
 
         <Button
                 android:id="@+id/send_"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:drawableTop="@android:drawable/ic_menu_send"
                 android:text="@string/send_"/>
-    </LinearLayout>
 
-</RelativeLayout>
+        <EditText
+                android:id="@+id/text"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_toLeftOf="@id/send_"
+                android:layout_toStartOf="@id/send_"
+                android:gravity="top"
+                android:hint="@string/text_hint"
+                android:imeOptions="actionDone|flagNoEnterAction"
+                android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                android:nextFocusRight="@+id/send_"/>
+
+        <TextView
+                android:id="@+id/text_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/text"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="#88000000"
+                android:paddingBottom="3dip"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"/>
+
+        <TextView
+                android:id="@+id/text_paste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/text"
+                android:layout_alignParentLeft="true"
+                android:background="#88000000"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="3dip"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:text="@string/paste_"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>
