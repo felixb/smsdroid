@@ -27,7 +27,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -111,5 +113,24 @@ public final class SMSdroid extends Application {
                 }
             }
         };
+    }
+
+    static boolean isDefaultApp(final Context context) {
+        // there is no default sms app before android 4.4
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return true;
+        }
+
+        try {
+            // check if this is the default sms app.
+            // If the device doesn't support Telephony.Sms (i.e. tablet) getDefaultSmsPackage() will
+            // be null.
+            final String smsPackage = Telephony.Sms.getDefaultSmsPackage(context);
+            return smsPackage == null || smsPackage.equals(BuildConfig.APPLICATION_ID);
+        } catch (SecurityException e) {
+            // some samsung devices/tablets want permission GET_TASKS o.O
+            Log.e(TAG, "failed to query default SMS app", e);
+            return true;
+        }
     }
 }

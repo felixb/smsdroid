@@ -30,11 +30,10 @@ import android.content.Intent;
  */
 public class MmsReceiver extends BroadcastReceiver {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final void onReceive(final Context context, final Intent intent) {
-        SmsReceiver.handleOnReceive(this, context, intent);
+        if (SMSdroid.isDefaultApp(context)) {
+            SmsReceiver.handleOnReceive(this, context, intent);
+        }
     }
 }

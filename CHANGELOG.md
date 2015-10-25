@@ -2,6 +2,7 @@
 
 ## 1.6.7
 * fixes for Android 6.0 (#22)
+* show notifications only when set as default SMS app (#23)
 * update translations
 
 ## 1.6.6

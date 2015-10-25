@@ -42,6 +42,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
@@ -141,7 +142,9 @@ public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public final void onReceive(final Context context, final Intent intent) {
-        handleOnReceive(this, context, intent);
+        if (SMSdroid.isDefaultApp(context)) {
+            handleOnReceive(this, context, intent);
+        }
     }
 
     static void handleOnReceive(final BroadcastReceiver receiver, final Context context,
