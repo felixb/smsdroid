@@ -41,16 +41,18 @@ android {
                 versionNameSuffix " debug"
             }
 
-            logRelease {
-                versionNameSuffix "-logRelease"
-                signingConfig signingConfigs.release
-                minifyEnabled false
-            }
+            if (project.hasProperty("releaseKeystorePassword")) {
+                logRelease {
+                    versionNameSuffix "-logRelease"
+                    signingConfig signingConfigs.release
+                    minifyEnabled false
+                }
 
-            release {
-                signingConfig signingConfigs.release
-                minifyEnabled true
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+                release {
+                    signingConfig signingConfigs.release
+                    minifyEnabled true
+                    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+                }
             }
         }
     }
