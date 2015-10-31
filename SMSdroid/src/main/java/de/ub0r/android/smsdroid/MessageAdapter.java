@@ -72,6 +72,8 @@ public class MessageAdapter extends ResourceCursorAdapter {
             + ")";
     // + " OR " + type + " = " + Message.SMS_PENDING;
 
+    private final MessageListActivity mActivity;
+
     /**
      * Display Name (name if !=null, else address).
      */
@@ -126,15 +128,15 @@ public class MessageAdapter extends ResourceCursorAdapter {
      */
     public MessageAdapter(final MessageListActivity c, final Uri u) {
         super(c, R.layout.messagelist_item, getCursor(c.getContentResolver(), u), true);
+        mActivity = c;
         backgroundDrawableIn = PreferencesActivity.getBubblesIn(c);
         backgroundDrawableOut = PreferencesActivity.getBubblesOut(c);
         textSize = PreferencesActivity.getTextsize(c);
         textColor = PreferencesActivity.getTextcolor(c);
         convertNCR = PreferencesActivity.decodeDecimalNCR(c);
         showEmoticons = PreferencesActivity.showEmoticons(c);
-        /*
-      Thread id.
-     */
+
+        // Thread id
         int threadId = -1;
         if (u == null || u.getLastPathSegment() == null) {
             threadId = -1;
@@ -142,13 +144,11 @@ public class MessageAdapter extends ResourceCursorAdapter {
             threadId = Integer.parseInt(u.getLastPathSegment());
         }
         final Conversation conv = Conversation.getConversation(c, threadId, false);
-        /*
-      Address.
-     */
+
+        // Address
         String address = null;
-        /*
-      Name.
-     */
+
+        //Name
         String name = null;
         if (conv == null) {
             address = null;
@@ -307,7 +307,7 @@ public class MessageAdapter extends ResourceCursorAdapter {
             holder.ivPhoto.setVisibility(View.VISIBLE);
             final Intent i = m.getContentIntent();
             holder.ivPhoto.setOnClickListener(SMSdroid.getOnClickStartActivity(context, i));
-            holder.ivPhoto.setOnLongClickListener(m.getSaveAttachmentListener(context));
+            holder.ivPhoto.setOnLongClickListener(m.getSaveAttachmentListener(mActivity));
         } else {
             holder.ivPhoto.setVisibility(View.GONE);
             holder.ivPhoto.setOnClickListener(null);

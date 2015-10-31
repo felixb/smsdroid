@@ -34,6 +34,7 @@
                 android:label="@string/permission_save_to_db"
                 android:description="@string/permission_save_to_db_description"
                 android:protectionLevel="signature"/>
+
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>

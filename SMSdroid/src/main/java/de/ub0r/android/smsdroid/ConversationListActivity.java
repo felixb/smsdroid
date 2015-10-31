@@ -18,6 +18,7 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -37,6 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -153,6 +155,10 @@ public final class ConversationListActivity extends AppCompatActivity implements
         // Get time for now - 24 hours
         CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
     }
+
+    private static final int PERMISSIONS_REQUEST_READ_SMS = 1;
+
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 2;
 
     /**
      * {@inheritDoc}
@@ -283,8 +289,6 @@ public final class ConversationListActivity extends AppCompatActivity implements
         showRows(this);
 
         final AbsListView list = getListView();
-        adapter = new ConversationAdapter(this);
-        setListAdapter(adapter);
         list.setOnItemClickListener(this);
         list.setOnItemLongClickListener(this);
         longItemClickDialog = new String[WHICH_N];
@@ -294,6 +298,8 @@ public final class ConversationListActivity extends AppCompatActivity implements
         longItemClickDialog[WHICH_VIEW] = getString(R.string.view_thread_);
         longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_thread_);
         longItemClickDialog[WHICH_MARK_SPAM] = getString(R.string.filter_spam_);
+
+        initAdapter();
 
         if (!SMSdroid.isDefaultApp(this)) {
             AlertDialog.Builder b = new AlertDialog.Builder(this);
@@ -315,6 +321,34 @@ public final class ConversationListActivity extends AppCompatActivity implements
         }
     }
 
+    private void initAdapter() {
+        if (!SMSdroid.requestPermission(this, Manifest.permission.READ_SMS,
+                PERMISSIONS_REQUEST_READ_SMS, R.string.permissions_read_sms,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })) {
+            return;
+        }
+
+        if (!SMSdroid.requestPermission(this, Manifest.permission.READ_CONTACTS,
+                PERMISSIONS_REQUEST_READ_CONTACTS, R.string.permissions_read_contacts,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })) {
+            return;
+        }
+
+        adapter = new ConversationAdapter(this);
+        setListAdapter(adapter);
+        adapter.startMsgListQuery();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -324,7 +358,9 @@ public final class ConversationListActivity extends AppCompatActivity implements
         final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
         showContactPhoto = p.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
         showEmoticons = p.getBoolean(PreferencesActivity.PREFS_EMOTICONS, false);
-        adapter.startMsgListQuery();
+        if (adapter != null) {
+            adapter.startMsgListQuery();
+        }
     }
 
     @Override
@@ -343,6 +379,39 @@ public final class ConversationListActivity extends AppCompatActivity implements
                 .getBoolean(PreferencesActivity.PREFS_HIDE_DELETE_ALL_THREADS, false);
         menu.findItem(R.id.item_delete_all_threads).setVisible(!hideDeleteAll);
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            final int requestCode,
+            @NonNull final String permissions[],
+            @NonNull final int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_READ_SMS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // just try again.
+                    initAdapter();
+                } else {
+                    // this app is useless without permission for reading sms
+                    Log.e(TAG, "permission for reading sms denied, exit");
+                    finish();
+                }
+                return;
+            }
+            case PERMISSIONS_REQUEST_READ_CONTACTS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // just try again.
+                    initAdapter();
+                } else {
+                    // this app is useless without permission for reading sms
+                    Log.e(TAG, "permission for reading contacts denied, exit");
+                    finish();
+                }
+                return;
+            }
+        }
     }
 
     /**

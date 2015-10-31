@@ -215,5 +215,12 @@
     <string formatted="false" name="forwarded_sms_clean_hint">Strips sender in received sms according to "([0-9a-zA-Z]+):" and use that this number as sender.</string>
     <string formatted="false" name="error_unknown">Unknown error</string>
     <string formatted="false" name="donate_remove_ads_">Donate/remove ads</string>
+    <string formatted="false" name="permissions_">Permissions</string>
+    <string formatted="false" name="permissions_read_phone_state">Read phone state: this permission is necessary to fetch your phone number from the device. The phone number is used as sender for outgoing messages.\nThe app still works when this permission is denied.</string>
+    <string formatted="false" name="permissions_read_contacts">Read contacts: this permission is necessary to resolve phone numbers to contacts and auto complete names and numbers in the recipient input field.\nThe app does not work without this permission.</string>
+    <string formatted="false" name="permissions_read_sms">Read SMS: this permission is necessary to read SMS from phone\'s database.\nThe app does not work without this permission.</string>
+    <string formatted="false" name="permissions_write_sms">Write SMS: this permission is necessary to mark SMS as read or to delete messages.\nThe app still works to some extend when this permission is denied.</string>
+    <string formatted="false" name="permissions_send_sms">Send SMS: this permission is necessary to send SMS.\nThe app still works when this permission is denied. You will need to use a different app for sending though.</string>
+    <string formatted="false" name="permissions_write_external_storage">Write external storage: this permission is necessary to save mms media to external storage.\nThe app still works when this permission is denied.</string>
 
 </resources>

@@ -18,10 +18,14 @@
  */
 package de.ub0r.android.smsdroid;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -30,6 +34,8 @@ import android.database.sqlite.SQLiteException;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,31 +69,38 @@ public final class SMSdroid extends Application {
         Log.i(TAG, "init SMSdroid v" + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE
                 + ")");
 
-        final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
-        int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-        if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
-            try {
-                Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
-                        null, null, "_id LIMIT 1");
-                if (c == null) {
-                    Log.i(TAG, "disable .Sender: cursor=null");
-                } else if (SmsManager.getDefault() == null) {
-                    Log.i(TAG, "disable .Sender: SmsManager=null");
-                } else {
-                    state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-                    Log.d(TAG, "enable .Sender");
+        // check for default app only when READ_SMS was granted
+        // this may need a second launch on Android 6.0 though
+        if (hasPermission(this, Manifest.permission.READ_SMS)) {
+            final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+            int state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+            if (p.getBoolean(PreferencesActivity.PREFS_ACTIVATE_SENDER, true)) {
+                try {
+                    Cursor c = getContentResolver().query(SenderActivity.URI_SENT, PROJECTION,
+                            null, null, "_id LIMIT 1");
+                    if (c == null) {
+                        Log.i(TAG, "disable .Sender: cursor=null");
+                    } else if (SmsManager.getDefault() == null) {
+                        Log.i(TAG, "disable .Sender: SmsManager=null");
+                    } else {
+                        state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+                        Log.d(TAG, "enable .Sender");
+                    }
+                    if (c != null && !c.isClosed()) {
+                        c.close();
+                    }
+                } catch (IllegalArgumentException | SQLiteException e) {
+                    Log.e(TAG, "disable .Sender: ", e.getMessage(), e);
                 }
-                if (c != null && !c.isClosed()) {
-                    c.close();
-                }
-            } catch (IllegalArgumentException | SQLiteException e) {
-                Log.e(TAG, "disable .Sender: ", e.getMessage(), e);
+            } else {
+                Log.i(TAG, "disable .Sender");
             }
+            getPackageManager().setComponentEnabledSetting(
+                    new ComponentName(this, SenderActivity.class), state,
+                    PackageManager.DONT_KILL_APP);
         } else {
-            Log.i(TAG, "disable .Sender");
+            Log.w(TAG, "ignore .Sender state, READ_SMS permission is missing to check default app");
         }
-        getPackageManager().setComponentEnabledSetting(
-                new ComponentName(this, SenderActivity.class), state, PackageManager.DONT_KILL_APP);
     }
 
     /**
@@ -130,6 +143,41 @@ public final class SMSdroid extends Application {
         } catch (SecurityException e) {
             // some samsung devices/tablets want permission GET_TASKS o.O
             Log.e(TAG, "failed to query default SMS app", e);
+            return true;
+        }
+    }
+
+    static boolean hasPermission(final Context context, final String permission) {
+        return ContextCompat.checkSelfPermission(context, permission)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    static boolean requestPermission(final Activity activity, final String permission,
+            final int requestCode, final int message,
+            final DialogInterface.OnClickListener onCancelListener) {
+        Log.i(TAG, "requesting permission: " + permission);
+        if (!hasPermission(activity, permission)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                new AlertDialog.Builder(activity)
+                        .setTitle(R.string.permissions_)
+                        .setMessage(message)
+                        .setCancelable(false)
+                        .setNegativeButton(android.R.string.cancel, onCancelListener)
+                        .setPositiveButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(final DialogInterface dialogInterface,
+                                            final int i) {
+                                        ActivityCompat.requestPermissions(activity,
+                                                new String[]{permission}, requestCode);
+                                    }
+                                })
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{permission}, requestCode);
+            }
+            return false;
+        } else {
             return true;
         }
     }

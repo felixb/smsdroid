@@ -20,6 +20,8 @@ package de.ub0r.android.smsdroid;
 
 import org.apache.commons.io.IOUtils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -656,7 +658,7 @@ public final class Message {
      * @param context {@link Context}
      * @return {@link OnLongClickListener}
      */
-    public OnLongClickListener getSaveAttachmentListener(final Context context) {
+    public OnLongClickListener getSaveAttachmentListener(final Activity context) {
         if (contentIntent == null) {
             return null;
         }
@@ -664,6 +666,11 @@ public final class Message {
         return new OnLongClickListener() {
             @Override
             public boolean onLongClick(final View v) {
+                // check/request permission Manifest.permission.WRITE_EXTERNAL_STORAGE
+                if (!SMSdroid.requestPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE, 0, R.string.permissions_write_external_storage, null)) {
+                    return true;
+                }
+
                 try {
                     Log.d(TAG, "save attachment: ", Message.this.id);
                     String fn = ATTACHMENT_FILE;
