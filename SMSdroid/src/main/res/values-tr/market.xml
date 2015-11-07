@@ -18,4 +18,6 @@
         copy of the GNU General Public License along with this program; If
         not, see <http://www.gnu.org/licenses/>.
     -->
-<resources/>
+<resources>
+  <string formatted="false" name="market_oss">Bu uygulama boş zamanlarda yapılmış açık kaynak kodlu bir yazılımdır. Google Play kötü yorum ekleme daha iyi yapmak için pek yardımcı olmaz.\nLütfen uygulamanın web sitesinden bu uygulama ile sorunları bildirin.</string>
+</resources>

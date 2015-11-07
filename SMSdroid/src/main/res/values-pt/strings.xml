@@ -216,4 +216,5 @@
   <string formatted="false" name="forwarded_sms_clean_hint">Remover remetente das mensagens recebidas de acordo com \"([0-9a-zA-Z]+):\" e utilizar este número como remetente.</string>
   <string formatted="false" name="error_unknown">Erro desconhecido</string>
   <string formatted="false" name="donate_remove_ads_">Doar e remover publicidade</string>
+  <string formatted="false" name="permissions_">Permissões</string>
 </resources>

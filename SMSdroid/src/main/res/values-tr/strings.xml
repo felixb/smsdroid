@@ -62,6 +62,9 @@
   <string formatted="false" name="show_contact_photo_">Fotoğrafı göster</string>
   <string formatted="false" name="show_emoticons_">İfadeleri göster</string>
   <string formatted="false" name="hide_send_">\"Gönder\" düğmesini gizle</string>
+  <string formatted="false" name="show_full_date_">Tam tarihini göster</string>
+  <string formatted="false" name="me">Ben</string>
+  <string formatted="false" name="view_contact_">Kişiyi görüntüle</string>
   <string formatted="false" name="add_contact_">Kişilere ekle</string>
   <string formatted="false" name="view_thread_">İleti dizisini görüntüle</string>
   <string formatted="false" name="filter_spam_">Spam olarak İşaretle</string>
@@ -72,6 +75,7 @@
   <string formatted="false" name="send_draft_">Taslak gönderin</string>
   <string formatted="false" name="copy_text_">İleti metnini Kopyala</string>
   <string formatted="false" name="view_details_">İleti ayrıntılarını görüntüle</string>
+  <string formatted="false" name="delete_threads_">Tüm ileti dizilerini sil</string>
   <string formatted="false" name="mark_all_read_">Tümünü okundu işaretle</string>
   <string formatted="false" name="delete_message_question">Bu resmi silmek istiyor musunuz?</string>
   <string formatted="false" name="delete_thread_question"><b>Bu konuyu tüm iletileri</b> silmek istiyor musunuz?</string>
@@ -85,7 +89,34 @@
   <string formatted="false" name="import_contact_">Kişileri içe aktar</string>
   <string formatted="false" name="download_">İndir</string>
   <string formatted="false" name="downloading_">İndiriliyor..</string>
+  <string formatted="false" name="notification_icon_">Bildirim simgesi</string>
+  <string formatted="false" name="notification_default_">Varsayılan</string>
+  <string formatted="false" name="notification_black_">Siyah</string>
+  <string formatted="false" name="notification_green_">Yeşil</string>
+  <string formatted="false" name="notification_yellow_">Sarı</string>
+  <string formatted="false" name="bubbles_nothing">Hiçbir şey</string>
+  <string formatted="false" name="bubbles_plain_dark_gray">Düz koyu gri</string>
+  <string formatted="false" name="bubbles_plain_light_gray">Düz açık gri</string>
+  <string formatted="false" name="bubbles_old_turquoise_left">Eski turkuaz sol</string>
   <string formatted="false" name="bubbles_blue_left">Mavi sol</string>
+  <string-array name="themes">
+    <item>Siyah</item>
+    <item>Beyaz</item>
+  </string-array>
+  <string-array name="led_color">
+    <item>Yeşil</item>
+    <item>Mavi</item>
+    <item>Kırmızı</item>
+    <item>Turuncu</item>
+    <item>Eflatun</item>
+    <item>Cyan</item>
+  </string-array>
+  <string-array name="vibrate_mode">
+    <item>Uzun</item>
+    <item>Multiple short</item>
+    <item>Multiple long</item>
+    <item>Kısa, uzun, kısa, uzun</item>
+  </string-array>
   <string formatted="false" name="reset">Sıfırlama</string>
   <string formatted="false" name="license_">Lisans:</string>
   <string formatted="false" name="license">GPLv3 - Bakınız http://www.gnu.org/licenses/gpl-3.0.txt</string>
