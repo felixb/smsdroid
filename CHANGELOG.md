@@ -1,5 +1,8 @@
 # Changes
 
+## 1.6.8
+* more fixes for Android 6.0
+
 ## 1.6.7
 * fixes for Android 6.0 (#22)
 * show notifications only when set as default SMS app (#23)
