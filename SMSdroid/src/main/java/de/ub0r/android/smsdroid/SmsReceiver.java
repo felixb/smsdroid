@@ -42,7 +42,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
-import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
@@ -573,7 +572,11 @@ public class SmsReceiver extends BroadcastReceiver {
             Log.d(TAG, "uri: ", uri);
             mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
             if (enableNotifications && showNotification) {
-                mNotificationMgr.notify(NOTIFICATION_ID_NEW, nb.getNotification());
+                try {
+                    mNotificationMgr.notify(NOTIFICATION_ID_NEW, nb.getNotification());
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "illegal notification: ", nb, e);
+                }
             }
         }
         Log.d(TAG, "return ", l, " (2)");
