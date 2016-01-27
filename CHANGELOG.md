@@ -1,5 +1,8 @@
 # Changes
 
+## 1.6.9
+* fix link to ads free app
+
 ## 1.6.8
 * more fixes for Android 6.0
 
