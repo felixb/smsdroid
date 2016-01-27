@@ -18,10 +18,6 @@
  */
 package de.ub0r.android.smsdroid;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 import android.annotation.TargetApi;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
@@ -60,6 +56,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Utils;
@@ -349,15 +349,18 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
             finish();
             return;
         }
-        final Conversation c = Conversation.getConversation(this, threadId, true);
-        conv = c;
-
-        if (c == null) {
+        Conversation c;
+        try {
+            c = Conversation.getConversation(this, threadId, true);
+            threadId = c.getThreadId(); // force a NPE :x
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Fetched null conversation for thread ", threadId, e);
             Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
+        conv = c;
         final Contact contact = c.getContact();
         try {
             contact.update(this, false, true);
@@ -580,8 +583,13 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
                 send(true, false);
                 return true;
             case R.id.item_call:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:"
-                        + conv.getContact().getNumber())));
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:"
+                            + conv.getContact().getNumber())));
+                } catch (ActivityNotFoundException e) {
+                    Log.e(TAG, "unable to open dailer", e);
+                    Toast.makeText(this, R.string.error_unknown, Toast.LENGTH_LONG).show();
+                }
                 return true;
             case R.id.item_restore:
                 etText.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(
@@ -656,8 +664,8 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
                         try {
                             MessageListActivity.this.startActivity(i);
                         } catch (ActivityNotFoundException e) {
-                            Log.e(TAG, "activity not found: ", i.getAction(), e);
-                            Toast.makeText(MessageListActivity.this, "activity not found",
+                            Log.e(TAG, "unable to launch dailer: ", i.getAction(), e);
+                            Toast.makeText(MessageListActivity.this, R.string.error_unknown,
                                     Toast.LENGTH_LONG).show();
                         }
                         break;

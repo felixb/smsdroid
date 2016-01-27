@@ -1,6 +1,7 @@
 # Changes
 
 ## 1.6.9
+* fix some rare crashes
 * fix link to ads free app
 * add czech translation
 * update translations
