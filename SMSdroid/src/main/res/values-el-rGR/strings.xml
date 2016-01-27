@@ -58,6 +58,10 @@
   <string formatted="false" name="theme_">Θέμα</string>
   <string formatted="false" name="textsize_">Μέγεθος κειμένου</string>
   <string formatted="false" name="textcolor_">Χρώμα κειμένου</string>
+  <string formatted="false" name="show_contact_photo_">Εμφάνιση φωτογραφίας</string>
+  <string formatted="false" name="show_contact_photo_hint">Εμφάνιση φωτογραφίας επαφής στη λίστα συζητήσεων</string>
+  <string formatted="false" name="show_emoticons_">Εμφάνιση emoticon</string>
+  <string formatted="false" name="show_emoticons_hint">Εμφάνιση emoticon στη λίστα μηνυμάτων.</string>
   <string formatted="false" name="me">Εγώ</string>
   <string formatted="false" name="view_contact_">Προβολή επαφής</string>
   <string formatted="false" name="add_contact_">Προσθήκη στις επαφές</string>
@@ -175,4 +179,5 @@
   <string formatted="false" name="forwarded_sms_clean_">Τροποποίηση ληφθέντων SMS</string>
   <string formatted="false" name="error_unknown">Άγνωστο σφάλμα</string>
   <string formatted="false" name="donate_remove_ads_">Δωρεά/αφαίρεση διαφημίσεων</string>
+  <string formatted="false" name="permissions_">Δικαιώματα</string>
 </resources>
