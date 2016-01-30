@@ -19,6 +19,7 @@
 
 package de.ub0r.android.smsdroid;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -42,6 +43,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
@@ -78,16 +80,20 @@ public class SmsReceiver extends BroadcastReceiver {
     /**
      * Intent.action for receiving SMS.
      */
-    private static final String ACTION_SMS_OLD = "android.provider.Telephony.SMS_RECEIVED";
+    @SuppressLint("InlinedApi")
+    private static final String ACTION_SMS_OLD = Telephony.Sms.Intents.SMS_RECEIVED_ACTION;
 
-    private static final String ACTION_SMS_NEW = "android.provider.Telephony.SMS_DELIVER";
+    @SuppressLint("InlinedApi")
+    private static final String ACTION_SMS_NEW = Telephony.Sms.Intents.SMS_DELIVER_ACTION;
 
     /**
      * Intent.action for receiving MMS.
      */
-    private static final String ACTION_MMS_OLD = "android.provider.Telephony.WAP_PUSH_RECEIVED";
+    @SuppressLint("InlinedApi")
+    private static final String ACTION_MMS_OLD = Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION;
 
-    private static final String ACTION_MMS_MEW = "android.provider.Telephony.WAP_PUSH_DELIVER";
+    @SuppressLint("InlinedApi")
+    private static final String ACTION_MMS_MEW = Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION;
 
     /**
      * An unreadable MMS body.
@@ -146,6 +152,15 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
 
+    @SuppressLint("NewApi")
+    private static boolean shouldHandleSmsAction(final Context context, final String action) {
+        return ACTION_SMS_NEW.equals(action) // -> is >= android 4.4 and default app
+                || ACTION_SMS_OLD.equals(action) && ( // handle old action only if:
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT // -> is < android 4.4
+                        || !BuildConfig.APPLICATION_ID // or not default app
+                        .equals(Telephony.Sms.getDefaultSmsPackage(context)));
+    }
+
     static void handleOnReceive(final BroadcastReceiver receiver, final Context context,
             final Intent intent) {
         final String action = intent.getAction();
@@ -168,7 +183,7 @@ public class SmsReceiver extends BroadcastReceiver {
         } else {
             boolean silent = false;
 
-            if (ACTION_SMS_OLD.equals(action) || ACTION_SMS_NEW.equals(action)) {
+            if (shouldHandleSmsAction(context, action)) {
                 Bundle b = intent.getExtras();
                 assert b != null;
                 Object[] messages = (Object[]) b.get("pdus");
@@ -397,7 +412,7 @@ public class SmsReceiver extends BroadcastReceiver {
             }
             return ret;
         } catch (SQLiteException e) {
-            Log.e(TAG, "unable to get unread messages",e);
+            Log.e(TAG, "unable to get unread messages", e);
             return new int[]{-1, 0};
         }
     }
