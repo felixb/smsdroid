@@ -177,7 +177,7 @@ public class SmsReceiver extends BroadcastReceiver {
             Log.d(TAG, "interrupted in spinlock", e);
             e.printStackTrace();
         }
-        String t = null;
+        String text;
         if (SenderActivity.MESSAGE_SENT_ACTION.equals(action)) {
             handleSent(context, intent, receiver.getResultCode());
         } else {
@@ -192,14 +192,14 @@ public class SmsReceiver extends BroadcastReceiver {
                 for (int i = 0; i < l; i++) {
                     smsMessage[i] = SmsMessage.createFromPdu((byte[]) messages[i]);
                 }
-                t = null;
+                text = null;
                 if (l > 0) {
                     // concatenate multipart SMS body
                     StringBuilder sbt = new StringBuilder();
                     for (int i = 0; i < l; i++) {
                         sbt.append(smsMessage[i].getMessageBody());
                     }
-                    t = sbt.toString();
+                    text = sbt.toString();
 
                     // ! Check in blacklist db - filter spam
                     String s = smsMessage[0].getDisplayOriginatingAddress();
@@ -208,17 +208,17 @@ public class SmsReceiver extends BroadcastReceiver {
                     final SharedPreferences prefs = PreferenceManager
                             .getDefaultSharedPreferences(context);
                     if (prefs.getBoolean(PreferencesActivity.PREFS_FORWARD_SMS_CLEAN, false)
-                            && t.contains(":")) {
+                            && text.contains(":")) {
                         Pattern smsPattern = Pattern.compile("([0-9a-zA-Z+]+):");
-                        Matcher m = smsPattern.matcher(t);
+                        Matcher m = smsPattern.matcher(text);
                         if (m.find()) {
                             s = m.group(1);
                             Log.d(TAG, "found forwarding sms number: (", s, ")");
                             // now strip the sender from the message
                             Pattern textPattern = Pattern.compile("^[0-9a-zA-Z+]+: (.*)");
-                            Matcher m2 = textPattern.matcher(t);
-                            if (t.contains(":") && m2.find()) {
-                                t = m2.group(1);
+                            Matcher m2 = textPattern.matcher(text);
+                            if (text.contains(":") && m2.find()) {
+                                text = m2.group(1);
                                 Log.d(TAG, "stripped the message");
                             }
                         }
@@ -238,40 +238,47 @@ public class SmsReceiver extends BroadcastReceiver {
                         // API19+: save message to the database
                         ContentValues values = new ContentValues();
                         values.put("address", s);
-                        values.put("body", t);
+                        values.put("body", text);
                         context.getContentResolver().insert(Uri.parse("content://sms/inbox"),
                                 values);
-                        Log.d(TAG, "Insert SMS into database: ", s, ", ", t);
+                        Log.d(TAG, "Insert SMS into database: ", s, ", ", text);
                     }
                 }
+                updateNotificationsWithNewText(context, text, silent);
             } else if (ACTION_MMS_OLD.equals(action) || ACTION_MMS_MEW.equals(action)) {
-                t = MMS_BODY;
+                text = MMS_BODY;
                 // TODO API19+ MMS code
-            }
-
-            if (!silent) {
-                Log.d(TAG, "t: ", t);
-                int count = MAX_SPINS;
-                do {
-                    Log.d(TAG, "spin: ", count);
-                    try {
-                        Log.d(TAG, "sleep(", SLEEP, ")");
-                        Thread.sleep(SLEEP);
-                    } catch (InterruptedException e) {
-                        Log.d(TAG, "interrupted in spin lock", e);
-                        e.printStackTrace();
-                    }
-                    --count;
-                } while (
-                        updateNewMessageNotification(context, t) <= 0
-                                && count > 0);
-                if (count == 0) { // use messages as they are available
-                    updateNewMessageNotification(context, null);
-                }
+                updateNotificationsWithNewText(context, text, silent);
             }
         }
         wakelock.release();
         Log.i(TAG, "wakelock released");
+    }
+
+    private static void updateNotificationsWithNewText(final Context context, final String text,
+            final boolean silent) {
+        if (silent) {
+            Log.i(TAG, "ignore notifications for silent text");
+            return;
+        }
+
+        Log.d(TAG, "text: ", text);
+        int count = MAX_SPINS;
+        do {
+            Log.d(TAG, "spin: ", count);
+            try {
+                Log.d(TAG, "sleep(", SLEEP, ")");
+                Thread.sleep(SLEEP);
+            } catch (InterruptedException e) {
+                Log.d(TAG, "interrupted in spin lock", e);
+                e.printStackTrace();
+            }
+            --count;
+        } while (updateNewMessageNotification(context, text) <= 0 && count > 0);
+
+        if (count == 0) { // use messages as they are available
+            updateNewMessageNotification(context, null);
+        }
     }
 
 
