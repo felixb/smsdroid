@@ -1,5 +1,9 @@
 # Changes
 
+## 1.6.10
+* fix double notification on Android 4.4+ (#21)
+* increase text box size for answering messages
+
 ## 1.6.9
 * fix some rare crashes
 * fix link to ads free app
