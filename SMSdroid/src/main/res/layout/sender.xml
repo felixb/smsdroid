@@ -16,48 +16,80 @@
     copy of the GNU General Public License along with this program; If
     not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent" android:layout_height="fill_parent"
-              android:background="?android:attr/colorBackground" android:orientation="vertical">
-    <ScrollView android:layout_width="fill_parent"
-                android:layout_height="0dp" android:layout_weight="1"
-                android:fillViewport="true" android:background="?android:attr/colorBackground">
-        <LinearLayout android:orientation="vertical"
-                      android:layout_width="fill_parent" android:layout_height="wrap_content">
-            <MultiAutoCompleteTextView android:text=""
-                                       android:id="@+id/to" android:hint="@string/to_hint"
-                                       android:layout_width="fill_parent"
-                                       android:layout_height="wrap_content"
-                                       android:nextFocusRight="@+id/text"
-                                       android:nextFocusDown="@+id/text"
-                                       android:imeOptions="actionNext" android:singleLine="true"
-                                       android:layout_weight="0"
-                                       style="@style/TextAppearance.MultiComplete"/>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="?android:attr/colorBackground"
+        android:orientation="vertical">
+    <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:background="?android:attr/colorBackground">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <MultiAutoCompleteTextView
+                    android:id="@+id/to"
+                    android:text=""
+                    android:hint="@string/to_hint"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusRight="@+id/text"
+                    android:nextFocusDown="@+id/text"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:layout_weight="0"
+                    style="@style/TextAppearance.MultiComplete"/>
 
-            <RelativeLayout android:layout_width="fill_parent"
-                            android:layout_height="fill_parent" android:layout_weight="1"
-                            android:addStatesFromChildren="true">
-                <EditText android:id="@+id/text" android:layout_width="fill_parent"
-                          android:layout_height="fill_parent" android:layout_weight="1"
-                          android:hint="@string/text_hint"
-                          android:imeOptions="actionDone|flagNoEnterAction"
-                          android:nextFocusRight="@+id/send_" android:gravity="top"
-                          android:autoText="true" android:minLines="3"
-                          android:inputType="textMultiLine|textAutoCorrect|textCapSentences"/>
-                <TextView android:id="@+id/text_" android:layout_width="wrap_content"
-                          android:layout_height="wrap_content" android:paddingLeft="3dip"
-                          android:paddingRight="3dip" android:paddingBottom="3dip"
-                          android:layout_alignParentRight="true"
-                          android:layout_alignBottom="@id/text"
-                          android:textStyle="bold" android:background="#88000000"
-                          android:textColor="#ffffffff"/>
-                <TextView android:id="@+id/text_paste" android:text="@string/paste_"
-                          android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:paddingLeft="3dip" android:paddingRight="3dip"
-                          android:paddingBottom="3dip" android:layout_alignParentLeft="true"
-                          android:layout_alignBottom="@id/text" android:textStyle="bold"
-                          android:background="#88000000" android:textColor="#ffffffff"
-                          android:clickable="true" android:focusable="true"/>
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:addStatesFromChildren="true">
+                <EditText
+                        android:id="@+id/text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/text_hint"
+                        android:imeOptions="actionDone|flagNoEnterAction"
+                        android:nextFocusRight="@+id/send_"
+                        android:gravity="top"
+                        android:autoText="true"
+                        android:minLines="3"
+                        android:inputType="textMultiLine|textAutoCorrect|textCapSentences"/>
+                <TextView
+                        android:id="@+id/text_"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="3dip"
+                        android:paddingRight="3dip"
+                        android:paddingBottom="3dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignBottom="@id/text"
+                        android:textStyle="bold"
+                        android:background="#88000000"
+                        android:textColor="#ffffffff"/>
+                <TextView
+                        android:id="@+id/text_paste"
+                        android:text="@string/paste_"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="3dip"
+                        android:paddingRight="3dip"
+                        android:paddingBottom="3dip"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignBottom="@id/text"
+                        android:textStyle="bold"
+                        android:background="#88000000"
+                        android:textColor="#ffffffff"
+                        android:clickable="true"
+                        android:focusable="true"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
