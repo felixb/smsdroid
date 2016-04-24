@@ -158,11 +158,15 @@ public final class SenderActivity extends AppCompatActivity implements OnClickLi
                         to = to.substring(0, to.length() - 1).trim();
                     }
                     if (to.indexOf('<') < 0) {
-                        // try to fetch recipient's name from phone book
-                        String n = ContactsWrapper.getInstance().getNameForNumber(
-                                getContentResolver(), to);
-                        if (n != null) {
-                            to = n + " <" + to + ">, ";
+                        try {
+                            // try to fetch recipient's name from phone book
+                            String n = ContactsWrapper.getInstance().getNameForNumber(
+                                    getContentResolver(), to);
+                            if (n != null) {
+                                to = n + " <" + to + ">, ";
+                            }
+                        } catch (NullPointerException e) {
+                            Log.e(TAG, "Null pointer while resolving number: ", to);
                         }
                     }
                     mtv.setText(to);
@@ -331,7 +335,7 @@ public final class SenderActivity extends AppCompatActivity implements OnClickLi
                 send(r, text);
             } catch (Exception e) {
                 Log.e(TAG, "unable to send message: ", to, e);
-                Toast.makeText(this, R.string.error_sending_failed,Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.error_sending_failed, Toast.LENGTH_LONG).show();
             }
         }
         return true;
