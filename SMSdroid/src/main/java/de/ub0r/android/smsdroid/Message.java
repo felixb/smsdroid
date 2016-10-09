@@ -453,66 +453,73 @@ public final class Message {
      */
     private void fetchMmsParts(final Context context) {
         final ContentResolver cr = context.getContentResolver();
-        Cursor cursor = cr.query(URI_PARTS, null, PROJECTION_PARTS[INDEX_MID] + " = ?",
-                new String[]{String.valueOf(id)}, null);
-        if (cursor == null || !cursor.moveToFirst()) {
-            return;
-        }
-        final int iID = cursor.getColumnIndex(PROJECTION_PARTS[INDEX_ID]);
-        final int iCT = cursor.getColumnIndex(PROJECTION_PARTS[INDEX_CT]);
-        final int iText = cursor.getColumnIndex("text");
-        do {
-            final int pid = cursor.getInt(iID);
-            final String ct = cursor.getString(iCT);
-            Log.d(TAG, "part: ", pid, " ", ct);
-
-            // get part
-            InputStream is = null;
-
-            final Uri uri = ContentUris.withAppendedId(URI_PARTS, pid);
-            if (uri == null) {
-                Log.w(TAG, "parts URI=null for pid=", pid);
-                continue;
+        Cursor cursor = null;
+        try{
+            cursor = cr.query(URI_PARTS, null, PROJECTION_PARTS[INDEX_MID] + " = ?",
+                    new String[]{String.valueOf(id)}, null);
+            if (cursor == null || !cursor.moveToFirst()) {
+                return;
             }
-            try {
-                is = cr.openInputStream(uri);
-            } catch (IOException | NullPointerException e) {
-                Log.e(TAG, "Failed to load part data", e);
-            }
-            if (is == null) {
-                Log.i(TAG, "InputStream for part ", pid, " is null");
-                if (iText >= 0 && ct != null && ct.startsWith("text/")) {
-                    body = cursor.getString(iText);
+            final int iID = cursor.getColumnIndex(PROJECTION_PARTS[INDEX_ID]);
+            final int iCT = cursor.getColumnIndex(PROJECTION_PARTS[INDEX_CT]);
+            final int iText = cursor.getColumnIndex("text");
+            do {
+                final int pid = cursor.getInt(iID);
+                final String ct = cursor.getString(iCT);
+                Log.d(TAG, "part: ", pid, " ", ct);
+
+                // get part
+                InputStream is = null;
+
+                final Uri uri = ContentUris.withAppendedId(URI_PARTS, pid);
+                if (uri == null) {
+                    Log.w(TAG, "parts URI=null for pid=", pid);
+                    continue;
                 }
-                continue;
-            }
-            if (ct == null) {
-                continue;
-            }
-            if (ct.startsWith("image/")) {
-                picture = BitmapFactory.decodeStream(is);
-                final Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setDataAndType(uri, ct);
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                contentIntent = i;
-                continue; // skip the rest
-            } else if (ct.startsWith("video/") || ct.startsWith("audio/")) {
-                picture = BITMAP_PLAY;
-                final Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setDataAndType(uri, ct);
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                contentIntent = i;
-                continue; // skip the rest
-            } else if (ct.startsWith("text/")) {
-                body = fetchPart(is);
-            }
+                try {
+                    is = cr.openInputStream(uri);
+                } catch (IOException | NullPointerException e) {
+                    Log.e(TAG, "Failed to load part data", e);
+                }
+                if (is == null) {
+                    Log.i(TAG, "InputStream for part ", pid, " is null");
+                    if (iText >= 0 && ct != null && ct.startsWith("text/")) {
+                        body = cursor.getString(iText);
+                    }
+                    continue;
+                }
+                if (ct == null) {
+                    continue;
+                }
+                if (ct.startsWith("image/")) {
+                    picture = BitmapFactory.decodeStream(is);
+                    final Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setDataAndType(uri, ct);
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    contentIntent = i;
+                    continue; // skip the rest
+                } else if (ct.startsWith("video/") || ct.startsWith("audio/")) {
+                    picture = BITMAP_PLAY;
+                    final Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setDataAndType(uri, ct);
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    contentIntent = i;
+                    continue; // skip the rest
+                } else if (ct.startsWith("text/")) {
+                    body = fetchPart(is);
+                }
 
-            try {
-                is.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Failed to close stream", e);
-            } // Ignore
-        } while (cursor.moveToNext());
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to close stream", e);
+                } // Ignore
+            } while (cursor.moveToNext());
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
     }
 
     /**
