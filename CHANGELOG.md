@@ -1,5 +1,8 @@
 # Changes
 
+## 1.7.1
+* bug fixes (#32)
+
 ## 1.7.0
 * fix double notification on Android 4.4+ (#21)
 * increase text box size for answering messages
