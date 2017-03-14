@@ -1,5 +1,8 @@
 # Changes
 
+## 1.7.2
+* bug fixes
+
 ## 1.7.1
 * bug fixes (#32)
 

@@ -34,6 +34,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
@@ -340,28 +341,14 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
             }
         }
 
-        int threadId;
-        try {
-            threadId = Integer.parseInt(uri.getLastPathSegment());
-        } catch (NumberFormatException e) {
-            Log.e(TAG, "unable to parse thread id: ", e);
-            Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-        Conversation c;
-        try {
-            c = Conversation.getConversation(this, threadId, true);
-            threadId = c.getThreadId(); // force a NPE :x
-        } catch (NullPointerException e) {
-            Log.e(TAG, "Fetched null conversation for thread ", threadId, e);
-            Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
+        conv = getConversation();
+        if (conv == null) {
+            // failed fetching converstion
             finish();
             return;
         }
 
-        conv = c;
-        final Contact contact = c.getContact();
+        final Contact contact = conv.getContact();
         try {
             contact.update(this, false, true);
         } catch (NullPointerException e) {
@@ -380,16 +367,7 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
         MessageAdapter adapter = new MessageAdapter(this, uri);
         setListAdapter(adapter);
 
-        String displayName = contact.getDisplayName();
-        setTitle(displayName);
-        String number = contact.getNumber();
-        if (displayName.equals(number)) {
-            getSupportActionBar().setSubtitle(null);
-        } else {
-            getSupportActionBar().setSubtitle(number);
-        }
-
-        setContactIcon(contact);
+        updateHeader(contact);
 
         final String body = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (!TextUtils.isEmpty(body)) {
@@ -402,6 +380,45 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
         }
 
         setRead();
+    }
+
+    private void updateHeader(final Contact contact) {
+        String displayName = contact.getDisplayName();
+        setTitle(displayName);
+        String number = contact.getNumber();
+        if (displayName.equals(number)) {
+            getSupportActionBar().setSubtitle(null);
+        } else {
+            getSupportActionBar().setSubtitle(number);
+        }
+
+        setContactIcon(contact);
+    }
+
+    @Nullable
+    private Conversation getConversation() {
+        int threadId;
+        try {
+            threadId = Integer.parseInt(uri.getLastPathSegment());
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "unable to parse thread id from uri: ", uri, e);
+            Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
+            return null;
+        }
+        if (threadId < 0) {
+            Log.e(TAG, "negative thread id from uri: ", uri);
+            Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
+            return null;
+        }
+        try {
+            Conversation c = Conversation.getConversation(this, threadId, true);
+            threadId = c.getThreadId(); // force a NPE :x
+            return c;
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Fetched null conversation for thread ", threadId, e);
+            Toast.makeText(this, R.string.error_conv_null, Toast.LENGTH_LONG).show();
+            return null;
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -610,7 +627,7 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
      * {@inheritDoc}
      */
     public final void onItemClick(final AdapterView<?> parent, final View view, final int position,
-            final long id) {
+                                  final long id) {
         onItemLongClick(parent, view, position, id);
     }
 
@@ -618,7 +635,7 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
      * {@inheritDoc}
      */
     public final boolean onItemLongClick(final AdapterView<?> parent, final View view,
-            final int position, final long id) {
+                                         final int position, final long id) {
         final Context context = this;
         final Message m = Message.getMessage(this, (Cursor) parent.getItemAtPosition(position));
         final Uri target = m.getUri();

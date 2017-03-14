@@ -22,6 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import de.ub0r.android.logg0r.Log;
@@ -224,5 +225,49 @@ public final class SpamDB {
             return;
         }
         db.delete(DATABASE_TABLE, KEY_NR + " = ?", new String[]{nr});
+    }
+
+    public static String[] getBlacklist(final Context context) {
+        String[] blacklist;
+        try {
+            SpamDB spamDB = new SpamDB(context);
+            spamDB.open();
+            blacklist = spamDB.getAllEntries();
+            spamDB.close();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "error opening spam db, continue with empty list");
+            blacklist = new String[0];
+        }
+        return blacklist;
+    }
+
+    public static boolean isBlacklisted(final Context context, final String number) {
+        try {
+            SpamDB spamDB = new SpamDB(context);
+            spamDB.open();
+            boolean result = spamDB.isInDB(number);
+            spamDB.close();
+            return result;
+        } catch (SQLiteException e) {
+            Log.e(TAG, "error opening spam db, continue with empty list");
+            return false;
+        }
+    }
+
+    public static void toggleBlacklist(final Context context, final String number) {
+        try {
+            final SpamDB spamDB = new SpamDB(context);
+            spamDB.open();
+            if (!spamDB.isInDB(number)) {
+                spamDB.insertNr(number);
+                Log.d(TAG, "Added ", number, " to spam list");
+            } else {
+                spamDB.removeNr(number);
+                Log.d(TAG, "Removed ", number, " from spam list");
+            }
+            spamDB.close();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "error opening spam db, doing nothing");
+        }
     }
 }

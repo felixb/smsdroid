@@ -285,16 +285,15 @@ public final class SenderActivity extends AppCompatActivity implements OnClickLi
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
-        SmsManager smsmgr = SmsManager.getDefault();
-        final ArrayList<String> messages = smsmgr.divideMessage(message);
-        final int c = messages.size();
-        ArrayList<PendingIntent> sentIntents = new ArrayList<>(c);
 
+        Log.d(TAG, "send messages to: ", recipient);
+
+        final ArrayList<PendingIntent> sentIntents = new ArrayList<>();
         try {
-            Log.d(TAG, "send messages to: ", recipient);
+            SmsManager smsmgr = SmsManager.getDefault();
 
-            for (int i = 0; i < c; i++) {
-                final String m = messages.get(i);
+            final ArrayList<String> messages = smsmgr.divideMessage(message);
+            for (String m : messages) {
                 Log.d(TAG, "divided messages: ", m);
 
                 final Intent sent = new Intent(MESSAGE_SENT_ACTION, draft, this, SmsReceiver.class);

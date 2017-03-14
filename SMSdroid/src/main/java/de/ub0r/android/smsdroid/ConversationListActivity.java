@@ -25,6 +25,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -452,7 +453,7 @@ public final class ConversationListActivity extends AppCompatActivity implements
      * @param activity {@link Activity} to finish when deleting.
      */
     static void deleteMessages(final Context context, final Uri uri, final int title,
-            final int message, final Activity activity) {
+                               final int message, final Activity activity) {
         Log.i(TAG, "deleteMessages(..,", uri, " ,..)");
         final Builder builder = new Builder(context);
         builder.setTitle(title);
@@ -492,16 +493,7 @@ public final class ConversationListActivity extends AppCompatActivity implements
      * @param addr    address
      */
     private static void addToOrRemoveFromSpamlist(final Context context, final String addr) {
-        final SpamDB db = new SpamDB(context);
-        db.open();
-        if (!db.isInDB(addr)) {
-            db.insertNr(addr);
-            Log.d(TAG, "Added ", addr, " to spam list");
-        } else {
-            db.removeNr(addr);
-            Log.d(TAG, "Removed ", addr, " from spam list");
-        }
-        db.close();
+        SpamDB.toggleBlacklist(context, addr);
     }
 
     /**
@@ -557,7 +549,7 @@ public final class ConversationListActivity extends AppCompatActivity implements
      * @return {@link Intent}
      */
     static Intent getComposeIntent(final Context context, final String address,
-            final boolean showChooser) {
+                                   final boolean showChooser) {
         Intent i = null;
 
         if (!showChooser && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -586,7 +578,7 @@ public final class ConversationListActivity extends AppCompatActivity implements
      * {@inheritDoc}
      */
     public void onItemClick(final AdapterView<?> parent, final View view, final int position,
-            final long id) {
+                            final long id) {
         final Conversation c = Conversation.getConversation(this,
                 (Cursor) parent.getItemAtPosition(position), false);
         final Uri target = c.getUri();
@@ -606,10 +598,14 @@ public final class ConversationListActivity extends AppCompatActivity implements
      * {@inheritDoc}
      */
     public boolean onItemLongClick(final AdapterView<?> parent, final View view,
-            final int position, final long id) {
+                                   final int position, final long id) {
         final Conversation c = Conversation.getConversation(this,
                 (Cursor) parent.getItemAtPosition(position), true);
         final Uri target = c.getUri();
+        if (ContentUris.parseId(target) < 0) {
+            // do not show anything for broken threadIds
+            return true;
+        }
         Builder builder = new Builder(this);
         String[] items = longItemClickDialog;
         final Contact contact = c.getContact();
@@ -623,13 +619,10 @@ public final class ConversationListActivity extends AppCompatActivity implements
         } else {
             builder.setTitle(n);
         }
-        final SpamDB db = new SpamDB(getApplicationContext());
-        db.open();
-        if (db.isInDB(a)) {
+        if (SpamDB.isBlacklisted(getApplicationContext(), a)) {
             items = items.clone();
             items[WHICH_MARK_SPAM] = getString(R.string.dont_filter_spam_);
         }
-        db.close();
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, final int which) {

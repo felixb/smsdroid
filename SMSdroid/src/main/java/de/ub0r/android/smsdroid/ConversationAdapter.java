@@ -173,10 +173,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
         }
         final ContentResolver cr = c.getContentResolver();
         queryHandler = new BackgroundQueryHandler(cr);
-        SpamDB spam = new SpamDB(c);
-        spam.open();
-        blacklist = spam.getAllEntries();
-        spam.close();
+        blacklist = SpamDB.getBlacklist(c);
 
         defaultContactAvatar = c.getResources().getDrawable(R.drawable.ic_contact_picture);
 
@@ -189,7 +186,7 @@ public class ConversationAdapter extends ResourceCursorAdapter {
         try {
             cursor = cr.query(Conversation.URI_SIMPLE, Conversation.PROJECTION_SIMPLE,
                     Conversation.COUNT + ">0", null, null);
-        } catch (SQLiteException e) {
+        } catch (Exception e) {
             Log.e(TAG, "error getting conversations", e);
         }
 

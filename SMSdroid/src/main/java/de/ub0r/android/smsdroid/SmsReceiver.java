@@ -162,7 +162,7 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     static void handleOnReceive(final BroadcastReceiver receiver, final Context context,
-            final Intent intent) {
+                                final Intent intent) {
         final String action = intent.getAction();
         Log.d(TAG, "onReceive(context, ", action, ")");
         final PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -224,15 +224,12 @@ public class SmsReceiver extends BroadcastReceiver {
                         }
                     }
 
-                    final SpamDB db = new SpamDB(context);
-                    db.open();
-                    if (db.isInDB(smsMessage[0].getOriginatingAddress())) {
+                    if (SpamDB.isBlacklisted(context, smsMessage[0].getOriginatingAddress())) {
                         Log.d(TAG, "Message from ", s, " filtered.");
                         silent = true;
                     } else {
                         Log.d(TAG, "Message from ", s, " NOT filtered.");
                     }
-                    db.close();
 
                     if (action.equals(ACTION_SMS_NEW)) {
                         // API19+: save message to the database
@@ -256,7 +253,7 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     private static void updateNotificationsWithNewText(final Context context, final String text,
-            final boolean silent) {
+                                                       final boolean silent) {
         if (silent) {
             Log.i(TAG, "ignore notifications for silent text");
             return;
@@ -692,7 +689,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * @param resultCode message status
      */
     private static void handleSent(final Context context, final Intent intent,
-            final int resultCode) {
+                                   final int resultCode) {
         final Uri uri = intent.getData();
         Log.d(TAG, "sent message: ", uri, ", rc: ", resultCode);
         if (uri == null) {
