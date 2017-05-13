@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.2'
     }
 }
 apply plugin: 'com.android.application'
@@ -20,9 +20,9 @@ android {
     buildToolsVersion '25.0.2'
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 25
-        versionCode 91710000
+        versionCode 141710000
         versionName "1.7.1"
     }
 
@@ -63,9 +63,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:25.2.0'
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.google.android.gms:play-services-ads:10.0.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.google.android.gms:play-services-ads:10.2.4'
     compile 'de.ub0r.android.lib:lib:1.1.1'
     compile 'de.ub0r.android.logg0r:logg0r:2.0.0'
     compile 'de.ub0r.android.eucookieconsent:library:0.2.0@aar'
