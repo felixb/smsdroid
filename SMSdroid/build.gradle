@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
@@ -22,38 +22,40 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 141710000
-        versionName "1.7.1"
+        versionCode 141720000
+        versionName "1.7.2"
     }
 
     signingConfigs {
-        if (project.hasProperty("releaseKeystorePassword")) {
-            release {
-                storeFile file("release.ks")
-                storePassword releaseKeystorePassword
+        release {
+            File releaseProps = new File("release.properties")
+            if (releaseProps.exists()) {
+                Properties props = new Properties()
+                props.load(new FileInputStream(releaseProps))
+
+                storeFile file("../release.ks")
+                storePassword props.getProperty("releaseKeystorePassword")
                 keyAlias "jarsign"
-                keyPassword releaseKeyPassword
+                keyPassword props.getProperty("releaseKeyPassword")
             }
         }
+    }
 
-        buildTypes {
-            debug {
-                versionNameSuffix " debug"
-            }
+    buildTypes {
+        debug {
+            versionNameSuffix " debug"
+        }
 
-            if (project.hasProperty("releaseKeystorePassword")) {
-                logRelease {
-                    versionNameSuffix "-logRelease"
-                    signingConfig signingConfigs.release
-                    minifyEnabled false
-                }
+        logRelease {
+            versionNameSuffix "-logRelease"
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
 
-                release {
-                    signingConfig signingConfigs.release
-                    minifyEnabled true
-                    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
-                }
-            }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
         }
     }
 
