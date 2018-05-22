@@ -1,9 +1,10 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:3.1.2'
     }
 }
 apply plugin: 'com.android.application'
@@ -12,12 +13,13 @@ repositories {
     maven {
         url 'https://raw.githubusercontent.com/felixb/mvn-repo/master'
     }
-    mavenCentral()
+    jcenter()
+    google()
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -65,10 +67,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.google.android.gms:play-services-ads:10.2.4'
-    compile 'de.ub0r.android.lib:lib:1.1.1'
-    compile 'de.ub0r.android.logg0r:logg0r:2.0.0'
-    compile 'de.ub0r.android.eucookieconsent:library:0.2.0@aar'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.google.android.gms:play-services-ads:10.2.6'
+    implementation 'de.ub0r.android.lib:lib:1.1.1'
+    implementation 'de.ub0r.android.logg0r:logg0r:2.0.0'
+    implementation 'de.ub0r.android.eucookieconsent:library:0.2.0@aar'
 }

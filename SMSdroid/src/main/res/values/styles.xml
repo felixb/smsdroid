@@ -39,13 +39,13 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <style name="Theme.SMSdroid" parent="style/Theme.AppCompat">
+    <style name="Theme.SMSdroid" parent="@style/Theme.AppCompat">
         <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar</item>
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="ubButtonBarBackground">@color/ubActionBarBackgroundDark</item>
     </style>
 
-    <style name="Theme.SMSdroid_Light" parent="style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.SMSdroid_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar_Light</item>
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar_Light</item>
         <item name="ubButtonBarBackground">@color/ubActionBarBackgroundLight</item>
