@@ -18,12 +18,12 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 141720000
         versionName "1.7.2"
     }
@@ -67,9 +67,10 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:25.4.0'
-    implementation 'com.android.support:appcompat-v7:25.4.0'
-    implementation 'com.google.android.gms:play-services-ads:10.2.6'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'de.ub0r.android.lib:lib:1.1.1'
     implementation 'de.ub0r.android.logg0r:logg0r:2.0.0'
+    implementation 'com.google.android.ads.consent:consent-library:1.0.1'
 }

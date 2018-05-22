@@ -62,7 +62,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -285,9 +284,11 @@ public class MessageListActivity extends AppCompatActivity implements OnItemClic
         longItemClickDialog[WHICH_VIEW_DETAILS] = getString(R.string.view_details_);
         longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_message_);
 
-        mAdView = (AdView) findViewById(R.id.ads);
+        mAdView = findViewById(R.id.ads);
         mAdView.setVisibility(View.GONE);
-        if (!DonationHelper.hideAds(this)) {
+        ConsentManager cm = new ConsentManager(this);
+        cm.updateConsent();
+        if (cm.showAds()) {
             mAdView.loadAd(new AdRequest.Builder().build());
             mAdView.setAdListener(new AdListener() {
                 @Override

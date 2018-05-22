@@ -1,5 +1,8 @@
 # Changes
 
+## 1.7.3
+* GDPR compliance
+
 ## 1.7.2
 * bug fixes
 
