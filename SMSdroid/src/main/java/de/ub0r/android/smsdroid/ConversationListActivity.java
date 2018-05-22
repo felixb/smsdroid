@@ -282,10 +282,6 @@ public final class ConversationListActivity extends AppCompatActivity implements
             setContentView(R.layout.conversationlist);
         }
 
-        if (DonationHelper.hideAds(this)) {
-            findViewById(R.id.cookie_consent).setVisibility(View.GONE);
-        }
-
         // debug info
         showRows(this);
 

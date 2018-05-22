@@ -32,11 +32,4 @@
             android:scrollingCache="true"
             android:stretchMode="columnWidth"
             android:verticalSpacing="1dp"/>
-    <de.ub0r.android.eucookieconsent.EuCookieConsentView
-            android:id="@+id/cookie_consent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            app:urlLeanMore="@string/privacy_policy_url"/>
 </LinearLayout>

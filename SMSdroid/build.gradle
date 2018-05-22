@@ -72,5 +72,4 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:10.2.6'
     implementation 'de.ub0r.android.lib:lib:1.1.1'
     implementation 'de.ub0r.android.logg0r:logg0r:2.0.0'
-    implementation 'de.ub0r.android.eucookieconsent:library:0.2.0@aar'
 }
