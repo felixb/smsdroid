@@ -24,7 +24,7 @@
             android:title="@string/theme_"/>
 
     <CheckBoxPreference
-            android:defaultValue="@bool/default_icstheme"
+            android:defaultValue="true"
             android:key="use_gridlayout"
             android:summary="@string/use_new_layout_hint"
             android:title="@string/use_new_layout_"/>

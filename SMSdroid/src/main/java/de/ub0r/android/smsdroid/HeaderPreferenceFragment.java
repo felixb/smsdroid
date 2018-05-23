@@ -27,12 +27,6 @@ import android.preference.PreferenceFragment;
 
 import de.ub0r.android.lib.IPreferenceContainer;
 
-/**
- * {@link PreferenceFragment} for API>=11.
- *
- * @author flx
- */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public final class HeaderPreferenceFragment extends PreferenceFragment implements
         IPreferenceContainer {
 

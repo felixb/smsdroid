@@ -17,27 +17,25 @@
     not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/about_">
-        <PreferenceScreen android:title="@string/about_"
-                          android:summary="@string/about_hint">
-            <intent android:action="android.intent.action.MAIN"
-                    android:targetPackage="de.ub0r.android.smsdroid"
-                    android:targetClass="de.ub0r.android.smsdroid.AboutActivity"/>
-        </PreferenceScreen>
-        <PreferenceScreen android:title="@string/feedback_"
-                          android:summary="@string/feedback_hint">
-            <intent android:action="android.intent.action.VIEW"
-                    android:data="https://github.com/felixb/smsdroid/issues"/>
-        </PreferenceScreen>
-        <PreferenceScreen android:title="@string/google_plus_"
-                          android:summary="@string/google_plus_hint">
-            <intent android:action="android.intent.action.VIEW"
-                    android:data="https://plus.google.com/101490294894990964252"/>
-        </PreferenceScreen>
-        <PreferenceScreen android:key="more_apps"
-                          android:title="@string/more_apps_">
-            <intent android:action="android.intent.action.VIEW"
-                    android:data="https://play.google.com/store/apps/developer?id=Felix+Bechstein"/>
-        </PreferenceScreen>
-    </PreferenceCategory>
+    <PreferenceScreen android:title="@string/about_"
+                      android:summary="@string/about_hint">
+        <intent android:action="android.intent.action.MAIN"
+                android:targetPackage="de.ub0r.android.smsdroid"
+                android:targetClass="de.ub0r.android.smsdroid.AboutActivity"/>
+    </PreferenceScreen>
+    <PreferenceScreen android:title="@string/feedback_"
+                      android:summary="@string/feedback_hint">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://github.com/felixb/smsdroid/issues"/>
+    </PreferenceScreen>
+    <PreferenceScreen android:title="@string/google_plus_"
+                      android:summary="@string/google_plus_hint">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://plus.google.com/101490294894990964252"/>
+    </PreferenceScreen>
+    <PreferenceScreen android:key="more_apps"
+                      android:title="@string/more_apps_">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://play.google.com/store/apps/developer?id=Felix+Bechstein"/>
+    </PreferenceScreen>
 </PreferenceScreen>

@@ -27,16 +27,19 @@
         <attr name="ubButtonBarBackground" format="reference" />
     </declare-styleable>
 
-    <style name="ButtonBar" parent="@android:style/ButtonBar" />
+    <style name="ButtonBar" parent="@android:style/ButtonBar">
+        <item name="android:background">?attr/ubButtonBarBackground</item>
+    </style>
 
     <style name="TextAppearance.Widget.Subtitle" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/actionbar_text_color</item>
     </style>
 
-    <style name="TextAppearance.MultiComplete" parent="@android:style/TextAppearance.Widget.EditText" />
+    <style name="TextAppearance.MultiComplete" parent="@android:style/TextAppearance"/>
 
     <style name="Divider">
-        <item name="android:visibility">gone</item>
+        <item name="android:background">?android:attr/dividerHorizontal</item>
+        <item name="android:visibility">visible</item>
     </style>
 
     <style name="Theme.SMSdroid" parent="@style/Theme.AppCompat">

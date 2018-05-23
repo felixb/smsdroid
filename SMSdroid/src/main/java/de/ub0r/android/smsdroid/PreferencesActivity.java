@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 import de.ub0r.android.lib.IPreferenceContainer;
@@ -391,14 +392,21 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public final void onCreate(final Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.prefs_appearance_behavior);
-        addPreferencesFromResource(R.xml.prefs_about);
+        setTitle(R.string.settings);
+        Utils.setLocale(this);
+    }
 
-        registerOnPreferenceClickListener(this);
+    @Override
+    public void onBuildHeaders(final List<Header> target) {
+        loadHeadersFromResource(R.xml.preference_headers, target);
+    }
+
+    @Override
+    protected boolean isValidFragment(final String fragmentName) {
+        return HeaderPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**

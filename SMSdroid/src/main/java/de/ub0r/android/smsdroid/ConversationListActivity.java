@@ -512,11 +512,7 @@ public final class ConversationListActivity extends AppCompatActivity implements
                 }
                 return true;
             case R.id.item_settings: // start settings activity
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    startActivity(new Intent(this, Preferences11Activity.class));
-                } else {
-                    startActivity(new Intent(this, PreferencesActivity.class));
-                }
+                startActivity(new Intent(this, PreferencesActivity.class));
                 return true;
             case R.id.item_donate:
                 try {
