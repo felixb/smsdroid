@@ -11,7 +11,6 @@ import com.google.ads.consent.ConsentStatus;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Calendar;
 
 import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.logg0r.Log;
@@ -27,7 +26,6 @@ public class ConsentManager {
 
     public ConsentManager(final Activity activity) {
         mActivity = activity;
-
     }
 
     public void updateConsent() {
@@ -53,24 +51,27 @@ public class ConsentManager {
         return !DonationHelper.hideAds(mActivity) && checkConsentForAds();
     }
 
+    public boolean needConsent() {
+        final ConsentInformation consentInformation = ConsentInformation.getInstance(mActivity);
+        if (!consentInformation.isRequestLocationInEeaOrUnknown()) {
+            Log.d(TAG, "User is outside EEA");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private boolean checkConsentForAds() {
         final ConsentInformation consentInformation = ConsentInformation.getInstance(mActivity);
         if (!consentInformation.isRequestLocationInEeaOrUnknown()) {
-            // user is outside EEA
-            Log.d(TAG, "User is outseide EEA");
+            Log.d(TAG, "User is outside EEA");
             return true;
         }
 
-        final Calendar now = Calendar.getInstance();
-        final Calendar gdprDeadline = Calendar.getInstance();
-        gdprDeadline.set(2018, 5, 25, 0, 0, 0);
+        final ConsentStatus consentStatus = consentInformation.getConsentStatus();
+        Log.d(TAG, "ConstentStatus: ", consentStatus);
 
-        if (now.before(gdprDeadline)) {
-            Log.d(TAG, "Before GDPR deadline");
-            return true;
-        }
-
-        if (ConsentStatus.UNKNOWN.equals(consentInformation.getConsentStatus())) {
+        if (ConsentStatus.UNKNOWN.equals(consentStatus)) {
             Log.d(TAG, "Need to ask for consent");
             // we need to ask for consent
             askForConsent();
@@ -80,7 +81,7 @@ public class ConsentManager {
         return true;
     }
 
-    private void askForConsent() {
+    public void askForConsent() {
         URL privacyUrl = null;
         try {
             privacyUrl = new URL(PRIVACY_URL);
@@ -103,7 +104,7 @@ public class ConsentManager {
 
                     @Override
                     public void onConsentFormClosed(final ConsentStatus consentStatus, final Boolean userPrefersAdFree) {
-                        Log.d(TAG, "onConsentFormClosed(", consentStatus, userPrefersAdFree, ")");
+                        Log.d(TAG, "onConsentFormClosed(", consentStatus, ", ", userPrefersAdFree, ")");
                         if (userPrefersAdFree) {
                             Intent i = new Intent(Intent.ACTION_VIEW, DonationHelper.DONATOR_URI);
                             mActivity.startActivity(i);

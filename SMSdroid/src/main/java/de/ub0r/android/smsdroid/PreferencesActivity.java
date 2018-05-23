@@ -1,18 +1,18 @@
 /*
  * Copyright (C) 2009-2015 Felix Bechstein
- * 
+ *
  * This file is part of SMSdroid.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,6 +29,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
@@ -56,6 +57,8 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      * Tag for logging.
      */
     static final String TAG = "prefs";
+
+    private static final String PREFS_BEHAVIOR = "prefs_behavior";
 
     /**
      * Preference's name: vibrate on receive.
@@ -231,6 +234,8 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
      * Preference's name: prefix replace.
      */
     private static final String PREFS_REPLACE = "replace";
+
+    private static final String PREFS_EU_USER_CONSENT_POLICY = "eu_user_consent_policy";
 
     /**
      * Number of regular expressions.
@@ -467,6 +472,24 @@ public class PreferencesActivity extends PreferenceActivity implements IPreferen
                     return true;
                 }
             });
+        }
+
+        p = pc.findPreference(PREFS_EU_USER_CONSENT_POLICY);
+        if (p != null) {
+            final ConsentManager consentManager = new ConsentManager(pc.getActivity());
+
+            if (consentManager.needConsent()) {
+                p.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(final Preference preference) {
+                        consentManager.askForConsent();
+                        return true;
+                    }
+                });
+            } else {
+                PreferenceScreen ps = (PreferenceScreen) pc.findPreference(PREFS_BEHAVIOR);
+                ps.removePreference(p);
+            }
         }
     }
 

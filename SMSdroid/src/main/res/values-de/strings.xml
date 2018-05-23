@@ -223,4 +223,5 @@
   <string formatted="false" name="permissions_write_sms">SMS schreiben: Diese Berechtigung ist erforderlich, um SMS als gelesen zu markieren oder zu löschen.\nDie App funktioniert eingeschränkt, wenn diese Berechtigung verweigert wurde.</string>
   <string formatted="false" name="permissions_send_sms">SMS senden: Diese Berechtigung ist notwendig, um SMS zu senden.\nDie App funktioniert noch, wenn diese Berechtigung verweigert wird. Sie benötigen eine andere App zum Senden der Nachrichten.</string>
   <string formatted="false" name="permissions_write_external_storage">Externen Speicher schreiben: Diese Berechtigung ist notwendig, um MMS Inhalte auf externe Medien zu schreiben.\nDie App funktioniert noch, wenn diese Berechtigung verweigert wird.</string>
+  <string formatted="false" name="eu_user_consent_policy">EU Benutzer Einwilligung</string>
 </resources>

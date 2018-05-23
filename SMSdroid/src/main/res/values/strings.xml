@@ -222,5 +222,6 @@
     <string formatted="false" name="permissions_write_sms">Write SMS: this permission is necessary to mark SMS as read or to delete messages.\nThe app still works to some extend when this permission is denied.</string>
     <string formatted="false" name="permissions_send_sms">Send SMS: this permission is necessary to send SMS.\nThe app still works when this permission is denied. You will need to use a different app for sending though.</string>
     <string formatted="false" name="permissions_write_external_storage">Write external storage: this permission is necessary to save mms media to external storage.\nThe app still works when this permission is denied.</string>
+    <string formatted="false" name="eu_user_consent_policy">EU User Consent Policy</string>
 
 </resources>

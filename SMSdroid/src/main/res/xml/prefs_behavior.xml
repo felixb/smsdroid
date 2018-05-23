@@ -16,7 +16,8 @@
     copy of the GNU General Public License along with this program; If
     not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="prefs_behavior">
     <CheckBoxPreference android:key="enable_autosend"
                         android:defaultValue="true" android:title="@string/autosend_"
                         android:summary="@string/autosend_hint"
@@ -74,4 +75,7 @@
                                 android:summary="@string/fix_numbers_replace_hint"/>
         </PreferenceCategory>
     </PreferenceScreen>
+    <PreferenceScreen
+        android:key="eu_user_consent_policy"
+        android:title="@string/eu_user_consent_policy" />
 </PreferenceScreen>
