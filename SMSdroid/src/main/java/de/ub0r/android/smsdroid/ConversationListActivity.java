@@ -365,9 +365,6 @@ public final class ConversationListActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.conversationlist, menu);
-        if (DonationHelper.hideAds(this)) {
-            menu.removeItem(R.id.item_donate);
-        }
         return true;
     }
 
@@ -513,13 +510,6 @@ public final class ConversationListActivity extends AppCompatActivity implements
                 return true;
             case R.id.item_settings: // start settings activity
                 startActivity(new Intent(this, PreferencesActivity.class));
-                return true;
-            case R.id.item_donate:
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, DonationHelper.DONATOR_URI));
-                } catch (ActivityNotFoundException e) {
-                    Log.e(TAG, "error opening play store with donation app", e);
-                }
                 return true;
             case R.id.item_delete_all_threads:
                 deleteMessages(this, Uri.parse("content://sms/"), R.string.delete_threads_,

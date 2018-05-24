@@ -36,9 +36,5 @@
             android:id="@+id/item_settings"
             android:title="@string/settings"
             android:icon="@android:drawable/ic_menu_preferences"/>
-    <item
-            android:id="@+id/item_donate"
-            android:title="@string/donate_remove_ads_"
-            android:icon="@drawable/ic_menu_star"/>
 
 </menu>

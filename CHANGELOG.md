@@ -1,5 +1,8 @@
 # Changes
 
+## 1.7.4
+* Google Play Store compliance
+
 ## 1.7.3
 * GDPR compliance
 
