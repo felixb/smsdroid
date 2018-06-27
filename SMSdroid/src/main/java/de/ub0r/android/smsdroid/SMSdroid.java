@@ -60,11 +60,6 @@ public final class SMSdroid extends Application {
 
     @Override
     public void onCreate() {
-        try {
-            Class.forName("android.os.AsyncTask");
-        } catch (Throwable ignore) {
-        }
-
         super.onCreate();
         Log.i(TAG, "init SMSdroid v" + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE
                 + ")");
