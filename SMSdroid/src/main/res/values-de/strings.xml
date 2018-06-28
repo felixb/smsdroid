@@ -177,6 +177,10 @@
   <string formatted="false" name="use_new_layout_">Neues Layout</string>
   <string formatted="false" name="use_new_layout_hint">Nutze ein neues tiled Layout für Konversationen.</string>
   <string formatted="false" name="error_start_mms_download">Fehler beim starten des MMS Downloads</string>
+  <string formatted="false" name="notification_channel_messages_name">Nachrichten</string>
+  <string formatted="false" name="notification_channel_messages_description">SMS/MMS</string>
+  <string formatted="false" name="notification_channel_failed_sending_message_name">Fehlgeschlagene Nachrichten</string>
+  <string formatted="false" name="notification_channel_failed_sending_message_description">Fehlgeschlagene Sendeversuche</string>
   <string-array name="themes">
     <item>Schwarz</item>
     <item>Hell</item>

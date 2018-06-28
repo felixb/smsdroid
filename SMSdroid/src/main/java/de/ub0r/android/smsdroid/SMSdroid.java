@@ -1,18 +1,18 @@
 /*
  * Copyright (C) 2009-2015 Felix Bechstein
- * 
+ *
  * This file is part of SMSdroid.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,6 +22,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -53,6 +55,9 @@ public final class SMSdroid extends Application {
      */
     private static final String TAG = "app";
 
+    static final String NOTIFICATION_CHANNEL_ID_MESSAGES = "messages";
+    static final String NOTIFICATION_CHANNEL_ID_FAILD_SENDING_MESSAGE = "failed_sending_message";
+
     /**
      * Projection for checking {@link Cursor}.
      */
@@ -63,7 +68,11 @@ public final class SMSdroid extends Application {
         super.onCreate();
         Log.i(TAG, "init SMSdroid v" + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE
                 + ")");
+        updateSenderStatus();
+        setupNotificationChannels();
+    }
 
+    private void updateSenderStatus() {
         // check for default app only when READ_SMS was granted
         // this may need a second launch on Android 6.0 though
         if (hasPermission(this, Manifest.permission.READ_SMS)) {
@@ -95,6 +104,26 @@ public final class SMSdroid extends Application {
                     PackageManager.DONT_KILL_APP);
         } else {
             Log.w(TAG, "ignore .Sender state, READ_SMS permission is missing to check default app");
+        }
+    }
+
+    private void setupNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d(TAG, "Setting up notification channels");
+            final NotificationManager manager = getSystemService(NotificationManager.class);
+            assert manager != null;
+
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID_MESSAGES, getString(R.string.notification_channel_messages_name), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(getString(R.string.notification_channel_messages_description));
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            manager.createNotificationChannel(channel);
+
+            channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID_FAILD_SENDING_MESSAGE, getString(R.string.notification_channel_failed_sending_message_name), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(getString(R.string.notification_channel_failed_sending_message_description));
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            manager.createNotificationChannel(channel);
         }
     }
 
@@ -148,8 +177,8 @@ public final class SMSdroid extends Application {
     }
 
     static boolean requestPermission(final Activity activity, final String permission,
-            final int requestCode, final int message,
-            final DialogInterface.OnClickListener onCancelListener) {
+                                     final int requestCode, final int message,
+                                     final DialogInterface.OnClickListener onCancelListener) {
         Log.i(TAG, "requesting permission: " + permission);
         if (!hasPermission(activity, permission)) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
@@ -162,7 +191,7 @@ public final class SMSdroid extends Application {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(final DialogInterface dialogInterface,
-                                            final int i) {
+                                                        final int i) {
                                         ActivityCompat.requestPermissions(activity,
                                                 new String[]{permission}, requestCode);
                                     }

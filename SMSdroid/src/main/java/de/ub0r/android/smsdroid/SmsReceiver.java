@@ -45,6 +45,7 @@ import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
 import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -430,8 +431,7 @@ public class SmsReceiver extends BroadcastReceiver {
      */
     static int updateNewMessageNotification(final Context context, final String text) {
         Log.d(TAG, "updNewMsgNoti(", context, ",", text, ")");
-        final NotificationManager mNotificationMgr = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean enableNotifications = prefs.getBoolean(
                 PreferencesActivity.PREFS_NOTIFICATION_ENABLE, true);
@@ -440,9 +440,10 @@ public class SmsReceiver extends BroadcastReceiver {
         final boolean showPhoto = !privateNotification
                 && prefs.getBoolean(PreferencesActivity.PREFS_CONTACT_PHOTO, true);
         if (!enableNotifications) {
-            mNotificationMgr.cancelAll();
+            notificationManager.cancelAll();
             Log.d(TAG, "no notification needed!");
         }
+
         final int[] status = getUnread(context.getContentResolver(), text);
         final int l = status[ID_COUNT];
         final int tid = status[ID_TID];
@@ -454,7 +455,7 @@ public class SmsReceiver extends BroadcastReceiver {
         }
 
         if (enableNotifications && (text != null || l == 0)) {
-            mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
+            notificationManager.cancel(NOTIFICATION_ID_NEW);
         }
         Uri uri;
         PendingIntent pIntent;
@@ -464,8 +465,7 @@ public class SmsReceiver extends BroadcastReceiver {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
-            final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
-            boolean showNotification = true;
+            final NotificationCompat.Builder nb = new NotificationCompat.Builder(context, SMSdroid.NOTIFICATION_CHANNEL_ID_MESSAGES);
             Intent i;
             if (tid >= 0) {
                 uri = Uri.parse(MessageListActivity.URI + tid);
@@ -486,7 +486,6 @@ public class SmsReceiver extends BroadcastReceiver {
                         } else {
                             a = conv.getContact().getDisplayName();
                         }
-                        showNotification = true;
                         nb.setSmallIcon(PreferencesActivity.getNotificationIcon(context));
                         nb.setTicker(a);
                         nb.setWhen(lastUnreadDate);
@@ -524,8 +523,7 @@ public class SmsReceiver extends BroadcastReceiver {
                             nb.setContentText(context.getString(R.string.new_messages, l));
                             nb.setContentIntent(pIntent);
                         }
-                        if (showPhoto // just for the speeeeed
-                                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        if (showPhoto) {
                             try {
                                 conv.getContact().update(context, false, true);
                             } catch (NullPointerException e) {
@@ -551,7 +549,6 @@ public class SmsReceiver extends BroadcastReceiver {
                         PendingIntent.FLAG_UPDATE_CURRENT);
 
                 if (enableNotifications) {
-                    showNotification = true;
                     nb.setSmallIcon(PreferencesActivity.getNotificationIcon(context));
                     nb.setTicker(context.getString(R.string.new_messages_));
                     nb.setWhen(lastUnreadDate);
@@ -564,7 +561,7 @@ public class SmsReceiver extends BroadcastReceiver {
             // add pending intent
             i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            if (enableNotifications && showNotification) {
+            if (enableNotifications) {
                 int[] ledFlash = PreferencesActivity.getLEDflash(context);
                 nb.setLights(PreferencesActivity.getLEDcolor(context), ledFlash[0], ledFlash[1]);
                 final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
@@ -589,10 +586,10 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
             }
             Log.d(TAG, "uri: ", uri);
-            mNotificationMgr.cancel(NOTIFICATION_ID_NEW);
-            if (enableNotifications && showNotification) {
+            notificationManager.cancel(NOTIFICATION_ID_NEW);
+            if (enableNotifications) {
                 try {
-                    mNotificationMgr.notify(NOTIFICATION_ID_NEW, nb.getNotification());
+                    notificationManager.notify(NOTIFICATION_ID_NEW, nb.getNotification());
                 } catch (IllegalArgumentException e) {
                     Log.e(TAG, "illegal notification: ", nb, e);
                 }
@@ -624,8 +621,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
             Conversation conv = Conversation.getConversation(context, tid, true);
 
-            final NotificationManager mNotificationMgr = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             final SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(context);
             final boolean privateNotification = p.getBoolean(
                     PreferencesActivity.PREFS_NOTIFICATION_PRIVACY, false);
@@ -641,7 +637,7 @@ public class SmsReceiver extends BroadcastReceiver {
             String title = context.getString(R.string.error_sending_failed);
 
             final int[] ledFlash = PreferencesActivity.getLEDflash(context);
-            final NotificationCompat.Builder b = new NotificationCompat.Builder(context)
+            final NotificationCompat.Builder b = new NotificationCompat.Builder(context, SMSdroid.NOTIFICATION_CHANNEL_ID_FAILD_SENDING_MESSAGE)
                     .setSmallIcon(android.R.drawable.stat_sys_warning)
                     .setTicker(title)
                     .setWhen(date)
@@ -674,7 +670,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
             }
 
-            mNotificationMgr.notify(id, b.build());
+            notificationManager.notify(id, b.build());
         }
         if (c != null && !c.isClosed()) {
             c.close();
