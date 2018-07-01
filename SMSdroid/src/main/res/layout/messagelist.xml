@@ -54,7 +54,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:drawableTop="@android:drawable/ic_menu_send"
+                android:drawableTop="@drawable/ic_action_send_dark"
                 android:text="@string/send_"/>
 
         <EditText

@@ -2,6 +2,7 @@
 
 ## 1.7.5
 * fix notifications on Android 8+
+* improve action icons
 
 ## 1.7.4
 * Google Play Store compliance

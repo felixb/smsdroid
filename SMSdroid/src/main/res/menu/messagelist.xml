@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2009-2015 Felix Bechstein -->
-<!--
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2009-2015 Felix Bechstein --><!--
 		This file is part of SMSdroid. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
 		Public License as published by the Free Software Foundation; either
 		version 3 of the License, or (at your option) any later version.
--->
-<!--
+--><!--
 		This program is distributed in the hope that it will be useful, but
 		WITHOUT ANY WARRANTY; without even the implied warranty of
 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -14,30 +11,31 @@
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
 -->
-<menu
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-            android:id="@+id/item_contact"
-            android:title="@string/view_contact_"
-            app:actionLayout="@layout/contact"
-            app:showAsAction="always|never"/>
+        android:id="@+id/item_contact"
+        android:title="@string/view_contact_"
+        app:actionLayout="@layout/contact"
+        app:showAsAction="always|never" />
     <item
-            android:id="@+id/item_answer"
-            android:icon="@android:drawable/android:ic_menu_send"
-            android:title="@string/reply"/>
+        android:id="@+id/item_answer"
+        android:icon="@drawable/ic_action_reply"
+        android:title="@string/reply"
+        app:showAsAction="ifRoom" />
     <item
-            android:id="@+id/item_call"
-            android:icon="@drawable/android:ic_menu_call"
-            android:title="@string/call"/>
+        android:id="@+id/item_call"
+        android:icon="@drawable/ic_action_call"
+        android:title="@string/call"
+        app:showAsAction="ifRoom" />
     <item
-            android:id="@+id/item_delete_thread"
-            android:icon="@android:drawable/ic_menu_delete"
-            android:title="@string/delete_thread_"/>
+        android:id="@+id/item_delete_thread"
+        android:title="@string/delete_thread_"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/item_restore"
-            android:icon="@android:drawable/ic_menu_revert"
-            android:title="@string/restore_"/>
+        android:id="@+id/item_restore"
+        android:title="@string/restore_"
+        app:showAsAction="never" />
 
 </menu>

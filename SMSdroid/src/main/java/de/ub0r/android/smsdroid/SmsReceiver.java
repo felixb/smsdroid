@@ -514,9 +514,9 @@ public class SmsReceiver extends BroadcastReceiver {
                                     .getBroadcast(context, 0, nextIntent,
                                             PendingIntent.FLAG_UPDATE_CURRENT);
 
-                            nb.addAction(R.drawable.ic_menu_mark,
+                            nb.addAction(R.drawable.ic_action_done_dark,
                                     context.getString(R.string.mark_read_), nextPendingIntent);
-                            nb.addAction(R.drawable.ic_menu_compose,
+                            nb.addAction(R.drawable.ic_action_reply_dark,
                                     context.getString(R.string.reply), pIntent);
                         } else {
                             nb.setContentTitle(a);
