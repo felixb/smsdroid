@@ -184,11 +184,9 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".NotificationBroadcastReceiver">
-            <intent-filter>
-                <action android:name="de.ub0r.android.smsdroid.MARK_READ" />
-            </intent-filter>
-        </receiver>
+        <receiver
+            android:name=".NotificationBroadcastReceiver"
+            android:exported="false" />
 
         <receiver android:name=".WidgetProvider">
             <meta-data

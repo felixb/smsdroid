@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 
 import de.ub0r.android.logg0r.Log;
 
@@ -17,28 +16,20 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
     public static final String ACTION_MARK_READ = "de.ub0r.android.smsdroid.MARK_READ";
 
-    public static final String EXTRA_MURI = "de.ub0r.android.smsdroid.MURI_KEY";
-
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         Log.d(TAG, "onReceive(context, ", intent, ")");
 
-        if (ACTION_MARK_READ.equals(intent.getAction())) {
+        final Uri uri = intent.getData();
+        Log.d(TAG, "with uri: ", uri);
+        if (ACTION_MARK_READ.equals(intent.getAction()) && uri != null) {
             try {
-                Bundle extras = intent.getExtras();
-                if (extras == null) {
-                    Log.w(TAG, "empty extras");
-                    return;
-                }
-
-                // remember that we have to add the package here ..
-                String muri = extras.getString(EXTRA_MURI);
-                Log.d(TAG, "received uri: ", muri);
-                ConversationListActivity.markRead(context, Uri.parse(muri), 1);
-
+                ConversationListActivity.markRead(context, uri, 1);
             } catch (Exception e) {
                 Log.e(TAG, "unable to mark message read", e);
             }
+        } else {
+            Log.e(TAG, "illegal intent: ", intent.getAction(), ", ", uri);
         }
     }
 }

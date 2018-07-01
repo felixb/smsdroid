@@ -1,18 +1,18 @@
 /*
  * Copyright (C) 2010 Felix Bechstein
- * 
+ *
  * This file is part of SMSdroid.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,7 +22,6 @@ package de.ub0r.android.smsdroid;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -458,19 +457,19 @@ public class SmsReceiver extends BroadcastReceiver {
             notificationManager.cancel(NOTIFICATION_ID_NEW);
         }
         Uri uri;
-        PendingIntent pIntent;
+        PendingIntent defaultPendingIntent;
         if (l == 0) {
             final Intent i = new Intent(context, ConversationListActivity.class);
             // add pending intent
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+            defaultPendingIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
             final NotificationCompat.Builder nb = new NotificationCompat.Builder(context, SMSdroid.NOTIFICATION_CHANNEL_ID_MESSAGES);
-            Intent i;
+            Intent defaultIntent;
             if (tid >= 0) {
                 uri = Uri.parse(MessageListActivity.URI + tid);
-                i = new Intent(Intent.ACTION_VIEW, uri, context, MessageListActivity.class);
-                pIntent = PendingIntent.getActivity(context, 0, i,
+                defaultIntent = new Intent(Intent.ACTION_VIEW, uri, context, MessageListActivity.class);
+                defaultPendingIntent = PendingIntent.getActivity(context, 0, defaultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
 
                 if (enableNotifications) {
@@ -501,27 +500,29 @@ public class SmsReceiver extends BroadcastReceiver {
                             }
                             nb.setContentTitle(a);
                             nb.setContentText(body);
-                            nb.setContentIntent(pIntent);
+                            nb.setContentIntent(defaultPendingIntent);
                             // add long text
                             nb.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
 
                             // add actions
-                            Intent nextIntent = new Intent(
-                                    NotificationBroadcastReceiver.ACTION_MARK_READ);
-                            nextIntent.putExtra(NotificationBroadcastReceiver.EXTRA_MURI,
-                                    uri.toString());
-                            PendingIntent nextPendingIntent = PendingIntent
-                                    .getBroadcast(context, 0, nextIntent,
-                                            PendingIntent.FLAG_UPDATE_CURRENT);
+                            final PendingIntent markReadPendingIntent = PendingIntent.getBroadcast(
+                                    context,
+                                    0,
+                                    new Intent(
+                                            NotificationBroadcastReceiver.ACTION_MARK_READ,
+                                            uri,
+                                            context,
+                                            NotificationBroadcastReceiver.class),
+                                    PendingIntent.FLAG_UPDATE_CURRENT);
 
                             nb.addAction(R.drawable.ic_action_done_dark,
-                                    context.getString(R.string.mark_read_), nextPendingIntent);
+                                    context.getString(R.string.mark_read_), markReadPendingIntent);
                             nb.addAction(R.drawable.ic_action_reply_dark,
-                                    context.getString(R.string.reply), pIntent);
+                                    context.getString(R.string.reply), defaultPendingIntent);
                         } else {
                             nb.setContentTitle(a);
                             nb.setContentText(context.getString(R.string.new_messages, l));
-                            nb.setContentIntent(pIntent);
+                            nb.setContentIntent(defaultPendingIntent);
                         }
                         if (showPhoto) {
                             try {
@@ -544,8 +545,8 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
             } else {
                 uri = Uri.parse(MessageListActivity.URI);
-                i = new Intent(Intent.ACTION_VIEW, uri, context, ConversationListActivity.class);
-                pIntent = PendingIntent.getActivity(context, 0, i,
+                defaultIntent = new Intent(Intent.ACTION_VIEW, uri, context, ConversationListActivity.class);
+                defaultPendingIntent = PendingIntent.getActivity(context, 0, defaultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
 
                 if (enableNotifications) {
@@ -554,12 +555,12 @@ public class SmsReceiver extends BroadcastReceiver {
                     nb.setWhen(lastUnreadDate);
                     nb.setContentTitle(context.getString(R.string.new_messages_));
                     nb.setContentText(context.getString(R.string.new_messages, l));
-                    nb.setContentIntent(pIntent);
+                    nb.setContentIntent(defaultPendingIntent);
                     nb.setNumber(l);
                 }
             }
             // add pending intent
-            i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+            defaultIntent.setFlags(defaultIntent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 
             if (enableNotifications) {
                 int[] ledFlash = PreferencesActivity.getLEDflash(context);
@@ -599,7 +600,7 @@ public class SmsReceiver extends BroadcastReceiver {
         //noinspection ConstantConditions
         AppWidgetManager.getInstance(context).updateAppWidget(
                 new ComponentName(context, WidgetProvider.class),
-                WidgetProvider.getRemoteViews(context, l, pIntent));
+                WidgetProvider.getRemoteViews(context, l, defaultPendingIntent));
         return l;
     }
 

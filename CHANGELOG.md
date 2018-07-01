@@ -2,6 +2,7 @@
 
 ## 1.7.5
 * fix notifications on Android 8+
+* fix "mark read" action in notifications
 * improve action icons
 
 ## 1.7.4
