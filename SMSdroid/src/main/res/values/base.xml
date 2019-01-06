@@ -25,6 +25,7 @@
 	<string name="website">https://github.com/felixb/smsdroid</string>
 	<string name="privacy_policy_url" translatable="false">https://github.com/felixb/smsdroid/blob/master/PRIVACY.md</string>
 	<string name="DATEFORMAT_details">dd.MM.yyyy kk:mm</string>
+	<string name="admob_app_id">ca-app-pub-1948477123608376~9603426082</string>
 	<string-array name="themes_values">
 		<item>black</item>
 		<item>light</item>

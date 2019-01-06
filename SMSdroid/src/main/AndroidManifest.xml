@@ -206,9 +206,9 @@
             android:authorities="de.ub0r.android.smsdroid.SearchProvider"
             android:syncable="false" />
 
-        <activity
-            android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id"/>
 
         <meta-data
             android:name="com.google.android.gms.version"

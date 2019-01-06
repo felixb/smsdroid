@@ -58,7 +58,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import de.ub0r.android.lib.DonationHelper;
 import de.ub0r.android.lib.Utils;
 import de.ub0r.android.lib.apis.Contact;
 import de.ub0r.android.lib.apis.ContactsWrapper;
@@ -282,8 +281,6 @@ public final class ConversationListActivity extends AppCompatActivity implements
             setContentView(R.layout.conversationlist);
         }
 
-        new ConsentManager(this).updateConsent();
-
         // debug info
         showRows(this);
 
@@ -298,13 +295,20 @@ public final class ConversationListActivity extends AppCompatActivity implements
         longItemClickDialog[WHICH_DELETE] = getString(R.string.delete_thread_);
         longItemClickDialog[WHICH_MARK_SPAM] = getString(R.string.filter_spam_);
 
-        initAdapter();
-
-        if (!SMSdroid.isDefaultApp(this)) {
+        if (SMSdroid.isDefaultApp(this)) {
+            initAdapter();
+            getAdsConstent();
+        } else {
             AlertDialog.Builder b = new AlertDialog.Builder(this);
             b.setTitle(R.string.not_default_app);
             b.setMessage(R.string.not_default_app_message);
-            b.setNegativeButton(android.R.string.cancel, null);
+            b.setCancelable(false);
+            b.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialogInterface, final int i) {
+                    ConversationListActivity.this.finish();
+                }
+            });
             b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 @TargetApi(Build.VERSION_CODES.KITKAT)
                 @Override
@@ -318,6 +322,10 @@ public final class ConversationListActivity extends AppCompatActivity implements
             });
             b.show();
         }
+    }
+
+    private void getAdsConstent() {
+        new ConsentManager(this).updateConsent();
     }
 
     private void initAdapter() {
@@ -351,6 +359,12 @@ public final class ConversationListActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (adapter == null && SMSdroid.isDefaultApp(this)) {
+            // after setting SMSdroid to default SMS app
+            initAdapter();
+        }
+
         CAL_DAYAGO.setTimeInMillis(System.currentTimeMillis());
         CAL_DAYAGO.add(Calendar.DAY_OF_MONTH, -1);
 

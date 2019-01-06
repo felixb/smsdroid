@@ -43,6 +43,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+
 import de.ub0r.android.logg0r.Log;
 
 /**
@@ -70,6 +72,7 @@ public final class SMSdroid extends Application {
                 + ")");
         updateSenderStatus();
         setupNotificationChannels();
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
     }
 
     private void updateSenderStatus() {

@@ -1,5 +1,8 @@
 # Changes
 
+## 1.7.6
+* compliance to new Google Play Store rules
+
 ## 1.7.5
 * fix notifications on Android 8+
 * fix "mark read" action in notifications
