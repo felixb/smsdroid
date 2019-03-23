@@ -1,5 +1,8 @@
 # Changes
 
+## 1.7.7
+* upgrade libraries
+
 ## 1.7.6
 * compliance to new Google Play Store rules
 

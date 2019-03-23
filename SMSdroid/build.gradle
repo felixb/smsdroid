@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
     }
 }
 apply plugin: 'com.android.application'
@@ -19,7 +19,6 @@ repositories {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '28.0.3'
 
     compileOptions {
         targetCompatibility 1.8
@@ -29,8 +28,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 141760000
-        versionName "1.7.6"
+        versionCode 141770000
+        versionName "1.7.7"
     }
 
     signingConfigs {
@@ -74,8 +73,8 @@ android {
 dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.google.android.gms:play-services-ads:17.1.2'
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation 'de.ub0r.android.lib:lib:1.1.1'
     implementation 'de.ub0r.android.logg0r:logg0r:2.0.0'
-    implementation 'com.google.android.ads.consent:consent-library:1.0.6'
+    implementation 'com.google.android.ads.consent:consent-library:1.0.7'
 }
